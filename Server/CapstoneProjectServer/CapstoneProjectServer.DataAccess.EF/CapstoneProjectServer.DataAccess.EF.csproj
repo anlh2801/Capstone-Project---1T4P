@@ -50,6 +50,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CasptoneProjectContext.cs" />
+    <Compile Include="Infrastructure\CustomizeException.cs" />
+    <Compile Include="Infrastructure\DbContextTransactionProxy.cs" />
+    <Compile Include="Infrastructure\Disposable.cs" />
+    <Compile Include="Infrastructure\IDatabaseConnectionSettings.cs" />
+    <Compile Include="Infrastructure\IDbContextTransactionProxy.cs" />
+    <Compile Include="Infrastructure\IRepository.cs" />
+    <Compile Include="Infrastructure\IUnitOfWork.cs" />
+    <Compile Include="Infrastructure\RepositoryBase.cs" />
+    <Compile Include="Infrastructure\RepositoryHelper.cs" />
+    <Compile Include="Infrastructure\UnitOfWork.cs" />
     <Compile Include="Models\tblContact.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ContactRepository.cs" />
@@ -61,5 +71,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

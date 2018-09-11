@@ -1,4 +1,5 @@
 ﻿using CapstoneProjectServer.BusinessLogic.Settings;
+using CapstoneProjectServer.DataAccess.EF.Infrastructure;
 using CapstoneProjectServer.DataAccess.EF.Models;
 using CapstoneProjectServer.DataAccess.EF.Repositories;
 using System;
@@ -15,13 +16,21 @@ namespace CapstoneProjectServer.BusinessLogic.Services
     }
     public class ContactService : IContactService
     {
+        public ContactService(IRepositoryHelper repositoryHelper)
+        {
+            this.RepositoryHelper = repositoryHelper;
+            this.UnitOfWork = RepositoryHelper.GetUnitOfWork();
+        }
+        private readonly IUnitOfWork UnitOfWork;
+        private readonly IRepositoryHelper RepositoryHelper;
+
+
         public async Task<BusinessLogicResult<tblContact>> GetLatestContact()
         {
-            var repo = new ContactRepository();
+            var repo = this.RepositoryHelper.GetRepository<IContactRepository>(UnitOfWork);
             var contacts = await repo.GetAllContact();
-            var result = contacts.OrderByDescending(x => x.publicDate).FirstOrDefault();
-            return new BusinessLogicResult<tblContact> { Success = true, Result = result };
-            
+            var contact = contacts.OrderByDescending(x => x.publicDate).FirstOrDefault();
+            return new BusinessLogicResult<tblContact> { Success = true, Result = contact };
         }
     }
 }

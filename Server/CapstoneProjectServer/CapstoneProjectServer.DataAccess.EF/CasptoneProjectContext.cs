@@ -13,6 +13,11 @@ public partial class CasptoneProjectContext : DbContext
         {
         }
 
+        public CasptoneProjectContext(String connectionString) : base(connectionString)
+        {
+
+        }
+
         public virtual DbSet<tblContact> tblContacts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

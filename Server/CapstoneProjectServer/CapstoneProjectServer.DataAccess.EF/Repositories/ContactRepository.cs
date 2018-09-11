@@ -1,4 +1,5 @@
-﻿using CapstoneProjectServer.DataAccess.EF.Models;
+﻿using CapstoneProjectServer.DataAccess.EF.Infrastructure;
+using CapstoneProjectServer.DataAccess.EF.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,19 +9,15 @@ using System.Threading.Tasks;
 
 namespace CapstoneProjectServer.DataAccess.EF.Repositories
 {
-    public interface IContactRepository
+    public interface IContactRepository : IRepository<tblContact>
     {
         Task<List<tblContact>> GetAllContact();
     }
-    public class ContactRepository : IContactRepository
+    public class ContactRepository : RepositoryBase<tblContact>, IContactRepository
     {
         public async Task<List<tblContact>> GetAllContact()
         {
-            
-            using (var context = new CasptoneProjectContext())
-            {
-                return await context.Set<tblContact>().ToListAsync();
-            }
+            return await DbSet.AsQueryable().ToListAsync();            
         }
     }
 }
