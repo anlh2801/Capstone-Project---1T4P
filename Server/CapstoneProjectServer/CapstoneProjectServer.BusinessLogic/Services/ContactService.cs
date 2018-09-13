@@ -13,6 +13,8 @@ namespace CapstoneProjectServer.BusinessLogic.Services
     public interface IContactService
     {
         Task<BusinessLogicResult<tblContact>> GetLatestContact();
+
+        Task<BusinessLogicResult<IEnumerable<tblContact>>> GetAllContact();
     }
     public class ContactService : IContactService
     {
@@ -31,6 +33,14 @@ namespace CapstoneProjectServer.BusinessLogic.Services
             var contacts = await repo.GetAllContact();
             var contact = contacts.OrderByDescending(x => x.publicDate).FirstOrDefault();
             return new BusinessLogicResult<tblContact> { Success = true, Result = contact };
+        }
+
+        public async Task<BusinessLogicResult<IEnumerable<tblContact>>> GetAllContact()
+        {
+            var repo = this.RepositoryHelper.GetRepository<IContactRepository>(UnitOfWork);
+            var contacts = await repo.GetAllContact();
+            
+            return new BusinessLogicResult<IEnumerable<tblContact>> { Success = true, Result = contacts };
         }
     }
 }

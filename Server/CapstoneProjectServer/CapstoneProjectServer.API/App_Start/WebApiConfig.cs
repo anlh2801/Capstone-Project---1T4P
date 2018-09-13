@@ -14,8 +14,7 @@ namespace CapstoneProjectServer.API
 
             // Web API routes
             config.MapHttpAttributeRoutes();
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
-            new DefaultContractResolver { IgnoreSerializableAttribute = true };
+            config.EnableCors();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

@@ -8,10 +8,10 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace CapstoneProjectServer.API.Controllers
 {
-    
     public class ValuesController : ApiController
     {
         private  IContactService _contactService;
@@ -36,7 +36,22 @@ namespace CapstoneProjectServer.API.Controllers
 
 
         }
-        
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [HttpGet]
+        [Route("contact/all-contact")]
+        public async Task<HttpResponseMessage> GetAllContact()
+        {
+
+            var result = await _contactService.GetAllContact();
+            if (!result.Success)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, result.Validations);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, result.Result);
+
+
+        }
+
         [HttpPost]
         [Route("value/data-test")]
         public async Task<HttpResponseMessage> AddData(An anDto)
