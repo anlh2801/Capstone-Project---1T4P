@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a953182087fa4e5da5ae5fba3fd67cda" Name="Diagram1">
+        <EntityTypeShape EntityType="ODTS_DBModel.Account" Width="1.5" PointX="0.75" PointY="4.375" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Agency" Width="1.5" PointX="3" PointY="8.125" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Company" Width="1.5" PointX="0.75" PointY="8.5" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Contract" Width="1.5" PointX="3" PointY="12.625" />
+        <EntityTypeShape EntityType="ODTS_DBModel.ContractService" Width="1.5" PointX="5.25" PointY="12.625" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Device" Width="1.5" PointX="8.25" PointY="7.5" />
+        <EntityTypeShape EntityType="ODTS_DBModel.DeviceType" Width="1.5" PointX="6" PointY="4.625" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Guideline" Width="1.5" PointX="10.5" PointY="20.625" />
+        <EntityTypeShape EntityType="ODTS_DBModel.ITSupporter" Width="1.5" PointX="3" PointY="17.875" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Role" Width="1.5" PointX="1.5" PointY="0.75" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Service" Width="1.5" PointX="6" PointY="17.25" />
+        <EntityTypeShape EntityType="ODTS_DBModel.ServiceItem" Width="1.5" PointX="8.25" PointY="17" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Skill" Width="1.5" PointX="10.5" PointY="17" />
+        <EntityTypeShape EntityType="ODTS_DBModel.sysdiagram" Width="1.5" PointX="2.75" PointY="4.5" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Task" Width="1.5" PointX="12.75" PointY="8.25" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Ticket" Width="1.5" PointX="5.25" PointY="7.75" />
+        <EntityTypeShape EntityType="ODTS_DBModel.TicketDetail" Width="1.5" PointX="10.5" PointY="8.125" />
+        <EntityTypeShape EntityType="ODTS_DBModel.TicketHistory" Width="1.5" PointX="10.5" PointY="4.25" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Account_Role" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Agency_Account" />
+        <AssociationConnector Association="ODTS_DBModel.FK_ITSupporter_Account" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Agency_Company" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Device_Agency" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Ticket_Agency" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Contract_Company" />
+        <AssociationConnector Association="ODTS_DBModel.FK_ContractService_Contract" />
+        <AssociationConnector Association="ODTS_DBModel.FK_ContractService_Service" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Device_DeviceType" />
+        <AssociationConnector Association="ODTS_DBModel.FK_TicketDetail_Device" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Guideline_ServiceItem" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Skill_ITSupporter" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Ticket_ITSupporter" />
+        <AssociationConnector Association="ODTS_DBModel.FK_TicketHistory_ITSupporter" />
+        <AssociationConnector Association="ODTS_DBModel.FK_ServiceItem_Service" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Skill_ServiceItem" />
+        <AssociationConnector Association="ODTS_DBModel.FK_TicketDetail_ServiceItem" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Task_TicketDetail" />
+        <AssociationConnector Association="ODTS_DBModel.FK_TicketDetail_Ticket" />
+        <AssociationConnector Association="ODTS_DBModel.FK_TicketHistory_Ticket" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
