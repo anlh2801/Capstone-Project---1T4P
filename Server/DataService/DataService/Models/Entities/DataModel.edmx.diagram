@@ -4,352 +4,45 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b6c6c35d065248d1a8db3157f68ea220" Name="Diagram1">
-        <EntityTypeShape EntityType="DataModel.C__MigrationHistory" Width="1.5" PointX="12.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.C_TransactionIndex_2244ceaa_24f5_4fde_bd5f_baf8ea08cdc4" Width="1.5" PointX="12.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Account" Width="1.5" PointX="9.75" PointY="158.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Application" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.AreaDelivery" Width="1.5" PointX="9" PointY="125.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Article" Width="1.5" PointX="18.25" PointY="110.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.AspNetRole" Width="1.5" PointX="8.25" PointY="133.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.AspNetUserClaim" Width="1.5" PointX="12.75" PointY="138" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.AspNetUserLogin" Width="1.5" PointX="12.75" PointY="157.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.AspNetUser" Width="1.5" PointX="10.5" PointY="146.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Attendance" Width="1.5" PointX="21.25" PointY="144.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.AttendanceDate" Width="1.5" PointX="18.25" PointY="113.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.BlogCategory" Width="1.5" PointX="22" PointY="112.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.BlogPost" Width="1.5" PointX="24.25" PointY="143.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.BlogPostCollection" Width="1.5" PointX="18.25" PointY="126.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.BlogPostCollectionItem" Width="1.5" PointX="20.5" PointY="128.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.BlogPostCollectionItemMapping" Width="1.5" PointX="26.5" PointY="139.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.BlogPostImage" Width="1.5" PointX="26.5" PointY="152.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Brand" Width="1.5" PointX="0.75" PointY="143.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Card" Width="1.5" PointX="8" PointY="145.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.CategoryExtra" Width="1.5" PointX="12.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.CategoryExtraMapping" Width="1.5" PointX="5.25" PointY="173.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.CheckFinger" Width="1.5" PointX="21.25" PointY="103.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Contact" Width="1.5" PointX="3" PointY="132.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Cost" Width="1.5" PointX="18.25" PointY="141.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.CostCategory" Width="1.5" PointX="16" PointY="133.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.CostInventoryMapping" Width="1.5" PointX="29.5" PointY="145.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Coupon" Width="1.5" PointX="21.25" PointY="141.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.CouponCampaign" Width="1.5" PointX="19" PointY="121.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.CouponProvider" Width="1.5" PointX="16.75" PointY="122.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Customer" Width="1.5" PointX="5.25" PointY="145.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.CustomerDevice" Width="1.5" PointX="7.5" PointY="151" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.CustomerFilter" Width="1.5" PointX="3" PointY="138.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.CustomerProductMapping" Width="1.5" PointX="10.5" PointY="143" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.CustomerStoreReportMapping" Width="1.5" PointX="7.5" PointY="141.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.CustomerType" Width="1.5" PointX="3" PointY="148.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.DateHotelReport" Width="1.5" PointX="12.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.DateProduct" Width="1.5" PointX="23.25" PointY="159.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.DateProductItem" Width="1.5" PointX="18.25" PointY="152.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.DateReport" Width="1.5" PointX="18.25" PointY="156" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.DayMode" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.DeliveryInfo" Width="1.5" PointX="7.5" PointY="161.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.DeliveryInformation" Width="1.5" PointX="20.75" PointY="157" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.District" Width="1.5" PointX="11.25" PointY="127.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Employee" Width="1.5" PointX="19" PointY="102.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.EmployeeFinger" Width="1.5" PointX="21.25" PointY="108.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.EmployeeGroup" Width="1.5" PointX="16.75" PointY="104.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.EmployeeInStore" Width="1.5" PointX="21.25" PointY="153.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.EventLocation" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Favorited" Width="1.5" PointX="10.5" PointY="172.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.FingerScanMachine" Width="1.5" PointX="19" PointY="92.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Group" Width="1.5" PointX="13.75" PointY="129" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Guest" Width="1.5" PointX="9.75" PointY="180.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.ImageCollection" Width="1.5" PointX="18.25" PointY="166.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.ImageCollectionItem" Width="1.5" PointX="20.5" PointY="166" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.InventoryChecking" Width="1.5" PointX="7.75" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.InventoryCheckingItem" Width="1.5" PointX="10" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.InventoryDateReport" Width="1.5" PointX="18.25" PointY="169.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.InventoryDateReportItem" Width="1.5" PointX="20.5" PointY="170.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.InventoryReceipt" Width="1.5" PointX="27.25" PointY="146.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.InventoryReceiptItem" Width="1.5" PointX="32.5" PointY="147.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.InventoryTemplateReport" Width="1.5" PointX="3" PointY="154.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Language" Width="1.5" PointX="18.25" PointY="178.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.LanguageKey" Width="1.5" PointX="18.25" PointY="181.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.LanguageValue" Width="1.5" PointX="20.5" PointY="179.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.MachineConnect" Width="1.5" PointX="2.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.MembershipCard" Width="1.5" PointX="7.5" PointY="153.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.MembershipCardType" Width="1.5" PointX="3" PointY="157.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Menu" Width="1.5" PointX="10.5" PointY="105.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Notification" Width="1.5" PointX="4.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Order" Width="1.5" PointX="13.5" PointY="141.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.OrderDetail" Width="1.5" PointX="15.75" PointY="157.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.OrderDetailPromotionMapping" Width="1.5" PointX="26" PointY="163.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.OrderFeeItem" Width="1.5" PointX="18.75" PointY="135.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.OrderGroup" Width="1.5" PointX="7.5" PointY="180.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.OrderPromotionMapping" Width="1.5" PointX="21.75" PointY="136.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Partner" Width="1.5" PointX="0.75" PointY="154" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.PartnerMapping" Width="1.5" PointX="3" PointY="151.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Payment" Width="1.5" PointX="18.75" PointY="147" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.PaymentPartner" Width="1.5" PointX="6.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.PaymentReport" Width="1.5" PointX="18.25" PointY="184.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Pos" Width="1.5" PointX="13.75" PointY="169.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.PosConfig" Width="1.5" PointX="5" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.PosFile" Width="1.5" PointX="2.75" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.PriceAddition" Width="1.5" PointX="8.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.PriceGroup" Width="1.5" PointX="11.25" PointY="120.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.PriceNight" Width="1.5" PointX="13.5" PointY="121.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Product" Width="1.5" PointX="8.25" PointY="165.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.ProductCategory" Width="1.5" PointX="3" PointY="169.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.ProductCollection" Width="1.5" PointX="10" PointY="153.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.ProductCollectionItemMapping" Width="1.5" PointX="12.25" PointY="165.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.ProductComboDetail" Width="1.5" PointX="10.5" PointY="176.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.ProductDetailMapping" Width="1.5" PointX="26.25" PointY="159.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.ProductImage" Width="1.5" PointX="10.5" PointY="185.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.ProductImageCollection" Width="1.5" PointX="9.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.ProductImageCollectionItemMapping" Width="1.5" PointX="12" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.ProductItem" Width="1.5" PointX="30.25" PointY="133.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.ProductItemCategory" Width="1.5" PointX="28" PointY="134.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.ProductItemCompositionMapping" Width="1.5" PointX="10.5" PointY="169.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.ProductSpecification" Width="1.5" PointX="10.5" PointY="191.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Profile" Width="1.5" PointX="7.5" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Promotion" Width="1.5" PointX="22" PointY="120.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.PromotionDetail" Width="1.5" PointX="10.5" PointY="201" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.PromotionPartner" Width="1.5" PointX="11.25" PointY="114.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.PromotionStoreMapping" Width="1.5" PointX="24.25" PointY="140.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Provider" Width="1.5" PointX="7.75" PointY="136.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.ProviderProductItemMapping" Width="1.5" PointX="32.5" PointY="135.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Province" Width="1.5" PointX="9" PointY="129.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.RatingProduct" Width="1.5" PointX="10.5" PointY="195" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.RatingStar" Width="1.5" PointX="10.5" PointY="198.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.ReportTracking" Width="1.5" PointX="18.25" PointY="192.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.RequestHistory" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Role" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Room" Width="1.5" PointX="20.5" PointY="194.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.RoomCategory" Width="1.5" PointX="18.25" PointY="195.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.RoomCategoryPriceGroupMapping" Width="1.5" PointX="23.5" PointY="195.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.RoomFloor" Width="1.5" PointX="18.25" PointY="202.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.SalaryHour" Width="1.5" PointX="14.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.SalaryRule" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Store" Width="1.5" PointX="16" PointY="140.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.StoreDomain" Width="1.5" PointX="18.25" PointY="199.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.StoreGroup" Width="1.5" PointX="3" PointY="179.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.StoreGroupMapping" Width="1.5" PointX="18.25" PointY="163" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.StoreTheme" Width="1.5" PointX="24.25" PointY="154.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.StoreUser" Width="1.5" PointX="18.25" PointY="210" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.StoreWebRoute" Width="1.5" PointX="18.25" PointY="212.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.StoreWebRouteModel" Width="1.5" PointX="20.5" PointY="212.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.StoreWebSetting" Width="1.5" PointX="18.25" PointY="216.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.StoreWebViewCounter" Width="1.5" PointX="18.25" PointY="219.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.SubRentGroup" Width="1.5" PointX="12.75" PointY="180.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.sysdiagram" Width="1.5" PointX="14.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.SystemPartnerMapping" Width="1.5" PointX="14.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Tag" Width="1.5" PointX="27.25" PointY="142.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.TagMapping" Width="1.5" PointX="29.5" PointY="148.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.TemplateReportProductItemMapping" Width="1.5" PointX="5.25" PointY="154.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Theme" Width="1.5" PointX="22" PointY="131.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.TimeFrame" Width="1.5" PointX="19" PointY="96.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.TimeModeRule" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.TimeModeType" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.TokenUser" Width="1.5" PointX="16.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Transaction" Width="1.5" PointX="12" PointY="133.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.User" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.VATOrder" Width="1.5" PointX="10" PointY="137.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.VATOrderMapping" Width="1.5" PointX="15.75" PointY="137.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.ViewCounter" Width="1.5" PointX="18.25" PointY="223" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Voucher" Width="1.5" PointX="12.75" PointY="160.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.Ward" Width="1.5" PointX="11.25" PointY="110.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.WebCustomerFeedback" Width="1.5" PointX="16.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.WebElement" Width="1.5" PointX="10" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.WebElementType" Width="1.5" PointX="7.75" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.WebMenu" Width="1.5" PointX="20.5" PointY="226.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.WebMenuCategory" Width="1.5" PointX="18.25" PointY="227.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.WebPage" Width="1.5" PointX="18.25" PointY="231.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataModel.CustomerFeedback" Width="1.5" PointX="16.75" PointY="7.75" IsExpanded="true" />
-        <AssociationConnector Association="DataModel.FK_Account_MembershipCard" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_AccountCustomer" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Payment_Account" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Transaction_Account" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.RoleApplication" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.UserApplication" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_AreaDelivery_AreaDelivery" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_District_AreaDelivery" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Province_AreaDelivery" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Article_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_AspNetUsers_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_AspNetUsers_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_AspNetUsers_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_DeliveryAddress_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_DeliveryInformation_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Attendance_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Attendance_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_AttendanceDate_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_BlogPost_BlogCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_TagMapping_BlogCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_BlogPost_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_BlogPostCollectionItem_BlogPost" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_BlogPostImage_BlogPost" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_TagMapping_BlogPost" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_BlogPostCollection_BlogPostCollection" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_BlogPostCollection_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_BlogPostCollectionItem_BlogPostCollection" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_BlogPostCollectionItem_BlogPostCollection1" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK__Card__BrandId__7DEDA633" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK__Membershi__Brand__00CA12DE" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK__PartnerMa__Brand__47919582" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Contact_Brand" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_CustomerFilter_Brand" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_CustomerType_Brand" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_InventoryTemplateReport_Brand" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_PartnerMapping_Brand" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ProductCategory_Brand" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ProductCollection_Brand" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Store_Brand" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_StoreGroup_Brand" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_VATOrder_Brand" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK__Card__Membership__7EE1CA6C" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Payment_Card" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_CategoryExtra_ProductCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_CategoryExtra_ProductCategory1" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_CheckFinger_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_CheckFinger_FingerScanMachine" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Cost_CostCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Cost_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_CostInventoryMapping_Cost" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Payment_Cost" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_CostInventoryMapping_InventoryReceipt" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Voucher_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Vourcher_VoucherCampagin" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_VoucherCampagin_VourcherProvider" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Customer_CustomerType" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_CustomerDevice_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_CustomerProduct_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_CustomerStore_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_DeliveryInfo_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_MembershipCard_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Order_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_RentGroup_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_CustomerProductMapping_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_CustomerStore_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_DateProduct_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_DateProduct_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_DateProductItem_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_DateReport_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_TimeModeRule_DayMode" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_DeliveryInformation_District" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_DeliveryInformation_Province" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_District_Province" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Order_District" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Ward_District" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Employee_EmployeeGroup" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_EmployeeFingers_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_EmployeeInStore_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_TimeFrame_EmployeeGroup" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_EmployeeInStore_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Favorited_Product1" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Product_Group" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Store_Group" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Guest_RentGroup" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ImageCollection_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ImageCollectionItem_ImageCollection" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_InventoryCheckingItem_InventoryChecking" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_InventoryReport_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ReportItem_InventoryReport" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK__ReportIte__ItemI__55009F39" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_InventoryReceipt_Provider" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_InventoryReceipt_Store3" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_InventoryReceipt_Store4" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_InventoryReceipt_Store5" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ReceiptItem_InventoryReceipt" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ReceiptItem_ProductItem" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_TemplateReportProductItemMapping_InventoryTemplateReport" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Language_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_LanguageValue_Language" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_LanguageKey_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_LanguageValue_LanguageKey" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_MembershipCard_MembershipCardType" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Voucher_MembershipCard" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Menu_Menu" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Order_PriceGroup" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Order_PromotionPartner" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Order_Province" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Order_Room" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Order_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Order_SubRentGroup" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Order_Ward" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_OrderDetail_Order" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_OrderFeeItem_Order" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_OrderPromotionMapping_Order" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Payment_Order" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_PromotionPartnerOrder" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_VATOrderMapping_Order" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_OrderDetail_OrderDetail" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_OrderDetail_OrderDetailPromotionMapping" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_OrderDetail_OrderPromotionMapping" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_OrderDetail_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_OrderDetailPromotionMapping_OrderDetail" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_OrderDetailPromotionMapping_Promotion" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_OrderFeeItem_PriceGroup" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_SubRentGroup_RentGroup" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_OrderPromotionMapping_Promotion" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK__PartnerMa__Partn__4885B9BB" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_PaymentReport_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Store_POS" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_PosConfig_PosFile" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_CategoryPriceGroup_PriceGroup" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_PriceNight_PriceGroup" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK__Compositi__Produ__778AC167" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ComboDetail_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ComboDetail_Product1" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Product_ProductCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ProductCollectionItem_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ProductDetail_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ProductImage_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ProductSpecification_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_RatingProduct_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_RatingStar_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ProductCategory_ProductCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ProductCollection_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ProductCollectionItem_ProductCollection" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ProductDetail_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ProductImageCollectionItemMapping_ProductImageCollection" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK__Compositi__ItemI__76969D2E" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ProductItem_ItemCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ProviderProductItem_ProductItem" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_TemplateReportProductItemMapping_ProductItem" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.UserProfile" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_PromotionStoreMapping_Promotion" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Voucher_Promotion" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_Voucher_PromotionDetail" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_PromotionPartner_PromotionPartner" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_PromotionStoreMapping_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ProviderProductItem_Provider" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_VATOrder_Provider" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ReportTracking_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK__Room__CategoryID__76EBA2E9" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK__Room__FloorID__4589517F" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_CategoryPriceGroup_RoomCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_RoomCategory_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_SubRentGroup_RoomCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_SalaryRule_TimeModeRule" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_StoreDomain_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_StoreGroupMapping_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_StoreTheme_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_StoreUser_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_StoreWebRoute_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_StoreWebSetting_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_StoreWebViewCounter_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_ViewCounter_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_WebMenuCategory_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_WebPage_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_StoreGroupMapping_StoreGroup" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_StoreTheme_Theme" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_StoreWebRoute_StoreWebRoute" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_StoreWebRouteModel_StoreWebRoute" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_TagMapping_Tag" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_TimeModeRule_TimeModeType" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_VATOrderMapping_VATOrder" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_WebElement_WebElementType" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_WebMenu_WebMenu" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.FK_WebMenu_WebMenuCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.AspNetUserRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.MenuRole" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.UsersInRoles" ManuallyRouted="false" />
+      <Diagram DiagramId="b6c6c35d065248d1a8db3157f68ea220" Name="Diagram1" ZoomLevel="101">
+        <EntityTypeShape EntityType="DataModel.Account" Width="1.5" PointX="0.75" PointY="4.375" />
+        <EntityTypeShape EntityType="DataModel.Agency" Width="1.5" PointX="3" PointY="8.125" />
+        <EntityTypeShape EntityType="DataModel.Company" Width="1.5" PointX="0.75" PointY="8.5" />
+        <EntityTypeShape EntityType="DataModel.Contract" Width="1.5" PointX="3" PointY="12.625" />
+        <EntityTypeShape EntityType="DataModel.ContractServiceITSupport" Width="1.5" PointX="5.25" PointY="12.625" />
+        <EntityTypeShape EntityType="DataModel.Device" Width="1.5" PointX="8.25" PointY="7.5" />
+        <EntityTypeShape EntityType="DataModel.DeviceType" Width="1.5" PointX="6" PointY="4.625" />
+        <EntityTypeShape EntityType="DataModel.Guideline" Width="1.5" PointX="10.5" PointY="17.125" />
+        <EntityTypeShape EntityType="DataModel.ITSupporter" Width="1.5" PointX="3" PointY="17.875" />
+        <EntityTypeShape EntityType="DataModel.Role" Width="1.5" PointX="1.5" PointY="0.75" />
+        <EntityTypeShape EntityType="DataModel.ServiceItem" Width="1.5" PointX="8.25" PointY="17" />
+        <EntityTypeShape EntityType="DataModel.ServiceITSupport" Width="1.5" PointX="6" PointY="17.25" />
+        <EntityTypeShape EntityType="DataModel.Skill" Width="1.5" PointX="10.5" PointY="21" />
+        <EntityTypeShape EntityType="DataModel.Ticket" Width="1.5" PointX="5.25" PointY="7.75" />
+        <EntityTypeShape EntityType="DataModel.TicketDetail" Width="1.5" PointX="10.5" PointY="8.125" />
+        <EntityTypeShape EntityType="DataModel.TicketHistory" Width="1.5" PointX="10.5" PointY="4.25" />
+        <EntityTypeShape EntityType="DataModel.TicketTask" Width="1.5" PointX="12.75" PointY="8.25" />
+        <AssociationConnector Association="DataModel.FK_Account_Role" />
+        <AssociationConnector Association="DataModel.FK_Agency_Account" />
+        <AssociationConnector Association="DataModel.FK_ITSupporter_Account" />
+        <AssociationConnector Association="DataModel.FK_Agency_Company" />
+        <AssociationConnector Association="DataModel.FK_Device_Agency" />
+        <AssociationConnector Association="DataModel.FK_Ticket_Agency" />
+        <AssociationConnector Association="DataModel.FK_Contract_Company" />
+        <AssociationConnector Association="DataModel.FK_ContractService_Contract" />
+        <AssociationConnector Association="DataModel.FK_ContractService_Service" />
+        <AssociationConnector Association="DataModel.FK_Device_DeviceType" />
+        <AssociationConnector Association="DataModel.FK_TicketDetail_Device" />
+        <AssociationConnector Association="DataModel.FK_Guideline_ServiceItem" />
+        <AssociationConnector Association="DataModel.FK_Skill_ITSupporter" />
+        <AssociationConnector Association="DataModel.FK_Ticket_ITSupporter" />
+        <AssociationConnector Association="DataModel.FK_TicketHistory_ITSupporter" />
+        <AssociationConnector Association="DataModel.FK_ServiceItem_Service" />
+        <AssociationConnector Association="DataModel.FK_Skill_ServiceItem" />
+        <AssociationConnector Association="DataModel.FK_TicketDetail_ServiceItem" />
+        <AssociationConnector Association="DataModel.FK_TicketDetail_Ticket" />
+        <AssociationConnector Association="DataModel.FK_TicketHistory_Ticket" />
+        <AssociationConnector Association="DataModel.FK_Task_TicketDetail" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

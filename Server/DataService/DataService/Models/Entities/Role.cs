@@ -17,16 +17,16 @@ namespace DataService.Models.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Role()
         {
-            this.Users = new HashSet<User>();
+            this.Accounts = new HashSet<Account>();
         }
     
-        public System.Guid ApplicationId { get; set; }
-        public System.Guid RoleId { get; set; }
+        public int RoleId { get; set; }
         public string RoleName { get; set; }
-        public string Description { get; set; }
+        public bool IsDelete { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
     
-        public virtual Application Application { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Account> Accounts { get; set; }
     }
 }

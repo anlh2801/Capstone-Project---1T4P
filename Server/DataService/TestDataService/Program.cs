@@ -17,9 +17,9 @@ namespace TestDataService
             //{
             //    var result = _db.BlogCategories.ToList();
             //}
-            BlogCategoryService blogCategoryService = new BlogCategoryService();
-            var blogCategories = blogCategoryService.GetActive();
-            Console.ReadLine();
+            //BlogCategoryService blogCategoryService = new BlogCategoryService();
+            //var blogCategories = blogCategoryService.GetActive();
+            //Console.ReadLine();
         }
     }
 }

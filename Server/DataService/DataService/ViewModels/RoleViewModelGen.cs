@@ -15,10 +15,11 @@ namespace DataService.ViewModels
     public partial class RoleViewModel : DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.Role>
     {
     	
-    			public virtual System.Guid ApplicationId { get; set; }
-    			public virtual System.Guid RoleId { get; set; }
+    			public virtual int RoleId { get; set; }
     			public virtual string RoleName { get; set; }
-    			public virtual string Description { get; set; }
+    			public virtual bool IsDelete { get; set; }
+    			public virtual Nullable<System.DateTime> CreateDate { get; set; }
+    			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	
     	public RoleViewModel() : base() { }
     	public RoleViewModel(DataService.Models.Entities.Role entity) : base(entity) { }

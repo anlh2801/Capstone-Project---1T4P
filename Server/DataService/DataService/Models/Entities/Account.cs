@@ -17,29 +17,22 @@ namespace DataService.Models.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Account()
         {
-            this.Payments = new HashSet<Payment>();
-            this.Transactions = new HashSet<Transaction>();
+            this.Agencies = new HashSet<Agency>();
+            this.ITSupporters = new HashSet<ITSupporter>();
         }
     
-        public int AccountID { get; set; }
-        public string AccountCode { get; set; }
-        public string AccountName { get; set; }
-        public short Level_ { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public Nullable<System.DateTime> FinishDate { get; set; }
-        public Nullable<decimal> Balance { get; set; }
-        public string ProductCode { get; set; }
-        public Nullable<int> MembershipCardId { get; set; }
-        public Nullable<int> Type { get; set; }
-        public Nullable<int> BrandId { get; set; }
-        public Nullable<bool> Active { get; set; }
-        public Nullable<int> CustomerId { get; set; }
+        public int AccountId { get; set; }
+        public int RoleId { get; set; }
+        public string Username { get; set; }
+        public string Passwrod { get; set; }
+        public bool IsDelete { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
     
-        public virtual MembershipCard MembershipCard { get; set; }
-        public virtual Customer Customer { get; set; }
+        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Payment> Payments { get; set; }
+        public virtual ICollection<Agency> Agencies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Transaction> Transactions { get; set; }
+        public virtual ICollection<ITSupporter> ITSupporters { get; set; }
     }
 }
