@@ -26,7 +26,6 @@ namespace DataService.Domain
             var companies = companyService.GetAllCompany();
             foreach (var item in companies)
             {
-
                 companyList.Add(new CompanyAPIViewModel
                 {
                     CompanyId = item.CompanyId,

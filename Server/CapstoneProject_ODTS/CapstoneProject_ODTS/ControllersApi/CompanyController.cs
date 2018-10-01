@@ -25,13 +25,7 @@ namespace CapstoneProject_ODTS.Controllers
             if (result.Count() < 0)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-            }
-            //List<CompanyDTO> dtos = new List<CompanyDTO>();
-            //foreach (var item in result)
-            //{
-            //    var dto = new CompanyDTO() { CompanyName = item.CompanyName, CompanyDescription = item.Description };
-            //    dtos.Add(dto);
-            //}
+            }            
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
