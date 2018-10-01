@@ -183,6 +183,7 @@
     <Compile Include="DataAPIGen\TicketTaskApiGen.cs">
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
+    <Compile Include="Domain\AccountDomain.cs" />
     <Compile Include="Domain\BaseDomain.cs" />
     <Compile Include="Domain\CompanyDomain.cs" />
     <Compile Include="Models\APIModels\BaseResponse.cs" />
@@ -338,6 +339,7 @@
     <Compile Include="Models\Entities\ServiceITSupportRefined.cs">
       <DependentUpon>EntityRefinery.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Services\AccountService.cs" />
     <Compile Include="Models\Entities\Services\AccountServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
