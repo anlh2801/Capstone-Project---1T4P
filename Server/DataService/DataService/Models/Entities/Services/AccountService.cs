@@ -18,7 +18,7 @@ namespace DataService.Models.Entities.Services
         public bool CheckLogin(string username, string password, int roleid)
         {            
             var accountRepo = DependencyUtils.Resolve<IAccountRepository>();
-            var isLoginSucess = accountRepo.GetActive().Any(a => a.Username == username && a.Passwrod == password && a.RoleId == 1);
+            var isLoginSucess = accountRepo.GetActive().Any(a => a.Username == username && a.Passwrod == password && a.RoleId == roleid);
             return isLoginSucess;
         }
     }
