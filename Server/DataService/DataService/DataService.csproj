@@ -185,6 +185,7 @@
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\AccountDomain.cs" />
+    <Compile Include="Domain\AgencyDomain.cs" />
     <Compile Include="Domain\BaseDomain.cs" />
     <Compile Include="Domain\CompanyDomain.cs" />
     <Compile Include="Models\APIModels\BaseResponse.cs" />
