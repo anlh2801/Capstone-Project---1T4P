@@ -106,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiEndpoint.cs" />
+    <Compile Include="APIViewModels\AgencyAPIViewModel.cs" />
     <Compile Include="APIViewModels\CompanyAPIViewModel.cs" />
     <Compile Include="AutofacModule\AutoMapperModule.cs" />
     <Compile Include="AutofacModule\EntityFrameworkModule.cs" />
@@ -343,6 +344,7 @@
     <Compile Include="Models\Entities\Services\AccountServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Services\AgencyService.cs" />
     <Compile Include="Models\Entities\Services\AgencyServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>

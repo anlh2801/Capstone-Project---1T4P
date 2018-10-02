@@ -18,24 +18,12 @@ namespace DataService.Domain
     public class CompanyDomain : BaseDomain, ICompanyDomain
     {
         public List<CompanyAPIViewModel> GetAllCompany()
-        {
-            var companyList = new List<CompanyAPIViewModel>();            
-            
+        {          
             var companyService = this.Service<ICompanyService>();
 
             var companies = companyService.GetAllCompany();
-            foreach (var item in companies)
-            {
-                companyList.Add(new CompanyAPIViewModel
-                {
-                    CompanyId = item.CompanyId,
-                    CompanyName = item.CompanyName,
-                    Description = item.Description,
-                    CreateDate = item.CreatedAt.Value.ToString("MM/dd/yyyy"),
-                    UpdateDate = item.UpdateAt.Value.ToString("MM/dd/yyyy")
-                });
-            }
-            return companyList;
+           
+            return companies;
         }
     }
 }

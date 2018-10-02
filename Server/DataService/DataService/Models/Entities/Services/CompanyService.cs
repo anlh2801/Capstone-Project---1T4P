@@ -12,20 +12,27 @@ namespace DataService.Models.Entities.Services
 {
     public partial interface ICompanyService
     {
-        List<CompanyViewModel> GetAllCompany();
+        List<CompanyAPIViewModel> GetAllCompany();
     }
 
     public partial class CompanyService
     {
-        public List<CompanyViewModel> GetAllCompany()
+        public List<CompanyAPIViewModel> GetAllCompany()
         {
-            List<CompanyViewModel> rsList = new List<CompanyViewModel>();
+            List<CompanyAPIViewModel> rsList = new List<CompanyAPIViewModel>();
             var companyRepo = DependencyUtils.Resolve<ICompanyRepository>();
             var companies = companyRepo.GetActive().ToList();
             foreach (var item in companies)
             {
-                var a = new CompanyViewModel(item);
-                rsList.Add(a);
+                
+                rsList.Add(new CompanyAPIViewModel
+                {
+                    CompanyId = item.CompanyId,
+                    CompanyName = item.CompanyName,
+                    Description = item.Description,
+                    CreateDate = item.CreatedAt.Value.ToString("MM/dd/yyyy"),
+                    UpdateDate = item.UpdateAt.Value.ToString("MM/dd/yyyy")
+                });
             }
 
             return rsList;
