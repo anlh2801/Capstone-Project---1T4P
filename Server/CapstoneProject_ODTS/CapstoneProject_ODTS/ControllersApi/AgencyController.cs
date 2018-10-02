@@ -18,10 +18,10 @@ namespace CapstoneProject_ODTS.Controllers
         }
 
         [HttpGet]
-        [Route("agency/all_agency")]
-        public HttpResponseMessage GetAllAgency()
+        [Route("agency/view_profile_agency")]
+        public HttpResponseMessage ViewProfile(int agency_id)
         {
-            var result = _agencyDomain.GetAllAgency();
+            var result = _agencyDomain.ViewProfile(agency_id);
             if (result.Count() < 0)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");

@@ -12,16 +12,16 @@ namespace DataService.Domain
     public interface IAgencyDomain
     {
 
-        List<AgencyAPIViewModel> GetAllAgency();
+        List<AgencyAPIViewModel> ViewProfile(int agency_id);
     }
 
     public class AgencyDomain : BaseDomain, IAgencyDomain
     {
-        public List<AgencyAPIViewModel> GetAllAgency()
+        public List<AgencyAPIViewModel> ViewProfile(int agency_id)
         {
             var agencyService = this.Service<IAgencyService>();
 
-            var agency = agencyService.GetAllAgency();
+            var agency = agencyService.ViewProfile(agency_id);
 
             return agency;
         }
