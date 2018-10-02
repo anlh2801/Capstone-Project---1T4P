@@ -180,12 +180,10 @@
           </Key>
           <Property Name="TicketId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AgencyId" Type="int" Nullable="false" />
-          <Property Name="CurrentITSupporter_Id" Type="int" Nullable="false" />
           <Property Name="CurrentStatus" Type="int" Nullable="false" />
           <Property Name="TicketName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
-          <Property Name="Ratting" Type="int" />
           <Property Name="Feedback" Type="nvarchar(max)" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" />
@@ -203,6 +201,8 @@
           <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="CurrentITSupporter_Id" Type="int" Nullable="false" />
+          <Property Name="Rating" Type="int" />
         </EntityType>
         <EntityType Name="TicketHistory">
           <Key>
@@ -413,18 +413,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Ticket_ITSupporter">
-          <End Role="ITSupporter" Type="Self.ITSupporter" Multiplicity="1" />
-          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ITSupporter">
-              <PropertyRef Name="ITSupporterId" />
-            </Principal>
-            <Dependent Role="Ticket">
-              <PropertyRef Name="CurrentITSupporter_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TicketDetail_Device">
           <End Role="Device" Type="Self.Device" Multiplicity="1" />
           <End Role="TicketDetail" Type="Self.TicketDetail" Multiplicity="*" />
@@ -434,6 +422,18 @@
             </Principal>
             <Dependent Role="TicketDetail">
               <PropertyRef Name="DeviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketDetail_ITSupporter">
+          <End Role="ITSupporter" Type="Self.ITSupporter" Multiplicity="1" />
+          <End Role="TicketDetail" Type="Self.TicketDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ITSupporter">
+              <PropertyRef Name="ITSupporterId" />
+            </Principal>
+            <Dependent Role="TicketDetail">
+              <PropertyRef Name="CurrentITSupporter_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -563,12 +563,12 @@
             <End Role="Agency" EntitySet="Agency" />
             <End Role="Ticket" EntitySet="Ticket" />
           </AssociationSet>
-          <AssociationSet Name="FK_Ticket_ITSupporter" Association="Self.FK_Ticket_ITSupporter">
-            <End Role="ITSupporter" EntitySet="ITSupporter" />
-            <End Role="Ticket" EntitySet="Ticket" />
-          </AssociationSet>
           <AssociationSet Name="FK_TicketDetail_Device" Association="Self.FK_TicketDetail_Device">
             <End Role="Device" EntitySet="Device" />
+            <End Role="TicketDetail" EntitySet="TicketDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketDetail_ITSupporter" Association="Self.FK_TicketDetail_ITSupporter">
+            <End Role="ITSupporter" EntitySet="ITSupporter" />
             <End Role="TicketDetail" EntitySet="TicketDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_TicketDetail_ServiceItem" Association="Self.FK_TicketDetail_ServiceItem">
@@ -662,9 +662,9 @@
             <End Role="ITSupporter" EntitySet="ITSupporters" />
             <End Role="Skill" EntitySet="Skills" />
           </AssociationSet>
-          <AssociationSet Name="FK_Ticket_ITSupporter" Association="DataModel.FK_Ticket_ITSupporter">
+          <AssociationSet Name="FK_TicketDetail_ITSupporter" Association="DataModel.FK_TicketDetail_ITSupporter">
             <End Role="ITSupporter" EntitySet="ITSupporters" />
-            <End Role="Ticket" EntitySet="Tickets" />
+            <End Role="TicketDetail" EntitySet="TicketDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_TicketHistory_ITSupporter" Association="DataModel.FK_TicketHistory_ITSupporter">
             <End Role="ITSupporter" EntitySet="ITSupporters" />
@@ -838,7 +838,7 @@
           <Property Name="RatingAVG" Type="Double" />
           <NavigationProperty Name="Account" Relationship="DataModel.FK_ITSupporter_Account" FromRole="ITSupporter" ToRole="Account" />
           <NavigationProperty Name="Skills" Relationship="DataModel.FK_Skill_ITSupporter" FromRole="ITSupporter" ToRole="Skill" />
-          <NavigationProperty Name="Tickets" Relationship="DataModel.FK_Ticket_ITSupporter" FromRole="ITSupporter" ToRole="Ticket" />
+          <NavigationProperty Name="TicketDetails" Relationship="DataModel.FK_TicketDetail_ITSupporter" FromRole="ITSupporter" ToRole="TicketDetail" />
           <NavigationProperty Name="TicketHistories" Relationship="DataModel.FK_TicketHistory_ITSupporter" FromRole="ITSupporter" ToRole="TicketHistory" />
         </EntityType>
         <EntityType Name="Role">
@@ -901,18 +901,15 @@
           </Key>
           <Property Name="TicketId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AgencyId" Type="Int32" Nullable="false" />
-          <Property Name="CurrentITSupporter_Id" Type="Int32" Nullable="false" />
           <Property Name="CurrentStatus" Type="Int32" Nullable="false" />
           <Property Name="TicketName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
-          <Property Name="Ratting" Type="Int32" />
           <Property Name="Feedback" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Agency" Relationship="DataModel.FK_Ticket_Agency" FromRole="Ticket" ToRole="Agency" />
-          <NavigationProperty Name="ITSupporter" Relationship="DataModel.FK_Ticket_ITSupporter" FromRole="Ticket" ToRole="ITSupporter" />
           <NavigationProperty Name="TicketDetails" Relationship="DataModel.FK_TicketDetail_Ticket" FromRole="Ticket" ToRole="TicketDetail" />
           <NavigationProperty Name="TicketHistories" Relationship="DataModel.FK_TicketHistory_Ticket" FromRole="Ticket" ToRole="TicketHistory" />
         </EntityType>
@@ -928,7 +925,10 @@
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="CurrentITSupporter_Id" Type="Int32" Nullable="false" />
+          <Property Name="Rating" Type="Int32" />
           <NavigationProperty Name="Device" Relationship="DataModel.FK_TicketDetail_Device" FromRole="TicketDetail" ToRole="Device" />
+          <NavigationProperty Name="ITSupporter" Relationship="DataModel.FK_TicketDetail_ITSupporter" FromRole="TicketDetail" ToRole="ITSupporter" />
           <NavigationProperty Name="ServiceItem" Relationship="DataModel.FK_TicketDetail_ServiceItem" FromRole="TicketDetail" ToRole="ServiceItem" />
           <NavigationProperty Name="Ticket" Relationship="DataModel.FK_TicketDetail_Ticket" FromRole="TicketDetail" ToRole="Ticket" />
           <NavigationProperty Name="TicketTasks" Relationship="DataModel.FK_Task_TicketDetail" FromRole="TicketDetail" ToRole="TicketTask" />
@@ -1121,14 +1121,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Ticket_ITSupporter">
+        <Association Name="FK_TicketDetail_ITSupporter">
           <End Type="DataModel.ITSupporter" Role="ITSupporter" Multiplicity="1" />
-          <End Type="DataModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <End Type="DataModel.TicketDetail" Role="TicketDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ITSupporter">
               <PropertyRef Name="ITSupporterId" />
             </Principal>
-            <Dependent Role="Ticket">
+            <Dependent Role="TicketDetail">
               <PropertyRef Name="CurrentITSupporter_Id" />
             </Dependent>
           </ReferentialConstraint>
@@ -1412,12 +1412,10 @@
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="Feedback" ColumnName="Feedback" />
-                <ScalarProperty Name="Ratting" ColumnName="Ratting" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="TicketName" ColumnName="TicketName" />
                 <ScalarProperty Name="CurrentStatus" ColumnName="CurrentStatus" />
-                <ScalarProperty Name="CurrentITSupporter_Id" ColumnName="CurrentITSupporter_Id" />
                 <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
                 <ScalarProperty Name="TicketId" ColumnName="TicketId" />
               </MappingFragment>
@@ -1426,6 +1424,8 @@
           <EntitySetMapping Name="TicketDetails">
             <EntityTypeMapping TypeName="DataModel.TicketDetail">
               <MappingFragment StoreEntitySet="TicketDetail">
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="CurrentITSupporter_Id" ColumnName="CurrentITSupporter_Id" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />

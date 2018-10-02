@@ -18,8 +18,8 @@ namespace DataService.Models.Entities.Repositories
     }
     
     public partial class CompanyRepository : DataService.BaseConnect.BaseRepository<Company>, ICompanyRepository
-    {        
-        public CompanyRepository(System.Data.Entity.DbContext dbContext) : base(dbContext)
+    {
+    	public CompanyRepository(System.Data.Entity.DbContext dbContext) : base(dbContext)
     	{
     	}
     }

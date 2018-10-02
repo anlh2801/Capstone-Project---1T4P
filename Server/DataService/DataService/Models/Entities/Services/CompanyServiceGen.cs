@@ -11,19 +11,17 @@ namespace DataService.Models.Entities.Services
 {
     using System;
     using System.Collections.Generic;
-    using DataService.Models.Entities.Repositories;
-    using DataService.Utilities;
     using DataService.ViewModels;
     
     public partial interface ICompanyService : DataService.BaseConnect.IBaseService<Company, CompanyViewModel>
-    {        
+    {
     }
     
     public partial class CompanyService : DataService.BaseConnect.BaseService<Company, CompanyViewModel>, ICompanyService
     {
          public CompanyService()
-         {            
-        }
+         {
+         }
         public CompanyService(DataService.BaseConnect.IUnitOfWork unitOfWork, Repositories.ICompanyRepository repository) : base(unitOfWork, repository)
         {
         }
