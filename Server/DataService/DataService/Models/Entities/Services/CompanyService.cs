@@ -22,7 +22,7 @@ namespace DataService.Models.Entities.Services
             List<CompanyAPIViewModel> rsList = new List<CompanyAPIViewModel>();
             var companyRepo = DependencyUtils.Resolve<ICompanyRepository>();
             var companies = companyRepo.GetActive().ToList();
-            
+
             foreach (var item in companies)
             {                
                 rsList.Add(new CompanyAPIViewModel
