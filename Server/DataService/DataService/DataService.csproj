@@ -108,6 +108,7 @@
     <Compile Include="ApiEndpoint.cs" />
     <Compile Include="APIViewModels\AgencyAPIViewModel.cs" />
     <Compile Include="APIViewModels\CompanyAPIViewModel.cs" />
+    <Compile Include="APIViewModels\UpdateAgencyAPIViewModel.cs" />
     <Compile Include="AutofacModule\AutoMapperModule.cs" />
     <Compile Include="AutofacModule\EntityFrameworkModule.cs" />
     <Compile Include="AutofacModule\RepositoryModule.cs" />

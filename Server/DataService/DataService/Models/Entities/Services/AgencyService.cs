@@ -13,6 +13,7 @@ namespace DataService.Models.Entities.Services
     public partial interface IAgencyService
     {
         List<AgencyAPIViewModel> ViewProfile(int agency_id);
+        bool UpdateProfile(UpdateAgencyAPIViewModel model);
     }
 
     public partial class AgencyService
@@ -43,5 +44,25 @@ namespace DataService.Models.Entities.Services
 
             return rsList;
         }
+
+        public bool UpdateProfile(UpdateAgencyAPIViewModel model)
+        {
+            var agencyRepo = DependencyUtils.Resolve<IAgencyRepository>();
+            var updateAgency = agencyRepo.GetActive().SingleOrDefault(a => a.AgencyId == model.AgencyId);
+            if (updateAgency.AgencyId == model.AgencyId)
+            {
+                updateAgency.AgencyName = model.AgencyName;
+                updateAgency.Address = model.Address;
+                updateAgency.Telephone = model.Telephone;
+                updateAgency.UpdateAt = DateTime.Now;
+
+                agencyRepo.Edit(updateAgency);
+                agencyRepo.Save();
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }

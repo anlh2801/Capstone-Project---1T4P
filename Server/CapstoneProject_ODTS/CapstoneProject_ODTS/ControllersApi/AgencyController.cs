@@ -1,4 +1,5 @@
-﻿using DataService.Domain;
+﻿using DataService.APIViewModels;
+using DataService.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,21 @@ namespace CapstoneProject_ODTS.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
+
+        [HttpPost]
+        [Route("agency/update_profile_agency")]
+        public HttpResponseMessage UpdateProfile(UpdateAgencyAPIViewModel model)
+        {
+            _agencyDomain.UpdateProfile(model);
+            var result = _agencyDomain.UpdateProfile(model);
+            if (result == false)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, "Update Thành Công!");
+        }
+
     }
 }
 

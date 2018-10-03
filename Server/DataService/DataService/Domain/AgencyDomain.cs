@@ -13,6 +13,7 @@ namespace DataService.Domain
     {
 
         List<AgencyAPIViewModel> ViewProfile(int agency_id);
+        bool UpdateProfile(UpdateAgencyAPIViewModel model);
     }
 
     public class AgencyDomain : BaseDomain, IAgencyDomain
@@ -25,5 +26,15 @@ namespace DataService.Domain
 
             return agency;
         }
+
+        public bool UpdateProfile(UpdateAgencyAPIViewModel model)
+        {
+            var agencyService = this.Service<IAgencyService>();
+
+            var result = agencyService.UpdateProfile(model);
+
+            return result;
+        }
+
     }
 }
