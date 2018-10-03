@@ -106,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiEndpoint.cs" />
+    <Compile Include="APIViewModels\TicketAPIViewModel.cs" />
     <Compile Include="APIViewModels\CompanyAPIViewModel.cs" />
     <Compile Include="AutofacModule\AutoMapperModule.cs" />
     <Compile Include="AutofacModule\EntityFrameworkModule.cs" />
@@ -185,6 +186,7 @@
     </Compile>
     <Compile Include="Domain\AccountDomain.cs" />
     <Compile Include="Domain\BaseDomain.cs" />
+    <Compile Include="Domain\TicketDomain.cs" />
     <Compile Include="Domain\CompanyDomain.cs" />
     <Compile Include="Models\APIModels\BaseResponse.cs" />
     <Compile Include="Models\APIModels\InternalServersResponse.cs" />
@@ -346,6 +348,7 @@
     <Compile Include="Models\Entities\Services\AgencyServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Services\TicketService.cs" />
     <Compile Include="Models\Entities\Services\CompanyService.cs" />
     <Compile Include="Models\Entities\Services\CompanyServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
