@@ -19,21 +19,11 @@ namespace DataService.Domain
     {
         public List<DeviceTypeAPIViewModel> GetAllDeviceType()
         {
-            var companyList = new List<DeviceTypeAPIViewModel>();
+            var deviceTypeService = this.Service<IDeviceTypeService>();
 
-            var companyService = this.Service<IDeviceTypeService>();
-
-            var companies = companyService.GetAllDeviceType();
-            foreach (var item in companies)
-            {
-                companyList.Add(new DeviceTypeAPIViewModel
-                {
-                    DeviceTypeId = item.DeviceTypeId,
-                    DeviceTypeName = item.DeviceTypeName,
-                    
-                });
-            }
-            return companyList;
+            var deviceTypes = deviceTypeService.GetAllDeviceType();
+            
+            return deviceTypes;
         }
     }
 }

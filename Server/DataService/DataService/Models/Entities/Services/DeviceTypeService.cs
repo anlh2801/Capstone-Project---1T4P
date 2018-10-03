@@ -13,20 +13,24 @@ namespace DataService.Models.Entities.Services
 
     public partial interface IDeviceTypeService
     {
-        List<DeviceTypeViewModel> GetAllDeviceType();
+        List<DeviceTypeAPIViewModel> GetAllDeviceType();
     }
 
     public partial class DeviceTypeService
     {
-        public List<DeviceTypeViewModel> GetAllDeviceType()
+        public List<DeviceTypeAPIViewModel> GetAllDeviceType()
         {
-            List<DeviceTypeViewModel> rsList = new List<DeviceTypeViewModel>();
+            List<DeviceTypeAPIViewModel> rsList = new List<DeviceTypeAPIViewModel>();
             var devicetypeRepo = DependencyUtils.Resolve<IDeviceTypeRepository>();
             var devicetypes = devicetypeRepo.GetActive().ToList();
             foreach (var item in devicetypes)
             {
-                var a = new DeviceTypeViewModel(item);
-                rsList.Add(a);
+                rsList.Add(new DeviceTypeAPIViewModel
+                {
+                    DeviceTypeId = item.DeviceTypeId,
+                    DeviceTypeName = item.DeviceTypeName,
+
+                });
             }
 
             return rsList;

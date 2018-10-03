@@ -208,6 +208,7 @@
     <Compile Include="ControllersApi\AgencyController.cs" />
     <Compile Include="ControllersApi\CompanyController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ContractController.cs" />
     <Compile Include="Controllers\DeviceTypeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -7674,6 +7675,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\DeviceType\Index.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Contract\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
