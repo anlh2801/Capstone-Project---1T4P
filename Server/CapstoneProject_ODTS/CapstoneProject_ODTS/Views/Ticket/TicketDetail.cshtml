@@ -1,0 +1,100 @@
+﻿<!-- Datatable -->
+@{
+    var data = ViewData["ID"];
+}
+<div class="row col-md-12">
+
+    <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
+        <thead>
+            <tr>
+                <th><label>No.</label></th>
+                <th><label>Ticket Name</label></th>
+                <th><label>Time</label></th>
+                <th><label>Agency Name</label></th>
+                <th><label>Assign To</label></th>
+                <th><label>Issue Name</label></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts {
+    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            loadCompany();
+        });
+
+        function loadCompany() {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetTicketDetail", "Ticket", new { id = data })',
+                data: {
+
+                },
+                success: function(result) {
+                    initDatatable(result.result);
+                },
+                error: function(error) {
+                    showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                }
+            });
+        }
+        function initDatatable(data) {
+            $("#detail-table").dataTable({
+                stateSave: true,
+                "bFilter": true,
+                "bSort": false,
+                "data": data,
+                "bRetrieve": true,
+                "bScrollCollapse": true,
+                "bProcessing": true,
+                "oLanguage": {
+                    "sSearch": "Tìm kiếm:",
+                    "sSearchPlaceholder": "Thành phần con",
+                    "sZeroRecords": "Không có dữ liệu phù hợp",
+                    "sInfo": "Hiển thị từ _START_ đến _END_ trên tổng số _TOTAL_ dòng",
+                    "sEmptyTable": "Không có dữ liệu",
+                    "sInfoFiltered": " - lọc ra từ _MAX_ dòng",
+                    "sLengthMenu": "Hiển thị _MENU_ dòng",
+                    "sProcessing": "Đang xử lý...",
+                    "oPaginate": {
+                        "sNext": "<i class='fa fa-chevron-right'></i>",
+                        "sPrevious": "<i class='fa fa-chevron-left'></i>"
+                    }
+                },
+                "aoColumnDefs": [
+                    {
+                        "aTargets": [0, 1, 2, 3, 4, 5],
+                        "bSortable": false,
+                        "sClass": "text-center"
+                    },
+
+                    //{
+                    //    "aTargets": [7],
+                    //    "mRender": function (data, type, row) {
+                    //        var edit = "<a title='Chỉnh sửa' class='btn btn-sm btn-primary' onclick='callShowEditModal(" + data + ")'><i class='glyphicon glyphicon-pencil'></i></a>";
+                    //        var del = "<a title='Xóa' class='btn btn-sm btn-danger' onclick='deleteElementChil(" + data + ")'><i class='glyphicon glyphicon-trash'></i></a>";
+                    //        return edit + " " + del;
+                    //    },
+                    //}
+
+                ],
+                "columns": [
+                    { "data": "TicketId" },
+                    { "data": "TicketName" },
+                    { "data": "CreateDate" },
+                    { "data": "AgencyName" },
+                    { "data": "ITSupporterName" },
+                    { "data": "IssueName"},
+                ],
+                "bAutoWidth": false,
+            });
+        }
+
+    </script>
+
+}

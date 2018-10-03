@@ -68,6 +68,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\DataService\DataService.csproj">
       <Project>{6625bd94-74bc-47da-aa23-035836f32161}</Project>
       <Name>DataService</Name>

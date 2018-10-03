@@ -106,10 +106,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiEndpoint.cs" />
+    <Compile Include="APIViewModels\TicketAPIViewModel.cs" />
     <Compile Include="APIViewModels\AccountAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyAPIViewModel.cs" />
     <Compile Include="APIViewModels\CompanyAPIViewModel.cs" />
     <Compile Include="APIViewModels\ContractAPIViewModel.cs" />
+    <Compile Include="APIViewModels\UpdateAgencyAPIViewModel.cs" />
+    <Compile Include="APIViewModels\RatingAPIViewModel.cs" />
     <Compile Include="APIViewModels\DeviceTypeAPIViewModel.cs" />
     <Compile Include="AutofacModule\AutoMapperModule.cs" />
     <Compile Include="AutofacModule\EntityFrameworkModule.cs" />
@@ -187,9 +190,11 @@
     <Compile Include="DataAPIGen\TicketTaskApiGen.cs">
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
+    <Compile Include="Domain\TicketDetailDomain.cs" />
     <Compile Include="Domain\AccountDomain.cs" />
     <Compile Include="Domain\AgencyDomain.cs" />
     <Compile Include="Domain\BaseDomain.cs" />
+    <Compile Include="Domain\TicketDomain.cs" />
     <Compile Include="Domain\CompanyDomain.cs" />
     <Compile Include="Domain\ContractDomain.cs" />
     <Compile Include="Domain\DeviceTypeDomain.cs" />
@@ -346,6 +351,7 @@
     <Compile Include="Models\Entities\ServiceITSupportRefined.cs">
       <DependentUpon>EntityRefinery.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Services\TicketDetailService.cs" />
     <Compile Include="Models\Entities\Services\AccountService.cs" />
     <Compile Include="Models\Entities\Services\AccountServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
@@ -354,6 +360,7 @@
     <Compile Include="Models\Entities\Services\AgencyServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Services\TicketService.cs" />
     <Compile Include="Models\Entities\Services\CompanyService.cs" />
     <Compile Include="Models\Entities\Services\CompanyServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
