@@ -12,20 +12,33 @@ namespace DataService.Models.Entities.Services
 {
     public partial interface IAgencyService
     {
-        List<AgencyViewModel> GetAllAgency();
+        List<AgencyAPIViewModel> ViewProfile(int agency_id);
     }
 
     public partial class AgencyService
     {
-        public List<AgencyViewModel> GetAllAgency()
+        public List<AgencyAPIViewModel> ViewProfile(int agency_id)
         {
-            List<AgencyViewModel> rsList = new List<AgencyViewModel>();
+            List<AgencyAPIViewModel> rsList = new List<AgencyAPIViewModel>();
             var agencyRepo = DependencyUtils.Resolve<IAgencyRepository>();
             var agency = agencyRepo.GetActive().ToList();
             foreach (var item in agency)
             {
-                var a = new AgencyViewModel(item);
-                rsList.Add(a);
+                if(agency_id == item.AgencyId)
+                {
+                    rsList.Add(new AgencyAPIViewModel
+                    {
+                        AgencyId = item.AgencyId,
+                        CompanyId = item.CompanyId ?? 0,
+                        AccountId = item.AccountId,
+                        AgencyName = item.AgencyName,
+                        Address = item.Address,
+                        Telephone = item.Telephone,
+                        CreateAt = item.CreateAt.Value.ToString("MM/dd/yyyy"),
+                        UpdateAt = item.UpdateAt.Value.ToString("MM/dd/yyyy")
+                    });
+                }
+                
             }
 
             return rsList;
