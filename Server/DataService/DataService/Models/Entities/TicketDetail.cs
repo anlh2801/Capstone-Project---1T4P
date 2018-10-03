@@ -26,10 +26,10 @@ namespace DataService.Models.Entities
         public int DeviceId { get; set; }
         public string Desciption { get; set; }
         public bool IsDelete { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
-        public Nullable<System.DateTime> UpdateDate { get; set; }
         public int CurrentITSupporter_Id { get; set; }
         public Nullable<int> Rating { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
     
         public virtual Device Device { get; set; }
         public virtual ITSupporter ITSupporter { get; set; }
