@@ -71,7 +71,7 @@ namespace DataService.Models.Entities.Services
                 TicketName = list.TicketName,
                 CreateDate = timeAgo,
                 AgencyName = list.Agency.AgencyName,
-                ITSupporterName = list.ITSupporter.ITSupporterName,
+                //ITSupporterName = list.ITSupporter.ITSupporterName,
                 //IssueName = IssueName.IssueName.ToString(),
                 IssueName = listIssue,
 

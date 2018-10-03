@@ -110,6 +110,7 @@
     <Compile Include="APIViewModels\AccountAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyAPIViewModel.cs" />
     <Compile Include="APIViewModels\CompanyAPIViewModel.cs" />
+    <Compile Include="APIViewModels\UpdateAgencyAPIViewModel.cs" />
     <Compile Include="APIViewModels\RatingAPIViewModel.cs" />
     <Compile Include="APIViewModels\DeviceTypeAPIViewModel.cs" />
     <Compile Include="AutofacModule\AutoMapperModule.cs" />
