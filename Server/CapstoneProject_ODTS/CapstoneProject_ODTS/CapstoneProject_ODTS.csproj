@@ -205,8 +205,12 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="ControllersApi\AgencyController.cs" />
     <Compile Include="ControllersApi\CompanyController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
+    <Compile Include="ControllersApi\TicketDetailController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DeviceTypeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -7645,7 +7649,9 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -7668,9 +7674,14 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+<<<<<<< HEAD
     <Content Include="Views\Ticket\Index.cshtml" />
     <Content Include="Views\Home\ViewPage1.cshtml" />
     <Content Include="Views\Ticket\TicketDetail.cshtml" />
+=======
+    <Content Include="Views\DeviceType\Index.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+>>>>>>> 3a3e89578eebc36093c3e71e3684936d0829c3e0
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

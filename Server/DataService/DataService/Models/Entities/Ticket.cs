@@ -23,19 +23,16 @@ namespace DataService.Models.Entities
     
         public int TicketId { get; set; }
         public int AgencyId { get; set; }
-        public int CurrentITSupporter_Id { get; set; }
         public int CurrentStatus { get; set; }
         public string TicketName { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
-        public Nullable<int> Ratting { get; set; }
         public string Feedback { get; set; }
         public bool IsDelete { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
         public virtual Agency Agency { get; set; }
-        public virtual ITSupporter ITSupporter { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TicketDetail> TicketDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
