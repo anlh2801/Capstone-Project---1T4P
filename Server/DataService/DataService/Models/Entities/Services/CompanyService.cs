@@ -24,8 +24,7 @@ namespace DataService.Models.Entities.Services
             var companies = companyRepo.GetActive().ToList();
 
             foreach (var item in companies)
-            {
-                
+            {                
                 rsList.Add(new CompanyAPIViewModel
                 {
                     CompanyId = item.CompanyId,
