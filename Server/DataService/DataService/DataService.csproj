@@ -107,6 +107,7 @@
   <ItemGroup>
     <Compile Include="ApiEndpoint.cs" />
     <Compile Include="APIViewModels\AccountAPIViewModel.cs" />
+    <Compile Include="APIViewModels\AgencyAPIViewModel.cs" />
     <Compile Include="APIViewModels\CompanyAPIViewModel.cs" />
     <Compile Include="APIViewModels\DeviceTypeAPIViewModel.cs" />
     <Compile Include="AutofacModule\AutoMapperModule.cs" />
@@ -186,6 +187,7 @@
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\AccountDomain.cs" />
+    <Compile Include="Domain\AgencyDomain.cs" />
     <Compile Include="Domain\BaseDomain.cs" />
     <Compile Include="Domain\CompanyDomain.cs" />
     <Compile Include="Domain\DeviceTypeDomain.cs" />
@@ -346,6 +348,7 @@
     <Compile Include="Models\Entities\Services\AccountServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Services\AgencyService.cs" />
     <Compile Include="Models\Entities\Services\AgencyServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
