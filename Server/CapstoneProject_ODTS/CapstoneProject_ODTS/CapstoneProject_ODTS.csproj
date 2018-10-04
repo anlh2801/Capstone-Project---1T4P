@@ -210,6 +210,7 @@
     <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="ControllersApi\TicketDetailController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ContractController.cs" />
     <Compile Include="Controllers\DeviceTypeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -7679,6 +7680,7 @@
     <Content Include="Views\Ticket\TicketDetail.cshtml" />
     <Content Include="Views\DeviceType\Index.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Contract\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

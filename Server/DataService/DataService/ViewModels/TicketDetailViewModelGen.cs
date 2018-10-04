@@ -21,10 +21,10 @@ namespace DataService.ViewModels
     			public virtual int DeviceId { get; set; }
     			public virtual string Desciption { get; set; }
     			public virtual bool IsDelete { get; set; }
-    			public virtual Nullable<System.DateTime> CreateDate { get; set; }
-    			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     			public virtual int CurrentITSupporter_Id { get; set; }
     			public virtual Nullable<int> Rating { get; set; }
+    			public virtual Nullable<System.DateTime> CreateDate { get; set; }
+    			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	
     	public TicketDetailViewModel() : base() { }
     	public TicketDetailViewModel(DataService.Models.Entities.TicketDetail entity) : base(entity) { }

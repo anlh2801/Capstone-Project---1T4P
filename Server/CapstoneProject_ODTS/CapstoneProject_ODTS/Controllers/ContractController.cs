@@ -7,13 +7,13 @@ using System.Web.Mvc;
 
 namespace CapstoneProject_ODTS.Controllers
 {
-    public class DeviceTypeController : Controller
+    public class ContractController : Controller
     {
-        private DeviceTypeDomain _devicetypeDomain;
+        private ContractDomain _contractDomain;
 
-        public DeviceTypeController()
+        public ContractController()
         {
-            _devicetypeDomain = new DeviceTypeDomain();
+            _contractDomain = new ContractDomain();
         }
         public ActionResult Index()
         {
@@ -21,15 +21,15 @@ namespace CapstoneProject_ODTS.Controllers
 
             return View();
         }
-        public ActionResult GetAllDeviceType()
+        public ActionResult GetAllContract()
         {
-            var devicetypes = _devicetypeDomain.GetAllDeviceType();
-            if (devicetypes.Count() < 0)
+            var contracts = _contractDomain.GetAllContract();
+            if (contracts.Count() < 0)
             {
                 return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { result = devicetypes }, JsonRequestBehavior.AllowGet);
+            return Json(new { result = contracts }, JsonRequestBehavior.AllowGet);
         }
     }
 }
