@@ -12,6 +12,8 @@ namespace DataService.Domain
     public interface ITicketHistoryDomain
     {
         List<TicketHistoryAPIViewModel> GetTicketHistoryByTicketId(int ticketId);
+
+        List<TicketHistoryAPIViewModel> GetAllTicketHistory();
     };
 
     public class TicketHistoryDomain : BaseDomain, ITicketHistoryDomain
@@ -20,6 +22,13 @@ namespace DataService.Domain
         {
             var ticketHistoryService = this.Service<ITicketHistoryService>();
             var rs = ticketHistoryService.GetTicketHistoryByTicketId(ticketId);
+            return rs;
+        }
+
+        public List<TicketHistoryAPIViewModel> GetAllTicketHistory()
+        {
+            var ticketHistoryService = this.Service<ITicketHistoryService>();
+            var rs = ticketHistoryService.GetAllTicketHistory();
             return rs;
         }
     }

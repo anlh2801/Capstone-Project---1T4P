@@ -76,6 +76,19 @@ namespace CapstoneProject_ODTS.ControllersApi
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        [HttpGet]
+        [Route("ticket/all_ticket_history")]
+        public HttpResponseMessage GetAllTicketHistory()
+        {
+            var result = _ticketHistoryDomain.GetAllTicketHistory();
+            if (result.Count() < 0)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
         [HttpPost]
         [Route("ticketDetail/rate_ITSupporter")]
         public HttpResponseMessage GetAllCompany(RatingAPIViewModel rate)
