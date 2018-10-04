@@ -15,6 +15,7 @@ namespace DataService.Models.Entities.Services
         List<TicketAPIViewModel> GetAllTicket();
         List<TicketAPIViewModel> GetTicketDetail(Int32 id);
         List<TicketAPIViewModel> GetTicketWithStatus(Int32 status);
+        List<TicketAPIViewModel> GetAllTicketByAgencyIDAndStatus(Int32 acency_id, Int32 status);
     }
 
     public partial class TicketService
@@ -154,6 +155,28 @@ namespace DataService.Models.Entities.Services
             }
 
             return result;
+        }
+
+        public List<TicketAPIViewModel> GetAllTicketByAgencyIDAndStatus(Int32 acency_id, Int32 status)
+        {
+            List<TicketAPIViewModel> rsList = new List<TicketAPIViewModel>();
+            var TicketRepo = DependencyUtils.Resolve<ITicketRepository>();
+            var companies = TicketRepo.GetActive().ToList();
+            var listStatus = companies.FindAll(x => x.CurrentStatus == status && x.AgencyId == acency_id);
+            foreach (var item in listStatus)
+            {
+                var timeAgo = TimeAgo(item.CreateDate.Value);
+                var a = new TicketAPIViewModel()
+                {
+                    TicketId = item.TicketId,
+                    TicketName = item.TicketName,
+                    CreateDate = timeAgo,
+                    //AgencyName = item.Agency.AgencyName,
+                };
+                rsList.Add(a);
+            }
+
+            return rsList;
         }
     }
 }
