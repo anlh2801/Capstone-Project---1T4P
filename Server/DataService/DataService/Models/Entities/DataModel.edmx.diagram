@@ -5,23 +5,23 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b6c6c35d065248d1a8db3157f68ea220" Name="Diagram1" ZoomLevel="101">
-        <EntityTypeShape EntityType="DataModel.Account" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="DataModel.Agency" Width="1.5" PointX="3" PointY="7.5" />
+        <EntityTypeShape EntityType="DataModel.Account" Width="1.5" PointX="0.75" PointY="3.875" />
+        <EntityTypeShape EntityType="DataModel.Agency" Width="1.5" PointX="3" PointY="7.625" />
         <EntityTypeShape EntityType="DataModel.Company" Width="1.5" PointX="0.75" PointY="8" />
-        <EntityTypeShape EntityType="DataModel.Contract" Width="1.5" PointX="3" PointY="12" />
-        <EntityTypeShape EntityType="DataModel.ContractServiceITSupport" Width="1.5" PointX="5.25" PointY="12" />
-        <EntityTypeShape EntityType="DataModel.Device" Width="1.5" PointX="5.25" PointY="5.875" />
-        <EntityTypeShape EntityType="DataModel.DeviceType" Width="1.5" PointX="3" PointY="4" />
-        <EntityTypeShape EntityType="DataModel.Guideline" Width="1.5" PointX="7.5" PointY="24.125" />
+        <EntityTypeShape EntityType="DataModel.Contract" Width="1.5" PointX="3" PointY="12.125" />
+        <EntityTypeShape EntityType="DataModel.ContractServiceITSupport" Width="1.5" PointX="5.25" PointY="12.125" />
+        <EntityTypeShape EntityType="DataModel.Device" Width="1.5" PointX="5.25" PointY="6" />
+        <EntityTypeShape EntityType="DataModel.DeviceType" Width="1.5" PointX="3" PointY="4.125" />
+        <EntityTypeShape EntityType="DataModel.Guideline" Width="1.5" PointX="7.5" PointY="24.5" />
         <EntityTypeShape EntityType="DataModel.ITSupporter" Width="1.5" PointX="5.25" PointY="0.75" />
-        <EntityTypeShape EntityType="DataModel.Role" Width="1.5" PointX="1.5" PointY="16.125" />
-        <EntityTypeShape EntityType="DataModel.ServiceItem" Width="1.5" PointX="5.25" PointY="20.375" />
-        <EntityTypeShape EntityType="DataModel.ServiceITSupport" Width="1.5" PointX="3" PointY="20.75" />
-        <EntityTypeShape EntityType="DataModel.Skill" Width="1.5" PointX="7.5" PointY="6.75" />
-        <EntityTypeShape EntityType="DataModel.Ticket" Width="1.5" PointX="5.25" PointY="15.875" />
+        <EntityTypeShape EntityType="DataModel.Role" Width="1.5" PointX="1.5" PointY="16.25" />
+        <EntityTypeShape EntityType="DataModel.ServiceItem" Width="1.5" PointX="5.25" PointY="20.875" />
+        <EntityTypeShape EntityType="DataModel.ServiceITSupport" Width="1.5" PointX="3" PointY="21.125" />
+        <EntityTypeShape EntityType="DataModel.Skill" Width="1.5" PointX="7.5" PointY="7" />
+        <EntityTypeShape EntityType="DataModel.Ticket" Width="1.5" PointX="5.25" PointY="16" />
         <EntityTypeShape EntityType="DataModel.TicketDetail" Width="1.5" PointX="7.5" PointY="10.75" />
-        <EntityTypeShape EntityType="DataModel.TicketHistory" Width="1.5" PointX="7.5" PointY="16.125" />
-        <EntityTypeShape EntityType="DataModel.TicketTask" Width="1.5" PointX="9.75" PointY="11.125" />
+        <EntityTypeShape EntityType="DataModel.TicketHistory" Width="1.5" PointX="7.5" PointY="16.25" />
+        <EntityTypeShape EntityType="DataModel.TicketTask" Width="1.5" PointX="9.75" PointY="11.25" />
         <AssociationConnector Association="DataModel.FK_Account_Role" />
         <AssociationConnector Association="DataModel.FK_Agency_Account" />
         <AssociationConnector Association="DataModel.FK_ITSupporter_Account" />

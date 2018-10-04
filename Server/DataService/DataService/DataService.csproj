@@ -106,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiEndpoint.cs" />
+    <Compile Include="APIViewModels\TicketHistoryAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketAPIViewModel.cs" />
     <Compile Include="APIViewModels\AccountAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyAPIViewModel.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="DataAPIGen\TicketTaskApiGen.cs">
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
+    <Compile Include="Domain\TicketHistoryDomain.cs" />
     <Compile Include="Domain\TicketDetailDomain.cs" />
     <Compile Include="Domain\AccountDomain.cs" />
     <Compile Include="Domain\AgencyDomain.cs" />
@@ -360,6 +362,7 @@
     <Compile Include="Models\Entities\Services\AgencyServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Services\TicketHistoryService.cs" />
     <Compile Include="Models\Entities\Services\TicketService.cs" />
     <Compile Include="Models\Entities\Services\CompanyService.cs" />
     <Compile Include="Models\Entities\Services\CompanyServiceGen.cs">

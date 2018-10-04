@@ -13,10 +13,14 @@ namespace CapstoneProject_ODTS.ControllersApi
     public class TicketController : ApiController
     {
         private TicketDomain _ticketDomain;
+        private TicketDetailDomain _ticketDetailDomain;
+        private TicketHistoryDomain _ticketHistoryDomain;
 
         public TicketController()
         {
             _ticketDomain = new TicketDomain();
+            _ticketDetailDomain = new TicketDetailDomain();
+            _ticketHistoryDomain = new TicketHistoryDomain();
         }
 
         [HttpGet]
@@ -55,6 +59,28 @@ namespace CapstoneProject_ODTS.ControllersApi
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi");
             }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        [Route("ticket/ticket_history_in_ticket")]
+        public HttpResponseMessage GetTicketHistoryByTicketId(int ticketid)
+        {
+            var result = _ticketHistoryDomain.GetTicketHistoryByTicketId(ticketid);
+            if (result.Count() < 0)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPost]
+        [Route("ticketDetail/rate_ITSupporter")]
+        public HttpResponseMessage GetAllCompany(RatingAPIViewModel rate)
+        {
+            var result = _ticketDetailDomain.CreateRatingForHero(rate);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
