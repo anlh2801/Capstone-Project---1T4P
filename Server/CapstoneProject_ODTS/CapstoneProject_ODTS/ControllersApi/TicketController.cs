@@ -107,5 +107,18 @@ namespace CapstoneProject_ODTS.ControllersApi
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        [HttpPost]
+        [Route("ticket/cancel_ticket")]
+        public HttpResponseMessage CancelTicket(TicketCancelAPIViewModel model)
+        {
+            _ticketDomain.CancelTicket(model);
+            var result = _ticketDomain.CancelTicket(model);
+            if (result == false)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, "Cancel Thành Công!");
+        }
     }
 }

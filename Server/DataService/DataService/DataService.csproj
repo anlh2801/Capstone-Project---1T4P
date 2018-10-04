@@ -107,6 +107,7 @@
   <ItemGroup>
     <Compile Include="ApiEndpoint.cs" />
     <Compile Include="APIViewModels\FeedbackAPIViewModel.cs" />
+    <Compile Include="APIViewModels\TicketCancelAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketHistoryAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketAPIViewModel.cs" />
     <Compile Include="APIViewModels\AccountAPIViewModel.cs" />
