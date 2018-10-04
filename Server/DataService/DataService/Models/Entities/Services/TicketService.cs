@@ -14,6 +14,8 @@ namespace DataService.Models.Entities.Services
     {
         List<TicketAPIViewModel> GetAllTicket();
         List<TicketAPIViewModel> GetTicketDetail(Int32 id);
+        List<TicketAPIViewModel> GetTicketWithStatus(Int32 status);
+        List<TicketAPIViewModel> GetAllTicketByAgencyIDAndStatus(Int32 acency_id, Int32 status);
     }
 
     public partial class TicketService
@@ -39,7 +41,30 @@ namespace DataService.Models.Entities.Services
             return rsList;
         }
 
-        
+
+        public List<TicketAPIViewModel> GetTicketWithStatus(Int32 status)
+        {
+            List<TicketAPIViewModel> rsList = new List<TicketAPIViewModel>();
+            var TicketRepo = DependencyUtils.Resolve<ITicketRepository>();
+            var companies = TicketRepo.GetActive().ToList();
+            var listStatus = companies.FindAll(x => x.CurrentStatus == status);
+            foreach (var item in listStatus)
+            {
+                var timeAgo = TimeAgo(item.CreateDate.Value);
+                var a = new TicketAPIViewModel()
+                {
+                    TicketId = item.TicketId,
+                    TicketName = item.TicketName,
+                    CreateDate = timeAgo,
+                    //AgencyName = item.Agency.AgencyName,
+                };
+                rsList.Add(a);
+            }
+
+            return rsList;
+        }
+
+
 
         public List<TicketAPIViewModel> GetTicketDetail(Int32 id)
         {
@@ -47,20 +72,26 @@ namespace DataService.Models.Entities.Services
             var TicketRepo = DependencyUtils.Resolve<ITicketRepository>();
             var TicketDetailRepo = DependencyUtils.Resolve<ITicketDetailRepository>();
             var ServiceItemRepo = DependencyUtils.Resolve<IServiceItemRepository>();
+            var ITRepo = DependencyUtils.Resolve<IITSupporterRepository>();
 
             var ticket = TicketRepo.GetActive().ToList();
             var list = ticket.Find(x => x.TicketId == id);
 
             var service = ServiceItemRepo.GetActive().ToList();
+            var it = ITRepo.GetActive().ToList();
 
             var detail = TicketDetailRepo.GetActive().ToList();
             var detailList = detail.FindAll(x => x.TicketId == list.TicketId);
             var listIssue = new List<String>();
+            var listIT = new List<String>();
             for (int i = 0; i < detailList.Count; i++)
             {
                 var serviceId = detailList[i].ServiceItemId;
                 var IssueName = service.Find((x => x.ServiceItemId == serviceId)).IssueName;
+                var ITId = detailList[i].CurrentITSupporter_Id;
+                var ITName = it.Find((x => x.ITSupporterId == ITId)).ITSupporterName;
                 listIssue.Add(IssueName);
+                listIT.Add(ITName);
             }
             
 
@@ -74,6 +105,7 @@ namespace DataService.Models.Entities.Services
                 //ITSupporterName = list.ITSupporter.ITSupporterName,
                 //IssueName = IssueName.IssueName.ToString(),
                 IssueName = listIssue,
+                ITName = listIT,
 
             };
             rsList.Add(a);
@@ -123,6 +155,28 @@ namespace DataService.Models.Entities.Services
             }
 
             return result;
+        }
+
+        public List<TicketAPIViewModel> GetAllTicketByAgencyIDAndStatus(Int32 acency_id, Int32 status)
+        {
+            List<TicketAPIViewModel> rsList = new List<TicketAPIViewModel>();
+            var TicketRepo = DependencyUtils.Resolve<ITicketRepository>();
+            var companies = TicketRepo.GetActive().ToList();
+            var listStatus = companies.FindAll(x => x.CurrentStatus == status && x.AgencyId == acency_id);
+            foreach (var item in listStatus)
+            {
+                var timeAgo = TimeAgo(item.CreateDate.Value);
+                var a = new TicketAPIViewModel()
+                {
+                    TicketId = item.TicketId,
+                    TicketName = item.TicketName,
+                    CreateDate = timeAgo,
+                    //AgencyName = item.Agency.AgencyName,
+                };
+                rsList.Add(a);
+            }
+
+            return rsList;
         }
     }
 }

@@ -133,7 +133,7 @@
           <Key>
             <PropertyRef Name="RoleId" />
           </Key>
-          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" />
@@ -155,7 +155,7 @@
           <Key>
             <PropertyRef Name="ServiceITSupportId" />
           </Key>
-          <Property Name="ServiceITSupportId" Type="int" Nullable="false" />
+          <Property Name="ServiceITSupportId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ServiceName" Type="nvarchar" MaxLength="50" />
           <Property Name="Description" Type="nchar" MaxLength="10" />
           <Property Name="IsDelete" Type="bit" />
@@ -193,16 +193,16 @@
           <Key>
             <PropertyRef Name="TicketDetailId" />
           </Key>
-          <Property Name="TicketDetailId" Type="int" Nullable="false" />
+          <Property Name="TicketDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ServiceItemId" Type="int" Nullable="false" />
           <Property Name="TicketId" Type="int" Nullable="false" />
           <Property Name="DeviceId" Type="int" Nullable="false" />
           <Property Name="Desciption" Type="nvarchar(max)" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
-          <Property Name="CreateDate" Type="datetime" />
-          <Property Name="UpdateDate" Type="datetime" />
           <Property Name="CurrentITSupporter_Id" Type="int" Nullable="false" />
           <Property Name="Rating" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="TicketHistory">
           <Key>
@@ -845,7 +845,7 @@
           <Key>
             <PropertyRef Name="RoleId" />
           </Key>
-          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
@@ -872,7 +872,7 @@
           <Key>
             <PropertyRef Name="ServiceITSupportId" />
           </Key>
-          <Property Name="ServiceITSupportId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceITSupportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="IsDelete" Type="Boolean" />
@@ -917,16 +917,16 @@
           <Key>
             <PropertyRef Name="TicketDetailId" />
           </Key>
-          <Property Name="TicketDetailId" Type="Int32" Nullable="false" />
+          <Property Name="TicketDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ServiceItemId" Type="Int32" Nullable="false" />
           <Property Name="TicketId" Type="Int32" Nullable="false" />
           <Property Name="DeviceId" Type="Int32" Nullable="false" />
           <Property Name="Desciption" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <Property Name="CurrentITSupporter_Id" Type="Int32" Nullable="false" />
           <Property Name="Rating" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Device" Relationship="DataModel.FK_TicketDetail_Device" FromRole="TicketDetail" ToRole="Device" />
           <NavigationProperty Name="ITSupporter" Relationship="DataModel.FK_TicketDetail_ITSupporter" FromRole="TicketDetail" ToRole="ITSupporter" />
           <NavigationProperty Name="ServiceItem" Relationship="DataModel.FK_TicketDetail_ServiceItem" FromRole="TicketDetail" ToRole="ServiceItem" />
@@ -1424,10 +1424,10 @@
           <EntitySetMapping Name="TicketDetails">
             <EntityTypeMapping TypeName="DataModel.TicketDetail">
               <MappingFragment StoreEntitySet="TicketDetail">
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="CurrentITSupporter_Id" ColumnName="CurrentITSupporter_Id" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="CurrentITSupporter_Id" ColumnName="CurrentITSupporter_Id" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="Desciption" ColumnName="Desciption" />
                 <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
