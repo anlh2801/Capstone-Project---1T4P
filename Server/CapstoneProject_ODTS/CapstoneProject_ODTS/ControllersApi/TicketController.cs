@@ -90,12 +90,22 @@ namespace CapstoneProject_ODTS.ControllersApi
         }
 
         [HttpPost]
-        [Route("ticketDetail/rate_ITSupporter")]
+        [Route("ticket/ticketDetail/rate_ITSupporter")]
         public HttpResponseMessage GetAllCompany(RatingAPIViewModel rate)
         {
             var result = _ticketDetailDomain.CreateRatingForHero(rate);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
+
+        [HttpPost]
+        [Route("ticket/feedback")]
+        public HttpResponseMessage FeedbackTicket(FeedbackAPIViewModel feedback)
+        {
+            var result = _ticketDomain.CreateFeedbackForTicket(feedback);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
     }
 }

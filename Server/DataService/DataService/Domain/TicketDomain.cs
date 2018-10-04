@@ -13,9 +13,14 @@ namespace DataService.Domain
     {
        
         List<TicketAPIViewModel> GetAllTicket();
+
         List<TicketAPIViewModel> GetTicketDetail(Int32 id);
+
         List<TicketAPIViewModel> GetTicketWithStatus(Int32 status);
+
         List<TicketAPIViewModel> GetAllTicketByAgencyIDAndStatus(Int32 acency_id, Int32 status);
+
+        bool CreateFeedbackForTicket(FeedbackAPIViewModel feedback);
     }
 
     public  class TicketDomain : BaseDomain, ITicketDomain
@@ -58,14 +63,21 @@ namespace DataService.Domain
 
         public List<TicketAPIViewModel> GetAllTicketByAgencyIDAndStatus(Int32 acency_id, Int32 status)
         {
-            var TicketList = new List<TicketAPIViewModel>();
-
             var TicketService = this.Service<ITicketService>();
-
-
+            
             var companies = TicketService.GetAllTicketByAgencyIDAndStatus(acency_id, status);
 
             return companies;
+
+        }
+
+        public bool CreateFeedbackForTicket(FeedbackAPIViewModel feedback)
+        {          
+            var TicketService = this.Service<ITicketService>();
+
+            var rs = TicketService.CreateFeedbackForTicket(feedback.TicketId, feedback.FeedbackContent);
+
+            return rs;
 
         }
 
