@@ -48,5 +48,24 @@ namespace CapstoneProject_ODTS.Controllers
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult TicketStatus(Int32 id)
+        {
+            ViewBag.Title = "Home Page";
+            ViewData["STATUS"] = id.ToString();
+            return View();
+        }
+
+        public ActionResult GetTicketWithStatus(Int32 id)
+        {
+            var result = _TicketDomain.GetTicketWithStatus(id);
+            if (result.Count() < 0)
+            {
+                //không co record
+            }
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

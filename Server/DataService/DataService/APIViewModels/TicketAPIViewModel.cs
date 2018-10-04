@@ -18,6 +18,8 @@ namespace DataService.APIViewModels
         public string AgencyName { get; set; }
         public string ITSupporterName { get; set; }
         public List<String> IssueName { get; set; }
+        public List<String> ITName { get; set; }
+
 
     }
 }
