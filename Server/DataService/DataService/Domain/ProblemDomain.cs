@@ -28,55 +28,46 @@ namespace DataService.Domain
     {
         public List<ProblemAPIViewModel> GetAllProblem()
         {
-            var TicketList = new List<ProblemAPIViewModel>();            
-            
-            var TicketService = this.Service<IProblemService>();
+            var problemService = this.Service<IProblemService>();
 
-
-            var companies = TicketService.GetAllProblem();
+            var result = problemService.GetAllProblem();
             
-            return companies;
+            return result;
         }
 
         public List<ProblemAPIViewModel> GetProblemWithStatus(int status)
         {
-            var TicketList = new List<ProblemAPIViewModel>();
+            var problemService = this.Service<IProblemService>();
+            
+            var result = problemService.GetProblemWithStatus(status);
 
-            var TicketService = this.Service<IProblemService>();
-
-
-            var companies = TicketService.GetProblemWithStatus(status);
-
-            return companies;
+            return result;
         }
 
         public List<ProblemAPIViewModel> GetTicketByProbleId(int problemId)
         {
-            var TicketListtt = new List<ProblemAPIViewModel>();
+            var problemService = this.Service<IProblemService>();
 
-            var TicketService = this.Service<IProblemService>();
+            var result = problemService.GetTicketByProbleId(problemId);
 
-
-            var companies = TicketService.GetTicketByProbleId(problemId);
-
-            return companies;
+            return result;
         }
 
         public List<ProblemAPIViewModel> GetAllProblemByAgencyIDAndStatus(int acency_id, int status)
         {
-            var TicketService = this.Service<IProblemService>();
+            var problemService = this.Service<IProblemService>();
             
-            var companies = TicketService.GetAllProblemByAgencyIDAndStatus(acency_id, status);
+            var result = problemService.GetAllProblemByAgencyIDAndStatus(acency_id, status);
 
-            return companies;
+            return result;
 
         }
 
         public bool CreateFeedbackForProblem(FeedbackAPIViewModel feedback)
         {          
-            var TicketService = this.Service<IProblemService>();
+            var problemService = this.Service<IProblemService>();
 
-            var rs = TicketService.CreateFeedbackForProblem(feedback.TicketId, feedback.FeedbackContent);
+            var rs = problemService.CreateFeedbackForProblem(feedback.TicketId, feedback.FeedbackContent);
 
             return rs;
 
@@ -84,9 +75,9 @@ namespace DataService.Domain
 
         public bool CancelProblem(ProblemCancelAPIViewModel model)
         {
-            var ticketService = this.Service<IProblemService>();
+            var problemService = this.Service<IProblemService>();
 
-            var result = ticketService.CancelProblem(model);
+            var result = problemService.CancelProblem(model);
 
             return result;
         }

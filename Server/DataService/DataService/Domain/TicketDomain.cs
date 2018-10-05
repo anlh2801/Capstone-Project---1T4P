@@ -18,8 +18,8 @@ namespace DataService.Domain
     {
         public bool CreateRatingForHero(RatingAPIViewModel rate)
         {
-            var ticketDetailService = this.Service<ITicketService>();
-            var rs = ticketDetailService.CreateRatingForHero(rate);
+            var ticketService = this.Service<ITicketService>();
+            var rs = ticketService.CreateRatingForHero(rate);
             return rs;
         }
     }
