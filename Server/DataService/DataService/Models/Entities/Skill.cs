@@ -19,8 +19,8 @@ namespace DataService.Models.Entities
         public Nullable<int> ServiceItemId { get; set; }
         public Nullable<int> MonthExperience { get; set; }
         public Nullable<bool> IsDelete { get; set; }
-        public Nullable<System.DateTime> CreatedAt { get; set; }
-        public Nullable<System.DateTime> UpdatedAt { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
     
         public virtual ITSupporter ITSupporter { get; set; }
         public virtual ServiceItem ServiceItem { get; set; }

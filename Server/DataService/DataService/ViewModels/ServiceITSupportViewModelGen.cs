@@ -19,8 +19,8 @@ namespace DataService.ViewModels
     			public virtual string ServiceName { get; set; }
     			public virtual string Description { get; set; }
     			public virtual Nullable<bool> IsDelete { get; set; }
-    			public virtual Nullable<System.DateTime> CreatedAt { get; set; }
-    			public virtual Nullable<System.DateTime> UpdatedAt { get; set; }
+    			public virtual Nullable<System.DateTime> CreateDate { get; set; }
+    			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	
     	public ServiceITSupportViewModel() : base() { }
     	public ServiceITSupportViewModel(DataService.Models.Entities.ServiceITSupport entity) : base(entity) { }

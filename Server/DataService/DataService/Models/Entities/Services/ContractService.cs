@@ -32,8 +32,8 @@ namespace DataService.Models.Entities.Services
                     StartDate = item.StartDate.Value.ToString("MM/dd/yyyy"),
                     EndDate = item.EndDate.Value.ToString("MM/dd/yyyy"),
                     IsDelete = item.IsDelete,
-                    CreatedAt = item.CreatedAt.Value.ToString("MM/dd/yyyy"),
-                    UpdateAt = item.UpdateAt.Value.ToString("MM/dd/yyyy")
+                    CreatedAt = item.CreateDate.Value.ToString("MM/dd/yyyy"),
+                    UpdateAt = item.UpdateDate.Value.ToString("MM/dd/yyyy")
                 });
             }
 

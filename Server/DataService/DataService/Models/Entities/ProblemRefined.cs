@@ -12,7 +12,7 @@ namespace DataService.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class TicketDetail : DataService.BaseConnect.IEntity
+    public partial class Problem : DataService.BaseConnect.IEntity
     {
     }
 }

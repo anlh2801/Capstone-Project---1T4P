@@ -20,8 +20,8 @@ namespace DataService.ViewModels
     			public virtual string IssueName { get; set; }
     			public virtual Nullable<double> Price { get; set; }
     			public virtual Nullable<bool> IsDelete { get; set; }
-    			public virtual Nullable<System.DateTime> CreatedAt { get; set; }
-    			public virtual Nullable<System.DateTime> UpdatedAt { get; set; }
+    			public virtual Nullable<System.DateTime> CreateDate { get; set; }
+    			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	
     	public ServiceItemViewModel() : base() { }
     	public ServiceItemViewModel(DataService.Models.Entities.ServiceItem entity) : base(entity) { }

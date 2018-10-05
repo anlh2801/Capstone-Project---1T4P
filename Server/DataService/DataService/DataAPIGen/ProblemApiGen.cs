@@ -7,20 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataService.Models.Entities.Repositories
+namespace DataService.DataAPIGen
 {
     using System;
     using System.Collections.Generic;
     
-    
-    public partial interface ITicketDetailRepository : DataService.BaseConnect.IBaseRepository<TicketDetail>
+    public partial class ProblemApi : DataService.DataAPIGen.BaseApi<DataService.Models.Entities.Problem, DataService.ViewModels.ProblemViewModel, DataService.Models.Entities.Services.IProblemService>
     {
-    }
-    
-    public partial class TicketDetailRepository : DataService.BaseConnect.BaseRepository<TicketDetail>, ITicketDetailRepository
-    {
-    	public TicketDetailRepository(System.Data.Entity.DbContext dbContext) : base(dbContext)
-    	{
-    	}
+    	
     }
 }

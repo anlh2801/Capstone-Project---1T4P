@@ -12,22 +12,22 @@ namespace DataService.ViewModels
     using System;
     using System.Collections.Generic;
     
-    public partial class TicketDetailViewModel : DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.TicketDetail>
+    public partial class ProblemViewModel : DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.Problem>
     {
     	
-    			public virtual int TicketDetailId { get; set; }
-    			public virtual int ServiceItemId { get; set; }
-    			public virtual int TicketId { get; set; }
-    			public virtual int DeviceId { get; set; }
-    			public virtual string Desciption { get; set; }
+    			public virtual int ProblemId { get; set; }
+    			public virtual int AgencyId { get; set; }
+    			public virtual int ProblemStatus { get; set; }
+    			public virtual string ProblemtName { get; set; }
+    			public virtual Nullable<System.DateTime> StartDate { get; set; }
+    			public virtual Nullable<System.DateTime> EndDate { get; set; }
+    			public virtual string Feedback { get; set; }
     			public virtual bool IsDelete { get; set; }
-    			public virtual int CurrentITSupporter_Id { get; set; }
-    			public virtual Nullable<int> Rating { get; set; }
     			public virtual Nullable<System.DateTime> CreateDate { get; set; }
     			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	
-    	public TicketDetailViewModel() : base() { }
-    	public TicketDetailViewModel(DataService.Models.Entities.TicketDetail entity) : base(entity) { }
+    	public ProblemViewModel() : base() { }
+    	public ProblemViewModel(DataService.Models.Entities.Problem entity) : base(entity) { }
     
     }
 }

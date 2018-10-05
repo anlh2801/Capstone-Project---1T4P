@@ -19,7 +19,7 @@ namespace DataService.Models.Entities
         {
             this.Guidelines = new HashSet<Guideline>();
             this.Skills = new HashSet<Skill>();
-            this.TicketDetails = new HashSet<TicketDetail>();
+            this.Tickets = new HashSet<Ticket>();
         }
     
         public int ServiceItemId { get; set; }
@@ -27,8 +27,8 @@ namespace DataService.Models.Entities
         public string IssueName { get; set; }
         public Nullable<double> Price { get; set; }
         public Nullable<bool> IsDelete { get; set; }
-        public Nullable<System.DateTime> CreatedAt { get; set; }
-        public Nullable<System.DateTime> UpdatedAt { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Guideline> Guidelines { get; set; }
@@ -36,6 +36,6 @@ namespace DataService.Models.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Skill> Skills { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TicketDetail> TicketDetails { get; set; }
+        public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }

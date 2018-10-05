@@ -21,7 +21,7 @@ namespace DataService.Models.Entities.Services
         public bool CheckLogin(string username, string password, int roleid)
         {            
             var accountRepo = DependencyUtils.Resolve<IAccountRepository>();
-            var isLoginSucess = accountRepo.GetActive().Any(a => a.Username == username && a.Passwrod == password && a.RoleId == roleid);
+            var isLoginSucess = accountRepo.GetActive().Any(a => a.Username == username && a.Password == password && a.RoleId == roleid);
             return isLoginSucess;
         }
         public List<AccountAPIViewModel> GetAllAccount()
@@ -37,7 +37,7 @@ namespace DataService.Models.Entities.Services
                     AccountId = item.AccountId,
                     RoleId = item.RoleId,
                     Username = item.Username,
-                    Passwrod = item.Passwrod,
+                    Passwrod = item.Password,
 
                 });
             }

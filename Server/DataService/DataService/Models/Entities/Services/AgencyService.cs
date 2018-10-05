@@ -36,8 +36,8 @@ namespace DataService.Models.Entities.Services
                         AgencyName = item.AgencyName,
                         Address = item.Address,
                         Telephone = item.Telephone,
-                        CreateAt = item.CreateAt.Value.ToString("MM/dd/yyyy"),
-                        UpdateAt = item.UpdateAt.Value.ToString("MM/dd/yyyy")
+                        CreateAt = item.CreateDate.Value.ToString("MM/dd/yyyy"),
+                        UpdateAt = item.UpdateDate.Value.ToString("MM/dd/yyyy")
                     });
                 }
                 
@@ -55,7 +55,7 @@ namespace DataService.Models.Entities.Services
                 updateAgency.AgencyName = model.AgencyName;
                 updateAgency.Address = model.Address;
                 updateAgency.Telephone = model.Telephone;
-                updateAgency.UpdateAt = DateTime.Now;
+                updateAgency.UpdateDate = DateTime.Now;
 
                 agencyRepo.Edit(updateAgency);
                 agencyRepo.Save();
@@ -81,8 +81,8 @@ namespace DataService.Models.Entities.Services
                     AgencyName = item.AgencyName,
                     Address =  item.Address,
                     Telephone = item.Telephone,
-                    CreateAt = item.CreateAt != null ? item.CreateAt.Value.ToString("MM/dd/yyyy") : string.Empty,
-                    UpdateAt = item.UpdateAt != null ? item.UpdateAt.Value.ToString("MM/dd/yyyy") : string.Empty
+                    CreateAt = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    UpdateAt = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                 });
             }
 

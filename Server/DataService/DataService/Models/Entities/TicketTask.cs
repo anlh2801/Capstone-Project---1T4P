@@ -15,8 +15,8 @@ namespace DataService.Models.Entities
     public partial class TicketTask
     {
         public int TicketTaskId { get; set; }
-        public int TicketDetailId { get; set; }
-        public int Status { get; set; }
+        public int TicketId { get; set; }
+        public Nullable<int> TaskStatus { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public Nullable<int> Priority { get; set; }
@@ -25,6 +25,6 @@ namespace DataService.Models.Entities
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
-        public virtual TicketDetail TicketDetail { get; set; }
+        public virtual Ticket Ticket { get; set; }
     }
 }

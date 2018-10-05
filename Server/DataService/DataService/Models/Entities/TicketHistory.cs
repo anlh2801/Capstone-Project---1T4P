@@ -16,13 +16,13 @@ namespace DataService.Models.Entities
     {
         public int TicketHistoryId { get; set; }
         public int TicketId { get; set; }
-        public Nullable<int> PreItSupporterId { get; set; }
-        public Nullable<int> PreStatus { get; set; }
+        public Nullable<int> Pre_It_SupporterId { get; set; }
+        public Nullable<int> Pre_Status { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public Nullable<bool> IsDelete { get; set; }
-        public Nullable<System.DateTime> CreatedAt { get; set; }
-        public Nullable<System.DateTime> UpdatedAt { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
     
         public virtual ITSupporter ITSupporter { get; set; }
         public virtual Ticket Ticket { get; set; }

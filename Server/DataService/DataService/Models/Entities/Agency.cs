@@ -18,7 +18,7 @@ namespace DataService.Models.Entities
         public Agency()
         {
             this.Devices = new HashSet<Device>();
-            this.Tickets = new HashSet<Ticket>();
+            this.Problems = new HashSet<Problem>();
         }
     
         public int AgencyId { get; set; }
@@ -28,14 +28,14 @@ namespace DataService.Models.Entities
         public string Address { get; set; }
         public string Telephone { get; set; }
         public bool IsDelete { get; set; }
-        public Nullable<System.DateTime> CreateAt { get; set; }
-        public Nullable<System.DateTime> UpdateAt { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
     
         public virtual Account Account { get; set; }
         public virtual Company Company { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Device> Devices { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ticket> Tickets { get; set; }
+        public virtual ICollection<Problem> Problems { get; set; }
     }
 }

@@ -21,8 +21,8 @@ namespace DataService.ViewModels
     			public virtual Nullable<System.DateTime> StartDate { get; set; }
     			public virtual Nullable<System.DateTime> EndDate { get; set; }
     			public virtual Nullable<bool> IsDelete { get; set; }
-    			public virtual Nullable<System.DateTime> CreatedAt { get; set; }
-    			public virtual Nullable<System.DateTime> UpdatedAt { get; set; }
+    			public virtual Nullable<System.DateTime> CreateDate { get; set; }
+    			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	
     	public GuidelineViewModel() : base() { }
     	public GuidelineViewModel(DataService.Models.Entities.Guideline entity) : base(entity) { }

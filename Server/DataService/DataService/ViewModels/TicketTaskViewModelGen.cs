@@ -16,8 +16,8 @@ namespace DataService.ViewModels
     {
     	
     			public virtual int TicketTaskId { get; set; }
-    			public virtual int TicketDetailId { get; set; }
-    			public virtual int Status { get; set; }
+    			public virtual int TicketId { get; set; }
+    			public virtual Nullable<int> TaskStatus { get; set; }
     			public virtual Nullable<System.DateTime> StartDate { get; set; }
     			public virtual Nullable<System.DateTime> EndDate { get; set; }
     			public virtual Nullable<int> Priority { get; set; }

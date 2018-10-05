@@ -24,7 +24,7 @@ namespace DataService.Models.Entities
         public int AccountId { get; set; }
         public int RoleId { get; set; }
         public string Username { get; set; }
-        public string Passwrod { get; set; }
+        public string Password { get; set; }
         public bool IsDelete { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }

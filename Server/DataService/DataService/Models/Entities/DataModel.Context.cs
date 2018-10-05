@@ -34,12 +34,12 @@ namespace DataService.Models.Entities
         public virtual DbSet<DeviceType> DeviceTypes { get; set; }
         public virtual DbSet<Guideline> Guidelines { get; set; }
         public virtual DbSet<ITSupporter> ITSupporters { get; set; }
+        public virtual DbSet<Problem> Problems { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<ServiceItem> ServiceItems { get; set; }
         public virtual DbSet<ServiceITSupport> ServiceITSupports { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
-        public virtual DbSet<TicketDetail> TicketDetails { get; set; }
         public virtual DbSet<TicketHistory> TicketHistories { get; set; }
         public virtual DbSet<TicketTask> TicketTasks { get; set; }
     }

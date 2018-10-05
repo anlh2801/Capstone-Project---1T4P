@@ -16,12 +16,13 @@ namespace DataService.ViewModels
     {
     	
     			public virtual int TicketId { get; set; }
-    			public virtual int AgencyId { get; set; }
-    			public virtual int CurrentStatus { get; set; }
-    			public virtual string TicketName { get; set; }
-    			public virtual Nullable<System.DateTime> StartDate { get; set; }
-    			public virtual Nullable<System.DateTime> EndDate { get; set; }
-    			public virtual string Feedback { get; set; }
+    			public virtual int ServiceItemId { get; set; }
+    			public virtual int ProblemId { get; set; }
+    			public virtual int DeviceId { get; set; }
+    			public virtual string Desciption { get; set; }
+    			public virtual Nullable<int> Current_TicketStatus { get; set; }
+    			public virtual int CurrentITSupporter_Id { get; set; }
+    			public virtual Nullable<int> Rating { get; set; }
     			public virtual bool IsDelete { get; set; }
     			public virtual Nullable<System.DateTime> CreateDate { get; set; }
     			public virtual Nullable<System.DateTime> UpdateDate { get; set; }

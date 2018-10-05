@@ -10,24 +10,24 @@ using DataService.Domain;
 
 namespace CapstoneProject_ODTS.ControllersApi
 {
-    public class TicketController : ApiController
+    public class ProblemController : ApiController
     {
+        private ProblemDomain _problemDomain;
         private TicketDomain _ticketDomain;
-        private TicketDetailDomain _ticketDetailDomain;
         private TicketHistoryDomain _ticketHistoryDomain;
 
-        public TicketController()
+        public ProblemController()
         {
+            _problemDomain = new ProblemDomain();
             _ticketDomain = new TicketDomain();
-            _ticketDetailDomain = new TicketDetailDomain();
             _ticketHistoryDomain = new TicketHistoryDomain();
         }
 
         [HttpGet]
         [Route("ticket/all_ticket")]
-        public HttpResponseMessage GetAllCompany(TicketAPIViewModel agency_id)
+        public HttpResponseMessage GetAllCompany(ProblemAPIViewModel agency_id)
         {
-            var result = _ticketDomain.GetAllTicket();
+            var result = _problemDomain.GetAllProblem();
             if (result.Count() < 0)
             {
                 //return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
@@ -41,7 +41,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         [Route("ticket/all_ticket_with_status")]
         public HttpResponseMessage GetTicketWithStatus()
         {
-            var result = _ticketDomain.GetTicketWithStatus(3);
+            var result = _problemDomain.GetProblemWithStatus(3);
             if (result.Count() < 0)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi");
@@ -54,7 +54,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         [Route("ticket/all_ticket_with_status_agency")]
         public HttpResponseMessage GetAllTicketByAgencyIDAndStatus(Int32 agency_id, Int32 status)
         {
-            var result = _ticketDomain.GetAllTicketByAgencyIDAndStatus(agency_id, status);
+            var result = _problemDomain.GetAllProblemByAgencyIDAndStatus(agency_id, status);
             if (result.Count() < 0)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi");
@@ -93,7 +93,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         [Route("ticket/ticketDetail/rate_ITSupporter")]
         public HttpResponseMessage GetAllCompany(RatingAPIViewModel rate)
         {
-            var result = _ticketDetailDomain.CreateRatingForHero(rate);
+            var result = _ticketDomain.CreateRatingForHero(rate);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
@@ -102,17 +102,16 @@ namespace CapstoneProject_ODTS.ControllersApi
         [Route("ticket/feedback")]
         public HttpResponseMessage FeedbackTicket(FeedbackAPIViewModel feedback)
         {
-            var result = _ticketDomain.CreateFeedbackForTicket(feedback);
+            var result = _problemDomain.CreateFeedbackForProblem(feedback);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpPost]
         [Route("ticket/cancel_ticket")]
-        public HttpResponseMessage CancelTicket(TicketCancelAPIViewModel model)
-        {
-            _ticketDomain.CancelTicket(model);
-            var result = _ticketDomain.CancelTicket(model);
+        public HttpResponseMessage CancelTicket(ProblemCancelAPIViewModel model)
+        {            
+            var result = _problemDomain.CancelProblem(model);
             if (result == false)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");

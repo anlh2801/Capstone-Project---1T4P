@@ -17,13 +17,13 @@ namespace DataService.ViewModels
     	
     			public virtual int TicketHistoryId { get; set; }
     			public virtual int TicketId { get; set; }
-    			public virtual Nullable<int> PreItSupporterId { get; set; }
-    			public virtual Nullable<int> PreStatus { get; set; }
+    			public virtual Nullable<int> Pre_It_SupporterId { get; set; }
+    			public virtual Nullable<int> Pre_Status { get; set; }
     			public virtual Nullable<System.DateTime> StartDate { get; set; }
     			public virtual Nullable<System.DateTime> EndDate { get; set; }
     			public virtual Nullable<bool> IsDelete { get; set; }
-    			public virtual Nullable<System.DateTime> CreatedAt { get; set; }
-    			public virtual Nullable<System.DateTime> UpdatedAt { get; set; }
+    			public virtual Nullable<System.DateTime> CreateDate { get; set; }
+    			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	
     	public TicketHistoryViewModel() : base() { }
     	public TicketHistoryViewModel(DataService.Models.Entities.TicketHistory entity) : base(entity) { }

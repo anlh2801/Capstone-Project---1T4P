@@ -20,8 +20,8 @@ namespace DataService.ViewModels
     			public virtual Nullable<int> ServiceItemId { get; set; }
     			public virtual Nullable<int> MonthExperience { get; set; }
     			public virtual Nullable<bool> IsDelete { get; set; }
-    			public virtual Nullable<System.DateTime> CreatedAt { get; set; }
-    			public virtual Nullable<System.DateTime> UpdatedAt { get; set; }
+    			public virtual Nullable<System.DateTime> CreateDate { get; set; }
+    			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	
     	public SkillViewModel() : base() { }
     	public SkillViewModel(DataService.Models.Entities.Skill entity) : base(entity) { }

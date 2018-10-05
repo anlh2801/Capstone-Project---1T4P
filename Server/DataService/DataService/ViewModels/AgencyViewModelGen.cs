@@ -22,8 +22,8 @@ namespace DataService.ViewModels
     			public virtual string Address { get; set; }
     			public virtual string Telephone { get; set; }
     			public virtual bool IsDelete { get; set; }
-    			public virtual Nullable<System.DateTime> CreateAt { get; set; }
-    			public virtual Nullable<System.DateTime> UpdateAt { get; set; }
+    			public virtual Nullable<System.DateTime> CreateDate { get; set; }
+    			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	
     	public AgencyViewModel() : base() { }
     	public AgencyViewModel(DataService.Models.Entities.Agency entity) : base(entity) { }

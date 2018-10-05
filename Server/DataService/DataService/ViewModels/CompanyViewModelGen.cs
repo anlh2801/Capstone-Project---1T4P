@@ -19,8 +19,8 @@ namespace DataService.ViewModels
     			public virtual string CompanyName { get; set; }
     			public virtual string Description { get; set; }
     			public virtual bool IsDelete { get; set; }
-    			public virtual Nullable<System.DateTime> CreatedAt { get; set; }
-    			public virtual Nullable<System.DateTime> UpdateAt { get; set; }
+    			public virtual Nullable<System.DateTime> CreateDate { get; set; }
+    			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	
     	public CompanyViewModel() : base() { }
     	public CompanyViewModel(DataService.Models.Entities.Company entity) : base(entity) { }

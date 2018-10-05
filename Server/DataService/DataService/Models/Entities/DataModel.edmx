@@ -12,7 +12,7 @@
           <Property Name="AccountId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="Username" Type="nvarchar" MaxLength="50" />
-          <Property Name="Passwrod" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
@@ -28,8 +28,8 @@
           <Property Name="Address" Type="nvarchar" MaxLength="250" />
           <Property Name="Telephone" Type="nvarchar" MaxLength="50" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
-          <Property Name="CreateAt" Type="datetime" />
-          <Property Name="UpdateAt" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Company">
           <Key>
@@ -39,8 +39,8 @@
           <Property Name="CompanyName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
-          <Property Name="CreatedAt" Type="datetime" />
-          <Property Name="UpdateAt" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Contract">
           <Key>
@@ -52,8 +52,8 @@
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
-          <Property Name="CreatedAt" Type="datetime" />
-          <Property Name="UpdateAt" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="ContractServiceITSupport">
           <Key>
@@ -65,8 +65,8 @@
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
           <Property Name="IsDelete" Type="bit" />
-          <Property Name="CreatedAt" Type="datetime" />
-          <Property Name="UpdatedAt" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Device">
           <Key>
@@ -110,8 +110,8 @@
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="date" />
           <Property Name="IsDelete" Type="bit" />
-          <Property Name="CreatedAt" Type="datetime" />
-          <Property Name="UpdatedAt" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="ITSupporter">
           <Key>
@@ -124,10 +124,26 @@
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="Gender" Type="nvarchar" MaxLength="50" />
           <Property Name="Address" Type="nvarchar" MaxLength="50" />
-          <Property Name="IsDelete" Type="bit" />
-          <Property Name="CreatedAt" Type="datetime" />
-          <Property Name="UpdatedAt" Type="datetime" />
           <Property Name="RatingAVG" Type="float" />
+          <Property Name="IsBusy" Type="nchar" MaxLength="10" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Problem">
+          <Key>
+            <PropertyRef Name="ProblemId" />
+          </Key>
+          <Property Name="ProblemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AgencyId" Type="int" Nullable="false" />
+          <Property Name="ProblemStatus" Type="int" Nullable="false" />
+          <Property Name="ProblemtName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="Feedback" Type="nvarchar(max)" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -148,8 +164,8 @@
           <Property Name="IssueName" Type="nvarchar" MaxLength="50" />
           <Property Name="Price" Type="float" />
           <Property Name="IsDelete" Type="bit" />
-          <Property Name="CreatedAt" Type="datetime" />
-          <Property Name="UpdatedAt" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="ServiceITSupport">
           <Key>
@@ -159,8 +175,8 @@
           <Property Name="ServiceName" Type="nvarchar" MaxLength="50" />
           <Property Name="Description" Type="nchar" MaxLength="10" />
           <Property Name="IsDelete" Type="bit" />
-          <Property Name="CreatedAt" Type="datetime" />
-          <Property Name="UpdatedAt" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Skill">
           <Key>
@@ -171,36 +187,22 @@
           <Property Name="ServiceItemId" Type="int" />
           <Property Name="MonthExperience" Type="int" />
           <Property Name="IsDelete" Type="bit" />
-          <Property Name="CreatedAt" Type="datetime" />
-          <Property Name="UpdatedAt" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Ticket">
           <Key>
             <PropertyRef Name="TicketId" />
           </Key>
           <Property Name="TicketId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AgencyId" Type="int" Nullable="false" />
-          <Property Name="CurrentStatus" Type="int" Nullable="false" />
-          <Property Name="TicketName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="StartDate" Type="datetime" />
-          <Property Name="EndDate" Type="datetime" />
-          <Property Name="Feedback" Type="nvarchar(max)" />
-          <Property Name="IsDelete" Type="bit" Nullable="false" />
-          <Property Name="CreateDate" Type="datetime" />
-          <Property Name="UpdateDate" Type="datetime" />
-        </EntityType>
-        <EntityType Name="TicketDetail">
-          <Key>
-            <PropertyRef Name="TicketDetailId" />
-          </Key>
-          <Property Name="TicketDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ServiceItemId" Type="int" Nullable="false" />
-          <Property Name="TicketId" Type="int" Nullable="false" />
+          <Property Name="ProblemId" Type="int" Nullable="false" />
           <Property Name="DeviceId" Type="int" Nullable="false" />
           <Property Name="Desciption" Type="nvarchar(max)" />
-          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="Current_TicketStatus" Type="int" />
           <Property Name="CurrentITSupporter_Id" Type="int" Nullable="false" />
           <Property Name="Rating" Type="int" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
@@ -210,21 +212,21 @@
           </Key>
           <Property Name="TicketHistoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TicketId" Type="int" Nullable="false" />
-          <Property Name="PreItSupporterId" Type="int" />
-          <Property Name="PreStatus" Type="int" />
+          <Property Name="Pre_It_SupporterId" Type="int" />
+          <Property Name="Pre_Status" Type="int" />
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
           <Property Name="IsDelete" Type="bit" />
-          <Property Name="CreatedAt" Type="datetime" />
-          <Property Name="UpdatedAt" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="TicketTask">
           <Key>
             <PropertyRef Name="TicketTaskId" />
           </Key>
           <Property Name="TicketTaskId" Type="int" Nullable="false" />
-          <Property Name="TicketDetailId" Type="int" Nullable="false" />
-          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="TicketId" Type="int" Nullable="false" />
+          <Property Name="TaskStatus" Type="int" />
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
           <Property Name="Priority" Type="int" />
@@ -389,75 +391,63 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Task_TicketDetail">
-          <End Role="TicketDetail" Type="Self.TicketDetail" Multiplicity="1" />
-          <End Role="TicketTask" Type="Self.TicketTask" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TicketDetail">
-              <PropertyRef Name="TicketDetailId" />
-            </Principal>
-            <Dependent Role="TicketTask">
-              <PropertyRef Name="TicketDetailId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Ticket_Agency">
           <End Role="Agency" Type="Self.Agency" Multiplicity="1" />
-          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <End Role="Problem" Type="Self.Problem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Agency">
               <PropertyRef Name="AgencyId" />
             </Principal>
-            <Dependent Role="Ticket">
+            <Dependent Role="Problem">
               <PropertyRef Name="AgencyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Problem">
+          <End Role="Problem" Type="Self.Problem" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Problem">
+              <PropertyRef Name="ProblemId" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="ProblemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TicketDetail_Device">
           <End Role="Device" Type="Self.Device" Multiplicity="1" />
-          <End Role="TicketDetail" Type="Self.TicketDetail" Multiplicity="*" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Device">
               <PropertyRef Name="DeviceId" />
             </Principal>
-            <Dependent Role="TicketDetail">
+            <Dependent Role="Ticket">
               <PropertyRef Name="DeviceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TicketDetail_ITSupporter">
           <End Role="ITSupporter" Type="Self.ITSupporter" Multiplicity="1" />
-          <End Role="TicketDetail" Type="Self.TicketDetail" Multiplicity="*" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ITSupporter">
               <PropertyRef Name="ITSupporterId" />
             </Principal>
-            <Dependent Role="TicketDetail">
+            <Dependent Role="Ticket">
               <PropertyRef Name="CurrentITSupporter_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TicketDetail_ServiceItem">
           <End Role="ServiceItem" Type="Self.ServiceItem" Multiplicity="1" />
-          <End Role="TicketDetail" Type="Self.TicketDetail" Multiplicity="*" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ServiceItem">
               <PropertyRef Name="ServiceItemId" />
             </Principal>
-            <Dependent Role="TicketDetail">
+            <Dependent Role="Ticket">
               <PropertyRef Name="ServiceItemId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TicketDetail_Ticket">
-          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
-          <End Role="TicketDetail" Type="Self.TicketDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ticket">
-              <PropertyRef Name="TicketId" />
-            </Principal>
-            <Dependent Role="TicketDetail">
-              <PropertyRef Name="TicketId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -469,7 +459,7 @@
               <PropertyRef Name="ITSupporterId" />
             </Principal>
             <Dependent Role="TicketHistory">
-              <PropertyRef Name="PreItSupporterId" />
+              <PropertyRef Name="Pre_It_SupporterId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -485,6 +475,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TicketTask_Ticket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
+          <End Role="TicketTask" Type="Self.TicketTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="TicketId" />
+            </Principal>
+            <Dependent Role="TicketTask">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="DataModelStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Agency" EntityType="Self.Agency" Schema="dbo" store:Type="Tables" />
@@ -495,12 +497,12 @@
           <EntitySet Name="DeviceType" EntityType="Self.DeviceType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Guideline" EntityType="Self.Guideline" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ITSupporter" EntityType="Self.ITSupporter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Problem" EntityType="Self.Problem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceItem" EntityType="Self.ServiceItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceITSupport" EntityType="Self.ServiceITSupport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Skill" EntityType="Self.Skill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TicketDetail" EntityType="Self.TicketDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketHistory" EntityType="Self.TicketHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketTask" EntityType="Self.TicketTask" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Account_Role" Association="Self.FK_Account_Role">
@@ -555,29 +557,25 @@
             <End Role="ServiceItem" EntitySet="ServiceItem" />
             <End Role="Skill" EntitySet="Skill" />
           </AssociationSet>
-          <AssociationSet Name="FK_Task_TicketDetail" Association="Self.FK_Task_TicketDetail">
-            <End Role="TicketDetail" EntitySet="TicketDetail" />
-            <End Role="TicketTask" EntitySet="TicketTask" />
-          </AssociationSet>
           <AssociationSet Name="FK_Ticket_Agency" Association="Self.FK_Ticket_Agency">
             <End Role="Agency" EntitySet="Agency" />
+            <End Role="Problem" EntitySet="Problem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Problem" Association="Self.FK_Ticket_Problem">
+            <End Role="Problem" EntitySet="Problem" />
             <End Role="Ticket" EntitySet="Ticket" />
           </AssociationSet>
           <AssociationSet Name="FK_TicketDetail_Device" Association="Self.FK_TicketDetail_Device">
             <End Role="Device" EntitySet="Device" />
-            <End Role="TicketDetail" EntitySet="TicketDetail" />
+            <End Role="Ticket" EntitySet="Ticket" />
           </AssociationSet>
           <AssociationSet Name="FK_TicketDetail_ITSupporter" Association="Self.FK_TicketDetail_ITSupporter">
             <End Role="ITSupporter" EntitySet="ITSupporter" />
-            <End Role="TicketDetail" EntitySet="TicketDetail" />
+            <End Role="Ticket" EntitySet="Ticket" />
           </AssociationSet>
           <AssociationSet Name="FK_TicketDetail_ServiceItem" Association="Self.FK_TicketDetail_ServiceItem">
             <End Role="ServiceItem" EntitySet="ServiceItem" />
-            <End Role="TicketDetail" EntitySet="TicketDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TicketDetail_Ticket" Association="Self.FK_TicketDetail_Ticket">
             <End Role="Ticket" EntitySet="Ticket" />
-            <End Role="TicketDetail" EntitySet="TicketDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_TicketHistory_ITSupporter" Association="Self.FK_TicketHistory_ITSupporter">
             <End Role="ITSupporter" EntitySet="ITSupporter" />
@@ -586,6 +584,10 @@
           <AssociationSet Name="FK_TicketHistory_Ticket" Association="Self.FK_TicketHistory_Ticket">
             <End Role="Ticket" EntitySet="Ticket" />
             <End Role="TicketHistory" EntitySet="TicketHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketTask_Ticket" Association="Self.FK_TicketTask_Ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="TicketTask" EntitySet="TicketTask" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -602,12 +604,12 @@
           <EntitySet Name="DeviceTypes" EntityType="DataModel.DeviceType" />
           <EntitySet Name="Guidelines" EntityType="DataModel.Guideline" />
           <EntitySet Name="ITSupporters" EntityType="DataModel.ITSupporter" />
+          <EntitySet Name="Problems" EntityType="DataModel.Problem" />
           <EntitySet Name="Roles" EntityType="DataModel.Role" />
           <EntitySet Name="ServiceItems" EntityType="DataModel.ServiceItem" />
           <EntitySet Name="ServiceITSupports" EntityType="DataModel.ServiceITSupport" />
           <EntitySet Name="Skills" EntityType="DataModel.Skill" />
           <EntitySet Name="Tickets" EntityType="DataModel.Ticket" />
-          <EntitySet Name="TicketDetails" EntityType="DataModel.TicketDetail" />
           <EntitySet Name="TicketHistories" EntityType="DataModel.TicketHistory" />
           <EntitySet Name="TicketTasks" EntityType="DataModel.TicketTask" />
           <AssociationSet Name="FK_Account_Role" Association="DataModel.FK_Account_Role">
@@ -632,7 +634,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_Ticket_Agency" Association="DataModel.FK_Ticket_Agency">
             <End Role="Agency" EntitySet="Agencies" />
-            <End Role="Ticket" EntitySet="Tickets" />
+            <End Role="Problem" EntitySet="Problems" />
           </AssociationSet>
           <AssociationSet Name="FK_Contract_Company" Association="DataModel.FK_Contract_Company">
             <End Role="Company" EntitySet="Companies" />
@@ -652,7 +654,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_TicketDetail_Device" Association="DataModel.FK_TicketDetail_Device">
             <End Role="Device" EntitySet="Devices" />
-            <End Role="TicketDetail" EntitySet="TicketDetails" />
+            <End Role="Ticket" EntitySet="Tickets" />
           </AssociationSet>
           <AssociationSet Name="FK_Guideline_ServiceItem" Association="DataModel.FK_Guideline_ServiceItem">
             <End Role="ServiceItem" EntitySet="ServiceItems" />
@@ -664,11 +666,15 @@
           </AssociationSet>
           <AssociationSet Name="FK_TicketDetail_ITSupporter" Association="DataModel.FK_TicketDetail_ITSupporter">
             <End Role="ITSupporter" EntitySet="ITSupporters" />
-            <End Role="TicketDetail" EntitySet="TicketDetails" />
+            <End Role="Ticket" EntitySet="Tickets" />
           </AssociationSet>
           <AssociationSet Name="FK_TicketHistory_ITSupporter" Association="DataModel.FK_TicketHistory_ITSupporter">
             <End Role="ITSupporter" EntitySet="ITSupporters" />
             <End Role="TicketHistory" EntitySet="TicketHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Problem" Association="DataModel.FK_Ticket_Problem">
+            <End Role="Problem" EntitySet="Problems" />
+            <End Role="Ticket" EntitySet="Tickets" />
           </AssociationSet>
           <AssociationSet Name="FK_ServiceItem_Service" Association="DataModel.FK_ServiceItem_Service">
             <End Role="ServiceITSupport" EntitySet="ServiceITSupports" />
@@ -680,18 +686,14 @@
           </AssociationSet>
           <AssociationSet Name="FK_TicketDetail_ServiceItem" Association="DataModel.FK_TicketDetail_ServiceItem">
             <End Role="ServiceItem" EntitySet="ServiceItems" />
-            <End Role="TicketDetail" EntitySet="TicketDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TicketDetail_Ticket" Association="DataModel.FK_TicketDetail_Ticket">
             <End Role="Ticket" EntitySet="Tickets" />
-            <End Role="TicketDetail" EntitySet="TicketDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_TicketHistory_Ticket" Association="DataModel.FK_TicketHistory_Ticket">
             <End Role="Ticket" EntitySet="Tickets" />
             <End Role="TicketHistory" EntitySet="TicketHistories" />
           </AssociationSet>
-          <AssociationSet Name="FK_Task_TicketDetail" Association="DataModel.FK_Task_TicketDetail">
-            <End Role="TicketDetail" EntitySet="TicketDetails" />
+          <AssociationSet Name="FK_TicketTask_Ticket" Association="DataModel.FK_TicketTask_Ticket">
+            <End Role="Ticket" EntitySet="Tickets" />
             <End Role="TicketTask" EntitySet="TicketTasks" />
           </AssociationSet>
         </EntityContainer>
@@ -702,7 +704,7 @@
           <Property Name="AccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Passwrod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
@@ -721,12 +723,12 @@
           <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
-          <Property Name="CreateAt" Type="DateTime" Precision="3" />
-          <Property Name="UpdateAt" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="DataModel.FK_Agency_Account" FromRole="Agency" ToRole="Account" />
           <NavigationProperty Name="Company" Relationship="DataModel.FK_Agency_Company" FromRole="Agency" ToRole="Company" />
           <NavigationProperty Name="Devices" Relationship="DataModel.FK_Device_Agency" FromRole="Agency" ToRole="Device" />
-          <NavigationProperty Name="Tickets" Relationship="DataModel.FK_Ticket_Agency" FromRole="Agency" ToRole="Ticket" />
+          <NavigationProperty Name="Problems" Relationship="DataModel.FK_Ticket_Agency" FromRole="Agency" ToRole="Problem" />
         </EntityType>
         <EntityType Name="Company">
           <Key>
@@ -736,8 +738,8 @@
           <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="UpdateAt" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Agencies" Relationship="DataModel.FK_Agency_Company" FromRole="Company" ToRole="Agency" />
           <NavigationProperty Name="Contracts" Relationship="DataModel.FK_Contract_Company" FromRole="Company" ToRole="Contract" />
         </EntityType>
@@ -751,8 +753,8 @@
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="UpdateAt" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Company" Relationship="DataModel.FK_Contract_Company" FromRole="Contract" ToRole="Company" />
           <NavigationProperty Name="ContractServiceITSupports" Relationship="DataModel.FK_ContractService_Contract" FromRole="Contract" ToRole="ContractServiceITSupport" />
         </EntityType>
@@ -766,8 +768,8 @@
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
           <Property Name="IsDelete" Type="Boolean" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Contract" Relationship="DataModel.FK_ContractService_Contract" FromRole="ContractServiceITSupport" ToRole="Contract" />
           <NavigationProperty Name="ServiceITSupport" Relationship="DataModel.FK_ContractService_Service" FromRole="ContractServiceITSupport" ToRole="ServiceITSupport" />
         </EntityType>
@@ -793,7 +795,7 @@
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Agency" Relationship="DataModel.FK_Device_Agency" FromRole="Device" ToRole="Agency" />
           <NavigationProperty Name="DeviceType" Relationship="DataModel.FK_Device_DeviceType" FromRole="Device" ToRole="DeviceType" />
-          <NavigationProperty Name="TicketDetails" Relationship="DataModel.FK_TicketDetail_Device" FromRole="Device" ToRole="TicketDetail" />
+          <NavigationProperty Name="Tickets" Relationship="DataModel.FK_TicketDetail_Device" FromRole="Device" ToRole="Ticket" />
         </EntityType>
         <EntityType Name="DeviceType">
           <Key>
@@ -817,8 +819,8 @@
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="0" />
           <Property Name="IsDelete" Type="Boolean" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ServiceItem" Relationship="DataModel.FK_Guideline_ServiceItem" FromRole="Guideline" ToRole="ServiceItem" />
         </EntityType>
         <EntityType Name="ITSupporter">
@@ -832,14 +834,32 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsDelete" Type="Boolean" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
           <Property Name="RatingAVG" Type="Double" />
+          <Property Name="IsBusy" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="DataModel.FK_ITSupporter_Account" FromRole="ITSupporter" ToRole="Account" />
           <NavigationProperty Name="Skills" Relationship="DataModel.FK_Skill_ITSupporter" FromRole="ITSupporter" ToRole="Skill" />
-          <NavigationProperty Name="TicketDetails" Relationship="DataModel.FK_TicketDetail_ITSupporter" FromRole="ITSupporter" ToRole="TicketDetail" />
+          <NavigationProperty Name="Tickets" Relationship="DataModel.FK_TicketDetail_ITSupporter" FromRole="ITSupporter" ToRole="Ticket" />
           <NavigationProperty Name="TicketHistories" Relationship="DataModel.FK_TicketHistory_ITSupporter" FromRole="ITSupporter" ToRole="TicketHistory" />
+        </EntityType>
+        <EntityType Name="Problem">
+          <Key>
+            <PropertyRef Name="ProblemId" />
+          </Key>
+          <Property Name="ProblemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AgencyId" Type="Int32" Nullable="false" />
+          <Property Name="ProblemStatus" Type="Int32" Nullable="false" />
+          <Property Name="ProblemtName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="Feedback" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Agency" Relationship="DataModel.FK_Ticket_Agency" FromRole="Problem" ToRole="Agency" />
+          <NavigationProperty Name="Tickets" Relationship="DataModel.FK_Ticket_Problem" FromRole="Problem" ToRole="Ticket" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -861,12 +881,12 @@
           <Property Name="IssueName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Price" Type="Double" />
           <Property Name="IsDelete" Type="Boolean" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Guidelines" Relationship="DataModel.FK_Guideline_ServiceItem" FromRole="ServiceItem" ToRole="Guideline" />
           <NavigationProperty Name="ServiceITSupport" Relationship="DataModel.FK_ServiceItem_Service" FromRole="ServiceItem" ToRole="ServiceITSupport" />
           <NavigationProperty Name="Skills" Relationship="DataModel.FK_Skill_ServiceItem" FromRole="ServiceItem" ToRole="Skill" />
-          <NavigationProperty Name="TicketDetails" Relationship="DataModel.FK_TicketDetail_ServiceItem" FromRole="ServiceItem" ToRole="TicketDetail" />
+          <NavigationProperty Name="Tickets" Relationship="DataModel.FK_TicketDetail_ServiceItem" FromRole="ServiceItem" ToRole="Ticket" />
         </EntityType>
         <EntityType Name="ServiceITSupport">
           <Key>
@@ -876,8 +896,8 @@
           <Property Name="ServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="IsDelete" Type="Boolean" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ContractServiceITSupports" Relationship="DataModel.FK_ContractService_Service" FromRole="ServiceITSupport" ToRole="ContractServiceITSupport" />
           <NavigationProperty Name="ServiceItems" Relationship="DataModel.FK_ServiceItem_Service" FromRole="ServiceITSupport" ToRole="ServiceItem" />
         </EntityType>
@@ -890,8 +910,8 @@
           <Property Name="ServiceItemId" Type="Int32" />
           <Property Name="MonthExperience" Type="Int32" />
           <Property Name="IsDelete" Type="Boolean" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ITSupporter" Relationship="DataModel.FK_Skill_ITSupporter" FromRole="Skill" ToRole="ITSupporter" />
           <NavigationProperty Name="ServiceItem" Relationship="DataModel.FK_Skill_ServiceItem" FromRole="Skill" ToRole="ServiceItem" />
         </EntityType>
@@ -900,38 +920,22 @@
             <PropertyRef Name="TicketId" />
           </Key>
           <Property Name="TicketId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AgencyId" Type="Int32" Nullable="false" />
-          <Property Name="CurrentStatus" Type="Int32" Nullable="false" />
-          <Property Name="TicketName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Precision="3" />
-          <Property Name="Feedback" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Agency" Relationship="DataModel.FK_Ticket_Agency" FromRole="Ticket" ToRole="Agency" />
-          <NavigationProperty Name="TicketDetails" Relationship="DataModel.FK_TicketDetail_Ticket" FromRole="Ticket" ToRole="TicketDetail" />
-          <NavigationProperty Name="TicketHistories" Relationship="DataModel.FK_TicketHistory_Ticket" FromRole="Ticket" ToRole="TicketHistory" />
-        </EntityType>
-        <EntityType Name="TicketDetail">
-          <Key>
-            <PropertyRef Name="TicketDetailId" />
-          </Key>
-          <Property Name="TicketDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ServiceItemId" Type="Int32" Nullable="false" />
-          <Property Name="TicketId" Type="Int32" Nullable="false" />
+          <Property Name="ProblemId" Type="Int32" Nullable="false" />
           <Property Name="DeviceId" Type="Int32" Nullable="false" />
           <Property Name="Desciption" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="Current_TicketStatus" Type="Int32" />
           <Property Name="CurrentITSupporter_Id" Type="Int32" Nullable="false" />
           <Property Name="Rating" Type="Int32" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Device" Relationship="DataModel.FK_TicketDetail_Device" FromRole="TicketDetail" ToRole="Device" />
-          <NavigationProperty Name="ITSupporter" Relationship="DataModel.FK_TicketDetail_ITSupporter" FromRole="TicketDetail" ToRole="ITSupporter" />
-          <NavigationProperty Name="ServiceItem" Relationship="DataModel.FK_TicketDetail_ServiceItem" FromRole="TicketDetail" ToRole="ServiceItem" />
-          <NavigationProperty Name="Ticket" Relationship="DataModel.FK_TicketDetail_Ticket" FromRole="TicketDetail" ToRole="Ticket" />
-          <NavigationProperty Name="TicketTasks" Relationship="DataModel.FK_Task_TicketDetail" FromRole="TicketDetail" ToRole="TicketTask" />
+          <NavigationProperty Name="Device" Relationship="DataModel.FK_TicketDetail_Device" FromRole="Ticket" ToRole="Device" />
+          <NavigationProperty Name="ITSupporter" Relationship="DataModel.FK_TicketDetail_ITSupporter" FromRole="Ticket" ToRole="ITSupporter" />
+          <NavigationProperty Name="Problem" Relationship="DataModel.FK_Ticket_Problem" FromRole="Ticket" ToRole="Problem" />
+          <NavigationProperty Name="ServiceItem" Relationship="DataModel.FK_TicketDetail_ServiceItem" FromRole="Ticket" ToRole="ServiceItem" />
+          <NavigationProperty Name="TicketHistories" Relationship="DataModel.FK_TicketHistory_Ticket" FromRole="Ticket" ToRole="TicketHistory" />
+          <NavigationProperty Name="TicketTasks" Relationship="DataModel.FK_TicketTask_Ticket" FromRole="Ticket" ToRole="TicketTask" />
         </EntityType>
         <EntityType Name="TicketHistory">
           <Key>
@@ -939,13 +943,13 @@
           </Key>
           <Property Name="TicketHistoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TicketId" Type="Int32" Nullable="false" />
-          <Property Name="PreItSupporterId" Type="Int32" />
-          <Property Name="PreStatus" Type="Int32" />
+          <Property Name="Pre_It_SupporterId" Type="Int32" />
+          <Property Name="Pre_Status" Type="Int32" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
           <Property Name="IsDelete" Type="Boolean" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ITSupporter" Relationship="DataModel.FK_TicketHistory_ITSupporter" FromRole="TicketHistory" ToRole="ITSupporter" />
           <NavigationProperty Name="Ticket" Relationship="DataModel.FK_TicketHistory_Ticket" FromRole="TicketHistory" ToRole="Ticket" />
         </EntityType>
@@ -954,8 +958,8 @@
             <PropertyRef Name="TicketTaskId" />
           </Key>
           <Property Name="TicketTaskId" Type="Int32" Nullable="false" />
-          <Property Name="TicketDetailId" Type="Int32" Nullable="false" />
-          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="TicketId" Type="Int32" Nullable="false" />
+          <Property Name="TaskStatus" Type="Int32" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
           <Property Name="Priority" Type="Int32" />
@@ -963,7 +967,7 @@
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="TicketDetail" Relationship="DataModel.FK_Task_TicketDetail" FromRole="TicketTask" ToRole="TicketDetail" />
+          <NavigationProperty Name="Ticket" Relationship="DataModel.FK_TicketTask_Ticket" FromRole="TicketTask" ToRole="Ticket" />
         </EntityType>
         <Association Name="FK_Account_Role">
           <End Type="DataModel.Role" Role="Role" Multiplicity="1" />
@@ -1027,12 +1031,12 @@
         </Association>
         <Association Name="FK_Ticket_Agency">
           <End Type="DataModel.Agency" Role="Agency" Multiplicity="1" />
-          <End Type="DataModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <End Type="DataModel.Problem" Role="Problem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Agency">
               <PropertyRef Name="AgencyId" />
             </Principal>
-            <Dependent Role="Ticket">
+            <Dependent Role="Problem">
               <PropertyRef Name="AgencyId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1087,12 +1091,12 @@
         </Association>
         <Association Name="FK_TicketDetail_Device">
           <End Type="DataModel.Device" Role="Device" Multiplicity="1" />
-          <End Type="DataModel.TicketDetail" Role="TicketDetail" Multiplicity="*" />
+          <End Type="DataModel.Ticket" Role="Ticket" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Device">
               <PropertyRef Name="DeviceId" />
             </Principal>
-            <Dependent Role="TicketDetail">
+            <Dependent Role="Ticket">
               <PropertyRef Name="DeviceId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1123,12 +1127,12 @@
         </Association>
         <Association Name="FK_TicketDetail_ITSupporter">
           <End Type="DataModel.ITSupporter" Role="ITSupporter" Multiplicity="1" />
-          <End Type="DataModel.TicketDetail" Role="TicketDetail" Multiplicity="*" />
+          <End Type="DataModel.Ticket" Role="Ticket" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ITSupporter">
               <PropertyRef Name="ITSupporterId" />
             </Principal>
-            <Dependent Role="TicketDetail">
+            <Dependent Role="Ticket">
               <PropertyRef Name="CurrentITSupporter_Id" />
             </Dependent>
           </ReferentialConstraint>
@@ -1141,7 +1145,19 @@
               <PropertyRef Name="ITSupporterId" />
             </Principal>
             <Dependent Role="TicketHistory">
-              <PropertyRef Name="PreItSupporterId" />
+              <PropertyRef Name="Pre_It_SupporterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Problem">
+          <End Type="DataModel.Problem" Role="Problem" Multiplicity="1" />
+          <End Type="DataModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Problem">
+              <PropertyRef Name="ProblemId" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="ProblemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1171,25 +1187,13 @@
         </Association>
         <Association Name="FK_TicketDetail_ServiceItem">
           <End Type="DataModel.ServiceItem" Role="ServiceItem" Multiplicity="1" />
-          <End Type="DataModel.TicketDetail" Role="TicketDetail" Multiplicity="*" />
+          <End Type="DataModel.Ticket" Role="Ticket" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ServiceItem">
               <PropertyRef Name="ServiceItemId" />
             </Principal>
-            <Dependent Role="TicketDetail">
+            <Dependent Role="Ticket">
               <PropertyRef Name="ServiceItemId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TicketDetail_Ticket">
-          <End Type="DataModel.Ticket" Role="Ticket" Multiplicity="1" />
-          <End Type="DataModel.TicketDetail" Role="TicketDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ticket">
-              <PropertyRef Name="TicketId" />
-            </Principal>
-            <Dependent Role="TicketDetail">
-              <PropertyRef Name="TicketId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1205,15 +1209,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Task_TicketDetail">
-          <End Type="DataModel.TicketDetail" Role="TicketDetail" Multiplicity="1" />
+        <Association Name="FK_TicketTask_Ticket">
+          <End Type="DataModel.Ticket" Role="Ticket" Multiplicity="1" />
           <End Type="DataModel.TicketTask" Role="TicketTask" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TicketDetail">
-              <PropertyRef Name="TicketDetailId" />
+            <Principal Role="Ticket">
+              <PropertyRef Name="TicketId" />
             </Principal>
             <Dependent Role="TicketTask">
-              <PropertyRef Name="TicketDetailId" />
+              <PropertyRef Name="TicketId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1229,7 +1233,7 @@
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="Passwrod" ColumnName="Passwrod" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="AccountId" ColumnName="AccountId" />
@@ -1239,8 +1243,8 @@
           <EntitySetMapping Name="Agencies">
             <EntityTypeMapping TypeName="DataModel.Agency">
               <MappingFragment StoreEntitySet="Agency">
-                <ScalarProperty Name="UpdateAt" ColumnName="UpdateAt" />
-                <ScalarProperty Name="CreateAt" ColumnName="CreateAt" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="Telephone" ColumnName="Telephone" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -1254,8 +1258,8 @@
           <EntitySetMapping Name="Companies">
             <EntityTypeMapping TypeName="DataModel.Company">
               <MappingFragment StoreEntitySet="Company">
-                <ScalarProperty Name="UpdateAt" ColumnName="UpdateAt" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
@@ -1266,8 +1270,8 @@
           <EntitySetMapping Name="Contracts">
             <EntityTypeMapping TypeName="DataModel.Contract">
               <MappingFragment StoreEntitySet="Contract">
-                <ScalarProperty Name="UpdateAt" ColumnName="UpdateAt" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
@@ -1280,8 +1284,8 @@
           <EntitySetMapping Name="ContractServiceITSupports">
             <EntityTypeMapping TypeName="DataModel.ContractServiceITSupport">
               <MappingFragment StoreEntitySet="ContractServiceITSupport">
-                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
@@ -1328,8 +1332,8 @@
           <EntitySetMapping Name="Guidelines">
             <EntityTypeMapping TypeName="DataModel.Guideline">
               <MappingFragment StoreEntitySet="Guideline">
-                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
@@ -1342,10 +1346,11 @@
           <EntitySetMapping Name="ITSupporters">
             <EntityTypeMapping TypeName="DataModel.ITSupporter">
               <MappingFragment StoreEntitySet="ITSupporter">
-                <ScalarProperty Name="RatingAVG" ColumnName="RatingAVG" />
-                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsBusy" ColumnName="IsBusy" />
+                <ScalarProperty Name="RatingAVG" ColumnName="RatingAVG" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -1353,6 +1358,22 @@
                 <ScalarProperty Name="AccountId" ColumnName="AccountId" />
                 <ScalarProperty Name="ITSupporterName" ColumnName="ITSupporterName" />
                 <ScalarProperty Name="ITSupporterId" ColumnName="ITSupporterId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Problems">
+            <EntityTypeMapping TypeName="DataModel.Problem">
+              <MappingFragment StoreEntitySet="Problem">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Feedback" ColumnName="Feedback" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="ProblemtName" ColumnName="ProblemtName" />
+                <ScalarProperty Name="ProblemStatus" ColumnName="ProblemStatus" />
+                <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
+                <ScalarProperty Name="ProblemId" ColumnName="ProblemId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1370,8 +1391,8 @@
           <EntitySetMapping Name="ServiceItems">
             <EntityTypeMapping TypeName="DataModel.ServiceItem">
               <MappingFragment StoreEntitySet="ServiceItem">
-                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="IssueName" ColumnName="IssueName" />
@@ -1383,8 +1404,8 @@
           <EntitySetMapping Name="ServiceITSupports">
             <EntityTypeMapping TypeName="DataModel.ServiceITSupport">
               <MappingFragment StoreEntitySet="ServiceITSupport">
-                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
@@ -1395,8 +1416,8 @@
           <EntitySetMapping Name="Skills">
             <EntityTypeMapping TypeName="DataModel.Skill">
               <MappingFragment StoreEntitySet="Skill">
-                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="MonthExperience" ColumnName="MonthExperience" />
                 <ScalarProperty Name="ServiceItemId" ColumnName="ServiceItemId" />
@@ -1411,42 +1432,27 @@
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="Feedback" ColumnName="Feedback" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="TicketName" ColumnName="TicketName" />
-                <ScalarProperty Name="CurrentStatus" ColumnName="CurrentStatus" />
-                <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
-                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TicketDetails">
-            <EntityTypeMapping TypeName="DataModel.TicketDetail">
-              <MappingFragment StoreEntitySet="TicketDetail">
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="CurrentITSupporter_Id" ColumnName="CurrentITSupporter_Id" />
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Current_TicketStatus" ColumnName="Current_TicketStatus" />
                 <ScalarProperty Name="Desciption" ColumnName="Desciption" />
                 <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
-                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="ProblemId" ColumnName="ProblemId" />
                 <ScalarProperty Name="ServiceItemId" ColumnName="ServiceItemId" />
-                <ScalarProperty Name="TicketDetailId" ColumnName="TicketDetailId" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TicketHistories">
             <EntityTypeMapping TypeName="DataModel.TicketHistory">
               <MappingFragment StoreEntitySet="TicketHistory">
-                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="PreStatus" ColumnName="PreStatus" />
-                <ScalarProperty Name="PreItSupporterId" ColumnName="PreItSupporterId" />
+                <ScalarProperty Name="Pre_Status" ColumnName="Pre_Status" />
+                <ScalarProperty Name="Pre_It_SupporterId" ColumnName="Pre_It_SupporterId" />
                 <ScalarProperty Name="TicketId" ColumnName="TicketId" />
                 <ScalarProperty Name="TicketHistoryId" ColumnName="TicketHistoryId" />
               </MappingFragment>
@@ -1462,8 +1468,8 @@
                 <ScalarProperty Name="Priority" ColumnName="Priority" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="TicketDetailId" ColumnName="TicketDetailId" />
+                <ScalarProperty Name="TaskStatus" ColumnName="TaskStatus" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
                 <ScalarProperty Name="TicketTaskId" ColumnName="TicketTaskId" />
               </MappingFragment>
             </EntityTypeMapping>

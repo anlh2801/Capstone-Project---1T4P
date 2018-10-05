@@ -7,13 +7,13 @@ using DataService.ViewModels;
 
 namespace DataService.APIViewModels
 {
-    public class TicketAPIViewModel: DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.Ticket>
+    public class ProblemAPIViewModel: DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.Ticket>
     {
-        public TicketAPIViewModel() : base() { }
-        public TicketAPIViewModel(DataService.Models.Entities.Ticket entity) : base(entity) { }
+        public ProblemAPIViewModel() : base() { }
+        public ProblemAPIViewModel(DataService.Models.Entities.Ticket entity) : base(entity) { }
 
-        public int TicketId { get; set; }
-        public string TicketName { get; set; }
+        public int ProblemId { get; set; }
+        public string ProblemName { get; set; }
         public string CreateDate { get; set; }
         public string AgencyName { get; set; }
         public string ITSupporterName { get; set; }

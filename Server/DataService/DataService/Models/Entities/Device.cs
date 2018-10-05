@@ -17,7 +17,7 @@ namespace DataService.Models.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Device()
         {
-            this.TicketDetails = new HashSet<TicketDetail>();
+            this.Tickets = new HashSet<Ticket>();
         }
     
         public int DeviceId { get; set; }
@@ -40,6 +40,6 @@ namespace DataService.Models.Entities
         public virtual Agency Agency { get; set; }
         public virtual DeviceType DeviceType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TicketDetail> TicketDetails { get; set; }
+        public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }

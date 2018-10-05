@@ -17,25 +17,29 @@ namespace DataService.Models.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Ticket()
         {
-            this.TicketDetails = new HashSet<TicketDetail>();
             this.TicketHistories = new HashSet<TicketHistory>();
+            this.TicketTasks = new HashSet<TicketTask>();
         }
     
         public int TicketId { get; set; }
-        public int AgencyId { get; set; }
-        public int CurrentStatus { get; set; }
-        public string TicketName { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
-        public string Feedback { get; set; }
+        public int ServiceItemId { get; set; }
+        public int ProblemId { get; set; }
+        public int DeviceId { get; set; }
+        public string Desciption { get; set; }
+        public Nullable<int> Current_TicketStatus { get; set; }
+        public int CurrentITSupporter_Id { get; set; }
+        public Nullable<int> Rating { get; set; }
         public bool IsDelete { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
-        public virtual Agency Agency { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TicketDetail> TicketDetails { get; set; }
+        public virtual Device Device { get; set; }
+        public virtual ITSupporter ITSupporter { get; set; }
+        public virtual Problem Problem { get; set; }
+        public virtual ServiceItem ServiceItem { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TicketHistory> TicketHistories { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TicketTask> TicketTasks { get; set; }
     }
 }

@@ -109,9 +109,9 @@
     <Compile Include="APIViewModels\AgencyDeviceAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyUpdateAPIViewModel.cs" />
     <Compile Include="APIViewModels\FeedbackAPIViewModel.cs" />
-    <Compile Include="APIViewModels\TicketCancelAPIViewModel.cs" />
+    <Compile Include="APIViewModels\ProblemCancelAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketHistoryAPIViewModel.cs" />
-    <Compile Include="APIViewModels\TicketAPIViewModel.cs" />
+    <Compile Include="APIViewModels\ProblemAPIViewModel.cs" />
     <Compile Include="APIViewModels\AccountAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyAPIViewModel.cs" />
     <Compile Include="APIViewModels\CompanyAPIViewModel.cs" />
@@ -170,6 +170,9 @@
     <Compile Include="DataAPIGen\ITSupporterApiGen.cs">
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataAPIGen\ProblemApiGen.cs">
+      <DependentUpon>DataAPI.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataAPIGen\RoleApiGen.cs">
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
@@ -185,9 +188,6 @@
     <Compile Include="DataAPIGen\TicketApiGen.cs">
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataAPIGen\TicketDetailApiGen.cs">
-      <DependentUpon>DataAPI.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataAPIGen\TicketHistoryApiGen.cs">
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
@@ -195,11 +195,11 @@
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\TicketHistoryDomain.cs" />
-    <Compile Include="Domain\TicketDetailDomain.cs" />
+    <Compile Include="Domain\TicketDomain.cs" />
     <Compile Include="Domain\AccountDomain.cs" />
     <Compile Include="Domain\AgencyDomain.cs" />
     <Compile Include="Domain\BaseDomain.cs" />
-    <Compile Include="Domain\TicketDomain.cs" />
+    <Compile Include="Domain\ProblemDomain.cs" />
     <Compile Include="Domain\CompanyDomain.cs" />
     <Compile Include="Domain\ContractDomain.cs" />
     <Compile Include="Domain\DeviceTypeDomain.cs" />
@@ -282,6 +282,12 @@
     <Compile Include="Models\Entities\ITSupporterRefined.cs">
       <DependentUpon>EntityRefinery.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Problem.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\ProblemRefined.cs">
+      <DependentUpon>EntityRefinery.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\Repositories\AccountRepositoryGen.cs">
       <DependentUpon>Repositories.tt</DependentUpon>
     </Compile>
@@ -309,6 +315,9 @@
     <Compile Include="Models\Entities\Repositories\ITSupporterRepositoryGen.cs">
       <DependentUpon>Repositories.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Repositories\ProblemRepositoryGen.cs">
+      <DependentUpon>Repositories.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\Repositories\Repositories.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -324,9 +333,6 @@
       <DependentUpon>Repositories.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Repositories\SkillRepositoryGen.cs">
-      <DependentUpon>Repositories.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\Repositories\TicketDetailRepositoryGen.cs">
       <DependentUpon>Repositories.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Repositories\TicketHistoryRepositoryGen.cs">
@@ -356,33 +362,25 @@
     <Compile Include="Models\Entities\ServiceITSupportRefined.cs">
       <DependentUpon>EntityRefinery.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Services\DeviceService.cs" />
-    <Compile Include="Models\Entities\Services\TicketDetailService.cs" />
-    <Compile Include="Models\Entities\Services\AccountService.cs" />
     <Compile Include="Models\Entities\Services\AccountServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Services\AgencyService.cs" />
     <Compile Include="Models\Entities\Services\AgencyServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Services\TicketHistoryService.cs" />
-    <Compile Include="Models\Entities\Services\TicketService.cs" />
-    <Compile Include="Models\Entities\Services\CompanyService.cs" />
     <Compile Include="Models\Entities\Services\CompanyServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Services\ContractService.cs" />
     <Compile Include="Models\Entities\Services\ContractServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Services\ContractServiceITSupportServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Services\DeviceService.cs" />
     <Compile Include="Models\Entities\Services\DeviceServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Services\DeviceTypeService.cs" />
     <Compile Include="Models\Entities\Services\DeviceTypeServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
@@ -390,6 +388,9 @@
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Services\ITSupporterServiceGen.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Services\ProblemServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Services\RoleServiceGen.cs">
@@ -401,18 +402,23 @@
     <Compile Include="Models\Entities\Services\ServiceITSupportServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Services\Services.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Services.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Entities\Services\SkillServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Services\TicketDetailServiceGen.cs">
+    <Compile Include="Models\Entities\Services\TicketService.cs" />
+    <Compile Include="Models\Entities\Services\AccountService.cs" />
+    <Compile Include="Models\Entities\Services\AgencyService.cs" />
+    <Compile Include="Models\Entities\Services\TicketHistoryService.cs" />
+    <Compile Include="Models\Entities\Services\TicketHistoryServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Services\TicketHistoryServiceGen.cs">
+    <Compile Include="Models\Entities\Services\ProblemService.cs" />
+    <Compile Include="Models\Entities\Services\CompanyService.cs" />
+    <Compile Include="Models\Entities\Services\ContractService.cs" />
+    <Compile Include="Models\Entities\Services\DeviceTypeService.cs" />
+    <Compile Include="Models\Entities\Services\Services.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Services\TicketServiceGen.cs">
@@ -429,12 +435,6 @@
     </Compile>
     <Compile Include="Models\Entities\Ticket.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\TicketDetail.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\TicketDetailRefined.cs">
-      <DependentUpon>EntityRefinery.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\TicketHistory.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
@@ -494,6 +494,9 @@
     <Compile Include="ViewModels\ITSupporterViewModelGen.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ProblemViewModelGen.cs">
+      <DependentUpon>ViewModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\RoleViewModelGen.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
@@ -504,9 +507,6 @@
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\SkillViewModelGen.cs">
-      <DependentUpon>ViewModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModels\TicketDetailViewModelGen.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\TicketHistoryViewModelGen.cs">

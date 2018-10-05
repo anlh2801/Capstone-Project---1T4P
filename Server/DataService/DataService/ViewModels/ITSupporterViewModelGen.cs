@@ -22,10 +22,11 @@ namespace DataService.ViewModels
     			public virtual string Email { get; set; }
     			public virtual string Gender { get; set; }
     			public virtual string Address { get; set; }
-    			public virtual Nullable<bool> IsDelete { get; set; }
-    			public virtual Nullable<System.DateTime> CreatedAt { get; set; }
-    			public virtual Nullable<System.DateTime> UpdatedAt { get; set; }
     			public virtual Nullable<double> RatingAVG { get; set; }
+    			public virtual string IsBusy { get; set; }
+    			public virtual Nullable<bool> IsDelete { get; set; }
+    			public virtual Nullable<System.DateTime> CreateDate { get; set; }
+    			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	
     	public ITSupporterViewModel() : base() { }
     	public ITSupporterViewModel(DataService.Models.Entities.ITSupporter entity) : base(entity) { }
