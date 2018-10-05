@@ -17,6 +17,8 @@ namespace DataService.Domain
         List<AgencyDeviceAPIViewModel> ViewAllDevice(int agency_id);
 
         bool UpdateProfile(AgencyUpdateAPIViewModel model);
+
+        List<AgencyAPIViewModel> GetAllAgency();
     }
 
     public class AgencyDomain : BaseDomain, IAgencyDomain
@@ -46,6 +48,18 @@ namespace DataService.Domain
             var agency = agencyDeviceService.ViewAllDevice(agency_id);
 
             return agency;
+        }
+
+        public List<AgencyAPIViewModel> GetAllAgency()
+        {
+            var TicketList = new List<AgencyAPIViewModel>();
+
+            var TicketService = this.Service<IAgencyService>();
+
+
+            var companies = TicketService.GetAllAgency();
+
+            return companies;
         }
     }
 }

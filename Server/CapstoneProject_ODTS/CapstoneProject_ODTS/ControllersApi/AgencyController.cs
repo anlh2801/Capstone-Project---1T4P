@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace CapstoneProject_ODTS.Controllers
+namespace CapstoneProject_ODTS.ControllersApi
 {
     public class AgencyController : ApiController
     {

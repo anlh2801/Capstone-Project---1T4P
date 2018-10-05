@@ -52,9 +52,9 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         [HttpGet]
         [Route("ticket/all_ticket_with_status_agency")]
-        public HttpResponseMessage GetAllTicketByAgencyIDAndStatus()
+        public HttpResponseMessage GetAllTicketByAgencyIDAndStatus(Int32 agency_id, Int32 status)
         {
-            var result = _ticketDomain.GetAllTicketByAgencyIDAndStatus(3, 3);
+            var result = _ticketDomain.GetAllTicketByAgencyIDAndStatus(agency_id, status);
             if (result.Count() < 0)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi");

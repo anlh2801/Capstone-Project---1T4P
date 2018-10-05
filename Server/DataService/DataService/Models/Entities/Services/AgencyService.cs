@@ -14,6 +14,7 @@ namespace DataService.Models.Entities.Services
     {
         List<AgencyAPIViewModel> ViewProfile(int agency_id);
         bool UpdateProfile(AgencyUpdateAPIViewModel model);
+        List<AgencyAPIViewModel> GetAllAgency();
     }
 
     public partial class AgencyService
@@ -62,6 +63,30 @@ namespace DataService.Models.Entities.Services
             }
 
             return false;
+        }
+
+        public List<AgencyAPIViewModel> GetAllAgency()
+        {
+            List<AgencyAPIViewModel> rsList = new List<AgencyAPIViewModel>();
+            var companyRepo = DependencyUtils.Resolve<IAgencyRepository>();
+            var companies = companyRepo.GetActive().ToList();
+
+            foreach (var item in companies)
+            {
+                rsList.Add(new AgencyAPIViewModel
+                {
+                    AgencyId = item.AgencyId,
+                    CompanyName = item.Company.CompanyName,
+                    UserName = item.Account.Username,
+                    AgencyName = item.AgencyName,
+                    Address =  item.Address,
+                    Telephone = item.Telephone,
+                    CreateAt = item.CreateAt != null ? item.CreateAt.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    UpdateAt = item.UpdateAt != null ? item.UpdateAt.Value.ToString("MM/dd/yyyy") : string.Empty
+                });
+            }
+
+            return rsList;
         }
 
     }
