@@ -7,11 +7,11 @@ using System.Web.Mvc;
 
 namespace CapstoneProject_ODTS.Controllers
 {
-    public class AccountController : Controller
+    public class LoginController : Controller
     {
         private AccountDomain _accountDomain;
 
-        public AccountController()
+        public LoginController()
         {
             _accountDomain = new AccountDomain();
         }
@@ -21,15 +21,12 @@ namespace CapstoneProject_ODTS.Controllers
 
             return View();
         }
-        public ActionResult GetAllAccount()
+        public ActionResult CheckLogin(string username,string password,int roleId)
         {
-            var accounts = _accountDomain.GetAllAccount();
-            if (accounts.Count() < 0)
-            {
-                return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new { result = accounts }, JsonRequestBehavior.AllowGet);
+            var isSucess = _accountDomain.CheckLogin(username, password, roleId);
+            
+            return Json(new { isSucess = isSucess, urlReturn = "/Home/Index" }, JsonRequestBehavior.AllowGet);
+            
         }
     }
 }

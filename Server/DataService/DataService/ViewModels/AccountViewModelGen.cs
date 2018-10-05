@@ -18,7 +18,7 @@ namespace DataService.ViewModels
     			public virtual int AccountId { get; set; }
     			public virtual int RoleId { get; set; }
     			public virtual string Username { get; set; }
-    			public virtual string Passwrod { get; set; }
+    			public virtual string Password { get; set; }
     			public virtual bool IsDelete { get; set; }
     			public virtual Nullable<System.DateTime> CreateDate { get; set; }
     			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
