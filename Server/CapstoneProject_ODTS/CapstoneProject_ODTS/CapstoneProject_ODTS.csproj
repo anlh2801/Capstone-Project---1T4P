@@ -207,10 +207,11 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="ControllersApi\AgencyController.cs" />
     <Compile Include="ControllersApi\CompanyController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AgencyController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="ControllersApi\TicketDetailController.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ContractController.cs" />
     <Compile Include="Controllers\DeviceTypeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -7680,8 +7681,9 @@
     <Content Include="Views\Home\ViewPage1.cshtml" />
     <Content Include="Views\Ticket\TicketDetail.cshtml" />
     <Content Include="Views\DeviceType\Index.cshtml" />
-    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Contract\Index.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

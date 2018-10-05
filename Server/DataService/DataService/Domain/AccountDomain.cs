@@ -1,4 +1,5 @@
-﻿using DataService.Models.Entities.Services;
+﻿using DataService.APIViewModels;
+using DataService.Models.Entities.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace DataService.Domain
     {
 
         bool CheckLogin(string username, string password, int roleid);
+        List<AccountAPIViewModel> GetAllAccount();
     };
 
     public class AccountDomain : BaseDomain, IAccountDomain
@@ -24,6 +26,15 @@ namespace DataService.Domain
             var isLoginSucess = accountService.CheckLogin(username,password,roleid);
             
             return isLoginSucess;
+        }
+
+        public List<AccountAPIViewModel> GetAllAccount()
+        {
+            var accountService = this.Service<IAccountService>();
+
+            var accounts = accountService.GetAllAccount();
+
+            return accounts;
         }
     }
 }
