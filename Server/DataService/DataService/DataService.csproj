@@ -107,6 +107,7 @@
   <ItemGroup>
     <Compile Include="ApiEndpoint.cs" />
     <Compile Include="APIViewModels\AgencyDeviceAPIViewModel.cs" />
+    <Compile Include="APIViewModels\AgencyUpdateAPIViewModel.cs" />
     <Compile Include="APIViewModels\FeedbackAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketCancelAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketHistoryAPIViewModel.cs" />
@@ -115,7 +116,6 @@
     <Compile Include="APIViewModels\AgencyAPIViewModel.cs" />
     <Compile Include="APIViewModels\CompanyAPIViewModel.cs" />
     <Compile Include="APIViewModels\ContractAPIViewModel.cs" />
-    <Compile Include="APIViewModels\UpdateAgencyAPIViewModel.cs" />
     <Compile Include="APIViewModels\RatingAPIViewModel.cs" />
     <Compile Include="APIViewModels\DeviceTypeAPIViewModel.cs" />
     <Compile Include="AutofacModule\AutoMapperModule.cs" />
