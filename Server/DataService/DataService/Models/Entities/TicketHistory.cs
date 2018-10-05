@@ -15,7 +15,7 @@ namespace DataService.Models.Entities
     public partial class TicketHistory
     {
         public int TicketHistoryId { get; set; }
-        public Nullable<int> TicketId { get; set; }
+        public int TicketId { get; set; }
         public Nullable<int> PreItSupporterId { get; set; }
         public Nullable<int> PreStatus { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }

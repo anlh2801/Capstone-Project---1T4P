@@ -106,12 +106,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiEndpoint.cs" />
+    <Compile Include="APIViewModels\AgencyDeviceAPIViewModel.cs" />
+    <Compile Include="APIViewModels\AgencyUpdateAPIViewModel.cs" />
+    <Compile Include="APIViewModels\FeedbackAPIViewModel.cs" />
+    <Compile Include="APIViewModels\TicketCancelAPIViewModel.cs" />
+    <Compile Include="APIViewModels\TicketHistoryAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketAPIViewModel.cs" />
     <Compile Include="APIViewModels\AccountAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyAPIViewModel.cs" />
     <Compile Include="APIViewModels\CompanyAPIViewModel.cs" />
     <Compile Include="APIViewModels\ContractAPIViewModel.cs" />
-    <Compile Include="APIViewModels\UpdateAgencyAPIViewModel.cs" />
     <Compile Include="APIViewModels\RatingAPIViewModel.cs" />
     <Compile Include="APIViewModels\DeviceTypeAPIViewModel.cs" />
     <Compile Include="AutofacModule\AutoMapperModule.cs" />
@@ -190,6 +194,7 @@
     <Compile Include="DataAPIGen\TicketTaskApiGen.cs">
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
+    <Compile Include="Domain\TicketHistoryDomain.cs" />
     <Compile Include="Domain\TicketDetailDomain.cs" />
     <Compile Include="Domain\AccountDomain.cs" />
     <Compile Include="Domain\AgencyDomain.cs" />
@@ -351,6 +356,7 @@
     <Compile Include="Models\Entities\ServiceITSupportRefined.cs">
       <DependentUpon>EntityRefinery.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Services\DeviceService.cs" />
     <Compile Include="Models\Entities\Services\TicketDetailService.cs" />
     <Compile Include="Models\Entities\Services\AccountService.cs" />
     <Compile Include="Models\Entities\Services\AccountServiceGen.cs">
@@ -360,6 +366,7 @@
     <Compile Include="Models\Entities\Services\AgencyServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Services\TicketHistoryService.cs" />
     <Compile Include="Models\Entities\Services\TicketService.cs" />
     <Compile Include="Models\Entities\Services\CompanyService.cs" />
     <Compile Include="Models\Entities\Services\CompanyServiceGen.cs">

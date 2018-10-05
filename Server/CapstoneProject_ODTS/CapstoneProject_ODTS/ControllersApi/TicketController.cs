@@ -13,10 +13,14 @@ namespace CapstoneProject_ODTS.ControllersApi
     public class TicketController : ApiController
     {
         private TicketDomain _ticketDomain;
+        private TicketDetailDomain _ticketDetailDomain;
+        private TicketHistoryDomain _ticketHistoryDomain;
 
         public TicketController()
         {
             _ticketDomain = new TicketDomain();
+            _ticketDetailDomain = new TicketDetailDomain();
+            _ticketHistoryDomain = new TicketHistoryDomain();
         }
 
         [HttpGet]
@@ -57,6 +61,64 @@ namespace CapstoneProject_ODTS.ControllersApi
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        [Route("ticket/ticket_history_in_ticket")]
+        public HttpResponseMessage GetTicketHistoryByTicketId(int ticketid)
+        {
+            var result = _ticketHistoryDomain.GetTicketHistoryByTicketId(ticketid);
+            if (result.Count() < 0)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        [Route("ticket/all_ticket_history")]
+        public HttpResponseMessage GetAllTicketHistory()
+        {
+            var result = _ticketHistoryDomain.GetAllTicketHistory();
+            if (result.Count() < 0)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPost]
+        [Route("ticket/ticketDetail/rate_ITSupporter")]
+        public HttpResponseMessage GetAllCompany(RatingAPIViewModel rate)
+        {
+            var result = _ticketDetailDomain.CreateRatingForHero(rate);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPost]
+        [Route("ticket/feedback")]
+        public HttpResponseMessage FeedbackTicket(FeedbackAPIViewModel feedback)
+        {
+            var result = _ticketDomain.CreateFeedbackForTicket(feedback);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPost]
+        [Route("ticket/cancel_ticket")]
+        public HttpResponseMessage CancelTicket(TicketCancelAPIViewModel model)
+        {
+            _ticketDomain.CancelTicket(model);
+            var result = _ticketDomain.CancelTicket(model);
+            if (result == false)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, "Cancel Thành Công!");
         }
     }
 }

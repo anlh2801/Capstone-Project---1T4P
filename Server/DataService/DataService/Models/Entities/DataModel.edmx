@@ -209,7 +209,7 @@
             <PropertyRef Name="TicketHistoryId" />
           </Key>
           <Property Name="TicketHistoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TicketId" Type="int" />
+          <Property Name="TicketId" Type="int" Nullable="false" />
           <Property Name="PreItSupporterId" Type="int" />
           <Property Name="PreStatus" Type="int" />
           <Property Name="StartDate" Type="datetime" />
@@ -474,7 +474,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TicketHistory_Ticket">
-          <End Role="Ticket" Type="Self.Ticket" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
           <End Role="TicketHistory" Type="Self.TicketHistory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ticket">
@@ -938,7 +938,7 @@
             <PropertyRef Name="TicketHistoryId" />
           </Key>
           <Property Name="TicketHistoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TicketId" Type="Int32" />
+          <Property Name="TicketId" Type="Int32" Nullable="false" />
           <Property Name="PreItSupporterId" Type="Int32" />
           <Property Name="PreStatus" Type="Int32" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />
@@ -1194,7 +1194,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TicketHistory_Ticket">
-          <End Type="DataModel.Ticket" Role="Ticket" Multiplicity="0..1" />
+          <End Type="DataModel.Ticket" Role="Ticket" Multiplicity="1" />
           <End Type="DataModel.TicketHistory" Role="TicketHistory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ticket">

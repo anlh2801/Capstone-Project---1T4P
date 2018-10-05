@@ -30,8 +30,8 @@ namespace DataService.Models.Entities.Services
                     CompanyId = item.CompanyId,
                     CompanyName = item.CompanyName,
                     Description = item.Description,
-                    CreateDate = item.CreatedAt.Value.ToString("MM/dd/yyyy"),
-                    UpdateDate = item.UpdateAt.Value.ToString("MM/dd/yyyy")
+                    CreateDate = item.CreatedAt != null ? item.CreatedAt.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    UpdateDate = item.UpdateAt != null ? item.UpdateAt.Value.ToString("MM/dd/yyyy") : string.Empty
                 });
             }
 

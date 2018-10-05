@@ -29,10 +29,12 @@ namespace DataService.Models.Entities.Services
             {
                 ticketDetails.Rating = rate.Rating;
                 ticketDetails.Desciption = rate.Description;
+                ticketDetails.UpdateDate = DateTime.Now;
                 ticketDetailRepo.Edit(ticketDetails);
                 ticketDetailRepo.Save();
 
                 itupporter.RatingAVG = itupporter.RatingAVG != null ? (itupporter.RatingAVG + rate.Rating) / 2 : rate.Rating;
+                itupporter.UpdatedAt = DateTime.Now;
                 itSupporterlRepo.Edit(itupporter);
                 itSupporterlRepo.Save();
 
