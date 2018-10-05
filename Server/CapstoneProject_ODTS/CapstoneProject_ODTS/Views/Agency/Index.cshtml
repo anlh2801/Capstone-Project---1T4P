@@ -1,16 +1,17 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<!-- Datatable -->
+﻿<!-- Datatable -->
 <div class="row col-md-12">
 
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
             <tr>
-                <th><label>Id</label></th>
-                <th><label>RoleID</label></th>
-                <th><label>Tên đăng nhập</label></th>
-                <th><label>Mật khẩu</label></th>
+                <th><label>STT</label></th>
+                <th><label>Tên</label></th>
+                <th><label>Mô tả</label></th>
+                <th><label>Tạo ngày</label></th>
+                <th><label>Cập nhật ngày</label></th>
+                <th><label>Cập nhật ngày</label></th>
+                <th><label>Cập nhật ngày</label></th>
+                <th><label>Cập nhật ngày</label></th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -23,13 +24,13 @@
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function() {
-            loadDeviceType();
+            loadCompany();
         });
 
-        function loadDeviceType() {
+        function loadCompany() {
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("GetAllAccount", "Account")',
+                url: '@Url.Action("GetAllAgency", "Agency")',
                 data: {
 
                 },
@@ -66,26 +67,30 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1,2,3],
+                        "aTargets": [0, 1, 2, 3, 4, 5, 6, 7],
                         "bSortable": false,
                         "sClass": "text-center"
                     },
 
                     //{
-                    //    "atargets": [7],
-                    //    "mrender": function (data, type, row) {
-                    //        var edit = "<a title='chỉnh sửa' class='btn btn-sm btn-primary' onclick='callshoweditmodal(" + data + ")'><i class='glyphicon glyphicon-pencil'></i></a>";
-                    //        var del = "<a title='xóa' class='btn btn-sm btn-danger' onclick='deleteelementchil(" + data + ")'><i class='glyphicon glyphicon-trash'></i></a>";
+                    //    "aTargets": [7],
+                    //    "mRender": function (data, type, row) {
+                    //        var edit = "<a title='Chỉnh sửa' class='btn btn-sm btn-primary' onclick='callShowEditModal(" + data + ")'><i class='glyphicon glyphicon-pencil'></i></a>";
+                    //        var del = "<a title='Xóa' class='btn btn-sm btn-danger' onclick='deleteElementChil(" + data + ")'><i class='glyphicon glyphicon-trash'></i></a>";
                     //        return edit + " " + del;
                     //    },
                     //}
 
                 ],
                 "columns": [
-                    { "data": "AccountId" },
-                    { "data": "RoleId" },
-                    { "data": "Username" },
-                    { "data": "Passwrod" },
+                    { "data": "AgencyId" },
+                    { "data": "CompanyName" },
+                    { "data": "UserName" },
+                    { "data": "AgencyName" },
+                    { "data": "Address" },
+                    { "data": "Telephone" },
+                    { "data": "CreateAt" },
+                    { "data": "UpdateAt" },
                 ],
                 "bAutoWidth": false,
             });
@@ -94,4 +99,3 @@
     </script>
 
 }
-

@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace CapstoneProject_ODTS.Controllers
+namespace CapstoneProject_ODTS.ControllersApi
 {
     public class AgencyController : ApiController
     {
@@ -33,7 +33,7 @@ namespace CapstoneProject_ODTS.Controllers
 
         [HttpPost]
         [Route("agency/update_profile_agency")]
-        public HttpResponseMessage UpdateProfile(UpdateAgencyAPIViewModel model)
+        public HttpResponseMessage UpdateProfile(AgencyUpdateAPIViewModel model)
         {
             _agencyDomain.UpdateProfile(model);
             var result = _agencyDomain.UpdateProfile(model);
@@ -45,6 +45,18 @@ namespace CapstoneProject_ODTS.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, "Update Thành Công!");
         }
 
+        [HttpGet]
+        [Route("agency/view_all_device")]
+        public HttpResponseMessage ViewAllDevice(int agency_id)
+        {
+            var result = _agencyDomain.ViewAllDevice(agency_id);
+            if (result.Count() < 0)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
     }
 }
 

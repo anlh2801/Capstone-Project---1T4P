@@ -21,6 +21,8 @@ namespace DataService.Domain
         List<TicketAPIViewModel> GetAllTicketByAgencyIDAndStatus(Int32 acency_id, Int32 status);
 
         bool CreateFeedbackForTicket(FeedbackAPIViewModel feedback);
+
+        bool CancelTicket(TicketCancelAPIViewModel model);
     }
 
     public  class TicketDomain : BaseDomain, ITicketDomain
@@ -81,6 +83,14 @@ namespace DataService.Domain
 
         }
 
+        public bool CancelTicket(TicketCancelAPIViewModel model)
+        {
+            var ticketService = this.Service<ITicketService>();
+
+            var result = ticketService.CancelTicket(model);
+
+            return result;
+        }
 
     }
 }

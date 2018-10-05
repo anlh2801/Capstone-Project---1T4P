@@ -8,14 +8,33 @@ using System.Threading.Tasks;
 
 namespace DataService.Models
 {    
-    public enum NotificationsTypeEnum
+    //For agency view
+    public enum TicketStatusEnum
     {
-        [Display(Name ="Thông báo")]
-        Notify = 1,
-        [Display(Name = "Tin tức")]
-        News = 2,
-        [Display(Name = "Khuyến mãi")]
-        Promotion = 3,
+        [Display(Name ="Chờ Xử lý")]
+        Pending = 1,
+        [Display(Name = "Đang xử lý")]
+        Processing = 2,
+        [Display(Name = "Hoàn thành")]
+        Done = 3,
+        [Display(Name = "Hủy bỏ")]
+        Cancel = 4
     }
+
+    //For ITSupporter View
+    public enum SubTicketStatusEnum
+    {
+        [Display(Name = "Mới")]
+        New = 1,
+        [Display(Name = "Xác nhận")]
+        Approve = 2,
+        [Display(Name = "Đang xử lý")]
+        In_Process = 3,
+        [Display(Name = "Hoàn thành")]
+        Done = 4,
+        [Display(Name = "Hủy bỏ")]
+        Cancel = 5
+    }
+
 }
 

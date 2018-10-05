@@ -19,5 +19,7 @@ namespace DataService.APIViewModels
         public string Telephone { get; set; }
         public string CreateAt { get; set; }
         public string UpdateAt { get; set; }
+        public string CompanyName { get; set; }
+        public string UserName {get; set; }
     }
 }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DataService.APIViewModels
 {
-    public class UpdateAgencyAPIViewModel : DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.Agency>
+    public class AgencyUpdateAPIViewModel : DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.Agency>
     {
-        public UpdateAgencyAPIViewModel() : base() { }
-        public UpdateAgencyAPIViewModel(DataService.Models.Entities.Agency entity) : base(entity) { }
+        public AgencyUpdateAPIViewModel() : base() { }
+        public AgencyUpdateAPIViewModel(DataService.Models.Entities.Agency entity) : base(entity) { }
 
         public int AgencyId { get; set; }
         public string AgencyName { get; set; }

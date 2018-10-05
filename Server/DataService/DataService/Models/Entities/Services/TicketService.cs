@@ -21,6 +21,9 @@ namespace DataService.Models.Entities.Services
         List<TicketAPIViewModel> GetAllTicketByAgencyIDAndStatus(Int32 acency_id, Int32 status);
 
         bool CreateFeedbackForTicket(int ticketId, string feedbackContent);
+
+        bool CancelTicket(TicketCancelAPIViewModel model);
+
     }
 
     public partial class TicketService
@@ -198,6 +201,24 @@ namespace DataService.Models.Entities.Services
 
                 return true;
             }
+            return false;
+        }
+
+        public bool CancelTicket(TicketCancelAPIViewModel model)
+        {
+            var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+            var cancelTicket = ticketRepo.GetActive().SingleOrDefault(a => a.TicketId == model.TicketId);
+            if (cancelTicket.TicketId == model.TicketId)
+            {
+
+                cancelTicket.TicketId = model.TicketId;
+                cancelTicket.CurrentStatus = model.CurrentStatus;
+
+                ticketRepo.Edit(cancelTicket);
+                ticketRepo.Save();
+                return true;
+            }
+
             return false;
         }
     }
