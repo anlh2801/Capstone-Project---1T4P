@@ -45,6 +45,18 @@ namespace CapstoneProject_ODTS.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, "Update Thành Công!");
         }
 
+        [HttpGet]
+        [Route("agency/view_all_device")]
+        public HttpResponseMessage ViewAllDevice(int agency_id)
+        {
+            var result = _agencyDomain.ViewAllDevice(agency_id);
+            if (result.Count() < 0)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
     }
 }
 
