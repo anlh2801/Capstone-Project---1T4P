@@ -33,7 +33,7 @@ namespace CapstoneProject_ODTS.Controllers
 
         [HttpPost]
         [Route("agency/update_profile_agency")]
-        public HttpResponseMessage UpdateProfile(UpdateAgencyAPIViewModel model)
+        public HttpResponseMessage UpdateProfile(AgencyUpdateAPIViewModel model)
         {
             _agencyDomain.UpdateProfile(model);
             var result = _agencyDomain.UpdateProfile(model);

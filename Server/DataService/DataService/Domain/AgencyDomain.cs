@@ -16,7 +16,7 @@ namespace DataService.Domain
 
         List<AgencyDeviceAPIViewModel> ViewAllDevice(int agency_id);
 
-        bool UpdateProfile(UpdateAgencyAPIViewModel model);
+        bool UpdateProfile(AgencyUpdateAPIViewModel model);
     }
 
     public class AgencyDomain : BaseDomain, IAgencyDomain
@@ -30,7 +30,7 @@ namespace DataService.Domain
             return agency;
         }
 
-        public bool UpdateProfile(UpdateAgencyAPIViewModel model)
+        public bool UpdateProfile(AgencyUpdateAPIViewModel model)
         {
             var agencyService = this.Service<IAgencyService>();
 
