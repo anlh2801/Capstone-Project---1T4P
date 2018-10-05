@@ -7684,6 +7684,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Contract\Index.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Agency\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
