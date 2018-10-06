@@ -29,6 +29,9 @@ namespace DataService.Models.Entities
         public Nullable<int> Current_TicketStatus { get; set; }
         public int CurrentITSupporter_Id { get; set; }
         public Nullable<int> Rating { get; set; }
+        public Nullable<double> Estimation { get; set; }
+        public Nullable<System.DateTime> StartTime { get; set; }
+        public Nullable<System.DateTime> Endtime { get; set; }
         public bool IsDelete { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }

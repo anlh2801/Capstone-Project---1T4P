@@ -202,6 +202,9 @@
           <Property Name="Current_TicketStatus" Type="int" />
           <Property Name="CurrentITSupporter_Id" Type="int" Nullable="false" />
           <Property Name="Rating" Type="int" />
+          <Property Name="Estimation" Type="float" />
+          <Property Name="StartTime" Type="datetime" />
+          <Property Name="Endtime" Type="datetime" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
@@ -227,6 +230,7 @@
           <Property Name="TicketTaskId" Type="int" Nullable="false" />
           <Property Name="TicketId" Type="int" Nullable="false" />
           <Property Name="TaskStatus" Type="int" />
+          <Property Name="CreateByITSupporter" Type="int" />
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
           <Property Name="Priority" Type="int" />
@@ -927,6 +931,9 @@
           <Property Name="Current_TicketStatus" Type="Int32" />
           <Property Name="CurrentITSupporter_Id" Type="Int32" Nullable="false" />
           <Property Name="Rating" Type="Int32" />
+          <Property Name="Estimation" Type="Double" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="Endtime" Type="DateTime" Precision="3" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
@@ -960,6 +967,7 @@
           <Property Name="TicketTaskId" Type="Int32" Nullable="false" />
           <Property Name="TicketId" Type="Int32" Nullable="false" />
           <Property Name="TaskStatus" Type="Int32" />
+          <Property Name="CreateByITSupporter" Type="Int32" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
           <Property Name="Priority" Type="Int32" />
@@ -1432,6 +1440,9 @@
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Endtime" ColumnName="Endtime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Estimation" ColumnName="Estimation" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="CurrentITSupporter_Id" ColumnName="CurrentITSupporter_Id" />
                 <ScalarProperty Name="Current_TicketStatus" ColumnName="Current_TicketStatus" />
@@ -1468,6 +1479,7 @@
                 <ScalarProperty Name="Priority" ColumnName="Priority" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="CreateByITSupporter" ColumnName="CreateByITSupporter" />
                 <ScalarProperty Name="TaskStatus" ColumnName="TaskStatus" />
                 <ScalarProperty Name="TicketId" ColumnName="TicketId" />
                 <ScalarProperty Name="TicketTaskId" ColumnName="TicketTaskId" />
