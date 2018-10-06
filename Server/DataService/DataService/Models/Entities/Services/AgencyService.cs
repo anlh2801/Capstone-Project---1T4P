@@ -36,8 +36,8 @@ namespace DataService.Models.Entities.Services
                         AgencyName = item.AgencyName,
                         Address = item.Address,
                         Telephone = item.Telephone,
-                        CreateAt = item.CreateDate.Value.ToString("MM/dd/yyyy"),
-                        UpdateAt = item.UpdateDate.Value.ToString("MM/dd/yyyy")
+                        CreateAt = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        UpdateAt = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                     });
                 }
                 
