@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace DataService.Models
 {    
     //For agency view
-    public enum ProblemStatusEnum
+    public enum RequestStatusEnum
     {
         [Display(Name ="Chờ Xử lý")]
         Pending = 1,

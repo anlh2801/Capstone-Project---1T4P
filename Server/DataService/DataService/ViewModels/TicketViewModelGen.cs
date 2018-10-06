@@ -17,7 +17,7 @@ namespace DataService.ViewModels
     	
     			public virtual int TicketId { get; set; }
     			public virtual int ServiceItemId { get; set; }
-    			public virtual int ProblemId { get; set; }
+    			public virtual int RequestId { get; set; }
     			public virtual int DeviceId { get; set; }
     			public virtual string Desciption { get; set; }
     			public virtual Nullable<int> Current_TicketStatus { get; set; }

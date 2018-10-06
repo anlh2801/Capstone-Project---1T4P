@@ -13,16 +13,16 @@ namespace DataService.Models.Entities.Services
     using System.Collections.Generic;
     using DataService.ViewModels;
     
-    public partial interface IProblemService : DataService.BaseConnect.IBaseService<Problem, ProblemViewModel>
+    public partial interface IRequestCategoryService : DataService.BaseConnect.IBaseService<RequestCategory, RequestCategoryViewModel>
     {
     }
     
-    public partial class ProblemService : DataService.BaseConnect.BaseService<Problem, ProblemViewModel>, IProblemService
+    public partial class RequestCategoryService : DataService.BaseConnect.BaseService<RequestCategory, RequestCategoryViewModel>, IRequestCategoryService
     {
-         public ProblemService()
+         public RequestCategoryService()
          {
          }
-        public ProblemService(DataService.BaseConnect.IUnitOfWork unitOfWork, Repositories.IProblemRepository repository) : base(unitOfWork, repository)
+        public RequestCategoryService(DataService.BaseConnect.IUnitOfWork unitOfWork, Repositories.IRequestCategoryRepository repository) : base(unitOfWork, repository)
         {
         }
     }

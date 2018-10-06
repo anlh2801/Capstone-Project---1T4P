@@ -7,12 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataService.Models.Entities
+namespace DataService.DataAPIGen
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Problem : DataService.BaseConnect.IEntity
+    public partial class RequestApi : DataService.DataAPIGen.BaseApi<DataService.Models.Entities.Request, DataService.ViewModels.RequestViewModel, DataService.Models.Entities.Services.IRequestService>
     {
+    	
     }
 }

@@ -7,20 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataService.Models.Entities.Repositories
+namespace DataService.Models.Entities
 {
     using System;
     using System.Collections.Generic;
     
-    
-    public partial interface IProblemRepository : DataService.BaseConnect.IBaseRepository<Problem>
+    public partial class Request : DataService.BaseConnect.IEntity
     {
-    }
-    
-    public partial class ProblemRepository : DataService.BaseConnect.BaseRepository<Problem>, IProblemRepository
-    {
-    	public ProblemRepository(System.Data.Entity.DbContext dbContext) : base(dbContext)
-    	{
-    	}
     }
 }

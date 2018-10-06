@@ -109,9 +109,9 @@
     <Compile Include="APIViewModels\AgencyDeviceAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyUpdateAPIViewModel.cs" />
     <Compile Include="APIViewModels\FeedbackAPIViewModel.cs" />
-    <Compile Include="APIViewModels\ProblemCancelAPIViewModel.cs" />
+    <Compile Include="APIViewModels\RequestCancelAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketHistoryAPIViewModel.cs" />
-    <Compile Include="APIViewModels\ProblemAPIViewModel.cs" />
+    <Compile Include="APIViewModels\RequestAPIViewModel.cs" />
     <Compile Include="APIViewModels\AccountAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyAPIViewModel.cs" />
     <Compile Include="APIViewModels\CompanyAPIViewModel.cs" />
@@ -170,7 +170,10 @@
     <Compile Include="DataAPIGen\ITSupporterApiGen.cs">
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataAPIGen\ProblemApiGen.cs">
+    <Compile Include="DataAPIGen\RequestApiGen.cs">
+      <DependentUpon>DataAPI.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAPIGen\RequestCategoryApiGen.cs">
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAPIGen\RoleApiGen.cs">
@@ -199,7 +202,7 @@
     <Compile Include="Domain\AccountDomain.cs" />
     <Compile Include="Domain\AgencyDomain.cs" />
     <Compile Include="Domain\BaseDomain.cs" />
-    <Compile Include="Domain\ProblemDomain.cs" />
+    <Compile Include="Domain\RequestDomain.cs" />
     <Compile Include="Domain\CompanyDomain.cs" />
     <Compile Include="Domain\ContractDomain.cs" />
     <Compile Include="Domain\DeviceTypeDomain.cs" />
@@ -282,12 +285,6 @@
     <Compile Include="Models\Entities\ITSupporterRefined.cs">
       <DependentUpon>EntityRefinery.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Problem.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\ProblemRefined.cs">
-      <DependentUpon>EntityRefinery.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Entities\Repositories\AccountRepositoryGen.cs">
       <DependentUpon>Repositories.tt</DependentUpon>
     </Compile>
@@ -315,12 +312,15 @@
     <Compile Include="Models\Entities\Repositories\ITSupporterRepositoryGen.cs">
       <DependentUpon>Repositories.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Repositories\ProblemRepositoryGen.cs">
-      <DependentUpon>Repositories.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Entities\Repositories\Repositories.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Repositories.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Repositories\RequestCategoryRepositoryGen.cs">
+      <DependentUpon>Repositories.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Repositories\RequestRepositoryGen.cs">
       <DependentUpon>Repositories.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Repositories\RoleRepositoryGen.cs">
@@ -343,6 +343,18 @@
     </Compile>
     <Compile Include="Models\Entities\Repositories\TicketTaskRepositoryGen.cs">
       <DependentUpon>Repositories.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Request.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\RequestCategory.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\RequestCategoryRefined.cs">
+      <DependentUpon>EntityRefinery.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\RequestRefined.cs">
+      <DependentUpon>EntityRefinery.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Role.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
@@ -390,7 +402,10 @@
     <Compile Include="Models\Entities\Services\ITSupporterServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Services\ProblemServiceGen.cs">
+    <Compile Include="Models\Entities\Services\RequestCategoryServiceGen.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Services\RequestServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Services\RoleServiceGen.cs">
@@ -412,7 +427,7 @@
     <Compile Include="Models\Entities\Services\TicketHistoryServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Services\ProblemService.cs" />
+    <Compile Include="Models\Entities\Services\RequestService.cs" />
     <Compile Include="Models\Entities\Services\CompanyService.cs" />
     <Compile Include="Models\Entities\Services\ContractService.cs" />
     <Compile Include="Models\Entities\Services\DeviceTypeService.cs" />
@@ -494,7 +509,10 @@
     <Compile Include="ViewModels\ITSupporterViewModelGen.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\ProblemViewModelGen.cs">
+    <Compile Include="ViewModels\RequestCategoryViewModelGen.cs">
+      <DependentUpon>ViewModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\RequestViewModelGen.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\RoleViewModelGen.cs">

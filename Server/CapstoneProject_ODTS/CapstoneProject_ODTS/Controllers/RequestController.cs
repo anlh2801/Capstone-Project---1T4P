@@ -7,13 +7,13 @@ using System.Web.Mvc;
 
 namespace CapstoneProject_ODTS.Controllers
 {
-    public class ProblemController : Controller
+    public class RequestController : Controller
     {
-        private ProblemDomain _problemDomain;
+        private RequestDomain _requestDomain;
 
-        public ProblemController()
+        public RequestController()
         {
-            _problemDomain = new ProblemDomain();
+            _requestDomain = new RequestDomain();
         }
         public ActionResult Index()
         {
@@ -23,7 +23,7 @@ namespace CapstoneProject_ODTS.Controllers
         }
         public ActionResult GetAllTicket()
         {
-            var result = _problemDomain.GetAllProblem();
+            var result = _requestDomain.GetAllRequest();
             if (result.Count() < 0)
             {
                 //không co record
@@ -38,9 +38,9 @@ namespace CapstoneProject_ODTS.Controllers
             return View();
         }
 
-        public ActionResult GetTicketDetail(int problemId)
+        public ActionResult GetTicketDetail(int requestId)
         {
-            var result = _problemDomain.GetTicketByProblemId(problemId);
+            var result = _requestDomain.GetTicketByRequestId(requestId);
             if (result.Count() < 0)
             {
                 //không co record
@@ -58,7 +58,7 @@ namespace CapstoneProject_ODTS.Controllers
 
         public ActionResult GetTicketWithStatus(int status)
         {
-            var result = _problemDomain.GetProblemWithStatus(status);
+            var result = _requestDomain.GetRequestWithStatus(status);
             if (result.Count() < 0)
             {
                 //không co record

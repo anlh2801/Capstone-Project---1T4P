@@ -12,29 +12,21 @@ namespace DataService.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Agency
+    public partial class RequestCategory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Agency()
+        public RequestCategory()
         {
-            this.Devices = new HashSet<Device>();
             this.Requests = new HashSet<Request>();
         }
     
-        public int AgencyId { get; set; }
-        public Nullable<int> CompanyId { get; set; }
-        public int AccountId { get; set; }
-        public string AgencyName { get; set; }
-        public string Address { get; set; }
-        public string Telephone { get; set; }
+        public int RequestCategoryId { get; set; }
+        public string RequestCategoryName { get; set; }
+        public string Description { get; set; }
         public bool IsDelete { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
-        public virtual Account Account { get; set; }
-        public virtual Company Company { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Device> Devices { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Request> Requests { get; set; }
     }

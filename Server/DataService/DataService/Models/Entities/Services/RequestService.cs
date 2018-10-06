@@ -10,36 +10,36 @@ using System.Threading.Tasks;
 
 namespace DataService.Models.Entities.Services
 {
-    public partial interface IProblemService
+    public partial interface IRequestService
     {
-        List<ProblemAPIViewModel> GetAllProblem();
+        List<RequestAPIViewModel> GetAllRequest();
 
-        List<ProblemAPIViewModel> GetTicketByProblemId(int problemId);
+        List<RequestAPIViewModel> GetTicketByRequestId(int requestId);
 
-        List<ProblemAPIViewModel> GetProblemWithStatus(int status);
+        List<RequestAPIViewModel> GetRequestWithStatus(int status);
 
-        List<ProblemAPIViewModel> GetAllProblemByAgencyIDAndStatus(int acency_id, int status);
+        List<RequestAPIViewModel> GetAllRequestByAgencyIDAndStatus(int acency_id, int status);
 
-        bool CreateFeedbackForProblem(int problemId, string feedbackContent);
+        bool CreateFeedbackForRequest(int RequestId, string feedbackContent);
 
-        bool CancelProblem(ProblemCancelAPIViewModel model);
+        bool CancelRequest(RequestCancelAPIViewModel model);
 
     }
 
-    public partial class ProblemService
+    public partial class RequestService
     {
-        public List<ProblemAPIViewModel> GetAllProblem()
+        public List<RequestAPIViewModel> GetAllRequest()
         {
-            List<ProblemAPIViewModel> rsList = new List<ProblemAPIViewModel>();
-            var ProblemRepo = DependencyUtils.Resolve<IProblemRepository>();
-            var problems = ProblemRepo.GetActive().ToList();
-            foreach (var item in problems)
+            List<RequestAPIViewModel> rsList = new List<RequestAPIViewModel>();
+            var RequestRepo = DependencyUtils.Resolve<IRequestRepository>();
+            var requests = RequestRepo.GetActive().ToList();
+            foreach (var item in requests)
             {
                 var timeAgo = TimeAgo(item.CreateDate.Value);
-                var a = new ProblemAPIViewModel()
+                var a = new RequestAPIViewModel()
                 {
-                    ProblemId = item.ProblemId,
-                    ProblemName = item.ProblemtName,
+                    RequestId = item.RequestId,
+                    RequestName = item.RequestName,
                     CreateDate = timeAgo,
                     //AgencyName = item.Agency.AgencyName,
                 };
@@ -50,19 +50,19 @@ namespace DataService.Models.Entities.Services
         }
 
 
-        public List<ProblemAPIViewModel> GetProblemWithStatus(int status)
+        public List<RequestAPIViewModel> GetRequestWithStatus(int status)
         {
-            List<ProblemAPIViewModel> rsList = new List<ProblemAPIViewModel>();
-            var problemRepo = DependencyUtils.Resolve<IProblemRepository>();
-            var problems = problemRepo.GetActive().ToList();
-            var listStatus = problems.FindAll(x => x.ProblemStatus == status);
+            List<RequestAPIViewModel> rsList = new List<RequestAPIViewModel>();
+            var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+            var requests = requestRepo.GetActive().ToList();
+            var listStatus = requests.FindAll(x => x.RequestStatus == status);
             foreach (var item in listStatus)
             {
                 var timeAgo = TimeAgo(item.CreateDate.Value);
-                var a = new ProblemAPIViewModel()
+                var a = new RequestAPIViewModel()
                 {
-                    ProblemId = item.ProblemId,
-                    ProblemName = item.ProblemtName,
+                    RequestId = item.RequestId,
+                    RequestName = item.RequestName,
                     CreateDate = timeAgo,
                     //AgencyName = item.Agency.AgencyName,
                 };
@@ -72,15 +72,15 @@ namespace DataService.Models.Entities.Services
             return rsList;
         }
 
-        public List<ProblemAPIViewModel> GetTicketByProblemId(int problemId)
+        public List<RequestAPIViewModel> GetTicketByRequestId(int requestId)
         {
-            List<ProblemAPIViewModel> rsList = new List<ProblemAPIViewModel>();
-            var problemRepo = DependencyUtils.Resolve<IProblemRepository>();
+            List<RequestAPIViewModel> rsList = new List<RequestAPIViewModel>();
+            var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
             var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
             var ServiceItemRepo = DependencyUtils.Resolve<IServiceItemRepository>();
             var ITRepo = DependencyUtils.Resolve<IITSupporterRepository>();
 
-            var problem = problemRepo.GetActive().FirstOrDefault(x => x.ProblemId == problemId);            
+            var request = requestRepo.GetActive().FirstOrDefault(x => x.RequestId == requestId);            
 
             var service = ServiceItemRepo.GetActive().ToList();
             var it = ITRepo.GetActive().ToList();
@@ -100,13 +100,13 @@ namespace DataService.Models.Entities.Services
             }
             
 
-            var timeAgo = TimeAgo(problem.CreateDate.Value);
-            var a = new ProblemAPIViewModel()
+            var timeAgo = TimeAgo(request.CreateDate.Value);
+            var a = new RequestAPIViewModel()
             {
-                ProblemId = problem.ProblemId,
-                ProblemName = problem.ProblemtName,
+                RequestId = request.RequestId,
+                RequestName = request.RequestName,
                 CreateDate = timeAgo,
-                AgencyName = problem.Agency.AgencyName,
+                AgencyName = request.Agency.AgencyName,
                 //ITSupporterName = list.ITSupporter.ITSupporterName,
                 //IssueName = IssueName.IssueName.ToString(),
                 IssueName = listIssue,
@@ -162,19 +162,19 @@ namespace DataService.Models.Entities.Services
             return result;
         }
 
-        public List<ProblemAPIViewModel> GetAllProblemByAgencyIDAndStatus(int acency_id, int status)
+        public List<RequestAPIViewModel> GetAllRequestByAgencyIDAndStatus(int acency_id, int status)
         {
-            List<ProblemAPIViewModel> rsList = new List<ProblemAPIViewModel>();
-            var problemRepo = DependencyUtils.Resolve<IProblemRepository>();
-            var problems = problemRepo.GetActive().ToList();
-            var listStatus = problems.FindAll(x => x.ProblemStatus == status && x.AgencyId == acency_id);
+            List<RequestAPIViewModel> rsList = new List<RequestAPIViewModel>();
+            var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+            var requests = requestRepo.GetActive().ToList();
+            var listStatus = requests.FindAll(x => x.RequestStatus == status && x.AgencyId == acency_id);
             foreach (var item in listStatus)
             {
                 var timeAgo = TimeAgo(item.CreateDate.Value);
-                var a = new ProblemAPIViewModel()
+                var a = new RequestAPIViewModel()
                 {
-                    ProblemId = item.ProblemId,
-                    ProblemName = item.ProblemtName,
+                    RequestId = item.RequestId,
+                    RequestName = item.RequestName,
                     CreateDate = timeAgo,
                     //AgencyName = item.Agency.AgencyName,
                 };
@@ -184,35 +184,35 @@ namespace DataService.Models.Entities.Services
             return rsList;
         }
 
-        public bool CreateFeedbackForProblem(int problemId, string feedbackContent)
+        public bool CreateFeedbackForRequest(int requestId, string feedbackContent)
         {
-            var problemRepo = DependencyUtils.Resolve<IProblemRepository>();
+            var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                         
-            var problem = problemRepo.Get(problemId);
+            var request = requestRepo.Get(requestId);
 
-            if (problem != null)
+            if (request != null)
             {
-                problem.Feedback = feedbackContent;
-                problemRepo.Edit(problem);
-                problemRepo.Save();
+                request.Feedback = feedbackContent;
+                requestRepo.Edit(request);
+                requestRepo.Save();
 
                 return true;
             }
             return false;
         }
 
-        public bool CancelProblem(ProblemCancelAPIViewModel model)
+        public bool CancelRequest(RequestCancelAPIViewModel model)
         {
-            var problemRepo = DependencyUtils.Resolve<IProblemRepository>();
-            var cancelTicket = problemRepo.GetActive().SingleOrDefault(a => a.ProblemId == model.ProblemId);
-            if (cancelTicket.ProblemId == model.ProblemId)
+            var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+            var cancelTicket = requestRepo.GetActive().SingleOrDefault(a => a.RequestId == model.RequestId);
+            if (cancelTicket.RequestId == model.RequestId)
             {
 
-                cancelTicket.ProblemId = model.ProblemId;
-                cancelTicket.ProblemStatus = model.CurrentStatus;
+                cancelTicket.RequestId = model.RequestId;
+                cancelTicket.RequestStatus = model.CurrentStatus;
 
-                problemRepo.Edit(cancelTicket);
-                problemRepo.Save();
+                requestRepo.Edit(cancelTicket);
+                requestRepo.Save();
                 return true;
             }
 

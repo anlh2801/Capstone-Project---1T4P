@@ -12,18 +12,19 @@ namespace DataService.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Problem
+    public partial class Request
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Problem()
+        public Request()
         {
             this.Tickets = new HashSet<Ticket>();
         }
     
-        public int ProblemId { get; set; }
+        public int RequestId { get; set; }
         public int AgencyId { get; set; }
-        public int ProblemStatus { get; set; }
-        public string ProblemtName { get; set; }
+        public int RequestCategoryId { get; set; }
+        public int RequestStatus { get; set; }
+        public string RequestName { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public string Feedback { get; set; }
@@ -32,6 +33,7 @@ namespace DataService.Models.Entities
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
         public virtual Agency Agency { get; set; }
+        public virtual RequestCategory RequestCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ticket> Tickets { get; set; }
     }

@@ -12,22 +12,18 @@ namespace DataService.ViewModels
     using System;
     using System.Collections.Generic;
     
-    public partial class ProblemViewModel : DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.Problem>
+    public partial class RequestCategoryViewModel : DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.RequestCategory>
     {
     	
-    			public virtual int ProblemId { get; set; }
-    			public virtual int AgencyId { get; set; }
-    			public virtual int ProblemStatus { get; set; }
-    			public virtual string ProblemtName { get; set; }
-    			public virtual Nullable<System.DateTime> StartDate { get; set; }
-    			public virtual Nullable<System.DateTime> EndDate { get; set; }
-    			public virtual string Feedback { get; set; }
+    			public virtual int RequestCategoryId { get; set; }
+    			public virtual string RequestCategoryName { get; set; }
+    			public virtual string Description { get; set; }
     			public virtual bool IsDelete { get; set; }
     			public virtual Nullable<System.DateTime> CreateDate { get; set; }
     			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	
-    	public ProblemViewModel() : base() { }
-    	public ProblemViewModel(DataService.Models.Entities.Problem entity) : base(entity) { }
+    	public RequestCategoryViewModel() : base() { }
+    	public RequestCategoryViewModel(DataService.Models.Entities.RequestCategory entity) : base(entity) { }
     
     }
 }
