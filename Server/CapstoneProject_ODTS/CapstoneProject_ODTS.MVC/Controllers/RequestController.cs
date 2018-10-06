@@ -31,16 +31,16 @@ namespace CapstoneProject_ODTS.Controllers
             
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult TicketDetail(Int32 id)
+        public ActionResult RequestDetail(int id)
         {
             ViewBag.Title = "Home Page";
             ViewData["ID"] = id.ToString();
             return View();
         }
 
-        public ActionResult GetTicketDetail(int requestId)
+        public ActionResult GetTicketDetail(int request_id)
         {
-            var result = _requestDomain.GetTicketByRequestId(requestId);
+            var result = _requestDomain.GetTicketByRequestId(request_id);
             if (result.Count() < 0)
             {
                 //không co record
@@ -49,7 +49,7 @@ namespace CapstoneProject_ODTS.Controllers
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult TicketStatus(Int32 id)
+        public ActionResult RequestStatus(int id)
         {
             ViewBag.Title = "Home Page";
             ViewData["STATUS"] = id.ToString();

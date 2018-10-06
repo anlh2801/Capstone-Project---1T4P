@@ -1,18 +1,11 @@
 ﻿<!-- Datatable -->
-@{
-    var data = ViewData["ID"];
-}
 <div class="row col-md-12">
 
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
             <tr>
-                <th><label>No.</label></th>
-                <th><label>Ticket Name</label></th>
-                <th><label>Time</label></th>
-                <th><label>Agency Name</label></th>
-                <th><label>Assign To</label></th>
-                <th><label>Issue Name</label></th>
+                <th><label>STT</label></th>
+                <th><label>Tên</label></th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -31,7 +24,7 @@
         function loadCompany() {
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("GetTicketDetail", "Ticket", new { id = data })',
+                url: '@Url.Action("GetAllTicket", "Request")',
                 data: {
 
                 },
@@ -68,7 +61,7 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1, 2, 3, 4, 5],
+                        "aTargets": [0, 1],
                         "bSortable": false,
                         "sClass": "text-center"
                     },
@@ -84,12 +77,8 @@
 
                 ],
                 "columns": [
-                    { "data": "TicketId" },
-                    { "data": "TicketName" },
-                    { "data": "CreateDate" },
-                    { "data": "AgencyName" },
-                    { "data": "ITName" },
-                    { "data": "IssueName"},
+                    { "data": "RequestId" },
+                    { "data": "RequestName" },
                 ],
                 "bAutoWidth": false,
             });

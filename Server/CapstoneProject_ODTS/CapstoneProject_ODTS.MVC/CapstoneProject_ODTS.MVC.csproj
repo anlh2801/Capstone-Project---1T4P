@@ -7370,9 +7370,9 @@
     <Content Include="Views\Contract\Index.cshtml" />
     <Content Include="Views\DeviceType\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
-    <Content Include="Views\Ticket\Index.cshtml" />
-    <Content Include="Views\Ticket\TicketDetail.cshtml" />
-    <Content Include="Views\Ticket\TicketStatus.cshtml" />
+    <Content Include="Views\Request\Index.cshtml" />
+    <Content Include="Views\Request\RequestDetail.cshtml" />
+    <Content Include="Views\Request\RequestStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

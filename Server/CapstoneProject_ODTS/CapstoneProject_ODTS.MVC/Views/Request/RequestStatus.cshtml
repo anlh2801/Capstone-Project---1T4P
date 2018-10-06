@@ -27,7 +27,7 @@
         function loadCompany() {
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("GetTicketWithStatus", "Ticket", new { id = data })',
+                url: '@Url.Action("GetTicketWithStatus", "Request", new { status = data })',
                 data: {
 
                 },
@@ -80,8 +80,8 @@
 
                 ],
                 "columns": [
-                    { "data": "TicketId" },
-                    { "data": "TicketName" },
+                    { "data": "RequestId" },
+                    { "data": "RequestName" },
                 ],
                 "bAutoWidth": false,
             });
