@@ -229,8 +229,8 @@
           <Property Name="TicketId" Type="int" Nullable="false" />
           <Property Name="Pre_It_SupporterId" Type="int" />
           <Property Name="Pre_Status" Type="int" />
-          <Property Name="StartDate" Type="datetime" />
-          <Property Name="EndDate" Type="datetime" />
+          <Property Name="StartTime" Type="datetime" />
+          <Property Name="EndTime" Type="datetime" />
           <Property Name="IsDelete" Type="bit" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
@@ -243,8 +243,8 @@
           <Property Name="TicketId" Type="int" Nullable="false" />
           <Property Name="TaskStatus" Type="int" />
           <Property Name="CreateByITSupporter" Type="int" />
-          <Property Name="StartDate" Type="datetime" />
-          <Property Name="EndDate" Type="datetime" />
+          <Property Name="StartTime" Type="datetime" />
+          <Property Name="EndTime" Type="datetime" />
           <Property Name="Priority" Type="int" />
           <Property Name="PreTaskCondition" Type="int" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
@@ -1000,8 +1000,8 @@
           <Property Name="TicketId" Type="Int32" Nullable="false" />
           <Property Name="Pre_It_SupporterId" Type="Int32" />
           <Property Name="Pre_Status" Type="Int32" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
           <Property Name="IsDelete" Type="Boolean" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
@@ -1016,8 +1016,8 @@
           <Property Name="TicketId" Type="Int32" Nullable="false" />
           <Property Name="TaskStatus" Type="Int32" />
           <Property Name="CreateByITSupporter" Type="Int32" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
           <Property Name="Priority" Type="Int32" />
           <Property Name="PreTaskCondition" Type="Int32" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
@@ -1533,8 +1533,8 @@
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
                 <ScalarProperty Name="Pre_Status" ColumnName="Pre_Status" />
                 <ScalarProperty Name="Pre_It_SupporterId" ColumnName="Pre_It_SupporterId" />
                 <ScalarProperty Name="TicketId" ColumnName="TicketId" />
@@ -1550,8 +1550,8 @@
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="PreTaskCondition" ColumnName="PreTaskCondition" />
                 <ScalarProperty Name="Priority" ColumnName="Priority" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
                 <ScalarProperty Name="CreateByITSupporter" ColumnName="CreateByITSupporter" />
                 <ScalarProperty Name="TaskStatus" ColumnName="TaskStatus" />
                 <ScalarProperty Name="TicketId" ColumnName="TicketId" />

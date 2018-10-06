@@ -19,8 +19,8 @@ namespace DataService.ViewModels
     			public virtual int TicketId { get; set; }
     			public virtual Nullable<int> TaskStatus { get; set; }
     			public virtual Nullable<int> CreateByITSupporter { get; set; }
-    			public virtual Nullable<System.DateTime> StartDate { get; set; }
-    			public virtual Nullable<System.DateTime> EndDate { get; set; }
+    			public virtual Nullable<System.DateTime> StartTime { get; set; }
+    			public virtual Nullable<System.DateTime> EndTime { get; set; }
     			public virtual Nullable<int> Priority { get; set; }
     			public virtual Nullable<int> PreTaskCondition { get; set; }
     			public virtual bool IsDelete { get; set; }

@@ -18,8 +18,8 @@ namespace DataService.Models.Entities
         public int TicketId { get; set; }
         public Nullable<int> TaskStatus { get; set; }
         public Nullable<int> CreateByITSupporter { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
+        public Nullable<System.DateTime> StartTime { get; set; }
+        public Nullable<System.DateTime> EndTime { get; set; }
         public Nullable<int> Priority { get; set; }
         public Nullable<int> PreTaskCondition { get; set; }
         public bool IsDelete { get; set; }

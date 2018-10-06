@@ -18,8 +18,8 @@ namespace DataService.Models.Entities
         public int TicketId { get; set; }
         public Nullable<int> Pre_It_SupporterId { get; set; }
         public Nullable<int> Pre_Status { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
+        public Nullable<System.DateTime> StartTime { get; set; }
+        public Nullable<System.DateTime> EndTime { get; set; }
         public Nullable<bool> IsDelete { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }

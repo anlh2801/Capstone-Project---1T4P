@@ -31,8 +31,8 @@ namespace DataService.Models.Entities.Services
                     TicketHistoryId = item.TicketHistoryId,
                     TicketId = item.TicketId,
                     PreSupporter_Name = item.ITSupporter != null ? item.ITSupporter.ITSupporterName : string.Empty,
-                    StartDate = item.StartDate != null ? item.StartDate.Value.ToString("MM/dd/yyyy"): string.Empty,
-                    EndDate = item.EndDate != null ? item.EndDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    StartDate = item.StartTime != null ? item.StartTime.Value.ToString("MM/dd/yyyy"): string.Empty,
+                    EndDate = item.EndTime != null ? item.EndTime.Value.ToString("MM/dd/yyyy") : string.Empty,
                 });
             }
 
@@ -52,8 +52,8 @@ namespace DataService.Models.Entities.Services
                     TicketHistoryId = item.TicketHistoryId,
                     TicketId = item.TicketId,
                     PreSupporter_Name = item.ITSupporter != null ? item.ITSupporter.ITSupporterName : string.Empty,
-                    StartDate = item.StartDate != null ? item.StartDate.Value.ToString("MM/dd/yyyy") : string.Empty,
-                    EndDate = item.EndDate != null ? item.EndDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    StartDate = item.StartTime != null ? item.StartTime.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    EndDate = item.EndTime != null ? item.EndTime.Value.ToString("MM/dd/yyyy") : string.Empty,
                 });
             }
 
