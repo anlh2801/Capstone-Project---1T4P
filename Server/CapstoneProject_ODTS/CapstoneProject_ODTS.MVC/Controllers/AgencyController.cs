@@ -34,5 +34,23 @@ namespace CapstoneProject_ODTS.Controllers
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult AgencyDevice(int id)
+        {
+            ViewData["ID"] = id.ToString();
+            return View();
+        }
+
+
+        public ActionResult GetAllDevice(int agency_id)
+        {
+            var result = _companyDomain.ViewAllDevice(agency_id);
+            if (result.Count() < 0)
+            {
+                //không co record
+            }
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
