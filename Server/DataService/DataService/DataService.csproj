@@ -109,6 +109,7 @@
     <Compile Include="APIViewModels\AgencyDeviceAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyUpdateAPIViewModel.cs" />
     <Compile Include="APIViewModels\FeedbackAPIViewModel.cs" />
+    <Compile Include="APIViewModels\ITSupporterAPIViewModel.cs" />
     <Compile Include="APIViewModels\RequestCancelAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketHistoryAPIViewModel.cs" />
     <Compile Include="APIViewModels\RequestAPIViewModel.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="DataAPIGen\TicketTaskApiGen.cs">
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
+    <Compile Include="Domain\ITSuppoterDomain.cs" />
     <Compile Include="Domain\TicketHistoryDomain.cs" />
     <Compile Include="Domain\TicketDomain.cs" />
     <Compile Include="Domain\AccountDomain.cs" />
@@ -380,6 +382,7 @@
     <Compile Include="Models\Entities\Services\AgencyServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Services\ITSupporterService.cs" />
     <Compile Include="Models\Entities\Services\CompanyServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
