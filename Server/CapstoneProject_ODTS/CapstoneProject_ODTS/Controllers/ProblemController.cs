@@ -40,7 +40,7 @@ namespace CapstoneProject_ODTS.Controllers
 
         public ActionResult GetTicketDetail(int problemId)
         {
-            var result = _problemDomain.GetTicketByProbleId(problemId);
+            var result = _problemDomain.GetTicketByProblemId(problemId);
             if (result.Count() < 0)
             {
                 //không co record

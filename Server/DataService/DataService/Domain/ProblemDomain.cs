@@ -13,7 +13,7 @@ namespace DataService.Domain
     {
         List<ProblemAPIViewModel> GetAllProblem();
 
-        List<ProblemAPIViewModel> GetTicketByProbleId(int problemId);
+        List<ProblemAPIViewModel> GetTicketByProblemId(int problemId);
 
         List<ProblemAPIViewModel> GetProblemWithStatus(int status);
 
@@ -44,11 +44,11 @@ namespace DataService.Domain
             return result;
         }
 
-        public List<ProblemAPIViewModel> GetTicketByProbleId(int problemId)
+        public List<ProblemAPIViewModel> GetTicketByProblemId(int problemId)
         {
             var problemService = this.Service<IProblemService>();
 
-            var result = problemService.GetTicketByProbleId(problemId);
+            var result = problemService.GetTicketByProblemId(problemId);
 
             return result;
         }

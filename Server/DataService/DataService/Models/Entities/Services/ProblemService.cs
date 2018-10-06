@@ -14,7 +14,7 @@ namespace DataService.Models.Entities.Services
     {
         List<ProblemAPIViewModel> GetAllProblem();
 
-        List<ProblemAPIViewModel> GetTicketByProbleId(int problemId);
+        List<ProblemAPIViewModel> GetTicketByProblemId(int problemId);
 
         List<ProblemAPIViewModel> GetProblemWithStatus(int status);
 
@@ -72,9 +72,7 @@ namespace DataService.Models.Entities.Services
             return rsList;
         }
 
-
-
-        public List<ProblemAPIViewModel> GetTicketByProbleId(int problemId)
+        public List<ProblemAPIViewModel> GetTicketByProblemId(int problemId)
         {
             List<ProblemAPIViewModel> rsList = new List<ProblemAPIViewModel>();
             var problemRepo = DependencyUtils.Resolve<IProblemRepository>();
@@ -87,7 +85,7 @@ namespace DataService.Models.Entities.Services
             var service = ServiceItemRepo.GetActive().ToList();
             var it = ITRepo.GetActive().ToList();
 
-            var tickets = ticketRepo.GetActive(x => x.ProblemId == problem.ProblemId).ToList();
+            var tickets = ticketRepo.GetActive().ToList();
             
             var listIssue = new List<String>();
             var listIT = new List<String>();

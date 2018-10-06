@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace DataService.Models
 {    
     //For agency view
-    public enum TicketStatusEnum
+    public enum ProblemStatusEnum
     {
         [Display(Name ="Chờ Xử lý")]
         Pending = 1,
@@ -22,7 +22,7 @@ namespace DataService.Models
     }
 
     //For ITSupporter View
-    public enum SubTicketStatusEnum
+    public enum TicketStatusEnum
     {
         [Display(Name = "Mới")]
         New = 1,
