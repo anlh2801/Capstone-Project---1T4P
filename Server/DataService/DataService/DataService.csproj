@@ -201,6 +201,7 @@
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\ITSupporterDomain.cs" />
+    <Compile Include="Domain\ITSuppoterDomain.cs" />
     <Compile Include="Domain\TicketHistoryDomain.cs" />
     <Compile Include="Domain\TicketDomain.cs" />
     <Compile Include="Domain\AccountDomain.cs" />
@@ -384,6 +385,7 @@
     <Compile Include="Models\Entities\Services\AgencyServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Services\ITSupporterService.cs" />
     <Compile Include="Models\Entities\Services\CompanyServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>

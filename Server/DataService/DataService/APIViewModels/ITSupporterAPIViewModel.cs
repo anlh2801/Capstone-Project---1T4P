@@ -11,6 +11,7 @@ namespace DataService.APIViewModels
         public ITSupporterAPIViewModel() : base() { }
         public ITSupporterAPIViewModel(DataService.Models.Entities.ITSupporter entity) : base(entity) { }
 
+<<<<<<< HEAD
         public int ITSupporterId { get; set; }
         public string ITSupporterName { get; set; }
         public int AccountId { get; set; }
@@ -22,5 +23,20 @@ namespace DataService.APIViewModels
         public string IsBusy { get; set; }
         public string CreateDate { get; set; }
         public string UpdateDate { get; set; }
+=======
+        public  int ITSupporterId { get; set; }
+        public  string ITSupporterName { get; set; }
+        public  int AccountId { get; set; }
+        public string Username { get; set; }
+        public  string Telephone { get; set; }
+        public  string Email { get; set; }
+        public  string Gender { get; set; }
+        public  string Address { get; set; }
+        public Nullable<double> RatingAVG { get; set; }
+        public  string IsBusy { get; set; }
+        public  bool IsDelete { get; set; }
+        public  string CreateDate { get; set; }
+        public  string UpdateDate { get; set; }
+>>>>>>> 7ac075cb87e67b808ddf122c378a5d68788b6615
     }
 }
