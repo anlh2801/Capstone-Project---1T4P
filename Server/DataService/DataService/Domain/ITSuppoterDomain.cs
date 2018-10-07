@@ -16,7 +16,7 @@ namespace DataService.Domain
 
         bool UpdateTicketStatus(ITSupporterUpdateAPIViewModel model);
 
-        List<ITSupporterAPIViewModel> ViewProfileITSupporter(int ITsupporter_id);
+        ITSupporterAPIViewModel ViewProfileITSupporter(int itSupporter_id);
 
         List<TicketAPIViewModel> ViewAllOwnerTicket(int ITsupporter_id);
     }
@@ -41,13 +41,13 @@ namespace DataService.Domain
             return result;
         }
 
-        public List<ITSupporterAPIViewModel> ViewProfileITSupporter(int ITsupporter_id)
+        public ITSupporterAPIViewModel ViewProfileITSupporter(int itSupporter_id)
         {
-            var ITSupporterService = this.Service<IITSupporterService>();
+            var itSupporterService = this.Service<IITSupporterService>();
 
-            var ITSupporter = ITSupporterService.ViewProfileITSupporter(ITsupporter_id);
+            var itSupporter = itSupporterService.ViewProfileITSupporter(itSupporter_id);
 
-            return ITSupporter;
+            return itSupporter;
         }
 
         public List<TicketAPIViewModel> ViewAllOwnerTicket(int ITsupporter_id)

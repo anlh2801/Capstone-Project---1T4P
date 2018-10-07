@@ -18,7 +18,7 @@ namespace CapstoneProject_ODTS.ControllersApi
             _ITSupporterDomain = new ITSupporterDomain();
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("ITsuportter/update_ticket_status")]
         public HttpResponseMessage UpdateProfile(ITSupporterUpdateAPIViewModel model)
         {
@@ -34,10 +34,10 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         [HttpGet]
         [Route("ITsupporter/view_profile_ITsupporter")]
-        public HttpResponseMessage ViewProfileITSupporter(int ITsupporter_id)
+        public HttpResponseMessage ViewProfileITSupporter(int itSupporter_id)
         {
-            var result = _ITSupporterDomain.ViewProfileITSupporter(ITsupporter_id);
-            if (result.Count() < 0)
+            var result = _ITSupporterDomain.ViewProfileITSupporter(itSupporter_id);
+            if (result == null)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
             }

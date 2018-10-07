@@ -17,7 +17,7 @@ namespace DataService.Models.Entities.Services
 
         bool UpdateTicketStatus(ITSupporterUpdateAPIViewModel model);
 
-        List<ITSupporterAPIViewModel> ViewProfileITSupporter(int ITsupporter_id);
+        ITSupporterAPIViewModel ViewProfileITSupporter(int itSupporter_id);
 
         List<TicketAPIViewModel> ViewAllOwnerTicket(int ITsupporter_id);
     }
@@ -69,34 +69,31 @@ namespace DataService.Models.Entities.Services
             return false;
         }
 
-        public List<ITSupporterAPIViewModel> ViewProfileITSupporter(int ITsupporter_id)
+        public ITSupporterAPIViewModel ViewProfileITSupporter(int itSupporter_id)
         {
-            List<ITSupporterAPIViewModel> rsList = new List<ITSupporterAPIViewModel>();
+            
             var ITSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
-            var ITSupporter = ITSupporterRepo.GetActive().ToList();
-            foreach (var item in ITSupporter)
+            var itSupporter = ITSupporterRepo.GetActive().SingleOrDefault(i => i.ITSupporterId == itSupporter_id);
+            if (itSupporter != null)
             {
-                if (ITsupporter_id == item.ITSupporterId)
+                var itSupporterAPIViewModel = new ITSupporterAPIViewModel
                 {
-                    rsList.Add(new ITSupporterAPIViewModel
-                    {
-                        ITSupporterId = item.ITSupporterId,
-                        ITSupporterName = item.ITSupporterName,
-                        AccountId = item.AccountId ?? 0,
-                        Telephone = item.Telephone,
-                        Email = item.Email,
-                        Gender = item.Gender,
-                        Address = item.Address,
-                        RatingAVG = item.RatingAVG ?? 0,
-                        IsBusy = item.IsBusy,
-                        CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
-                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
-                    });
-                }
-
+                    ITSupporterId = itSupporter.ITSupporterId,
+                    ITSupporterName = itSupporter.ITSupporterName,
+                    AccountId = itSupporter.AccountId ?? 0,
+                    Telephone = itSupporter.Telephone,
+                    Email = itSupporter.Email,
+                    Gender = itSupporter.Gender,
+                    Address = itSupporter.Address,
+                    RatingAVG = itSupporter.RatingAVG ?? 0,
+                    IsBusy = itSupporter.IsBusy,
+                    CreateDate = itSupporter.CreateDate != null ? itSupporter.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    UpdateDate = itSupporter.UpdateDate != null ? itSupporter.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                };
+                return itSupporterAPIViewModel;
             }
 
-            return rsList;
+            return null;
         }
 
         public List<TicketAPIViewModel> ViewAllOwnerTicket(int ITsupporter_id)
