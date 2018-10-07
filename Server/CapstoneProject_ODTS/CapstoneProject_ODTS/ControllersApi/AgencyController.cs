@@ -23,7 +23,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage ViewProfile(int agency_id)
         {
             var result = _agencyDomain.ViewProfile(agency_id);
-            if (result.Count() < 0)
+            if (result == null)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
             }
@@ -31,11 +31,10 @@ namespace CapstoneProject_ODTS.ControllersApi
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("agency/update_profile_agency")]
         public HttpResponseMessage UpdateProfile(AgencyUpdateAPIViewModel model)
-        {
-            _agencyDomain.UpdateProfile(model);
+        {            
             var result = _agencyDomain.UpdateProfile(model);
             if (result == false)
             {

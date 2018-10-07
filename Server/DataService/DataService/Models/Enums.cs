@@ -7,11 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataService.Models
-{    
+{
     //For agency view
     public enum RequestStatusEnum
     {
-        [Display(Name ="Chờ Xử lý")]
+        [Display(Name = "Chờ Xử lý")]
         Pending = 1,
         [Display(Name = "Đang xử lý")]
         Processing = 2,
@@ -34,7 +34,6 @@ namespace DataService.Models
         Done = 4,
         [Display(Name = "Hủy bỏ")]
         Cancel = 5
-    }
-
+    }   
 }
 

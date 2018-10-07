@@ -11,8 +11,7 @@ namespace DataService.Domain
 {
     public interface IAgencyDomain
     {
-
-        List<AgencyAPIViewModel> ViewProfile(int agency_id);
+        AgencyAPIViewModel ViewProfile(int agency_id);
 
         List<AgencyDeviceAPIViewModel> ViewAllDevice(int agency_id);
 
@@ -23,7 +22,7 @@ namespace DataService.Domain
 
     public class AgencyDomain : BaseDomain, IAgencyDomain
     {
-        public List<AgencyAPIViewModel> ViewProfile(int agency_id)
+        public AgencyAPIViewModel ViewProfile(int agency_id)
         {
             var agencyService = this.Service<IAgencyService>();
 

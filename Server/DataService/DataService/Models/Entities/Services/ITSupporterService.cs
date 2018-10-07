@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc.Html;
 
 namespace DataService.Models.Entities.Services
 {
@@ -114,7 +115,7 @@ namespace DataService.Models.Entities.Services
                         RequestId = item.RequestId,
                         DeviceId = item.DeviceId,
                         Desciption = item.Desciption,
-                        Current_TicketStatus = item.Current_TicketStatus ?? 0,
+                        Current_TicketStatus = item.Current_TicketStatus != null ? Enum.GetName(typeof(TicketStatusEnum), item.Current_TicketStatus) : string.Empty,
                         CurrentITSupporter_Id = item.CurrentITSupporter_Id,
                         Rating = item.Rating ?? 0,
                         Estimation = item.Estimation ?? 0,
@@ -126,7 +127,7 @@ namespace DataService.Models.Entities.Services
                 }
 
             }
-
+            
             return rsList;
         }
     }

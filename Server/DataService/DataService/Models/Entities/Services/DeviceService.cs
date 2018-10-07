@@ -21,8 +21,8 @@ namespace DataService.Models.Entities.Services
         {
             List<AgencyDeviceAPIViewModel> rsList = new List<AgencyDeviceAPIViewModel>();
             var agencyDeviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
-            var agencyDevice = agencyDeviceRepo.GetActive().ToList();
-            foreach (var item in agencyDevice)
+            var agencyDevices = agencyDeviceRepo.GetActive().ToList();
+            foreach (var item in agencyDevices)
             {
                 if (agency_id == item.AgencyId)
                 {
