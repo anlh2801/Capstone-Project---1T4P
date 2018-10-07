@@ -1,11 +1,74 @@
 ﻿<!-- Datatable -->
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <h2>Request Summary</h2>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Status 1</span>
+                <span class="info-box-number">90</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Status 2</span>
+                <span class="info-box-number">41</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <!-- fix for small devices only -->
+    <div class="clearfix visible-sm-block"></div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Status 3</span>
+                <span class="info-box-number">70</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Status 4</span>
+                <span class="info-box-number">20</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+</div>
 <div class="row col-md-12">
+    <h3>Recent Activity</h3>
 
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
             <tr>
                 <th><label>STT</label></th>
                 <th><label>Tên</label></th>
+                <th><label>Thời gian</label></th>
+                <th><label>Tạo bởi</label></th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -61,7 +124,7 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1],
+                        "aTargets": [0, 1, 2, 3],
                         "bSortable": false,
                         "sClass": "text-center"
                     },
@@ -78,7 +141,14 @@
                 ],
                 "columns": [
                     { "data": "RequestId" },
-                    { "data": "RequestName" },
+                    {
+                        "data": "RequestName",
+                        "mRender": function ( data, type, full ) {
+                            return '<a href="RequestDetail/' + full.RequestId + '">'+data+'</a>';
+                        }
+                    },
+                    { "data": "CreateDate" },
+                    { "data": "AgencyName" },
                 ],
                 "bAutoWidth": false,
             });

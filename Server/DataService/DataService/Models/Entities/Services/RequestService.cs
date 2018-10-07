@@ -41,7 +41,7 @@ namespace DataService.Models.Entities.Services
                     RequestId = item.RequestId,
                     RequestName = item.RequestName,
                     CreateDate = timeAgo,
-                    //AgencyName = item.Agency.AgencyName,
+                    AgencyName = item.Agency.AgencyName,
                 };
                 rsList.Add(a);
             }
