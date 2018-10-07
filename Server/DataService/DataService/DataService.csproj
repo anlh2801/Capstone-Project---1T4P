@@ -110,7 +110,9 @@
     <Compile Include="APIViewModels\AgencyUpdateAPIViewModel.cs" />
     <Compile Include="APIViewModels\FeedbackAPIViewModel.cs" />
     <Compile Include="APIViewModels\ITSupporterAPIViewModel.cs" />
+    <Compile Include="APIViewModels\ITSupporterUpdateAPIViewModel.cs" />
     <Compile Include="APIViewModels\RequestCancelAPIViewModel.cs" />
+    <Compile Include="APIViewModels\TicketAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketHistoryAPIViewModel.cs" />
     <Compile Include="APIViewModels\RequestAPIViewModel.cs" />
     <Compile Include="APIViewModels\AccountAPIViewModel.cs" />
