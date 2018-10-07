@@ -27,7 +27,7 @@
         function loadCompany() {
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("GetTicketWithStatus", "Request", new { status = data })',
+                url: '@Url.Action("GetRequestWithStatus", "Request", new { status = data })',
                 data: {
 
                 },

@@ -12,11 +12,11 @@ namespace CapstoneProject_ODTS.Controllers
     //}
     public class AgencyController : Controller
     {
-        private AgencyDomain _companyDomain;
+        private AgencyDomain _agencyDomain;
 
         public AgencyController()
         {
-            _companyDomain = new AgencyDomain();
+            _agencyDomain = new AgencyDomain();
         }
         public ActionResult Index()
         {
@@ -26,7 +26,7 @@ namespace CapstoneProject_ODTS.Controllers
         }
         public ActionResult GetAllAgency()
         {
-            var result = _companyDomain.GetAllAgency();
+            var result = _agencyDomain.GetAllAgency();
             if (result.Count() < 0)
             {
                 //không co record
@@ -44,7 +44,7 @@ namespace CapstoneProject_ODTS.Controllers
 
         public ActionResult GetAllDevice(int agency_id)
         {
-            var result = _companyDomain.ViewAllDevice(agency_id);
+            var result = _agencyDomain.ViewAllDevice(agency_id);
             if (result.Count() < 0)
             {
                 //không co record

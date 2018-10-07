@@ -81,10 +81,8 @@ namespace DataService.Models.Entities.Services
             var ITRepo = DependencyUtils.Resolve<IITSupporterRepository>();
 
             var request = requestRepo.GetActive().FirstOrDefault(x => x.RequestId == requestId);            
-
             var service = ServiceItemRepo.GetActive().ToList();
             var it = ITRepo.GetActive().ToList();
-
             var tickets = ticketRepo.GetActive().ToList();
             
             var listIssue = new List<String>();

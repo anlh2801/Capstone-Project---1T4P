@@ -63,10 +63,10 @@ namespace DataService.Models.Entities.Services
         public List<AgencyAPIViewModel> GetAllAgency()
         {
             List<AgencyAPIViewModel> rsList = new List<AgencyAPIViewModel>();
-            var companyRepo = DependencyUtils.Resolve<IAgencyRepository>();
-            var companies = companyRepo.GetActive().ToList();
+            var agencyRepo = DependencyUtils.Resolve<IAgencyRepository>();
+            var agencies = agencyRepo.GetActive().ToList();
 
-            foreach (var item in companies)
+            foreach (var item in agencies)
             {
                 rsList.Add(new AgencyAPIViewModel
                 {
