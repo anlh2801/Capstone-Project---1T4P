@@ -36,14 +36,23 @@ namespace DataService.Models.Entities.Services
             foreach (var item in requests)
             {
                 var timeAgo = TimeAgo(item.CreateDate.Value);
-                var a = new RequestAPIViewModel()
+                foreach (int  enumm in Enum.GetValues(typeof(RequestStatusEnum)))
                 {
-                    RequestId = item.RequestId,
-                    RequestName = item.RequestName,
-                    CreateDate = timeAgo,
-                    AgencyName = item.Agency.AgencyName,
-                };
-                rsList.Add(a);
+                    if (item.RequestStatus == enumm)
+                    {
+                        var a = new RequestAPIViewModel()
+                        {
+                            RequestId = item.RequestId,
+                            RequestName = item.RequestName,
+                            CreateDate = timeAgo,
+                            AgencyName = item.Agency.AgencyName,
+                            StatusName = Enum.GetNames(typeof(RequestStatusEnum))[enumm-1],
+                        };
+                        rsList.Add(a);
+                    }
+
+                }
+
             }
 
             return rsList;
@@ -65,6 +74,7 @@ namespace DataService.Models.Entities.Services
                     RequestName = item.RequestName,
                     CreateDate = timeAgo,
                     //AgencyName = item.Agency.AgencyName,
+                    RequestStatus = item.RequestStatus,
                 };
                 rsList.Add(a);
             }
@@ -109,6 +119,7 @@ namespace DataService.Models.Entities.Services
                 //IssueName = IssueName.IssueName.ToString(),
                 IssueName = listIssue,
                 ITName = listIT,
+                RequestStatus = request.RequestStatus,
 
             };
             rsList.Add(a);
