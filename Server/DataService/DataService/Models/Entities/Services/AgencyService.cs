@@ -68,17 +68,21 @@ namespace DataService.Models.Entities.Services
 
             foreach (var item in agencies)
             {
-                rsList.Add(new AgencyAPIViewModel
+                if (!item.IsDelete)
                 {
-                    AgencyId = item.AgencyId,
-                    CompanyName = item.Company.CompanyName,
-                    UserName = item.Account.Username,
-                    AgencyName = item.AgencyName,
-                    Address =  item.Address,
-                    Telephone = item.Telephone,
-                    CreateAt = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
-                    UpdateAt = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
-                });
+                    rsList.Add(new AgencyAPIViewModel
+                    {
+                        AgencyId = item.AgencyId,
+                        CompanyName = item.Company.CompanyName,
+                        UserName = item.Account.Username,
+                        AgencyName = item.AgencyName,
+                        Address = item.Address,
+                        Telephone = item.Telephone,
+                        CreateAt = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        UpdateAt = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                    });
+                }
+               
             }
 
             return rsList;
