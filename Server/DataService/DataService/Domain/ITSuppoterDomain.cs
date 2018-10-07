@@ -27,9 +27,9 @@ namespace DataService.Domain
         {          
             var ITSupporterService = this.Service<IITSupporterService>();
 
-            var companies = ITSupporterService.GetAllITSupporter();
+            var itSupporters = ITSupporterService.GetAllITSupporter();
            
-            return companies;
+            return itSupporters;
         }
 
         public bool UpdateTicketStatus(ITSupporterUpdateAPIViewModel model)

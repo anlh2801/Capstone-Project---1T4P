@@ -44,21 +44,21 @@ namespace DataService.Domain
         {
             var agencyDeviceService = this.Service<IDeviceService>();
 
-            var agency = agencyDeviceService.ViewAllDevice(agency_id);
+            var agencies = agencyDeviceService.ViewAllDevice(agency_id);
 
-            return agency;
+            return agencies;
         }
 
         public List<AgencyAPIViewModel> GetAllAgency()
         {
             var TicketList = new List<AgencyAPIViewModel>();
 
-            var TicketService = this.Service<IAgencyService>();
+            var agencyService = this.Service<IAgencyService>();
 
 
-            var companies = TicketService.GetAllAgency();
+            var agencies = agencyService.GetAllAgency();
 
-            return companies;
+            return agencies;
         }
     }
 }

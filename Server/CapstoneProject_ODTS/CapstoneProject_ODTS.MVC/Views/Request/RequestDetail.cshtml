@@ -31,7 +31,7 @@
         function loadCompany() {
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("GetTicketDetail", "Request", new { request_id = data })',
+                url: '@Url.Action("GetRequestDetail", "Request", new { request_id = data })',
                 data: {
 
                 },

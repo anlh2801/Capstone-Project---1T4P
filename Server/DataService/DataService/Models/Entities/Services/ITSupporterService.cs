@@ -28,9 +28,9 @@ namespace DataService.Models.Entities.Services
         {
             List<ITSupporterAPIViewModel> rsList = new List<ITSupporterAPIViewModel>();
             var ITSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
-            var companies = ITSupporterRepo.GetActive().ToList();
+            var itSupporters = ITSupporterRepo.GetActive().ToList();
 
-            foreach (var item in companies)
+            foreach (var item in itSupporters)
             {                
                 rsList.Add(new ITSupporterAPIViewModel
                 {

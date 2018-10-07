@@ -60,7 +60,7 @@
     <!-- /.col -->
 </div>
 <div class="row col-md-12">
-    <h3>Recent Activity</h3>
+    <h3>Recent Request</h3>
 
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
@@ -69,6 +69,7 @@
                 <th><label>Tên</label></th>
                 <th><label>Thời gian</label></th>
                 <th><label>Tạo bởi</label></th>
+                <th><label>Trạng thái</label></th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -87,7 +88,7 @@
         function loadCompany() {
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("GetAllTicket", "Request")',
+                url: '@Url.Action("GetAllRequest", "Request")',
                 data: {
 
                 },
@@ -124,7 +125,7 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1, 2, 3],
+                        "aTargets": [0, 1, 2, 3, 4],
                         "bSortable": false,
                         "sClass": "text-center"
                     },
@@ -149,6 +150,7 @@
                     },
                     { "data": "CreateDate" },
                     { "data": "AgencyName" },
+                    { "data": "StatusName" },
                 ],
                 "bAutoWidth": false,
             });

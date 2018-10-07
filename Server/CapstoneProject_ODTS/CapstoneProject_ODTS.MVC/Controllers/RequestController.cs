@@ -21,7 +21,7 @@ namespace CapstoneProject_ODTS.Controllers
 
             return View();
         }
-        public ActionResult GetAllTicket()
+        public ActionResult GetAllRequest()
         {
             var result = _requestDomain.GetAllRequest();
             if (result.Count() < 0)
@@ -38,7 +38,7 @@ namespace CapstoneProject_ODTS.Controllers
             return View();
         }
 
-        public ActionResult GetTicketDetail(int request_id)
+        public ActionResult GetRequestDetail(int request_id)
         {
             var result = _requestDomain.GetTicketByRequestId(request_id);
             if (result.Count() < 0)
@@ -56,7 +56,7 @@ namespace CapstoneProject_ODTS.Controllers
             return View();
         }
 
-        public ActionResult GetTicketWithStatus(int status)
+        public ActionResult GetRequestWithStatus(int status)
         {
             var result = _requestDomain.GetRequestWithStatus(status);
             if (result.Count() < 0)

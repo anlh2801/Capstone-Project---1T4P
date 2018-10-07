@@ -63,22 +63,26 @@ namespace DataService.Models.Entities.Services
         public List<AgencyAPIViewModel> GetAllAgency()
         {
             List<AgencyAPIViewModel> rsList = new List<AgencyAPIViewModel>();
-            var companyRepo = DependencyUtils.Resolve<IAgencyRepository>();
-            var companies = companyRepo.GetActive().ToList();
+            var agencyRepo = DependencyUtils.Resolve<IAgencyRepository>();
+            var agencies = agencyRepo.GetActive().ToList();
 
-            foreach (var item in companies)
+            foreach (var item in agencies)
             {
-                rsList.Add(new AgencyAPIViewModel
+                if (!item.IsDelete)
                 {
-                    AgencyId = item.AgencyId,
-                    CompanyName = item.Company.CompanyName,
-                    UserName = item.Account.Username,
-                    AgencyName = item.AgencyName,
-                    Address =  item.Address,
-                    Telephone = item.Telephone,
-                    CreateAt = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
-                    UpdateAt = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
-                });
+                    rsList.Add(new AgencyAPIViewModel
+                    {
+                        AgencyId = item.AgencyId,
+                        CompanyName = item.Company.CompanyName,
+                        UserName = item.Account.Username,
+                        AgencyName = item.AgencyName,
+                        Address = item.Address,
+                        Telephone = item.Telephone,
+                        CreateAt = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        UpdateAt = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                    });
+                }
+               
             }
 
             return rsList;
