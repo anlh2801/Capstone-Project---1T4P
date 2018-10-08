@@ -1,4 +1,69 @@
-﻿<!-- Datatable -->
+﻿@{
+    var data = ViewData["ID"];
+}
+
+<p>@Html.ActionLink("GetId", "Edit", "Home", new { id = "1" }, new { @class = "myLink" })</p>
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <p><b>Message:</b><br>
+                <input class="message-edit-text" type="text" size="20">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <b>RequestId:</b><br>
+                        <p class="rqID"></p>
+                    <p>
+                        <b>RequestName:</b><br>
+                        <p class="rqName"></p>
+                    <p>
+                        <b>Date:</b><br>
+                        <p class="rqCD"></p>
+                    <p>
+                        <b>AgencyName:</b><br>
+                        <p class="rqAN"></p>
+                    <p>
+                        <b>ITName:</b><br>
+                        <p class="rqIT"></p>
+                    <p>
+                        <b>Issue Name:</b><br>
+                        <p class="rqIN"></p>
+                    
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</div>
+<!-- Datatable -->
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <h2>Request Summary</h2>
@@ -65,7 +130,7 @@
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
             <tr>
-                <th><label>STT</label></th>
+                <th><label>STTTT</label></th>
                 <th><label>Tên</label></th>
                 <th><label>Thời gian</label></th>
                 <th><label>Tạo bởi</label></th>
@@ -78,6 +143,9 @@
 
 <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts {
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script>
@@ -90,7 +158,6 @@
                 type: 'POST',
                 url: '@Url.Action("GetAllRequest", "Request")',
                 data: {
-
                 },
                 success: function(result) {
                     initDatatable(result.result);
@@ -127,8 +194,9 @@
                     {
                         "aTargets": [0, 1, 2, 3, 4],
                         "bSortable": false,
-                        "sClass": "text-center"
+                        "sClass": "text-center",
                     },
+
 
                     //{
                     //    "aTargets": [7],
@@ -138,23 +206,53 @@
                     //        return edit + " " + del;
                     //    },
                     //}
-
                 ],
                 "columns": [
                     { "data": "RequestId" },
                     {
                         "data": "RequestName",
-                        "mRender": function ( data, type, full ) {
-                            return '<a href="RequestDetail/' + full.RequestId + '">'+data+'</a>';
+                        "mRender": function(data, type, full) {
+                            return '<a href="RequestDetail/' + full.RequestId + '">' + data + '</a>';
                         }
                     },
                     { "data": "CreateDate" },
                     { "data": "AgencyName" },
                     { "data": "StatusName" },
+                    {
+                        "mRender": function(data, type, full) {
+                            return ' <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="getData('+full.RequestId+')">View Detail</button>';
+                        }
+                    },
                 ],
                 "bAutoWidth": false,
             });
         }
+
+        function getData(asd) {
+
+            $.ajax({
+                //url: '@Url.RouteUrl(new {action = "Edit", controller = "Home"})',
+                url: '@Url.RouteUrl(new {action = "GetRequestDetail", controller = "Request"})',
+
+                data: {
+                    request_id: asd
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    $(".rqID").text(data.result[0].RequestId);
+                    $(".rqName").text(data.result[0].RequestName);
+                    $(".rqCD").text(data.result[0].CreateDate);
+                    $(".rqAN").text(data.result[0].AgencyName);
+                    $(".rqIT").text(data.result[0].ITName);
+                    $(".rqIN").text(data.result[0].IssueName);
+
+                }
+            });
+            $('#exampleModal').modal('show');
+        }
+
 
     </script>
 
