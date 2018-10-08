@@ -19,6 +19,8 @@ namespace DataService.Domain
         ITSupporterAPIViewModel ViewProfileITSupporter(int itSupporter_id);
 
         List<TicketAPIViewModel> ViewAllOwnerTicket(int ITsupporter_id);
+
+        bool EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain
@@ -57,6 +59,15 @@ namespace DataService.Domain
             var ITSupporter = ITSupporterService.ViewAllOwnerTicket(ITsupporter_id);
 
             return ITSupporter;
+        }
+
+        public bool EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.EstimateTimeTicket(model);
+
+            return result;
         }
     }
 }

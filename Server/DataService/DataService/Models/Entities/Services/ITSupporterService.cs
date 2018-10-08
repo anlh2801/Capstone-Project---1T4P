@@ -20,6 +20,8 @@ namespace DataService.Models.Entities.Services
         ITSupporterAPIViewModel ViewProfileITSupporter(int itSupporter_id);
 
         List<TicketAPIViewModel> ViewAllOwnerTicket(int ITsupporter_id);
+
+        bool EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
     }
 
     public partial class ITSupporterService
@@ -126,6 +128,24 @@ namespace DataService.Models.Entities.Services
             }
             
             return rsList;
+        }
+
+        public bool EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model)
+        {
+
+            var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+            var updateEstimateTimeTicket = ticketRepo.GetActive().SingleOrDefault(a => a.CurrentITSupporter_Id == model.CurrentITSupporter_Id && a.TicketId == model.TicketId);
+            if (updateEstimateTimeTicket != null)
+            {
+                updateEstimateTimeTicket.Estimation = model.Estimation;
+
+                ticketRepo.Edit(updateEstimateTimeTicket);
+
+                ticketRepo.Save();
+                return true;
+            }
+
+            return false;
         }
     }
 }

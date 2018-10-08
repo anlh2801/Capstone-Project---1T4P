@@ -21,8 +21,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         [HttpPut]
         [Route("ITsuportter/update_ticket_status")]
         public HttpResponseMessage UpdateProfile(ITSupporterUpdateAPIViewModel model)
-        {
-            _ITSupporterDomain.UpdateTicketStatus(model);
+        {           
             var result = _ITSupporterDomain.UpdateTicketStatus(model);
             if (result == false)
             {
@@ -56,6 +55,19 @@ namespace CapstoneProject_ODTS.ControllersApi
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPut]
+        [Route("ITsuportter/update_estimate_time_ticket")]
+        public HttpResponseMessage EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model)
+        {
+            var result = _ITSupporterDomain.EstimateTimeTicket(model);
+            if (result == false)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, "Cập nhật Thành Công!");
         }
     }
 }
