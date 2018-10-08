@@ -23,6 +23,8 @@ namespace DataService.Domain
         bool EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
 
         bool UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model);
+
+        bool UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain
@@ -77,6 +79,15 @@ namespace DataService.Domain
             var iTSupporterService = this.Service<IITSupporterService>();
 
             var result = iTSupporterService.UpdateTaskStatus(model);
+
+            return result;
+        }
+
+        public bool UpdateProfile(ITSupporterUpdateProfileAPIViewModel model)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.UpdateProfile(model);
 
             return result;
         }

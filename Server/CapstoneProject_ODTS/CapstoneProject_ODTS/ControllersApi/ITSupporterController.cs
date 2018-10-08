@@ -82,6 +82,19 @@ namespace CapstoneProject_ODTS.ControllersApi
 
             return Request.CreateResponse(HttpStatusCode.OK, "Cập nhật Thành Công!");
         }
+
+        [HttpPut]
+        [Route("ITsuportter/update_profile")]
+        public HttpResponseMessage UpdateProfile(ITSupporterUpdateProfileAPIViewModel model)
+        {
+            var result = _ITSupporterDomain.UpdateProfile(model);
+            if (result == false)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, "Cập nhật Thành Công!");
+        }
     }
 }
 

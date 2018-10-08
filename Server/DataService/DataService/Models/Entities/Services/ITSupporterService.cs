@@ -24,6 +24,8 @@ namespace DataService.Models.Entities.Services
         bool EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
 
         bool UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model);
+
+        bool UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
     }
 
     public partial class ITSupporterService
@@ -162,6 +164,29 @@ namespace DataService.Models.Entities.Services
                 ticketTaskRepo.Edit(updateTicketTaskStatus);
 
                 ticketTaskRepo.Save();
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool UpdateProfile(ITSupporterUpdateProfileAPIViewModel model)
+        {
+
+            var ITSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+            var updateProfile = ITSupporterRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == model.ITSupporterId);
+            if (updateProfile != null)
+            {
+                updateProfile.ITSupporterName = model.ITSupporterName;
+                updateProfile.Telephone = model.ITSupporterName;
+                updateProfile.Email = model.Email;
+                updateProfile.Gender = model.Gender;
+                updateProfile.Address = model.Address;
+                updateProfile.UpdateDate = DateTime.Now;
+
+                ITSupporterRepo.Edit(updateProfile);
+
+                ITSupporterRepo.Save();
                 return true;
             }
 
