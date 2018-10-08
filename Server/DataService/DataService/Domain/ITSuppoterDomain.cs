@@ -19,6 +19,14 @@ namespace DataService.Domain
         ITSupporterAPIViewModel ViewProfileITSupporter(int itSupporter_id);
 
         List<TicketAPIViewModel> ViewAllOwnerTicket(int ITsupporter_id);
+
+        bool EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
+
+        bool UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model);
+
+        bool UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
+
+        bool CreateTask(ITSupporterCreateTaskAPIViewModel model);
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain
@@ -57,6 +65,42 @@ namespace DataService.Domain
             var ITSupporter = ITSupporterService.ViewAllOwnerTicket(ITsupporter_id);
 
             return ITSupporter;
+        }
+
+        public bool EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.EstimateTimeTicket(model);
+
+            return result;
+        }
+
+        public bool UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.UpdateTaskStatus(model);
+
+            return result;
+        }
+
+        public bool UpdateProfile(ITSupporterUpdateProfileAPIViewModel model)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.UpdateProfile(model);
+
+            return result;
+        }
+
+        public bool CreateTask(ITSupporterCreateTaskAPIViewModel model)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.CreateTask(model);
+
+            return result;
         }
     }
 }

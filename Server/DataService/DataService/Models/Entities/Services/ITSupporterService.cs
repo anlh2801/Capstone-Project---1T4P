@@ -20,6 +20,14 @@ namespace DataService.Models.Entities.Services
         ITSupporterAPIViewModel ViewProfileITSupporter(int itSupporter_id);
 
         List<TicketAPIViewModel> ViewAllOwnerTicket(int ITsupporter_id);
+
+        bool EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
+
+        bool UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model);
+
+        bool UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
+
+        bool CreateTask(ITSupporterCreateTaskAPIViewModel model);
     }
 
     public partial class ITSupporterService
@@ -126,6 +134,95 @@ namespace DataService.Models.Entities.Services
             }
             
             return rsList;
+        }
+
+        public bool EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model)
+        {
+
+            var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+            var updateEstimateTimeTicket = ticketRepo.GetActive().SingleOrDefault(a => a.CurrentITSupporter_Id == model.CurrentITSupporter_Id && a.TicketId == model.TicketId);
+            if (updateEstimateTimeTicket != null)
+            {
+                updateEstimateTimeTicket.Estimation = model.Estimation;
+
+                ticketRepo.Edit(updateEstimateTimeTicket);
+
+                ticketRepo.Save();
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model)
+        {
+
+            var ticketTaskRepo = DependencyUtils.Resolve<ITicketTaskRepository>();
+            var updateTicketTaskStatus = ticketTaskRepo.GetActive().SingleOrDefault(a => a.TicketTaskId == model.TicketTaskId);
+            if (updateTicketTaskStatus != null)
+            {
+                updateTicketTaskStatus.TaskStatus = model.TaskStatus;
+
+                ticketTaskRepo.Edit(updateTicketTaskStatus);
+
+                ticketTaskRepo.Save();
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool UpdateProfile(ITSupporterUpdateProfileAPIViewModel model)
+        {
+
+            var ITSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+            var updateProfile = ITSupporterRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == model.ITSupporterId);
+            if (updateProfile != null)
+            {
+                updateProfile.ITSupporterName = model.ITSupporterName;
+                updateProfile.Telephone = model.ITSupporterName;
+                updateProfile.Email = model.Email;
+                updateProfile.Gender = model.Gender;
+                updateProfile.Address = model.Address;
+                updateProfile.UpdateDate = DateTime.Now;
+
+                ITSupporterRepo.Edit(updateProfile);
+
+                ITSupporterRepo.Save();
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool CreateTask(ITSupporterCreateTaskAPIViewModel model)
+        {
+
+            var ticketTaskRepo = DependencyUtils.Resolve<ITicketTaskRepository>();
+            var createTask = new TicketTask();
+
+            try
+            {
+                createTask.TicketId = model.TicketId;
+                createTask.TaskStatus = model.TaskStatus;
+                createTask.CreateByITSupporter = model.CreateByITSupporter;
+                createTask.StartTime = DateTime.Parse(model.StartTime);
+                createTask.EndTime = DateTime.Parse(model.EndTime);
+                createTask.Priority = model.Priority;
+                createTask.PreTaskCondition = model.PreTaskCondition;
+                createTask.CreateDate = DateTime.Now;
+
+                ticketTaskRepo.Add(createTask);
+
+                ticketTaskRepo.Save();
+                return true;
+            }
+            catch (Exception e)
+            {
+
+                return false;
+            }
+            
         }
     }
 }

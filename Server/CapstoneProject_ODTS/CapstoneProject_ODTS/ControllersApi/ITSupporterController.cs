@@ -21,8 +21,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         [HttpPut]
         [Route("ITsuportter/update_ticket_status")]
         public HttpResponseMessage UpdateProfile(ITSupporterUpdateAPIViewModel model)
-        {
-            _ITSupporterDomain.UpdateTicketStatus(model);
+        {           
             var result = _ITSupporterDomain.UpdateTicketStatus(model);
             if (result == false)
             {
@@ -56,6 +55,59 @@ namespace CapstoneProject_ODTS.ControllersApi
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPut]
+        [Route("ITsuportter/update_estimate_time_ticket")]
+        public HttpResponseMessage EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model)
+        {
+            var result = _ITSupporterDomain.EstimateTimeTicket(model);
+            if (result == false)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, "Cập nhật Thành Công!");
+        }
+
+        [HttpPut]
+        [Route("ITsuportter/update_task_status")]
+        public HttpResponseMessage UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model)
+        {
+            var result = _ITSupporterDomain.UpdateTaskStatus(model);
+            if (result == false)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, "Cập nhật Thành Công!");
+        }
+
+        [HttpPut]
+        [Route("ITsuportter/update_profile")]
+        public HttpResponseMessage UpdateProfile(ITSupporterUpdateProfileAPIViewModel model)
+        {
+            var result = _ITSupporterDomain.UpdateProfile(model);
+            if (result == false)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, "Cập nhật Thành Công!");
+        }
+
+        [HttpPost]
+        [Route("ITsuportter/create_task")]
+        public HttpResponseMessage CreateTask(ITSupporterCreateTaskAPIViewModel model)
+        {
+            var result = _ITSupporterDomain.CreateTask(model);
+            if (result == false)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, "Tạo Thành Công!");
+
         }
     }
 }

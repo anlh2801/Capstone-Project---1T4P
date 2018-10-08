@@ -12,9 +12,13 @@ namespace DataService.APIViewModels
         public AccountAPIViewModel() : base() { }
         public AccountAPIViewModel(DataService.Models.Entities.Account entity) : base(entity) { }
 
+        public int NumericalOrder { get; set; }
         public int AccountId { get; set; }
         public int RoleId { get; set; }
         public string Username { get; set; }
-        public string Passwrod { get; set; }
+        public string Password { get; set; }
+        public bool IsDelete { get; set; }
+        public string CreateAt { get; set; }
+        public string UpdateAt { get; set; }
     }
 }

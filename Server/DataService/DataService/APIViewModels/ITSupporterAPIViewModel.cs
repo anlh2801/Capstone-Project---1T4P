@@ -21,7 +21,6 @@ namespace DataService.APIViewModels
         public  string Address { get; set; }
         public Nullable<double> RatingAVG { get; set; }
         public  string IsBusy { get; set; }
-        public  bool IsDelete { get; set; }
         public  string CreateDate { get; set; }
         public  string UpdateDate { get; set; }
     }

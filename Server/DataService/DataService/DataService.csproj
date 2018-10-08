@@ -110,7 +110,11 @@
     <Compile Include="APIViewModels\AgencyUpdateAPIViewModel.cs" />
     <Compile Include="APIViewModels\FeedbackAPIViewModel.cs" />
     <Compile Include="APIViewModels\ITSupporterAPIViewModel.cs" />
+    <Compile Include="APIViewModels\ITSupporterCreateTaskAPIViewModel.cs" />
     <Compile Include="APIViewModels\ITSupporterUpdateAPIViewModel.cs" />
+    <Compile Include="APIViewModels\ITSupporterUpdateEstimateTimeAPIViewModel.cs" />
+    <Compile Include="APIViewModels\ITSupporterUpdateProfileAPIViewModel.cs" />
+    <Compile Include="APIViewModels\ITSupporterUpdateTaskStatusAPIViewModel.cs" />
     <Compile Include="APIViewModels\RequestCancelAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketHistoryAPIViewModel.cs" />

@@ -11,7 +11,7 @@ namespace DataService.Domain
     
     public interface IAccountDomain
     {
-
+        AccountAPIViewModel ViewProfile(int account_id);
         bool CheckLogin(string username, string password, int roleid);
         List<AccountAPIViewModel> GetAllAccount();
     };
@@ -35,6 +35,15 @@ namespace DataService.Domain
             var accounts = accountService.GetAllAccount();
 
             return accounts;
+        }
+
+        public AccountAPIViewModel ViewProfile(int account_id)
+        {
+            var accountService = this.Service<IAccountService>();
+
+            var account = accountService.ViewProfile(account_id);
+
+            return account;
         }
     }
 }
