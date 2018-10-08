@@ -14,6 +14,7 @@ namespace DataService.Models.Entities.Services
     {
         bool CheckLogin(string username, string password,int roleid);
         List<AccountAPIViewModel> GetAllAccount();
+        AccountAPIViewModel ViewProfile(int account_id);
     }
 
     public partial class AccountService
@@ -29,20 +30,47 @@ namespace DataService.Models.Entities.Services
             List<AccountAPIViewModel> rsList = new List<AccountAPIViewModel>();
             var accountRepo = DependencyUtils.Resolve<IAccountRepository>();
             var accounts = accountRepo.GetActive().ToList();
-
+            int count = 1;
             foreach (var item in accounts)
             {
-                rsList.Add(new AccountAPIViewModel
+                if (!item.IsDelete)
                 {
-                    AccountId = item.AccountId,
-                    RoleId = item.RoleId,
-                    Username = item.Username,
-                    Passwrod = item.Password,
+                    rsList.Add(new AccountAPIViewModel
+                    {
+                        NumericalOrder = count,
+                        AccountId = item.AccountId,
+                        RoleId = item.RoleId,
+                        Username = item.Username,
+                        Password = item.Password,
+                        CreateAt = item.CreateDate.Value.ToString("MM/dd/yyyy"),
+                        UpdateAt = item.UpdateDate.Value.ToString("MM/dd/yyyy"),
 
-                });
+                    });
+                    
+                }
+                count++;
             }
-
+           
             return rsList;
+        }
+        public AccountAPIViewModel ViewProfile(int account_id)
+        {
+            var accountRepo = DependencyUtils.Resolve<IAccountRepository>();
+            var account = accountRepo.GetActive().SingleOrDefault(a => a.AccountId == account_id);
+            if (account != null)
+            {
+                var accountAPIViewModel = new AccountAPIViewModel
+                {
+                    AccountId = account.AccountId,
+                    RoleId = account.RoleId,
+                    Username = account.Username,
+                    Password = account.Password,
+                    CreateAt = account.CreateDate.Value.ToString("MM/dd/yyyy"),
+                    UpdateAt = account.UpdateDate.Value.ToString("MM/dd/yyyy"),
+                };
+                return accountAPIViewModel;
+            }
+            return null;
         }
     }
 }
