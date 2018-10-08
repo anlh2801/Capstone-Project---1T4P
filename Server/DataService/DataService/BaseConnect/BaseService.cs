@@ -279,9 +279,9 @@ namespace DataService.BaseConnect
                 IAuditable obj = ((object)entity) as IAuditable;
                 DateTime dateTime2 = obj.CreatedTime = (obj.UpdatedTime = DateTime.UtcNow);
             }
-            if (((object)entity) is IActivable)
+            if (((object)entity) is IDeleting)
             {
-                ((IActivable)(object)entity).Active = true;
+                ((IDeleting)(object)entity).IsDelete = false;
             }
             this.repository.Add(entity);
         }

@@ -12,7 +12,7 @@ namespace DataService.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Agency : DataService.BaseConnect.IEntity
+    public partial class Agency : DataService.BaseConnect.IEntity, DataService.BaseConnect.IDeleting
     {
     }
 }

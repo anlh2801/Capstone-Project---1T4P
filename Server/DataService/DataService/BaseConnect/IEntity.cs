@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataService.BaseConnect
 {
-    public interface IEntity
+    public interface IEntity 
     {
     }
 }

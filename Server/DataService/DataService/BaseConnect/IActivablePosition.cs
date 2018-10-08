@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataService.BaseConnect
 {
-    interface IActivablePosition : IActivable, IPosition
+    interface IActivablePosition : IDeleting, IPosition
     {
     }
 }

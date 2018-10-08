@@ -127,7 +127,7 @@
     <Compile Include="AutofacModule\ServiceModule.cs" />
     <Compile Include="BaseConnect\BaseRepository.cs" />
     <Compile Include="BaseConnect\BaseService.cs" />
-    <Compile Include="BaseConnect\IActivable.cs" />
+    <Compile Include="BaseConnect\IDeleting.cs" />
     <Compile Include="BaseConnect\IActivablePosition.cs" />
     <Compile Include="BaseConnect\IAuditable.cs" />
     <Compile Include="BaseConnect\IBaseRepository.cs" />

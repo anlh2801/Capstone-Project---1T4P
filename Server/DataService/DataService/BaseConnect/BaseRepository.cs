@@ -41,9 +41,9 @@ namespace DataService.BaseConnect
         /// <returns></returns>
         public virtual IQueryable<TEntity> GetActive()
         {
-            if (typeof(IActivable).IsAssignableFrom(typeof(TEntity)))
+            if (typeof(IDeleting).IsAssignableFrom(typeof(TEntity)))
             {
-                Expression<Func<TEntity, bool>> node = (TEntity q) => ((IActivable)q).Active;
+                Expression<Func<TEntity, bool>> node = (TEntity q) => !((IDeleting)q).IsDelete;
                 node = (Expression<Func<TEntity, bool>>)RemoveCastsVisitor.Visit(node);
                 return Queryable.Where<TEntity>(this.Get(), node);
             }
@@ -52,9 +52,9 @@ namespace DataService.BaseConnect
 
         public virtual IQueryable<TEntity> GetActive(Expression<Func<TEntity, bool>> predicate)
         {
-            if (typeof(IActivable).IsAssignableFrom(typeof(TEntity)))
+            if (typeof(IDeleting).IsAssignableFrom(typeof(TEntity)))
             {
-                Expression<Func<TEntity, bool>> node = (TEntity q) => ((IActivable)q).Active;
+                Expression<Func<TEntity, bool>> node = (TEntity q) => ((IDeleting)q).IsDelete;
                 node = (Expression<Func<TEntity, bool>>)RemoveCastsVisitor.Visit(node);
                 return Queryable.Where<TEntity>(Queryable.Where<TEntity>(this.Get(), node), predicate);
             }
@@ -68,9 +68,9 @@ namespace DataService.BaseConnect
 
         public virtual TEntity FirstOrDefaultActive()
         {
-            if (typeof(IActivable).IsAssignableFrom(typeof(TEntity)))
+            if (typeof(IDeleting).IsAssignableFrom(typeof(TEntity)))
             {
-                Expression<Func<TEntity, bool>> node = (TEntity q) => ((IActivable)q).Active;
+                Expression<Func<TEntity, bool>> node = (TEntity q) => ((IDeleting)q).IsDelete;
                 node = (Expression<Func<TEntity, bool>>)RemoveCastsVisitor.Visit(node);
                 return Queryable.FirstOrDefault<TEntity>((IQueryable<TEntity>)this.dbSet, node);
             }
@@ -84,9 +84,9 @@ namespace DataService.BaseConnect
 
         public virtual TEntity FirstOrDefaultActive(Expression<Func<TEntity, bool>> predicate)
         {
-            if (typeof(IActivable).IsAssignableFrom(typeof(TEntity)))
+            if (typeof(IDeleting).IsAssignableFrom(typeof(TEntity)))
             {
-                Expression<Func<TEntity, bool>> node = (TEntity q) => ((IActivable)q).Active;
+                Expression<Func<TEntity, bool>> node = (TEntity q) => ((IDeleting)q).IsDelete;
                 node = (Expression<Func<TEntity, bool>>)RemoveCastsVisitor.Visit(node);
                 return Queryable.FirstOrDefault<TEntity>(Queryable.Where<TEntity>((IQueryable<TEntity>)this.dbSet, predicate), node);
             }
@@ -105,9 +105,9 @@ namespace DataService.BaseConnect
 
         public virtual void Activate(TEntity entity)
         {
-            if (((object)entity) is IActivable)
+            if (((object)entity) is IDeleting)
             {
-                ((IActivable)(object)entity).Active = true;
+                ((IDeleting)(object)entity).IsDelete = false;
                 return;
             }
             throw new NotSupportedException("TEntity must implement IActivable to use this method. TEntity: " + typeof(TEntity).FullName);
@@ -115,9 +115,9 @@ namespace DataService.BaseConnect
 
         public virtual void Deactivate(TEntity entity)
         {
-            if (((object)entity) is IActivable)
+            if (((object)entity) is IDeleting)
             {
-                ((IActivable)(object)entity).Active = false;
+                ((IDeleting)(object)entity).IsDelete = true;
                 return;
             }
             throw new NotSupportedException("TEntity must implement IActivable to use this method. TEntity: " + typeof(TEntity).FullName);
@@ -150,9 +150,9 @@ namespace DataService.BaseConnect
 
         public Task<TEntity> FirstOrDefaultActiveAsync()
         {
-            if (typeof(IActivable).IsAssignableFrom(typeof(TEntity)))
+            if (typeof(IDeleting).IsAssignableFrom(typeof(TEntity)))
             {
-                Expression<Func<TEntity, bool>> node = (TEntity q) => ((IActivable)q).Active;
+                Expression<Func<TEntity, bool>> node = (TEntity q) => ((IDeleting)q).IsDelete;
                 node = (Expression<Func<TEntity, bool>>)RemoveCastsVisitor.Visit(node);
                 return QueryableExtensions.FirstOrDefaultAsync<TEntity>((IQueryable<TEntity>)this.dbSet, node);
             }
@@ -166,9 +166,9 @@ namespace DataService.BaseConnect
 
         public Task<TEntity> FirstOrDefaultActiveAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            if (typeof(IActivable).IsAssignableFrom(typeof(TEntity)))
+            if (typeof(IDeleting).IsAssignableFrom(typeof(TEntity)))
             {
-                Expression<Func<TEntity, bool>> node = (TEntity q) => ((IActivable)q).Active;
+                Expression<Func<TEntity, bool>> node = (TEntity q) => ((IDeleting)q).IsDelete;
                 node = (Expression<Func<TEntity, bool>>)RemoveCastsVisitor.Visit(node);
                 return QueryableExtensions.FirstOrDefaultAsync<TEntity>(Queryable.Where<TEntity>((IQueryable<TEntity>)this.dbSet, predicate), node);
             }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataService.BaseConnect
 {
-    public interface IActivable
+    public interface IDeleting
     {
-        bool Active { get; set; }
+        bool IsDelete { get; set; }
     }
 }

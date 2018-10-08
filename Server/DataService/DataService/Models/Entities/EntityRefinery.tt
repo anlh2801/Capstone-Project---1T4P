@@ -25,25 +25,25 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
 	List<string> appropriateNamespaces = new List<string>();
 	appropriateNamespaces.Add("DataService.BaseConnect.IEntity");
 
-	var hasCreatedTime = entity.DeclaredProperties.Any(q => q.Name == "CreatedTime" && q.TypeName == "DateTime" && q.Nullable == false);
-	var hasUpdatedTime = entity.DeclaredProperties.Any(q => q.Name == "UpdatedTime" && q.TypeName == "DateTime" && q.Nullable == false);
-	if (hasCreatedTime && hasUpdatedTime) 
+	var hasCreateDate = entity.DeclaredProperties.Any(q => q.Name == "CreateDate" && q.TypeName == "DateTime" && q.Nullable == false);
+	var hasUpdateDate = entity.DeclaredProperties.Any(q => q.Name == "UpdateDate" && q.TypeName == "DateTime" && q.Nullable == false);
+	if (hasCreateDate && hasUpdateDate) 
 	{
 		appropriateNamespaces.Add("DataService.BaseConnect.IAuditable");
     }
 
-	var isActivable = entity.DeclaredProperties.Any(q => q.Name == "Active" && q.TypeName == "Boolean" && q.Nullable == false);
+	var isDelete = entity.DeclaredProperties.Any(q => q.Name == "IsDelete" && q.TypeName == "Boolean" && q.Nullable == false);
 	var isPositioned = entity.DeclaredProperties.Any(q => q.Name == "Position" && q.TypeName == "Int32" && q.Nullable == false);
 
-	if (isActivable && isPositioned) 
+	if (isDelete && isPositioned) 
 	{
 		appropriateNamespaces.Add("DataService.BaseConnect.IActivablePosition");
 	}
 	else
 	{
-		if (isActivable)
+		if (isDelete)
 		{
-			appropriateNamespaces.Add("DataService.BaseConnect.IActivable");
+			appropriateNamespaces.Add("DataService.BaseConnect.IDeleting");
 		}
 		
 		if (isPositioned)
