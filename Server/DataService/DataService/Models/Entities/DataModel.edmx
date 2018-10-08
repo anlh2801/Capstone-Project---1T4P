@@ -239,7 +239,7 @@
           <Key>
             <PropertyRef Name="TicketTaskId" />
           </Key>
-          <Property Name="TicketTaskId" Type="int" Nullable="false" />
+          <Property Name="TicketTaskId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TicketId" Type="int" Nullable="false" />
           <Property Name="TaskStatus" Type="int" />
           <Property Name="CreateByITSupporter" Type="int" />
@@ -1012,7 +1012,7 @@
           <Key>
             <PropertyRef Name="TicketTaskId" />
           </Key>
-          <Property Name="TicketTaskId" Type="Int32" Nullable="false" />
+          <Property Name="TicketTaskId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TicketId" Type="Int32" Nullable="false" />
           <Property Name="TaskStatus" Type="Int32" />
           <Property Name="CreateByITSupporter" Type="Int32" />

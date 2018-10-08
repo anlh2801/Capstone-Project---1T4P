@@ -26,6 +26,8 @@ namespace DataService.Models.Entities.Services
         bool UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model);
 
         bool UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
+
+        bool CreateTask(ITSupporterCreateTaskAPIViewModel model);
     }
 
     public partial class ITSupporterService
@@ -191,6 +193,36 @@ namespace DataService.Models.Entities.Services
             }
 
             return false;
+        }
+
+        public bool CreateTask(ITSupporterCreateTaskAPIViewModel model)
+        {
+
+            var ticketTaskRepo = DependencyUtils.Resolve<ITicketTaskRepository>();
+            var createTask = new TicketTask();
+
+            try
+            {
+                createTask.TicketId = model.TicketId;
+                createTask.TaskStatus = model.TaskStatus;
+                createTask.CreateByITSupporter = model.CreateByITSupporter;
+                createTask.StartTime = DateTime.Parse(model.StartTime);
+                createTask.EndTime = DateTime.Parse(model.EndTime);
+                createTask.Priority = model.Priority;
+                createTask.PreTaskCondition = model.PreTaskCondition;
+                createTask.CreateDate = DateTime.Now;
+
+                ticketTaskRepo.Add(createTask);
+
+                ticketTaskRepo.Save();
+                return true;
+            }
+            catch (Exception e)
+            {
+
+                return false;
+            }
+            
         }
     }
 }

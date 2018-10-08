@@ -24,8 +24,8 @@
         <EntityTypeShape EntityType="DataModel.ServiceITSupport" Width="1.5" PointX="6" PointY="16.625" />
         <EntityTypeShape EntityType="DataModel.Skill" Width="1.5" PointX="10.5" PointY="12.625" />
         <EntityTypeShape EntityType="DataModel.Ticket" Width="1.5" PointX="10.5" PointY="6.625" />
-        <EntityTypeShape EntityType="DataModel.TicketHistory" Width="1.5" PointX="15.75" PointY="7.5" />
-        <EntityTypeShape EntityType="DataModel.TicketTask" Width="1.5" PointX="12.75" PointY="7.375" />
+        <EntityTypeShape EntityType="DataModel.TicketHistory" Width="1.5" PointX="12.75" PointY="6.5" />
+        <EntityTypeShape EntityType="DataModel.TicketTask" Width="1.5" PointX="12.75" PointY="11.375" />
         <AssociationConnector Association="DataModel.FK_Account_Role" />
         <AssociationConnector Association="DataModel.FK_Agency_Account" />
         <AssociationConnector Association="DataModel.FK_ITSupporter_Account" />

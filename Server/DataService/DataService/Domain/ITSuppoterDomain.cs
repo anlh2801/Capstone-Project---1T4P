@@ -25,6 +25,8 @@ namespace DataService.Domain
         bool UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model);
 
         bool UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
+
+        bool CreateTask(ITSupporterCreateTaskAPIViewModel model);
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain
@@ -88,6 +90,15 @@ namespace DataService.Domain
             var iTSupporterService = this.Service<IITSupporterService>();
 
             var result = iTSupporterService.UpdateProfile(model);
+
+            return result;
+        }
+
+        public bool CreateTask(ITSupporterCreateTaskAPIViewModel model)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.CreateTask(model);
 
             return result;
         }
