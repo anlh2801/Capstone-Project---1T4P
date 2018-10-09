@@ -1,4 +1,42 @@
-﻿<!-- Datatable -->
+﻿    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Request Detail</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                <b>RequestId:</b><br>
+                <p class="rqID"></p>
+                <p>
+                <b>RequestName:</b><br>
+                <p class="rqName"></p>
+                <p>
+                <b>Date:</b><br>
+                <p class="rqCD"></p>
+                <p>
+                <b>AgencyName:</b><br>
+                <p class="rqAN"></p>
+                <p>
+                <b>ITName:</b><br>
+                <p class="rqIT"></p>
+                <p>
+                <b>Issue Name:</b><br>
+                <p class="rqIN"></p>
+                    
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Datatable -->
 <div class="row col-md-12">
 
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
@@ -20,6 +58,9 @@
 
 <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts {
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script>
@@ -97,9 +138,48 @@
                             return '<a href="AgencyDevice/' + full.AgencyId + '">View All Device</a>';
                         }
                     },
+                    {
+                        "mRender": function(data, type, full) {
+                            return ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.AgencyId+')"></button>';
+                        }
+                    },
+                    {
+                        "mRender": function (data, type, full) {
+                            return ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getData(' + full.AgencyId + ')"></button>';
+                        }
+                    },
+                    {
+                        "mRender": function (data, type, full) {
+                            return ' <button type="button" class="btn btn-danger fa fa-trash warning-alert deleteID" data-toggle="modal" data-target="" onclick="getData(' + full.AgencyId + ')"></button>';
+                        }
+                    },
                 ],
                 "bAutoWidth": false,
             });
+        }
+
+        function getData(id) {
+
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "GetAgencyDetail", controller = "Agency"})',
+
+                data: {
+                    agency_id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $(".rqID").text(data.result.AgencyId);
+                    $(".rqName").text(data.result.CompanyName);
+                    $(".rqCD").text(data.result.UserName);
+                    $(".rqAN").text(data.result.AgencyName);
+                    $(".rqIT").text(data.result.Address);
+                    $(".rqIN").text(data.result.Telephone);
+
+                }
+            });
+            $('#exampleModal').modal('show');
         }
 
     </script>

@@ -1,33 +1,10 @@
-﻿@{
-    var data = ViewData["ID"];
-}
-
-<p>@Html.ActionLink("GetId", "Edit", "Home", new { id = "1" }, new { @class = "myLink" })</p>
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Modal title</h4>
-            </div>
-            <div class="modal-body">
-                <p><b>Message:</b><br>
-                <input class="message-edit-text" type="text" size="20">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<div class="container">
+﻿<div class="container">
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Request Detail</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -56,7 +33,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    @*<button type="button" class="btn btn-primary">Save changes</button>*@
                 </div>
             </div>
         </div>
@@ -220,7 +197,7 @@
                     { "data": "StatusName" },
                     {
                         "mRender": function(data, type, full) {
-                            return ' <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="getData('+full.RequestId+')">View Detail</button>';
+                            return ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData('+full.RequestId+')"></button>';
                         }
                     },
                 ],
@@ -228,25 +205,25 @@
             });
         }
 
-        function getData(asd) {
+        function getData(id) {
 
             $.ajax({
                 //url: '@Url.RouteUrl(new {action = "Edit", controller = "Home"})',
                 url: '@Url.RouteUrl(new {action = "GetRequestDetail", controller = "Request"})',
 
                 data: {
-                    request_id: asd
+                    request_id: id
                 },
                 type: 'GET',
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                    $(".rqID").text(data.result[0].RequestId);
-                    $(".rqName").text(data.result[0].RequestName);
-                    $(".rqCD").text(data.result[0].CreateDate);
-                    $(".rqAN").text(data.result[0].AgencyName);
-                    $(".rqIT").text(data.result[0].ITName);
-                    $(".rqIN").text(data.result[0].IssueName);
+                    $(".rqID").text(data.result.RequestId);
+                    $(".rqName").text(data.result.RequestName);
+                    $(".rqCD").text(data.result.CreateDate);
+                    $(".rqAN").text(data.result.AgencyName);
+                    $(".rqIT").text(data.result.ITName);
+                    $(".rqIN").text(data.result.IssueName);
 
                 }
             });

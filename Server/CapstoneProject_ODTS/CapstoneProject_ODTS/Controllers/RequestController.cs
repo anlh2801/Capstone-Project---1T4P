@@ -41,10 +41,10 @@ namespace CapstoneProject_ODTS.Controllers
         public ActionResult GetTicketDetail(int requestId)
         {
             var result = _requestDomain.GetTicketByRequestId(requestId);
-            if (result.Count() < 0)
-            {
-                //không co record
-            }
+            //if (result.Count() < 0)
+            //{
+            //    //không co record
+            //}
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }

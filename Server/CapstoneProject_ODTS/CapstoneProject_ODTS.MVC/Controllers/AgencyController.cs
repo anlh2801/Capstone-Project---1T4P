@@ -52,5 +52,15 @@ namespace CapstoneProject_ODTS.Controllers
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetAgencyDetail(int agency_id)
+        {
+            var agencyDetail = _agencyDomain.ViewProfile(agency_id);
+            if (agencyDetail == null)
+            {
+                return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { result = agencyDetail }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

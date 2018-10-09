@@ -40,13 +40,14 @@ namespace CapstoneProject_ODTS.Controllers
 
         public ActionResult GetRequestDetail(int request_id)
         {
-            var result = _requestDomain.GetTicketByRequestId(request_id);
-            if (result.Count() < 0)
+            var requestDetail = _requestDomain.GetTicketByRequestId(request_id);
+            if (requestDetail == null)
             {
                 //không co record
+                return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { result }, JsonRequestBehavior.AllowGet);
+            return Json(new { result = requestDetail}, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult RequestStatus(int id)

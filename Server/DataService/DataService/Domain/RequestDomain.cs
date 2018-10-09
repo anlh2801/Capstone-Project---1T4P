@@ -13,7 +13,7 @@ namespace DataService.Domain
     {
         List<RequestAPIViewModel> GetAllRequest();
 
-        List<RequestAPIViewModel> GetTicketByRequestId(int RequestId);
+        RequestAPIViewModel GetTicketByRequestId(int RequestId);
 
         List<RequestAPIViewModel> GetRequestWithStatus(int status);
 
@@ -44,7 +44,7 @@ namespace DataService.Domain
             return result;
         }
 
-        public List<RequestAPIViewModel> GetTicketByRequestId(int requestId)
+        public RequestAPIViewModel GetTicketByRequestId(int requestId)
         {
             var requestService = this.Service<IRequestService>();
 

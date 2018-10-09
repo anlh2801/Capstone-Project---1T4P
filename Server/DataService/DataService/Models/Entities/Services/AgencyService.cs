@@ -28,8 +28,10 @@ namespace DataService.Models.Entities.Services
                    var agencyAPIViewModel = new AgencyAPIViewModel
                     {
                         AgencyId = agency.AgencyId,
-                        CompanyId = agency.CompanyId ?? 0,
+                       CompanyId = agency.CompanyId ?? 0,
+                       CompanyName = agency.Company.CompanyName,
                         AccountId = agency.AccountId,
+                        UserName = agency.Account.Username,
                         AgencyName = agency.AgencyName,
                         Address = agency.Address,
                         Telephone = agency.Telephone,
