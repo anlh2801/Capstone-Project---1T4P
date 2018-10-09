@@ -109,6 +109,47 @@ namespace CapstoneProject_ODTS.ControllersApi
             return Request.CreateResponse(HttpStatusCode.OK, "Tạo Thành Công!");
 
         }
+
+        [HttpPost]
+        [Route("ITsuportter/monitor_time_task")]
+        public HttpResponseMessage SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model)
+        {
+            var result = _ITSupporterDomain.SetMonitorTimeTask(model);
+            if (result == false)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, "Tạo Thành Công!");
+
+        }
+
+        [HttpPost]
+        [Route("ITsuportter/set_priority_task")]
+        public HttpResponseMessage SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model)
+        {
+            var result = _ITSupporterDomain.SetPriorityTask(model);
+            if (result == false)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, "Tạo Thành Công!");
+
+        }
+
+        [HttpGet]
+        [Route("ITsupporter/view_guideline")]
+        public HttpResponseMessage GetGuidelineByServiceItemID(int service_item_Id)
+        {
+            var result = _ITSupporterDomain.GetGuidelineByServiceItemID(service_item_Id);
+            if (result == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
     }
 }
 

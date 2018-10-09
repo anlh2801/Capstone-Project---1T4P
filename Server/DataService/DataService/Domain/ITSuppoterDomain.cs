@@ -27,6 +27,12 @@ namespace DataService.Domain
         bool UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
 
         bool CreateTask(ITSupporterCreateTaskAPIViewModel model);
+
+        bool SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model);
+
+        bool SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model);
+
+        GuidelineAPIViewModel GetGuidelineByServiceItemID(int service_item_Id);
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain
@@ -102,5 +108,34 @@ namespace DataService.Domain
 
             return result;
         }
+
+        public bool SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.SetMonitorTimeTask(model);
+
+            return result;
+        }
+
+
+        public bool SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.SetPriorityTask(model);
+
+            return result;
+        }
+
+        public GuidelineAPIViewModel GetGuidelineByServiceItemID(int service_item_Id)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.GetGuidelineByServiceItemID(service_item_Id);
+
+            return result;
+        }
+        
     }
 }
