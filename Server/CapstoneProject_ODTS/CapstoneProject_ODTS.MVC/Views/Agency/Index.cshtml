@@ -1,4 +1,39 @@
-﻿    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+﻿
+
+<!--Modal: modalConfirmDelete-->
+<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+        <!--Content-->
+        <div class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center">
+                <p class="heading">Are you sure you want to delete this item?</p>
+            </div>
+
+            <!--Body-->
+            <div class="modal-body">
+
+                <i class="fa fa-times fa-4x animated rotateIn"></i>
+
+            </div>
+
+            <!--Footer-->
+            <div class="modal-footer flex-center">
+                @*@Html.ActionLink("Yess", "GetAgencyDetail", "Agency", new { agency_id = 4 }, null)*@
+                <a href="#" onClick="yourFunction(); return false;" class="btn  btn-outline-danger">Yes</a>
+                @*<a href="@Url.Action("removeAgency", "Agency", new {agency_id = 4})" class="btn  btn-outline-danger">Yes</a>*@
+                <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+
+<input type="hidden" id="agencyHidden"  />
+<!--Modal: modalConfirmDelete-->    
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
@@ -9,22 +44,22 @@
             </div>
             <div class="modal-body">
                 <p>
-                <b>RequestId:</b><br>
+                <b>ID:</b><br>
                 <p class="rqID"></p>
                 <p>
-                <b>RequestName:</b><br>
+                <b>Company:</b><br>
                 <p class="rqName"></p>
                 <p>
-                <b>Date:</b><br>
+                <b>Account:</b><br>
                 <p class="rqCD"></p>
                 <p>
-                <b>AgencyName:</b><br>
+                <b>Agency Name:</b><br>
                 <p class="rqAN"></p>
                 <p>
-                <b>ITName:</b><br>
+                <b>Address:</b><br>
                 <p class="rqIT"></p>
                 <p>
-                <b>Issue Name:</b><br>
+                <b>Telephone:</b><br>
                 <p class="rqIN"></p>
                     
 
@@ -32,25 +67,68 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 @*<button type="button" class="btn btn-primary">Save changes</button>*@
-                </div>
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="createAgency" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Request Detail</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                <b>Company:</b>
+                <select class="form-control" id="q">
+                </select>
+                <p>
+                <b>Account:</b><br>
+                <select class="form-control" id="w">
+
+                </select>
+                <p>
+                <b>Name</b><br>
+                <input id="e" type="text">
+                <p>
+                <b>Address:</b><br>
+                <input id="r" type="text">
+                <p>
+                <b>Telephone:</b><br>
+                <input id="t" type="text">
+                <p>
+                    
+
+            </div>
+            <div class="modal-footer">
+                <a href="#" onClick="createAgency();" class="btn  btn-outline-danger">Create</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Datatable -->
 <div class="row col-md-12">
-
+    <div class="col-md-1">
+        <button type="button" class="btn btn-block btn-primary" onclick="showCreate(), showAcc()">Create</button>
+    </div>
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
-            <tr>
-                <th><label>STT</label></th>
-                <th><label>Tên</label></th>
-                <th><label>Mô tả</label></th>
-                <th><label>Tạo ngày</label></th>
-                <th><label>Cập nhật ngày</label></th>
-                <th><label>Cập nhật ngày</label></th>
-                <th><label>Cập nhật ngày</label></th>
-                <th><label>Cập nhật ngày</label></th>
-            </tr>
+        <tr>
+            <th><label>STT</label></th>
+            <th><label>Company Name</label></th>
+            <th><label>Account Name</label></th>
+            <th><label>Name</label></th>
+            <th><label>Address</label></th>
+            <th><label>Telephone</label></th>
+            <th><label>Create Date</label></th>
+            <th><label>Update Date  </label></th>
+        </tr>
         </thead>
         <tbody></tbody>
     </table>
@@ -64,13 +142,13 @@
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             loadCompany();
         });
 
         function loadCompany() {
             $.ajax({
-                type: 'POST',
+                type: 'GET',
                 url: '@Url.Action("GetAllAgency", "Agency")',
                 data: {
 
@@ -84,6 +162,7 @@
             });
         }
         function initDatatable(data) {
+            $("#detail-table").dataTable().fnDestroy();
             $("#detail-table").dataTable({
                 stateSave: true,
                 "bFilter": true,
@@ -150,7 +229,7 @@
                     },
                     {
                         "mRender": function (data, type, full) {
-                            return ' <button type="button" class="btn btn-danger fa fa-trash warning-alert deleteID" data-toggle="modal" data-target="" onclick="getData(' + full.AgencyId + ')"></button>';
+                            return ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeAg(' + full.AgencyId + ')"></button>';
                         }
                     },
                 ],
@@ -181,6 +260,97 @@
             });
             $('#exampleModal').modal('show');
         }
+        function yourFunction() {
+            var agency_idd = $('#agencyHidden').val();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("RemoveAgency", "Agency")',
+                data: {
+                    agency_id: agency_idd
+                },
+                
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#modalConfirmDelete').modal('hide')                    
+                    loadCompany();
+                }
+            });
+        }
+        function removeAg(id) {
+            $('#modalConfirmDelete').modal('show');
+            $('#agencyHidden').val(id);
+        }
+        function showCreate() {
+            $('#modalConfirmDelete').modal('hide');
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllCompany", "Home")',
+                data: {
+                    
+                },
+                
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#createAgency').modal('show');
+                    var len = data.result.length;
+                    var html = '';
+                    for (var i = 0; i< len; i++) {
+                        html += '<option value="' + data.result[i].CompanyId + '">' + data.result[i].CompanyName + '</option>';
+                    }
+                    $('#q').append(html);
+
+                }
+            });
+
+        }
+
+        function showAcc() {
+            $('#modalConfirmDelete').modal('hide')
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllAccount", "Account")',
+                data: {
+                    
+                },
+                
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var len = data.result.length;
+                    var html = '';
+                    for (var i = 0; i< len; i++) {
+                        html += '<option value="' + data.result[i].AccountId + '">' + data.result[i].Username + '</option>';
+                    }
+                    $('#w').append(html);
+
+                }
+            });
+
+        }
+        function createAgency() {
+            var empObj = {
+                CompanyId: $('#q').val(),
+                AccountId: $('#w').val(),
+                AgencyName: $('#e').val(),
+                Address: $('#r').val(),
+                Telephone: $('#t').val(),
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("CreateAgency", "Agency")',
+                data: JSON.stringify(empObj),
+                
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#createAgency').modal('hide'),
+                        loadCompany();
+                }
+            });
+        }
+
 
     </script>
 

@@ -21,5 +21,6 @@ namespace DataService.APIViewModels
         public string UpdateAt { get; set; }
         public string CompanyName { get; set; }
         public string UserName {get; set; }
+        public bool IsDelete { get; set; }
     }
 }

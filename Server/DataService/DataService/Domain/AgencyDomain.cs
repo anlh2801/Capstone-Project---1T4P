@@ -60,5 +60,23 @@ namespace DataService.Domain
 
             return agencies;
         }
+
+        public Boolean removeAgency(int agency_id)
+        {
+            var TicketList = new List<AgencyAPIViewModel>();
+
+            var agencyService = this.Service<IAgencyService>();
+            bool a = agencyService.removeAgency(agency_id);
+            return a;
+        }
+
+        public bool CreateAgency(AgencyAPIViewModel model)
+        {
+            var iTSupporterService = this.Service<IAgencyService>();
+
+            var result = iTSupporterService.CreateAgency(model);
+
+            return result;
+        }
     }
 }
