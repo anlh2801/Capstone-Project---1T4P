@@ -64,7 +64,7 @@
           <Property Name="ServiceITSupportId" Type="int" />
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
-          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
@@ -109,7 +109,7 @@
           <Property Name="GuidelineName" Type="nvarchar" MaxLength="50" />
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="date" />
-          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
@@ -125,8 +125,8 @@
           <Property Name="Gender" Type="nvarchar" MaxLength="50" />
           <Property Name="Address" Type="nvarchar" MaxLength="50" />
           <Property Name="RatingAVG" Type="float" />
-          <Property Name="IsBusy" Type="nchar" MaxLength="10" />
-          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="IsBusy" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
@@ -175,7 +175,7 @@
           <Property Name="ServiceId" Type="int" />
           <Property Name="IssueName" Type="nvarchar" MaxLength="50" />
           <Property Name="Price" Type="float" />
-          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
@@ -186,7 +186,7 @@
           <Property Name="ServiceITSupportId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ServiceName" Type="nvarchar" MaxLength="50" />
           <Property Name="Description" Type="nchar" MaxLength="10" />
-          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
@@ -198,7 +198,7 @@
           <Property Name="ITSupportId" Type="int" Nullable="false" />
           <Property Name="ServiceItemId" Type="int" />
           <Property Name="MonthExperience" Type="int" />
-          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
@@ -231,7 +231,7 @@
           <Property Name="Pre_Status" Type="int" />
           <Property Name="StartTime" Type="datetime" />
           <Property Name="EndTime" Type="datetime" />
-          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
@@ -805,7 +805,7 @@
           <Property Name="ServiceITSupportId" Type="Int32" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
-          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="IsDelete" Type="Boolean" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Contract" Relationship="DataModel.FK_ContractService_Contract" FromRole="ContractServiceITSupport" ToRole="Contract" />
@@ -856,7 +856,7 @@
           <Property Name="GuidelineName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="0" />
-          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="IsDelete" Type="Boolean" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ServiceItem" Relationship="DataModel.FK_Guideline_ServiceItem" FromRole="Guideline" ToRole="ServiceItem" />
@@ -873,8 +873,8 @@
           <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RatingAVG" Type="Double" />
-          <Property Name="IsBusy" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="IsBusy" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="DataModel.FK_ITSupporter_Account" FromRole="ITSupporter" ToRole="Account" />
@@ -932,7 +932,7 @@
           <Property Name="ServiceId" Type="Int32" />
           <Property Name="IssueName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Price" Type="Double" />
-          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="IsDelete" Type="Boolean" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Guidelines" Relationship="DataModel.FK_Guideline_ServiceItem" FromRole="ServiceItem" ToRole="Guideline" />
@@ -947,7 +947,7 @@
           <Property Name="ServiceITSupportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="IsDelete" Type="Boolean" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ContractServiceITSupports" Relationship="DataModel.FK_ContractService_Service" FromRole="ServiceITSupport" ToRole="ContractServiceITSupport" />
@@ -961,7 +961,7 @@
           <Property Name="ITSupportId" Type="Int32" Nullable="false" />
           <Property Name="ServiceItemId" Type="Int32" />
           <Property Name="MonthExperience" Type="Int32" />
-          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="IsDelete" Type="Boolean" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ITSupporter" Relationship="DataModel.FK_Skill_ITSupporter" FromRole="Skill" ToRole="ITSupporter" />
@@ -1002,7 +1002,7 @@
           <Property Name="Pre_Status" Type="Int32" />
           <Property Name="StartTime" Type="DateTime" Precision="3" />
           <Property Name="EndTime" Type="DateTime" Precision="3" />
-          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="IsDelete" Type="Boolean" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ITSupporter" Relationship="DataModel.FK_TicketHistory_ITSupporter" FromRole="TicketHistory" ToRole="ITSupporter" />

@@ -12,9 +12,18 @@ namespace DataService.Models.Entities.Services
 {
     public partial interface IAgencyService
     {
+
         AgencyAPIViewModel ViewProfile(int agency_id);
+
         bool UpdateProfile(AgencyUpdateAPIViewModel model);
+
         List<AgencyAPIViewModel> GetAllAgency();
+
+        bool CreateRequest(AgencyCreateRequestAPIViewModel model);
+
+        void CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId);
+
+        void AssignITSupporter(Ticket ticket);
     }
 
     public partial class AgencyService
@@ -90,5 +99,98 @@ namespace DataService.Models.Entities.Services
             return rsList;
         }
 
+        public bool CreateRequest(AgencyCreateRequestAPIViewModel model)
+        {
+            try
+            {
+
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+
+                var createRequest = new Request();
+
+                createRequest.AgencyId = model.AgencyId;
+                createRequest.RequestCategoryId = model.RequestCategoryId;
+                createRequest.RequestStatus = (int)RequestStatusEnum.Pending;
+                createRequest.RequestName = model.RequestName;
+                requestRepo.Add(createRequest);
+                requestRepo.Save();
+
+                CreateTicket(model.Ticket, createRequest.RequestId);
+
+                createRequest.RequestStatus = (int)RequestStatusEnum.Processing;
+
+
+
+                requestRepo.Save();
+                return true;
+            }
+            catch (Exception e)
+            {
+
+                return false;
+            }
+
+        }
+
+        public void CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId)
+        {
+            try
+            {
+
+                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+
+                foreach (var item in listTicket)
+                {
+                    var createTicket = new Ticket();
+                    createTicket.RequestId = RequestId;
+                    createTicket.ServiceItemId = item.ServiceItemId;
+                    createTicket.DeviceId = item.DeviceId;
+                    createTicket.Current_TicketStatus = (int)TicketStatusEnum.Await;
+                    createTicket.Desciption = item.Desciption;
+                    ticketRepo.Add(createTicket);
+
+
+                    AssignITSupporter(createTicket);
+                }
+                ticketRepo.Save();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
+        public void AssignITSupporter(Ticket ticket)
+        {
+            try
+            {
+                var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var itSupporter = itSupporterRepo.GetActive(p => (p.IsBusy != null || p.IsBusy == false)).FirstOrDefault(x => x.Skills.OrderByDescending(o => o.MonthExperience).Any(s => s.ServiceItemId == ticket.ServiceItemId));
+                if (itSupporter != null)
+                {
+                    var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+                    var ticketById = ticketRepo.GetActive().SingleOrDefault(a => a.TicketId == ticket.TicketId);
+                    ticketById.CurrentITSupporter_Id = itSupporter.ITSupporterId;
+                    ticketById.StartTime = DateTime.Now;
+                    itSupporter.IsBusy = true;
+                    ticketById.Current_TicketStatus = (int)TicketStatusEnum.In_Process;
+
+                    itSupporterRepo.Edit(itSupporter);
+                    ticketRepo.Edit(ticketById);
+
+                    itSupporterRepo.Save();
+                    ticketRepo.Save();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
     }
 }

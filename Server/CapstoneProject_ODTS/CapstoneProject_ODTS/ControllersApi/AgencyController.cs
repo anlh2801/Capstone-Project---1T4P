@@ -48,13 +48,27 @@ namespace CapstoneProject_ODTS.ControllersApi
         [Route("agency/view_all_device")]
         public HttpResponseMessage ViewAllDevice(int agency_id)
         {
-            var result = _agencyDomain.ViewAllDevice(agency_id);
+            var result = _agencyDomain.ViewAllDeviceByAgencyId(agency_id);
             if (result.Count() < 0)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPost]
+        [Route("agency/create_request")]
+        public HttpResponseMessage CreateRequest(AgencyCreateRequestAPIViewModel model)
+        {
+            var result = _agencyDomain.CreateRequest(model);
+            if (result == false)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, "Tạo Thành Công!");
+
         }
     }
 }

@@ -13,11 +13,13 @@ namespace DataService.Domain
     {
         AgencyAPIViewModel ViewProfile(int agency_id);
 
-        List<AgencyDeviceAPIViewModel> ViewAllDevice(int agency_id);
+        List<AgencyDeviceAPIViewModel> ViewAllDeviceByAgencyId(int agency_id);
 
         bool UpdateProfile(AgencyUpdateAPIViewModel model);
 
         List<AgencyAPIViewModel> GetAllAgency();
+
+        bool CreateRequest(AgencyCreateRequestAPIViewModel model);
     }
 
     public class AgencyDomain : BaseDomain, IAgencyDomain
@@ -40,11 +42,11 @@ namespace DataService.Domain
             return result;
         }
 
-        public List<AgencyDeviceAPIViewModel> ViewAllDevice(int agency_id)
+        public List<AgencyDeviceAPIViewModel> ViewAllDeviceByAgencyId(int agency_id)
         {
             var agencyDeviceService = this.Service<IDeviceService>();
 
-            var agencies = agencyDeviceService.ViewAllDevice(agency_id);
+            var agencies = agencyDeviceService.ViewAllDeviceByAgencyId(agency_id);
 
             return agencies;
         }
@@ -59,6 +61,15 @@ namespace DataService.Domain
             var agencies = agencyService.GetAllAgency();
 
             return agencies;
+        }
+
+        public bool CreateRequest(AgencyCreateRequestAPIViewModel model)
+        {
+            var agencyService = this.Service<IAgencyService>();
+
+            var result = agencyService.CreateRequest(model);
+
+            return result;
         }
     }
 }

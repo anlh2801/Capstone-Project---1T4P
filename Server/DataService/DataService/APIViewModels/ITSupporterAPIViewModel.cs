@@ -19,7 +19,7 @@ namespace DataService.APIViewModels
         public  string Email { get; set; }
         public  string Gender { get; set; }
         public  string Address { get; set; }
-        public Nullable<double> RatingAVG { get; set; }
+        public double RatingAVG { get; set; }
         public  string IsBusy { get; set; }
         public  string CreateDate { get; set; }
         public  string UpdateDate { get; set; }
