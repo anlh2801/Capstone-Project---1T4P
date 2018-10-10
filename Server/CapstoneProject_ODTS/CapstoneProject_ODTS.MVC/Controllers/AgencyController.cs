@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DataService.APIViewModels;
 using DataService.Domain;
 
 namespace CapstoneProject_ODTS.Controllers
@@ -61,6 +62,25 @@ namespace CapstoneProject_ODTS.Controllers
                 return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { result = agencyDetail }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult RemoveAgency(int agency_id)
+        {
+            var agencyDetail = _agencyDomain.removeAgency(agency_id);
+            //return RedirectToAction("Index");
+            return Json(new { result = agencyDetail }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CreateAgency(AgencyAPIViewModel model)
+        {
+            var result = _agencyDomain.CreateAgency(model);
+            if (result == false)
+            {
+                return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+
         }
     }
 }

@@ -1,7 +1,9 @@
-﻿using DataService.Domain;
+﻿using DataService.APIViewModels;
+using DataService.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -40,6 +42,27 @@ namespace CapstoneProject_ODTS.Controllers
             }
 
             return Json(new { result = accountdetail }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult CreateAccount(int RoleId, string Username, string Password, string CreateDate, string UpdateDate)
+        {
+            var model = new AccountCreateAPIViewModel()
+            {
+                RoleId = RoleId,
+                Username=Username,
+                Password = Password,
+                CreateAt =CreateDate,
+                UpdateAt = UpdateDate,
+            };
+
+             
+            var result = _accountDomain.CreateAccount(model);
+            if (result == false)
+            {
+                return Json(false); ;
+            }
+
+            return Json(true);
+
         }
     }
 }
