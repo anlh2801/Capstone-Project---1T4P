@@ -14,7 +14,7 @@ namespace DataService.APIViewModels
 
         public int NumericalOrder { get; set; }
         public int AccountId { get; set; }
-        public int RoleId { get; set; }
+        public string RoleName { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public bool IsDelete { get; set; }

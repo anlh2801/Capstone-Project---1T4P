@@ -106,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiEndpoint.cs" />
+    <Compile Include="APIViewModels\AccountCreateAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyDeviceAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyUpdateAPIViewModel.cs" />
     <Compile Include="APIViewModels\FeedbackAPIViewModel.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="APIViewModels\ITSupporterUpdateProfileAPIViewModel.cs" />
     <Compile Include="APIViewModels\ITSupporterUpdateTaskStatusAPIViewModel.cs" />
     <Compile Include="APIViewModels\RequestCancelAPIViewModel.cs" />
+    <Compile Include="APIViewModels\RoleAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketHistoryAPIViewModel.cs" />
     <Compile Include="APIViewModels\RequestAPIViewModel.cs" />
@@ -205,6 +207,7 @@
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\ITSuppoterDomain.cs" />
+    <Compile Include="Domain\RoleDomain.cs" />
     <Compile Include="Domain\TicketHistoryDomain.cs" />
     <Compile Include="Domain\TicketDomain.cs" />
     <Compile Include="Domain\AccountDomain.cs" />
@@ -417,6 +420,7 @@
     <Compile Include="Models\Entities\Services\RequestServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Services\RoleService.cs" />
     <Compile Include="Models\Entities\Services\RoleServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>

@@ -15,6 +15,7 @@ namespace DataService.Models.Entities.Services
         bool CheckLogin(string username, string password,int roleid);
         List<AccountAPIViewModel> GetAllAccount();
         AccountAPIViewModel ViewProfile(int account_id);
+        bool CreateAccount(AccountCreateAPIViewModel model);
     }
 
     public partial class AccountService
@@ -39,7 +40,7 @@ namespace DataService.Models.Entities.Services
                     {
                         NumericalOrder = count,
                         AccountId = item.AccountId,
-                        RoleId = item.RoleId,
+                        RoleName = item.Role.RoleName,
                         Username = item.Username,
                         Password = item.Password,
                         CreateAt = item.CreateDate.Value.ToString("MM/dd/yyyy"),
@@ -62,7 +63,7 @@ namespace DataService.Models.Entities.Services
                 var accountAPIViewModel = new AccountAPIViewModel
                 {
                     AccountId = account.AccountId,
-                    RoleId = account.RoleId,
+                    RoleName = account.Role.RoleName,
                     Username = account.Username,
                     Password = account.Password,
                     CreateAt = account.CreateDate.Value.ToString("MM/dd/yyyy"),
@@ -72,5 +73,33 @@ namespace DataService.Models.Entities.Services
             }
             return null;
         }
+        public bool CreateAccount(AccountCreateAPIViewModel model)
+        {
+
+            var accountRepo = DependencyUtils.Resolve<IAccountRepository>();
+            var createAccount = new Account();
+
+            try
+            {
+                createAccount.AccountId = model.AccountId;
+                createAccount.RoleId = model.RoleId;
+                createAccount.Username = model.Username;
+                createAccount.Password = model.Password;
+                createAccount.CreateDate = DateTime.Now;
+                createAccount.UpdateDate = DateTime.Now;
+
+                accountRepo.Add(createAccount);
+
+                accountRepo.Save();
+                return true;
+            }
+            catch (Exception e)
+            {
+
+                return false;
+            }
+
+        }
+       
     }
 }
