@@ -14,7 +14,7 @@ namespace DataService.Models.Entities.Services
     {
         List<RequestAPIViewModel> GetAllRequest();
 
-        List<RequestAPIViewModel> GetTicketByRequestId(int requestId);
+        RequestAPIViewModel GetTicketByRequestId(int requestId);
 
         List<RequestAPIViewModel> GetRequestWithStatus(int status);
 
@@ -82,9 +82,9 @@ namespace DataService.Models.Entities.Services
             return rsList;
         }
 
-        public List<RequestAPIViewModel> GetTicketByRequestId(int requestId)
+        public RequestAPIViewModel GetTicketByRequestId(int requestId)
         {
-            List<RequestAPIViewModel> rsList = new List<RequestAPIViewModel>();
+            RequestAPIViewModel rsList = new RequestAPIViewModel();
             var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
             var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
             var ServiceItemRepo = DependencyUtils.Resolve<IServiceItemRepository>();
@@ -122,10 +122,10 @@ namespace DataService.Models.Entities.Services
                 RequestStatus = request.RequestStatus,
 
             };
-            rsList.Add(a);
+            //rsList.Add(a);
 
 
-            return rsList;
+            return a;
         }
 
         public static string TimeAgo(DateTime dateTime)

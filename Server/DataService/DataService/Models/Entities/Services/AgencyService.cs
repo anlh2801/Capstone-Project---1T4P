@@ -15,6 +15,8 @@ namespace DataService.Models.Entities.Services
         AgencyAPIViewModel ViewProfile(int agency_id);
         bool UpdateProfile(AgencyUpdateAPIViewModel model);
         List<AgencyAPIViewModel> GetAllAgency();
+        Boolean removeAgency(int agency_id);
+        bool CreateAgency(AgencyAPIViewModel model);
     }
 
     public partial class AgencyService
@@ -28,8 +30,10 @@ namespace DataService.Models.Entities.Services
                    var agencyAPIViewModel = new AgencyAPIViewModel
                     {
                         AgencyId = agency.AgencyId,
-                        CompanyId = agency.CompanyId ?? 0,
+                       CompanyId = agency.CompanyId ?? 0,
+                       CompanyName = agency.Company.CompanyName,
                         AccountId = agency.AccountId,
+                        UserName = agency.Account.Username,
                         AgencyName = agency.AgencyName,
                         Address = agency.Address,
                         Telephone = agency.Telephone,
@@ -68,8 +72,6 @@ namespace DataService.Models.Entities.Services
 
             foreach (var item in agencies)
             {
-                if (!item.IsDelete)
-                {
                     rsList.Add(new AgencyAPIViewModel
                     {
                         AgencyId = item.AgencyId,
@@ -80,12 +82,43 @@ namespace DataService.Models.Entities.Services
                         Telephone = item.Telephone,
                         CreateAt = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
                         UpdateAt = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
-                    });
-                }
-               
+                    });              
             }
 
             return rsList;
+        }
+        public Boolean removeAgency(int agency_id)
+        {
+            var agencyRepo = DependencyUtils.Resolve<IAgencyRepository>();
+            var agency = agencyRepo.GetActive().SingleOrDefault(a => a.AgencyId == agency_id);
+            Deactivate(agency);
+            return true;
+        }
+
+        public bool CreateAgency(AgencyAPIViewModel model)
+        {
+            try
+            {
+                var ticketTaskRepo = DependencyUtils.Resolve<IAgencyRepository>();
+                var createTask = new Agency();
+
+                createTask.CompanyId = model.CompanyId;
+                createTask.AccountId = model.AccountId;
+                createTask.AgencyName = model.AgencyName;
+                createTask.Address = model.Address;
+                createTask.Telephone = model.Telephone;
+                createTask.IsDelete = false;
+                createTask.CreateDate = DateTime.Now;
+                createTask.UpdateDate = DateTime.Now;
+                ticketTaskRepo.Add(createTask);
+                ticketTaskRepo.Save();
+                return true;
+            }
+            catch (Exception e)
+            {
+
+                return false;
+            }
         }
 
     }

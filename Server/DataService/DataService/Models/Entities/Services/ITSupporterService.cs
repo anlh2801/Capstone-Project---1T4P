@@ -28,6 +28,12 @@ namespace DataService.Models.Entities.Services
         bool UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
 
         bool CreateTask(ITSupporterCreateTaskAPIViewModel model);
+
+        bool SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model);
+
+        bool SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model);
+
+        GuidelineAPIViewModel GetGuidelineByServiceItemID(int service_item_Id);
     }
 
     public partial class ITSupporterService
@@ -197,12 +203,12 @@ namespace DataService.Models.Entities.Services
 
         public bool CreateTask(ITSupporterCreateTaskAPIViewModel model)
         {
-
-            var ticketTaskRepo = DependencyUtils.Resolve<ITicketTaskRepository>();
-            var createTask = new TicketTask();
-
             try
             {
+
+                var ticketTaskRepo = DependencyUtils.Resolve<ITicketTaskRepository>();
+                var createTask = new TicketTask();
+
                 createTask.TicketId = model.TicketId;
                 createTask.TaskStatus = model.TaskStatus;
                 createTask.CreateByITSupporter = model.CreateByITSupporter;
@@ -223,6 +229,72 @@ namespace DataService.Models.Entities.Services
                 return false;
             }
             
+        }
+
+        public bool SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model)
+        {
+
+                var ticketTaskRepo = DependencyUtils.Resolve<ITicketTaskRepository>();
+                var setTimeTask = ticketTaskRepo.GetActive().SingleOrDefault(a => a.TicketTaskId == model.TicketTaskId);
+
+                if (setTimeTask != null)
+                {
+                    setTimeTask.TicketTaskId = model.TicketTaskId;
+                    setTimeTask.StartTime = DateTime.Parse(model.StartTime);
+                    setTimeTask.EndTime = DateTime.Parse(model.EndTime);
+
+                    ticketTaskRepo.Edit(setTimeTask);
+
+                    ticketTaskRepo.Save();
+                    return true;
+                }
+
+                return false;
+
+            }
+
+        public bool SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model)
+        {
+
+            var ticketTaskRepo = DependencyUtils.Resolve<ITicketTaskRepository>();
+            var setPriorityTask = ticketTaskRepo.GetActive().SingleOrDefault(a => a.TicketTaskId == model.TicketTaskId);
+
+            if (setPriorityTask != null)
+            {
+                setPriorityTask.TicketTaskId = model.TicketTaskId;
+                setPriorityTask.Priority = model.Priority;
+
+                ticketTaskRepo.Edit(setPriorityTask);
+
+                ticketTaskRepo.Save();
+                return true;
+            }
+
+            return false;
+
+        }
+
+        public GuidelineAPIViewModel GetGuidelineByServiceItemID(int service_item_Id)
+        {
+
+            var guidelineRepo = DependencyUtils.Resolve<IGuidelineRepository>();
+            var guideline = guidelineRepo.GetActive().SingleOrDefault(a => a.ServiceItemId == service_item_Id);
+            if (guideline != null)
+            {
+                var GuidelineAPIViewModel = new GuidelineAPIViewModel
+                {
+                    GuidelineId = guideline.GuidelineId,
+                    ServiceItemId = guideline.ServiceItemId ?? 0,
+                    GuidelineName = guideline.GuidelineName,
+                    StartDate = guideline.StartDate != null ? guideline.StartDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    EndDate = guideline.EndDate != null ? guideline.EndDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    CreateDate = guideline.CreateDate != null ? guideline.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    UpdateDate = guideline.UpdateDate != null ? guideline.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                };
+                return GuidelineAPIViewModel;
+            }
+
+            return null;
         }
     }
 }
