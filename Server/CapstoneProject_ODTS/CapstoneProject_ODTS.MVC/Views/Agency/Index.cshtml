@@ -45,26 +45,65 @@
             <div class="modal-body">
                 <p>
                 <b>ID:</b><br>
-                <p class="rqID"></p>
+                <p id="rqID"></p>
                 <p>
                 <b>Company:</b><br>
-                <p class="rqName"></p>
+                <p id="rqName"></p>
                 <p>
                 <b>Account:</b><br>
-                <p class="rqCD"></p>
+                <p id="rqCD"></p>
                 <p>
                 <b>Agency Name:</b><br>
-                <p class="rqAN"></p>
+                <p id="rqAN"></p>
                 <p>
                 <b>Address:</b><br>
-                <p class="rqIT"></p>
+                <p id="rqIT"></p>
                 <p>
                 <b>Telephone:</b><br>
-                <p class="rqIN"></p>
-                    
+                <p id="rqIN"></p>
+
 
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Request Detail</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                <b>ID:</b>
+                <p>
+                <input id="idd" type="text" readonly/>
+                <p>
+                <b>Company:</b>
+                <select class="form-control" id="q"></select>
+                <p>
+                <b>Account:</b><br>
+                <select class="form-control" id="w"></select>
+                <p>
+                <b>Name</b><br>
+                <input id="e" type="text">
+                <p>
+                <b>Address:</b><br>
+                <input id="r" type="text">
+                <p>
+                <b>Telephone:</b><br>
+                <input id="t" type="text">
+                <p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" onClick="updateAgency();" class="btn  btn-outline-danger">Save Changes</a>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 @*<button type="button" class="btn btn-primary">Save changes</button>*@
             </div>
@@ -84,22 +123,23 @@
             <div class="modal-body">
                 <p>
                 <b>Company:</b>
-                <select class="form-control" id="q">
+                <select class="form-control" id="qq">
+
                 </select>
                 <p>
                 <b>Account:</b><br>
-                <select class="form-control" id="w">
+                <select class="form-control" id="ww">
 
                 </select>
                 <p>
                 <b>Name</b><br>
-                <input id="e" type="text">
+                <input id="ee" type="text">
                 <p>
                 <b>Address:</b><br>
-                <input id="r" type="text">
+                <input id="rr" type="text">
                 <p>
                 <b>Telephone:</b><br>
-                <input id="t" type="text">
+                <input id="tt" type="text">
                 <p>
                     
 
@@ -114,9 +154,6 @@
 </div>
 <!-- Datatable -->
 <div class="row col-md-12">
-    <div class="col-md-1">
-        <button type="button" class="btn btn-block btn-primary" onclick="showCreateModal(); showCompany(), showAccount()">Create</button>
-    </div>
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
         <tr>
@@ -132,6 +169,9 @@
         </thead>
         <tbody></tbody>
     </table>
+    <div class="test">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="showCreateModal(), showAccount(), showCompany()">New Agency</button>
+    </div>
 </div>
 
 <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -142,7 +182,7 @@
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             loadCompany();
         });
 
@@ -151,7 +191,6 @@
                 type: 'GET',
                 url: '@Url.Action("GetAllAgency", "Agency")',
                 data: {
-
                 },
                 success: function(result) {
                     initDatatable(result.result);
@@ -161,6 +200,7 @@
                 }
             });
         }
+
         function initDatatable(data) {
             $("#detail-table").dataTable().fnDestroy();
             $("#detail-table").dataTable({
@@ -200,7 +240,6 @@
                     //        return edit + " " + del;
                     //    },
                     //}
-
                 ],
                 "columns": [
                     { "data": "AgencyId" },
@@ -213,23 +252,29 @@
                     { "data": "UpdateAt" },
                     {
                         "data": "RequestName",
-                        "mRender": function ( data, type, full ) {
+                        "mRender": function(data, type, full) {
                             return '<a href="AgencyDevice/' + full.AgencyId + '">View All Device</a>';
                         }
                     },
                     {
                         "mRender": function(data, type, full) {
-                            return ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.AgencyId+')"></button>';
+                            return ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' +
+                                full.AgencyId +
+                                ')"></button>';
                         }
                     },
                     {
-                        "mRender": function (data, type, full) {
-                            return ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getData(' + full.AgencyId + ')"></button>';
+                        "mRender": function(data, type, full) {
+                            return ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' +
+                                full.AgencyId +
+                                '),showCompany(),showAccount()"></button>';
                         }
                     },
                     {
-                        "mRender": function (data, type, full) {
-                            return ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeAgency(' + full.AgencyId + ')"></button>';
+                        "mRender": function(data, type, full) {
+                            return ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeAgency(' +
+                                full.AgencyId +
+                                ')"></button>';
                         }
                     },
                 ],
@@ -248,18 +293,41 @@
                 type: 'GET',
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    $(".rqID").text(data.result.AgencyId);
-                    $(".rqName").text(data.result.CompanyName);
-                    $(".rqCD").text(data.result.UserName);
-                    $(".rqAN").text(data.result.AgencyName);
-                    $(".rqIT").text(data.result.Address);
-                    $(".rqIN").text(data.result.Telephone);
+                success: function(data) {
+                    $("#rqID").text(data.result.AgencyId);
+                    $("#rqName").text(data.result.CompanyName);
+                    $("#rqCD").text(data.result.UserName);
+                    $("#rqAN").text(data.result.AgencyName);
+                    $("#rqIT").text(data.result.Address);
+                    $("#rqIN").text(data.result.Telephone);
 
                 }
             });
             $('#detailModal').modal('show');
         }
+
+        //show Data on Edit Modal
+        function getDataEdit(id) {
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "GetAgencyDetail", controller = "Agency"})',
+
+                data: {
+                    agency_id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    $("#idd").val(data.result.AgencyId);
+                    $("#e").val(data.result.AgencyName);
+                    $("#r").val(data.result.Address);
+                    $("#t").val(data.result.Telephone);
+
+                }
+            });
+            $('#editModal').modal('show');
+        }
+
         //show delete modal
         function removeAgency(id) {
             $('#modalConfirmDelete').modal('show');
@@ -275,11 +343,11 @@
                 data: {
                     agency_id: agency_idd
                 },
-                
+
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    $('#modalConfirmDelete').modal('hide')                    
+                success: function(data) {
+                    $('#modalConfirmDelete').modal('hide')
                     loadCompany();
                 }
             });
@@ -292,47 +360,65 @@
 
         //show all company on combo box
         function showCompany() {
+            $('#qq, #q')
+                    .find('option')
+                    .remove()
+                    .end();
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("GetAllCompany", "Home")',
                 data: {
-                    
                 },
-                
+
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
-                success: function (data) {
+                success: function(data) {
                     //$('#createAgency').modal('show');
                     var len = data.result.length;
                     var html = '';
-                    for (var i = 0; i< len; i++) {
-                        html += '<option value="' + data.result[i].CompanyId + '">' + data.result[i].CompanyName + '</option>';
+                    for (var i = 0; i < len; i++) {
+                        html += '<option value="' +
+                            data.result[i].CompanyId +
+                            '">' +
+                            data.result[i].CompanyName +
+                            '</option>';
                     }
                     $('#q').append(html);
+                    $('#qq').append(html);
 
                 }
             });
+            
 
         }
+
         //show all account on combo box
         function showAccount() {
+            $('#ww, #w')
+                .find('option')
+                .remove()
+                .end();
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("GetAllAccount", "Account")',
                 data: {
-                    
                 },
-                
+
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
-                success: function (data) {
+                success: function(data) {
                     //$('#createAgency').modal('show');
                     var len = data.result.length;
                     var html = '';
-                    for (var i = 0; i< len; i++) {
-                        html += '<option value="' + data.result[i].AccountId + '">' + data.result[i].Username + '</option>';
+                    for (var i = 0; i < len; i++) {
+                        html += '<option value="' +
+                            data.result[i].AccountId +
+                            '">' +
+                            data.result[i].Username +
+                            '</option>';
                     }
                     $('#w').append(html);
+                    $('#ww').append(html);
 
                 }
             });
@@ -340,24 +426,45 @@
         }
 
         //create agency when click create button on create modal
-        function createAgency() {
+        function updateAgency() {
             var empObj = {
-                CompanyId: $('#q').val(),
-                AccountId: $('#w').val(),
+                AgencyId: $('#idd').val(),
                 AgencyName: $('#e').val(),
                 Address: $('#r').val(),
                 Telephone: $('#t').val(),
             }
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("CreateAgency", "Agency")',
+                url: '@Url.Action("UpdateAgency", "Agency")',
                 data: JSON.stringify(empObj),
-                
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
+                    $('#editModal').modal('hide'),
+                        loadCompany();
+                }
+            });
+        }
+
+        function createAgency() {
+            var empObj = {
+                CompanyId: $('#qq').val(),
+                AccountId: $('#ww').val(),
+                AgencyName: $('#ee').val(),
+                Address: $('#rr').val(),
+                Telephone: $('#tt').val(),
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("CreateAgency", "Agency")',
+                data: JSON.stringify(empObj),
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
                     $('#createAgencyModal').modal('hide'),
                         loadCompany();
+
                 }
             });
         }

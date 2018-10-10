@@ -82,5 +82,17 @@ namespace CapstoneProject_ODTS.Controllers
             return Json(new { result }, JsonRequestBehavior.AllowGet);
 
         }
+
+        public ActionResult UpdateAgency(AgencyUpdateAPIViewModel model)
+        {
+            var result = _agencyDomain.UpdateProfile(model);
+            if (result == false)
+            {
+                return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+
+        }
     }
 }
