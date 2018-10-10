@@ -30,26 +30,63 @@
                 </div>
                 <div class="modal-body">
                     <p>
-                        <b>RoleId:</b><br>
-                    <p class="accRole"></p>
+                        <b>RoleName:</b><br>
+                    <p id="accRole"></p>
                     <p>
                         <b>Username:</b><br>
-                    <p class="accName"></p>
+                    <p id="accName"></p>
                     <p>
                         <b>Password:</b><br>
-                    <p class="accPass"></p>
+                    <p id="accPass"></p>
                     <p>
                         <b>CreateDate:</b><br>
-                    <p class="accCreateDate"></p>
+                    <p id="accCreateDate"></p>
                     <p>
                         <b>UpdateDate:</b><br>
-                    <p class="accUpdateDate"></p>
+                    <p id="accUpdateDate"></p>
 
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade2" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <b>RoleId:</b><br>
+                        <select>
+                            <option value="1">Admin</option>
+                            <option value="2">Saab</option>
+                            <option value="3">Opel</option>
+                        </select>
+                    <p>
+                        <b>Username:</b><br>
+                        <input type="text" id="accName"></input>
+                    <p>
+                        <b>Password:</b><br>
+                        <input type="text" id="accPass"></input>
+                   
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="createAcccount">Save changes</button>
                 </div>
             </div>
         </div>
@@ -73,6 +110,9 @@
         </thead>
         <tbody></tbody>
     </table>
+    <div class="test">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="getDataToEdit('+full.AccountId+')">New Account</button>
+    </div>
 </div>
 
 <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -101,6 +141,29 @@
                 }
             });
         }
+        function createAcccount() {
+           $.ajax({
+                type: 'POST',
+                url: '@Url.Action("CreateAccount", "Account")',
+               data: {
+                    'roleid': $('#RoleId').val(),
+                    'username': $('#Username').val(),
+                    'password': $('#Password').val(),
+               
+               
+                },
+                success: function(result) {
+                    if (result.isSucess) {
+
+                        window.location.href = result.urlReturn.toString();
+                    };
+                },
+                error: function(error) {
+                    showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                }
+            });
+        }
+
         function initDatatable(data) {
             $("#detail-table").dataTable({
                 stateSave: true,
@@ -126,24 +189,24 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [1, 2, 3, 4, 5, 6],
+                        "aTargets": [1, 2, 3, 4, 5, 6,7],
                         "bSortable": false,
                         "sClass": "text-center",
                     },
 
 
-                    //{
-                    //    "aTargets": [6],
-                    //    "mRender": function (data, type, row) {
-                    //        var edit = "<a title='Chỉnh sửa' class='btn btn-sm btn-primary' onclick='callShowEditModal(" + data + ")'><i class='glyphicon glyphicon-pencil'></i></a>";
-                    //        var del = "<a title='Xóa' class='btn btn-sm btn-danger' onclick='deleteElementChil(" + data + ")'><i class='glyphicon glyphicon-trash'></i></a>";
-                    //        return edit + " " + del;
-                    //    },
-                    //}
+                    {
+                        "aTargets": [7],
+                        "mRender": function (data, type, row) {
+                            var edit = "<a title='Chỉnh sửa' class='btn btn-sm btn-primary' onclick='callShowEditModal(" + data + ")'><i class='glyphicon glyphicon-pencil'></i></a>";
+                            var del = "<a title='Xóa' class='btn btn-sm btn-danger' onclick='deleteElementChil(" + data + ")'><i class='glyphicon glyphicon-trash'></i></a>";
+                            return edit + " " + del;
+                        },
+                    }
                 ],
                 "columns": [
                     { "data": "NumericalOrder" },
-                    { "data": "RoleId" },
+                    { "data": "RoleName" },
                     { "data": "Username"},
                     { "data": "Password" },
                     { "data": "CreateAt" },
@@ -170,18 +233,36 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $(".accRole").text(data.result.RoleId);
-                    $(".accName").text(data.result.Username);
-                    $(".accPass").text(data.result.Password);
-                    $(".accCreateDate").text(data.result.CreateAt);
-                    $(".accUpdateDate").text(data.result.UpdateAt);
-                    
+                    $("#accRole").text(data.result.RoleName);
+                    $("#accName").text(data.result.Username);
+                    $("#accPass").text(data.result.Password);
+                    $("#accCreateDate").text(data.result.CreateAt);
+                    $("#accUpdateDate").text(data.result.UpdateAt);
+
                 }
             });
             $('#exampleModal').modal('show');
         }
+        function getDataToEdit(idd) {
 
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "CreateAccount", controller = "Account"})',
 
+                data: {
+                    account_id: idd
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $("#accRole").val(data.result.RoleId);
+                    $("#accName").val(data.result.Username);
+                    $("#accPass").val(data.result.Password);
+
+                }
+            });
+            $('#exampleModal2').modal('show');
+        }
     </script>
 
 }
