@@ -21,7 +21,7 @@
             <!--Footer-->
             <div class="modal-footer flex-center">
                 @*@Html.ActionLink("Yess", "GetAgencyDetail", "Agency", new { agency_id = 4 }, null)*@
-                <a href="#" onClick="yourFunction(); return false;" class="btn  btn-outline-danger">Yes</a>
+                <a href="#" onClick="deleteAgency(); return false;" class="btn  btn-outline-danger">Yes</a>
                 @*<a href="@Url.Action("removeAgency", "Agency", new {agency_id = 4})" class="btn  btn-outline-danger">Yes</a>*@
                 <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
             </div>
@@ -33,7 +33,7 @@
 <input type="hidden" id="agencyHidden"  />
 <!--Modal: modalConfirmDelete-->    
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
@@ -72,7 +72,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="createAgency" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="createAgencyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
@@ -115,7 +115,7 @@
 <!-- Datatable -->
 <div class="row col-md-12">
     <div class="col-md-1">
-        <button type="button" class="btn btn-block btn-primary" onclick="showCreate(), showAcc()">Create</button>
+        <button type="button" class="btn btn-block btn-primary" onclick="showCreateModal(); showCompany(), showAccount()">Create</button>
     </div>
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
@@ -229,7 +229,7 @@
                     },
                     {
                         "mRender": function (data, type, full) {
-                            return ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeAg(' + full.AgencyId + ')"></button>';
+                            return ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeAgency(' + full.AgencyId + ')"></button>';
                         }
                     },
                 ],
@@ -237,8 +237,8 @@
             });
         }
 
+        //show Data on View Detail Modal
         function getData(id) {
-
             $.ajax({
                 url: '@Url.RouteUrl(new {action = "GetAgencyDetail", controller = "Agency"})',
 
@@ -258,9 +258,16 @@
 
                 }
             });
-            $('#exampleModal').modal('show');
+            $('#detailModal').modal('show');
         }
-        function yourFunction() {
+        //show delete modal
+        function removeAgency(id) {
+            $('#modalConfirmDelete').modal('show');
+            $('#agencyHidden').val(id);
+        }
+
+        //delete agency
+        function deleteAgency() {
             var agency_idd = $('#agencyHidden').val();
             $.ajax({
                 type: 'GET',
@@ -277,12 +284,14 @@
                 }
             });
         }
-        function removeAg(id) {
-            $('#modalConfirmDelete').modal('show');
-            $('#agencyHidden').val(id);
+
+        //show Create Modal
+        function showCreateModal() {
+            $('#createAgencyModal').modal('show');
         }
-        function showCreate() {
-            $('#modalConfirmDelete').modal('hide');
+
+        //show all company on combo box
+        function showCompany() {
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("GetAllCompany", "Home")',
@@ -293,7 +302,7 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $('#createAgency').modal('show');
+                    //$('#createAgency').modal('show');
                     var len = data.result.length;
                     var html = '';
                     for (var i = 0; i< len; i++) {
@@ -305,9 +314,8 @@
             });
 
         }
-
-        function showAcc() {
-            $('#modalConfirmDelete').modal('hide')
+        //show all account on combo box
+        function showAccount() {
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("GetAllAccount", "Account")',
@@ -318,6 +326,7 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
+                    //$('#createAgency').modal('show');
                     var len = data.result.length;
                     var html = '';
                     for (var i = 0; i< len; i++) {
@@ -329,6 +338,8 @@
             });
 
         }
+
+        //create agency when click create button on create modal
         function createAgency() {
             var empObj = {
                 CompanyId: $('#q').val(),
@@ -345,7 +356,7 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $('#createAgency').modal('hide'),
+                    $('#createAgencyModal').modal('hide'),
                         loadCompany();
                 }
             });
