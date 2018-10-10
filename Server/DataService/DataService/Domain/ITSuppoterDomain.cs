@@ -33,6 +33,7 @@ namespace DataService.Domain
         bool SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model);
 
         GuidelineAPIViewModel GetGuidelineByServiceItemID(int service_item_Id);
+
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain

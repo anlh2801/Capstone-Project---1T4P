@@ -34,6 +34,7 @@ namespace DataService.Models.Entities.Services
         bool SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model);
 
         GuidelineAPIViewModel GetGuidelineByServiceItemID(int service_item_Id);
+
     }
 
     public partial class ITSupporterService
@@ -55,8 +56,8 @@ namespace DataService.Models.Entities.Services
                     Email = item.Email,
                     Gender = item.Gender,
                     Address = item.Address,
-                    RatingAVG = item.RatingAVG,
-                    IsBusy = item.IsBusy,
+                    RatingAVG = item.RatingAVG ?? 0,
+                    IsBusy = item.IsBusy.Value == true ? "Đang bận!" : "Chờ việc",
                     CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
                     UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                 });
@@ -100,7 +101,7 @@ namespace DataService.Models.Entities.Services
                     Gender = itSupporter.Gender,
                     Address = itSupporter.Address,
                     RatingAVG = itSupporter.RatingAVG ?? 0,
-                    IsBusy = itSupporter.IsBusy,
+                    IsBusy = itSupporter.IsBusy.Value == true ? "Đang bận!" : "Chờ việc",
                     CreateDate = itSupporter.CreateDate != null ? itSupporter.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
                     UpdateDate = itSupporter.UpdateDate != null ? itSupporter.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                 };
@@ -296,5 +297,7 @@ namespace DataService.Models.Entities.Services
 
             return null;
         }
+
+        
     }
 }

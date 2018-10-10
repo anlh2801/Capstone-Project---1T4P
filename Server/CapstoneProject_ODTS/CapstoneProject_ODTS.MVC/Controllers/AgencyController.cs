@@ -45,7 +45,7 @@ namespace CapstoneProject_ODTS.Controllers
 
         public ActionResult GetAllDevice(int agency_id)
         {
-            var result = _agencyDomain.ViewAllDevice(agency_id);
+            var result = _agencyDomain.ViewAllDeviceByAgencyId(agency_id);
             if (result.Count() < 0)
             {
                 //không co record

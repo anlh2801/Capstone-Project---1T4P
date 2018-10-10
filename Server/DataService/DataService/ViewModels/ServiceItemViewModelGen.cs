@@ -19,7 +19,7 @@ namespace DataService.ViewModels
     			public virtual Nullable<int> ServiceId { get; set; }
     			public virtual string IssueName { get; set; }
     			public virtual Nullable<double> Price { get; set; }
-    			public virtual bool IsDelete { get; set; }
+    			public virtual Nullable<bool> IsDelete { get; set; }
     			public virtual Nullable<System.DateTime> CreateDate { get; set; }
     			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	

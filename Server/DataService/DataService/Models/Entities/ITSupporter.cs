@@ -30,8 +30,8 @@ namespace DataService.Models.Entities
         public string Gender { get; set; }
         public string Address { get; set; }
         public Nullable<double> RatingAVG { get; set; }
-        public string IsBusy { get; set; }
-        public bool IsDelete { get; set; }
+        public Nullable<bool> IsBusy { get; set; }
+        public Nullable<bool> IsDelete { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
     

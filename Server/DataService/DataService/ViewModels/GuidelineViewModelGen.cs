@@ -20,7 +20,7 @@ namespace DataService.ViewModels
     			public virtual string GuidelineName { get; set; }
     			public virtual Nullable<System.DateTime> StartDate { get; set; }
     			public virtual Nullable<System.DateTime> EndDate { get; set; }
-    			public virtual bool IsDelete { get; set; }
+    			public virtual Nullable<bool> IsDelete { get; set; }
     			public virtual Nullable<System.DateTime> CreateDate { get; set; }
     			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	

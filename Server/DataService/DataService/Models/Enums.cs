@@ -24,16 +24,14 @@ namespace DataService.Models
     //For ITSupporter View
     public enum TicketStatusEnum
     {
-        [Display(Name = "Mới")]
-        New = 1,
-        [Display(Name = "Xác nhận")]
-        Approve = 2,
+        [Display(Name = "Đang chờ xử lý")]
+        Await = 1,
         [Display(Name = "Đang xử lý")]
-        In_Process = 3,
+        In_Process = 2,
         [Display(Name = "Hoàn thành")]
-        Done = 4,
+        Done = 3,
         [Display(Name = "Hủy bỏ")]
-        Cancel = 5
+        Cancel = 4
     }
 
     //For Ticket Task

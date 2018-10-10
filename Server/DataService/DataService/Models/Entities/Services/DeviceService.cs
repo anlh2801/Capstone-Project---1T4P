@@ -12,12 +12,12 @@ namespace DataService.Models.Entities.Services
 {
     public partial interface IDeviceService
     {
-        List<AgencyDeviceAPIViewModel> ViewAllDevice(int agency_id);
+        List<AgencyDeviceAPIViewModel> ViewAllDeviceByAgencyId(int agency_id);
     }
 
     public partial class DeviceService
     {
-        public List<AgencyDeviceAPIViewModel> ViewAllDevice(int agency_id)
+        public List<AgencyDeviceAPIViewModel> ViewAllDeviceByAgencyId(int agency_id)
         {
             List<AgencyDeviceAPIViewModel> rsList = new List<AgencyDeviceAPIViewModel>();
             var agencyDeviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
