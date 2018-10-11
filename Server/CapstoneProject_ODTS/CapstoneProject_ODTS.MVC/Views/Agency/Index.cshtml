@@ -87,10 +87,10 @@
                     <input id="idd" type="text" disabled="disabled" class="form-control" />
                 <p>
                     <b>Company:</b>
-                    <select id="q" class="form-control" disabled="disabled"></select>
+                    <select id="q" class="form-control" disabled="true"></select>
                 <p>
                     <b>Account:</b><br>
-                    <select id="w" class="form-control" disabled="disabled"></select>
+                    <select id="w" class="form-control" disabled="true"></select>
                 <p>
                     <b>Name</b><br>
                     <input id="e" type="text" class="form-control">
@@ -167,7 +167,7 @@
         <tbody></tbody>
     </table>
     <div class="test">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="showCreateModal(), showAccount(), showCompany()">New Agency</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="showCreateModal()">New Agency</button>
     </div>
 </div>
 
@@ -183,6 +183,8 @@
     <script>
         $(document).ready(function() {
             loadCompany();
+            showAccount();
+            showCompany()
         });
         $('#createAgencyModal').on('hidden.bs.modal', function () {
             $('.modal-body').find('input').val('');
@@ -269,7 +271,7 @@
                         "mRender": function(data, type, full) {
                             return ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' +
                                 full.AgencyId +
-                                '),showCompany(),showAccount()"></button>';
+                                ')"></button>';
                         }
                     },
                     {
@@ -319,7 +321,9 @@
                 type: 'GET',
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
-                success: function(data) {
+                success: function (data) {
+                    $("#q").val(data.result.CompanyId);
+                    $("#w").val(data.result.AccountId);
                     $("#idd").val(data.result.AgencyId);
                     $("#e").val(data.result.AgencyName);
                     $("#r").val(data.result.Address);
