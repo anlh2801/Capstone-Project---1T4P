@@ -49,9 +49,9 @@ namespace DataService.Models.Entities.Services
                         AgencyName = agency.AgencyName,
                         Address = agency.Address,
                         Telephone = agency.Telephone,
-                        CreateAt = agency.CreateDate.Value.ToString("MM/dd/yyyy"),
-                        UpdateAt = agency.UpdateDate.Value.ToString("MM/dd/yyyy")
-                    };
+                        CreateAt = agency.CreateDate != null ? agency.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        UpdateAt = agency.UpdateDate != null ? agency.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                   };
                 return agencyAPIViewModel;
             }
             return null;
@@ -121,7 +121,6 @@ namespace DataService.Models.Entities.Services
                 createTask.Telephone = model.Telephone;
                 createTask.IsDelete = false;
                 createTask.CreateDate = DateTime.Now;
-                createTask.UpdateDate = DateTime.Now;
                 ticketTaskRepo.Add(createTask);
                 ticketTaskRepo.Save();
                 return true;

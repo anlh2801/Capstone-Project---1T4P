@@ -44,22 +44,22 @@
             </div>
             <div class="modal-body">
                 <p>
-                <b>ID:</b><br>
+                    <b>ID:</b><br>
                 <p id="rqID"></p>
                 <p>
-                <b>Company:</b><br>
+                    <b>Company:</b><br>
                 <p id="rqName"></p>
                 <p>
-                <b>Account:</b><br>
+                    <b>Account:</b><br>
                 <p id="rqCD"></p>
                 <p>
-                <b>Agency Name:</b><br>
+                    <b>Agency Name:</b><br>
                 <p id="rqAN"></p>
                 <p>
-                <b>Address:</b><br>
+                    <b>Address:</b><br>
                 <p id="rqIT"></p>
                 <p>
-                <b>Telephone:</b><br>
+                    <b>Telephone:</b><br>
                 <p id="rqIN"></p>
 
 
@@ -82,28 +82,29 @@
             </div>
             <div class="modal-body">
                 <p>
-                <b>ID:</b>
+                    <b>ID:</b>
                 <p>
-                <input id="idd" type="text" readonly/>
+                    <input id="idd" type="text" disabled="disabled" class="form-control" />
                 <p>
-                <b>Company:</b>
-                <select class="form-control" id="q"></select>
+                    <b>Company:</b>
+                    <select id="q" class="form-control" disabled="true"></select>
                 <p>
-                <b>Account:</b><br>
-                <select class="form-control" id="w"></select>
+                    <b>Account:</b><br>
+                    <select id="w" class="form-control" disabled="true"></select>
                 <p>
-                <b>Name</b><br>
-                <input id="e" type="text">
+                    <b>Name</b><br>
+                    <input id="e" type="text" class="form-control">
                 <p>
-                <b>Address:</b><br>
-                <input id="r" type="text">
+                    <b>Address:</b><br>
+                    <input id="r" type="text" class="form-control">
                 <p>
-                <b>Telephone:</b><br>
-                <input id="t" type="text">
+                    <b>Telephone:</b><br>
+                    <input id="t" type="text" class="form-control">
                 <p>
             </div>
             <div class="modal-footer">
-                <a href="#" onClick="updateAgency();" class="btn  btn-outline-danger">Save Changes</a>
+                @*<a href="#" onClick="updateAgency();" class="btn  btn-outline-danger">Save Changes</a>*@
+                <button type="button" class="btn btn-primary" onClick="updateAgency();">Save changes</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 @*<button type="button" class="btn btn-primary">Save changes</button>*@
             </div>
@@ -120,35 +121,30 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <p>
-                <b>Company:</b>
-                <select class="form-control" id="qq">
+                <div class="modal-body">
 
-                </select>
-                <p>
-                <b>Account:</b><br>
-                <select class="form-control" id="ww">
+                    <label for="qq">Company:</label>
+                    <select class="form-control" id="qq"></select>
 
-                </select>
-                <p>
-                <b>Name</b><br>
-                <input id="ee" type="text">
-                <p>
-                <b>Address:</b><br>
-                <input id="rr" type="text">
-                <p>
-                <b>Telephone:</b><br>
-                <input id="tt" type="text">
-                <p>
-                    
+                    <label for="ww">Account:</label>
+                    <select class="form-control" id="ww"></select>
 
-            </div>
-            <div class="modal-footer">
-                <a href="#" onClick="createAgency();" class="btn  btn-outline-danger">Create</a>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                @*<button type="button" class="btn btn-primary">Save changes</button>*@
-            </div>
+                    <label for="ee">Name</label>
+                    <input id="ee" type="text" class="form-control" required>
+
+                    <label for="rr">Address</label>
+                    <input id="rr" type="text" class="form-control" required>
+
+                    <label for="tt">Telephone:</label>
+                    <input id="tt" type="text" class="form-control" required>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button  class="btn btn-primary" onClick="createAgency();">Create</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    @*<button type="button" class="btn btn-primary">Save changes</button>*@
+                </div>
         </div>
     </div>
 </div>
@@ -156,34 +152,42 @@
 <div class="row col-md-12">
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
-        <tr>
-            <th><label>STT</label></th>
-            <th><label>Company Name</label></th>
-            <th><label>Account Name</label></th>
-            <th><label>Name</label></th>
-            <th><label>Address</label></th>
-            <th><label>Telephone</label></th>
-            <th><label>Create Date</label></th>
-            <th><label>Update Date  </label></th>
-        </tr>
+            <tr>
+                <th><label>STT</label></th>
+                <th><label>Company Name</label></th>
+                @*<th><label>Account Name</label></th>*@
+                <th><label>Name</label></th>
+                <th><label>Detail</label></th>
+                @*<th><label>Address</label></th>
+                    <th><label>Telephone</label></th>
+                    <th><label>Create Date</label></th>
+                    <th><label>Update Date  </label></th>*@
+            </tr>
         </thead>
         <tbody></tbody>
     </table>
     <div class="test">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="showCreateModal(), showAccount(), showCompany()">New Agency</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="showCreateModal()">New Agency</button>
     </div>
 </div>
 
-<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AdminLTE/bower_components/datatables.net-bs/css/jquery.dataTables.min.css" rel="stylesheet" />
+
 @section scripts {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
-    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    @*<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>*@
+    <script src="~/AdminLTE/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function() {
             loadCompany();
+            showAccount();
+            showCompany()
+        });
+        $('#createAgencyModal').on('hidden.bs.modal', function () {
+            $('.modal-body').find('input').val('');
         });
 
         function loadCompany() {
@@ -227,7 +231,7 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+                        "aTargets": [0, 1, 2, 3, 4, 5, 6],
                         "bSortable": false,
                         "sClass": "text-center"
                     },
@@ -244,12 +248,12 @@
                 "columns": [
                     { "data": "AgencyId" },
                     { "data": "CompanyName" },
-                    { "data": "UserName" },
+                    //{ "data": "UserName" },
                     { "data": "AgencyName" },
-                    { "data": "Address" },
-                    { "data": "Telephone" },
-                    { "data": "CreateAt" },
-                    { "data": "UpdateAt" },
+                    //{ "data": "Address" },
+                    //{ "data": "Telephone" },
+                    //{ "data": "CreateAt" },
+                    //{ "data": "UpdateAt" },
                     {
                         "data": "RequestName",
                         "mRender": function(data, type, full) {
@@ -267,7 +271,7 @@
                         "mRender": function(data, type, full) {
                             return ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' +
                                 full.AgencyId +
-                                '),showCompany(),showAccount()"></button>';
+                                ')"></button>';
                         }
                     },
                     {
@@ -317,7 +321,9 @@
                 type: 'GET',
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
-                success: function(data) {
+                success: function (data) {
+                    $("#q").val(data.result.CompanyId);
+                    $("#w").val(data.result.AccountId);
                     $("#idd").val(data.result.AgencyId);
                     $("#e").val(data.result.AgencyName);
                     $("#r").val(data.result.Address);
@@ -388,7 +394,7 @@
 
                 }
             });
-            
+
 
         }
 
