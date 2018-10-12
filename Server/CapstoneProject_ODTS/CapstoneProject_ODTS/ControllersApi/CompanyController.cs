@@ -8,7 +8,12 @@ using System.Web.Http;
 
 namespace CapstoneProject_ODTS.Controllers
 {
-    public class CompanyController : ApiController
+    public interface ICompanyController
+    {
+        HttpResponseMessage GetAllCompany();
+    }
+
+    public class CompanyController : ApiController, ICompanyController
     {
         private CompanyDomain _companyDomain;
 

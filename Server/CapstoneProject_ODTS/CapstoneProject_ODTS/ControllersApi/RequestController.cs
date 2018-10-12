@@ -10,6 +10,21 @@ using DataService.Domain;
 
 namespace CapstoneProject_ODTS.ControllersApi
 {
+    public interface IRequestDomain
+    {
+        HttpResponseMessage GetAllRequest();
+
+        HttpResponseMessage GetTicketByRequestId(int RequestId);
+
+        HttpResponseMessage GetRequestWithStatus(int status);
+
+        HttpResponseMessage GetAllRequestByAgencyIDAndStatus(int acency_id, int status);
+
+        HttpResponseMessage CreateFeedbackForRequest(FeedbackAPIViewModel feedback);
+
+        HttpResponseMessage CancelRequest(RequestCancelAPIViewModel model);
+    }
+
     public class RequestController : ApiController
     {
         private RequestDomain _requestDomain;

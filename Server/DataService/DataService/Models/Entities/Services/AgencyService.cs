@@ -23,7 +23,7 @@ namespace DataService.Models.Entities.Services
 
         void CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId);
 
-        void AssignITSupporter(Ticket ticket);
+        int AssignITSupporter(Ticket ticket);
 
         Boolean removeAgency(int agency_id);
 
@@ -152,9 +152,7 @@ namespace DataService.Models.Entities.Services
 
                 CreateTicket(model.Ticket, createRequest.RequestId);
 
-                createRequest.RequestStatus = (int)RequestStatusEnum.Processing;
-
-
+                createRequest.RequestStatus = (int)RequestStatusEnum.Processing; 
 
                 requestRepo.Save();
                 return true;
@@ -169,62 +167,49 @@ namespace DataService.Models.Entities.Services
 
         public void CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId)
         {
-            try
+
+            var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+
+            foreach (var item in listTicket)
             {
+                var createTicket = new Ticket();
+                createTicket.RequestId = RequestId;
+                createTicket.ServiceItemId = item.ServiceItemId;
+                createTicket.DeviceId = item.DeviceId;
+                createTicket.Current_TicketStatus = (int)TicketStatusEnum.Await;
+                createTicket.Desciption = item.Desciption;
 
-                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
-
-                foreach (var item in listTicket)
-                {
-                    var createTicket = new Ticket();
-                    createTicket.RequestId = RequestId;
-                    createTicket.ServiceItemId = item.ServiceItemId;
-                    createTicket.DeviceId = item.DeviceId;
-                    createTicket.Current_TicketStatus = (int)TicketStatusEnum.Await;
-                    createTicket.Desciption = item.Desciption;
-                    ticketRepo.Add(createTicket);
-
-
-                    AssignITSupporter(createTicket);
-                }
-                ticketRepo.Save();
+                createTicket.CurrentITSupporter_Id = AssignITSupporter(createTicket);
+                ticketRepo.Add(createTicket);
             }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            ticketRepo.Save();
 
         }
 
-        public void AssignITSupporter(Ticket ticket)
+        public int AssignITSupporter(Ticket ticket)
         {
-            try
+
+            var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+            var itSupporter = itSupporterRepo.GetActive(p => (p.IsBusy == null || p.IsBusy == false)).FirstOrDefault(x => x.Skills.OrderByDescending(o => o.MonthExperience).Any(s => s.ServiceItemId == ticket.ServiceItemId));
+            if (itSupporter != null)
             {
-                var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
-                var itSupporter = itSupporterRepo.GetActive(p => (p.IsBusy != null || p.IsBusy == false)).FirstOrDefault(x => x.Skills.OrderByDescending(o => o.MonthExperience).Any(s => s.ServiceItemId == ticket.ServiceItemId));
-                if (itSupporter != null)
-                {
-                    var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
-                    var ticketById = ticketRepo.GetActive().SingleOrDefault(a => a.TicketId == ticket.TicketId);
-                    ticketById.CurrentITSupporter_Id = itSupporter.ITSupporterId;
-                    ticketById.StartTime = DateTime.Now;
-                    itSupporter.IsBusy = true;
-                    ticketById.Current_TicketStatus = (int)TicketStatusEnum.In_Process;
+                //var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+                //var ticketById = ticketRepo.GetActive().SingleOrDefault(a => a.TicketId == ticket.TicketId);
+                //ticketById.CurrentITSupporter_Id = itSupporter.ITSupporterId;
+                //ticketById.StartTime = DateTime.Now;
+                itSupporter.IsBusy = true;
+                //ticketById.Current_TicketStatus = (int)TicketStatusEnum.In_Process;
 
-                    itSupporterRepo.Edit(itSupporter);
-                    ticketRepo.Edit(ticketById);
+                itSupporterRepo.Edit(itSupporter);
+                //ticketRepo.Edit(ticketById);
 
-                    itSupporterRepo.Save();
-                    ticketRepo.Save();
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
+                itSupporterRepo.Save();
+                //ticketRepo.Save;
             }
 
+            return itSupporter.ITSupporterId;
         }
+
+
     }
 }

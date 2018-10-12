@@ -9,7 +9,20 @@ using System.Web.Http;
 
 namespace CapstoneProject_ODTS.ControllersApi
 {
-    public class AgencyController : ApiController
+    public interface IAgencyController
+    {
+        HttpResponseMessage ViewProfile(int agency_id);
+
+        HttpResponseMessage UpdateProfile(AgencyUpdateAPIViewModel model);
+
+        HttpResponseMessage ViewAllDevice(int agency_id);
+
+        HttpResponseMessage CreateRequest(AgencyCreateRequestAPIViewModel model);
+
+
+    }
+
+    public class AgencyController : ApiController, IAgencyController
     {
         private AgencyDomain _agencyDomain;
 

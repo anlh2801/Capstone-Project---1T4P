@@ -9,7 +9,30 @@ using System.Web.Http;
 
 namespace CapstoneProject_ODTS.ControllersApi
 {
-    public class ITSupporterController : ApiController
+    public interface IITSupporterController
+    {
+
+        HttpResponseMessage ViewProfileITSupporter(int itSupporter_id);
+
+        HttpResponseMessage ViewAllOwnerTicket(int ITsupporter_id);
+
+        HttpResponseMessage EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
+
+        HttpResponseMessage UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model);
+
+        HttpResponseMessage UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
+
+        HttpResponseMessage CreateTask(ITSupporterCreateTaskAPIViewModel model);
+
+        HttpResponseMessage SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model);
+
+        HttpResponseMessage SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model);
+
+        HttpResponseMessage GetGuidelineByServiceItemID(int service_item_Id);
+
+    }
+
+    public class ITSupporterController : ApiController, IITSupporterController
     {
         private ITSupporterDomain _ITSupporterDomain;
 
