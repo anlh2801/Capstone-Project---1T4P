@@ -8,12 +8,8 @@ using System.Web.Http;
 
 namespace CapstoneProject_ODTS.Controllers
 {
-    public interface ICompanyController
-    {
-        HttpResponseMessage GetAllCompany();
-    }
-
-    public class CompanyController : ApiController, ICompanyController
+    [RoutePrefix("api/company")]
+    public class CompanyController : ApiController
     {
         private CompanyDomain _companyDomain;
 
@@ -23,16 +19,16 @@ namespace CapstoneProject_ODTS.Controllers
         }
 
         [HttpGet]
-        [Route("company/all_company")]
+        [Route("findall")]
         public HttpResponseMessage GetAllCompany()
         {
-            var result = _companyDomain.GetAllCompany();
-            if (result.Count() < 0)
+            var list = _companyDomain.GetAllCompany();
+            if (list.Count() < 0)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
             }            
 
-            return Request.CreateResponse(HttpStatusCode.OK, result);
+            return Request.CreateResponse(HttpStatusCode.OK, new {result = list});
         }
     }
 }
