@@ -13,12 +13,12 @@ namespace DataService.Models.Entities.Services
 {
     public partial interface ICompanyService
     {
-        ResponseObject GetAllCompany();
+        ResponseObject<List<CompanyAPIViewModel>> GetAllCompany();
     }
 
     public partial class CompanyService
     {
-        public ResponseObject GetAllCompany()
+        public ResponseObject<List<CompanyAPIViewModel>> GetAllCompany()
         {
             List<CompanyAPIViewModel> rsList = new List<CompanyAPIViewModel>();
             var companyRepo = DependencyUtils.Resolve<ICompanyRepository>();
@@ -46,11 +46,11 @@ namespace DataService.Models.Entities.Services
             }
             else
             {
-                return new ResponseObject { IsError = true, ErrorMessage = "Không có công ty nào", ObjReturn = rsList };
+                return new ResponseObject<List<CompanyAPIViewModel>> { IsError = true, ErrorMessage = "Không có công ty nào", ObjReturn = rsList };
             }
             
 
-            return new ResponseObject { IsError = false, ObjReturn = rsList };
+            return new ResponseObject<List<CompanyAPIViewModel>> { IsError = false, ObjReturn = rsList };
         }
 }
 }

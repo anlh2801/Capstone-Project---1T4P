@@ -13,12 +13,12 @@ namespace DataService.Domain
     public interface ICompanyDomain
     {
 
-        ResponseObject GetAllCompany();
+        ResponseObject<List<CompanyAPIViewModel>> GetAllCompany();
     }
 
     public class CompanyDomain : BaseDomain, ICompanyDomain
     {
-        public ResponseObject GetAllCompany()
+        public ResponseObject<List<CompanyAPIViewModel>> GetAllCompany()
         {          
             var companyService = this.Service<ICompanyService>();
 
