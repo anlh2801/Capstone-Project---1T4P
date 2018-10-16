@@ -1,5 +1,6 @@
 ﻿using DataService.APIViewModels;
 using DataService.Models.Entities.Repositories;
+using DataService.ResponseModel;
 using DataService.Utilities;
 using DataService.ViewModels;
 using System;
@@ -12,27 +13,31 @@ namespace DataService.Models.Entities.Services
 {
     public partial interface IRequestService
     {
-        List<RequestAPIViewModel> GetAllRequest();
+        ResponseObject<List<RequestAPIViewModel>> GetAllRequest();
 
-        RequestAPIViewModel GetTicketByRequestId(int requestId);
+        ResponseObject<RequestAPIViewModel> GetTicketByRequestId(int requestId);
 
-        List<RequestAPIViewModel> GetRequestWithStatus(int status);
+        ResponseObject<List<RequestAPIViewModel>> GetRequestWithStatus(int status);
 
-        List<RequestAPIViewModel> GetAllRequestByAgencyIDAndStatus(int acency_id, int status);
+        ResponseObject<List<RequestAPIViewModel>> GetAllRequestByAgencyIDAndStatus(int acency_id, int status);
 
-        bool CreateFeedbackForRequest(int RequestId, string feedbackContent);
+        ResponseObject<bool> CreateFeedbackForRequest(int RequestId, string feedbackContent);
 
-        bool CancelRequest(RequestCancelAPIViewModel model);
+        ResponseObject<bool> CancelRequest(RequestCancelAPIViewModel model);
 
     }
 
     public partial class RequestService
     {
-        public List<RequestAPIViewModel> GetAllRequest()
+        public ResponseObject<List<RequestAPIViewModel>> GetAllRequest()
         {
             List<RequestAPIViewModel> rsList = new List<RequestAPIViewModel>();
             var RequestRepo = DependencyUtils.Resolve<IRequestRepository>();
             var requests = RequestRepo.GetActive().ToList();
+            if (requests.Count < 0)
+            {
+                return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại" };
+            }
             foreach (var item in requests)
             {
                 var timeAgo = TimeAgo(item.CreateDate.Value);
@@ -55,34 +60,36 @@ namespace DataService.Models.Entities.Services
 
             }
 
-            return rsList;
+            return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, SuccessMessage = "Hiển thị yêu cầu thành công" , ObjReturn = rsList};
         }
 
 
-        public List<RequestAPIViewModel> GetRequestWithStatus(int status)
+        public ResponseObject<List<RequestAPIViewModel>> GetRequestWithStatus(int status)
         {
             List<RequestAPIViewModel> rsList = new List<RequestAPIViewModel>();
             var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
-            var requests = requestRepo.GetActive().ToList();
-            var listStatus = requests.FindAll(x => x.RequestStatus == status);
-            foreach (var item in listStatus)
+            var requests = requestRepo.GetActive(x => x.RequestStatus == status).ToList();
+            if (requests.Count < 0)
+            {
+                return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Không lấy được" };
+            }
+            foreach (var item in requests)
             {
                 var timeAgo = TimeAgo(item.CreateDate.Value);
                 var a = new RequestAPIViewModel()
                 {
                     RequestId = item.RequestId,
                     RequestName = item.RequestName,
-                    CreateDate = timeAgo,
-                    //AgencyName = item.Agency.AgencyName,
+                    CreateDate = timeAgo,                    
                     RequestStatus = item.RequestStatus,
                 };
                 rsList.Add(a);
             }
 
-            return rsList;
+            return new ResponseObject<List<RequestAPIViewModel>> { IsError = false, SuccessMessage = "Thành công" };
         }
 
-        public RequestAPIViewModel GetTicketByRequestId(int requestId)
+        public ResponseObject<RequestAPIViewModel> GetTicketByRequestId(int requestId)
         {
             RequestAPIViewModel rsList = new RequestAPIViewModel();
             var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
@@ -109,26 +116,22 @@ namespace DataService.Models.Entities.Services
             
 
             var timeAgo = TimeAgo(request.CreateDate.Value);
-            var a = new RequestAPIViewModel()
+            var requestAPIViewModel = new RequestAPIViewModel()
             {
                 RequestId = request.RequestId,
                 RequestName = request.RequestName,
                 CreateDate = timeAgo,
                 AgencyName = request.Agency.AgencyName,
-                //ITSupporterName = list.ITSupporter.ITSupporterName,
-                //IssueName = IssueName.IssueName.ToString(),
                 IssueName = listIssue,
                 ITName = listIT,
                 RequestStatus = request.RequestStatus,
 
             };
-            //rsList.Add(a);
 
-
-            return a;
+            return new ResponseObject<RequestAPIViewModel> { IsError = false, SuccessMessage = "Lấy thành công", ObjReturn = requestAPIViewModel };
         }
 
-        public static string TimeAgo(DateTime dateTime)
+        private string TimeAgo(DateTime dateTime)
         {
             string result = string.Empty;
             var timeSpan = DateTime.Now.Subtract(dateTime);
@@ -171,29 +174,31 @@ namespace DataService.Models.Entities.Services
             return result;
         }
 
-        public List<RequestAPIViewModel> GetAllRequestByAgencyIDAndStatus(int acency_id, int status)
+        public ResponseObject<List<RequestAPIViewModel>> GetAllRequestByAgencyIDAndStatus(int acency_id, int status)
         {
             List<RequestAPIViewModel> rsList = new List<RequestAPIViewModel>();
             var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
-            var requests = requestRepo.GetActive().ToList();
-            var listStatus = requests.FindAll(x => x.RequestStatus == status && x.AgencyId == acency_id);
-            foreach (var item in listStatus)
+            var requests = requestRepo.GetActive(x => x.RequestStatus == status && x.AgencyId == acency_id).ToList();
+            if (requests.Count < 0)
+            {
+                return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Thất bại", ObjReturn = rsList };
+            }
+            foreach (var item in requests)
             {
                 var timeAgo = TimeAgo(item.CreateDate.Value);
                 var a = new RequestAPIViewModel()
                 {
                     RequestId = item.RequestId,
                     RequestName = item.RequestName,
-                    CreateDate = timeAgo,
-                    //AgencyName = item.Agency.AgencyName,
+                    CreateDate = timeAgo,                    
                 };
                 rsList.Add(a);
             }
 
-            return rsList;
+            return new ResponseObject<List<RequestAPIViewModel>> { IsError = false, SuccessMessage = "Thành công", ObjReturn = rsList};
         }
 
-        public bool CreateFeedbackForRequest(int requestId, string feedbackContent)
+        public ResponseObject<bool> CreateFeedbackForRequest(int requestId, string feedbackContent)
         {
             var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                         
@@ -205,12 +210,12 @@ namespace DataService.Models.Entities.Services
                 requestRepo.Edit(request);
                 requestRepo.Save();
 
-                return true;
+                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Đánh giá thành công", ObjReturn = true};
             }
-            return false;
+            return new ResponseObject<bool> { IsError = true, WarningMessage = "Đánh giá thất bại", ObjReturn = false };
         }
 
-        public bool CancelRequest(RequestCancelAPIViewModel model)
+        public ResponseObject<bool> CancelRequest(RequestCancelAPIViewModel model)
         {
             var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
             var cancelTicket = requestRepo.GetActive().SingleOrDefault(a => a.RequestId == model.RequestId);
@@ -222,10 +227,10 @@ namespace DataService.Models.Entities.Services
 
                 requestRepo.Edit(cancelTicket);
                 requestRepo.Save();
-                return true;
+                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Hủy yêu cầu thành công", ObjReturn = true };
             }
 
-            return false;
+            return new ResponseObject<bool> { IsError = true, WarningMessage = "Hủy yêu cầu thất bại", ObjReturn = false };
         }
     }
 }
