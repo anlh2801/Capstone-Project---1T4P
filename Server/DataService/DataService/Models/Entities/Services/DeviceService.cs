@@ -25,7 +25,7 @@ namespace DataService.Models.Entities.Services
             var agencyDevices = agencyDeviceRepo.GetActive(p => p.AgencyId == agency_id).ToList();
             if (agencyDevices.Count < 0)
             {
-                return new ResponseObject<List<AgencyDeviceAPIViewModel>> { IsError = true, ErrorMessage = "Không tìm thấy thiết bị nào!" };
+                return new ResponseObject<List<AgencyDeviceAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy thiết bị nào!" };
             }
             foreach (var item in agencyDevices)
             {
@@ -49,7 +49,7 @@ namespace DataService.Models.Entities.Services
                 });
             }
 
-            return new ResponseObject<List<AgencyDeviceAPIViewModel>> { IsError = false, ObjReturn = rsList };
+            return new ResponseObject<List<AgencyDeviceAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Tìm thấy thiết bị" };
         }
 
     }
