@@ -12,7 +12,6 @@ namespace DataService.APIViewModels
         public TicketAPIViewModel(DataService.Models.Entities.Ticket entity) : base(entity) { }
 
         public int TicketId { get; set; }
-        public int ServiceItemId { get; set; }
         public int RequestId { get; set; }
         public int DeviceId { get; set; }
         public string Desciption { get; set; }

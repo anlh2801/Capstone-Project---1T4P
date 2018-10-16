@@ -22,7 +22,7 @@ namespace DataService.Models.Entities.Services
             var itSupporterlRepo = DependencyUtils.Resolve<IITSupporterRepository>();
             var ticketDetails = ticketRepo.GetActive(p => p.TicketId == rate.TicketId &&
                                                            p.CurrentITSupporter_Id == rate.CurrentITSupporter_Id &&
-                                                           p.ServiceItemId == rate.ServiceItemId).SingleOrDefault();
+                                                           p.Request.ServiceItemId == rate.ServiceItemId).SingleOrDefault();
             var itupporter = itSupporterlRepo.Get(rate.CurrentITSupporter_Id);
 
             if (ticketDetails != null && itupporter != null)

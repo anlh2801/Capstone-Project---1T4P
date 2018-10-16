@@ -123,7 +123,6 @@ namespace DataService.Models.Entities.Services
                     rsList.Add(new TicketAPIViewModel
                     {
                         TicketId = item.TicketId,
-                        ServiceItemId = item.ServiceItemId,
                         RequestId = item.RequestId,
                         DeviceId = item.DeviceId,
                         Desciption = item.Desciption,

@@ -21,9 +21,9 @@ namespace DataService.Models.Entities.Services
 
         bool CreateRequest(AgencyCreateRequestAPIViewModel model);
 
-        void CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId);
+        void CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId, int current_IT_supporter_Id);
 
-        int AssignITSupporter(Ticket ticket);
+        int AssignITSupporter(int ServiceItemId);
 
         Boolean removeAgency(int agency_id);
 
