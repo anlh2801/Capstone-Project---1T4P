@@ -25,43 +25,24 @@ namespace CapstoneProject_ODTS.Controllers
         public ActionResult GetAllContract()
         {
             var contracts = _contractDomain.GetAllContract();
-            if (contracts.Count() < 0)
-            {
-                return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
-            }
-
+            
             return Json(new { result = contracts }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult ViewDetail(int contract_id)
         {
-            var contractdetail = _contractDomain.ViewDetail(contract_id);
-            if (contractdetail == null)
-            {
-                return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
-            }
+            var contractdetail = _contractDomain.ViewDetail(contract_id);            
 
             return Json(new { result = contractdetail }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult CreateContract(ContractAPIViewModel model)
         {
-
             var result = _contractDomain.CreateContract(model);
-            if (result == false)
-            {
-                return Json(false); ;
-            }
-
-            return Json(true);
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
 
         }
         public ActionResult UpdateContract(ContractAPIViewModel model)
         {
-            var result = _contractDomain.UpdateContract(model);
-            if (result == false)
-            {
-                return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
-            }
-
+            var result = _contractDomain.UpdateContract(model);            
             return Json(new { result }, JsonRequestBehavior.AllowGet);
 
         }

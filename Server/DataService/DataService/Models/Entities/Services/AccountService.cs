@@ -28,7 +28,7 @@ namespace DataService.Models.Entities.Services
             var accountRepo = DependencyUtils.Resolve<IAccountRepository>();
             var isLoginSucess = accountRepo.GetActive().Any(a => a.Username == username && a.Password == password && a.RoleId == roleid);
 
-            return new ResponseObject<bool> { ObjReturn = isLoginSucess };
+            return new ResponseObject<bool> { ObjReturn = isLoginSucess, SuccessMessage = "Đăng nhập thành công", ErrorMessage = "Đăng nhập thất bại" };
         }
         public ResponseObject<List<AccountAPIViewModel>> GetAllAccount()
         {
@@ -60,7 +60,7 @@ namespace DataService.Models.Entities.Services
                 count++;
             }
 
-            return new ResponseObject<List<AccountAPIViewModel>> { IsError = false, ObjReturn = rsList };
+            return new ResponseObject<List<AccountAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Lấy danh sách thành công" };
         }
         public ResponseObject<AccountAPIViewModel> ViewProfile(int account_id)
         {
@@ -75,10 +75,10 @@ namespace DataService.Models.Entities.Services
                     RoleName = account.Role.RoleName,
                     Username = account.Username,
                     Password = account.Password,
-                    CreateAt = account.CreateDate.Value.ToString("MM/dd/yyyy"),
-                    UpdateAt = account.UpdateDate.Value.ToString("MM/dd/yyyy"),
+                    CreateAt = account.CreateDate.Value.ToString("dd/MM/yyyy"),
+                    UpdateAt = account.UpdateDate.Value.ToString("dd/MM/yyyy"),
                 };
-                return new ResponseObject<AccountAPIViewModel> { IsError = false, ObjReturn = accountAPIViewModel };
+                return new ResponseObject<AccountAPIViewModel> { IsError = false, ObjReturn = accountAPIViewModel, SuccessMessage = "Đã tìm thấy tài khoản" };
             }
             return new ResponseObject<AccountAPIViewModel> { IsError = true, ErrorMessage = "Không tìm thấy chi tiết tài khoản" };
         }
@@ -100,12 +100,11 @@ namespace DataService.Models.Entities.Services
                 accountRepo.Add(createAccount);
 
                 accountRepo.Save();
-                return new ResponseObject<bool> { IsError = false, WarningMessage = "Thêm tài khoản thành công", ObjReturn = true };
+                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Thêm tài khoản thành công", ObjReturn = true };
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                return new ResponseObject<bool> { IsError = true, WarningMessage = "Thêm tài khoản thất bại", ObjReturn = false };
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Thêm tài khoản thất bại", ErrorMessage = ex.ToString(), ObjReturn = false };
             }
 
         }
@@ -116,18 +115,18 @@ namespace DataService.Models.Entities.Services
             try
             {
                 Deactivate(account);
-                return new ResponseObject<bool> { IsError = false, WarningMessage = "Xóa tài khoản thành công", ObjReturn = true };
+                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Xóa tài khoản thành công", ObjReturn = true };
             }
-            catch
+            catch (Exception ex)
             {
-                return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa tài khoản thất bại", ObjReturn = false };
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa tài khoản thất bại", ErrorMessage = ex.ToString(), ObjReturn = false };
             }
         }
         public ResponseObject<bool> UpdateProfile(AccountAPIViewModel model)
         {
             var accountRepo = DependencyUtils.Resolve<IAccountRepository>();
             var updateAccount = accountRepo.GetActive().SingleOrDefault(a => a.AccountId == model.AccountId);
-            if (updateAccount.AccountId == model.AccountId)
+            if (updateAccount != null)
             {
                 updateAccount.Username = model.Username;
                 updateAccount.Password = model.Password;
@@ -135,10 +134,10 @@ namespace DataService.Models.Entities.Services
 
                 accountRepo.Edit(updateAccount);
                 accountRepo.Save();
-                return new ResponseObject<bool> { IsError = false, WarningMessage = "Chỉnh sửa tài khoản thành công", ObjReturn = true };
+                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Chỉnh sửa tài khoản thành công", ObjReturn = true };
             }
 
-            return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉ sửa tài khoản thất bại", ObjReturn = false };
+            return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉnh sửa tài khoản thất bại", ObjReturn = false };
         }
     }
 }

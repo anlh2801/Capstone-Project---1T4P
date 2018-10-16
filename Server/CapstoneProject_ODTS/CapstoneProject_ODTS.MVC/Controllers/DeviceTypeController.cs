@@ -23,11 +23,7 @@ namespace CapstoneProject_ODTS.Controllers
         }
         public ActionResult GetAllDeviceType()
         {
-            var devicetypes = _devicetypeDomain.GetAllDeviceType();
-            if (devicetypes.Count() < 0)
-            {
-                return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
-            }
+            var devicetypes = _devicetypeDomain.GetAllDeviceType();            
 
             return Json(new { result = devicetypes }, JsonRequestBehavior.AllowGet);
         }

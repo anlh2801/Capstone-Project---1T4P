@@ -46,11 +46,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage UpdateProfile(ITSupporterUpdateAPIViewModel model)
         {           
             var result = _ITSupporterDomain.UpdateTicketStatus(model);
-            if (result == false)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-            }
-
+            
             return Request.CreateResponse(HttpStatusCode.OK, "Cập nhật Thành Công!");
         }
 
@@ -58,11 +54,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         [Route("ITsupporter/view_profile_ITsupporter")]
         public HttpResponseMessage ViewProfileITSupporter(int itSupporter_id)
         {
-            var result = _ITSupporterDomain.ViewProfileITSupporter(itSupporter_id);
-            if (result == null)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-            }
+            var result = _ITSupporterDomain.ViewProfileITSupporter(itSupporter_id);            
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
@@ -71,11 +63,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         [Route("ITsupporter/view_all_owner_ticket")]
         public HttpResponseMessage ViewAllOwnerTicket(int ITsupporter_id)
         {
-            var result = _ITSupporterDomain.ViewAllOwnerTicket(ITsupporter_id);
-            if (result.Count() < 0)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-            }
+            var result = _ITSupporterDomain.ViewAllOwnerTicket(ITsupporter_id);            
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
@@ -84,26 +72,18 @@ namespace CapstoneProject_ODTS.ControllersApi
         [Route("ITsuportter/update_estimate_time_ticket")]
         public HttpResponseMessage EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model)
         {
-            var result = _ITSupporterDomain.EstimateTimeTicket(model);
-            if (result == false)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-            }
+            var result = _ITSupporterDomain.EstimateTimeTicket(model);            
 
-            return Request.CreateResponse(HttpStatusCode.OK, "Cập nhật Thành Công!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpPut]
         [Route("ITsuportter/update_task_status")]
         public HttpResponseMessage UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model)
         {
-            var result = _ITSupporterDomain.UpdateTaskStatus(model);
-            if (result == false)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-            }
+            var result = _ITSupporterDomain.UpdateTaskStatus(model);           
 
-            return Request.CreateResponse(HttpStatusCode.OK, "Cập nhật Thành Công!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpPut]
@@ -111,12 +91,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage UpdateProfile(ITSupporterUpdateProfileAPIViewModel model)
         {
             var result = _ITSupporterDomain.UpdateProfile(model);
-            if (result == false)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-            }
-
-            return Request.CreateResponse(HttpStatusCode.OK, "Cập nhật Thành Công!");
+            
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpPost]
@@ -124,12 +100,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage CreateTask(ITSupporterCreateTaskAPIViewModel model)
         {
             var result = _ITSupporterDomain.CreateTask(model);
-            if (result == false)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-            }
-
-            return Request.CreateResponse(HttpStatusCode.OK, "Tạo Thành Công!");
+           
+            return Request.CreateResponse(HttpStatusCode.OK, result);
 
         }
 
@@ -138,12 +110,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model)
         {
             var result = _ITSupporterDomain.SetMonitorTimeTask(model);
-            if (result == false)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-            }
-
-            return Request.CreateResponse(HttpStatusCode.OK, "Tạo Thành Công!");
+            
+            return Request.CreateResponse(HttpStatusCode.OK, result);
 
         }
 
@@ -151,13 +119,9 @@ namespace CapstoneProject_ODTS.ControllersApi
         [Route("ITsuportter/set_priority_task")]
         public HttpResponseMessage SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model)
         {
-            var result = _ITSupporterDomain.SetPriorityTask(model);
-            if (result == false)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-            }
+            var result = _ITSupporterDomain.SetPriorityTask(model);            
 
-            return Request.CreateResponse(HttpStatusCode.OK, "Tạo Thành Công!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
 
         }
 
@@ -166,11 +130,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage GetGuidelineByServiceItemID(int service_item_Id)
         {
             var result = _ITSupporterDomain.GetGuidelineByServiceItemID(service_item_Id);
-            if (result == null)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-            }
-
+           
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

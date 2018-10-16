@@ -11,6 +11,7 @@ namespace DataService.ResponseModel
         public bool IsError { get; set; }
         public String ErrorMessage { get; set; }
         public String WarningMessage { get; set; }
+        public String SuccessMessage { get; set; }
         public Object ObjReturn { get; set; }
     }
 }

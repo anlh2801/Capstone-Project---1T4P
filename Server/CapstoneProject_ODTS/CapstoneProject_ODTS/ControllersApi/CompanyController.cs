@@ -27,11 +27,7 @@ namespace CapstoneProject_ODTS.Controllers
         public HttpResponseMessage GetAllCompany()
         {
             var result = _companyDomain.GetAllCompany();
-            if (result.IsError)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, result.ErrorMessage);
-            }            
-
+            
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
     }
