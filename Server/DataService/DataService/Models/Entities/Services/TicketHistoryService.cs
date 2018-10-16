@@ -1,5 +1,6 @@
 ﻿using DataService.APIViewModels;
 using DataService.Models.Entities.Repositories;
+using DataService.ResponseModel;
 using DataService.Utilities;
 using System;
 using System.Collections.Generic;
@@ -11,19 +12,22 @@ namespace DataService.Models.Entities.Services
 {
     public partial interface ITicketHistoryService
     {
-        List<TicketHistoryAPIViewModel> GetTicketHistoryByTicketId(int ticketId);
+        ResponseObject<List<TicketHistoryAPIViewModel>> GetTicketHistoryByTicketId(int ticketId);
 
-        List<TicketHistoryAPIViewModel> GetAllTicketHistory();
+        ResponseObject<List<TicketHistoryAPIViewModel>> GetAllTicketHistory();
     }
 
     public partial class TicketHistoryService
     {
-        public List<TicketHistoryAPIViewModel> GetTicketHistoryByTicketId(int ticketId)
+        public ResponseObject<List<TicketHistoryAPIViewModel>> GetTicketHistoryByTicketId(int ticketId)
         {
             List<TicketHistoryAPIViewModel> rsList = new List<TicketHistoryAPIViewModel>();
             var ticketHistoryRepo = DependencyUtils.Resolve<ITicketHistoryRepository>();
             var ticketHistoryOfTicket = ticketHistoryRepo.GetActive().Where(p => p.TicketId == ticketId).ToList();
-
+            if (ticketHistoryOfTicket.Count < 0)
+            {
+                return new ResponseObject<List<TicketHistoryAPIViewModel>> { IsError = false, WarningMessage = "Lịch sử yêu cầu thất bại"};
+            }
             foreach (var item in ticketHistoryOfTicket)
             {
                 rsList.Add(new TicketHistoryAPIViewModel
@@ -36,15 +40,18 @@ namespace DataService.Models.Entities.Services
                 });
             }
 
-            return rsList;
+            return new ResponseObject<List<TicketHistoryAPIViewModel>> { IsError = false, SuccessMessage = "Lịch sử yêu cầu thành công", ObjReturn = rsList};
         }
 
-        public List<TicketHistoryAPIViewModel> GetAllTicketHistory()
+        public ResponseObject<List<TicketHistoryAPIViewModel>> GetAllTicketHistory()
         {
             List<TicketHistoryAPIViewModel> rsList = new List<TicketHistoryAPIViewModel>();
             var ticketHistoryRepo = DependencyUtils.Resolve<ITicketHistoryRepository>();
             var ticketHistoryOfTicket = ticketHistoryRepo.GetActive().ToList();
-
+            if (ticketHistoryOfTicket.Count < 0)
+            {
+                return new ResponseObject<List<TicketHistoryAPIViewModel>> { IsError = true, SuccessMessage = "Lấy lịch sử thất bại" };
+            }
             foreach (var item in ticketHistoryOfTicket)
             {
                 rsList.Add(new TicketHistoryAPIViewModel
@@ -57,7 +64,7 @@ namespace DataService.Models.Entities.Services
                 });
             }
 
-            return rsList;
+            return new ResponseObject<List<TicketHistoryAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Lấy lịch sử thành công"};
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using DataService.APIViewModels;
 using DataService.Models.Entities.Repositories;
+using DataService.ResponseModel;
 using DataService.Utilities;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,12 @@ namespace DataService.Models.Entities.Services
 {
     public partial interface ITicketService
     {
-        bool CreateRatingForHero(RatingAPIViewModel rate);
+        ResponseObject<bool> CreateRatingForHero(RatingAPIViewModel rate);
     }
 
     public partial class TicketService
     {
-        public bool CreateRatingForHero(RatingAPIViewModel rate)
+        public ResponseObject<bool> CreateRatingForHero(RatingAPIViewModel rate)
         {
             var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
             var itSupporterlRepo = DependencyUtils.Resolve<IITSupporterRepository>();
@@ -38,9 +39,9 @@ namespace DataService.Models.Entities.Services
                 itSupporterlRepo.Edit(itupporter);
                 itSupporterlRepo.Save();
 
-                return true;
+                return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Đánh giá thành công"};
             }
-            return false;
+            return new ResponseObject<bool> { IsError = true, ObjReturn = false, SuccessMessage = "Đánh giá thất bại" }; 
         }
     }
 }

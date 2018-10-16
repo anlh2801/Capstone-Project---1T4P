@@ -1,5 +1,6 @@
 ﻿using DataService.APIViewModels;
 using DataService.Models.Entities.Repositories;
+using DataService.ResponseModel;
 using DataService.Utilities;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,20 @@ namespace DataService.Models.Entities.Services
 {
     public partial interface IRoleService
     {
-        List<RoleAPIViewModel> GetAllRole();
+        ResponseObject<List<RoleAPIViewModel>> GetAllRole();
     }
 
     public partial class RoleService
     {
-        public List<RoleAPIViewModel> GetAllRole()
+        public ResponseObject<List<RoleAPIViewModel>> GetAllRole()
         {
             List<RoleAPIViewModel> rsList = new List<RoleAPIViewModel>();
             var RoleRepo = DependencyUtils.Resolve<IRoleRepository>();
             var roles = RoleRepo.GetActive().ToList();
+            if (roles.Count < 0)
+            {
+                return new ResponseObject<List<RoleAPIViewModel>> { IsError = true, WarningMessage = "Thất bại" };
+            }
             foreach (var item in roles)
             {
                 if (!item.IsDelete)
@@ -31,15 +36,15 @@ namespace DataService.Models.Entities.Services
                         RoleId = item.RoleId,
                         RoleName = item.RoleName,
                         IsDelete = item.IsDelete,
-                        CreateDate = item.CreateDate.Value.ToString("MM/dd/yyyy"),
-                        UpdateDate = item.UpdateDate.Value.ToString("MM/dd/yyyy"),
+                        CreateDate = item.CreateDate.Value.ToString("dd/MM/yyyy"),
+                        UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy"),
 
                     });
 
                 }
             }
 
-            return rsList;
+            return new ResponseObject<List<RoleAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Lấy Thành công"};
         }
     }
 }
