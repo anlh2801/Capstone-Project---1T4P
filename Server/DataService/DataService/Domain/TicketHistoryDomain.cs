@@ -1,5 +1,6 @@
 ﻿using DataService.APIViewModels;
 using DataService.Models.Entities.Services;
+using DataService.ResponseModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,21 +12,21 @@ namespace DataService.Domain
     
     public interface ITicketHistoryDomain
     {
-        List<TicketHistoryAPIViewModel> GetTicketHistoryByTicketId(int ticketId);
+        ResponseObject<List<TicketHistoryAPIViewModel>> GetTicketHistoryByTicketId(int ticketId);
 
-        List<TicketHistoryAPIViewModel> GetAllTicketHistory();
+        ResponseObject<List<TicketHistoryAPIViewModel>> GetAllTicketHistory();
     };
 
     public class TicketHistoryDomain : BaseDomain, ITicketHistoryDomain
     {
-        public List<TicketHistoryAPIViewModel> GetTicketHistoryByTicketId(int ticketId)
+        public ResponseObject<List<TicketHistoryAPIViewModel>> GetTicketHistoryByTicketId(int ticketId)
         {
             var ticketHistoryService = this.Service<ITicketHistoryService>();
             var rs = ticketHistoryService.GetTicketHistoryByTicketId(ticketId);
             return rs;
         }
 
-        public List<TicketHistoryAPIViewModel> GetAllTicketHistory()
+        public ResponseObject<List<TicketHistoryAPIViewModel>> GetAllTicketHistory()
         {
             var ticketHistoryService = this.Service<ITicketHistoryService>();
             var rs = ticketHistoryService.GetAllTicketHistory();

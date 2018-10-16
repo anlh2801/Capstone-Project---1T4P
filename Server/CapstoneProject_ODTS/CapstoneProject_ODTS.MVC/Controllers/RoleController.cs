@@ -17,11 +17,7 @@ namespace CapstoneProject_ODTS.MVC.Controllers
         public ActionResult GetAllRole()
         {
             var roles = _roleDomain.GetAllRole();
-            if (roles.Count() < 0)
-            {
-                return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
-            }
-
+            
             return Json(new { result = roles }, JsonRequestBehavior.AllowGet);
         }
     }
