@@ -183,8 +183,13 @@
                 url: '@Url.Action("GetAllDeviceType", "DeviceType")',
                 data: {
                 },
-                success: function(result) {
-                    initDatatable(result.result);
+                success: function (result) {
+                    if(result.result.isError) {
+                        alert(result.result.SuccessMessage)
+                    }
+                    else
+                        alert(result.result.WarningMessage)
+                    initDatatable(result.result.ObjReturn);
                 },
                 error: function(error) {
                     showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
