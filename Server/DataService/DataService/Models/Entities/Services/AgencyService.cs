@@ -1,5 +1,6 @@
 ﻿using DataService.APIViewModels;
 using DataService.Models.Entities.Repositories;
+using DataService.ResponseModel;
 using DataService.Utilities;
 using DataService.ViewModels;
 using System;
@@ -13,27 +14,27 @@ namespace DataService.Models.Entities.Services
     public partial interface IAgencyService
     {
 
-        AgencyAPIViewModel ViewProfile(int agency_id);
+        ResponseObject<AgencyAPIViewModel> ViewProfile(int agency_id);
 
-        bool UpdateProfile(AgencyUpdateAPIViewModel model);
+        ResponseObject<bool> UpdateProfile(AgencyUpdateAPIViewModel model);
 
-        List<AgencyAPIViewModel> GetAllAgency();
+        ResponseObject<List<AgencyAPIViewModel>> GetAllAgency();
 
-        bool CreateRequest(AgencyCreateRequestAPIViewModel model);
+        ResponseObject<bool> CreateRequest(AgencyCreateRequestAPIViewModel model);
 
-        void CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId, int current_IT_supporter_Id);
+        ResponseObject<bool> CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId, int current_IT_supporter_Id);
 
-        int AssignITSupporter(int ServiceItemId);
+        ResponseObject<bool> RemoveAgency(int agency_id);
 
-        Boolean removeAgency(int agency_id);
+        ResponseObject<bool> CreateAgency(AgencyAPIViewModel model);
 
-        bool CreateAgency(AgencyAPIViewModel model);
+        ResponseObject<AgencyDeviceAPIViewModel> GetDeviceByDeviceId(int deviceId);
 
     }
 
     public partial class AgencyService
     {
-        public AgencyAPIViewModel ViewProfile(int agency_id)
+        public ResponseObject<AgencyAPIViewModel> ViewProfile(int agency_id)
         {            
             var agencyRepo = DependencyUtils.Resolve<IAgencyRepository>();
             var agency = agencyRepo.GetActive().SingleOrDefault(a => a.AgencyId == agency_id);
@@ -52,12 +53,12 @@ namespace DataService.Models.Entities.Services
                         CreateAt = agency.CreateDate != null ? agency.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
                         UpdateAt = agency.UpdateDate != null ? agency.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                    };
-                return agencyAPIViewModel;
+                return new ResponseObject<AgencyAPIViewModel> { IsError = false, ObjReturn = agencyAPIViewModel };
             }
-            return null;
+            return new ResponseObject<AgencyAPIViewModel> { IsError = true, ErrorMessage ="Không tìm thấy thông tin chi nhánh!"};
         }
 
-        public bool UpdateProfile(AgencyUpdateAPIViewModel model)
+        public ResponseObject<bool> UpdateProfile(AgencyUpdateAPIViewModel model)
         {
             var agencyRepo = DependencyUtils.Resolve<IAgencyRepository>();
             var updateAgency = agencyRepo.GetActive().SingleOrDefault(a => a.AgencyId == model.AgencyId);
@@ -70,18 +71,21 @@ namespace DataService.Models.Entities.Services
 
                 agencyRepo.Edit(updateAgency);
                 agencyRepo.Save();
-                return true;
+                return new ResponseObject<bool> { IsError = false, WarningMessage = "Cập nhật thành công!",ObjReturn = true };
             }
 
-            return false;
+            return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật chi nhánh thất bại!", ObjReturn = false };
         }
 
-        public List<AgencyAPIViewModel> GetAllAgency()
+        public ResponseObject<List<AgencyAPIViewModel>> GetAllAgency()
         {
             List<AgencyAPIViewModel> rsList = new List<AgencyAPIViewModel>();
             var agencyRepo = DependencyUtils.Resolve<IAgencyRepository>();
             var agencies = agencyRepo.GetActive().ToList();
-
+            if(agencies.Count < 0)
+            {
+                return new ResponseObject<List<AgencyAPIViewModel>> { IsError = true, WarningMessage = "Lấy thông tin tất cả công ty thất bại!" };
+            }
             foreach (var item in agencies)
             {
                     rsList.Add(new AgencyAPIViewModel
@@ -97,17 +101,22 @@ namespace DataService.Models.Entities.Services
                     });              
             }
 
-            return rsList;
+            return new ResponseObject<List<AgencyAPIViewModel>> { IsError = false, WarningMessage = "Lấy thông tin tất cả công ty thành công!", ObjReturn = rsList };
         }
-        public Boolean removeAgency(int agency_id)
+
+        public ResponseObject<bool> RemoveAgency(int agency_id)
         {
             var agencyRepo = DependencyUtils.Resolve<IAgencyRepository>();
             var agency = agencyRepo.GetActive().SingleOrDefault(a => a.AgencyId == agency_id);
+            if(agency == null)
+            {
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa chi nhánh thất bại!", ObjReturn = false };
+            }
             Deactivate(agency);
-            return true;
+            return new ResponseObject<bool> { IsError = false, WarningMessage = "Xóa chi nhánh thành công!", ObjReturn = true };
         }
 
-        public bool CreateAgency(AgencyAPIViewModel model)
+        public ResponseObject<bool> CreateAgency(AgencyAPIViewModel model)
         {
             try
             {
@@ -123,16 +132,15 @@ namespace DataService.Models.Entities.Services
                 createTask.CreateDate = DateTime.Now;
                 ticketTaskRepo.Add(createTask);
                 ticketTaskRepo.Save();
-                return true;
+                return new ResponseObject<bool> { IsError = false, WarningMessage = "Tạo chi nhánh thành công!", ObjReturn = true };
             }
             catch (Exception e)
             {
-
-                return false;
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa chi nhánh thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
             }
         }
 
-        public bool CreateRequest(AgencyCreateRequestAPIViewModel model)
+        public ResponseObject<bool> CreateRequest(AgencyCreateRequestAPIViewModel model)
         {
             try
             {
@@ -156,56 +164,103 @@ namespace DataService.Models.Entities.Services
                 createRequest.RequestStatus = (int)RequestStatusEnum.Processing;
 
                 requestRepo.Save();
-                return true;
+                return new ResponseObject<bool> { IsError = false, WarningMessage = "Tạo yêu cầu thành công!", ObjReturn = true };
             }
             catch (Exception e)
             {
 
-                return false;
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Tạo yêu cầu thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
             }
 
         }
 
-        public void CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId, int current_IT_supporter_Id)
+        public ResponseObject<bool> CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId, int current_IT_supporter_Id)
         {
-
-            var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
-
-            foreach (var item in listTicket)
+            try
             {
-                var createTicket = new Ticket();
-                createTicket.RequestId = RequestId;
-                createTicket.DeviceId = item.DeviceId;
-                createTicket.Current_TicketStatus = (int)TicketStatusEnum.Await;
-                createTicket.Desciption = item.Desciption;
+                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
 
-                createTicket.CurrentITSupporter_Id = current_IT_supporter_Id;
-                ticketRepo.Add(createTicket);
+                foreach (var item in listTicket)
+                {
+                    var createTicket = new Ticket();
+                    createTicket.RequestId = RequestId;
+                    createTicket.DeviceId = item.DeviceId;
+                    createTicket.Current_TicketStatus = (int)TicketStatusEnum.Await;
+                    createTicket.Desciption = item.Desciption;
 
-                createTicket.Current_TicketStatus = (int)TicketStatusEnum.In_Process;
+                    createTicket.CurrentITSupporter_Id = current_IT_supporter_Id;
+                    ticketRepo.Add(createTicket);
+
+                    createTicket.Current_TicketStatus = (int)TicketStatusEnum.In_Process;
+                }
+                ticketRepo.Save();
+
+                return new ResponseObject<bool> { IsError = false, WarningMessage = "Tạo thành công!", ObjReturn = true };
             }
-            ticketRepo.Save();
+            catch (Exception e)
+            {
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Tạo thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
+            }
+            
 
         }
 
-        public int AssignITSupporter(int ServiceItemId)
+        private int AssignITSupporter(int ServiceItemId)
         {
-
-            var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
-            var itSupporter = itSupporterRepo.GetActive(p => (p.IsBusy == null || p.IsBusy == false)).FirstOrDefault(x => x.Skills.OrderByDescending(o => o.MonthExperience).Any(s => s.ServiceItemId == ServiceItemId));
-            if (itSupporter != null)
+            try
             {
-                itSupporter.IsBusy = true;
+                var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var itSupporter = itSupporterRepo.GetActive(p => (p.IsBusy == null || p.IsBusy == false)).FirstOrDefault(x => x.Skills.OrderByDescending(o => o.MonthExperience).Any(s => s.ServiceItemId == ServiceItemId));
+                if (itSupporter != null)
+                {
+                    itSupporter.IsBusy = true;
 
-                itSupporterRepo.Edit(itSupporter);
+                    itSupporterRepo.Edit(itSupporter);
 
-                itSupporterRepo.Save();
+                    itSupporterRepo.Save();
 
+                }
+                return itSupporter.ITSupporterId;
             }
+            catch (Exception e)
+            {
 
-            return itSupporter.ITSupporterId;
+                return 0;
+            }
+            
         }
 
-
+        public ResponseObject<AgencyDeviceAPIViewModel> GetDeviceByDeviceId(int deviceId)
+        {
+            try
+            {
+                var deviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
+                var devices = deviceRepo.GetActive().SingleOrDefault(a => a.DeviceId == deviceId);
+                    var agencyDeviceAPIViewModel = new AgencyDeviceAPIViewModel
+                    {
+                        DeviceId = devices.DeviceId,
+                        AgencyId = devices.AgencyId,
+                        DeviceTypeId = devices.DeviceTypeId,
+                        DeviceName = devices.DeviceName,
+                        DeviceCode = devices.DeviceCode,
+                        GuarantyStartDate = devices.GuarantyStartDate != null ? devices.GuarantyStartDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        GuarantyEndDate = devices.GuarantyEndDate != null ? devices.GuarantyEndDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        Ip = devices.Ip,
+                        Port = devices.Port,
+                        DeviceAccount = devices.DeviceAccount,
+                        DevicePassword = devices.DevicePassword,
+                        SettingDate = devices.SettingDate != null ? devices.SettingDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        Other = devices.Other,
+                        CreateDate = devices.CreateDate != null ? devices.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        UpdateDate = devices.UpdateDate != null ? devices.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                    };
+                    return new ResponseObject<AgencyDeviceAPIViewModel> { IsError = false, WarningMessage = "Tìm thấy thiết bị!", ObjReturn = agencyDeviceAPIViewModel };
+            }
+            catch (Exception e)
+            {
+                return new ResponseObject<AgencyDeviceAPIViewModel> { IsError = true, WarningMessage = "Không tìm thấy thiết bị!", ObjReturn = null, ErrorMessage = e.ToString() };
+            }
+        }
     }
 }
