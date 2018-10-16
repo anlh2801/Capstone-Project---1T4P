@@ -36,10 +36,6 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage ViewProfile(int agency_id)
         {
             var result = _agencyDomain.ViewProfile(agency_id);
-            if (result == null)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-            }
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
@@ -49,12 +45,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage UpdateProfile(AgencyUpdateAPIViewModel model)
         {            
             var result = _agencyDomain.UpdateProfile(model);
-            if (result == false)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-            }
 
-            return Request.CreateResponse(HttpStatusCode.OK, "Update Thành Công!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpGet]
@@ -62,10 +54,6 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage ViewAllDevice(int agency_id)
         {
             var result = _agencyDomain.ViewAllDeviceByAgencyId(agency_id);
-            if (result.Count() < 0)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-            }
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
@@ -75,12 +63,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage CreateRequest(AgencyCreateRequestAPIViewModel model)
         {
             var result = _agencyDomain.CreateRequest(model);
-            if (result == false)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-            }
 
-            return Request.CreateResponse(HttpStatusCode.OK, "Tạo Thành Công!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
 
         }
 
@@ -89,10 +73,6 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage GetDeviceDetails(int deviceId)
         {
             var result = _agencyDomain.ViewProfile(deviceId);
-            if (result == null)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-            }
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
