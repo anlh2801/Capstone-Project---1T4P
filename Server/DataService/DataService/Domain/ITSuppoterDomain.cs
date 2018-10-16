@@ -1,5 +1,6 @@
 ﻿using DataService.APIViewModels;
 using DataService.Models.Entities.Services;
+using DataService.ResponseModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,35 +11,34 @@ namespace DataService.Domain
 {
     
     public interface IITSupporterDomain
-    {
-       
-        List<ITSupporterAPIViewModel> GetAllITSupporter();
+    {       
+        ResponseObject<List<ITSupporterAPIViewModel>> GetAllITSupporter();
 
-        bool UpdateTicketStatus(ITSupporterUpdateAPIViewModel model);
+        ResponseObject<bool> UpdateTicketStatus(ITSupporterUpdateAPIViewModel model);
 
-        ITSupporterAPIViewModel ViewProfileITSupporter(int itSupporter_id);
+        ResponseObject<ITSupporterAPIViewModel> ViewProfileITSupporter(int itSupporter_id);
 
-        List<TicketAPIViewModel> ViewAllOwnerTicket(int ITsupporter_id);
+        ResponseObject<List<TicketAPIViewModel>> ViewAllOwnerTicket(int ITsupporter_id);
 
-        bool EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
+        ResponseObject<bool> EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
 
-        bool UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model);
+        ResponseObject<bool> UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model);
 
-        bool UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
+        ResponseObject<bool> UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
 
-        bool CreateTask(ITSupporterCreateTaskAPIViewModel model);
+        ResponseObject<bool> CreateTask(ITSupporterCreateTaskAPIViewModel model);
 
-        bool SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model);
+        ResponseObject<bool> SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model);
 
-        bool SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model);
+        ResponseObject<bool> SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model);
 
-        GuidelineAPIViewModel GetGuidelineByServiceItemID(int service_item_Id);
+        ResponseObject<GuidelineAPIViewModel> GetGuidelineByServiceItemID(int service_item_Id);
 
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain
     {
-        public List<ITSupporterAPIViewModel> GetAllITSupporter()
+        public ResponseObject<List<ITSupporterAPIViewModel>> GetAllITSupporter()
         {          
             var ITSupporterService = this.Service<IITSupporterService>();
 
@@ -47,7 +47,7 @@ namespace DataService.Domain
             return itSupporters;
         }
 
-        public bool UpdateTicketStatus(ITSupporterUpdateAPIViewModel model)
+        public ResponseObject<bool> UpdateTicketStatus(ITSupporterUpdateAPIViewModel model)
         {
             var iTSupporterService = this.Service<IITSupporterService>();
 
@@ -56,7 +56,7 @@ namespace DataService.Domain
             return result;
         }
 
-        public ITSupporterAPIViewModel ViewProfileITSupporter(int itSupporter_id)
+        public ResponseObject<ITSupporterAPIViewModel> ViewProfileITSupporter(int itSupporter_id)
         {
             var itSupporterService = this.Service<IITSupporterService>();
 
@@ -65,7 +65,7 @@ namespace DataService.Domain
             return itSupporter;
         }
 
-        public List<TicketAPIViewModel> ViewAllOwnerTicket(int ITsupporter_id)
+        public ResponseObject<List<TicketAPIViewModel>> ViewAllOwnerTicket(int ITsupporter_id)
         {
             var ITSupporterService = this.Service<IITSupporterService>();
 
@@ -74,7 +74,7 @@ namespace DataService.Domain
             return ITSupporter;
         }
 
-        public bool EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model)
+        public ResponseObject<bool> EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model)
         {
             var iTSupporterService = this.Service<IITSupporterService>();
 
@@ -83,7 +83,7 @@ namespace DataService.Domain
             return result;
         }
 
-        public bool UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model)
+        public ResponseObject<bool> UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model)
         {
             var iTSupporterService = this.Service<IITSupporterService>();
 
@@ -92,7 +92,7 @@ namespace DataService.Domain
             return result;
         }
 
-        public bool UpdateProfile(ITSupporterUpdateProfileAPIViewModel model)
+        public ResponseObject<bool> UpdateProfile(ITSupporterUpdateProfileAPIViewModel model)
         {
             var iTSupporterService = this.Service<IITSupporterService>();
 
@@ -101,7 +101,7 @@ namespace DataService.Domain
             return result;
         }
 
-        public bool CreateTask(ITSupporterCreateTaskAPIViewModel model)
+        public ResponseObject<bool> CreateTask(ITSupporterCreateTaskAPIViewModel model)
         {
             var iTSupporterService = this.Service<IITSupporterService>();
 
@@ -110,7 +110,7 @@ namespace DataService.Domain
             return result;
         }
 
-        public bool SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model)
+        public ResponseObject<bool> SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model)
         {
             var iTSupporterService = this.Service<IITSupporterService>();
 
@@ -120,7 +120,7 @@ namespace DataService.Domain
         }
 
 
-        public bool SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model)
+        public ResponseObject<bool> SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model)
         {
             var iTSupporterService = this.Service<IITSupporterService>();
 
@@ -129,7 +129,7 @@ namespace DataService.Domain
             return result;
         }
 
-        public GuidelineAPIViewModel GetGuidelineByServiceItemID(int service_item_Id)
+        public ResponseObject<GuidelineAPIViewModel> GetGuidelineByServiceItemID(int service_item_Id)
         {
             var iTSupporterService = this.Service<IITSupporterService>();
 

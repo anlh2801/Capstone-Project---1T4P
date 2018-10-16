@@ -43,12 +43,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage GetAllCompany(RequestAPIViewModel agency_id)
         {
             var result = _requestDomain.GetAllRequest();
-            if (result.Count() < 0)
-            {
-                //return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi");
-            }
-
+            
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
@@ -57,11 +52,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage GetTicketWithStatus()
         {
             var result = _requestDomain.GetRequestWithStatus(3);
-            if (result.Count() < 0)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi");
-            }
-
+            
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
@@ -70,11 +61,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage GetAllTicketByAgencyIDAndStatus(Int32 agency_id, Int32 status)
         {
             var result = _requestDomain.GetAllRequestByAgencyIDAndStatus(agency_id, status);
-            if (result.Count() < 0)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi");
-            }
-
+            
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
@@ -83,11 +70,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage GetTicketHistoryByTicketId(int ticketid)
         {
             var result = _ticketHistoryDomain.GetTicketHistoryByTicketId(ticketid);
-            if (result.Count() < 0)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi");
-            }
-
+            
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
@@ -96,11 +79,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage GetAllTicketHistory()
         {
             var result = _ticketHistoryDomain.GetAllTicketHistory();
-            if (result.Count() < 0)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi");
-            }
-
+           
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
@@ -127,11 +106,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage CancelTicket(RequestCancelAPIViewModel model)
         {            
             var result = _requestDomain.CancelRequest(model);
-            if (result == false)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-            }
-
+            
             return Request.CreateResponse(HttpStatusCode.OK, "Cancel Thành Công!");
         }
     }

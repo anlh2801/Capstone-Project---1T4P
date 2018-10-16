@@ -1,5 +1,6 @@
 ﻿using DataService.APIViewModels;
 using DataService.Models.Entities.Services;
+using DataService.ResponseModel;
 using DataService.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,22 +12,22 @@ namespace DataService.Domain
 {
     public  interface IRequestDomain
     {
-        List<RequestAPIViewModel> GetAllRequest();
+        ResponseObject<List<RequestAPIViewModel>> GetAllRequest();
 
-        RequestAPIViewModel GetTicketByRequestId(int RequestId);
+        ResponseObject<RequestAPIViewModel> GetTicketByRequestId(int RequestId);
 
-        List<RequestAPIViewModel> GetRequestWithStatus(int status);
+        ResponseObject<List<RequestAPIViewModel>> GetRequestWithStatus(int status);
 
-        List<RequestAPIViewModel> GetAllRequestByAgencyIDAndStatus(int acency_id, int status);
+        ResponseObject<List<RequestAPIViewModel>> GetAllRequestByAgencyIDAndStatus(int acency_id, int status);
 
-        bool CreateFeedbackForRequest(FeedbackAPIViewModel feedback);
+        ResponseObject<bool> CreateFeedbackForRequest(FeedbackAPIViewModel feedback);
 
-        bool CancelRequest(RequestCancelAPIViewModel model);
+        ResponseObject<bool> CancelRequest(RequestCancelAPIViewModel model);
     }
 
     public  class RequestDomain : BaseDomain, IRequestDomain
     {
-        public List<RequestAPIViewModel> GetAllRequest()
+        public ResponseObject<List<RequestAPIViewModel>> GetAllRequest()
         {
             var requestService = this.Service<IRequestService>();
 
@@ -35,7 +36,7 @@ namespace DataService.Domain
             return result;
         }
 
-        public List<RequestAPIViewModel> GetRequestWithStatus(int status)
+        public ResponseObject<List<RequestAPIViewModel>> GetRequestWithStatus(int status)
         {
             var requestService = this.Service<IRequestService>();
             
@@ -44,7 +45,7 @@ namespace DataService.Domain
             return result;
         }
 
-        public RequestAPIViewModel GetTicketByRequestId(int requestId)
+        public ResponseObject<RequestAPIViewModel> GetTicketByRequestId(int requestId)
         {
             var requestService = this.Service<IRequestService>();
 
@@ -53,7 +54,7 @@ namespace DataService.Domain
             return result;
         }
 
-        public List<RequestAPIViewModel> GetAllRequestByAgencyIDAndStatus(int acency_id, int status)
+        public ResponseObject<List<RequestAPIViewModel>> GetAllRequestByAgencyIDAndStatus(int acency_id, int status)
         {
             var requestService = this.Service<IRequestService>();
             
@@ -63,7 +64,7 @@ namespace DataService.Domain
 
         }
 
-        public bool CreateFeedbackForRequest(FeedbackAPIViewModel feedback)
+        public ResponseObject<bool> CreateFeedbackForRequest(FeedbackAPIViewModel feedback)
         {          
             var requestService = this.Service<IRequestService>();
 
@@ -73,7 +74,7 @@ namespace DataService.Domain
 
         }
 
-        public bool CancelRequest(RequestCancelAPIViewModel model)
+        public ResponseObject<bool> CancelRequest(RequestCancelAPIViewModel model)
         {
             var requestService = this.Service<IRequestService>();
 

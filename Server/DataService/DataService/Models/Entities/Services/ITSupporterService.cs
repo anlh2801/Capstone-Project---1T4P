@@ -1,5 +1,6 @@
 ﻿using DataService.APIViewModels;
 using DataService.Models.Entities.Repositories;
+using DataService.ResponseModel;
 using DataService.Utilities;
 using DataService.ViewModels;
 using System;
@@ -13,62 +14,69 @@ namespace DataService.Models.Entities.Services
 {
     public partial interface IITSupporterService
     {
-        List<ITSupporterAPIViewModel> GetAllITSupporter();
+        ResponseObject<List<ITSupporterAPIViewModel>> GetAllITSupporter();
 
-        bool UpdateTicketStatus(ITSupporterUpdateAPIViewModel model);
+        ResponseObject<bool> UpdateTicketStatus(ITSupporterUpdateAPIViewModel model);
 
-        ITSupporterAPIViewModel ViewProfileITSupporter(int itSupporter_id);
+        ResponseObject<ITSupporterAPIViewModel> ViewProfileITSupporter(int itSupporter_id);
 
-        List<TicketAPIViewModel> ViewAllOwnerTicket(int ITsupporter_id);
+        ResponseObject<List<TicketAPIViewModel>> ViewAllOwnerTicket(int ITsupporter_id);
 
-        bool EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
+        ResponseObject<bool> EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
 
-        bool UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model);
+        ResponseObject<bool> UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model);
 
-        bool UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
+        ResponseObject<bool> UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
 
-        bool CreateTask(ITSupporterCreateTaskAPIViewModel model);
+        ResponseObject<bool> CreateTask(ITSupporterCreateTaskAPIViewModel model);
 
-        bool SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model);
+        ResponseObject<bool> SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model);
 
-        bool SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model);
+        ResponseObject<bool> SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model);
 
-        GuidelineAPIViewModel GetGuidelineByServiceItemID(int service_item_Id);
+        ResponseObject<GuidelineAPIViewModel> GetGuidelineByServiceItemID(int service_item_Id);
 
     }
 
     public partial class ITSupporterService
     {
-        public List<ITSupporterAPIViewModel> GetAllITSupporter()
+        public ResponseObject<List<ITSupporterAPIViewModel>> GetAllITSupporter()
         {
             List<ITSupporterAPIViewModel> rsList = new List<ITSupporterAPIViewModel>();
             var ITSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
-            var itSupporters = ITSupporterRepo.GetActive().ToList();
 
-            foreach (var item in itSupporters)
-            {                
-                rsList.Add(new ITSupporterAPIViewModel
+            try
+            {
+                var itSupporters = ITSupporterRepo.GetActive().ToList();
+                foreach (var item in itSupporters)
                 {
-                    ITSupporterId = item.ITSupporterId,
-                    ITSupporterName = item.ITSupporterName,
-                    Username = item.Account.Username,
-                    Telephone = item.Telephone,
-                    Email = item.Email,
-                    Gender = item.Gender,
-                    Address = item.Address,
-                    RatingAVG = item.RatingAVG ?? 0,
-                    IsBusy = item.IsBusy.Value == true ? "Đang bận!" : "Chờ việc",
-                    CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
-                    UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
-                });
+                    rsList.Add(new ITSupporterAPIViewModel
+                    {
+                        ITSupporterId = item.ITSupporterId,
+                        ITSupporterName = item.ITSupporterName,
+                        Username = item.Account.Username,
+                        Telephone = item.Telephone,
+                        Email = item.Email,
+                        Gender = item.Gender,
+                        Address = item.Address,
+                        RatingAVG = item.RatingAVG ?? 0,
+                        IsBusy = item.IsBusy.Value == true ? "Đang bận!" : "Chờ việc",
+                        CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
+                    });
+                }
+                return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công"};
+            }
+            catch (Exception ex)
+            {
+                return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = true, ErrorMessage = ex.ToString(), WarningMessage = "Không tìm thấy người hỗ trợ" };
             }
 
-            return rsList;
+
         }
 
-        public bool UpdateTicketStatus(ITSupporterUpdateAPIViewModel model)
+        public ResponseObject<bool> UpdateTicketStatus(ITSupporterUpdateAPIViewModel model)
         {
-
             var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
             var updateTicketStatus = ticketRepo.GetActive().SingleOrDefault(a => a.CurrentITSupporter_Id == model.ITSupporterId && a.TicketId == model.Ticket_Id);
             if (updateTicketStatus != null)
@@ -78,15 +86,14 @@ namespace DataService.Models.Entities.Services
                 ticketRepo.Edit(updateTicketStatus);
 
                 ticketRepo.Save();
-                return true;
+                return new ResponseObject<bool> { IsError = false, ObjReturn = true , SuccessMessage = "Cập nhật trạng thái thành công"};
             }
 
-            return false;
+            return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Cập nhật trạng thái thất bại" };
         }
 
-        public ITSupporterAPIViewModel ViewProfileITSupporter(int itSupporter_id)
+        public ResponseObject<ITSupporterAPIViewModel> ViewProfileITSupporter(int itSupporter_id)
         {
-            
             var ITSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
             var itSupporter = ITSupporterRepo.GetActive().SingleOrDefault(i => i.ITSupporterId == itSupporter_id);
             if (itSupporter != null)
@@ -105,44 +112,44 @@ namespace DataService.Models.Entities.Services
                     CreateDate = itSupporter.CreateDate != null ? itSupporter.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
                     UpdateDate = itSupporter.UpdateDate != null ? itSupporter.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                 };
-                return itSupporterAPIViewModel;
+                return new ResponseObject<ITSupporterAPIViewModel> { IsError = false, ObjReturn = itSupporterAPIViewModel, SuccessMessage = "Thành công" };
             }
 
-            return null;
+            return new ResponseObject<ITSupporterAPIViewModel> { IsError = true, WarningMessage = "Không tìm thấy người hỗ trợ" };
         }
 
-        public List<TicketAPIViewModel> ViewAllOwnerTicket(int ITsupporter_id)
+        public ResponseObject<List<TicketAPIViewModel>> ViewAllOwnerTicket(int ITsupporter_id)
         {
             List<TicketAPIViewModel> rsList = new List<TicketAPIViewModel>();
             var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
-            var ticket = ticketRepo.GetActive().ToList();
+            var ticket = ticketRepo.GetActive(p => p.CurrentITSupporter_Id == ITsupporter_id).ToList();
+            if (ticket.Count < 0)
+            {
+                return new ResponseObject<List<TicketAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy" };
+            }
             foreach (var item in ticket)
             {
-                if (ITsupporter_id == item.CurrentITSupporter_Id)
+                rsList.Add(new TicketAPIViewModel
                 {
-                    rsList.Add(new TicketAPIViewModel
-                    {
-                        TicketId = item.TicketId,
-                        RequestId = item.RequestId,
-                        DeviceId = item.DeviceId,
-                        Desciption = item.Desciption,
-                        Current_TicketStatus = item.Current_TicketStatus != null ? Enum.GetName(typeof(TicketStatusEnum), item.Current_TicketStatus) : string.Empty,
-                        CurrentITSupporter_Id = item.CurrentITSupporter_Id,
-                        Rating = item.Rating ?? 0,
-                        Estimation = item.Estimation ?? 0,
-                        StartTime = item.StartTime != null ? item.StartTime.Value.ToString("MM/dd/yyyy") : string.Empty,
-                        Endtime = item.Endtime != null ? item.Endtime.Value.ToString("MM/dd/yyyy") : string.Empty,
-                        CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
-                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
-                    });
-                }
-
+                    TicketId = item.TicketId,
+                    RequestId = item.RequestId,
+                    DeviceId = item.DeviceId,
+                    Desciption = item.Desciption,
+                    Current_TicketStatus = item.Current_TicketStatus != null ? Enum.GetName(typeof(TicketStatusEnum), item.Current_TicketStatus) : string.Empty,
+                    CurrentITSupporter_Id = item.CurrentITSupporter_Id,
+                    Rating = item.Rating ?? 0,
+                    Estimation = item.Estimation ?? 0,
+                    StartTime = item.StartTime != null ? item.StartTime.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    Endtime = item.Endtime != null ? item.Endtime.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                });
             }
-            
-            return rsList;
+
+            return new ResponseObject<List<TicketAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
         }
 
-        public bool EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model)
+        public ResponseObject<bool> EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model)
         {
 
             var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
@@ -154,13 +161,13 @@ namespace DataService.Models.Entities.Services
                 ticketRepo.Edit(updateEstimateTimeTicket);
 
                 ticketRepo.Save();
-                return true;
-            }
+                return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Cập nhật giờ dự kiến thành công" };
+                }
 
-            return false;
+            return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Cập nhật giờ dự kiến thất bại" };
         }
 
-        public bool UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model)
+        public ResponseObject<bool> UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model)
         {
 
             var ticketTaskRepo = DependencyUtils.Resolve<ITicketTaskRepository>();
@@ -172,13 +179,13 @@ namespace DataService.Models.Entities.Services
                 ticketTaskRepo.Edit(updateTicketTaskStatus);
 
                 ticketTaskRepo.Save();
-                return true;
+                return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Cập nhật trạng thái thành công" };
             }
 
-            return false;
+            return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Cập nhật trạng thái thất bại" };
         }
 
-        public bool UpdateProfile(ITSupporterUpdateProfileAPIViewModel model)
+        public ResponseObject<bool> UpdateProfile(ITSupporterUpdateProfileAPIViewModel model)
         {
 
             var ITSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
@@ -195,13 +202,13 @@ namespace DataService.Models.Entities.Services
                 ITSupporterRepo.Edit(updateProfile);
 
                 ITSupporterRepo.Save();
-                return true;
+                return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Cập nhật profile thành công" };
             }
 
-            return false;
+            return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Cập nhật profile thất bại" };
         }
 
-        public bool CreateTask(ITSupporterCreateTaskAPIViewModel model)
+        public ResponseObject<bool> CreateTask(ITSupporterCreateTaskAPIViewModel model)
         {
             try
             {
@@ -221,39 +228,39 @@ namespace DataService.Models.Entities.Services
                 ticketTaskRepo.Add(createTask);
 
                 ticketTaskRepo.Save();
-                return true;
+                return new ResponseObject<bool> { IsError = false, ObjReturn = true , SuccessMessage = "Tạo mới việc thành công"};
             }
             catch (Exception e)
             {
 
-                return false;
+                return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Tạo mới việc thất bại" };
             }
-            
+
         }
 
-        public bool SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model)
+        public ResponseObject<bool> SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model)
         {
 
-                var ticketTaskRepo = DependencyUtils.Resolve<ITicketTaskRepository>();
-                var setTimeTask = ticketTaskRepo.GetActive().SingleOrDefault(a => a.TicketTaskId == model.TicketTaskId);
+            var ticketTaskRepo = DependencyUtils.Resolve<ITicketTaskRepository>();
+            var setTimeTask = ticketTaskRepo.GetActive().SingleOrDefault(a => a.TicketTaskId == model.TicketTaskId);
 
-                if (setTimeTask != null)
-                {
-                    setTimeTask.TicketTaskId = model.TicketTaskId;
-                    setTimeTask.StartTime = DateTime.Parse(model.StartTime);
-                    setTimeTask.EndTime = DateTime.Parse(model.EndTime);
+            if (setTimeTask != null)
+            {
+                setTimeTask.TicketTaskId = model.TicketTaskId;
+                setTimeTask.StartTime = DateTime.Parse(model.StartTime);
+                setTimeTask.EndTime = DateTime.Parse(model.EndTime);
 
-                    ticketTaskRepo.Edit(setTimeTask);
+                ticketTaskRepo.Edit(setTimeTask);
 
-                    ticketTaskRepo.Save();
-                    return true;
-                }
-
-                return false;
-
+                ticketTaskRepo.Save();
+                return new ResponseObject<bool> { IsError = false, ObjReturn = true , SuccessMessage = "Gán thời gian thành công" };
             }
 
-        public bool SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model)
+            return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Gán thời gian thất bại" };
+
+        }
+
+        public ResponseObject<bool> SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model)
         {
 
             var ticketTaskRepo = DependencyUtils.Resolve<ITicketTaskRepository>();
@@ -267,36 +274,36 @@ namespace DataService.Models.Entities.Services
                 ticketTaskRepo.Edit(setPriorityTask);
 
                 ticketTaskRepo.Save();
-                return true;
+                return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Cập nhật độ ưu thành công" };
             }
 
-            return false;
+            return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Cập nhật độ ưu thất bại" };
 
         }
 
-        public GuidelineAPIViewModel GetGuidelineByServiceItemID(int service_item_Id)
+        public ResponseObject<GuidelineAPIViewModel> GetGuidelineByServiceItemID(int service_item_Id)
         {
 
             var guidelineRepo = DependencyUtils.Resolve<IGuidelineRepository>();
             var guideline = guidelineRepo.GetActive().SingleOrDefault(a => a.ServiceItemId == service_item_Id);
             if (guideline != null)
             {
-                var GuidelineAPIViewModel = new GuidelineAPIViewModel
+                var guidelineAPIViewModel = new GuidelineAPIViewModel
                 {
                     GuidelineId = guideline.GuidelineId,
                     ServiceItemId = guideline.ServiceItemId ?? 0,
                     GuidelineName = guideline.GuidelineName,
-                    StartDate = guideline.StartDate != null ? guideline.StartDate.Value.ToString("MM/dd/yyyy") : string.Empty,
-                    EndDate = guideline.EndDate != null ? guideline.EndDate.Value.ToString("MM/dd/yyyy") : string.Empty,
-                    CreateDate = guideline.CreateDate != null ? guideline.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
-                    UpdateDate = guideline.UpdateDate != null ? guideline.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                    StartDate = guideline.StartDate != null ? guideline.StartDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                    EndDate = guideline.EndDate != null ? guideline.EndDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                    CreateDate = guideline.CreateDate != null ? guideline.CreateDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                    UpdateDate = guideline.UpdateDate != null ? guideline.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                 };
-                return GuidelineAPIViewModel;
+                return new ResponseObject<GuidelineAPIViewModel> { IsError = false, ObjReturn = guidelineAPIViewModel, SuccessMessage = "Thành công" };
             }
 
-            return null;
+            return new ResponseObject<GuidelineAPIViewModel> { IsError = true, WarningMessage = "Không tìm thấy hướng dẫn nào" }; ;
         }
 
-        
+
     }
 }

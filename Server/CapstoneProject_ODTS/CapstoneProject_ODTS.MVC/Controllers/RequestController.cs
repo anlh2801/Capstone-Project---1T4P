@@ -24,10 +24,6 @@ namespace CapstoneProject_ODTS.Controllers
         public ActionResult GetAllRequest()
         {
             var result = _requestDomain.GetAllRequest();
-            if (result.Count() < 0)
-            {
-                //không co record
-            }
             
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
@@ -60,11 +56,7 @@ namespace CapstoneProject_ODTS.Controllers
         public ActionResult GetRequestWithStatus(int status)
         {
             var result = _requestDomain.GetRequestWithStatus(status);
-            if (result.Count() < 0)
-            {
-                //không co record
-            }
-
+            
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 

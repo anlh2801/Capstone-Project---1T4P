@@ -27,11 +27,7 @@ namespace CapstoneProject_ODTS.Controllers
         }
         public ActionResult GetAllAgency()
         {
-            var result = _agencyDomain.GetAllAgency();
-            if (result.Count() < 0)
-            {
-                //không co record
-            }
+            var result = _agencyDomain.GetAllAgency();            
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
@@ -46,27 +42,20 @@ namespace CapstoneProject_ODTS.Controllers
         public ActionResult GetAllDevice(int agency_id)
         {
             var result = _agencyDomain.ViewAllDeviceByAgencyId(agency_id);
-            if (result.Count() < 0)
-            {
-                //không co record
-            }
-
+            
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetAgencyDetail(int agency_id)
         {
             var agencyDetail = _agencyDomain.ViewProfile(agency_id);
-            if (agencyDetail == null)
-            {
-                return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
-            }
+            
             return Json(new { result = agencyDetail }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult RemoveAgency(int agency_id)
         {
-            var agencyDetail = _agencyDomain.removeAgency(agency_id);
+            var agencyDetail = _agencyDomain.RemoveAgency(agency_id);
             //return RedirectToAction("Index");
             return Json(new { result = agencyDetail }, JsonRequestBehavior.AllowGet);
         }
@@ -74,11 +63,7 @@ namespace CapstoneProject_ODTS.Controllers
         public ActionResult CreateAgency(AgencyAPIViewModel model)
         {
             var result = _agencyDomain.CreateAgency(model);
-            if (result == false)
-            {
-                return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
-            }
-
+           
             return Json(new { result }, JsonRequestBehavior.AllowGet);
 
         }
@@ -86,11 +71,7 @@ namespace CapstoneProject_ODTS.Controllers
         public ActionResult UpdateAgency(AgencyUpdateAPIViewModel model)
         {
             var result = _agencyDomain.UpdateProfile(model);
-            if (result == false)
-            {
-                return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
-            }
-
+            
             return Json(new { result }, JsonRequestBehavior.AllowGet);
 
         }

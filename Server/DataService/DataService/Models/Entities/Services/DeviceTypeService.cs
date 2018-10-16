@@ -1,5 +1,6 @@
 ﻿using DataService.APIViewModels;
 using DataService.Models.Entities.Repositories;
+using DataService.ResponseModel;
 using DataService.Utilities;
 using DataService.ViewModels;
 using System;
@@ -13,16 +14,20 @@ namespace DataService.Models.Entities.Services
 
     public partial interface IDeviceTypeService
     {
-        List<DeviceTypeAPIViewModel> GetAllDeviceType();
+        ResponseObject<List<DeviceTypeAPIViewModel>> GetAllDeviceType();
     }
 
     public partial class DeviceTypeService
     {
-        public List<DeviceTypeAPIViewModel> GetAllDeviceType()
+        public ResponseObject<List<DeviceTypeAPIViewModel>> GetAllDeviceType()
         {
             List<DeviceTypeAPIViewModel> rsList = new List<DeviceTypeAPIViewModel>();
             var devicetypeRepo = DependencyUtils.Resolve<IDeviceTypeRepository>();
             var devicetypes = devicetypeRepo.GetActive().ToList();
+            if (devicetypes.Count < 0)
+            {
+                return new ResponseObject<List<DeviceTypeAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy loại thiết bị nào" };
+            }
             foreach (var item in devicetypes)
             {
                 rsList.Add(new DeviceTypeAPIViewModel
@@ -33,7 +38,7 @@ namespace DataService.Models.Entities.Services
                 });
             }
 
-            return rsList;
+            return new ResponseObject<List<DeviceTypeAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
         }
     }
 }
