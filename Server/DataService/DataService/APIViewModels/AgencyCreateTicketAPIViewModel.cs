@@ -11,7 +11,6 @@ namespace DataService.APIViewModels
         public AgencyCreateTicketAPIViewModel() : base() { }
         public AgencyCreateTicketAPIViewModel(DataService.Models.Entities.Ticket entity) : base(entity) { }
 
-        public int ServiceItemId { get; set; }
         public int DeviceId { get; set; }
         public string Desciption { get; set; }
     }

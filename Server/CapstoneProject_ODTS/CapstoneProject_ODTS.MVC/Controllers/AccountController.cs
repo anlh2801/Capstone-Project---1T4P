@@ -26,9 +26,9 @@ namespace CapstoneProject_ODTS.Controllers
         public ActionResult GetAllAccount()
         {
             var accounts = _accountDomain.GetAllAccount();
-            if (accounts.Count() < 0)
+            if (accounts.IsError)
             {
-                return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
+                return Json(new { result = accounts.ErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new { result = accounts }, JsonRequestBehavior.AllowGet);
@@ -44,15 +44,10 @@ namespace CapstoneProject_ODTS.Controllers
             return Json(new { result = accountdetail }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult CreateAccount(AccountAPIViewModel model)
-        {
-             
+        {             
             var result = _accountDomain.CreateAccount(model);
-            if (result == false)
-            {
-                return Json(false); ;
-            }
 
-            return Json(true);
+            return Json(new { result = result }, JsonRequestBehavior.AllowGet);
 
         }
         public ActionResult RemoveAccount(int account_id)
@@ -64,13 +59,7 @@ namespace CapstoneProject_ODTS.Controllers
         public ActionResult UpdateProfile(AccountAPIViewModel model)
         {
             var result = _accountDomain.UpdateProfile(model);
-            if (result == false)
-            {
-                return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new { result }, JsonRequestBehavior.AllowGet);
-
+            return Json(new { result = result }, JsonRequestBehavior.AllowGet);
         }
     }
 }

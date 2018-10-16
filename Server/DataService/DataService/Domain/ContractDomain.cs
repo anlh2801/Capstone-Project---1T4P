@@ -1,5 +1,6 @@
 ﻿using DataService.APIViewModels;
 using DataService.Models.Entities.Services;
+using DataService.ResponseModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +11,15 @@ namespace DataService.Domain
 {
     public interface IContractDomain
     {
-
-        List<ContractAPIViewModel> GetAllContract();
-        ContractAPIViewModel ViewDetail(int contract_id);
-        bool CreateContract(ContractAPIViewModel model);
-        bool UpdateContract(ContractAPIViewModel model);
+        ResponseObject<List<ContractAPIViewModel>> GetAllContract();
+        ResponseObject<ContractAPIViewModel> ViewDetail(int contract_id);
+        ResponseObject<bool> CreateContract(ContractAPIViewModel model);
+        ResponseObject<bool> UpdateContract(ContractAPIViewModel model);
     }
 
     public class ContractDomain : BaseDomain, IContractDomain
     {
-        public bool CreateContract(ContractAPIViewModel model)
+        public ResponseObject<bool> CreateContract(ContractAPIViewModel model)
         {
             var ContractService = this.Service<IContractService>();
 
@@ -28,7 +28,7 @@ namespace DataService.Domain
             return result;
         }
 
-        public List<ContractAPIViewModel> GetAllContract()
+        public ResponseObject<List<ContractAPIViewModel>> GetAllContract()
         {
             var contractService = this.Service<IContractService>();
 
@@ -37,7 +37,7 @@ namespace DataService.Domain
             return contracts;
         }
 
-        public bool UpdateContract(ContractAPIViewModel model)
+        public ResponseObject<bool> UpdateContract(ContractAPIViewModel model)
         {
             var contractService = this.Service<IContractService>();
 
@@ -46,7 +46,7 @@ namespace DataService.Domain
             return result; 
         }
 
-        public ContractAPIViewModel ViewDetail(int contract_id)
+        public ResponseObject<ContractAPIViewModel> ViewDetail(int contract_id)
         {
             var contractService = this.Service<IContractService>();
 
@@ -54,13 +54,13 @@ namespace DataService.Domain
 
             return contract;
         }
-        public bool RemoveContract(int contract_id)
+        public ResponseObject<bool> RemoveContract(int contract_id)
         {
             var contractList = new List<ContractAPIViewModel>();
 
             var contractService = this.Service<IContractService>();
-            bool a = contractService.RemoveContract(contract_id);
-            return a;
+            var rs = contractService.RemoveContract(contract_id);
+            return rs;
         }
     }
 }

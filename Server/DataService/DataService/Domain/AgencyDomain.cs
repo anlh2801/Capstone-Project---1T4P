@@ -1,5 +1,6 @@
 ﻿using DataService.APIViewModels;
 using DataService.Models.Entities.Services;
+using DataService.ResponseModel;
 using DataService.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,20 +12,24 @@ namespace DataService.Domain
 {
     public interface IAgencyDomain
     {
-        AgencyAPIViewModel ViewProfile(int agency_id);
+        ResponseObject<AgencyAPIViewModel> ViewProfile(int agency_id);
 
-        List<AgencyDeviceAPIViewModel> ViewAllDeviceByAgencyId(int agency_id);
+        ResponseObject<List<AgencyDeviceAPIViewModel>> ViewAllDeviceByAgencyId(int agency_id);
 
-        bool UpdateProfile(AgencyUpdateAPIViewModel model);
+        ResponseObject<bool> RemoveAgency(int agency_id);
 
-        List<AgencyAPIViewModel> GetAllAgency();
+        ResponseObject<bool> UpdateProfile(AgencyUpdateAPIViewModel model);
 
-        bool CreateRequest(AgencyCreateRequestAPIViewModel model);
+        ResponseObject<List<AgencyAPIViewModel>> GetAllAgency();
+
+        ResponseObject<bool> CreateRequest(AgencyCreateRequestAPIViewModel model);
+
+        ResponseObject<AgencyDeviceAPIViewModel> GetDeviceDetails(int deviceId);
     }
 
     public class AgencyDomain : BaseDomain, IAgencyDomain
     {
-        public AgencyAPIViewModel ViewProfile(int agency_id)
+        public ResponseObject<AgencyAPIViewModel> ViewProfile(int agency_id)
         {
             var agencyService = this.Service<IAgencyService>();
 
@@ -33,7 +38,7 @@ namespace DataService.Domain
             return agency;
         }
 
-        public bool UpdateProfile(AgencyUpdateAPIViewModel model)
+        public ResponseObject<bool> UpdateProfile(AgencyUpdateAPIViewModel model)
         {
             var agencyService = this.Service<IAgencyService>();
 
@@ -42,7 +47,7 @@ namespace DataService.Domain
             return result;
         }
 
-        public List<AgencyDeviceAPIViewModel> ViewAllDeviceByAgencyId(int agency_id)
+        public ResponseObject<List<AgencyDeviceAPIViewModel>> ViewAllDeviceByAgencyId(int agency_id)
         {
             var agencyDeviceService = this.Service<IDeviceService>();
 
@@ -51,7 +56,7 @@ namespace DataService.Domain
             return agencies;
         }
 
-        public List<AgencyAPIViewModel> GetAllAgency()
+        public ResponseObject<List<AgencyAPIViewModel>> GetAllAgency()
         {
             var TicketList = new List<AgencyAPIViewModel>();
 
@@ -65,29 +70,38 @@ namespace DataService.Domain
 
 
 
-        public bool CreateRequest(AgencyCreateRequestAPIViewModel model)
+        public ResponseObject<bool> CreateRequest(AgencyCreateRequestAPIViewModel model)
         {
             var agencyService = this.Service<IAgencyService>();
 
             var result = agencyService.CreateRequest(model);
             return result;
         }
-        public Boolean removeAgency(int agency_id)
+        public ResponseObject<bool> RemoveAgency(int agency_id)
         {
             var TicketList = new List<AgencyAPIViewModel>();
 
             var agencyService = this.Service<IAgencyService>();
-            bool a = agencyService.removeAgency(agency_id);
-            return a;
+            var agency = agencyService.RemoveAgency(agency_id);
+            return agency;
         }
 
-        public bool CreateAgency(AgencyAPIViewModel model)
+        public ResponseObject<bool> CreateAgency(AgencyAPIViewModel model)
         {
             var iTSupporterService = this.Service<IAgencyService>();
 
             var result = iTSupporterService.CreateAgency(model);
 
             return result;
+        }
+
+        public ResponseObject<AgencyDeviceAPIViewModel> GetDeviceDetails(int deviceId)
+        {
+            var agencyService = this.Service<IAgencyService>();
+
+            var agency = agencyService.GetDeviceByDeviceId(deviceId);
+
+            return agency;
         }
     }
 }

@@ -16,6 +16,7 @@ namespace DataService.ViewModels
     {
     	
     			public virtual int DeviceTypeId { get; set; }
+    			public virtual int ServiceId { get; set; }
     			public virtual string DeviceTypeName { get; set; }
     			public virtual string Description { get; set; }
     			public virtual bool IsDelete { get; set; }

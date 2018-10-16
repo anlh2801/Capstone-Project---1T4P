@@ -37,9 +37,9 @@ namespace CapstoneProject_ODTS.MVC.Controllers
         public ActionResult GetAllCompany()
         {
             var result = _companyDomain.GetAllCompany();
-            if (result.Count() < 0)
+            if (result.IsError)
             {
-                //không co record
+                return Json(new { result.WarningMessage }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);

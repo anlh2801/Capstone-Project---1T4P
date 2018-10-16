@@ -25,11 +25,7 @@ namespace CapstoneProject_ODTS.MVC.Controllers
         public ActionResult GetAllITSupporter()
         {
             var result = _ITSupporterDomain.GetAllITSupporter();
-            if (result.Count() < 0)
-            {
-                //không co record
-            }
-
+            
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
     }

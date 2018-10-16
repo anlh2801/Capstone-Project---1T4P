@@ -1,5 +1,6 @@
 ﻿using DataService.APIViewModels;
 using DataService.Models.Entities.Services;
+using DataService.ResponseModel;
 using DataService.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,13 @@ namespace DataService.Domain
 {
     public interface ICompanyDomain
     {
-       
-        List<CompanyAPIViewModel> GetAllCompany();
+
+        ResponseObject<List<CompanyAPIViewModel>> GetAllCompany();
     }
 
     public class CompanyDomain : BaseDomain, ICompanyDomain
     {
-        public List<CompanyAPIViewModel> GetAllCompany()
+        public ResponseObject<List<CompanyAPIViewModel>> GetAllCompany()
         {          
             var companyService = this.Service<ICompanyService>();
 

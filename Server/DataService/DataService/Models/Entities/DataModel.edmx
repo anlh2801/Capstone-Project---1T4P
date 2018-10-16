@@ -94,6 +94,7 @@
             <PropertyRef Name="DeviceTypeId" />
           </Key>
           <Property Name="DeviceTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceId" Type="int" Nullable="false" />
           <Property Name="DeviceTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
@@ -136,6 +137,7 @@
           </Key>
           <Property Name="RequestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AgencyId" Type="int" Nullable="false" />
+          <Property Name="ServiceItemId" Type="int" Nullable="false" />
           <Property Name="RequestCategoryId" Type="int" Nullable="false" />
           <Property Name="RequestStatus" Type="int" Nullable="false" />
           <Property Name="RequestName" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -207,7 +209,6 @@
             <PropertyRef Name="TicketId" />
           </Key>
           <Property Name="TicketId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceItemId" Type="int" Nullable="false" />
           <Property Name="RequestId" Type="int" Nullable="false" />
           <Property Name="DeviceId" Type="int" Nullable="false" />
           <Property Name="Desciption" Type="nvarchar(max)" />
@@ -347,6 +348,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DeviceType_ServiceITSupport">
+          <End Role="ServiceITSupport" Type="Self.ServiceITSupport" Multiplicity="1" />
+          <End Role="DeviceType" Type="Self.DeviceType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceITSupport">
+              <PropertyRef Name="ServiceITSupportId" />
+            </Principal>
+            <Dependent Role="DeviceType">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Guideline_ServiceItem">
           <End Role="ServiceItem" Type="Self.ServiceItem" Multiplicity="0..1" />
           <End Role="Guideline" Type="Self.Guideline" Multiplicity="*" />
@@ -380,6 +393,18 @@
             </Principal>
             <Dependent Role="Request">
               <PropertyRef Name="RequestCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_ServiceItem">
+          <End Role="ServiceItem" Type="Self.ServiceItem" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceItem">
+              <PropertyRef Name="ServiceItemId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="ServiceItemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -464,18 +489,6 @@
             </Principal>
             <Dependent Role="Ticket">
               <PropertyRef Name="CurrentITSupporter_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TicketDetail_ServiceItem">
-          <End Role="ServiceItem" Type="Self.ServiceItem" Multiplicity="1" />
-          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServiceItem">
-              <PropertyRef Name="ServiceItemId" />
-            </Principal>
-            <Dependent Role="Ticket">
-              <PropertyRef Name="ServiceItemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -566,6 +579,10 @@
             <End Role="DeviceType" EntitySet="DeviceType" />
             <End Role="Device" EntitySet="Device" />
           </AssociationSet>
+          <AssociationSet Name="FK_DeviceType_ServiceITSupport" Association="Self.FK_DeviceType_ServiceITSupport">
+            <End Role="ServiceITSupport" EntitySet="ServiceITSupport" />
+            <End Role="DeviceType" EntitySet="DeviceType" />
+          </AssociationSet>
           <AssociationSet Name="FK_Guideline_ServiceItem" Association="Self.FK_Guideline_ServiceItem">
             <End Role="ServiceItem" EntitySet="ServiceItem" />
             <End Role="Guideline" EntitySet="Guideline" />
@@ -576,6 +593,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Request_RequestCategory" Association="Self.FK_Request_RequestCategory">
             <End Role="RequestCategory" EntitySet="RequestCategory" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_ServiceItem" Association="Self.FK_Request_ServiceItem">
+            <End Role="ServiceItem" EntitySet="ServiceItem" />
             <End Role="Request" EntitySet="Request" />
           </AssociationSet>
           <AssociationSet Name="FK_ServiceItem_Service" Association="Self.FK_ServiceItem_Service">
@@ -604,10 +625,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_TicketDetail_ITSupporter" Association="Self.FK_TicketDetail_ITSupporter">
             <End Role="ITSupporter" EntitySet="ITSupporter" />
-            <End Role="Ticket" EntitySet="Ticket" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TicketDetail_ServiceItem" Association="Self.FK_TicketDetail_ServiceItem">
-            <End Role="ServiceItem" EntitySet="ServiceItem" />
             <End Role="Ticket" EntitySet="Ticket" />
           </AssociationSet>
           <AssociationSet Name="FK_TicketHistory_ITSupporter" Association="Self.FK_TicketHistory_ITSupporter">
@@ -690,6 +707,10 @@
             <End Role="Device" EntitySet="Devices" />
             <End Role="Ticket" EntitySet="Tickets" />
           </AssociationSet>
+          <AssociationSet Name="FK_DeviceType_ServiceITSupport" Association="DataModel.FK_DeviceType_ServiceITSupport">
+            <End Role="ServiceITSupport" EntitySet="ServiceITSupports" />
+            <End Role="DeviceType" EntitySet="DeviceTypes" />
+          </AssociationSet>
           <AssociationSet Name="FK_Guideline_ServiceItem" Association="DataModel.FK_Guideline_ServiceItem">
             <End Role="ServiceItem" EntitySet="ServiceItems" />
             <End Role="Guideline" EntitySet="Guidelines" />
@@ -710,6 +731,10 @@
             <End Role="RequestCategory" EntitySet="RequestCategories" />
             <End Role="Request" EntitySet="Requests" />
           </AssociationSet>
+          <AssociationSet Name="FK_Request_ServiceItem" Association="DataModel.FK_Request_ServiceItem">
+            <End Role="ServiceItem" EntitySet="ServiceItems" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
           <AssociationSet Name="FK_Ticket_Request" Association="DataModel.FK_Ticket_Request">
             <End Role="Request" EntitySet="Requests" />
             <End Role="Ticket" EntitySet="Tickets" />
@@ -721,10 +746,6 @@
           <AssociationSet Name="FK_Skill_ServiceItem" Association="DataModel.FK_Skill_ServiceItem">
             <End Role="ServiceItem" EntitySet="ServiceItems" />
             <End Role="Skill" EntitySet="Skills" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TicketDetail_ServiceItem" Association="DataModel.FK_TicketDetail_ServiceItem">
-            <End Role="ServiceItem" EntitySet="ServiceItems" />
-            <End Role="Ticket" EntitySet="Tickets" />
           </AssociationSet>
           <AssociationSet Name="FK_TicketHistory_Ticket" Association="DataModel.FK_TicketHistory_Ticket">
             <End Role="Ticket" EntitySet="Tickets" />
@@ -840,12 +861,14 @@
             <PropertyRef Name="DeviceTypeId" />
           </Key>
           <Property Name="DeviceTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceId" Type="Int32" Nullable="false" />
           <Property Name="DeviceTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Devices" Relationship="DataModel.FK_Device_DeviceType" FromRole="DeviceType" ToRole="Device" />
+          <NavigationProperty Name="ServiceITSupport" Relationship="DataModel.FK_DeviceType_ServiceITSupport" FromRole="DeviceType" ToRole="ServiceITSupport" />
         </EntityType>
         <EntityType Name="Guideline">
           <Key>
@@ -888,6 +911,7 @@
           </Key>
           <Property Name="RequestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AgencyId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceItemId" Type="Int32" Nullable="false" />
           <Property Name="RequestCategoryId" Type="Int32" Nullable="false" />
           <Property Name="RequestStatus" Type="Int32" Nullable="false" />
           <Property Name="RequestName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -899,6 +923,7 @@
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Agency" Relationship="DataModel.FK_Ticket_Agency" FromRole="Request" ToRole="Agency" />
           <NavigationProperty Name="RequestCategory" Relationship="DataModel.FK_Request_RequestCategory" FromRole="Request" ToRole="RequestCategory" />
+          <NavigationProperty Name="ServiceItem" Relationship="DataModel.FK_Request_ServiceItem" FromRole="Request" ToRole="ServiceItem" />
           <NavigationProperty Name="Tickets" Relationship="DataModel.FK_Ticket_Request" FromRole="Request" ToRole="Ticket" />
         </EntityType>
         <EntityType Name="RequestCategory">
@@ -936,9 +961,9 @@
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Guidelines" Relationship="DataModel.FK_Guideline_ServiceItem" FromRole="ServiceItem" ToRole="Guideline" />
+          <NavigationProperty Name="Requests" Relationship="DataModel.FK_Request_ServiceItem" FromRole="ServiceItem" ToRole="Request" />
           <NavigationProperty Name="ServiceITSupport" Relationship="DataModel.FK_ServiceItem_Service" FromRole="ServiceItem" ToRole="ServiceITSupport" />
           <NavigationProperty Name="Skills" Relationship="DataModel.FK_Skill_ServiceItem" FromRole="ServiceItem" ToRole="Skill" />
-          <NavigationProperty Name="Tickets" Relationship="DataModel.FK_TicketDetail_ServiceItem" FromRole="ServiceItem" ToRole="Ticket" />
         </EntityType>
         <EntityType Name="ServiceITSupport">
           <Key>
@@ -951,6 +976,7 @@
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ContractServiceITSupports" Relationship="DataModel.FK_ContractService_Service" FromRole="ServiceITSupport" ToRole="ContractServiceITSupport" />
+          <NavigationProperty Name="DeviceTypes" Relationship="DataModel.FK_DeviceType_ServiceITSupport" FromRole="ServiceITSupport" ToRole="DeviceType" />
           <NavigationProperty Name="ServiceItems" Relationship="DataModel.FK_ServiceItem_Service" FromRole="ServiceITSupport" ToRole="ServiceItem" />
         </EntityType>
         <EntityType Name="Skill">
@@ -972,7 +998,6 @@
             <PropertyRef Name="TicketId" />
           </Key>
           <Property Name="TicketId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceItemId" Type="Int32" Nullable="false" />
           <Property Name="RequestId" Type="Int32" Nullable="false" />
           <Property Name="DeviceId" Type="Int32" Nullable="false" />
           <Property Name="Desciption" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -988,7 +1013,6 @@
           <NavigationProperty Name="Device" Relationship="DataModel.FK_TicketDetail_Device" FromRole="Ticket" ToRole="Device" />
           <NavigationProperty Name="ITSupporter" Relationship="DataModel.FK_TicketDetail_ITSupporter" FromRole="Ticket" ToRole="ITSupporter" />
           <NavigationProperty Name="Request" Relationship="DataModel.FK_Ticket_Request" FromRole="Ticket" ToRole="Request" />
-          <NavigationProperty Name="ServiceItem" Relationship="DataModel.FK_TicketDetail_ServiceItem" FromRole="Ticket" ToRole="ServiceItem" />
           <NavigationProperty Name="TicketHistories" Relationship="DataModel.FK_TicketHistory_Ticket" FromRole="Ticket" ToRole="TicketHistory" />
           <NavigationProperty Name="TicketTasks" Relationship="DataModel.FK_TicketTask_Ticket" FromRole="Ticket" ToRole="TicketTask" />
         </EntityType>
@@ -1157,6 +1181,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DeviceType_ServiceITSupport">
+          <End Type="DataModel.ServiceITSupport" Role="ServiceITSupport" Multiplicity="1" />
+          <End Type="DataModel.DeviceType" Role="DeviceType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceITSupport">
+              <PropertyRef Name="ServiceITSupportId" />
+            </Principal>
+            <Dependent Role="DeviceType">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Guideline_ServiceItem">
           <End Type="DataModel.ServiceItem" Role="ServiceItem" Multiplicity="0..1" />
           <End Type="DataModel.Guideline" Role="Guideline" Multiplicity="*" />
@@ -1217,6 +1253,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Request_ServiceItem">
+          <End Type="DataModel.ServiceItem" Role="ServiceItem" Multiplicity="1" />
+          <End Type="DataModel.Request" Role="Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceItem">
+              <PropertyRef Name="ServiceItemId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="ServiceItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Ticket_Request">
           <End Type="DataModel.Request" Role="Request" Multiplicity="1" />
           <End Type="DataModel.Ticket" Role="Ticket" Multiplicity="*" />
@@ -1249,18 +1297,6 @@
               <PropertyRef Name="ServiceItemId" />
             </Principal>
             <Dependent Role="Skill">
-              <PropertyRef Name="ServiceItemId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TicketDetail_ServiceItem">
-          <End Type="DataModel.ServiceItem" Role="ServiceItem" Multiplicity="1" />
-          <End Type="DataModel.Ticket" Role="Ticket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServiceItem">
-              <PropertyRef Name="ServiceItemId" />
-            </Principal>
-            <Dependent Role="Ticket">
               <PropertyRef Name="ServiceItemId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1393,6 +1429,7 @@
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="DeviceTypeName" ColumnName="DeviceTypeName" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
                 <ScalarProperty Name="DeviceTypeId" ColumnName="DeviceTypeId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1441,6 +1478,7 @@
                 <ScalarProperty Name="RequestName" ColumnName="RequestName" />
                 <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
                 <ScalarProperty Name="RequestCategoryId" ColumnName="RequestCategoryId" />
+                <ScalarProperty Name="ServiceItemId" ColumnName="ServiceItemId" />
                 <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
               </MappingFragment>
@@ -1522,7 +1560,6 @@
                 <ScalarProperty Name="Desciption" ColumnName="Desciption" />
                 <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-                <ScalarProperty Name="ServiceItemId" ColumnName="ServiceItemId" />
                 <ScalarProperty Name="TicketId" ColumnName="TicketId" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -27,11 +27,7 @@ namespace CapstoneProject_ODTS.Controllers
         public HttpResponseMessage GetAllCompany()
         {
             var result = _companyDomain.GetAllCompany();
-            if (result.Count() < 0)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
-            }            
-
+            
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
     }
