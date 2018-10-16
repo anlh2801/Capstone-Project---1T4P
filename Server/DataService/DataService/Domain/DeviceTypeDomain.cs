@@ -9,7 +9,6 @@ using DataService.ResponseModel;
 
 namespace DataService.Domain
 {
-
     public interface IDeviceTypeDomain
     {
 
@@ -23,7 +22,7 @@ namespace DataService.Domain
             var deviceTypeService = this.Service<IDeviceTypeService>();
 
             var deviceTypes = deviceTypeService.GetAllDeviceType();
-            
+
             return deviceTypes;
         }
     }

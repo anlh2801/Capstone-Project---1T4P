@@ -85,8 +85,8 @@ namespace DataService.Models.Entities.Services
             {
                 createContract.CompanyId = model.CompanyId;
                 createContract.ContractName = model.ContractName;
-                createContract.StartDate = DateTime.Parse(model.StartDate);
-                createContract.EndDate = DateTime.Parse(model.EndDate);
+                createContract.StartDate = model.StartDate.ToDateTime(); ;
+                createContract.EndDate = model.EndDate.ToDateTime();
                 createContract.IsDelete = false;
                 createContract.CreateDate = DateTime.Now;
                 createContract.UpdateDate = DateTime.Now;
@@ -107,14 +107,13 @@ namespace DataService.Models.Entities.Services
             var contractRepo = DependencyUtils.Resolve<IContractRepository>();
             var updateContract = contractRepo.GetActive().SingleOrDefault(a => a.ContractId == model.ContractId);
             
-            if (updateContract.ContractId == model.ContractId)
+            if (updateContract!=null)
             {
                 updateContract.ContractName = model.ContractName;
                 //updateContract.StartDate = DateTime.ParseExact(model.CreateDate, "dd-MM-yyyy", CultureInfo.InvariantCulture); 
                 //updateContract.EndDate = DateTime.ParseExact(model.EndDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-                updateContract.StartDate = DateTime.Parse(model.StartDate);
-                updateContract.EndDate = DateTime.Parse(model.EndDate);
-
+                updateContract.StartDate = model.StartDate.ToDateTime();
+                updateContract.EndDate = model.EndDate.ToDateTime();
                 updateContract.UpdateDate = DateTime.Now;
 
                 contractRepo.Edit(updateContract);
