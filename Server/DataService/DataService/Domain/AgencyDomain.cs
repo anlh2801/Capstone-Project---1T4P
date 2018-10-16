@@ -20,6 +20,8 @@ namespace DataService.Domain
         List<AgencyAPIViewModel> GetAllAgency();
 
         bool CreateRequest(AgencyCreateRequestAPIViewModel model);
+
+        AgencyDeviceAPIViewModel GetDeviceDetails(int deviceId);
     }
 
     public class AgencyDomain : BaseDomain, IAgencyDomain
@@ -88,6 +90,15 @@ namespace DataService.Domain
             var result = iTSupporterService.CreateAgency(model);
 
             return result;
+        }
+
+        public AgencyDeviceAPIViewModel GetDeviceDetails(int deviceId)
+        {
+            var agencyService = this.Service<IAgencyService>();
+
+            var agency = agencyService.GetDeviceByDeviceId(deviceId);
+
+            return agency;
         }
     }
 }

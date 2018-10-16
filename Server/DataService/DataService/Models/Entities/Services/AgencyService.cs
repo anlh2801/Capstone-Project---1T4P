@@ -29,6 +29,8 @@ namespace DataService.Models.Entities.Services
 
         bool CreateAgency(AgencyAPIViewModel model);
 
+        AgencyDeviceAPIViewModel GetDeviceByDeviceId(int deviceId);
+
     }
 
     public partial class AgencyService
@@ -206,6 +208,33 @@ namespace DataService.Models.Entities.Services
             return itSupporter.ITSupporterId;
         }
 
-
+        public AgencyDeviceAPIViewModel GetDeviceByDeviceId(int deviceId)
+        {
+            var deviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
+            var devices = deviceRepo.GetActive().SingleOrDefault(a => a.DeviceId == deviceId);
+            if (devices != null)
+            {
+                var agencyDeviceAPIViewModel = new AgencyDeviceAPIViewModel
+                {
+                    DeviceId = devices.DeviceId,
+                    AgencyId = devices.AgencyId,
+                    DeviceTypeId = devices.DeviceTypeId,
+                    DeviceName = devices.DeviceName,
+                    DeviceCode = devices.DeviceCode,
+                    GuarantyStartDate = devices.GuarantyStartDate != null ? devices.GuarantyStartDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    GuarantyEndDate = devices.GuarantyEndDate != null ? devices.GuarantyEndDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    Ip = devices.Ip,
+                    Port = devices.Port,
+                    DeviceAccount = devices.DeviceAccount,
+                    DevicePassword = devices.DevicePassword,
+                    SettingDate = devices.SettingDate != null ? devices.SettingDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    Other = devices.Other,
+                    CreateDate = devices.CreateDate != null ? devices.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    UpdateDate = devices.UpdateDate != null ? devices.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                };
+                return agencyDeviceAPIViewModel;
+            }
+            return null;
+        }
     }
 }

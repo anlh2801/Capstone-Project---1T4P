@@ -19,7 +19,7 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         HttpResponseMessage CreateRequest(AgencyCreateRequestAPIViewModel model);
 
-
+        HttpResponseMessage GetDeviceDetails(int deviceId);
     }
 
     public class AgencyController : ApiController, IAgencyController
@@ -83,6 +83,20 @@ namespace CapstoneProject_ODTS.ControllersApi
             return Request.CreateResponse(HttpStatusCode.OK, "Tạo Thành Công!");
 
         }
+
+        [HttpGet]
+        [Route("agency/get_device_details")]
+        public HttpResponseMessage GetDeviceDetails(int deviceId)
+        {
+            var result = _agencyDomain.ViewProfile(deviceId);
+            if (result == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Loi nek");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+        
     }
 }
 
