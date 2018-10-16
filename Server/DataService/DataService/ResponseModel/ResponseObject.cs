@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataService.ResponseModel
 {
-    public class ResponseObject
+    public class ResponseObject<Object>
     {
         public bool IsError { get; set; }
         public String ErrorMessage { get; set; }
