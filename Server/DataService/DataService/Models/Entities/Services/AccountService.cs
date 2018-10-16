@@ -15,7 +15,9 @@ namespace DataService.Models.Entities.Services
         bool CheckLogin(string username, string password,int roleid);
         List<AccountAPIViewModel> GetAllAccount();
         AccountAPIViewModel ViewProfile(int account_id);
-        bool CreateAccount(AccountCreateAPIViewModel model);
+        bool CreateAccount(AccountAPIViewModel model);
+        bool RemoveAccount(int account_id);
+        bool UpdateProfile(AccountAPIViewModel model);
     }
 
     public partial class AccountService
@@ -63,6 +65,7 @@ namespace DataService.Models.Entities.Services
                 var accountAPIViewModel = new AccountAPIViewModel
                 {
                     AccountId = account.AccountId,
+                    RoleId = account.RoleId,
                     RoleName = account.Role.RoleName,
                     Username = account.Username,
                     Password = account.Password,
@@ -73,7 +76,7 @@ namespace DataService.Models.Entities.Services
             }
             return null;
         }
-        public bool CreateAccount(AccountCreateAPIViewModel model)
+        public bool CreateAccount(AccountAPIViewModel model)
         {
 
             var accountRepo = DependencyUtils.Resolve<IAccountRepository>();
@@ -81,10 +84,10 @@ namespace DataService.Models.Entities.Services
 
             try
             {
-                createAccount.AccountId = model.AccountId;
                 createAccount.RoleId = model.RoleId;
                 createAccount.Username = model.Username;
                 createAccount.Password = model.Password;
+                createAccount.IsDelete = false;
                 createAccount.CreateDate = DateTime.Now;
                 createAccount.UpdateDate = DateTime.Now;
 
@@ -100,6 +103,29 @@ namespace DataService.Models.Entities.Services
             }
 
         }
-       
+        public bool RemoveAccount(int account_id)
+        {
+            var accountRepo = DependencyUtils.Resolve<IAccountRepository>();
+            var account = accountRepo.GetActive().SingleOrDefault(a => a.AccountId == account_id);
+            Deactivate(account);
+            return true;
+        }
+        public bool UpdateProfile(AccountAPIViewModel model)
+        {
+            var accountRepo = DependencyUtils.Resolve<IAccountRepository>();
+            var updateAccount = accountRepo.GetActive().SingleOrDefault(a => a.AccountId == model.AccountId);
+            if (updateAccount.AccountId == model.AccountId)
+            {
+                updateAccount.Username = model.Username;
+                updateAccount.Password = model.Password;
+                updateAccount.UpdateDate = DateTime.Now;
+
+                accountRepo.Edit(updateAccount);
+                accountRepo.Save();
+                return true;
+            }
+
+            return false;
+        }
     }
 }

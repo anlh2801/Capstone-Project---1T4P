@@ -16,5 +16,6 @@ namespace DataService.APIViewModels
         public string Description { get; set; }
         public string CreateDate { get; set; }
         public string UpdateDate { get; set; }
+        public int NumericalOrder { get; set; }
     }
 }

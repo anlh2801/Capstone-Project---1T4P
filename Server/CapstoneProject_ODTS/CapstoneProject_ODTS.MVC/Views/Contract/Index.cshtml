@@ -1,6 +1,157 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<!-- /.modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <b>Message:</b><br>
+                    <input class="message-edit-text" type="text" size="20">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+
+                </div>
+                <div class="modal-body">
+
+                    <p>
+                        <b>Tên Công Ty:</b><br>
+                    <p id="conCompany"></p>
+                    <p>
+                        <b>Mô Tả Hợp Đồng:</b><br>
+                    <p id="conName"></p>
+                    <p>
+                        <b>Ngày Bắt Đầu:</b><br>
+                    <p id="conStartDate"></p>
+                    <p>
+                        <b>Ngày Hết Hạn:</b><br>
+                    <p id="conEndDate"></p>
+                    <p>
+                        <b>Lần Chỉnh Sửa Cuối:</b><br>
+                    <p id="conUpdateDate"></p>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--deletemodal-->
+<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+        <!--Content-->
+        <div class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center">
+                <p class="heading">Are you sure you want to delete this item?</p>
+            </div>
+
+            <!--Body-->
+            <div class="modal-body">
+
+                <i class="fa fa-times fa-4x animated rotateIn"></i>
+
+            </div>
+
+            <!--Footer-->
+            <div class="modal-footer flex-center">
+                <a href="#" onClick="deleteContract(); return false;" class="btn  btn-outline-danger">Yes</a>
+                <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+<input type="hidden" id="contractHidden" />
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                </div>
+                <div class="modal-body">
+                    <p>
+                    <p id="id"></p>
+                    <p>
+                        <b>Tên Công Ty:</b><br>
+                        <select id="comboCompany"></select>
+                    <p>
+                        <b>Mô Tả Hợp Đồng:</b><br>
+                        <input type="text" id="conNameCreate"></input>
+                    <p>
+                        <b>Ngày Bất Đầu:</b><br>
+                        <input type="text" id="createDate" type="text" class="form-control" required></input>
+                    <p>
+                        <b>Ngày Hết Hạn:</b><br>
+                        <input type="text" id="endDate" type="text" class="form-control" required></input>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="createContracttt()">Create New</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <p>
+                    <b>Tên Công Ty:</b><br>
+                    <select id="comboCompanyE" disabled="true"></select>
+                <p>
+                    <b>Mô Tả Hợp Đồng:</b><br>
+                    <input type="text" id="conNameE"></input>
+                <p>
+                    <b>Ngày Bất Đầu:</b><br>
+                    <input type="text" id="conStartDateE" type="text" class="form-control" required></input>
+                <p>
+                    <b>Ngày Hết Hạn:</b><br>
+                    <input type="text" id="conEndDateE" type="text" class="form-control" required></input>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="UpdateContract()">Chỉnh Sửa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Datatable -->
 <div class="row col-md-12">
 
@@ -9,22 +160,31 @@
             <tr>
                 <th><label>STT</label></th>
                 <th><label>Tên</label></th>
-                <th><label>Mô tả</label></th>
-                <th><label>Tạo ngày</label></th>
-                <th><label>Cập nhật ngày</label></th>
+                <th><label>Mô Tả Hợp Đồng</label></th>
+                <th><label>Ngày Bắt Đầu</label></th>
+                <th><label>Hạn Hợp Đồng</label></th>
+                <th><label>Chức Năng</label></th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
+    <div class="NewThing">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="showCreateModal()">Tạo Hợp Đồng</button>
+    </div>
 </div>
 
 <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts {
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function() {
             loadContract();
+            showCompany();
         });
 
         function loadContract() {
@@ -32,9 +192,8 @@
                 type: 'POST',
                 url: '@Url.Action("GetAllContract", "Contract")',
                 data: {
-
                 },
-                success: function (result) {
+                success: function(result) {
                     initDatatable(result.result);
                 },
                 error: function(error) {
@@ -43,6 +202,7 @@
             });
         }
         function initDatatable(data) {
+            $("#detail-table").dataTable().fnDestroy();
             $("#detail-table").dataTable({
                 stateSave: true,
                 "bFilter": true,
@@ -71,25 +231,178 @@
                         "bSortable": false,
                         "sClass": "text-center"
                     },
-
-                    //{
-                    //    "aTargets": [7],
-                    //    "mRender": function (data, type, row) {
-                    //        var edit = "<a title='Chỉnh sửa' class='btn btn-sm btn-primary' onclick='callShowEditModal(" + data + ")'><i class='glyphicon glyphicon-pencil'></i></a>";
-                    //        var del = "<a title='Xóa' class='btn btn-sm btn-danger' onclick='deleteElementChil(" + data + ")'><i class='glyphicon glyphicon-trash'></i></a>";
-                    //        return edit + " " + del;
-                    //    },
-                    //}
-
                 ],
                 "columns": [
-                    { "data": "ContractId" },
-                    { "data": "CompanyId" },
+                    { "data": "NumericalOrder" },
+                    { "data": "CompanyName" },
                     { "data": "ContractName" },
                     { "data": "StartDate" },
                     { "data": "EndDate" },
+                    {
+                        "aTargets": [4],
+                        "mRender": function (data, type, full) {
+                            var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.ContractId + ')"></button>';
+                            var del = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.ContractId + ')"></button>';
+                            var edit = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeContract(' + full.ContractId + ')"></button>';
+                            return view + " " + del + " " + edit;
+                        }
+                    },
                 ],
                 "bAutoWidth": false,
+            });
+        }
+        function showCreateModal() {
+            $('#CreateModal').modal('show');
+        }
+        function showCompany() {
+            $('#comboCompany, #comboCompanyE')
+                .find('option')
+                .remove()
+                .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllCompany", "Home")',
+                data: {
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var len = data.result.length;
+                    var html = '';
+                    for (var i = 0; i < len; i++) {
+                        html += '<option value="' +
+                            data.result[i].CompanyId +
+                            '">' +
+                            data.result[i].CompanyName
+                            '</option>';
+                    }
+                    $('#comboCompany').append(html);
+                    $('#comboCompanyE').append(html);
+                }
+            });
+        }
+        function getData(idd) {
+
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "Contract"})',
+
+                data: {
+                    contract_id: idd
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $("#conCompany").text(data.result.CompanyName);
+                    $("#conName").text(data.result.ContractName);
+                    $("#conStartDate").text(data.result.StartDate);
+                    $("#conEndDate").text(data.result.EndDate);
+                    $("#conUpdateDate").text(data.result.UpdateDate);
+                }
+            });
+        $('#ViewModal').modal('show');
+            }
+        $('#createDate').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            forceParse: false,
+            })
+        $('#endDate').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            forceParse: false,
+        })
+        $('#conStartDateE').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            forceParse:false,
+        })
+        $('#conEndDateE').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            forceParse:false,
+        })
+
+        function getDataEdit(id) {
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "Contract" })',
+
+                data: {
+                    contract_id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $("#id").val(data.result.ContractId);
+                    $("#comboCompanyE").val(data.result.CompanyId);
+                    $("#conNameE").val(data.result.ContractName);
+                    $("#conStartDateE").val(data.result.StartDate);
+                    $("#conEndDateE").val(data.result.EndDate);
+                }
+
+            });
+            $('#EditModal').modal('show');
+        }
+        function UpdateContract() {
+            var empObj = {
+                ContractId: $('#id').val(),
+                ContractName: $('#conNameE').val(),
+                StartDate: $('#conStartDateE').val(),
+                EndDate: $('#conEndDateE').val(),
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateContract", "Contract")',
+                data: JSON.stringify(empObj),
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#EditModal').modal('hide'),
+                        loadContract();
+                }
+            });
+        }
+        function createContracttt() {
+            var empObj = {
+                CompanyId: $('#comboCompany').val(),
+                ContractName: $('#conNameCreate').val(),
+                StartDate: $('#createDate').val(),
+                EndDate: $('#endDate').val(),
+            }
+             $.ajax({
+                type: 'POST',
+                url: '@Url.Action("CreateContract", "Contract")',
+                data: JSON.stringify(empObj),
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    $('#CreateModal').modal('hide'),
+                        loadContract();
+                }
+            });
+        }
+        function removeContract(id) {
+            $('#modalConfirmDelete').modal('show');
+            $('#contractHidden').val(id);
+        }
+        function deleteContract() {
+            var contract_id = $('#contractHidden').val();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("RemoveContract", "Contract")',
+                data: {
+                    contract_id: contract_id
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#modalConfirmDelete').modal('hide')
+                    loadContract();
+                }
             });
         }
 

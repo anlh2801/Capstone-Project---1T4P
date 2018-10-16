@@ -7,9 +7,13 @@ using System.Web.Mvc;
 
 namespace CapstoneProject_ODTS.MVC.Controllers
 {
-    public class RoleController : Controller
+    public class RoleController: Controller
     {
         private RoleDomain _roleDomain;
+        public RoleController()
+        {
+            _roleDomain = new RoleDomain();
+        }
         public ActionResult GetAllRole()
         {
             var roles = _roleDomain.GetAllRole();

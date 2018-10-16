@@ -9,24 +9,25 @@ using System.Threading.Tasks;
 
 namespace DataService.Models.Entities.Services
 {
-    public partial interface IAccountService
+    public partial interface IRoleService
     {
         List<RoleAPIViewModel> GetAllRole();
     }
 
-    public partial class AccountService
+    public partial class RoleService
     {
         public List<RoleAPIViewModel> GetAllRole()
         {
             List<RoleAPIViewModel> rsList = new List<RoleAPIViewModel>();
-            var roleRepo = DependencyUtils.Resolve<IRoleRepository>();
-            var roles = roleRepo.GetActive().ToList();
+            var RoleRepo = DependencyUtils.Resolve<IRoleRepository>();
+            var roles = RoleRepo.GetActive().ToList();
             foreach (var item in roles)
             {
                 if (!item.IsDelete)
                 {
                     rsList.Add(new RoleAPIViewModel
                     {
+
                         RoleId = item.RoleId,
                         RoleName = item.RoleName,
                         IsDelete = item.IsDelete,

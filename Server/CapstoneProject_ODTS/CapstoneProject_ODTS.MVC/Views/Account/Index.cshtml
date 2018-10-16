@@ -1,4 +1,8 @@
-﻿<div class="modal fade" id="myModal">
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="modal fade" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -19,14 +23,12 @@
 </div><!-- /.modal -->
 <div class="container">
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+
                 </div>
                 <div class="modal-body">
                     <p>
@@ -49,7 +51,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -58,7 +59,7 @@
 </div>
 <div class="container">
     <!-- Modal -->
-    <div class="modal fade2" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -69,31 +70,87 @@
                 </div>
                 <div class="modal-body">
                     <p>
+                    <p id="id"></p>
+                    <p>
                         <b>RoleId:</b><br>
-                        <select>
-                            <option value="1">Admin</option>
-                            <option value="2">Saab</option>
-                            <option value="3">Opel</option>
-                        </select>
+                        <select id="comboRole"></select>
                     <p>
                         <b>Username:</b><br>
-                        <input type="text" id="accName"></input>
+                        <input type="text" id="accNameCreate"></input>
                     <p>
                         <b>Password:</b><br>
-                        <input type="text" id="accPass"></input>
-                   
+                        <input type="text" id="accPassCreate"></input>
+
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="createAcccount">Save changes</button>
+                    <button type="button" class="btn btn-primary" onclick="createAccount()">Create New</button>
                 </div>
             </div>
         </div>
     </div>
 
 </div>
-<!-- Datatable -->
+<!--deletemodal-->
+<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+        <!--Content-->
+        <div class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center">
+                <p class="heading">Are you sure you want to delete this item?</p>
+            </div>
+
+            <!--Body-->
+            <div class="modal-body">
+
+                <i class="fa fa-times fa-4x animated rotateIn"></i>
+
+            </div>
+
+            <!--Footer-->
+            <div class="modal-footer flex-center">
+                <a href="#" onClick="deleteAccount(); return false;" class="btn  btn-outline-danger">Yes</a>
+                <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+<input type="hidden" id="accountHidden" />
+@*Edit modal*@
+<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <p>
+                    <b>RoleId:</b><br>
+                    <select id="comboRoleEdit" class="form-control" disabled="true"></select>
+                <p>
+                    <b>Username:</b><br>
+                    <input type="text" id="accNameEdit"></input>
+                <p>
+                    <b>Password:</b><br>
+                    <input type="text" id="accPassEdit"></input>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="UpdateAccount()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row col-md-12">
     <h3>Recent Request</h3>
 
@@ -103,15 +160,14 @@
                 <th><label>STT</label></th>
                 <th><label>Quyền</label></th>
                 <th><label>Tên đăng nhập</label></th>
-                <th><label>Mật khẩu</label></th>
                 <th><label>Ngày tạo</label></th>
-                <th><label>Lần chỉnh</label></th>
+                <th><label>Chức Năng</label></th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
-    <div class="test">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="getDataToEdit('+full.AccountId+')">New Account</button>
+    <div class="NewThing">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="showCreateModal()">Tạo Tài Khoản</button>
     </div>
 </div>
 
@@ -125,6 +181,7 @@
     <script>
         $(document).ready(function() {
             loadAccount();
+            showRole();
         });
 
         function loadAccount() {
@@ -149,8 +206,8 @@
                     'roleid': $('#RoleId').val(),
                     'username': $('#Username').val(),
                     'password': $('#Password').val(),
-               
-               
+
+
                 },
                 success: function(result) {
                     if (result.isSucess) {
@@ -165,6 +222,7 @@
         }
 
         function initDatatable(data) {
+            $("#detail-table").dataTable().fnDestroy();
             $("#detail-table").dataTable({
                 stateSave: true,
                 "bFilter": true,
@@ -189,31 +247,23 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [1, 2, 3, 4, 5, 6,7],
+                        "aTargets": [0, 1, 2, 3, 4],
                         "bSortable": false,
                         "sClass": "text-center",
                     },
-
-
-                    {
-                        "aTargets": [7],
-                        "mRender": function (data, type, row) {
-                            var edit = "<a title='Chỉnh sửa' class='btn btn-sm btn-primary' onclick='callShowEditModal(" + data + ")'><i class='glyphicon glyphicon-pencil'></i></a>";
-                            var del = "<a title='Xóa' class='btn btn-sm btn-danger' onclick='deleteElementChil(" + data + ")'><i class='glyphicon glyphicon-trash'></i></a>";
-                            return edit + " " + del;
-                        },
-                    }
                 ],
                 "columns": [
                     { "data": "NumericalOrder" },
                     { "data": "RoleName" },
                     { "data": "Username"},
-                    { "data": "Password" },
                     { "data": "CreateAt" },
-                    { "data": "UpdateAt" },
                     {
-                        "mRender": function(data, type, full) {
-                            return ' <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="getData('+full.AccountId+')">View Detail</button>';
+                        "aTargets": [4],
+                        "mRender": function (data, type, full) {
+                            var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.AccountId + ')"></button>';
+                            var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.AccountId + ')"></button>';
+                            var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeAccount(' + full.AccountId + ')"></button>';
+                            return view + " " + edit + " " + del;
                         }
                     },
                 ],
@@ -241,27 +291,118 @@
 
                 }
             });
-            $('#exampleModal').modal('show');
+            $('#ViewModal').modal('show');
         }
-        function getDataToEdit(idd) {
 
+        function showRole() {
+            $('#comboRole, #comboRoleEdit')
+                .find('option')
+                .remove()
+                .end();
             $.ajax({
-                url: '@Url.RouteUrl(new {action = "CreateAccount", controller = "Account"})',
+                type: 'GET',
+                url: '@Url.Action("GetAllRole", "Role")',
+                data: {
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var len = data.result.length;
+                    var html = '';
+                    for (var i = 0; i < len; i++) {
+                        html += '<option value="' +
+                            data.result[i].RoleId +
+                            '">' +
+                            data.result[i].RoleName
+                            '</option>';
+                    }
+                    $('#comboRole').append(html);
+                    $('#comboRoleEdit').append(html);
+
+                }
+            });
+        }
+        function showCreateModal() {
+            $('#CreateModal').modal('show');
+        }
+        function createAccount() {
+            var empObj = {
+                RoleId: $('#comboRole').val(),
+                Username: $('#accNameCreate').val(),
+                Password: $('#accPassCreate').val(),
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("CreateAccount", "Account")',
+                data: JSON.stringify(empObj),
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#CreateModal').modal('hide'),
+                        loadAccount();
+                }
+            });
+        }
+        function removeAccount(id) {
+            $('#modalConfirmDelete').modal('show');
+            $('#accountHidden').val(id);
+        }
+        function deleteAccount() {
+            var account_id = $('#accountHidden').val();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("RemoveAccount", "Account")',
+                data: {
+                    account_id: account_id
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#modalConfirmDelete').modal('hide')
+                    loadAccount();
+                }
+            });
+        }
+        function getDataEdit(id) {
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "ViewProfile", controller = "Account"})',
 
                 data: {
-                    account_id: idd
+                    account_id: id
                 },
                 type: 'GET',
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#accRole").val(data.result.RoleId);
-                    $("#accName").val(data.result.Username);
-                    $("#accPass").val(data.result.Password);
+                    $("#id").val(data.result.AccountId);
+                    $("#comboRoleEdit").val(data.result.RoleId);
+                    $("#accNameEdit").val(data.result.Username);
+                    $("#accPassEdit").val(data.result.Password);
+                }
 
+            });
+            $('#EditModal').modal('show');
+        }
+        function UpdateAccount() {
+            var empObj = {
+                AccountId: $('#id').val(),
+                UserName: $('#accNameEdit').val(),
+                Password: $('#accPassEdit').val(),
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateProfile", "Account")',
+                data: JSON.stringify(empObj),
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#EditModal').modal('hide'),
+                        loadAccount();
                 }
             });
-            $('#exampleModal2').modal('show');
         }
     </script>
 

@@ -22,19 +22,24 @@ namespace DataService.Models.Entities.Services
             List<CompanyAPIViewModel> rsList = new List<CompanyAPIViewModel>();
             var companyRepo = DependencyUtils.Resolve<ICompanyRepository>();
             var companies = companyRepo.GetActive().ToList();
-
+            int count = 1;
             foreach (var item in companies)
-            {                
-                rsList.Add(new CompanyAPIViewModel
+            {
+                if (!item.IsDelete)
                 {
-                    CompanyId = item.CompanyId,
-                    CompanyName = item.CompanyName,
-                    Description = item.Description,
-                    CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
-                    UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
-                });
+                    rsList.Add(new CompanyAPIViewModel
+                    {
+                        NumericalOrder = count,
+                        CompanyId = item.CompanyId,
+                        CompanyName = item.CompanyName,
+                        Description = item.Description,
+                        CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                    });
+                }
+                count++;
             }
-
+           
             return rsList;
         }
 }

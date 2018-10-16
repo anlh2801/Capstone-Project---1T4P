@@ -17,7 +17,7 @@ namespace DataService.Domain
     {
         public List<RoleAPIViewModel> GetAllRole()
         {
-            var roleService = this.Service<IAccountService>();
+            var roleService = this.Service<IRoleService>();
 
             var roles = roleService.GetAllRole();
 

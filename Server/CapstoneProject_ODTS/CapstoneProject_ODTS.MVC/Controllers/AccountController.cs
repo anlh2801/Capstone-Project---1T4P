@@ -43,17 +43,8 @@ namespace CapstoneProject_ODTS.Controllers
 
             return Json(new { result = accountdetail }, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult CreateAccount(int RoleId, string Username, string Password, string CreateDate, string UpdateDate)
+        public ActionResult CreateAccount(AccountAPIViewModel model)
         {
-            var model = new AccountCreateAPIViewModel()
-            {
-                RoleId = RoleId,
-                Username=Username,
-                Password = Password,
-                CreateAt =CreateDate,
-                UpdateAt = UpdateDate,
-            };
-
              
             var result = _accountDomain.CreateAccount(model);
             if (result == false)
@@ -62,6 +53,23 @@ namespace CapstoneProject_ODTS.Controllers
             }
 
             return Json(true);
+
+        }
+        public ActionResult RemoveAccount(int account_id)
+        {
+            var accountDetail = _accountDomain.RemoveAccount(account_id);
+            return Json(new { result = accountDetail }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult UpdateProfile(AccountAPIViewModel model)
+        {
+            var result = _accountDomain.UpdateProfile(model);
+            if (result == false)
+            {
+                return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
 
         }
     }

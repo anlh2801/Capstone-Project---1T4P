@@ -14,7 +14,9 @@ namespace DataService.Domain
         AccountAPIViewModel ViewProfile(int account_id);
         bool CheckLogin(string username, string password, int roleid);
         List<AccountAPIViewModel> GetAllAccount();
-        bool CreateAccount(AccountCreateAPIViewModel model);
+        bool CreateAccount(AccountAPIViewModel model);
+        bool RemoveAccount(int account_id);
+        bool UpdateProfile(AccountAPIViewModel model);
     };
 
     public class AccountDomain : BaseDomain, IAccountDomain
@@ -29,7 +31,7 @@ namespace DataService.Domain
             return isLoginSucess;
         }
 
-        public bool CreateAccount(AccountCreateAPIViewModel model)
+        public bool CreateAccount(AccountAPIViewModel model)
         {
             var AccountService = this.Service<IAccountService>();
 
@@ -54,6 +56,23 @@ namespace DataService.Domain
             var account = accountService.ViewProfile(account_id);
 
             return account;
+        }
+        public bool RemoveAccount(int account_id)
+        {
+            var AccountList = new List<AccountAPIViewModel>();
+
+            var accountService = this.Service<IAccountService>();
+            bool a = accountService.RemoveAccount(account_id);
+            return a;
+        }
+
+        public bool UpdateProfile(AccountAPIViewModel model)
+        {
+            var accountService = this.Service<IAccountService>();
+
+            var result = accountService.UpdateProfile(model);
+
+            return result;
         }
     }
 }
