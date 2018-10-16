@@ -21,6 +21,7 @@ namespace DataService.Models.Entities
         }
     
         public int DeviceTypeId { get; set; }
+        public int ServiceId { get; set; }
         public string DeviceTypeName { get; set; }
         public string Description { get; set; }
         public bool IsDelete { get; set; }
@@ -29,5 +30,6 @@ namespace DataService.Models.Entities
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Device> Devices { get; set; }
+        public virtual ServiceITSupport ServiceITSupport { get; set; }
     }
 }

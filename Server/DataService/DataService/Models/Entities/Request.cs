@@ -22,6 +22,7 @@ namespace DataService.Models.Entities
     
         public int RequestId { get; set; }
         public int AgencyId { get; set; }
+        public int ServiceItemId { get; set; }
         public int RequestCategoryId { get; set; }
         public int RequestStatus { get; set; }
         public string RequestName { get; set; }
@@ -34,6 +35,7 @@ namespace DataService.Models.Entities
     
         public virtual Agency Agency { get; set; }
         public virtual RequestCategory RequestCategory { get; set; }
+        public virtual ServiceItem ServiceItem { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ticket> Tickets { get; set; }
     }

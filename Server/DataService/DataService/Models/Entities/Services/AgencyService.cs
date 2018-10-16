@@ -149,9 +149,10 @@ namespace DataService.Models.Entities.Services
                 requestRepo.Add(createRequest);
                 requestRepo.Save();
 
-                CreateTicket(model.Ticket, createRequest.RequestId);
+                var current_IT_supporter_Id = AssignITSupporter(model.ServiceItemId);
+                CreateTicket(model.Ticket, createRequest.RequestId, current_IT_supporter_Id);
 
-                createRequest.RequestStatus = (int)RequestStatusEnum.Processing; 
+                createRequest.RequestStatus = (int)RequestStatusEnum.Processing;
 
                 requestRepo.Save();
                 return true;
@@ -164,7 +165,7 @@ namespace DataService.Models.Entities.Services
 
         }
 
-        public void CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId)
+        public void CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId, int current_IT_supporter_Id)
         {
 
             var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
@@ -173,37 +174,32 @@ namespace DataService.Models.Entities.Services
             {
                 var createTicket = new Ticket();
                 createTicket.RequestId = RequestId;
-                createTicket.ServiceItemId = item.ServiceItemId;
                 createTicket.DeviceId = item.DeviceId;
                 createTicket.Current_TicketStatus = (int)TicketStatusEnum.Await;
                 createTicket.Desciption = item.Desciption;
 
-                createTicket.CurrentITSupporter_Id = AssignITSupporter(createTicket);
+                createTicket.CurrentITSupporter_Id = current_IT_supporter_Id;
                 ticketRepo.Add(createTicket);
+
+                createTicket.Current_TicketStatus = (int)TicketStatusEnum.In_Process;
             }
             ticketRepo.Save();
 
         }
 
-        public int AssignITSupporter(Ticket ticket)
+        public int AssignITSupporter(int ServiceItemId)
         {
 
             var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
-            var itSupporter = itSupporterRepo.GetActive(p => (p.IsBusy == null || p.IsBusy == false)).FirstOrDefault(x => x.Skills.OrderByDescending(o => o.MonthExperience).Any(s => s.ServiceItemId == ticket.ServiceItemId));
+            var itSupporter = itSupporterRepo.GetActive(p => (p.IsBusy == null || p.IsBusy == false)).FirstOrDefault(x => x.Skills.OrderByDescending(o => o.MonthExperience).Any(s => s.ServiceItemId == ServiceItemId));
             if (itSupporter != null)
             {
-                //var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
-                //var ticketById = ticketRepo.GetActive().SingleOrDefault(a => a.TicketId == ticket.TicketId);
-                //ticketById.CurrentITSupporter_Id = itSupporter.ITSupporterId;
-                //ticketById.StartTime = DateTime.Now;
                 itSupporter.IsBusy = true;
-                //ticketById.Current_TicketStatus = (int)TicketStatusEnum.In_Process;
 
                 itSupporterRepo.Edit(itSupporter);
-                //ticketRepo.Edit(ticketById);
 
                 itSupporterRepo.Save();
-                //ticketRepo.Save;
+
             }
 
             return itSupporter.ITSupporterId;

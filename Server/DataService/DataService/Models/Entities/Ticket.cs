@@ -22,7 +22,6 @@ namespace DataService.Models.Entities
         }
     
         public int TicketId { get; set; }
-        public int ServiceItemId { get; set; }
         public int RequestId { get; set; }
         public int DeviceId { get; set; }
         public string Desciption { get; set; }
@@ -39,7 +38,6 @@ namespace DataService.Models.Entities
         public virtual Device Device { get; set; }
         public virtual ITSupporter ITSupporter { get; set; }
         public virtual Request Request { get; set; }
-        public virtual ServiceItem ServiceItem { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TicketHistory> TicketHistories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
