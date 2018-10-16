@@ -492,6 +492,7 @@
     <Compile Include="Privacy\PGP\PGPEncryptHelper.cs" />
     <Compile Include="Privacy\RSA\RSAHelper.cs" />
     <Compile Include="Privacy\TripleDes\TripleDesHelper.cs" />
+    <Compile Include="ResponseModel\ResponseObject.cs" />
     <Compile Include="Utilities\Enums.cs" />
     <Compile Include="Models\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
