@@ -49,7 +49,7 @@ namespace DataService.Models.Entities.Services
                 }
                 else
                 {
-                    return new ResponseObject<List<CompanyAPIViewModel>> { IsError = true, ErrorMessage = "Không tìm thấy công ty!", ObjReturn = rsList };
+                    return new ResponseObject<List<CompanyAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy công ty!", ObjReturn = rsList };
                 }
             }
             catch (Exception e)
