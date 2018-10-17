@@ -21,24 +21,33 @@ namespace DataService.Models.Entities.Services
     {
         public ResponseObject<List<DeviceTypeAPIViewModel>> GetAllDeviceType()
         {
-            List<DeviceTypeAPIViewModel> rsList = new List<DeviceTypeAPIViewModel>();
-            var devicetypeRepo = DependencyUtils.Resolve<IDeviceTypeRepository>();
-            var devicetypes = devicetypeRepo.GetActive().ToList();
-            if (devicetypes.Count < 0)
+            try
             {
-                return new ResponseObject<List<DeviceTypeAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy loại thiết bị nào" };
-            }
-            foreach (var item in devicetypes)
-            {
-                rsList.Add(new DeviceTypeAPIViewModel
+                List<DeviceTypeAPIViewModel> rsList = new List<DeviceTypeAPIViewModel>();
+                var devicetypeRepo = DependencyUtils.Resolve<IDeviceTypeRepository>();
+                var devicetypes = devicetypeRepo.GetActive().ToList();
+                if (devicetypes.Count < 0)
                 {
-                    DeviceTypeId = item.DeviceTypeId,
-                    DeviceTypeName = item.DeviceTypeName,
+                    return new ResponseObject<List<DeviceTypeAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy loại thiết bị nào" };
+                }
+                foreach (var item in devicetypes)
+                {
+                    rsList.Add(new DeviceTypeAPIViewModel
+                    {
+                        DeviceTypeId = item.DeviceTypeId,
+                        DeviceTypeName = item.DeviceTypeName,
 
-                });
+                    });
+                }
+
+                return new ResponseObject<List<DeviceTypeAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<List<DeviceTypeAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy loại thiết bị nào", ObjReturn = null, ErrorMessage = e.ToString() };
             }
 
-            return new ResponseObject<List<DeviceTypeAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
         }
     }
 }

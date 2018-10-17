@@ -383,7 +383,7 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<bool> AssignTicketForITSupporter(int ticket_id,int current_id_supporter_id)
+        public ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id)
         {
             try
             {
@@ -407,6 +407,6 @@ namespace DataService.Models.Entities.Services
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉ định người hỗ trợ thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
             }
         }
-        
+
     }
 }
