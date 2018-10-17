@@ -181,6 +181,7 @@
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/common.js"></script>
     <script>
         $(document).ready(function() {
             loadContract();
@@ -194,7 +195,7 @@
                 data: {
                 },
                 success: function(result) {
-                    initDatatable(result.result);
+                    initDatatable(result.result.ObjReturn);
                 },
                 error: function(error) {
                     showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
@@ -268,13 +269,13 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                    var len = data.result.length;
+                    var obj = data.result.ObjReturn;
                     var html = '';
-                    for (var i = 0; i < len; i++) {
+                    for (var i = 0; i < obj.length; i++) {
                         html += '<option value="' +
-                            data.result[i].CompanyId +
+                            obj[i].CompanyId +
                             '">' +
-                            data.result[i].CompanyName
+                            obj[i].CompanyName
                             '</option>';
                     }
                     $('#comboCompany').append(html);
@@ -294,11 +295,11 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#conCompany").text(data.result.CompanyName);
-                    $("#conName").text(data.result.ContractName);
-                    $("#conStartDate").text(data.result.StartDate);
-                    $("#conEndDate").text(data.result.EndDate);
-                    $("#conUpdateDate").text(data.result.UpdateDate);
+                    $("#conCompany").text(data.result.ObjReturn.CompanyName);
+                    $("#conName").text(data.result.ObjReturn.ContractName);
+                    $("#conStartDate").text(data.result.ObjReturn.StartDate);
+                    $("#conEndDate").text(data.result.ObjReturn.EndDate);
+                    $("#conUpdateDate").text(data.result.ObjReturn.UpdateDate);
                 }
             });
         $('#ViewModal').modal('show');
@@ -335,11 +336,11 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#id").val(data.result.ContractId);
-                    $("#comboCompanyE").val(data.result.CompanyId);
-                    $("#conNameE").val(data.result.ContractName);
-                    $("#conStartDateE").val(data.result.StartDate);
-                    $("#conEndDateE").val(data.result.EndDate);
+                    $("#id").val(data.result.ObjReturn.ContractId);
+                    $("#comboCompanyE").val(data.result.ObjReturn.CompanyId);
+                    $("#conNameE").val(data.result.ObjReturn.ContractName);
+                    $("#conStartDateE").val(data.result.ObjReturn.StartDate);
+                    $("#conEndDateE").val(data.result.ObjReturn.EndDate);
                 }
 
             });
@@ -359,7 +360,12 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $('#EditModal').modal('hide'),
+                    $('#EditModal').modal('hide');
+                    if (!data.result.isError) {
+                        alert(data.result.SuccessMessage);
+                    }
+                    else
+                        alert(data.result.WarningMessage);
                         loadContract();
                 }
             });
@@ -379,7 +385,13 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                    $('#CreateModal').modal('hide'),
+                    $('#CreateModal').modal('hide');
+                        if (!data.result.isError) {                            
+                            alert(data.result.SuccessMessage);                            
+                        }
+                        else
+                            alert(data.result.WarningMessage);                                
+                       
                         loadContract();
                 }
             });

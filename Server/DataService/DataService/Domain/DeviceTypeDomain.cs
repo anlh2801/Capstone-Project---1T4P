@@ -13,6 +13,10 @@ namespace DataService.Domain
     {
 
         ResponseObject<List<DeviceTypeAPIViewModel>> GetAllDeviceType();
+        ResponseObject<bool> CreateDeviceType(DeviceTypeAPIViewModel model);
+        ResponseObject<bool> UpdateDeviceType(DeviceTypeAPIViewModel model);
+        ResponseObject<DeviceTypeAPIViewModel> ViewDetail(int devicetype_id);
+        ResponseObject<bool> RemoveDeviceType(int devicetype_id);
     }
 
     public class DeviceTypeDomain : BaseDomain, IDeviceTypeDomain
@@ -24,6 +28,39 @@ namespace DataService.Domain
             var deviceTypes = deviceTypeService.GetAllDeviceType();
 
             return deviceTypes;
+        }
+        public ResponseObject<bool> CreateDeviceType(DeviceTypeAPIViewModel model)
+        {
+            var deviceTypeService = this.Service<IDeviceTypeService>();
+
+            var result = deviceTypeService.CreateDeviceType(model);
+
+            return result;
+        }
+        public ResponseObject<bool> UpdateDeviceType(DeviceTypeAPIViewModel model)
+        {
+            var deviceTypeService = this.Service<IDeviceTypeService>();
+
+            var result = deviceTypeService.UpdateDeviceType(model);
+
+            return result;
+        }
+
+        public ResponseObject<DeviceTypeAPIViewModel> ViewDetail(int devicetype_id)
+        {
+            var deviceTypeService = this.Service<IDeviceTypeService>();
+
+            var devicetype = deviceTypeService.ViewDetail(devicetype_id);
+
+            return devicetype;
+        }
+        public ResponseObject<bool> RemoveDeviceType(int devicetype_id)
+        {
+            var devicetypeList = new List<DeviceTypeAPIViewModel>();
+
+            var devicetypeService = this.Service<IDeviceTypeService>();
+            var rs = devicetypeService.RemoveDeviceType(devicetype_id);
+            return rs;
         }
     }
 }

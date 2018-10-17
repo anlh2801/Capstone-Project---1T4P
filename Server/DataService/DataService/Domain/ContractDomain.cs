@@ -15,6 +15,7 @@ namespace DataService.Domain
         ResponseObject<ContractAPIViewModel> ViewDetail(int contract_id);
         ResponseObject<bool> CreateContract(ContractAPIViewModel model);
         ResponseObject<bool> UpdateContract(ContractAPIViewModel model);
+        ResponseObject<bool> RemoveContract(int contract_id);
     }
 
     public class ContractDomain : BaseDomain, IContractDomain
