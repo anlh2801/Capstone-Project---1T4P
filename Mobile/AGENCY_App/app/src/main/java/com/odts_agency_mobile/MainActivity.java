@@ -3,6 +3,7 @@ package com.odts_agency_mobile;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.odts_agency_mobile.utils.GetNoticeDataService;
 import com.odts_agency_mobile.utils.RetrofitInstance;
@@ -37,6 +38,12 @@ public class MainActivity extends AppCompatActivity {
                 if(response.code() == 200 && response.body() != null){
                     //Log.e("MainActivity", "success"+ response.body()   );
                     ArrayList<Company> noticeCompanyArrayList = response.body().getCompanyArrayList();
+                    TextView textView = (TextView) findViewById(R.id.testID);
+                    String a = "";
+                    for (Company com : noticeCompanyArrayList) {
+                        a = a + com.getCompanyName() + " - " + com.getUpdateDate() + "\n";
+                    }
+                    textView.setText(a);
                 } else {
                     Log.e("MainActivity", "error" );
                 }
