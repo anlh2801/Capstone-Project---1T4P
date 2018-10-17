@@ -1,7 +1,8 @@
-package com.example.chiennt.odts_agency_mobile.utils;
+package com.odts_agency_mobile.utils;
 
-import com.example.chiennt.odts_agency_mobile.model.Company;
-import com.example.chiennt.odts_agency_mobile.model.CompanyList;
+
+import com.odts_agency_mobile.model.Company;
+import com.odts_agency_mobile.model.CompanyList;
 
 import java.util.List;
 
