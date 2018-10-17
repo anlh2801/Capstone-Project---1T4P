@@ -1,4 +1,4 @@
-package com.example.chiennt.odts_agency_mobile.utils;
+package com.odts_agency_mobile.utils;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

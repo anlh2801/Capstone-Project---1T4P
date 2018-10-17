@@ -1,13 +1,15 @@
-package com.example.chiennt.odts_agency_mobile;
+package com.odts_agency_mobile;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+import com.odts_agency_mobile.utils.GetNoticeDataService;
+import com.odts_agency_mobile.utils.RetrofitInstance;
+import com.odts_agency_mobile.model.Company;
+import com.odts_agency_mobile.model.CompanyList;
 
-import com.example.chiennt.odts_agency_mobile.model.CompanyList;
-import com.example.chiennt.odts_agency_mobile.utils.GetNoticeDataService;
-import com.example.chiennt.odts_agency_mobile.utils.RetrofitInstance;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<CompanyList> call, Response<CompanyList> response) {
 //                generateNoticeList(response.body().getNoticeArrayList());
                 if(response.code() == 200 && response.body() != null){
-                    Log.e("MainActivity", "success"+ response.body()   );
+                    //Log.e("MainActivity", "success"+ response.body()   );
+                    ArrayList<Company> noticeCompanyArrayList = response.body().getCompanyArrayList();
                 } else {
                     Log.e("MainActivity", "error" );
                 }
