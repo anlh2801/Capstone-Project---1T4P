@@ -448,7 +448,7 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     $('#editModal').modal('hide'),
-                        swal(data.result.WarningMessage, "", "success");
+                        swal(data.result.SuccessMessage, "", "success");
                         loadCompany();
                 }
             });
