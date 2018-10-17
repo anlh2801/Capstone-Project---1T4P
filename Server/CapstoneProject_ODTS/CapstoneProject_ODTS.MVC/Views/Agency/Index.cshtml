@@ -169,6 +169,7 @@
     </div>
 </div>
 
+
 @section scripts {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -335,7 +336,23 @@
 
         //show delete modal
         function removeAgency(id) {
-            $('#modalConfirmDelete').modal('show');
+            //$('#modalConfirmDelete').modal('show');
+            swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(function() {
+                deleteAgency();
+                swal(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            });
             $('#agencyHidden').val(id);
         }
 
