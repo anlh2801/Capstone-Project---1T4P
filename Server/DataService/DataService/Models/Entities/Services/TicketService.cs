@@ -19,29 +19,36 @@ namespace DataService.Models.Entities.Services
     {
         public ResponseObject<bool> CreateRatingForHero(RatingAPIViewModel rate)
         {
-            var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
-            var itSupporterlRepo = DependencyUtils.Resolve<IITSupporterRepository>();
-            var ticketDetails = ticketRepo.GetActive(p => p.TicketId == rate.TicketId &&
-                                                           p.CurrentITSupporter_Id == rate.CurrentITSupporter_Id &&
-                                                           p.Request.ServiceItemId == rate.ServiceItemId).SingleOrDefault();
-            var itupporter = itSupporterlRepo.Get(rate.CurrentITSupporter_Id);
-
-            if (ticketDetails != null && itupporter != null)
+            try
             {
-                ticketDetails.Rating = rate.Rating;
-                ticketDetails.Desciption = rate.Description;
-                ticketDetails.UpdateDate = DateTime.Now;
-                ticketRepo.Edit(ticketDetails);
-                ticketRepo.Save();
+                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+                var itSupporterlRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var ticketDetails = ticketRepo.GetActive(p => p.TicketId == rate.TicketId &&
+                                                               p.CurrentITSupporter_Id == rate.CurrentITSupporter_Id &&
+                                                               p.Request.ServiceItemId == rate.ServiceItemId).SingleOrDefault();
+                var itupporter = itSupporterlRepo.Get(rate.CurrentITSupporter_Id);
 
-                itupporter.RatingAVG = itupporter.RatingAVG != null ? (itupporter.RatingAVG + rate.Rating) / 2 : rate.Rating;
-                itupporter.UpdateDate = DateTime.Now;
-                itSupporterlRepo.Edit(itupporter);
-                itSupporterlRepo.Save();
+                if (ticketDetails != null && itupporter != null)
+                {
+                    ticketDetails.Rating = rate.Rating;
+                    ticketDetails.Desciption = rate.Description;
+                    ticketDetails.UpdateDate = DateTime.Now;
+                    ticketRepo.Edit(ticketDetails);
+                    ticketRepo.Save();
 
-                return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Đánh giá thành công"};
+                    itupporter.RatingAVG = itupporter.RatingAVG != null ? (itupporter.RatingAVG + rate.Rating) / 2 : rate.Rating;
+                    itupporter.UpdateDate = DateTime.Now;
+                    itSupporterlRepo.Edit(itupporter);
+                    itSupporterlRepo.Save();
+
+                    return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Đánh giá thành công" };
+                }
+                return new ResponseObject<bool> { IsError = true, ObjReturn = false, SuccessMessage = "Đánh giá thất bại" };
             }
-            return new ResponseObject<bool> { IsError = true, ObjReturn = false, SuccessMessage = "Đánh giá thất bại" }; 
+            catch (Exception e)
+            {
+                return new ResponseObject<bool> { IsError = true, ObjReturn = false, SuccessMessage = "Đánh giá thất bại", ErrorMessage = e.ToString() };
+            }
         }
     }
 }

@@ -19,32 +19,40 @@ namespace DataService.Models.Entities.Services
     {
         public ResponseObject<List<RoleAPIViewModel>> GetAllRole()
         {
-            List<RoleAPIViewModel> rsList = new List<RoleAPIViewModel>();
-            var RoleRepo = DependencyUtils.Resolve<IRoleRepository>();
-            var roles = RoleRepo.GetActive().ToList();
-            if (roles.Count < 0)
+            try
             {
-                return new ResponseObject<List<RoleAPIViewModel>> { IsError = true, WarningMessage = "Thất bại" };
-            }
-            foreach (var item in roles)
-            {
-                if (!item.IsDelete)
+                List<RoleAPIViewModel> rsList = new List<RoleAPIViewModel>();
+                var RoleRepo = DependencyUtils.Resolve<IRoleRepository>();
+                var roles = RoleRepo.GetActive().ToList();
+                if (roles.Count < 0)
                 {
-                    rsList.Add(new RoleAPIViewModel
-                    {
-
-                        RoleId = item.RoleId,
-                        RoleName = item.RoleName,
-                        IsDelete = item.IsDelete,
-                        CreateDate = item.CreateDate.Value.ToString("dd/MM/yyyy"),
-                        UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy"),
-
-                    });
-
+                    return new ResponseObject<List<RoleAPIViewModel>> { IsError = true, WarningMessage = "Thất bại" };
                 }
-            }
+                foreach (var item in roles)
+                {
+                    if (!item.IsDelete)
+                    {
+                        rsList.Add(new RoleAPIViewModel
+                        {
 
-            return new ResponseObject<List<RoleAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Lấy Thành công"};
+                            RoleId = item.RoleId,
+                            RoleName = item.RoleName,
+                            IsDelete = item.IsDelete,
+                            CreateDate = item.CreateDate.Value.ToString("dd/MM/yyyy"),
+                            UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy"),
+
+                        });
+
+                    }
+                }
+
+                return new ResponseObject<List<RoleAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Lấy Thành công" };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<List<RoleAPIViewModel>> { IsError = true, WarningMessage = "Thất bại", ObjReturn = null, ErrorMessage = e.ToString() };
+            }
         }
     }
 }

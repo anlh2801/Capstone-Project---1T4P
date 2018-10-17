@@ -20,6 +20,12 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage CreateRequest(AgencyCreateRequestAPIViewModel model);
 
         HttpResponseMessage GetDeviceDetails(int deviceId);
+
+        HttpResponseMessage GetTicketByRequestId(int requestId);
+
+        HttpResponseMessage GetDevicesByDeviceTypeId(int deviceTypeId, int agencyId);
+
+        HttpResponseMessage AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id);
     }
 
     public class AgencyController : ApiController, IAgencyController
@@ -73,6 +79,33 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage GetDeviceDetails(int deviceId)
         {
             var result = _agencyDomain.ViewProfile(deviceId);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        [Route("agency/get_ticket_by_requestId")]
+        public HttpResponseMessage GetTicketByRequestId(int requestId)
+        {
+            var result = _agencyDomain.GetTicketByRequestId(requestId);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        [Route("agency/get_device_by_devicetypeId")]
+        public HttpResponseMessage GetDevicesByDeviceTypeId(int deviceTypeId, int agencyId)
+        {
+            var result = _agencyDomain.GetDevicesByDeviceTypeId(deviceTypeId, agencyId);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPut]
+        [Route("agency/assign_ticket_for_ITsupporter")]
+        public HttpResponseMessage AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id)
+        {
+            var result = _agencyDomain.AssignTicketForITSupporter(ticket_id, current_id_supporter_id);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }

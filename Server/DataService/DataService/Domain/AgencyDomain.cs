@@ -25,6 +25,12 @@ namespace DataService.Domain
         ResponseObject<bool> CreateRequest(AgencyCreateRequestAPIViewModel model);
 
         ResponseObject<AgencyDeviceAPIViewModel> GetDeviceDetails(int deviceId);
+
+        ResponseObject<List<TicketAPIViewModel>> GetTicketByRequestId(int requestId);
+
+        ResponseObject<List<AgencyDeviceAPIViewModel>> GetDevicesByDeviceTypeId(int deviceTypeId, int agencyId);
+
+        ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id);
     }
 
     public class AgencyDomain : BaseDomain, IAgencyDomain
@@ -103,5 +109,33 @@ namespace DataService.Domain
 
             return agency;
         }
+
+        public ResponseObject<List<TicketAPIViewModel>> GetTicketByRequestId(int requestId)
+        {
+            var agencyService = this.Service<IAgencyService>();
+
+            var agency = agencyService.GetTicketByRequestId(requestId);
+
+            return agency;
+        }
+
+        public ResponseObject<List<AgencyDeviceAPIViewModel>> GetDevicesByDeviceTypeId(int deviceTypeId, int agencyId)
+        {
+            var agencyService = this.Service<IAgencyService>();
+
+            var agency = agencyService.GetDevicesByDeviceTypeId(deviceTypeId, agencyId);
+
+            return agency;
+        }
+
+        public ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id)
+        {
+            var agencyService = this.Service<IAgencyService>();
+
+            var agency = agencyService.AssignTicketForITSupporter(ticket_id, current_id_supporter_id);
+
+            return agency;
+        }
+        
     }
 }

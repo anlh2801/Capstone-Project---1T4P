@@ -6469,6 +6469,22 @@
     <Content Include="AdminLTE\bower_components\select2\tests\vendor\qunit-1.23.1.css" />
     <Content Include="AdminLTE\bower_components\select2\tests\vendor\qunit-1.23.1.js" />
     <Content Include="AdminLTE\bower_components\select2\vendor\jquery-2.1.0.js" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\dist\sweetalert2.all.js" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\dist\sweetalert2.all.min.js" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\dist\sweetalert2.common.js" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\dist\sweetalert2.css" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\dist\sweetalert2.js" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\dist\sweetalert2.min.css" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\dist\sweetalert2.min.js" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\index.html" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\qunit\index.html" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\qunit\tests.js" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\src\sweetalert2.all.js" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\src\sweetalert2.js" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\src\utils\classes.js" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\src\utils\dom.js" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\src\utils\params.js" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\src\utils\utils.js" />
     <Content Include="AdminLTE\build\js\BoxRefresh.js" />
     <Content Include="AdminLTE\build\js\BoxWidget.js" />
     <Content Include="AdminLTE\build\js\ControlSidebar.js" />
@@ -6541,6 +6557,7 @@
     <Content Include="AdminLTE\dist\img\user8-128x128.jpg" />
     <Content Include="AdminLTE\dist\js\adminlte.js" />
     <Content Include="AdminLTE\dist\js\adminlte.min.js" />
+    <Content Include="AdminLTE\dist\js\common.js" />
     <Content Include="AdminLTE\dist\js\demo.js" />
     <Content Include="AdminLTE\dist\js\pages\dashboard.js" />
     <Content Include="AdminLTE\dist\js\pages\dashboard2.js" />
@@ -7326,6 +7343,20 @@
     <Content Include="AdminLTE\dist\css\adminlte.min.css.map" />
     <Content Include="AdminLTE\plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="AdminLTE\plugins\input-mask\phone-codes\phone-codes.json" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\.bower.json" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\.editorconfig" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\.gemini.yml" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\.github\CODE_OF_CONDUCT.md" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\.github\CONTRIBUTING.md" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\bower.json" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\LICENSE" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\README.md" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\src\colors.scss" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\src\mixins.scss" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\src\sweetalert2.scss" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\testem.json" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\tslint.json" />
+    <Content Include="AdminLTE\bower_components\sweetalert2\yarn.lock" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -7394,6 +7425,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="AdminLTE\bower_components\moment\moment.d.ts" />
+    <TypeScriptCompile Include="AdminLTE\bower_components\sweetalert2\sweetalert2.d.ts" />
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
