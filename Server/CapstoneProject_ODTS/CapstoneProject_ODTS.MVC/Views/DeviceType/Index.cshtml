@@ -1,6 +1,4 @@
 ﻿@{
-    /**/
-
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!-- /.modal -->
@@ -33,9 +31,13 @@
 
                 </div>
                 <div class="modal-body">
+
                     <p>
                         <b>Tên Loại Thiết Bị:</b><br>
                     <p id="dtName"></p>
+                    <p>
+                        <b>Dịch Vụ Hỗ Trợ:</b><br>
+                    <p id="dtService"></p>
                     <p>
                         <b>Mô Tả:</b><br>
                     <p id="dtDescription"></p>
@@ -94,12 +96,16 @@
                 </div>
                 <div class="modal-body">
                     <p>
+                    <p id="id"></p>
+                    <p>
                         <b>Tên Loại Thiết Bị:</b><br>
                         <input type="text" id="dtNameCreate"></input>
                     <p>
-                        <b>Mô Tả:</b><br>
-                        <input type="text" id="dtNameCreate"></input>
-
+                        <b>Dịch Vụ Hỗ Trợ:</b><br>
+                        <select id="comboService"></select>
+                    <p>
+                        <b>Mô Tả Loại Thiết Bị:</b><br>
+                        <input type="text" id="dtDescriptionCreate"></input>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -120,20 +126,16 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>
-                <p id="id"></p>
+
                 <p>
                     <b>Tên Loại Thiết Bị:</b><br>
-                    <input type="text" id="dtNameCreateE"></input>
+                    <input type="text" id="dtNameCreateEdit"></input>
                 <p>
-                    <b>Mô Tả:</b><br>
-                    <input type="text" id="dtDescriptionE"></input>
+                    <b>Dịch Vụ Hỗ Trợ:</b><br>
+                    <select id="comboServiceEdit"></select>
                 <p>
-                    <b>Ngày Tạo:</b><br>
-                    <input type="text" id="dtCreateDateE" type="text" class="form-control" required disabled="true"></input>
-                <p>
-                    <b>Lần Chỉnh Sửa Cuối:</b><br>
-                    <input type="text" id="dtUpdateDateE" type="text" class="form-control" required disabled="true"></input>
+                    <b>Mô Tả Loại Thiết Bị:</b><br>
+                    <input type="text" id="dtDescriptionCreateEdit"></input>
 
             </div>
             <div class="modal-footer">
@@ -152,6 +154,7 @@
             <tr>
                 <th><label>STT</label></th>
                 <th><label>Tên Loại Thiết Bị</label></th>
+                <th><label>Dịch vụ Hỗ Trợ</label></th>
                 <th><label>Mô Tả</label></th>
                 <th><label>Ngày Tạo</label></th>
                 <th><label>Chức Năng</label></th>
@@ -160,7 +163,7 @@
         <tbody></tbody>
     </table>
     <div class="NewThing">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="showCreateModal()">Thêm Loại Thiết Bị</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="showCreateModal()">Tạo Hợp Đồng</button>
     </div>
 </div>
 
@@ -172,9 +175,11 @@
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/common.js"></script>
     <script>
         $(document).ready(function() {
             loadDeviceType();
+            showService();
         });
 
         function loadDeviceType() {
@@ -184,11 +189,6 @@
                 data: {
                 },
                 success: function (result) {
-                    if(result.result.isError) {
-                        alert(result.result.SuccessMessage)
-                    }
-                    else
-                        alert(result.result.WarningMessage)
                     initDatatable(result.result.ObjReturn);
                 },
                 error: function(error) {
@@ -222,7 +222,7 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1, 2, 3, 4],
+                        "aTargets": [0, 1, 2, 3, 4, 5],
                         "bSortable": false,
                         "sClass": "text-center"
                     },
@@ -230,10 +230,11 @@
                 "columns": [
                     { "data": "NumericalOrder" },
                     { "data": "DeviceTypeName" },
+                    { "data": "ServiceName" },
                     { "data": "Description" },
                     { "data": "CreateDate" },
                     {
-                        "aTargets": [4],
+                        "aTargets": [5],
                         "mRender": function (data, type, full) {
                             var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.DeviceTypeId + ')"></button>';
                             var del = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.DeviceTypeId + ')"></button>';
@@ -248,6 +249,34 @@
         function showCreateModal() {
             $('#CreateModal').modal('show');
         }
+        function showService() {
+            $('#comboService, #comboServiceEdit')
+                .find('option')
+                .remove()
+                .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllServiceITSupport", "ServiceITSupport")',
+                data: {
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var obj = data.result.ObjReturn;
+                    var html = '';
+                    for (var i = 0; i < obj.length; i++) {
+                        html += '<option value="' +
+                            obj[i].ServiceITSupportId +
+                            '">' +
+                            obj[i].ServiceName
+                            '</option>';
+                    }
+                    $('#comboService').append(html);
+                    $('#comboServiceEdit').append(html);
+                }
+            });
+        }
         function getData(idd) {
 
             $.ajax({
@@ -260,15 +289,17 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#dtName").text(data.result.DeviceTypeName);
-                    $("#dtDescription").text(data.result.Description);
-                    $("#dtCreateDate").text(data.result.CreateDate);
-                    $("#dtUpdateDate").text(data.result.UpdateDate);
+                    $("#dtName").text(data.result.ObjReturn.DeviceTypeName);
+                    $("#dtService").text(data.result.ObjReturn.ServiceName);
+                    $("#dtDescription").text(data.result.ObjReturn.Description);
+                    $("#dtCreateDate").text(data.result.ObjReturn.CreateDate);
+                    $("#dtUpdateDate").text(data.result.ObjReturn.UpdateDate);
                 }
-            });
+                });
             $('#ViewModal').modal('show');
         }
-
+        
+           
         function getDataEdit(id) {
             $.ajax({
                 url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "DeviceType" })',
@@ -280,21 +311,21 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#id").val(data.result.DeviceTypeId);
-                    $("#dtNameCreateE").val(data.result.DeviceTypeName);
-                    $("#dtDescriptionE").val(data.result.Description);
-                    $("#dtCreateDateE").val(data.result.CreateDate);
-                    $("#dtUpdateDateE").val(data.result.UpdateDate);
+                    $("#id").val(data.result.ObjReturn.DeviceTypeId);
+                    $("#dtNameCreateEdit").val(data.result.ObjReturn.DeviceTypeName);
+                    $("#comboServiceEdit").val(data.result.ObjReturn.ServiceId);
+                    $("#dtDescriptionCreateEdit").val(data.result.ObjReturn.Description);
                 }
-
             });
             $('#EditModal').modal('show');
         }
         function UpdateDeviceType() {
             var empObj = {
                 DeviceTypeId: $('#id').val(),
-                DeviceTypeName: $('#dtNameCreateE').val(),
-                Description: $('#dtDescriptionE').val(),
+                ServiceId: $('#comboServiceEdit').val(),
+                DeviceTypeName: $('#dtNameCreateEdit').val(),
+                Description: $('#dtDescriptionCreateEdit').val(),
+
             }
             $.ajax({
                 type: 'POST',
@@ -303,15 +334,21 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $('#EditModal').modal('hide'),
-                        loadDeviceType();
+                    $('#EditModal').modal('hide');
+                    if (!data.result.isError) {
+                        alert(data.result.SuccessMessage);
+                    }
+                    else
+                        alert(data.result.WarningMessage);
+                    loadDeviceType();
                 }
             });
         }
         function createDeviceType() {
             var empObj = {
+                ServiceId: $('#comboService').val(),
                 DeviceTypeName: $('#dtNameCreate').val(),
-                Description: $('#dtDescription').val(),
+                Description: $('#dtDescriptionCreate').val(),
             }
              $.ajax({
                 type: 'POST',
@@ -321,8 +358,14 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                    $('#CreateModal').modal('hide'),
-                        loadDeviceType();
+                    $('#CreateModal').modal('hide');
+                        if (!data.result.isError) {
+                            alert(data.result.SuccessMessage);
+                        }
+                        else
+                            alert(data.result.WarningMessage);
+
+                    loadDeviceType();
                 }
             });
         }

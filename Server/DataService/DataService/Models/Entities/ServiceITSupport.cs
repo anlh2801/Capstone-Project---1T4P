@@ -25,7 +25,7 @@ namespace DataService.Models.Entities
         public int ServiceITSupportId { get; set; }
         public string ServiceName { get; set; }
         public string Description { get; set; }
-        public Nullable<bool> IsDelete { get; set; }
+        public bool IsDelete { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
