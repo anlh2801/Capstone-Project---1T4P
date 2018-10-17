@@ -87,7 +87,7 @@ namespace DataService.Models.Entities.Services
 
                     agencyRepo.Edit(updateAgency);
                     agencyRepo.Save();
-                    return new ResponseObject<bool> { IsError = false, WarningMessage = "Cập nhật thành công!", ObjReturn = true };
+                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Cập nhật thành công!", ObjReturn = true };
                 }
 
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật chi nhánh thất bại!", ObjReturn = false };
