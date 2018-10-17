@@ -12,7 +12,7 @@ namespace DataService.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class ServiceITSupport : DataService.BaseConnect.IEntity
+    public partial class ServiceITSupport : DataService.BaseConnect.IEntity, DataService.BaseConnect.IDeleting
     {
     }
 }

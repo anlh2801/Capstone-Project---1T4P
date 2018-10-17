@@ -15,6 +15,10 @@ namespace DataService.Models.Entities.Services
     public partial interface IDeviceTypeService
     {
         ResponseObject<List<DeviceTypeAPIViewModel>> GetAllDeviceType();
+        ResponseObject<DeviceTypeAPIViewModel> ViewDetail(int devicetype_id);
+        ResponseObject<bool> CreateDeviceType(DeviceTypeAPIViewModel model);
+        ResponseObject<bool> UpdateDeviceType(DeviceTypeAPIViewModel model);
+        ResponseObject<bool> RemoveDeviceType(int devicetype_id);
     }
 
     public partial class DeviceTypeService
@@ -28,17 +32,106 @@ namespace DataService.Models.Entities.Services
             {
                 return new ResponseObject<List<DeviceTypeAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy loại thiết bị nào" };
             }
+            int count = 1;
             foreach (var item in devicetypes)
             {
-                rsList.Add(new DeviceTypeAPIViewModel
+                if (!item.IsDelete)
                 {
-                    DeviceTypeId = item.DeviceTypeId,
-                    DeviceTypeName = item.DeviceTypeName,
+                    rsList.Add(new DeviceTypeAPIViewModel
+                    {
+                        NumericalOrder = count,
+                        DeviceTypeId = item.DeviceTypeId,
+                        DeviceTypeName = item.DeviceTypeName,
+                        ServiceName = item.ServiceITSupport.ServiceName,
+                        Description = item.Description,
+                        CreateDate = item.CreateDate.Value.ToString("dd/MM/yyyy"),
+                        UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy"),
+                    });
+                }
+                count++;
+            }
+            return new ResponseObject<List<DeviceTypeAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
+        }
+        public ResponseObject<DeviceTypeAPIViewModel> ViewDetail(int devicetype_id)
+        {
+            var devicetypeRepo = DependencyUtils.Resolve<IDeviceTypeRepository>();
+            var devicetype = devicetypeRepo.GetActive().SingleOrDefault(a => a.DeviceTypeId == devicetype_id);
+            if (devicetype != null)
+            {
+                var devicetypeAPIViewModel = new DeviceTypeAPIViewModel
+                {
+                    DeviceTypeId = devicetype.DeviceTypeId,
+                    DeviceTypeName = devicetype.DeviceTypeName,
+                    ServiceId = devicetype.ServiceId,
+                    ServiceName = devicetype.ServiceITSupport.ServiceName,
+                    Description = devicetype.Description,
+                    CreateDate = devicetype.CreateDate.Value.ToString("dd/MM/yyyy"),
+                    UpdateDate = devicetype.UpdateDate.Value.ToString("dd/MM/yyyy"),
+                };
+                return new ResponseObject<DeviceTypeAPIViewModel> { IsError = false, ObjReturn = devicetypeAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
+            }
+            return new ResponseObject<DeviceTypeAPIViewModel> { IsError = true, WarningMessage = "Không tồn tại hợp đồng này" };
+        }
+        public ResponseObject<bool> CreateDeviceType(DeviceTypeAPIViewModel model)
+        {
 
-                });
+            var devicetypeRepo = DependencyUtils.Resolve<IDeviceTypeRepository>();
+            var createDeviceType = new DeviceType();
+
+            try
+            {
+                createDeviceType.DeviceTypeId = model.DeviceTypeId;
+                createDeviceType.ServiceId = model.ServiceId;
+                createDeviceType.DeviceTypeName = model.DeviceTypeName ;
+                createDeviceType.Description = model.Description;
+                createDeviceType.IsDelete = false;
+                createDeviceType.CreateDate = DateTime.Now;
+                createDeviceType.UpdateDate = DateTime.Now;
+
+                devicetypeRepo.Add(createDeviceType);
+
+                devicetypeRepo.Save();
+                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Thêm hợp đồng thành công", ObjReturn = true };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Thêm hợp đồng thất bại", ErrorMessage = ex.ToString(), ObjReturn = false };
             }
 
-            return new ResponseObject<List<DeviceTypeAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
+        }
+        public ResponseObject<bool> UpdateDeviceType(DeviceTypeAPIViewModel model)
+        {
+            var devicetypeRepo = DependencyUtils.Resolve<IDeviceTypeRepository>();
+            var updateDeviceType = devicetypeRepo.GetActive().SingleOrDefault(a => a.DeviceTypeId == model.DeviceTypeId);
+
+            if (updateDeviceType != null)
+            {
+                updateDeviceType.ServiceId = model.ServiceId;
+                updateDeviceType.DeviceTypeName = model.DeviceTypeName;
+                updateDeviceType.Description = model.Description;
+                updateDeviceType.UpdateDate = DateTime.Now;
+
+                devicetypeRepo.Edit(updateDeviceType);
+                devicetypeRepo.Save();
+                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Chỉnh sửa hợp đồng thành công", ObjReturn = true };
+            }
+
+            return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉnh sửa hợp đồng thất bại", ObjReturn = false };
+        }
+        public ResponseObject<bool> RemoveDeviceType(int devicetype_id)
+        {
+            var devicetypeRepo = DependencyUtils.Resolve<IDeviceTypeRepository>();
+            var devicetype = devicetypeRepo.GetActive().SingleOrDefault(a => a.DeviceTypeId == devicetype_id);
+            try
+            {
+                Deactivate(devicetype);
+                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Xóa hợp đồng thành công", ObjReturn = true };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa hợp đồng thất bại", ErrorMessage = ex.ToString(), ObjReturn = false };
+            }
+
         }
     }
 }
