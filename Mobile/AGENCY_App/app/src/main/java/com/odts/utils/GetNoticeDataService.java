@@ -1,8 +1,8 @@
-package com.odts_agency_mobile.utils;
+package com.odts.utils;
 
 
-import com.odts_agency_mobile.model.Company;
-import com.odts_agency_mobile.model.CompanyList;
+import com.odts.models.Company;
+import com.odts.models.CompanyList;
 
 import java.util.List;
 

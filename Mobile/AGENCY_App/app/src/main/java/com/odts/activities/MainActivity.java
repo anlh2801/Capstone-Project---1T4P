@@ -1,14 +1,14 @@
-package com.odts_agency_mobile;
+package com.odts.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.odts_agency_mobile.utils.GetNoticeDataService;
-import com.odts_agency_mobile.utils.RetrofitInstance;
-import com.odts_agency_mobile.model.Company;
-import com.odts_agency_mobile.model.CompanyList;
+import com.odts.utils.GetNoticeDataService;
+import com.odts.utils.RetrofitInstance;
+import com.odts.models.Company;
+import com.odts.models.CompanyList;
 
 import java.util.ArrayList;
 

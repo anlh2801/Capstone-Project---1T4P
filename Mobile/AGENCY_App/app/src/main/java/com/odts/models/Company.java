@@ -1,4 +1,4 @@
-package com.odts_agency_mobile.model;
+package com.odts.models;
 
 import com.google.gson.annotations.SerializedName;
 
