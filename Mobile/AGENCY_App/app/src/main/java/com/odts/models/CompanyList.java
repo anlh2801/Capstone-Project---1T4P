@@ -1,19 +1,63 @@
 package com.odts.models;
 
-import com.google.gson.annotations.SerializedName;
+        import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+        import java.util.ArrayList;
 
 public class CompanyList {
 
     @SerializedName("ObjReturn")
     private ArrayList<Company> companyList;
 
-    public ArrayList<Company> getCompanyArrayList() {
+    @SerializedName("IsError")
+    private boolean isError;
+
+    @SerializedName("ErrorMessage")
+    private String errorMessage;
+
+    @SerializedName("WarningMessage")
+    private String warningMessage;
+
+    @SerializedName("SuccessMessage")
+    private String successMessage;
+
+    public ArrayList<Company> getCompanyList() {
         return companyList;
     }
 
-    public void setCompanyArrayList(ArrayList<Company> companyArrayList) {
-        this.companyList = companyArrayList;
+    public void setCompanyList(ArrayList<Company> companyList) {
+        this.companyList = companyList;
+    }
+
+    public boolean isError() {
+        return isError;
+    }
+
+    public void setError(boolean error) {
+        isError = error;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    public String getWarningMessage() {
+        return warningMessage;
+    }
+
+    public void setWarningMessage(String warningMessage) {
+        this.warningMessage = warningMessage;
+    }
+
+    public String getSuccessMessage() {
+        return successMessage;
+    }
+
+    public void setSuccessMessage(String successMessage) {
+        successMessage = successMessage;
     }
 }
