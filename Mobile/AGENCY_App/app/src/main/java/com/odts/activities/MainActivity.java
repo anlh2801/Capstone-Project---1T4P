@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.odts.services.CompanyService;
+import com.odts.utils.CallBackData;
 import com.odts.utils.GetNoticeDataService;
 import com.odts.utils.RetrofitInstance;
 import com.odts.models.Company;
@@ -17,41 +20,29 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-
+    private CompanyService _companyService;
+    private TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        GetNoticeDataService service = RetrofitInstance.getRetrofitInstance().create(GetNoticeDataService.class);
+        textView = (TextView) findViewById(R.id.testID);
 
-        /** Call the method with parameter in the interface to get the notice data*/
-        Call<CompanyList> call = service.getCompanyData();
-
-        /**Log the URL called*/
-        Log.wtf("URL Called", call.request().url() + "");
-
-        call.enqueue(new Callback<CompanyList>() {
+        _companyService = new CompanyService();
+        _companyService.getAllCompany(MainActivity.this, new CallBackData<ArrayList<Company>>() {
             @Override
-            public void onResponse(Call<CompanyList> call, Response<CompanyList> response) {
-//                generateNoticeList(response.body().getNoticeArrayList());
-                if(response.code() == 200 && response.body() != null){
-                    //Log.e("MainActivity", "success"+ response.body()   );
-                    ArrayList<Company> noticeCompanyArrayList = response.body().getCompanyArrayList();
-                    TextView textView = (TextView) findViewById(R.id.testID);
-                    String a = "";
-                    for (Company com : noticeCompanyArrayList) {
-                        a = a + com.getCompanyName() + " - " + com.getUpdateDate() + "\n";
-                    }
-                    textView.setText(a);
-                } else {
-                    Log.e("MainActivity", "error" );
+            public void onSuccess(ArrayList<Company> companies) {
+                String a = "";
+                for (Company com : companies) {
+                    a = a + com.getCompanyName() + " - " + com.getUpdateDate() + "\n";
                 }
+                textView.setText(a);
             }
 
             @Override
-            public void onFailure(Call<CompanyList> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Something went wrong...Error message: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFail(String message) {
+
             }
         });
     }
