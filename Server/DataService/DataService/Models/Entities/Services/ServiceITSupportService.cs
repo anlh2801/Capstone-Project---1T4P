@@ -17,6 +17,7 @@ namespace DataService.Models.Entities.Services
         ResponseObject<bool> CreateServiceITSupport(ServiceITSupportAPIViewModel model);
         ResponseObject<bool> UpdateServiceITSupport(ServiceITSupportAPIViewModel model);
         ResponseObject<bool> RemoveServiceITSupport(int serviceitsupport_id);
+        ResponseObject<List<ServiceITSupportAPIViewModel>> GetAllServiceITSupportByAgencyId(int agencyId);
     }
     public partial class ServiceITSupportService
     {
@@ -128,5 +129,39 @@ namespace DataService.Models.Entities.Services
             }
 
         }
+
+        public ResponseObject<List<ServiceITSupportAPIViewModel>> GetAllServiceITSupportByAgencyId(int agencyId)
+        {
+            List<ServiceITSupportAPIViewModel> rsList = new List<ServiceITSupportAPIViewModel>();
+            var serviceITSupportRepo = DependencyUtils.Resolve<IServiceITSupportRepository>();
+            var serviceITSupports = serviceITSupportRepo.GetActive(
+                p => p.ContractServiceITSupports.Any(
+                    c => (c.EndDate == null || c.EndDate > DateTime.Now) && c.Contract.Company.Agencies.Any(a => a.AgencyId == agencyId))).ToList();
+            if (serviceITSupports.Count < 0)
+            {
+                return new ResponseObject<List<ServiceITSupportAPIViewModel>> { IsError = true, WarningMessage = "Không có hợp đồng" };
+            }
+            int count = 1;
+            foreach (var item in serviceITSupports)
+            {
+                if (!item.IsDelete)
+                {
+                    rsList.Add(new ServiceITSupportAPIViewModel
+                    {
+                        NumericalOrder = count,
+                        ServiceITSupportId = item.ServiceITSupportId,
+                        ServiceName = item.ServiceName,
+                        Description = item.Description,
+                        IsDelete = item.IsDelete,
+                        CreateDate = item.CreateDate.Value.ToString("dd/MM/yyyy"),
+                        UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy")
+                    });
+                }
+                count++;
+            }
+
+            return new ResponseObject<List<ServiceITSupportAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Hiển thị hợp đồng thành công" };
+        }
+
     }
 }

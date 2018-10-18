@@ -174,9 +174,10 @@
             <PropertyRef Name="ServiceItemId" />
           </Key>
           <Property Name="ServiceItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceId" Type="int" />
-          <Property Name="IssueName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ServiceITSupportId" Type="int" />
+          <Property Name="ServiceItemName" Type="nvarchar" MaxLength="50" />
           <Property Name="Price" Type="float" />
+          <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="IsDelete" Type="bit" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
@@ -416,7 +417,7 @@
               <PropertyRef Name="ServiceITSupportId" />
             </Principal>
             <Dependent Role="ServiceItem">
-              <PropertyRef Name="ServiceId" />
+              <PropertyRef Name="ServiceITSupportId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -954,9 +955,10 @@
             <PropertyRef Name="ServiceItemId" />
           </Key>
           <Property Name="ServiceItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceId" Type="Int32" />
-          <Property Name="IssueName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceITSupportId" Type="Int32" />
+          <Property Name="ServiceItemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Price" Type="Double" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsDelete" Type="Boolean" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
@@ -1285,7 +1287,7 @@
               <PropertyRef Name="ServiceITSupportId" />
             </Principal>
             <Dependent Role="ServiceItem">
-              <PropertyRef Name="ServiceId" />
+              <PropertyRef Name="ServiceITSupportId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1513,9 +1515,10 @@
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="IssueName" ColumnName="IssueName" />
-                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="ServiceItemName" ColumnName="ServiceItemName" />
+                <ScalarProperty Name="ServiceITSupportId" ColumnName="ServiceITSupportId" />
                 <ScalarProperty Name="ServiceItemId" ColumnName="ServiceItemId" />
               </MappingFragment>
             </EntityTypeMapping>

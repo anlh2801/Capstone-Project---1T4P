@@ -121,7 +121,7 @@ namespace DataService.Models.Entities.Services
                 for (int i = 0; i < tickets.Count; i++)
                 {
                     var serviceId = tickets[i].Request.ServiceItemId;
-                    var IssueName = service.Find((x => x.ServiceItemId == serviceId)).IssueName;
+                    var IssueName = service.Find((x => x.ServiceItemId == serviceId)).ServiceItemName;
                     var ITId = tickets[i].CurrentITSupporter_Id;
                     var ITName = it.Find((x => x.ITSupporterId == ITId)).ITSupporterName;
                     listIssue.Add(IssueName);

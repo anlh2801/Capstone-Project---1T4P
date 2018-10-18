@@ -16,6 +16,7 @@ namespace DataService.Domain
         ResponseObject<bool> CreateServiceITSupport(ServiceITSupportAPIViewModel model);
         ResponseObject<bool> UpdateServiceITSupport(ServiceITSupportAPIViewModel model);
         ResponseObject<bool> RemoveServiceITSupport(int serviceitsupport_id);
+        ResponseObject<List<ServiceITSupportAPIViewModel>> GetAllServiceITSupportByAgencyId(int agencyId);
     }
 
     public class ServiceITSupportDomain : BaseDomain, IServiceITSupportDomain
@@ -64,6 +65,15 @@ namespace DataService.Domain
             var serviceitsupport = serviceITSupportService.ViewDetail(serviceitsupport_id);
 
             return serviceitsupport;
+        }
+
+        public ResponseObject<List<ServiceITSupportAPIViewModel>> GetAllServiceITSupportByAgencyId(int agencyId)
+        {
+            var serviceITSupportService = this.Service<IServiceITSupportService>();
+
+            var serviceITSupports = serviceITSupportService.GetAllServiceITSupportByAgencyId(agencyId);
+
+            return serviceITSupports;
         }
     }
 }
