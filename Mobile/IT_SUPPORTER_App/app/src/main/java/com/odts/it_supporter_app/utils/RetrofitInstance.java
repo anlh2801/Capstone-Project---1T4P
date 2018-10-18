@@ -1,5 +1,7 @@
 package com.odts.it_supporter_app.utils;
 
+import com.odts.it_supporter_app.services.RequestService;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -20,5 +22,8 @@ private static final String BASE_URL = "http://35.197.154.50/";
                     .build();
         }
         return retrofit;
+    }
+    public static RequestService getRequestService() {
+        return  getRetrofitInstance().create(RequestService.class);
     }
 }
