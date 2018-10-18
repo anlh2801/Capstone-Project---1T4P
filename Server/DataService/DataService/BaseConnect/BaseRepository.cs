@@ -54,7 +54,7 @@ namespace DataService.BaseConnect
         {
             if (typeof(IDeleting).IsAssignableFrom(typeof(TEntity)))
             {
-                Expression<Func<TEntity, bool>> node = (TEntity q) => ((IDeleting)q).IsDelete;
+                Expression<Func<TEntity, bool>> node = (TEntity q) => !((IDeleting)q).IsDelete;
                 node = (Expression<Func<TEntity, bool>>)RemoveCastsVisitor.Visit(node);
                 return Queryable.Where<TEntity>(Queryable.Where<TEntity>(this.Get(), node), predicate);
             }
