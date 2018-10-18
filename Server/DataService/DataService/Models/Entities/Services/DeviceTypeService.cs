@@ -40,7 +40,12 @@ namespace DataService.Models.Entities.Services
                     {
                         DeviceTypeId = item.DeviceTypeId,
                         DeviceTypeName = item.DeviceTypeName,
-
+                        ServiceId = item.ServiceId,
+                        ServiceName = item.ServiceITSupport.ServiceName,
+                        Description = item.Description,
+                        IsDelete = item.IsDelete,
+                        CreateDate = item.CreateDate.Value.ToString("dd/MM/yyyy"),
+                        UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy"),
                     });
                 }
 

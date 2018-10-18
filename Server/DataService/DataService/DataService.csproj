@@ -109,6 +109,7 @@
     <Compile Include="APIViewModels\AccountCreateAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyDeviceAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyUpdateAPIViewModel.cs" />
+    <Compile Include="APIViewModels\DeviceAPIViewModel.cs" />
     <Compile Include="APIViewModels\FeedbackAPIViewModel.cs" />
     <Compile Include="APIViewModels\GuidelineAPIViewModel.cs" />
     <Compile Include="APIViewModels\ITSupporterAPIViewModel.cs" />
@@ -212,6 +213,7 @@
     <Compile Include="DataAPIGen\TicketTaskApiGen.cs">
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
+    <Compile Include="Domain\DeviceDomain.cs" />
     <Compile Include="Domain\ITSuppoterDomain.cs" />
     <Compile Include="Domain\RoleDomain.cs" />
     <Compile Include="Domain\ServiceITSupportDomain.cs" />

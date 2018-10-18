@@ -1,0 +1,382 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- /.modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <b>Message:</b><br>
+                    <input class="message-edit-text" type="text" size="20">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+
+                </div>
+                <div class="modal-body">
+
+                    <p>
+                        <b>Tên Loại Dịch Vụ</b><br>
+                    <p id="stsName"></p>
+                    <p>
+                        <b>Mô Tả:</b><br>
+                    <p id="stsDescription"></p>
+                    <p>
+                        <b>Ngày Tạo</b><br>
+                    <p id="stsCreateDate"></p>
+                    <p>
+                        <b>Lần Chỉnh Sửa Cuối:</b><br>
+                    <p id="stsUpdateDate"></p>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--deletemodal-->
+<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+        <!--Content-->
+        <div class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center">
+                <p class="heading">Are you sure you want to delete this item?</p>
+            </div>
+
+            <!--Body-->
+            <div class="modal-body">
+
+                <i class="fa fa-times fa-4x animated rotateIn"></i>
+
+            </div>
+
+            <!--Footer-->
+            <div class="modal-footer flex-center">
+                <a href="#" onClick="deleteServiceITSupport(); return false;" class="btn  btn-outline-danger">Yes</a>
+                <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+<input type="hidden" id="serviceitsupportHidden" />
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                </div>
+                <div class="modal-body">
+                    <p>
+                    <p id="id"></p>
+                    <p>
+                        <b>Tên Dịch Vụ:</b><br>
+                        <input type="text" id="stsNameCreate"></input>
+                    <p>
+                        <b>Mô Tả:</b><br>
+                        <input type="text" id="sisDescriptionCreate"></input>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="createServiceITSupport()">Create New</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <p>
+                    <b>Tên Loại Dịch Vụ:</b><br>
+                    <input type="text" id="stsNameEdit"></input>
+                <p>
+                    <b>Mô Tả:</b><br>
+                    <input type="text" id="stsDescriptionEdit"></input>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="UpdateServiceITSupport()">Chỉnh Sửa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Datatable -->
+<div class="row col-md-12">
+
+    <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
+        <thead>
+            <tr>
+                <th><label>STT</label></th>
+                <th><label>Tên Loại Dịch Vụ</label></th>
+                <th><label>Mo Tả</label></th>
+                <th><label>Ngày Tạo</label></th>
+                <th><label>Chức Năng</label></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <div class="NewThing">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="showCreateModal()">Tạo Loại Dịch Vụ</button>
+    </div>
+</div>
+
+<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts {
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/common.js"></script>
+    <script>
+        $(document).ready(function() {
+            loadServiceITSupport();
+            showService();
+        });
+
+        function loadServiceITSupport() {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetAllServiceITSupport", "ServiceITSupport")',
+                data: {
+                },
+                success: function (result) {
+                    initDatatable(result.result.ObjReturn);
+                },
+                error: function(error) {
+                    showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                }
+            });
+        }
+        function initDatatable(data) {
+            $("#detail-table").dataTable().fnDestroy();
+            $("#detail-table").dataTable({
+                stateSave: true,
+                "bFilter": true,
+                "bSort": false,
+                "data": data,
+                "bRetrieve": true,
+                "bScrollCollapse": true,
+                "bProcessing": true,
+                "oLanguage": {
+                    "sSearch": "Tìm kiếm:",
+                    "sSearchPlaceholder": "Thành phần con",
+                    "sZeroRecords": "Không có dữ liệu phù hợp",
+                    "sInfo": "Hiển thị từ _START_ đến _END_ trên tổng số _TOTAL_ dòng",
+                    "sEmptyTable": "Không có dữ liệu",
+                    "sInfoFiltered": " - lọc ra từ _MAX_ dòng",
+                    "sLengthMenu": "Hiển thị _MENU_ dòng",
+                    "sProcessing": "Đang xử lý...",
+                    "oPaginate": {
+                        "sNext": "<i class='fa fa-chevron-right'></i>",
+                        "sPrevious": "<i class='fa fa-chevron-left'></i>"
+                    }
+                },
+                "aoColumnDefs": [
+                    {
+                        "aTargets": [0, 1, 2, 3, 4],
+                        "bSortable": false,
+                        "sClass": "text-center"
+                    },
+                ],
+                "columns": [
+                    { "data": "NumericalOrder" },
+                    { "data": "ServiceName" },
+                    { "data": "Description" },
+                    { "data": "CreateDate" },
+                    {
+                        "aTargets": [4],
+                        "mRender": function (data, type, full) {
+                            var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.ServiceITSupportId + ')"></button>';
+                            var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.ServiceITSupportId + ')"></button>';
+                            var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeServiceITSupport(' + full.ServiceITSupportId + ')"></button>';
+                            return view + " " + edit + " " + del;
+                        }
+                    },
+                ],
+                "bAutoWidth": false,
+            });
+        }
+        function showCreateModal() {
+            $('#CreateModal').modal('show');
+        }
+        function showService() {
+            $('#comboService, #comboServiceEdit')
+                .find('option')
+                .remove()
+                .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllServiceITSupport", "ServiceITSupport")',
+                data: {
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var obj = data.result.ObjReturn;
+                    var html = '';
+                    for (var i = 0; i < obj.length; i++) {
+                        html += '<option value="' +
+                            obj[i].ServiceITSupportId +
+                            '">' +
+                            obj[i].ServiceName
+                            '</option>';
+                    }
+                    $('#comboService').append(html);
+                    $('#comboServiceEdit').append(html);
+                }
+            });
+        }
+        function getData(idd) {
+
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "ServiceITSupport" })',
+
+                data: {
+                    serviceitsupport_id: idd
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $("#stsName").text(data.result.ObjReturn.ServiceName);
+                    $("#stsDescription").text(data.result.ObjReturn.Description);
+                    $("#stsCreateDate").text(data.result.ObjReturn.CreateDate);
+                    $("#stsUpdateDate").text(data.result.ObjReturn.UpdateDate);
+
+                }
+                });
+            $('#ViewModal').modal('show');
+        }
+
+
+        function getDataEdit(id) {
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "ServiceITSupport" })',
+
+                data: {
+                    serviceitsupport_id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $("#id").val(data.result.ObjReturn.ServiceITSupportId);
+                    $("#stsNameEdit").val(data.result.ObjReturn.ServiceName);
+                    $("#stsDescriptionEdit").val(data.result.ObjReturn.Description);
+                }
+            });
+            $('#EditModal').modal('show');
+        }
+        function UpdateServiceITSupport() {
+            var empObj = {
+                ServiceITSupportId: $('#id').val(),
+                ServiceName: $('#stsNameEdit').val(),
+                Description: $('#stsDescriptionEdit').val(),
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateServiceITSupport", "ServiceITSupport")',
+                data: JSON.stringify(empObj),
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#EditModal').modal('hide');
+                    if (!data.result.isError) {
+                        alert(data.result.SuccessMessage);
+                    }
+                    else
+                        alert(data.result.WarningMessage);
+                    loadServiceITSupport();
+                }
+            });
+        }
+        function createServiceITSupport() {
+            var empObj = {
+                ServiceName: $('#stsNameCreate').val(),
+                Description: $('#sisDescriptionCreate').val(),
+            }
+             $.ajax({
+                type: 'POST',
+                url: '@Url.Action("CreateServiceITSupport", "ServiceITSupport")',
+                data: JSON.stringify(empObj),
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    $('#CreateModal').modal('hide');
+                        if (!data.result.isError) {
+                            alert(data.result.SuccessMessage);
+                        }
+                        else
+                            alert(data.result.WarningMessage);
+
+                    loadServiceITSupport();
+                }
+            });
+        }
+        function removeServiceITSupport(id) {
+            $('#modalConfirmDelete').modal('show');
+            $('#serviceitsupportHidden').val(id);
+        }
+        function deleteServiceITSupport() {
+            var serviceitsupport_id = $('#serviceitsupportHidden').val();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("RemoveServiceITSupport", "ServiceITSupport")',
+                data: {
+                    serviceitsupport_id: serviceitsupport_id
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#modalConfirmDelete').modal('hide')
+                    loadServiceITSupport();
+                }
+            });
+        }
+
+    </script>
+
+}
+

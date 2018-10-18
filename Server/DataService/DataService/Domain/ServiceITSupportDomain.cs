@@ -12,10 +12,15 @@ namespace DataService.Domain
     public interface IServiceITSupportDomain
     {
         ResponseObject<List<ServiceITSupportAPIViewModel>> GetAllServiceITSupport();
+        ResponseObject<ServiceITSupportAPIViewModel> ViewDetail(int serviceitsupport_id);
+        ResponseObject<bool> CreateServiceITSupport(ServiceITSupportAPIViewModel model);
+        ResponseObject<bool> UpdateServiceITSupport(ServiceITSupportAPIViewModel model);
+        ResponseObject<bool> RemoveServiceITSupport(int serviceitsupport_id);
     }
 
     public class ServiceITSupportDomain : BaseDomain, IServiceITSupportDomain
     {
+        
         public ResponseObject<List<ServiceITSupportAPIViewModel>> GetAllServiceITSupport()
         {
             var serviceITSupportService = this.Service<IServiceITSupportService>();
@@ -23,6 +28,42 @@ namespace DataService.Domain
             var serviceITSupports = serviceITSupportService.GetAllServiceITSupport();
 
             return serviceITSupports;
+        }
+
+        public ResponseObject<bool> CreateServiceITSupport(ServiceITSupportAPIViewModel model)
+        {
+            var serviceITSupportService = this.Service<IServiceITSupportService>();
+
+            var result = serviceITSupportService.CreateServiceITSupport(model);
+
+            return result;
+        }
+
+        public ResponseObject<bool> RemoveServiceITSupport(int serviceitsupport_id)
+        {
+            var serviceitsupportList = new List<ServiceITSupportAPIViewModel>();
+
+            var serviceITSupportService = this.Service<IServiceITSupportService>();
+            var rs = serviceITSupportService.RemoveServiceITSupport(serviceitsupport_id);
+            return rs;
+        }
+
+        public ResponseObject<bool> UpdateServiceITSupport(ServiceITSupportAPIViewModel model)
+        {
+            var serviceITSupportService = this.Service<IServiceITSupportService>();
+
+            var result = serviceITSupportService.UpdateServiceITSupport(model);
+
+            return result;
+        }
+
+        public ResponseObject<ServiceITSupportAPIViewModel> ViewDetail(int serviceitsupport_id)
+        {
+            var serviceITSupportService = this.Service<IServiceITSupportService>();
+
+            var serviceitsupport = serviceITSupportService.ViewDetail(serviceitsupport_id);
+
+            return serviceitsupport;
         }
     }
 }

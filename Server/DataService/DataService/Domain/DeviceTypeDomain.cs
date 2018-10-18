@@ -29,6 +29,14 @@ namespace DataService.Domain
 
             return deviceTypes;
         }
+        public ResponseObject<DeviceTypeAPIViewModel> ViewDetail(int devicetype_id)
+        {
+            var deviceTypeService = this.Service<IDeviceTypeService>();
+
+            var devicetype = deviceTypeService.ViewDetail(devicetype_id);
+
+            return devicetype;
+        }
         public ResponseObject<bool> CreateDeviceType(DeviceTypeAPIViewModel model)
         {
             var deviceTypeService = this.Service<IDeviceTypeService>();
@@ -44,16 +52,7 @@ namespace DataService.Domain
             var result = deviceTypeService.UpdateDeviceType(model);
 
             return result;
-        }
-
-        public ResponseObject<DeviceTypeAPIViewModel> ViewDetail(int devicetype_id)
-        {
-            var deviceTypeService = this.Service<IDeviceTypeService>();
-
-            var devicetype = deviceTypeService.ViewDetail(devicetype_id);
-
-            return devicetype;
-        }
+        } 
         public ResponseObject<bool> RemoveDeviceType(int devicetype_id)
         {
             var devicetypeList = new List<DeviceTypeAPIViewModel>();

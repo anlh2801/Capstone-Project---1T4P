@@ -1,4 +1,5 @@
-﻿using DataService.Domain;
+﻿using DataService.APIViewModels;
+using DataService.Domain;
 using DataService.Models.Entities;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,29 @@ namespace CapstoneProject_ODTS.MVC.Controllers
             var serviceITSupports = _serviceITSupportDomain.GetAllServiceITSupport();
 
             return Json(new { result = serviceITSupports }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ViewDetail(int serviceitsupport_id)
+        {
+            var serviceitsupportDetail = _serviceITSupportDomain.ViewDetail(serviceitsupport_id);
+
+            return Json(new { result = serviceitsupportDetail }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult CreateServiceITSupport(ServiceITSupportAPIViewModel model)
+        {
+            var result = _serviceITSupportDomain.CreateServiceITSupport(model);
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+
+        }
+        public ActionResult UpdateServiceITSupport(ServiceITSupportAPIViewModel model)
+        {
+            var result = _serviceITSupportDomain.UpdateServiceITSupport(model);
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+
+        }
+        public ActionResult RemoveServiceITSupport(int serviceitsupport_id)
+        {
+            var serviceitsupportDetail = _serviceITSupportDomain.RemoveServiceITSupport(serviceitsupport_id);
+            return Json(new { result = serviceitsupportDetail }, JsonRequestBehavior.AllowGet);
         }
     }
 }

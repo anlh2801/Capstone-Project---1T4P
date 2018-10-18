@@ -103,7 +103,7 @@ namespace DataService.Models.Entities.Services
 
                 createContract.CompanyId = model.CompanyId;
                 createContract.ContractName = model.ContractName;
-                createContract.StartDate = model.StartDate.ToDateTime(); ;
+                createContract.StartDate = model.StartDate.ToDateTime();
                 createContract.EndDate = model.EndDate.ToDateTime();
                 createContract.IsDelete = false;
                 createContract.CreateDate = DateTime.Now;
