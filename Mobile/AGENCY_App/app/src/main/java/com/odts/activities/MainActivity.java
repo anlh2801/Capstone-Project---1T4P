@@ -1,8 +1,11 @@
 package com.odts.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +25,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     private CompanyService _companyService;
     private TextView textView;
+    Button btnAdd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,5 +49,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        btnAdd = (Button) findViewById(R.id.btnAdd);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, RequestActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
 }
