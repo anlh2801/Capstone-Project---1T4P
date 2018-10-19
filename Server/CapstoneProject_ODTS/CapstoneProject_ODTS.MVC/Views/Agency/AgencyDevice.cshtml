@@ -1,41 +1,202 @@
 ﻿<!-- Datatable -->
 @{
-    var data = ViewData["ID"];
+    var dataAgency = ViewData["ID"];
 }
+
+
+
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                </div>
+                <div class="modal-body">
+                    <p>
+                    <p id="id"></p>
+                    <p>
+                        <b>Tên Công Ty:</b><br>
+                        <select id="comboCompany"></select>
+                    <p>
+                        <b>Loại Thiết Bị:</b><br>
+                        <select id="comboDeviceType"></select>
+                    <p>
+                    <p>
+                        <b>Tên Thiết Bị:</b><br>
+                        <input type="text" id="dvNameC" type="text" class="form-control" required></input>
+                    <p>
+                        <b>Code:</b><br>
+                        <input type="text" id="dvCodeC" type="text" class="form-control" required></input>
+                    <p>
+                        <b>Ngày Bảo Hành:</b><br>
+                        <input type="text" id="dvGDateC" type="text" class="form-control" required></input>
+                    <p>
+                        <b>Hạn Bảo Hành:</b><br>
+                        <input type="text" id="dvGEndDateC" type="text" class="form-control" required></input>
+                    <p>
+                        <b>Ip:</b><br>
+                        <input type="text" id="dvIpC" type="text" class="form-control" required></input>
+                    <p>
+                        <b>Port:</b><br>
+                        <input type="text" id="dvPortC" type="text" class="form-control" required></input>
+                    <p>
+                        <b>Device Account:</b><br>
+                        <input type="text" id="dvAccC" type="text" class="form-control" required></input>
+                    <p>
+                        <b>Device Password:</b><br>
+                        <input type="text" id="dvPassC" type="text" class="form-control" required></input>
+                    <p>
+                        <b>Ngày Lắp:</b><br>
+                        <input type="text" id="dvSettingDateC" type="text" class="form-control" required></input>
+                    <p>
+                        <b>Thông Tin:</b><br>
+                        <input type="text" id="dvOtherC" type="text" class="form-control" required></input>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="createDevice()">Create New</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+
+                </div>
+                <div class="modal-body">
+
+                    <p>
+                    <b>Tên Thiết Bị:</b><br>
+                    <p id="dvName"></p>
+                    <p>
+                    <b>Loại Thiết Bị:</b><br>
+                    <p id="dvType"></p>
+                    <p>
+                    <b>Mã Thiết Bị:</b><br>
+                    <p id="dvCode"></p>
+                    <p>
+                    <b>Ngày Ký Bảo Hành:</b><br>
+                    <p id="dvGDate"></p>
+                    <p>
+                    <b>Hạn Bảo Hành:</b><br>
+                    <p id="dvEndDate"></p>
+                    <p>
+                    <b>Ip:</b><br>
+                    <p id="dvIp"></p>
+                    <p>
+                    <b>Port:</b><br>
+                    <p id="dvPort"></p>
+                    <p>
+                    <b>DeviceAccount:</b><br>
+                    <p id="dvAcc"></p>
+                    <p>
+                    <b>DevicePassword:</b><br>
+                    <p id="dvPass"></p>
+                    <p>
+                    <b>Ngày Cài Đặt:</b><br>
+                    <p id="dvSetupDate"></p>
+                    <p>
+                    <b>Thông Tin THêm:</b><br>
+                    <p id="dvOther"></p>
+                    <p>
+                    <b>Lần Chỉnh Sửa Cuối:</b><br>
+                    <p id="dvLastEdit"></p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <p>
+                <b>Tên Công Ty:</b><br>
+                <select id="comboCompanyE" disabled="true"></select>
+                <p>
+                <b>Mô Tả Hợp Đồng:</b><br>
+                <input type="text" id="conNameE"></input>
+                <p>
+                <b>Ngày Bất Đầu:</b><br>
+                <input type="text" id="conStartDateE" type="text" class="form-control" required></input>
+                <p>
+                <b>Ngày Hết Hạn:</b><br>
+                <input type="text" id="conEndDateE" type="text" class="form-control" required></input>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="UpdateContract()">Chỉnh Sửa</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row col-md-12">
 
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
             <tr>
                 <th><label>STT</label></th>
-                <th><label>Tên</label></th>
-                <th><label>Code</label></th>
-                <th><label>IP</label></th>
-                <th><label>Port</label></th>
+                <th><label>Tên Thiết Bị</label></th>
+                <th><label>Mã Thiết Bị</label></th>
+                <th><label>Ngày Ký Bảo Hành</label></th>
+                <th><label>Hạn Bảo Hành</label></th>
+                <th><label>Ngày Lắp</label></th>
+                <th><label>Chức Năng</label></th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
+    <div class="NewThing">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="showCreateModal()">Tạo Thiết Bị</button>
+    </div>
 </div>
 
 <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts {
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script>
-        $(document).ready(function() {
-            loadCompany();
+        $(document).ready(function () {
+            loadDevice();
+            showCompany();
+            showDeviceType();
         });
 
-        function loadCompany() {
+        function loadDevice() {
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("GetAllDevice", "Agency", new { agency_id = data })',
+                url: '@Url.Action("GetAllDevice", "Agency", new { agency_id = dataAgency })',
                 data: {
-
                 },
                 success: function(result) {
-                    initDatatable(result.result);
+                    initDatatable(result.result.ObjReturn);
                 },
                 error: function(error) {
                     showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
@@ -43,6 +204,7 @@
             });
         }
         function initDatatable(data) {
+            $("#detail-table").dataTable().fnDestroy();
             $("#detail-table").dataTable({
                 stateSave: true,
                 "bFilter": true,
@@ -67,32 +229,197 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1, 2, 3, 4],
+                        "aTargets": [0, 1, 2, 3, 4, 5],
                         "bSortable": false,
                         "sClass": "text-center"
                     },
-
-                    //{
-                    //    "aTargets": [7],
-                    //    "mRender": function (data, type, row) {
-                    //        var edit = "<a title='Chỉnh sửa' class='btn btn-sm btn-primary' onclick='callShowEditModal(" + data + ")'><i class='glyphicon glyphicon-pencil'></i></a>";
-                    //        var del = "<a title='Xóa' class='btn btn-sm btn-danger' onclick='deleteElementChil(" + data + ")'><i class='glyphicon glyphicon-trash'></i></a>";
-                    //        return edit + " " + del;
-                    //    },
-                    //}
-
                 ],
                 "columns": [
                     { "data": "DeviceId" },
                     { "data": "DeviceName" },
                     { "data": "DeviceCode" },
-                    { "data": "Ip" },
-                    { "data": "Port" },
+                    { "data": "GuarantyStartDate" },
+                    { "data": "GuarantyEndDate" },
+                    { "data": "CreateDate" },
+                    {
+                        "mRender": function(data, type, full) {
+                            return ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' +full.DeviceId +')"></button>';
+                        }
+                    },
+                    {
+                        "mRender": function(data, type, full) {
+                            return ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' +full.DeviceId +')"></button>';
+                        }
+                    },
+                    {
+                        "mRender": function(data, type, full) {
+                            return ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeAgency(' +full.DeviceId +')"></button>';
+                        }
+                    },
                 ],
                 "bAutoWidth": false,
+            });
+        }
+        function showCreateModal() {
+            $('#CreateModal').modal('show');
+        }
+        function showCompany() {
+            $('#comboCompany, #comboCompanyE')
+                .find('option')
+                .remove()
+                .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllCompany", "Home")',
+                data: {
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var obj = data.result.ObjReturn;
+                    var html = '';
+                    for (var i = 0; i < obj.length; i++) {
+                        html += '<option value="' +
+                            obj[i].CompanyId +
+                            '">' +
+                            obj[i].CompanyName
+                            '</option>';
+                    }
+                    $('#comboCompany').append(html);
+                    $('#comboCompanyE').append(html);
+                }
+            });
+        }
+        function showDeviceType() {
+            $('#comboDeviceType, #comboDeviceTypeE')
+                .find('option')
+                .remove()
+                .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllDeviceType", "DeviceType")',
+                data: {
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var obj = data.result.ObjReturn;
+                    var html = '';
+                    for (var i = 0; i < obj.length; i++) {
+                        html += '<option value="' +
+                            obj[i].DeviceTypeId +
+                            '">' +
+                            obj[i].DeviceTypeName
+                            '</option>';
+                    }
+                    $('#comboDeviceType').append(html);
+                    $('#comboDeviceTypeE').append(html);
+                }
+            });
+        }
+        function getData(idd) {
+
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "Device"})',
+
+                data: {
+                    device_id: idd
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $("#dvName").text(data.result.ObjReturn.DeviceName);
+                    $("#dvType").text(data.result.ObjReturn.DeviceTypeName);
+                    $("#dvCode").text(data.result.ObjReturn.DeviceCode);
+                    $("#dvGDate").text(data.result.ObjReturn.GuarantyStartDate);
+                    $("#dvEndDate").text(data.result.ObjReturn.GuarantyEndDate);
+                    $("#dvIp").text(data.result.ObjReturn.Ip);
+                    $("#dvPort").text(data.result.ObjReturn.Port);
+                    $("#dvAcc").text(data.result.ObjReturn.DeviceAccount);
+                    $("#dvPass").text(data.result.ObjReturn.DevicePassword);
+                    $("#dvSetupDate").text(data.result.ObjReturn.SettingDate);
+                    $("#dvOther").text(data.result.ObjReturn.Other);
+                    $("#dvLastEdit").text(data.result.ObjReturn.UpdateDate);
+                }
+            });
+        $('#ViewModal').modal('show');
+            }
+        $('#dvGDateC').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            forceParse: false,
+            })
+        $('#dvGEndDateC').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            forceParse: false,
+        })
+        $('#dvSettingDateC').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            forceParse:false,
+        })
+
+        function getDataEdit(id) {
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "Contract" })',
+
+                data: {
+                    contract_id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $("#id").val(data.result.ObjReturn.ContractId);
+                    $("#comboCompanyE").val(data.result.ObjReturn.CompanyId);
+                    $("#conNameE").val(data.result.ObjReturn.ContractName);
+                    $("#conStartDateE").val(data.result.ObjReturn.StartDate);
+                    $("#conEndDateE").val(data.result.ObjReturn.EndDate);
+                }
+
+            });
+            $('#EditModal').modal('show');
+        }
+
+        function createDevice() {
+            var empObj = {
+                AgencyId: @ViewData["ID"],
+                DeviceTypeId: $('#comboDeviceType').val(),
+                DeviceName: $('#dvNameC').val(),
+                DeviceCode: $('#dvCodeC').val(),
+                GuarantyStartDate: $('#dvGDateC').val(),
+                GuarantyEndDate: $('#dvGEndDateC').val(),
+                Ip: $('#dvIpC').val(),
+                Port: $('#dvPortC').val(),
+                DeviceAccount: $('#dvAccC').val(),
+                DevicePassword: $('#dvPassC').val(),
+                SettingDate: $('#dvSettingDateC').val(),
+                Other: $('#dvOtherC').val(),
+            }
+             $.ajax({
+                type: 'POST',
+                url: '@Url.Action("CreateDevice", "Agency")',
+                data: JSON.stringify(empObj),
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    $('#CreateModal').modal('hide');
+                        if (!data.result.isError) {
+                            swal(data.result.SuccessMessage, "", "success");
+                        }
+                        else
+                            swal(data.result.WarningMessage, "", "success");
+                            loadDevice();
+                }
             });
         }
 
     </script>
 
 }
+
