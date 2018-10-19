@@ -12,7 +12,7 @@ namespace DataService.APIViewModels
         public AgencyAPIViewModel(DataService.Models.Entities.Agency entity) : base(entity) { }
 
         public int AgencyId { get; set; }
-        public int CompanyId { get; set; }
+        public Nullable<int> CompanyId { get; set; }
         public int AccountId { get; set; }
         public string AgencyName { get; set; }
         public string Address { get; set; }

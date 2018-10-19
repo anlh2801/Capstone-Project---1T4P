@@ -35,10 +35,50 @@ namespace DataService.Models.Entities.Services
         ResponseObject<List<AgencyDeviceAPIViewModel>> GetDevicesByDeviceTypeId(int deviceTypeId, int agencyId);
 
         ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id);
+        ResponseObject<List<AgencyAPIViewModel>> ViewAllAgencyByCompanyId(int agency_id);
     }
 
     public partial class AgencyService
     {
+        public ResponseObject<List<AgencyAPIViewModel>> ViewAllAgencyByCompanyId(int company_id)
+        {
+            try
+            {
+                List<AgencyAPIViewModel> rsList = new List<AgencyAPIViewModel>();
+                var agencyDeviceRepo = DependencyUtils.Resolve<IAgencyRepository>();
+                var agencyDevices = agencyDeviceRepo.GetActive(p => p.CompanyId == company_id).ToList();
+                if (agencyDevices.Count < 0)
+                {
+                    return new ResponseObject<List<AgencyAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy thiết bị nào!" };
+                }
+                foreach (var item in agencyDevices)
+                {
+                    rsList.Add(new AgencyAPIViewModel
+                    {
+                        AgencyId = item.AgencyId,
+                        CompanyId = item.CompanyId,
+                        CompanyName = item.Company.CompanyName,
+                        AccountId = item.AccountId,
+                        UserName = item.Account.Username,
+                        AgencyName = item.AgencyName,
+                        Address = item.Address,
+                        Telephone = item.Telephone,
+                        CreateAt = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        UpdateAt = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+
+                    });
+                }
+
+                return new ResponseObject<List<AgencyAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Tìm thấy thiết bị" };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<List<AgencyAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy thiết bị nào!", ObjReturn = null, ErrorMessage = e.ToString() };
+            }
+        }
+
+
         public ResponseObject<AgencyAPIViewModel> ViewProfile(int agency_id)
         {
             try
