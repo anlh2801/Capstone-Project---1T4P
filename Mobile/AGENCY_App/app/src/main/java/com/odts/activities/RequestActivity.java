@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.odts.models.Request;
 import com.odts.models.Ticket;
 import com.odts.apiCaller.IRequestApiCaller;
+import com.odts.services.RequestService;
 import com.odts.utils.RetrofitInstance;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class RequestActivity extends AppCompatActivity {
     EditText deviceId;
     EditText desciption;
     Button btnSave;
+    RequestService requestService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,26 +54,27 @@ public class RequestActivity extends AppCompatActivity {
                 request.setServiceItemId(serviceItemId);
                 request.setRequestName("android request name");
                 request.setTicket(listTicket);
-                addRequest(request);
+                requestService = new RequestService();
+                requestService.addRequest(RequestActivity.this, request);
             }
         });
     }
-    public void addRequest(Request request) {
-        Call<Request> call = IRequestApiCaller.addUser(request);
-        call.enqueue(new Callback<Request>() {
-            @Override
-            public void onResponse(Call<Request> call, Response<Request> response) {
-                if(!response.body().isError()){
-                    Toast.makeText(RequestActivity.this, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
-                }
-                else
-                    Toast.makeText(RequestActivity.this, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<Request> call, Throwable t) {
-                Log.e("ERROR: ", t.getMessage());
-            }
-        });
-    }
+//    public void addRequest(Request request) {
+//        Call<Request> call = IRequestApiCaller.addUser(request);
+//        call.enqueue(new Callback<Request>() {
+//            @Override
+//            public void onResponse(Call<Request> call, Response<Request> response) {
+//                if(!response.body().isError()){
+//                    Toast.makeText(RequestActivity.this, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
+//                }
+//                else
+//                    Toast.makeText(RequestActivity.this, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Request> call, Throwable t) {
+//                Log.e("ERROR: ", t.getMessage());
+//            }
+//        });
+//    }
 }
