@@ -2,7 +2,6 @@ package com.odts.utils;
 
 
 import com.odts.models.Company;
-import com.odts.models.CompanyList;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ public interface GetNoticeDataService {
 //
 //    @GET("bins/1bsqcn/")
     @GET("/company/all_company")
-    Call<CompanyList> getCompanyData();
+    Call<ResponseObjectReturnList<Company>> getCompanyData();
 //    @GET("/user")
 //    Call<NoticeList> getNoticeData();
 

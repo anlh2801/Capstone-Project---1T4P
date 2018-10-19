@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.odts.models.Request;
 import com.odts.models.Ticket;
-import com.odts.services.RequestService;
+import com.odts.apiCaller.IRequestApiCaller;
 import com.odts.utils.RetrofitInstance;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import retrofit2.Response;
 
 
 public class RequestActivity extends AppCompatActivity {
-    RequestService requestService;
+    IRequestApiCaller IRequestApiCaller;
     EditText agencyId;
     EditText requestCategoryId;
     EditText serviceItemId;
@@ -33,7 +33,7 @@ public class RequestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request);
-        requestService = RetrofitInstance.getRequestService();
+        IRequestApiCaller = RetrofitInstance.getRequestService();
         btnSave = (Button) findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +54,7 @@ public class RequestActivity extends AppCompatActivity {
         });
     }
     public void addRequest(Request request) {
-        Call<Request> call = requestService.addUser(request);
+        Call<Request> call = IRequestApiCaller.addUser(request);
         call.enqueue(new Callback<Request>() {
             @Override
             public void onResponse(Call<Request> call, Response<Request> response) {

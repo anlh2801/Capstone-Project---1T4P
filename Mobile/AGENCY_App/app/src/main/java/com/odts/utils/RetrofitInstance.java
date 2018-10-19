@@ -1,6 +1,6 @@
 package com.odts.utils;
 
-import com.odts.services.RequestService;
+import com.odts.apiCaller.IRequestApiCaller;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -23,7 +23,7 @@ private static final String BASE_URL = "http://35.197.154.50/";
         }
         return retrofit;
     }
-    public static RequestService getRequestService() {
-        return  getRetrofitInstance().create(RequestService.class);
+    public static IRequestApiCaller getRequestService() {
+        return  getRetrofitInstance().create(IRequestApiCaller.class);
     }
 }

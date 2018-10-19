@@ -1,13 +1,13 @@
-package com.odts.models;
+package com.odts.utils;
 
-        import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.SerializedName;
+import com.odts.models.Company;
 
-        import java.util.ArrayList;
+import java.util.ArrayList;
 
-public class CompanyList {
-
+public class ResponseObject<T> {
     @SerializedName("ObjReturn")
-    private ArrayList<Company> companyList;
+    private T companyList;
 
     @SerializedName("IsError")
     private boolean isError;
@@ -21,11 +21,11 @@ public class CompanyList {
     @SerializedName("SuccessMessage")
     private String successMessage;
 
-    public ArrayList<Company> getCompanyList() {
+    public T getCompanyList() {
         return companyList;
     }
 
-    public void setCompanyList(ArrayList<Company> companyList) {
+    public void setCompanyList(T companyList) {
         this.companyList = companyList;
     }
 
@@ -58,6 +58,6 @@ public class CompanyList {
     }
 
     public void setSuccessMessage(String successMessage) {
-        successMessage = successMessage;
+        this.successMessage = successMessage;
     }
 }
