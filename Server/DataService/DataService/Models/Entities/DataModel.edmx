@@ -199,7 +199,7 @@
           </Key>
           <Property Name="SkillId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ITSupportId" Type="int" Nullable="false" />
-          <Property Name="ServiceItemId" Type="int" />
+          <Property Name="ServiceITSupportId" Type="int" />
           <Property Name="MonthExperience" Type="int" />
           <Property Name="IsDelete" Type="bit" />
           <Property Name="CreateDate" Type="datetime" />
@@ -433,15 +433,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Skill_ServiceItem">
-          <End Role="ServiceItem" Type="Self.ServiceItem" Multiplicity="0..1" />
+        <Association Name="FK_Skill_ServiceITSupport">
+          <End Role="ServiceITSupport" Type="Self.ServiceITSupport" Multiplicity="0..1" />
           <End Role="Skill" Type="Self.Skill" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ServiceItem">
-              <PropertyRef Name="ServiceItemId" />
+            <Principal Role="ServiceITSupport">
+              <PropertyRef Name="ServiceITSupportId" />
             </Principal>
             <Dependent Role="Skill">
-              <PropertyRef Name="ServiceItemId" />
+              <PropertyRef Name="ServiceITSupportId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -608,8 +608,8 @@
             <End Role="ITSupporter" EntitySet="ITSupporter" />
             <End Role="Skill" EntitySet="Skill" />
           </AssociationSet>
-          <AssociationSet Name="FK_Skill_ServiceItem" Association="Self.FK_Skill_ServiceItem">
-            <End Role="ServiceItem" EntitySet="ServiceItem" />
+          <AssociationSet Name="FK_Skill_ServiceITSupport" Association="Self.FK_Skill_ServiceITSupport">
+            <End Role="ServiceITSupport" EntitySet="ServiceITSupport" />
             <End Role="Skill" EntitySet="Skill" />
           </AssociationSet>
           <AssociationSet Name="FK_Ticket_Agency" Association="Self.FK_Ticket_Agency">
@@ -744,8 +744,8 @@
             <End Role="ServiceITSupport" EntitySet="ServiceITSupports" />
             <End Role="ServiceItem" EntitySet="ServiceItems" />
           </AssociationSet>
-          <AssociationSet Name="FK_Skill_ServiceItem" Association="DataModel.FK_Skill_ServiceItem">
-            <End Role="ServiceItem" EntitySet="ServiceItems" />
+          <AssociationSet Name="FK_Skill_ServiceITSupport" Association="DataModel.FK_Skill_ServiceITSupport">
+            <End Role="ServiceITSupport" EntitySet="ServiceITSupports" />
             <End Role="Skill" EntitySet="Skills" />
           </AssociationSet>
           <AssociationSet Name="FK_TicketHistory_Ticket" Association="DataModel.FK_TicketHistory_Ticket">
@@ -965,7 +965,6 @@
           <NavigationProperty Name="Guidelines" Relationship="DataModel.FK_Guideline_ServiceItem" FromRole="ServiceItem" ToRole="Guideline" />
           <NavigationProperty Name="Requests" Relationship="DataModel.FK_Request_ServiceItem" FromRole="ServiceItem" ToRole="Request" />
           <NavigationProperty Name="ServiceITSupport" Relationship="DataModel.FK_ServiceItem_Service" FromRole="ServiceItem" ToRole="ServiceITSupport" />
-          <NavigationProperty Name="Skills" Relationship="DataModel.FK_Skill_ServiceItem" FromRole="ServiceItem" ToRole="Skill" />
         </EntityType>
         <EntityType Name="ServiceITSupport">
           <Key>
@@ -980,6 +979,7 @@
           <NavigationProperty Name="ContractServiceITSupports" Relationship="DataModel.FK_ContractService_Service" FromRole="ServiceITSupport" ToRole="ContractServiceITSupport" />
           <NavigationProperty Name="DeviceTypes" Relationship="DataModel.FK_DeviceType_ServiceITSupport" FromRole="ServiceITSupport" ToRole="DeviceType" />
           <NavigationProperty Name="ServiceItems" Relationship="DataModel.FK_ServiceItem_Service" FromRole="ServiceITSupport" ToRole="ServiceItem" />
+          <NavigationProperty Name="Skills" Relationship="DataModel.FK_Skill_ServiceITSupport" FromRole="ServiceITSupport" ToRole="Skill" />
         </EntityType>
         <EntityType Name="Skill">
           <Key>
@@ -987,13 +987,13 @@
           </Key>
           <Property Name="SkillId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ITSupportId" Type="Int32" Nullable="false" />
-          <Property Name="ServiceItemId" Type="Int32" />
+          <Property Name="ServiceITSupportId" Type="Int32" />
           <Property Name="MonthExperience" Type="Int32" />
           <Property Name="IsDelete" Type="Boolean" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ITSupporter" Relationship="DataModel.FK_Skill_ITSupporter" FromRole="Skill" ToRole="ITSupporter" />
-          <NavigationProperty Name="ServiceItem" Relationship="DataModel.FK_Skill_ServiceItem" FromRole="Skill" ToRole="ServiceItem" />
+          <NavigationProperty Name="ServiceITSupport" Relationship="DataModel.FK_Skill_ServiceITSupport" FromRole="Skill" ToRole="ServiceITSupport" />
         </EntityType>
         <EntityType Name="Ticket">
           <Key>
@@ -1291,15 +1291,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Skill_ServiceItem">
-          <End Type="DataModel.ServiceItem" Role="ServiceItem" Multiplicity="0..1" />
+        <Association Name="FK_Skill_ServiceITSupport">
+          <End Type="DataModel.ServiceITSupport" Role="ServiceITSupport" Multiplicity="0..1" />
           <End Type="DataModel.Skill" Role="Skill" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ServiceItem">
-              <PropertyRef Name="ServiceItemId" />
+            <Principal Role="ServiceITSupport">
+              <PropertyRef Name="ServiceITSupportId" />
             </Principal>
             <Dependent Role="Skill">
-              <PropertyRef Name="ServiceItemId" />
+              <PropertyRef Name="ServiceITSupportId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1542,7 +1542,7 @@
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="MonthExperience" ColumnName="MonthExperience" />
-                <ScalarProperty Name="ServiceItemId" ColumnName="ServiceItemId" />
+                <ScalarProperty Name="ServiceITSupportId" ColumnName="ServiceITSupportId" />
                 <ScalarProperty Name="ITSupportId" ColumnName="ITSupportId" />
                 <ScalarProperty Name="SkillId" ColumnName="SkillId" />
               </MappingFragment>

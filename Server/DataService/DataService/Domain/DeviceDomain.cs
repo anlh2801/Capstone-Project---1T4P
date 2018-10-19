@@ -16,6 +16,7 @@ namespace DataService.Domain
         ResponseObject<List<DeviceAPIViewModel>> GetAllDevice();
         ResponseObject<bool> CreateDevice(DeviceAPIViewModel model);
         ResponseObject<DeviceAPIViewModel> ViewDetail(int device_id);
+        ResponseObject<List<AgencyDeviceAPIViewModel>> ViewAllDeviceByAgencyIdAndServiceId(int agencyId, int serviceId);
     }
 
     public class DeviceDomain : BaseDomain, IDeviceDomain
@@ -54,6 +55,15 @@ namespace DataService.Domain
             var contract = deviceService.ViewDetail(device_id);
 
             return contract;
+        }
+
+        public ResponseObject<List<AgencyDeviceAPIViewModel>> ViewAllDeviceByAgencyIdAndServiceId(int agencyId, int serviceId)
+        {
+            var deviceService = this.Service<IDeviceService>();
+
+            var devices = deviceService.ViewAllDeviceByAgencyIdAndServiceId(agencyId, serviceId);
+
+            return devices;
         }
     }
     

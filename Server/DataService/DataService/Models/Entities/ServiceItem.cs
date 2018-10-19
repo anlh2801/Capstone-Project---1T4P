@@ -19,7 +19,6 @@ namespace DataService.Models.Entities
         {
             this.Guidelines = new HashSet<Guideline>();
             this.Requests = new HashSet<Request>();
-            this.Skills = new HashSet<Skill>();
         }
     
         public int ServiceItemId { get; set; }
@@ -36,7 +35,5 @@ namespace DataService.Models.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Request> Requests { get; set; }
         public virtual ServiceITSupport ServiceITSupport { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Skill> Skills { get; set; }
     }
 }

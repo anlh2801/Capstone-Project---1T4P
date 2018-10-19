@@ -5,10 +5,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.odts.apiCaller.IServiceITSupportApiCaller;
-import com.odts.models.Company;
+import com.odts.apiCaller.IServiceItemApiCaller;
 import com.odts.models.ServiceITSupport;
+import com.odts.models.ServiceItem;
 import com.odts.utils.CallBackData;
-import com.odts.utils.GetNoticeDataService;
 import com.odts.utils.ResponseObjectReturnList;
 import com.odts.utils.RetrofitInstance;
 
@@ -18,19 +18,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ServiceITSupportService {
-    public void getAllServiceITSupport (final Context context, int agencyId, final CallBackData<ArrayList<ServiceITSupport>> callBackData) {
-        IServiceITSupportApiCaller service = RetrofitInstance.getRetrofitInstance().create(IServiceITSupportApiCaller.class);
+public class ServiceItemService {
+    public void getAllServiceItemByServiceId (final Context context, int serviceId, final CallBackData<ArrayList<ServiceItem>> callBackData) {
+        IServiceItemApiCaller service = RetrofitInstance.getRetrofitInstance().create(IServiceItemApiCaller.class);
 
         /** Call the method with parameter in the interface to get the notice data*/
-        Call<ResponseObjectReturnList<ServiceITSupport>> call = service.getAllServiceITSupport(agencyId);
+        Call<ResponseObjectReturnList<ServiceItem>> call = service.getAllServiceItemByServiceId(serviceId);
 
         /**Log the URL called*/
         Log.wtf("URL Called", call.request().url() + "");
 
-        call.enqueue(new Callback<ResponseObjectReturnList<ServiceITSupport>>() {
+        call.enqueue(new Callback<ResponseObjectReturnList<ServiceItem>>() {
             @Override
-            public void onResponse(Call<ResponseObjectReturnList<ServiceITSupport>> call, Response<ResponseObjectReturnList<ServiceITSupport>> response) {
+            public void onResponse(Call<ResponseObjectReturnList<ServiceItem>> call, Response<ResponseObjectReturnList<ServiceItem>> response) {
                 if(response.code() == 200 && response.body() != null){
                     if (!response.body().isError()) {
                         callBackData.onSuccess(response.body().getObjList());
@@ -45,7 +45,7 @@ public class ServiceITSupportService {
             }
 
             @Override
-            public void onFailure(Call<ResponseObjectReturnList<ServiceITSupport>> call, Throwable t) {
+            public void onFailure(Call<ResponseObjectReturnList<ServiceItem>> call, Throwable t) {
                 Toast.makeText(context, "Có lỗi", Toast.LENGTH_SHORT).show();
             }
         });

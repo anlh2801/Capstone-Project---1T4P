@@ -20,6 +20,7 @@ namespace DataService.Models.Entities
             this.ContractServiceITSupports = new HashSet<ContractServiceITSupport>();
             this.DeviceTypes = new HashSet<DeviceType>();
             this.ServiceItems = new HashSet<ServiceItem>();
+            this.Skills = new HashSet<Skill>();
         }
     
         public int ServiceITSupportId { get; set; }
@@ -35,5 +36,7 @@ namespace DataService.Models.Entities
         public virtual ICollection<DeviceType> DeviceTypes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ServiceItem> ServiceItems { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Skill> Skills { get; set; }
     }
 }
