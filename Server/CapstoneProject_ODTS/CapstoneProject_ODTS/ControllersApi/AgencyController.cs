@@ -31,7 +31,7 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         HttpResponseMessage GetAllServiceItemByServiceId(int serviceId);
 
-        HttpResponseMessage GetAllDeviceByAgencyIdAndServiceItem(int agencyId, int serviceId);
+        HttpResponseMessage GetAllDeviceByAgencyIdAndServiceId(int agencyId, int serviceId);
     }
 
     public class AgencyController : ApiController, IAgencyController
@@ -145,7 +145,7 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         [HttpGet]
         [Route("agency/device_in_agency_serviceGroup/{agencyId}/{serviceId}")]
-        public HttpResponseMessage GetAllDeviceByAgencyIdAndServiceItem(int agencyId, int serviceId)
+        public HttpResponseMessage GetAllDeviceByAgencyIdAndServiceId(int agencyId, int serviceId)
         {
             var result = _deviceDomain.ViewAllDeviceByAgencyIdAndServiceId(agencyId, serviceId);
 

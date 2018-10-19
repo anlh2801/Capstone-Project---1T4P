@@ -9,5 +9,5 @@ import retrofit2.http.Path;
 
 public interface IDeviceApiCaller {
     @GET("/agency/device_in_agency_serviceGroup/{agencyId}/{serviceId}")
-    Call<ResponseObjectReturnList<ServiceItem>> getAllDeviceByAgencyIdAndServiceItem(@Path("agencyId") int agencyId, @Path("serviceId") int serviceId);
+    Call<ResponseObjectReturnList<ServiceItem>> getAllDeviceByAgencyIdAndServiceId(@Path("agencyId") int agencyId, @Path("serviceId") int serviceId);
 }
