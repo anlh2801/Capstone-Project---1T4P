@@ -17,6 +17,7 @@ namespace DataService.Models.Entities.Services
         ResponseObject<List<DeviceAPIViewModel>> GetAllDevice();
         ResponseObject<DeviceAPIViewModel> ViewDetail(int device_id);
         ResponseObject<bool> CreateDevice(DeviceAPIViewModel model);
+        ResponseObject<List<AgencyDeviceAPIViewModel>> ViewAllDeviceByAgencyIdAndServiceId(int agencyId, int serviceId);
     }
 
     public partial class DeviceService
@@ -175,6 +176,48 @@ namespace DataService.Models.Entities.Services
             {
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Thêm loại thiết bị thất bại", ErrorMessage = ex.ToString(), ObjReturn = false };
             }     
+        }
+
+        public ResponseObject<List<AgencyDeviceAPIViewModel>> ViewAllDeviceByAgencyIdAndServiceId(int agencyId, int serviceId)
+        {
+            try
+            {
+                List<AgencyDeviceAPIViewModel> rsList = new List<AgencyDeviceAPIViewModel>();
+                var agencyDeviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
+                var agencyDevices = agencyDeviceRepo.GetActive(p => p.AgencyId == agencyId && p.DeviceType.ServiceId == serviceId).ToList();
+                if (agencyDevices.Count < 0)
+                {
+                    return new ResponseObject<List<AgencyDeviceAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy thiết bị nào!" };
+                }
+                foreach (var item in agencyDevices)
+                {
+                    rsList.Add(new AgencyDeviceAPIViewModel
+                    {
+                        DeviceId = item.DeviceId,
+                        AgencyId = item.AgencyId,
+                        DeviceTypeId = item.DeviceTypeId,
+                        DeviceName = item.DeviceName,
+                        DeviceCode = item.DeviceCode,
+                        GuarantyStartDate = item.GuarantyStartDate != null ? item.GuarantyStartDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        GuarantyEndDate = item.GuarantyEndDate != null ? item.GuarantyEndDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        Ip = item.Ip,
+                        Port = item.Port,
+                        DeviceAccount = item.DeviceAccount,
+                        DevicePassword = item.DevicePassword,
+                        SettingDate = item.SettingDate != null ? item.SettingDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        Other = item.Other,
+                        CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                    });
+                }
+
+                return new ResponseObject<List<AgencyDeviceAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Tìm thấy thiết bị" };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<List<AgencyDeviceAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy thiết bị nào!", ObjReturn = null, ErrorMessage = e.ToString() };
+            }
         }
         //public ResponseObject<bool> RemoveDevice(int device_id)
         //{
