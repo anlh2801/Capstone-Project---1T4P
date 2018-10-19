@@ -6559,7 +6559,6 @@
     <Content Include="AdminLTE\dist\img\user8-128x128.jpg" />
     <Content Include="AdminLTE\dist\js\adminlte.js" />
     <Content Include="AdminLTE\dist\js\adminlte.min.js" />
-    <Content Include="AdminLTE\dist\js\common.js" />
     <Content Include="AdminLTE\dist\js\demo.js" />
     <Content Include="AdminLTE\dist\js\pages\dashboard.js" />
     <Content Include="AdminLTE\dist\js\pages\dashboard2.js" />

@@ -245,12 +245,12 @@ namespace DataService.Models.Entities.Services
 
         }
 
-        private int AssignITSupporter(int ServiceItemId)
+        private int AssignITSupporter(int serviceItemId)
         {
             try
             {
                 var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
-                var itSupporter = itSupporterRepo.GetActive(p => (p.IsBusy == null || p.IsBusy == false)).FirstOrDefault(x => x.Skills.OrderByDescending(o => o.MonthExperience).Any(s => s.ServiceItemId == ServiceItemId));
+                var itSupporter = itSupporterRepo.GetActive(p => (p.IsBusy == null || p.IsBusy == false)).FirstOrDefault(x => x.Skills.OrderByDescending(o => o.MonthExperience).Any(s => s.ServiceITSupport.ServiceItems.Any(a => a.ServiceItemId == serviceItemId)));
                 if (itSupporter != null)
                 {
                     itSupporter.IsBusy = true;
