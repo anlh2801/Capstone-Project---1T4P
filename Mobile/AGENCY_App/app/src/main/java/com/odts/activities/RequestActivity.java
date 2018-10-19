@@ -1,5 +1,6 @@
 package com.odts.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -33,6 +34,8 @@ public class RequestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request);
+        Intent myIntent = getIntent(); // gets the previously created intent
+        final int serviceItemId = myIntent.getIntExtra("serviceItemId", 0);
         IRequestApiCaller = RetrofitInstance.getRequestService();
         btnSave = (Button) findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -46,7 +49,7 @@ public class RequestActivity extends AppCompatActivity {
                 Request request = new Request();
                 request.setAgencyId(3);
                 request.setRequestCategoryId(3);
-                request.setServiceItemId(1);
+                request.setServiceItemId(serviceItemId);
                 request.setRequestName("android request name");
                 request.setTicket(listTicket);
                 addRequest(request);

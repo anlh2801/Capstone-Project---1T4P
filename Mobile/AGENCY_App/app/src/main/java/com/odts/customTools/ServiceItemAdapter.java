@@ -2,6 +2,7 @@ package com.odts.customTools;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.odts.activities.MainActivity;
 import com.odts.activities.R;
+import com.odts.activities.RequestActivity;
 import com.odts.models.ServiceItem;
 
 import java.util.List;
@@ -49,7 +51,10 @@ public class ServiceItemAdapter extends ArrayAdapter<ServiceItem> {
         btnCreateRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, serviceItem.getServiceItemId().toString(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, RequestActivity.class);
+                intent.putExtra("serviceItemId",serviceItem.getServiceItemId());
+                context.startActivity(intent);
+                //Toast.makeText(context, serviceItem.getServiceItemId().toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
