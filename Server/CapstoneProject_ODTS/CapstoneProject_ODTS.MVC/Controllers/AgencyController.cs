@@ -14,10 +14,12 @@ namespace CapstoneProject_ODTS.Controllers
     public class AgencyController : Controller
     {
         private AgencyDomain _agencyDomain;
+        private DeviceDomain _deviceDomain;
 
         public AgencyController()
         {
             _agencyDomain = new AgencyDomain();
+            _deviceDomain = new DeviceDomain();
         }
         public ActionResult Index()
         {
@@ -72,6 +74,12 @@ namespace CapstoneProject_ODTS.Controllers
         {
             var result = _agencyDomain.UpdateProfile(model);
             
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+
+        }
+        public ActionResult CreateDevice(DeviceAPIViewModel model)
+        {
+            var result = _deviceDomain.CreateDevice(model);
             return Json(new { result }, JsonRequestBehavior.AllowGet);
 
         }
