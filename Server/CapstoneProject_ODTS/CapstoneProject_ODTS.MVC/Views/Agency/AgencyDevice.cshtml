@@ -409,12 +409,12 @@
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
                     $('#CreateModal').modal('hide');
-                        if (!data.result.isError) {
-                            swal(data.result.SuccessMessage, "", "success");
-                        }
-                        else
-                            swal(data.result.WarningMessage, "", "success");
-                            loadDevice();
+                    if (!data.result.IsError) {
+                        swal(data.result.SuccessMessage, "", "success");
+                    }
+                    else
+                         swal(data.result.WarningMessage, "", "error");
+                         loadDevice();
                 }
             });
         }

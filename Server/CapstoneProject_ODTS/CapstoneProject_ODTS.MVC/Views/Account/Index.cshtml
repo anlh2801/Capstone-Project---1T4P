@@ -70,8 +70,6 @@
                 </div>
                 <div class="modal-body">
                     <p>
-                    <p id="id"></p>
-                    <p>
                         <b>RoleId:</b><br>
                         <select id="comboRole"></select>
                     <p>
@@ -131,7 +129,8 @@
                 </button>
             </div>
             <div class="modal-body">
-
+                <p>
+                <p id="idE"></p>
                 <p>
                     <b>RoleId:</b><br>
                     <select id="comboRoleEdit" class="form-control" disabled="true"></select>
@@ -167,7 +166,7 @@
         <tbody></tbody>
     </table>
     <div class="NewThing">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="showCreateModal()">Tạo Tài Khoản</button>
+        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Tài Khoản</button>
     </div>
 </div>
 
@@ -191,7 +190,7 @@
                 data: {
                 },
                 success: function(result) {
-                    initDatatable(result.result);
+                    initDatatable(result.result.ObjReturn);
                 },
                 error: function(error) {
                     showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
@@ -283,11 +282,11 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#accRole").text(data.result.RoleName);
-                    $("#accName").text(data.result.Username);
-                    $("#accPass").text(data.result.Password);
-                    $("#accCreateDate").text(data.result.CreateAt);
-                    $("#accUpdateDate").text(data.result.UpdateAt);
+                    $("#accRole").text(data.result.ObjReturn.RoleName);
+                    $("#accName").text(data.result.ObjReturn.Username);
+                    $("#accPass").text(data.result.ObjReturn.Password);
+                    $("#accCreateDate").text(data.result.ObjReturn.CreateAt);
+                    $("#accUpdateDate").text(data.result.ObjReturn.UpdateAt);
 
                 }
             });
@@ -308,13 +307,13 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                    var len = data.result.length;
+                    var obj = data.result.ObjReturn;
                     var html = '';
-                    for (var i = 0; i < len; i++) {
+                    for (var i = 0; i < obj.length; i++) {
                         html += '<option value="' +
-                            data.result[i].RoleId +
+                            obj[i].RoleId +
                             '">' +
-                            data.result[i].RoleName
+                            obj[i].RoleName
                             '</option>';
                     }
                     $('#comboRole').append(html);
@@ -340,7 +339,12 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $('#CreateModal').modal('hide'),
+                    $('#CreateModal').modal('hide');
+                    if (!data.result.isError) {
+                        swal(data.result.SuccessMessage, "", "thành công");
+                    }
+                    else
+                        swal(data.result.WarningMessage, "", "thất bại");
                         loadAccount();
                 }
             });
@@ -377,10 +381,10 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#id").val(data.result.AccountId);
-                    $("#comboRoleEdit").val(data.result.RoleId);
-                    $("#accNameEdit").val(data.result.Username);
-                    $("#accPassEdit").val(data.result.Password);
+                    $("#idE").val(data.result.ObjReturn.AccountId);
+                    $("#comboRoleEdit").val(data.result.ObjReturn.RoleId);
+                    $("#accNameEdit").val(data.result.ObjReturn.Username);
+                    $("#accPassEdit").val(data.result.ObjReturn.Password);
                 }
 
             });
@@ -388,7 +392,7 @@
         }
         function UpdateAccount() {
             var empObj = {
-                AccountId: $('#id').val(),
+                AccountId: $('#idE').val(),
                 UserName: $('#accNameEdit').val(),
                 Password: $('#accPassEdit').val(),
             }
@@ -399,7 +403,12 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $('#EditModal').modal('hide'),
+                    $('#EditModal').modal('hide');
+                    if (!data.result.isError) {
+                        alert(data.result.SuccessMessage);
+                    }
+                    else
+                        alert(data.result.WarningMessage);
                         loadAccount();
                 }
             });
