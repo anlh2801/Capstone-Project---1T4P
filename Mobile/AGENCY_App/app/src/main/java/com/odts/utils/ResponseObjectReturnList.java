@@ -21,6 +21,8 @@ public class ResponseObjectReturnList<T> {
     @SerializedName("SuccessMessage")
     private String successMessage;
 
+
+
     public ArrayList<T> getObjList() {
         return objList;
     }
@@ -60,4 +62,5 @@ public class ResponseObjectReturnList<T> {
     public void setSuccessMessage(String successMessage) {
         this.successMessage = successMessage;
     }
+
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class ResponseObject<T> {
     @SerializedName("ObjReturn")
-    private T companyList;
+    private T ObjReturn;
 
     @SerializedName("IsError")
     private boolean isError;
@@ -21,12 +21,16 @@ public class ResponseObject<T> {
     @SerializedName("SuccessMessage")
     private String successMessage;
 
-    public T getCompanyList() {
-        return companyList;
+    public ResponseObject(T objReturn) {
+        ObjReturn = objReturn;
     }
 
-    public void setCompanyList(T companyList) {
-        this.companyList = companyList;
+    public T getObjReturn() {
+        return ObjReturn;
+    }
+
+    public void setObjReturn(T objReturn) {
+        ObjReturn = objReturn;
     }
 
     public boolean isError() {
