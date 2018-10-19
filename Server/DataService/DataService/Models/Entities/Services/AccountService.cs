@@ -34,7 +34,7 @@ namespace DataService.Models.Entities.Services
             }
             catch (Exception e)
             {
-                return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Đăng nhập thất bại", ErrorMessage = e.ToString() };
+                return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Sai Tên Tài Khoản Hoặc Mật Khẩu.", ErrorMessage = e.ToString() };
             }
         }
         public ResponseObject<List<AccountAPIViewModel>> GetAllAccount()

@@ -6545,12 +6545,13 @@
     <Content Include="AdminLTE\dist\img\credit\visa.png" />
     <Content Include="AdminLTE\dist\img\default-50x50.gif" />
     <Content Include="AdminLTE\dist\img\icons.png" />
+    <Content Include="AdminLTE\dist\img\login-background.png" />
     <Content Include="AdminLTE\dist\img\photo1.png" />
     <Content Include="AdminLTE\dist\img\photo2.png" />
     <Content Include="AdminLTE\dist\img\photo3.jpg" />
     <Content Include="AdminLTE\dist\img\photo4.jpg" />
     <Content Include="AdminLTE\dist\img\user1-128x128.jpg" />
-    <Content Include="AdminLTE\dist\img\user2-160x160.jpg" />
+    <Content Include="AdminLTE\dist\img\odts.jpg" />
     <Content Include="AdminLTE\dist\img\user3-128x128.jpg" />
     <Content Include="AdminLTE\dist\img\user4-128x128.jpg" />
     <Content Include="AdminLTE\dist\img\user5-128x128.jpg" />

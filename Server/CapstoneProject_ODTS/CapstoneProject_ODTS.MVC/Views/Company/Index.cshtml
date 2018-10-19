@@ -145,29 +145,26 @@
                 <th><label>Tên Công Ty</label></th>
                 <th><label>Thông Tin</label></th>
                 <th><label>Ngày Tạo</label></th>
+                <th><label>Store</label></th>
                 <th><label>Chức Năng</label></th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
     <div class="NewThing">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="showCreateModal()">Tạo Công Ty</button>
+        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Công Ty</button>
     </div>
 </div>
 
 <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts {
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
-    <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="~/Content/common.js"></script>
     <script>
         $(document).ready(function() {
             loadCompany();
-            showService();
         });
 
         function loadCompany() {
@@ -210,7 +207,7 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1, 2, 3],
+                        "aTargets": [0, 1, 2, 3,4],
                         "bSortable": false,
                         "sClass": "text-center"
                     },
@@ -221,7 +218,13 @@
                     { "data": "Description" },
                     { "data": "CreateDate" },
                     {
-                        "aTargets": [3],
+                        "data": "RequestName",
+                        "mRender": function (data, type, full) {
+                            return '<a href="Agency/Index/' + full.CompanyId + '">Xem Chi Nhánh</a>';
+                        }
+                    },
+                    {
+                        "aTargets": [4],
                         "mRender": function (data, type, full) {
                             var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.CompanyId + ')"></button>';
                             var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.CompanyId + ')"></button>';
@@ -235,34 +238,6 @@
         }
         function showCreateModal() {
             $('#CreateModal').modal('show');
-        }
-        function showService() {
-            $('#comboService, #comboServiceEdit')
-                .find('option')
-                .remove()
-                .end();
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("GetAllServiceITSupport", "ServiceITSupport")',
-                data: {
-                },
-
-                dataType: 'json',
-                contentType: "application/json; charset=utf-8",
-                success: function(data) {
-                    var obj = data.result.ObjReturn;
-                    var html = '';
-                    for (var i = 0; i < obj.length; i++) {
-                        html += '<option value="' +
-                            obj[i].ServiceITSupportId +
-                            '">' +
-                            obj[i].ServiceName
-                            '</option>';
-                    }
-                    $('#comboService').append(html);
-                    $('#comboServiceEdit').append(html);
-                }
-            });
         }
         function getData(idd) {
 
@@ -299,7 +274,7 @@
                 success: function (data) {
                     $("#id").val(data.result.ObjReturn.CompanyId);
                     $("#comNameEdit").val(data.result.ObjReturn.CompanyName);
-                    $("#comDescriptionEdit").val(data.result.ObjReturn.Description);     
+                    $("#comDescriptionEdit").val(data.result.ObjReturn.Description);
                 }
             });
             $('#EditModal').modal('show');
@@ -342,10 +317,10 @@
                 success: function(data) {
                     $('#CreateModal').modal('hide');
                         if (!data.result.isError) {
-                            alert(data.result.SuccessMessage);
+                            swal(data.result.SuccessMessage, "", "success");
                         }
                         else
-                            alert(data.result.WarningMessage);
+                            swal(data.result.WarningMessage, "", "error");
 
                     loadCompany();
                 }
