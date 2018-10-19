@@ -124,6 +124,7 @@
     <Compile Include="APIViewModels\ITSupporterUpdateTaskStatusAPIViewModel.cs" />
     <Compile Include="APIViewModels\RequestCancelAPIViewModel.cs" />
     <Compile Include="APIViewModels\RoleAPIViewModel.cs" />
+    <Compile Include="APIViewModels\ServiceItemAPIViewModel.cs" />
     <Compile Include="APIViewModels\ServiceITSupportAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketHistoryAPIViewModel.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Domain\DeviceDomain.cs" />
     <Compile Include="Domain\ITSuppoterDomain.cs" />
     <Compile Include="Domain\RoleDomain.cs" />
+    <Compile Include="Domain\ServiceItemDomain.cs" />
     <Compile Include="Domain\ServiceITSupportDomain.cs" />
     <Compile Include="Domain\TicketHistoryDomain.cs" />
     <Compile Include="Domain\TicketDomain.cs" />
@@ -429,6 +431,7 @@
     <Compile Include="Models\Entities\Services\RequestServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Services\ServiceItemService.cs" />
     <Compile Include="Models\Entities\Services\ServiceITSupportService.cs" />
     <Compile Include="Models\Entities\Services\RoleService.cs" />
     <Compile Include="Models\Entities\Services\RoleServiceGen.cs">

@@ -26,15 +26,25 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage GetDevicesByDeviceTypeId(int deviceTypeId, int agencyId);
 
         HttpResponseMessage AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id);
+
+        HttpResponseMessage GetServiceITSupportByAgencyId(int agencyId);
+
+        HttpResponseMessage GetAllServiceItemByServiceId(int serviceId);
     }
 
     public class AgencyController : ApiController, IAgencyController
     {
         private AgencyDomain _agencyDomain;
 
+        private ServiceITSupportDomain _serviceITSupportDomain;
+
+        private ServiceItemDomain _serviceItemDomain;
+
         public AgencyController()
         {
             _agencyDomain = new AgencyDomain();
+            _serviceITSupportDomain = new ServiceITSupportDomain();
+            _serviceItemDomain = new ServiceItemDomain();
         }
 
         [HttpGet]
@@ -109,7 +119,25 @@ namespace CapstoneProject_ODTS.ControllersApi
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
-        
+
+        [HttpGet]
+        [Route("agency/serviceITSupport/{agencyId}")]
+        public HttpResponseMessage GetServiceITSupportByAgencyId(int agencyId)
+        {
+            var result = _serviceITSupportDomain.GetAllServiceITSupportByAgencyId(agencyId);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        [Route("agency/serviceItem/{serviceId}")]
+        public HttpResponseMessage GetAllServiceItemByServiceId(int serviceId)
+        {
+            var result = _serviceItemDomain.GetAllServiceItemByServiceId(serviceId);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
     }
 }
 
