@@ -1,6 +1,7 @@
 package com.odts.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -38,8 +39,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //getAllCompany ();
-        getAllITSupportForAgency(3);
-
+        SharedPreferences share = getApplicationContext().getSharedPreferences("ODTS", 0);
+        SharedPreferences.Editor edit = share.edit();
+        Integer agencyId = share.getInt("agencyId", 0);
+        getAllITSupportForAgency(agencyId);
         btnAdd = (Button) findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 LinearLayout layout = (LinearLayout) findViewById(R.id.layout_ServicesHome);
                 // Load ServiceItem của Service đầu tiên
                 getAllServiceItemByServiceId(serviceITSupports.get(0).getServiceITSupportId());
-
                 for (ServiceITSupport item : serviceITSupports) {
                     Button bt = new Button(MainActivity.this);
                     bt.setText(item.getServiceName());

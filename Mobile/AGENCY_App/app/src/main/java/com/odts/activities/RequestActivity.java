@@ -1,6 +1,7 @@
 package com.odts.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -37,6 +38,9 @@ public class RequestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request);
         Intent myIntent = getIntent(); // gets the previously created intent
+        SharedPreferences share = getApplicationContext().getSharedPreferences("ODTS", 0);
+        SharedPreferences.Editor edit = share.edit();
+        final Integer agencyId = share.getInt("agencyId", 0);
         final int serviceItemId = myIntent.getIntExtra("serviceItemId", 0);
         IRequestApiCaller = RetrofitInstance.getRequestService();
         btnSave = (Button) findViewById(R.id.btnSave);
@@ -49,7 +53,7 @@ public class RequestActivity extends AppCompatActivity {
                 List listTicket = new ArrayList<Ticket>();
                 listTicket.add(tic);
                 Request request = new Request();
-                request.setAgencyId(3);
+                request.setAgencyId(agencyId);
                 request.setRequestCategoryId(3);
                 request.setServiceItemId(serviceItemId);
                 request.setRequestName("android request name");
