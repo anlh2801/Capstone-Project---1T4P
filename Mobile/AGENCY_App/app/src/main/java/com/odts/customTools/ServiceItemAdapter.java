@@ -10,9 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.odts.activities.MainActivity;
 import com.odts.activities.R;
 import com.odts.activities.RequestActivity;
 import com.odts.models.ServiceItem;
@@ -53,6 +51,7 @@ public class ServiceItemAdapter extends ArrayAdapter<ServiceItem> {
             public void onClick(View view) {
                 Intent intent = new Intent(context, RequestActivity.class);
                 intent.putExtra("serviceItemId",serviceItem.getServiceItemId());
+                intent.putExtra("serviceItemName",serviceItem.getServiceItemName());
                 context.startActivity(intent);
                 //Toast.makeText(context, serviceItem.getServiceItemId().toString(), Toast.LENGTH_SHORT).show();
             }

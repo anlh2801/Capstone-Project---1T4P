@@ -5,8 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.odts.apiCaller.IDeviceApiCaller;
-import com.odts.apiCaller.IServiceItemApiCaller;
-import com.odts.models.ServiceItem;
+import com.odts.models.Device;
 import com.odts.utils.CallBackData;
 import com.odts.utils.ResponseObjectReturnList;
 import com.odts.utils.RetrofitInstance;
@@ -18,18 +17,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DeviceService {
-    public void getAllDeviceByAgencyIdAndServiceItem (final Context context, int agencyId, int serviceId, final CallBackData<ArrayList<ServiceItem>> callBackData) {
+    public void getAllDeviceByAgencyIdAndServiceItem (final Context context, int agencyId, int serviceId, final CallBackData<ArrayList<Device>> callBackData) {
         IDeviceApiCaller service = RetrofitInstance.getRetrofitInstance().create(IDeviceApiCaller.class);
 
         /** Call the method with parameter in the interface to get the notice data*/
-        Call<ResponseObjectReturnList<ServiceItem>> call = service.getAllDeviceByAgencyIdAndServiceId(agencyId, serviceId);
+        Call<ResponseObjectReturnList<Device>> call = service.getAllDeviceByAgencyIdAndServiceId(agencyId, serviceId);
 
         /**Log the URL called*/
         Log.wtf("URL Called", call.request().url() + "");
 
-        call.enqueue(new Callback<ResponseObjectReturnList<ServiceItem>>() {
+        call.enqueue(new Callback<ResponseObjectReturnList<Device>>() {
             @Override
-            public void onResponse(Call<ResponseObjectReturnList<ServiceItem>> call, Response<ResponseObjectReturnList<ServiceItem>> response) {
+            public void onResponse(Call<ResponseObjectReturnList<Device>> call, Response<ResponseObjectReturnList<Device>> response) {
                 if(response.code() == 200 && response.body() != null){
                     if (!response.body().isError()) {
                         callBackData.onSuccess(response.body().getObjList());
@@ -44,7 +43,7 @@ public class DeviceService {
             }
 
             @Override
-            public void onFailure(Call<ResponseObjectReturnList<ServiceItem>> call, Throwable t) {
+            public void onFailure(Call<ResponseObjectReturnList<Device>> call, Throwable t) {
                 Toast.makeText(context, "Có lỗi", Toast.LENGTH_SHORT).show();
             }
         });
