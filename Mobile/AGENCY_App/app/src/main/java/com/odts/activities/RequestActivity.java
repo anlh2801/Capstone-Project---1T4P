@@ -4,7 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+
 import android.content.IntentFilter;
+
+import android.content.SharedPreferences;
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
@@ -59,7 +63,16 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request);
+
         initData ();
+
+
+        Intent myIntent = getIntent(); // gets the previously created intent
+        SharedPreferences share = getApplicationContext().getSharedPreferences("ODTS", 0);
+        SharedPreferences.Editor edit = share.edit();
+        final Integer agencyId = share.getInt("agencyId", 0);
+        final int serviceItemId = myIntent.getIntExtra("serviceItemId", 0);
+
         IRequestApiCaller IRequestApiCaller = RetrofitInstance.getRequestService();
         btnSave = (Button) findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +84,7 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
                 List listTicket = new ArrayList<Ticket>();
                 listTicket.add(tic);
                 Request request = new Request();
-                request.setAgencyId(3);
+                request.setAgencyId(agencyId);
                 request.setRequestCategoryId(3);
                 request.setServiceItemId(serviceItemId);
                 request.setRequestName("android request name");

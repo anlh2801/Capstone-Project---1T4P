@@ -13,7 +13,7 @@ namespace DataService.Domain
     public interface IAccountDomain
     {
         ResponseObject<AccountAPIViewModel> ViewProfile(int account_id);
-        ResponseObject<bool> CheckLogin(string username, string password, int roleid);
+        ResponseObject<AgencyAPIViewModel> CheckLogin(string username, string password, int roleid);
         ResponseObject<List<AccountAPIViewModel>> GetAllAccount();
         ResponseObject<bool> CreateAccount(AccountAPIViewModel model);
         ResponseObject<bool> RemoveAccount(int account_id);
@@ -22,7 +22,7 @@ namespace DataService.Domain
 
     public class AccountDomain : BaseDomain, IAccountDomain
     {
-        public ResponseObject<bool> CheckLogin(string username, string password, int roleid)
+        public ResponseObject<AgencyAPIViewModel> CheckLogin(string username, string password, int roleid)
         {
 
             var accountService = this.Service<IAccountService>();

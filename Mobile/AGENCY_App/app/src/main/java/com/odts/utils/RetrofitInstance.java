@@ -1,5 +1,6 @@
 package com.odts.utils;
 
+import com.odts.apiCaller.ILoginApiCaller;
 import com.odts.apiCaller.IRequestApiCaller;
 
 import retrofit2.Retrofit;
@@ -25,5 +26,8 @@ private static final String BASE_URL = "http://35.197.154.50/";
     }
     public static IRequestApiCaller getRequestService() {
         return  getRetrofitInstance().create(IRequestApiCaller.class);
+    }
+    public static ILoginApiCaller getLoginService() {
+        return  getRetrofitInstance().create(ILoginApiCaller.class);
     }
 }

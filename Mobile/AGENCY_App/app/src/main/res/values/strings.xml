@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ODTS_AGENCY_MOBILE</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello pending fragment</string>
+    <string name="hello_processing_fragment">Hello processing fragment</string>
 </resources>
