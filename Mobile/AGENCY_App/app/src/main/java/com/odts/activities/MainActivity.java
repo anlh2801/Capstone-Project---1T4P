@@ -43,15 +43,15 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor edit = share.edit();
         Integer agencyId = share.getInt("agencyId", 0);
         getAllITSupportForAgency(agencyId);
-        btnAdd = (Button) findViewById(R.id.btnAdd);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, RequestActivity.class);
-                intent.putExtra("firstKeyName","FirstKeyValue");
-                startActivity(intent);
-            }
-        });
+//        btnAdd = (Button) findViewById(R.id.btnAdd);
+//        btnAdd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, RequestActivity.class);
+//                intent.putExtra("firstKeyName","FirstKeyValue");
+//                startActivity(intent);
+//            }
+//        });
     }
 
     private void getAllCompany (){
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(ArrayList<ServiceItem> serviceItems) {
                 ListView lvServiceItem = findViewById(R.id.lvServiceItem);
-                ServiceItemAdapter serviceItemAdapter = new ServiceItemAdapter(MainActivity.this, R.layout.service_iten_list, serviceItems);
+                ServiceItemAdapter serviceItemAdapter = new ServiceItemAdapter(MainActivity.this, R.layout.service_item_list, serviceItems);
                 lvServiceItem.setAdapter(serviceItemAdapter);
             }
 
