@@ -12,6 +12,6 @@ import retrofit2.http.POST;
 public interface IRequestApiCaller {
     @POST("agency/create_request")
     Call<ResponseObject<Boolean>> addUser(@Body Request request);
-    @GET("agency/get_ticket_by_requestId")
-    Call<ResponseObjectReturnList<Request> >
+//    @GET("ticket/all_ticket_with_status_agency")
+//    Call<ResponseObjectReturnList<Request>>
 }
