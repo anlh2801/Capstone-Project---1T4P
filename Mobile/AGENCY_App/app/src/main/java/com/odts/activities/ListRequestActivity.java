@@ -8,6 +8,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.odts.customTools.PendingRequestAdapter;
+import com.odts.models.ListRequest;
+import com.odts.services.RequestService;
+import com.odts.utils.CallBackData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +23,7 @@ public class ListRequestActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    RequestService requestService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +36,20 @@ public class ListRequestActivity extends AppCompatActivity {
 //
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        requestService = new RequestService();
+        requestService.getRequestByStatus(ListRequestActivity.this, 3, 1, new CallBackData<ArrayList<ListRequest>>() {
+            @Override
+            public void onSuccess(ArrayList<ListRequest> listRequests) {
+                ListView listView = (ListView) findViewById(R.id.listPending);
+                PendingRequestAdapter pendingRequestAdapter = new PendingRequestAdapter(ListRequestActivity.this, R.layout.activity_list_item, listRequests);
+                listView.setAdapter(pendingRequestAdapter);
+            }
+
+            @Override
+            public void onFail(String message) {
+
+            }
+        });
     }
 
     private void setupViewPager(ViewPager viewPager) {
