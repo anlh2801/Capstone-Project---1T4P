@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences share = getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         Integer agencyId = share.getInt("agencyId", 0);
-        getAllITSupportForAgency(agencyId);
+        getAllITSupportForAgency(3);
 //        btnAdd = (Button) findViewById(R.id.btnAdd);
 //        btnAdd.setOnClickListener(new View.OnClickListener() {
 //            @Override

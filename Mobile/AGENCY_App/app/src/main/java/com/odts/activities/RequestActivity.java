@@ -75,6 +75,7 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
         SharedPreferences.Editor edit = share.edit();
         final Integer agencyId = share.getInt("agencyId", 0);
         final int serviceItemId = myIntent.getIntExtra("serviceItemId", 0);
+        getAllDeviceByAgencyIdAndServiceItem(3,1);
 
         IRequestApiCaller IRequestApiCaller = RetrofitInstance.getRequestService();
         btnSave = (Button) findViewById(R.id.btnSave);
@@ -106,19 +107,19 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
             }
         });
 
-//        View bottomSheet = findViewById(R.id.bottom_sheet);
-//        behavior = BottomSheetBehavior.from(bottomSheet);
-//        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-//            @Override
-//            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-//                // React to state change
-//            }
-//
-//            @Override
-//            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-//                // React to dragging events
-//            }
-//        });
+        View bottomSheet = findViewById(R.id.bottom_sheet);
+        behavior = BottomSheetBehavior.from(bottomSheet);
+        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                // React to state change
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                // React to dragging events
+            }
+        });
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("custom-message"));
@@ -146,7 +147,7 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
             behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
 
-        mBottomSheetDialog = new BottomSheetDialog(this);
+        mBottomSheetDialog = new BottomSheetDialog(RequestActivity.this);
         View view = getLayoutInflater().inflate(R.layout.bottom_sheet_device_list, null);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rvDeviceList);
         recyclerView.setHasFixedSize(true);
@@ -174,7 +175,7 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mAdapter.setListener(null);
+//        mAdapter.setListener(null);
     }
 
 
