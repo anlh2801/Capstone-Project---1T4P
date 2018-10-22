@@ -1,4 +1,7 @@
-﻿<!--Modal: modalConfirmDelete-->
+﻿@{
+    var dataAgency = ViewData["ID"];
+}
+<!--Modal: modalConfirmDelete-->
 <div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
@@ -189,7 +192,7 @@
         function loadCompany() {
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("GetAllAgency", "Agency")',
+                url: '@Url.Action("GetAllAgency", "Company", new { company_id = dataAgency })',
                 data: {
                 },
                 success: function(result) {

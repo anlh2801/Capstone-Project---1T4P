@@ -63,5 +63,15 @@ namespace DataService.Domain
             var rs = companyService.RemoveCompany(company_id);
             return rs;
         }
+
+
+        public ResponseObject<List<AgencyAPIViewModel>> ViewAllAgencyByCompanyId(int company_id)
+        {
+            var agencyDeviceService = this.Service<IAgencyService>();
+
+            var agencies = agencyDeviceService.ViewAllAgencyByCompanyId(company_id);
+
+            return agencies;
+        }
     }
 }

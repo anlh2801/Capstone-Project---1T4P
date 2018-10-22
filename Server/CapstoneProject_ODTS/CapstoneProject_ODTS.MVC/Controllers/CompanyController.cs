@@ -56,5 +56,17 @@ namespace CapstoneProject_ODTS.MVC.Controllers
             var companydetail = _companyDomain.RemoveCompany(company_id);
             return Json(new { result = companydetail }, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult CompanyAgency(int id)
+        {
+            ViewData["ID"] = id.ToString();
+            return View();
+        }
+        public ActionResult GetAllAgency(int company_id)
+        {
+            var result = _companyDomain.ViewAllAgencyByCompanyId(company_id);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

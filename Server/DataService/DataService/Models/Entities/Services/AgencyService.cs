@@ -35,10 +35,50 @@ namespace DataService.Models.Entities.Services
         ResponseObject<List<AgencyDeviceAPIViewModel>> GetDevicesByDeviceTypeId(int deviceTypeId, int agencyId);
 
         ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id);
+        ResponseObject<List<AgencyAPIViewModel>> ViewAllAgencyByCompanyId(int agency_id);
     }
 
     public partial class AgencyService
     {
+        public ResponseObject<List<AgencyAPIViewModel>> ViewAllAgencyByCompanyId(int company_id)
+        {
+            try
+            {
+                List<AgencyAPIViewModel> rsList = new List<AgencyAPIViewModel>();
+                var agencyDeviceRepo = DependencyUtils.Resolve<IAgencyRepository>();
+                var agencyDevices = agencyDeviceRepo.GetActive(p => p.CompanyId == company_id).ToList();
+                if (agencyDevices.Count < 0)
+                {
+                    return new ResponseObject<List<AgencyAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy thiết bị nào!" };
+                }
+                foreach (var item in agencyDevices)
+                {
+                    rsList.Add(new AgencyAPIViewModel
+                    {
+                        AgencyId = item.AgencyId,
+                        CompanyId = item.CompanyId,
+                        CompanyName = item.Company.CompanyName,
+                        AccountId = item.AccountId,
+                        UserName = item.Account.Username,
+                        AgencyName = item.AgencyName,
+                        Address = item.Address,
+                        Telephone = item.Telephone,
+                        CreateAt = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        UpdateAt = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+
+                    });
+                }
+
+                return new ResponseObject<List<AgencyAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Tìm thấy thiết bị" };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<List<AgencyAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy thiết bị nào!", ObjReturn = null, ErrorMessage = e.ToString() };
+            }
+        }
+
+
         public ResponseObject<AgencyAPIViewModel> ViewProfile(int agency_id)
         {
             try
@@ -194,14 +234,19 @@ namespace DataService.Models.Entities.Services
                 createRequest.ServiceItemId = model.ServiceItemId;
                 createRequest.CreateDate = DateTime.Now;
                 requestRepo.Add(createRequest);
-                requestRepo.Save();
+                requestRepo.Save();                
 
                 var current_IT_supporter_Id = AssignITSupporter(model.ServiceItemId);
-                CreateTicket(model.Ticket, createRequest.RequestId, current_IT_supporter_Id);
-
-                createRequest.RequestStatus = (int)RequestStatusEnum.Processing;
-
-                requestRepo.Save();
+                if (current_IT_supporter_Id > 0)
+                {
+                    CreateTicket(model.Ticket, createRequest.RequestId, current_IT_supporter_Id);
+                    createRequest.RequestStatus = (int)RequestStatusEnum.Processing;
+                    requestRepo.Save();
+                }
+                else
+                {
+                    return new ResponseObject<bool> { IsError = true, WarningMessage = "Chưa assign được cho Hero nào", ObjReturn = false };
+                }
                 return new ResponseObject<bool> { IsError = false, SuccessMessage = "Tạo yêu cầu thành công!", ObjReturn = true };
             }
             catch (Exception e)
@@ -247,25 +292,35 @@ namespace DataService.Models.Entities.Services
 
         private int AssignITSupporter(int serviceItemId)
         {
+            int itSupporterId = 0;
             try
             {
                 var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
-                var itSupporter = itSupporterRepo.GetActive(p => (p.IsBusy == null || p.IsBusy == false)).FirstOrDefault(x => x.Skills.OrderByDescending(o => o.MonthExperience).Any(s => s.ServiceITSupport.ServiceItems.Any(a => a.ServiceItemId == serviceItemId)));
-                if (itSupporter != null)
+                var skillRepo = DependencyUtils.Resolve<ISkillRepository>();
+                var serviceItemRepo = DependencyUtils.Resolve<IServiceItemRepository>();
+                var serviceITSupportId = serviceItemRepo.GetActive(p => p.ServiceItemId == serviceItemId).SingleOrDefault().ServiceITSupportId;
+                var skills = skillRepo.GetActive(a => a.ServiceITSupportId == serviceITSupportId).OrderByDescending(p => p.MonthExperience);                
+                
+                foreach (var item in skills)
                 {
-                    itSupporter.IsBusy = true;
+                    var itSupporter = itSupporterRepo.GetActive(p => p.ITSupporterId == item.ITSupportId && p.IsBusy == false).FirstOrDefault();
+                    if (itSupporter != null)
+                    {
+                        itSupporter.IsBusy = true;
 
-                    itSupporterRepo.Edit(itSupporter);
-
-                    itSupporterRepo.Save();
+                        itSupporterRepo.Edit(itSupporter);
+                        itSupporterId = itSupporter.ITSupporterId;
+                        break;                       
+                    }
 
                 }
-                return itSupporter.ITSupporterId;
+                itSupporterRepo.Save();
+                return itSupporterId;
             }
             catch (Exception e)
             {
-
-                return 0;
+                itSupporterId = 0;
+                return itSupporterId;
             }
 
         }

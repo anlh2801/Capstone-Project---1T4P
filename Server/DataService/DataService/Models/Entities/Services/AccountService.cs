@@ -13,7 +13,7 @@ namespace DataService.Models.Entities.Services
 {
     public partial interface IAccountService
     {
-        ResponseObject<bool> CheckLogin(string username, string password, int roleid);
+        ResponseObject<AgencyAPIViewModel> CheckLogin(string username, string password, int roleid);
         ResponseObject<List<AccountAPIViewModel>> GetAllAccount();
         ResponseObject<AccountAPIViewModel> ViewProfile(int account_id);
         ResponseObject<bool> CreateAccount(AccountAPIViewModel model);
@@ -23,18 +23,31 @@ namespace DataService.Models.Entities.Services
 
     public partial class AccountService
     {
-        public ResponseObject<bool> CheckLogin(string username, string password, int roleid)
+        public ResponseObject<AgencyAPIViewModel> CheckLogin(string username, string password, int roleid)
         {
             try
             {
                 var accountRepo = DependencyUtils.Resolve<IAccountRepository>();
-                var isLoginSucess = accountRepo.GetActive().Any(a => a.Username == username && a.Password == password && a.RoleId == roleid);
+                var aagencyRepo = DependencyUtils.Resolve<IAgencyRepository>();
+                var account = accountRepo.GetActive(a => a.Username == username && a.Password == password && a.RoleId == roleid).SingleOrDefault();
+                if (account != null)
+                {
+                    var agency = aagencyRepo.GetActive(b => b.AccountId == account.AccountId).SingleOrDefault();
+                    var agencymodel = new AgencyAPIViewModel();
+                    agencymodel.AgencyId = agency.AgencyId;
+                    agencymodel.AccountId = agency.AccountId;
+                    agencymodel.UserName = agency.Account.Username;
+                    return new ResponseObject<AgencyAPIViewModel> { IsError = false, ObjReturn = agencymodel, SuccessMessage = "Đăng nhập thành công" };
+                }
 
-                return new ResponseObject<bool> { IsError = false, ObjReturn = isLoginSucess, SuccessMessage = "Đăng nhập thành công" };
+
+                    
+                return new ResponseObject<AgencyAPIViewModel> { IsError = true, ObjReturn = null , WarningMessage = "Sai Tên Tài Khoản Hoặc Mật Khẩu." };
+
             }
             catch (Exception e)
             {
-                return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Sai Tên Tài Khoản Hoặc Mật Khẩu.", ErrorMessage = e.ToString() };
+                return new ResponseObject<AgencyAPIViewModel> { IsError = true, ObjReturn = null, WarningMessage = "Sai Tên Tài Khoản Hoặc Mật Khẩu.", ErrorMessage = e.ToString() };
             }
         }
         public ResponseObject<List<AccountAPIViewModel>> GetAllAccount()
