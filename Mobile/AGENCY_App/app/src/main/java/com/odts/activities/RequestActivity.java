@@ -23,6 +23,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +48,8 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
     EditText desciption;
     Button btnSave;
 
-    Button btnAddMoreDevice;
+
+    ImageButton ibtnAddMoreDeviceInRequest;
     BottomSheetBehavior behavior;
     private BottomSheetDialog mBottomSheetDialog;
     private DeviceAdapter mAdapter;
@@ -98,9 +100,10 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
             }
         });
 
-        btnAddMoreDevice = (Button) findViewById(R.id.btnAddMoreDevice);
 
-        btnAddMoreDevice.setOnClickListener(new View.OnClickListener() {
+        ibtnAddMoreDeviceInRequest = (ImageButton) findViewById(R.id.ibtnAddMoreDeviceInRequest);
+
+        ibtnAddMoreDeviceInRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showBottomSheetDialog();
