@@ -147,6 +147,7 @@
                 <th><label>Tên Loại Dịch Vụ</label></th>
                 <th><label>Mo Tả</label></th>
                 <th><label>Ngày Tạo</label></th>
+                <th><label>Dịch Vụ</label></th>
                 <th><label>Chức Năng</label></th>
             </tr>
         </thead>
@@ -221,6 +222,12 @@
                     { "data": "ServiceName" },
                     { "data": "Description" },
                     { "data": "CreateDate" },
+                    {
+                        "data": "RequestName",
+                        "mRender": function (data, type, full) {
+                            return '<a href="#' + full.ServiceITSupportId + '">Xem Dịch Vụ</a>';
+                        }
+                    },
                     {
                         "aTargets": [4],
                         "mRender": function (data, type, full) {

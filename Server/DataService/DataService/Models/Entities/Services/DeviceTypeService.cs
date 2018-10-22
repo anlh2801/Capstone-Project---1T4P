@@ -34,21 +34,26 @@ namespace DataService.Models.Entities.Services
                 {
                     return new ResponseObject<List<DeviceTypeAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy loại thiết bị nào" };
                 }
+                int count = 1;
                 foreach (var item in devicetypes)
                 {
-                    rsList.Add(new DeviceTypeAPIViewModel
+                    if (!item.IsDelete)
                     {
-                        DeviceTypeId = item.DeviceTypeId,
-                        DeviceTypeName = item.DeviceTypeName,
-                        ServiceId = item.ServiceId,
-                        ServiceName = item.ServiceITSupport.ServiceName,
-                        Description = item.Description,
-                        IsDelete = item.IsDelete,
-                        CreateDate = item.CreateDate.Value.ToString("dd/MM/yyyy"),
-                        UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy"),
-                    });
+                        rsList.Add(new DeviceTypeAPIViewModel
+                        {
+                            NumericalOrder = count,
+                            DeviceTypeId = item.DeviceTypeId,
+                            DeviceTypeName = item.DeviceTypeName,
+                            ServiceId = item.ServiceId,
+                            ServiceName = item.ServiceITSupport.ServiceName,
+                            Description = item.Description,
+                            IsDelete = item.IsDelete,
+                            CreateDate = item.CreateDate.Value.ToString("dd/MM/yyyy"),
+                            UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy"),
+                        });
+                    }
+                    count++;
                 }
-
                 return new ResponseObject<List<DeviceTypeAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
             }
             catch (Exception e)
