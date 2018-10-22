@@ -138,6 +138,7 @@
           <Property Name="RequestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AgencyId" Type="int" Nullable="false" />
           <Property Name="ServiceItemId" Type="int" Nullable="false" />
+          <Property Name="RequestDesciption" Type="nvarchar(max)" />
           <Property Name="RequestCategoryId" Type="int" Nullable="false" />
           <Property Name="RequestStatus" Type="int" Nullable="false" />
           <Property Name="RequestName" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -913,6 +914,7 @@
           <Property Name="RequestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AgencyId" Type="Int32" Nullable="false" />
           <Property Name="ServiceItemId" Type="Int32" Nullable="false" />
+          <Property Name="RequestDesciption" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="RequestCategoryId" Type="Int32" Nullable="false" />
           <Property Name="RequestStatus" Type="Int32" Nullable="false" />
           <Property Name="RequestName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1480,6 +1482,7 @@
                 <ScalarProperty Name="RequestName" ColumnName="RequestName" />
                 <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
                 <ScalarProperty Name="RequestCategoryId" ColumnName="RequestCategoryId" />
+                <ScalarProperty Name="RequestDesciption" ColumnName="RequestDesciption" />
                 <ScalarProperty Name="ServiceItemId" ColumnName="ServiceItemId" />
                 <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />

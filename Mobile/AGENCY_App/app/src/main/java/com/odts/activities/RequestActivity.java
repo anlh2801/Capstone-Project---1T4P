@@ -48,8 +48,9 @@ import java.util.List;
 public class RequestActivity extends AppCompatActivity implements DeviceAdapter.ItemListener {
     int serviceItemId;
     int serviceId;
+    int agencyId;
+
     TextView requestName;
-    EditText desciption;
     Button btnSave;
     ListView lvDeviceToRequest;
     DeviceRemoveAdapter deviceRemoveAdapter;
@@ -78,38 +79,18 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
 
         initData ();
         initDeviceListToRequest();
-
-        Intent myIntent = getIntent(); // gets the previously created intent
-        SharedPreferences share = getApplicationContext().getSharedPreferences("ODTS", 0);
-        SharedPreferences.Editor edit = share.edit();
-        final Integer agencyId = share.getInt("agencyId", 0);
-        final int serviceItemId = myIntent.getIntExtra("serviceItemId", 0);
         getAllDeviceByAgencyIdAndServiceItem(3,serviceId);
 
-        IRequestApiCaller IRequestApiCaller = RetrofitInstance.getRequestService();
         btnSave = (Button) findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Ticket tic = new Ticket();
-                tic.setDeviceId(3);
-                tic.setDesciption("android description");
-                List listTicket = new ArrayList<Ticket>();
-                listTicket.add(tic);
-                Request request = new Request();
-                request.setAgencyId(agencyId);
-                request.setRequestCategoryId(3);
-                request.setServiceItemId(serviceItemId);
-                request.setRequestName("android request name");
-                request.setTicket(listTicket);
-
-                _requestService.addRequest(RequestActivity.this, request);
+                createRequest();
             }
         });
 
 
         ibtnAddMoreDeviceInRequest = (ImageButton) findViewById(R.id.ibtnAddMoreDeviceInRequest);
-
         ibtnAddMoreDeviceInRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,10 +116,16 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
                 new IntentFilter("custom-message"));
     }
     private void initData () {
-        requestName = findViewById(R.id.txtRequestName);
+
+        SharedPreferences share = getApplicationContext().getSharedPreferences("ODTS", 0);
+        SharedPreferences.Editor edit = share.edit();
+        agencyId = share.getInt("agencyId", 0);
+
         Intent myIntent = getIntent(); // gets the previously created intent
         serviceItemId = myIntent.getIntExtra("serviceItemId", 0);
         serviceId = myIntent.getIntExtra("serviceId", 0);
+
+        requestName = findViewById(R.id.txtRequestName);
         requestName.setText(myIntent.getStringExtra("serviceItemName"));
     }
 
@@ -225,22 +212,25 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
         behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
-//    public void addRequest(Request request) {
-//        Call<Request> call = IRequestApiCaller.addUser(request);
-//        call.enqueue(new Callback<Request>() {
-//            @Override
-//            public void onResponse(Call<Request> call, Response<Request> response) {
-//                if(!response.body().isError()){
-//                    Toast.makeText(RequestActivity.this, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
-//                }
-//                else
-//                    Toast.makeText(RequestActivity.this, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Request> call, Throwable t) {
-//                Log.e("ERROR: ", t.getMessage());
-//            }
-//        });
-//    }
+    public void createRequest() {
+        List listTicket = new ArrayList<Ticket>();
+        for (Device item : deviceListToRequest) {
+            Ticket tic = new Ticket();
+            tic.setDeviceId(item.getDeviceId());
+            tic.setDesciption("Thuộc agencyId: " + agencyId + " thiết bị: " + item.getDeviceName() + "Vấn đề: " + requestName.getText().toString());
+            listTicket.add(tic);
+        }
+
+        Request request = new Request();
+//        request.setAgencyId(agencyId);
+        request.setAgencyId(3);
+        request.setRequestCategoryId(3);
+        request.setServiceItemId(serviceItemId);
+        EditText txtRequestDesciption = (EditText) findViewById(R.id.txtRequestDesciption);
+        request.setRequestDesciption(txtRequestDesciption.getText().toString());
+        request.setRequestName(requestName.getText().toString());
+        request.setTicket(listTicket);
+
+        _requestService.createRequest(RequestActivity.this, request);
+    }
 }
