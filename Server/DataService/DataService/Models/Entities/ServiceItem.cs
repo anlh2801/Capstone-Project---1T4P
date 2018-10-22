@@ -22,7 +22,7 @@ namespace DataService.Models.Entities
         }
     
         public int ServiceItemId { get; set; }
-        public Nullable<int> ServiceITSupportId { get; set; }
+        public int ServiceITSupportId { get; set; }
         public string ServiceItemName { get; set; }
         public Nullable<double> Price { get; set; }
         public string Description { get; set; }

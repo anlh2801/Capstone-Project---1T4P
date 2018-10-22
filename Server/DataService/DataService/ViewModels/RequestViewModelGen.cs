@@ -18,6 +18,7 @@ namespace DataService.ViewModels
     			public virtual int RequestId { get; set; }
     			public virtual int AgencyId { get; set; }
     			public virtual int ServiceItemId { get; set; }
+    			public virtual string RequestDesciption { get; set; }
     			public virtual int RequestCategoryId { get; set; }
     			public virtual int RequestStatus { get; set; }
     			public virtual string RequestName { get; set; }

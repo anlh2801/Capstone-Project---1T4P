@@ -32,6 +32,7 @@ namespace DataService.Models.Entities.Services
                 rsList.Add(new ServiceItemAPIViewModel
                 {
                     NumericalOrder = count,
+                    ServiceId = item.ServiceITSupportId,
                     ServiceItemId = item.ServiceItemId,
                     ServiceItemName = item.ServiceItemName,
                     ServiceItemPrice = item.Price ?? item.Price.Value,

@@ -52,8 +52,8 @@ public class ServiceItemAdapter extends ArrayAdapter<ServiceItem> {
             public void onClick(View view) {
                 Intent intent = new Intent(context, RequestActivity.class);
                 intent.putExtra("serviceItemId",serviceItem.getServiceItemId());
+                intent.putExtra("serviceId",serviceItem.getServiceId());
                 intent.putExtra("serviceItemName",serviceItem.getServiceItemName());
-
                 intent.putExtra("firstKeyName","FirstKeyValue");
 
                 context.startActivity(intent);

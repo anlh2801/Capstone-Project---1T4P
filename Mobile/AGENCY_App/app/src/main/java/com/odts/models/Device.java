@@ -2,7 +2,9 @@ package com.odts.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Device {
+import java.io.Serializable;
+
+public class Device implements Serializable {
     @SerializedName("DeviceId")
     private Integer deviceId;
     @SerializedName("AgencyId")

@@ -23,9 +23,9 @@ import retrofit2.Response;
 
 public class RequestService {
     IRequestApiCaller IRequestApiCaller;
-    public void addRequest(final Context context, Request request) {
+    public void createRequest(final Context context, Request request) {
         IRequestApiCaller = RetrofitInstance.getRequestService();
-        Call<ResponseObject<Boolean>> call = IRequestApiCaller.addUser(request);
+        Call<ResponseObject<Boolean>> call = IRequestApiCaller.createRequest(request);
         call.enqueue(new Callback<ResponseObject<Boolean>>() {
             @Override
             public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {

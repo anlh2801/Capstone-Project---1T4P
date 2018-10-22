@@ -7,8 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.odts.activities.R;
@@ -35,7 +34,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.device_item_list, parent, false));
+                .inflate(R.layout.device_add_item_list, parent, false));
     }
 
     @Override
@@ -53,7 +52,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
         public TextView txtDeviceCode;
         public TextView txtDeviceName;
 
-        public Button btnAddDevice;
+        public ImageButton btnAddDevice;
 
         public Device item;
 
@@ -62,9 +61,9 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
             itemView.setOnClickListener(this);
 
             txtDeviceCode = (TextView) itemView.findViewById(R.id.txtDeviceCode);
-            txtDeviceName = (TextView) itemView.findViewById(R.id.txtDeviceName);
+            txtDeviceName = (TextView) itemView.findViewById(R.id.txtDeviceNameDelete);
 
-            btnAddDevice = (Button) itemView.findViewById(R.id.btnAddDevice);
+            btnAddDevice = (ImageButton) itemView.findViewById(R.id.btnAddDeviceToListRequest);
 
         }
 
@@ -76,7 +75,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent("custom-message");
-                    intent.putExtra ("name",item.getDeviceName());
+                    intent.putExtra ("device",item);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                 }
             });

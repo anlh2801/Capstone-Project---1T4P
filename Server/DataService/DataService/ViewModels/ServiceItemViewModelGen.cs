@@ -16,7 +16,7 @@ namespace DataService.ViewModels
     {
     	
     			public virtual int ServiceItemId { get; set; }
-    			public virtual Nullable<int> ServiceITSupportId { get; set; }
+    			public virtual int ServiceITSupportId { get; set; }
     			public virtual string ServiceItemName { get; set; }
     			public virtual Nullable<double> Price { get; set; }
     			public virtual string Description { get; set; }

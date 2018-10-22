@@ -14,16 +14,10 @@ public class Request {
     private Integer serviceItemId;
     @SerializedName("requestName")
     private String requestName;
+    @SerializedName("RequestDesciption")
+    private String RequestDesciption;
     @SerializedName("ticket")
     private List<Ticket> ticket;
-
-    public Request(Integer agencyId, Integer requestCategoryId, Integer serviceItemId, String requestName, List<Ticket> ticket) {
-        this.agencyId = agencyId;
-        this.requestCategoryId = requestCategoryId;
-        this.serviceItemId = serviceItemId;
-        this.requestName = requestName;
-        this.ticket = ticket;
-    }
 
     public Integer getAgencyId() {
         return agencyId;
@@ -57,14 +51,19 @@ public class Request {
         this.requestName = requestName;
     }
 
+    public String getRequestDesciption() {
+        return RequestDesciption;
+    }
+
+    public void setRequestDesciption(String requestDesciption) {
+        RequestDesciption = requestDesciption;
+    }
+
     public List<Ticket> getTicket() {
         return ticket;
     }
 
     public void setTicket(List<Ticket> ticket) {
         this.ticket = ticket;
-    }
-
-    public Request() {
     }
 }

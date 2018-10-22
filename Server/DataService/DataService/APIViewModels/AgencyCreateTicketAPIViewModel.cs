@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataService.APIViewModels
 {
-    public class AgencyCreateTicketAPIViewModel : DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.Ticket>
+    public class AgencyCreateTicketAPIViewModel
     {
-        public AgencyCreateTicketAPIViewModel() : base() { }
-        public AgencyCreateTicketAPIViewModel(DataService.Models.Entities.Ticket entity) : base(entity) { }
-
         public int DeviceId { get; set; }
         public string Desciption { get; set; }
     }

@@ -23,6 +23,7 @@ namespace DataService.Models.Entities
         public int RequestId { get; set; }
         public int AgencyId { get; set; }
         public int ServiceItemId { get; set; }
+        public string RequestDesciption { get; set; }
         public int RequestCategoryId { get; set; }
         public int RequestStatus { get; set; }
         public string RequestName { get; set; }
