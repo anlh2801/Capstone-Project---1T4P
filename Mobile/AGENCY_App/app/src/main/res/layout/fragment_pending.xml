@@ -9,11 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/hello_processing_fragment" />
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listPending">
+        android:id="@+id/listPending"/>
 
-    </ListView>
+
 
 </FrameLayout>

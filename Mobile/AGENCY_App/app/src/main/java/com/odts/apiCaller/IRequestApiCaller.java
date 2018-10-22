@@ -17,5 +17,6 @@ public interface IRequestApiCaller {
     @GET("ticket/all_ticket_with_status_agency")
     Call<ResponseObjectReturnList<ListRequest>> getRequestByStatus(@Query("agency_id") Integer agency_id,
                                                                    @Query("status") Integer status_id);
-
+    @GET("request/view_request_detail")
+    Call<ResponseObject<ListRequest>> requestDetail(@Query("requestId") Integer request_id);
 }

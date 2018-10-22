@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -23,6 +25,8 @@ public class ListRequestActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private RecyclerView recyclerView;
+    private PendingRequestAdapter pendingRequestAdapter;
     RequestService requestService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +44,10 @@ public class ListRequestActivity extends AppCompatActivity {
         requestService.getRequestByStatus(ListRequestActivity.this, 3, 1, new CallBackData<ArrayList<ListRequest>>() {
             @Override
             public void onSuccess(ArrayList<ListRequest> listRequests) {
-                ListView listView = (ListView) findViewById(R.id.listPending);
-                PendingRequestAdapter pendingRequestAdapter = new PendingRequestAdapter(ListRequestActivity.this, R.layout.activity_list_item, listRequests);
-                listView.setAdapter(pendingRequestAdapter);
+                recyclerView = (RecyclerView) findViewById(R.id.listPending);
+                recyclerView.setLayoutManager(new LinearLayoutManager(ListRequestActivity.this));
+                pendingRequestAdapter = new PendingRequestAdapter(getApplicationContext(), listRequests);
+                recyclerView.setAdapter(pendingRequestAdapter);
             }
 
             @Override

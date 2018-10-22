@@ -1,6 +1,7 @@
 package com.odts.services;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -60,5 +61,25 @@ public class RequestService {
 
             }
         });
+    }
+    public void requestDetail(final Context context, Integer request_id, final CallBackData<ListRequest> callBackData) {
+        IRequestApiCaller = RetrofitInstance.getRequestService();
+        Call<ResponseObject<ListRequest>> call = IRequestApiCaller.requestDetail(request_id);
+        call.enqueue(new Callback<ResponseObject<ListRequest>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<ListRequest>> call, Response<ResponseObject<ListRequest>> response) {
+                callBackData.onSuccess(response.body().getObjReturn());
+                SharedPreferences share = context.getSharedPreferences("ODTS", 0);
+                SharedPreferences.Editor edit = share.edit();
+                edit.putString("requestName", response.body().getObjReturn().getRequestName());
+                edit.commit();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<ListRequest>> call, Throwable t) {
+
+            }
+        });
+
     }
 }
