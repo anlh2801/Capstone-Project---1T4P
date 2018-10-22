@@ -89,7 +89,6 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
             }
         });
 
-
         ibtnAddMoreDeviceInRequest = (ImageButton) findViewById(R.id.ibtnAddMoreDeviceInRequest);
         ibtnAddMoreDeviceInRequest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +96,7 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
                 showBottomSheetDialog();
             }
         });
-
+        // Dùng cho bottom sheet RecyclerView
         View bottomSheet = findViewById(R.id.bottom_sheet);
         behavior = BottomSheetBehavior.from(bottomSheet);
         behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
@@ -111,7 +110,7 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
                 // React to dragging events
             }
         });
-
+        // Dùng đề Chuyển device từ bottom sheet khi dùng RecyclerView
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("custom-message"));
     }
@@ -136,6 +135,7 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
         deviceRemoveAdapter.notifyDataSetChanged();
     }
 
+    // Chuyển device từ bottom sheet khi dùng RecyclerView
     public BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -153,7 +153,7 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
 
         }
     };
-
+    // ------------ Dùng RecyclerView - Bắt đầu -----------
     private void showBottomSheetDialog() {
         if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -183,13 +183,16 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
         });
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        mAdapter.setListener(null);
     }
 
+    @Override
+    public void onItemClick(Device item) {
+        behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+    // ------------ Dùng RecyclerView - Kết thúc -----------
 
     private void getAllDeviceByAgencyIdAndServiceItem (int agencyId, int serviceId){
         LinearLayout layout = (LinearLayout) findViewById(R.id.layout_ServicesHome);
@@ -204,12 +207,6 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
 
             }
         });
-    }
-
-
-    @Override
-    public void onItemClick(Device item) {
-        behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     public void createRequest() {

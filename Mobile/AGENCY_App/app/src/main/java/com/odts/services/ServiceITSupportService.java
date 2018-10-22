@@ -5,10 +5,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.odts.apiCaller.IServiceITSupportApiCaller;
-import com.odts.models.Company;
 import com.odts.models.ServiceITSupport;
 import com.odts.utils.CallBackData;
-import com.odts.utils.GetNoticeDataService;
 import com.odts.utils.ResponseObjectReturnList;
 import com.odts.utils.RetrofitInstance;
 
