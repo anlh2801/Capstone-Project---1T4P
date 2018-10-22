@@ -25,6 +25,8 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> CancelRequest(RequestCancelAPIViewModel model);
 
+        ResponseObject<RequestDetailAPIViewModel> ViewRequestDetail(int requestId);
+
     }
 
     public partial class RequestService
@@ -283,6 +285,39 @@ namespace DataService.Models.Entities.Services
             {
 
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Hủy yêu cầu thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
+            }
+        }
+
+        public ResponseObject<RequestDetailAPIViewModel> ViewRequestDetail(int requestId)
+        {
+            try
+            {
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var request = requestRepo.GetActive().FirstOrDefault(x => x.RequestId == requestId);
+                if (request != null)
+                {
+                    var RequestDetailAPIViewModel = new RequestDetailAPIViewModel
+                    {
+                        RequestId = request.RequestId,
+                        AgencyId = request.AgencyId,
+                        ServiceItemId = request.ServiceItemId,
+                        RequestCategoryId = request.RequestCategoryId,
+                        RequestStatus = request.RequestStatus,
+                        RequestName = request.RequestName,
+                        StartDate = request.StartDate != null ? request.StartDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        EndDate = request.EndDate != null ? request.EndDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        Feedback = request.Feedback,
+                        CreateDate = request.CreateDate != null ? request.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                    };
+                    return new ResponseObject<RequestDetailAPIViewModel> { IsError = false, ObjReturn = RequestDetailAPIViewModel, SuccessMessage = "Tìm thấy thông tin yêu cầu!" };
+                }
+                return new ResponseObject<RequestDetailAPIViewModel> { IsError = true, WarningMessage = "Không tìm thấy thông tin yêu cầu!" };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<RequestDetailAPIViewModel> { IsError = false, WarningMessage = "Lấy thất bại!", ObjReturn = null, ErrorMessage = e.ToString() };
             }
         }
     }

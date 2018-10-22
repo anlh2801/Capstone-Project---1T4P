@@ -23,6 +23,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage CreateFeedbackForRequest(FeedbackAPIViewModel feedback);
 
         HttpResponseMessage CancelRequest(RequestCancelAPIViewModel model);
+
+        HttpResponseMessage ViewRequestDetail(int requestId);
     }
 
     public class RequestController : ApiController
@@ -109,5 +111,15 @@ namespace CapstoneProject_ODTS.ControllersApi
             
             return Request.CreateResponse(HttpStatusCode.OK, "Cancel Thành Công!");
         }
+
+        [HttpGet]
+        [Route("request/view_request_detail")]
+        public HttpResponseMessage ViewRequestDetail(int requestId)
+        {
+            var result = _requestDomain.ViewRequestDetail(requestId);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+        
     }
 }

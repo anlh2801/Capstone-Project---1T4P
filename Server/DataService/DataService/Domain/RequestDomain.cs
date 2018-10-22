@@ -23,6 +23,8 @@ namespace DataService.Domain
         ResponseObject<bool> CreateFeedbackForRequest(FeedbackAPIViewModel feedback);
 
         ResponseObject<bool> CancelRequest(RequestCancelAPIViewModel model);
+
+        ResponseObject<RequestDetailAPIViewModel> ViewRequestDetail(int requestId);
     }
 
     public  class RequestDomain : BaseDomain, IRequestDomain
@@ -83,5 +85,13 @@ namespace DataService.Domain
             return result;
         }
 
+        public ResponseObject<RequestDetailAPIViewModel> ViewRequestDetail(int requestId)
+        {
+            var requestService = this.Service<IRequestService>();
+
+            var result = requestService.ViewRequestDetail(requestId);
+
+            return result;
+        }
     }
 }
