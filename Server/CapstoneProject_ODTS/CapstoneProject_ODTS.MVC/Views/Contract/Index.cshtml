@@ -154,7 +154,7 @@
 
 <!-- Datatable -->
 <div class="row col-md-12">
-
+    <h4>Tất Cả Hợp Đồng</h4>
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
             <tr>
@@ -163,13 +163,14 @@
                 <th><label>Mô Tả Hợp Đồng</label></th>
                 <th><label>Ngày Bắt Đầu</label></th>
                 <th><label>Hạn Hợp Đồng</label></th>
+                <th><label>Dịch Vụ</label></th>
                 <th><label>Chức Năng</label></th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
     <div class="NewThing">
-        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana" > Tạo Hợp Đồng</button>
+        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Hợp Đồng</button>
     </div>
 </div>
 
@@ -239,6 +240,12 @@
                     { "data": "ContractName" },
                     { "data": "StartDate" },
                     { "data": "EndDate" },
+                    {
+                        "data": "RequestName",
+                        "mRender": function (data, type, full) {
+                            return '<a href="#' + full.ContractId + '">Xem Dịch Vụ</a>';
+                        }
+                    },
                     {
                         "aTargets": [4],
                         "mRender": function (data, type, full) {
