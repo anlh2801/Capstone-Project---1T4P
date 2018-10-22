@@ -2,57 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:paddingBottom="20dp">
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="2dp"
-        android:layout_height="95dp"
-        android:layout_weight="1"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:srcCompat="@mipmap/ic_launcher" />
 
     <LinearLayout
-        android:layout_width="173dp"
-        android:layout_height="95dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="50dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/txtDeviceName"
+            android:layout_width="188dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:paddingTop="10dp"
+            android:text="DeviceName"
+            android:textSize="25dp"
+            android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="229dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/txtDeviceName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:text="DeviceName"
-                    android:textSize="30dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txtDeviceCode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="DeviceCode" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/btnAddDevice"
-                android:layout_width="62dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="+" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/txtDeviceCode"
+            android:layout_width="188dp"
+            android:layout_height="match_parent"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:text="DeviceCode" />
 
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btnAddDeviceToListRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 </LinearLayout>

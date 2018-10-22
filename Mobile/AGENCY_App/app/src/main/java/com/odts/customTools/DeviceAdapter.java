@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,7 +54,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
         public TextView txtDeviceCode;
         public TextView txtDeviceName;
 
-        public Button btnAddDevice;
+        public ImageButton btnAddDevice;
 
         public Device item;
 
@@ -64,7 +65,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
             txtDeviceCode = (TextView) itemView.findViewById(R.id.txtDeviceCode);
             txtDeviceName = (TextView) itemView.findViewById(R.id.txtDeviceName);
 
-            btnAddDevice = (Button) itemView.findViewById(R.id.btnAddDevice);
+            btnAddDevice = (ImageButton) itemView.findViewById(R.id.btnAddDeviceToListRequest);
 
         }
 
