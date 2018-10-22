@@ -15,6 +15,8 @@ public class ServiceItem {
     private String createDate;
     @SerializedName("UpdateDate")
     private String updateDate;
+    @SerializedName("ServiceId")
+    private Integer serviceId;
 
     public Integer getServiceItemId() {
         return serviceItemId;
@@ -62,5 +64,17 @@ public class ServiceItem {
 
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public void setServiceItemPrice(Double serviceItemPrice) {
+        this.serviceItemPrice = serviceItemPrice;
+    }
+
+    public Integer getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Integer serviceId) {
+        this.serviceId = serviceId;
     }
 }

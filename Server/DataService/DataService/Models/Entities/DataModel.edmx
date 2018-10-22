@@ -174,7 +174,7 @@
             <PropertyRef Name="ServiceItemId" />
           </Key>
           <Property Name="ServiceItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceITSupportId" Type="int" />
+          <Property Name="ServiceITSupportId" Type="int" Nullable="false" />
           <Property Name="ServiceItemName" Type="nvarchar" MaxLength="50" />
           <Property Name="Price" Type="float" />
           <Property Name="Description" Type="nvarchar(max)" />
@@ -410,7 +410,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ServiceItem_Service">
-          <End Role="ServiceITSupport" Type="Self.ServiceITSupport" Multiplicity="0..1" />
+          <End Role="ServiceITSupport" Type="Self.ServiceITSupport" Multiplicity="1" />
           <End Role="ServiceItem" Type="Self.ServiceItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ServiceITSupport">
@@ -955,7 +955,7 @@
             <PropertyRef Name="ServiceItemId" />
           </Key>
           <Property Name="ServiceItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceITSupportId" Type="Int32" />
+          <Property Name="ServiceITSupportId" Type="Int32" Nullable="false" />
           <Property Name="ServiceItemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Price" Type="Double" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1280,7 +1280,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ServiceItem_Service">
-          <End Type="DataModel.ServiceITSupport" Role="ServiceITSupport" Multiplicity="0..1" />
+          <End Type="DataModel.ServiceITSupport" Role="ServiceITSupport" Multiplicity="1" />
           <End Type="DataModel.ServiceItem" Role="ServiceItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ServiceITSupport">

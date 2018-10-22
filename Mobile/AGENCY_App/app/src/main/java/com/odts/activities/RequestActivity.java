@@ -25,10 +25,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.odts.customTools.DeviceAdapter;
+import com.odts.customTools.DeviceRemoveAdapter;
+import com.odts.customTools.ServiceItemAdapter;
 import com.odts.models.Device;
 import com.odts.models.Request;
 import com.odts.models.Ticket;
@@ -44,9 +47,12 @@ import java.util.List;
 
 public class RequestActivity extends AppCompatActivity implements DeviceAdapter.ItemListener {
     int serviceItemId;
+    int serviceId;
     TextView requestName;
     EditText desciption;
     Button btnSave;
+    ListView lvDeviceToRequest;
+    DeviceRemoveAdapter deviceRemoveAdapter;
 
 
     ImageButton ibtnAddMoreDeviceInRequest;
@@ -56,6 +62,7 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
 
 
     private  ArrayList<Device> deviceList;
+    private  ArrayList<Device> deviceListToRequest = new ArrayList<>();
 
     private  RequestService _requestService;
     private DeviceService _deviceService;
@@ -70,14 +77,14 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
         setContentView(R.layout.activity_request);
 
         initData ();
-
+        initDeviceListToRequest();
 
         Intent myIntent = getIntent(); // gets the previously created intent
         SharedPreferences share = getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         final Integer agencyId = share.getInt("agencyId", 0);
         final int serviceItemId = myIntent.getIntExtra("serviceItemId", 0);
-        getAllDeviceByAgencyIdAndServiceItem(3,1);
+        getAllDeviceByAgencyIdAndServiceItem(3,serviceId);
 
         IRequestApiCaller IRequestApiCaller = RetrofitInstance.getRequestService();
         btnSave = (Button) findViewById(R.id.btnSave);
@@ -131,17 +138,32 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
         requestName = findViewById(R.id.txtRequestName);
         Intent myIntent = getIntent(); // gets the previously created intent
         serviceItemId = myIntent.getIntExtra("serviceItemId", 0);
+        serviceId = myIntent.getIntExtra("serviceId", 0);
         requestName.setText(myIntent.getStringExtra("serviceItemName"));
+    }
+
+    private void initDeviceListToRequest() {
+        lvDeviceToRequest = (ListView) findViewById(R.id.lvDeviceToRequest);
+        deviceRemoveAdapter = new DeviceRemoveAdapter(RequestActivity.this, R.layout.device_remove_item_list, deviceListToRequest);
+        lvDeviceToRequest.setAdapter(deviceRemoveAdapter);
+        deviceRemoveAdapter.notifyDataSetChanged();
     }
 
     public BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
-            String ItemName = intent.getStringExtra("name");
+            Device device = (Device) intent.getSerializableExtra("device");
+            if (deviceListToRequest.contains(device)){
+                Toast.makeText(RequestActivity.this,"Bạn đã thêm thiết bị này rồi" ,Toast.LENGTH_SHORT).show();
+            }
+            else {
+                deviceListToRequest.add(device);
+                deviceRemoveAdapter.notifyDataSetChanged();
+            }
 
             mBottomSheetDialog.dismiss();
-            Toast.makeText(RequestActivity.this,ItemName ,Toast.LENGTH_SHORT).show();
+
         }
     };
 
