@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                         loadFragment(new HomeFragment());
                         break;
                     case  R.id.navigation_request:
-                        Toast.makeText(MainActivity.this, "bc nek", Toast.LENGTH_SHORT).show();
+                        loadFragment(new RequestFragment());
                         break;
                     case  R.id.navigation_devices:
                         loadFragment(new ManageDeviceFragment());
