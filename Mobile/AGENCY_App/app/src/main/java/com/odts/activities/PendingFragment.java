@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ public class PendingFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+//    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private RequestService requestService;
@@ -44,6 +45,7 @@ public class PendingFragment extends Fragment {
 
     public PendingFragment() {
         // Required empty public constructor
+        requestService = new RequestService();
     }
 
     /**
@@ -71,19 +73,13 @@ public class PendingFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 //        requestService = new RequestService();
-//        requestService.getRequestByStatus(ListRequestActivity.class, 3, 1, new CallBackData<ArrayList<ListRequest>>() {
+//        requestService.getRequestByStatus(getActivity(), 3, 1, new CallBackData<ArrayList<ListRequest>>() {
 //            @Override
 //            public void onSuccess(ArrayList<ListRequest> listRequests) {
-//                recyclerView = (RecyclerView) inflaterfindViewById(R.id.listPending);
-//                recyclerView.setLayoutManager(new LinearLayoutManager(ListRequestActivity.class));
-//                pendingRequestAdapter = new PendingRequestAdapter(ListRequestActivity.class, listRequests);
+//                recyclerView = (RecyclerView) getActivity().findViewById(R.id.listPending);
+//                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//                pendingRequestAdapter = new PendingRequestAdapter(getActivity(), listRequests);
 //                recyclerView.setAdapter(pendingRequestAdapter);
 //            }
 //
@@ -92,12 +88,14 @@ public class PendingFragment extends Fragment {
 //
 //            }
 //        });
-        return inflater.inflate(R.layout.fragment_pending, container, false);
     }
+
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-                requestService = new RequestService();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_pending, container, false);
+        requestService = new RequestService();
         requestService.getRequestByStatus(getActivity(), 3, 1, new CallBackData<ArrayList<ListRequest>>() {
             @Override
             public void onSuccess(ArrayList<ListRequest> listRequests) {
@@ -112,6 +110,26 @@ public class PendingFragment extends Fragment {
 
             }
         });
+        return v;
+    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+//                requestService = new RequestService();
+//        requestService.getRequestByStatus(getActivity(), 3, 1, new CallBackData<ArrayList<ListRequest>>() {
+//            @Override
+//            public void onSuccess(ArrayList<ListRequest> listRequests) {
+//                recyclerView = (RecyclerView) getActivity().findViewById(R.id.listPending);
+//                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//                pendingRequestAdapter = new PendingRequestAdapter(getActivity(), listRequests);
+//                recyclerView.setAdapter(pendingRequestAdapter);
+//            }
+//
+//            @Override
+//            public void onFail(String message) {
+//
+//            }
+//        });
 
     }
 

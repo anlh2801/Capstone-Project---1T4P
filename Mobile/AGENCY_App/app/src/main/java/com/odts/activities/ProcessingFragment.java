@@ -71,18 +71,6 @@ public class ProcessingFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_processing, container, false);
-    }
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         requestService = new RequestService();
         requestService.getRequestByStatus(getActivity(), 3, 3, new CallBackData<ArrayList<ListRequest>>() {
             @Override
@@ -98,6 +86,33 @@ public class ProcessingFragment extends Fragment {
 
             }
         });
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_processing, container, false);
+    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+//        requestService = new RequestService();
+//        requestService.getRequestByStatus(getActivity(), 3, 3, new CallBackData<ArrayList<ListRequest>>() {
+//            @Override
+//            public void onSuccess(ArrayList<ListRequest> listRequests) {
+//                recyclerView = (RecyclerView) getActivity().findViewById(R.id.listpro);
+//                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//                pendingRequestAdapter = new PendingRequestAdapter(getActivity(), listRequests);
+//                recyclerView.setAdapter(pendingRequestAdapter);
+//            }
+//
+//            @Override
+//            public void onFail(String message) {
+//
+//            }
+//        });
 
     }
 

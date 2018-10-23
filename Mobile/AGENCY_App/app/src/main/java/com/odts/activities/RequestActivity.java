@@ -4,14 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import android.content.IntentFilter;
-
 import android.content.SharedPreferences;
-
-
-import android.content.SharedPreferences;
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
@@ -31,11 +25,9 @@ import android.widget.Toast;
 
 import com.odts.customTools.DeviceAdapter;
 import com.odts.customTools.DeviceRemoveAdapter;
-import com.odts.customTools.ServiceItemAdapter;
 import com.odts.models.Device;
 import com.odts.models.Request;
 import com.odts.models.Ticket;
-import com.odts.apiCaller.IRequestApiCaller;
 import com.odts.services.DeviceService;
 import com.odts.services.RequestService;
 import com.odts.utils.CallBackData;

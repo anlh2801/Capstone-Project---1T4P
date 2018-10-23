@@ -1,12 +1,11 @@
 package com.odts.activities;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -28,7 +27,7 @@ import java.util.List;
  * Activities that contain this fragment must implement the
 
  * to handle interaction events.
- * Use the {@link RequestFragment#newInstance} factory method to
+// * Use the {@link RequestFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class RequestFragment extends Fragment {
@@ -58,30 +57,30 @@ public class RequestFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+//     * @param param1 Parameter 1.
+//     * @param param2 Parameter 2.
      * @return A new instance of fragment RequestFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RequestFragment newInstance(String param1, String param2) {
-        RequestFragment fragment = new RequestFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    public static RequestFragment newInstance(String param1, String param2) {
+//        RequestFragment fragment = new RequestFragment();
+//        Bundle args = new Bundle();
+//        args.putString(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, param2);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+//        if (getArguments() != null) {
+//            mParam1 = getArguments().getString(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
+//        }
 //        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-////        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-////        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        viewPager = (ViewPager) getActivity().findViewById(R.id.viewpager);
 //        setupViewPager(viewPager);
 ////
@@ -94,57 +93,77 @@ public class RequestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_request, container, false);
+
+        View v =  inflater.inflate(R.layout.fragment_request, container, false);
+        toolbar = (Toolbar) v.findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        viewPager = (ViewPager)v.findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+//
+        tabLayout = (TabLayout) v.findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+        return v;
     }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        viewPager = (ViewPager) getActivity().findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-//
-        tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-        requestService = new RequestService();
         super.onActivityCreated(savedInstanceState);
+//        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+//        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+////        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        viewPager = (ViewPager) getActivity().findViewById(R.id.viewpager);
+//        setupViewPager(viewPager);
+////
+//        tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
+//        tabLayout.setupWithViewPager(viewPager);
+//        requestService = new RequestService();
+
 
     }
+
     private void setupViewPager(ViewPager viewPager) {
-        RequestFragment.ViewPagerAdapter adapter = new RequestFragment.ViewPagerAdapter( getActivity().getSupportFragmentManager());
-        adapter.addFragment(new PendingFragment(), "Chờ xử lý");
-        adapter.addFragment(new ProcessingFragment(), "Đang xử lý");
+        PagerAdapter adapter = new PagerAdapter( getActivity().getSupportFragmentManager());
         viewPager.setAdapter(adapter);
     }
 
-     class  ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
+    public class PagerAdapter extends FragmentStatePagerAdapter {
 
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
+        PagerAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
         }
-
         @Override
         public Fragment getItem(int position) {
-            return mFragmentList.get(position);
+            Fragment frag=null;
+            switch (position){
+                case 0:
+                    frag = new PendingFragment();
+                    break;
+                case 1:
+                    frag = new ProcessingFragment();
+                    break;
+            }
+            return frag;
         }
 
         @Override
         public int getCount() {
-            return mFragmentList.size();
+            return 2;
         }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
         @Override
         public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
+            String title = "";
+            switch (position){
+                case 0:
+                    title = "Chờ xử lý";
+                    break;
+                case 1:
+                    title = "Đang xử lý";
+                    break;
+            }
+            return title;
         }
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
 //    public void onButtonPressed(Uri uri) {
