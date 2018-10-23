@@ -1,13 +1,17 @@
 package com.odts.activities;
 
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.odts.customTools.ServiceItemAdapter;
 import com.odts.models.ServiceITSupport;
@@ -23,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private ServiceITSupportService _serviceITSupportService;
     private ServiceItemService _serviceItem;
     private TextView textView;
-    Button btnAdd;
+
 
     public  MainActivity(){
         _serviceITSupportService = new ServiceITSupportService();
@@ -38,6 +42,28 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor edit = share.edit();
         Integer agencyId = share.getInt("agencyId", 0);
         getAllITSupportForAgency(3);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case  R.id.navigation_home:
+                        Toast.makeText(MainActivity.this, "home nek", Toast.LENGTH_SHORT).show();
+                        break;
+                    case  R.id.navigation_request:
+                        Toast.makeText(MainActivity.this, "bc nek", Toast.LENGTH_SHORT).show();
+                        break;
+                    case  R.id.navigation_devices:
+                        Toast.makeText(MainActivity.this, "devie nek", Toast.LENGTH_SHORT).show();
+                        break;
+                    case  R.id.navigation_accountDetail:
+                        Toast.makeText(MainActivity.this, "tai khoan nek", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     private void getAllITSupportForAgency (int agencyId){
