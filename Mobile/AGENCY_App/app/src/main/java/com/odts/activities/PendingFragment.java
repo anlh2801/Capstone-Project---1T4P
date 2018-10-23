@@ -4,9 +4,18 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.odts.customTools.PendingRequestAdapter;
+import com.odts.models.ListRequest;
+import com.odts.services.RequestService;
+import com.odts.utils.CallBackData;
+
+import java.util.ArrayList;
 
 //import com.example.chiennt.odts_agency_mobile.R;
 
@@ -27,6 +36,9 @@ public class PendingFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private RequestService requestService;
+    private RecyclerView recyclerView;
+    private PendingRequestAdapter pendingRequestAdapter;
 
 //    private OnFragmentInteractionListener mListener;
 
@@ -65,7 +77,42 @@ public class PendingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+//        requestService = new RequestService();
+//        requestService.getRequestByStatus(ListRequestActivity.class, 3, 1, new CallBackData<ArrayList<ListRequest>>() {
+//            @Override
+//            public void onSuccess(ArrayList<ListRequest> listRequests) {
+//                recyclerView = (RecyclerView) inflaterfindViewById(R.id.listPending);
+//                recyclerView.setLayoutManager(new LinearLayoutManager(ListRequestActivity.class));
+//                pendingRequestAdapter = new PendingRequestAdapter(ListRequestActivity.class, listRequests);
+//                recyclerView.setAdapter(pendingRequestAdapter);
+//            }
+//
+//            @Override
+//            public void onFail(String message) {
+//
+//            }
+//        });
         return inflater.inflate(R.layout.fragment_pending, container, false);
+    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+                requestService = new RequestService();
+        requestService.getRequestByStatus(getActivity(), 3, 1, new CallBackData<ArrayList<ListRequest>>() {
+            @Override
+            public void onSuccess(ArrayList<ListRequest> listRequests) {
+                recyclerView = (RecyclerView) getActivity().findViewById(R.id.listPending);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                pendingRequestAdapter = new PendingRequestAdapter(getActivity(), listRequests);
+                recyclerView.setAdapter(pendingRequestAdapter);
+            }
+
+            @Override
+            public void onFail(String message) {
+
+            }
+        });
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

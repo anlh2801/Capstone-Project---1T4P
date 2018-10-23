@@ -1,24 +1,19 @@
 package com.odts.customTools;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.odts.activities.ListRequestActivity;
+import com.odts.activities.LoginActivity;
 import com.odts.activities.R;
-import com.odts.activities.RequestActivity;
 import com.odts.activities.RequestDetailActivity;
 import com.odts.models.ListRequest;
-import com.odts.models.Request;
 import com.odts.services.RequestService;
 import com.odts.utils.CallBackData;
 
@@ -35,36 +30,29 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
             super(view);
             rqName = (TextView) view.findViewById(R.id.txtRequestNamee);
             crDate = (TextView) view.findViewById(R.id.txtCreateDatee);
-            rqNameDT = (TextView) view.findViewById(R.id.txtRequestNameee);
+//            rqNameDT = (TextView) view.findViewById(R.id.requestNameDetail);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     if(position != RecyclerView.NO_POSITION) {
-                        Toast.makeText(context,String.valueOf(listRequest.get(position).getRequestId()),Toast.LENGTH_SHORT).show();
-
-//                        intent.putExtra("requestID", listRequest.get(position).getRequestId());
-                        final RequestService requestService = new RequestService();
-                        requestService.requestDetail(context, listRequest.get(position).getRequestId(), new CallBackData<ListRequest>() {
-                            @Override
-                            public void onSuccess(ListRequest listRequestt) {
-
-//                                SharedPreferences share = context.getSharedPreferences("ODTS", 0);
-//                                SharedPreferences.Editor edit = share.edit();
-//                                String agencyId = share.getString("requestName", "");
-//                                rqNameDT.setText("3");
-                                Intent intent = new Intent(context, RequestDetailActivity.class);
-                                context.startActivity(intent);
-                            }
-
-                            @Override
-                            public void onFail(String message) {
-
-                            }
-                        });
-
-
-
+//                        Toast.makeText(context,String.valueOf(listRequest.get(position).getRequestId()),Toast.LENGTH_SHORT).show();
+//                        requestService = new RequestService();
+//                        requestService.requestDetail(context, listRequest.get(position).getRequestId(), new CallBackData<ListRequest>() {
+//                            @Override
+//                            public void onSuccess(ListRequest listRequest) {
+////                                rqNameDT.setText(listRequest.getRequestName());
+//                                Toast.makeText(context,listRequest.getRequestName(),Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                            @Override
+//                            public void onFail(String message) {
+//
+//                            }
+//                        });
+                        Intent intent = new Intent(context, RequestDetailActivity.class);
+                        intent.putExtra("requestID", listRequest.get(position).getRequestId());
+                        context.startActivity(intent);
                     }
                 }
             });
@@ -86,6 +74,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
         ListRequest album = listRequest.get(position);
         holder.rqName.setText(album.getRequestName());
         holder.crDate.setText(album.getCreateDate());
+//        holder.rqNameDT.setText(album.getCreateDate());
 
     }
 

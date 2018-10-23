@@ -149,7 +149,9 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
                 deviceRemoveAdapter.notifyDataSetChanged();
             }
 
-            mBottomSheetDialog.dismiss();
+            if (mBottomSheetDialog != null) {
+                mBottomSheetDialog.dismiss();
+            }
 
         }
     };

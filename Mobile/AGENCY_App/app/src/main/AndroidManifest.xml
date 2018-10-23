@@ -24,10 +24,7 @@
         <activity android:name=".RequestActivity" />
         <activity android:name=".ListRequestActivity" />
         <activity android:name=".LoginActivity" />
-        <activity
-            android:name=".RequestDetailActivity"
-            android:label="@string/title_activity_request_detail"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".RequestDetailActivity" />
     </application>
 
 </manifest>
