@@ -15,7 +15,7 @@ namespace DataService.Models.Entities
     public partial class Skill
     {
         public int SkillId { get; set; }
-        public int ITSupportId { get; set; }
+        public int ITSupporterId { get; set; }
         public Nullable<int> ServiceITSupportId { get; set; }
         public Nullable<int> MonthExperience { get; set; }
         public Nullable<bool> IsDelete { get; set; }

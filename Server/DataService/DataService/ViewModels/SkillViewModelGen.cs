@@ -16,7 +16,7 @@ namespace DataService.ViewModels
     {
     	
     			public virtual int SkillId { get; set; }
-    			public virtual int ITSupportId { get; set; }
+    			public virtual int ITSupporterId { get; set; }
     			public virtual Nullable<int> ServiceITSupportId { get; set; }
     			public virtual Nullable<int> MonthExperience { get; set; }
     			public virtual Nullable<bool> IsDelete { get; set; }

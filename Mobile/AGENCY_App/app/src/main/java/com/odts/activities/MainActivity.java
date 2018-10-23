@@ -1,5 +1,9 @@
 package com.odts.activities;
 
+import android.support.v4.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -24,11 +28,14 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private BottomNavigationView bottomNavigationView;
+
     private ServiceITSupportService _serviceITSupportService;
     private ServiceItemService _serviceItem;
-    private TextView textView;
 
-
+    FragmentManager fragmentManager = getFragmentManager();
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+    
     public  MainActivity(){
         _serviceITSupportService = new ServiceITSupportService();
         _serviceItem = new ServiceItemService();
@@ -38,24 +45,44 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initBottomMenu ();
+        loadFragment(new HomeFragment());
         SharedPreferences share = getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         Integer agencyId = share.getInt("agencyId", 0);
-        getAllITSupportForAgency(3);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
+
+    }
+
+    private boolean loadFragment(Fragment fragment) {
+        //switching fragment
+        if (fragment != null) {
+            fragment.onResume();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fmHome, fragment)
+                    .commit();
+            fragment.onStop();
+            return true;
+        }
+        return false;
+    }
+
+    private void initBottomMenu () {
+        bottomNavigationView = findViewById(R.id.navigationView);
+        Fragment fragment = null;
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case  R.id.navigation_home:
-                        Toast.makeText(MainActivity.this, "home nek", Toast.LENGTH_SHORT).show();
+                        loadFragment(new HomeFragment());
                         break;
                     case  R.id.navigation_request:
                         Toast.makeText(MainActivity.this, "bc nek", Toast.LENGTH_SHORT).show();
                         break;
                     case  R.id.navigation_devices:
-                        Toast.makeText(MainActivity.this, "devie nek", Toast.LENGTH_SHORT).show();
+                        loadFragment(new ManageDeviceFragment());
                         break;
                     case  R.id.navigation_accountDetail:
                         Toast.makeText(MainActivity.this, "tai khoan nek", Toast.LENGTH_SHORT).show();
@@ -66,46 +93,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void getAllITSupportForAgency (int agencyId){
-        LinearLayout layout = (LinearLayout) findViewById(R.id.layout_ServicesHome);
-        _serviceITSupportService.getAllServiceITSupport(MainActivity.this, agencyId, new CallBackData<ArrayList<ServiceITSupport>>() {
-            @Override
-            public void onSuccess(ArrayList<ServiceITSupport> serviceITSupports) {
-                LinearLayout layout = (LinearLayout) findViewById(R.id.layout_ServicesHome);
-                // Load ServiceItem của Service đầu tiên
-                getAllServiceItemByServiceId(serviceITSupports.get(0).getServiceITSupportId());
-                for (ServiceITSupport item : serviceITSupports) {
-                    Button bt = new Button(MainActivity.this);
-                    bt.setText(item.getServiceName());
-                    final int serviceId = item.getServiceITSupportId();
-                    bt.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            getAllServiceItemByServiceId(serviceId);
-                        }
-                    });
-                    layout.addView(bt);
-                }
-            }
-            @Override
-            public void onFail(String message) {
-
-            }
-        });
-    }
-
-    private void getAllServiceItemByServiceId (int serviceId){
-        _serviceItem.getAllServiceItemByServiceId(MainActivity.this, serviceId, new CallBackData<ArrayList<ServiceItem>>() {
-            @Override
-            public void onSuccess(ArrayList<ServiceItem> serviceItems) {
-                ListView lvServiceItem = findViewById(R.id.lvServiceItem);
-                ServiceItemAdapter serviceItemAdapter = new ServiceItemAdapter(MainActivity.this, R.layout.service_item_list, serviceItems);
-                lvServiceItem.setAdapter(serviceItemAdapter);
-            }
-            @Override
-            public void onFail(String message) {
-
-            }
-        });
-    }
 }

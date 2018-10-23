@@ -27,7 +27,7 @@
         <activity
             android:name=".RequestDetailActivity"
             android:label="@string/title_activity_request_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

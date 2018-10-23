@@ -304,7 +304,7 @@ namespace DataService.Models.Entities.Services
                 
                 foreach (var item in skills)
                 {
-                    var itSupporter = itSupporterRepo.GetActive(p => p.ITSupporterId == item.ITSupportId && p.IsBusy == false).FirstOrDefault();
+                    var itSupporter = itSupporterRepo.GetActive(p => p.ITSupporterId == item.ITSupporterId && p.IsBusy == false).FirstOrDefault();
                     if (itSupporter != null)
                     {
                         itSupporter.IsBusy = true;

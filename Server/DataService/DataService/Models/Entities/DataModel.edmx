@@ -199,7 +199,7 @@
             <PropertyRef Name="SkillId" />
           </Key>
           <Property Name="SkillId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ITSupportId" Type="int" Nullable="false" />
+          <Property Name="ITSupporterId" Type="int" Nullable="false" />
           <Property Name="ServiceITSupportId" Type="int" />
           <Property Name="MonthExperience" Type="int" />
           <Property Name="IsDelete" Type="bit" />
@@ -430,7 +430,7 @@
               <PropertyRef Name="ITSupporterId" />
             </Principal>
             <Dependent Role="Skill">
-              <PropertyRef Name="ITSupportId" />
+              <PropertyRef Name="ITSupporterId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -988,7 +988,7 @@
             <PropertyRef Name="SkillId" />
           </Key>
           <Property Name="SkillId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ITSupportId" Type="Int32" Nullable="false" />
+          <Property Name="ITSupporterId" Type="Int32" Nullable="false" />
           <Property Name="ServiceITSupportId" Type="Int32" />
           <Property Name="MonthExperience" Type="Int32" />
           <Property Name="IsDelete" Type="Boolean" />
@@ -1217,7 +1217,7 @@
               <PropertyRef Name="ITSupporterId" />
             </Principal>
             <Dependent Role="Skill">
-              <PropertyRef Name="ITSupportId" />
+              <PropertyRef Name="ITSupporterId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1546,7 +1546,7 @@
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="MonthExperience" ColumnName="MonthExperience" />
                 <ScalarProperty Name="ServiceITSupportId" ColumnName="ServiceITSupportId" />
-                <ScalarProperty Name="ITSupportId" ColumnName="ITSupportId" />
+                <ScalarProperty Name="ITSupporterId" ColumnName="ITSupporterId" />
                 <ScalarProperty Name="SkillId" ColumnName="SkillId" />
               </MappingFragment>
             </EntityTypeMapping>

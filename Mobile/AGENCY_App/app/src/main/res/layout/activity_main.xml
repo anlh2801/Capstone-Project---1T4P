@@ -6,37 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/layout_ServicesHome"
-        android:layout_width="390dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:padding="10dp"
-        android:textAlignment="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
 
-    <ListView
-        android:id="@+id/lvServiceItem"
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_ServicesHome" />
-    <FrameLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigationView"
@@ -52,4 +22,14 @@
         app:itemIconTint="#FFFFFF"
         app:itemTextColor="#FFFFFF"
         app:menu="@menu/navigation"/>
+
+    <FrameLayout
+        android:id="@+id/fmHome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>
