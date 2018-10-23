@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                     .beginTransaction()
                     .replace(R.id.fmHome, fragment)
                     .commit();
-            fragment.onStop();
+            fragment.onPause();
             return true;
         }
         return false;
