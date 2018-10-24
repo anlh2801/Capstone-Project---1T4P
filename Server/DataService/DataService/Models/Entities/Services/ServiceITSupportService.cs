@@ -139,7 +139,7 @@ namespace DataService.Models.Entities.Services
                     c => (c.EndDate == null || c.EndDate > DateTime.Now) && c.Contract.Company.Agencies.Any(a => a.AgencyId == agencyId))).ToList();
             if (serviceITSupports.Count <= 0)
             {
-                return new ResponseObject<List<ServiceITSupportAPIViewModel>> { IsError = true, WarningMessage = "Không có hợp đồng" };
+                return new ResponseObject<List<ServiceITSupportAPIViewModel>> { IsError = true, WarningMessage = "Không có dịch vụ nào" };
             }
             int count = 1;
             foreach (var item in serviceITSupports)
@@ -160,7 +160,7 @@ namespace DataService.Models.Entities.Services
                 count++;
             }
 
-            return new ResponseObject<List<ServiceITSupportAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Hiển thị hợp đồng thành công" };
+            return new ResponseObject<List<ServiceITSupportAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Hiển thị thành công" };
         }
 
     }
