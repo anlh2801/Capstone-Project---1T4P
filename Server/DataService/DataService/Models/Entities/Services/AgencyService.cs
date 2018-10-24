@@ -233,7 +233,7 @@ namespace DataService.Models.Entities.Services
                 createRequest.RequestName = model.RequestName;
                 createRequest.RequestDesciption = model.RequestDesciption;
                 createRequest.ServiceItemId = model.ServiceItemId;
-                createRequest.CreateDate = DateTime.Now;
+                createRequest.CreateDate = DateTime.UtcNow;
                 requestRepo.Add(createRequest);
                 requestRepo.Save();                
 
@@ -242,6 +242,7 @@ namespace DataService.Models.Entities.Services
                 {
                     CreateTicket(model.Ticket, createRequest.RequestId, current_IT_supporter_Id);
                     createRequest.RequestStatus = (int)RequestStatusEnum.Processing;
+                    createRequest.StartDate = DateTime.UtcNow;
                     requestRepo.Save();
                 }
                 else
@@ -271,8 +272,8 @@ namespace DataService.Models.Entities.Services
                     createTicket.DeviceId = item.DeviceId;
                     createTicket.Current_TicketStatus = (int)TicketStatusEnum.Await;
                     createTicket.Desciption = item.Desciption;
-                    createTicket.CreateDate = DateTime.Now;
-                    createTicket.StartTime = DateTime.Now;
+                    createTicket.CreateDate = DateTime.UtcNow;
+                    createTicket.StartTime = DateTime.UtcNow;
                     createTicket.CurrentITSupporter_Id = current_IT_supporter_Id;
                     ticketRepo.Add(createTicket);
 
