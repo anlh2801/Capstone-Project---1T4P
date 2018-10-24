@@ -241,7 +241,7 @@ namespace DataService.Models.Entities.Services
                 if (current_IT_supporter_Id > 0)
                 {
                     CreateTicket(model.Ticket, createRequest.RequestId, current_IT_supporter_Id);
-                    //createRequest.RequestStatus = (int)RequestStatusEnum.Processing;
+                    createRequest.RequestStatus = (int)RequestStatusEnum.Processing;
                     requestRepo.Save();
                 }
                 else
@@ -272,7 +272,7 @@ namespace DataService.Models.Entities.Services
                     createTicket.Current_TicketStatus = (int)TicketStatusEnum.Await;
                     createTicket.Desciption = item.Desciption;
                     createTicket.CreateDate = DateTime.Now;
-
+                    createTicket.StartTime = DateTime.Now;
                     createTicket.CurrentITSupporter_Id = current_IT_supporter_Id;
                     ticketRepo.Add(createTicket);
 
