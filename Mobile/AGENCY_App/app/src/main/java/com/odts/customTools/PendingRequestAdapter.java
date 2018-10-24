@@ -21,11 +21,12 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
     RequestService requestService;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView rqName, crDate, rqNameDT;
+        public TextView rqName, crDate, nod;
         public MyViewHolder(View view) {
             super(view);
             rqName = (TextView) view.findViewById(R.id.txtRequestNamee);
             crDate = (TextView) view.findViewById(R.id.txtCreateDatee);
+            nod = (TextView) view.findViewById(R.id.txtNoD);
 //            rqNameDT = (TextView) view.findViewById(R.id.requestNameDetail);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -70,6 +71,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
         Request album = listRequest.get(position);
         holder.rqName.setText(album.getRequestName());
         holder.crDate.setText(album.getCreateDate());
+        holder.nod.setText("Số thiết bị:" +album.getNod());
 //        holder.rqNameDT.setText(album.getCreateDate());
 
     }

@@ -16,7 +16,7 @@
 
         <TextView
             android:id="@+id/txtRequestNamee"
-            android:layout_width="120dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
             android:textStyle="bold" />

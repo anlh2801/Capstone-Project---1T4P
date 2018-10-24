@@ -19,8 +19,18 @@ public class Request {
     private String RequestDesciption;
     @SerializedName("CreateDate")
     private String createDate;
+    @SerializedName("NumberOfTicket")
+    private String nod;
     @SerializedName("ticket")
     private List<Ticket> ticket;
+
+    public String getNod() {
+        return nod;
+    }
+
+    public void setNod(String nod) {
+        this.nod = nod;
+    }
 
     public Integer getRequestId() {
         return requestId;
