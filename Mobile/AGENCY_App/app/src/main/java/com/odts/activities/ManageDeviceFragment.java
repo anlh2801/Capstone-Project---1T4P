@@ -1,6 +1,7 @@
 package com.odts.activities;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -9,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.odts.customTools.DeviceManageAdapter;
 import com.odts.models.Device;
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 public class ManageDeviceFragment extends Fragment {
     private ServiceITSupportService _serviceITSupportService;
     private DeviceService _deviceService;
+    Integer agencyId;
 
     public  ManageDeviceFragment(){
         _serviceITSupportService = new ServiceITSupportService();
@@ -33,7 +37,12 @@ public class ManageDeviceFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getAllServiceITSupportForAgency (3);
+
+        SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
+        SharedPreferences.Editor edit = share.edit();
+        agencyId = share.getInt("agencyId", 0);
+
+        getAllServiceITSupportForAgency (agencyId);
     }
 
     @Override
@@ -49,25 +58,35 @@ public class ManageDeviceFragment extends Fragment {
             @Override
             public void onSuccess(ArrayList<ServiceITSupport> serviceITSupports) {
                 LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.layout_ServicesManagerDevice);
-
-                // Load ServiceItem của Service đầu tiên
-                getAllDeviceByAgencyIdAndServiceItem( agencyId ,serviceITSupports.get(0).getServiceITSupportId());
-                for (ServiceITSupport item : serviceITSupports) {
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                    params.weight = 1.0f;
-                    Button bt = new Button(getActivity());
-                    bt.setLayoutParams(params);
-                    bt.setText(item.getServiceName());
-                    final int serviceId = item.getServiceITSupportId();
-                    bt.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            getAllDeviceByAgencyIdAndServiceItem(agencyId, serviceId);
-                        }
-                    });
-                    layout.addView(bt);
+                if (serviceITSupports.size() > 0) {
+                    // Load ServiceItem của Service đầu tiên
+                    getAllDeviceByAgencyIdAndServiceItem( agencyId ,serviceITSupports.get(0).getServiceITSupportId());
+                    for (ServiceITSupport item : serviceITSupports) {
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                        params.weight = 1.0f;
+                        Button bt = new Button(getActivity());
+                        bt.setLayoutParams(params);
+                        bt.setText(item.getServiceName());
+                        final int serviceId = item.getServiceITSupportId();
+                        bt.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                getAllDeviceByAgencyIdAndServiceItem(agencyId, serviceId);
+                            }
+                        });
+                        layout.addView(bt);
+                    }
+                } else {
+                    ImageView iv = new ImageView(getActivity());
+                    iv.setImageResource(R.drawable.ic_warning_black_24dp);
+                    TextView tx = new TextView(getActivity());
+                    tx.setText("Bạn chưa kích hoạt dịch vụ và thiết bị");
+                    tx.setTextSize(30);
+                    layout.addView(iv);
+                    layout.addView(tx);
                 }
+
             }
             @Override
             public void onFail(String message) {
