@@ -20,7 +20,7 @@ namespace DataService.ViewModels
     			public virtual Nullable<int> AccountId { get; set; }
     			public virtual string Telephone { get; set; }
     			public virtual string Email { get; set; }
-    			public virtual string Gender { get; set; }
+    			public virtual Nullable<int> Gender { get; set; }
     			public virtual string Address { get; set; }
     			public virtual Nullable<double> RatingAVG { get; set; }
     			public virtual Nullable<bool> IsBusy { get; set; }
