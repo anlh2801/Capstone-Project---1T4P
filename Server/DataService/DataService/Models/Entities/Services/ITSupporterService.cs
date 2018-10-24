@@ -47,7 +47,7 @@ namespace DataService.Models.Entities.Services
                 List<ITSupporterAPIViewModel> rsList = new List<ITSupporterAPIViewModel>();
                 var ITSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
                 var itSupporters = ITSupporterRepo.GetActive().ToList();
-                if (itSupporters.Count < 0)
+                if (itSupporters.Count <= 0)
                 {
                     return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy người hỗ trợ" };
                 }
@@ -144,7 +144,7 @@ namespace DataService.Models.Entities.Services
                 List<TicketAPIViewModel> rsList = new List<TicketAPIViewModel>();
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
                 var ticket = ticketRepo.GetActive(p => p.CurrentITSupporter_Id == ITsupporter_id).ToList();
-                if (ticket.Count < 0)
+                if (ticket.Count <= 0)
                 {
                     return new ResponseObject<List<TicketAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy" };
                 }

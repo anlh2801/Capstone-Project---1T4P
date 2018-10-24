@@ -57,7 +57,7 @@ namespace DataService.Models.Entities.Services
                 List<AccountAPIViewModel> rsList = new List<AccountAPIViewModel>();
                 var accountRepo = DependencyUtils.Resolve<IAccountRepository>();
                 var accounts = accountRepo.GetActive().ToList();
-                if (accounts.Count < 0)
+                if (accounts.Count <= 0)
                 {
                     return new ResponseObject<List<AccountAPIViewModel>> { IsError = true, WarningMessage = "Không có tài khoản" };
                 }

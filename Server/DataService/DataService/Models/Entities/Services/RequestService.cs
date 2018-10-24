@@ -38,7 +38,7 @@ namespace DataService.Models.Entities.Services
                 List<RequestAPIViewModel> rsList = new List<RequestAPIViewModel>();
                 var RequestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var requests = RequestRepo.GetActive().ToList();
-                if (requests.Count < 0)
+                if (requests.Count <= 0)
                 {
                     return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại" };
                 }
@@ -78,7 +78,7 @@ namespace DataService.Models.Entities.Services
                 List<RequestAPIViewModel> rsList = new List<RequestAPIViewModel>();
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var requests = requestRepo.GetActive(x => x.RequestStatus == status).ToList();
-                if (requests.Count < 0)
+                if (requests.Count <= 0)
                 {
                     return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Không lấy được" };
                 }
@@ -212,7 +212,7 @@ namespace DataService.Models.Entities.Services
                 List<RequestAPIViewModel> rsList = new List<RequestAPIViewModel>();
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var requests = requestRepo.GetActive(x => x.RequestStatus == status && x.AgencyId == acency_id).ToList();
-                if (requests.Count < 0)
+                if (requests.Count <= 0)
                 {
                     return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Thất bại", ObjReturn = rsList };
                 }

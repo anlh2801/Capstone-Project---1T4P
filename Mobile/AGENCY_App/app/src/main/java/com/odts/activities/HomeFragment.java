@@ -31,10 +31,11 @@ public class HomeFragment extends Fragment {
 
     Integer agencyId = 0;
 
-    public  HomeFragment(){
+    public HomeFragment() {
         _serviceITSupportService = new ServiceITSupportService();
         _serviceItem = new ServiceItemService();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,40 +55,32 @@ public class HomeFragment extends Fragment {
         getAllServiceITSupportForAgency(agencyId);
     }
 
-    private void getAllServiceITSupportForAgency (int agencyId){
+    private void getAllServiceITSupportForAgency(int agencyId) {
         _serviceITSupportService.getAllServiceITSupport(getActivity(), agencyId, new CallBackData<ArrayList<ServiceITSupport>>() {
             @Override
             public void onSuccess(ArrayList<ServiceITSupport> serviceITSupports) {
                 LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.layout_ServicesHome);
-                if (serviceITSupports.size() > 0) {
-                    // Load ServiceItem của Service đầu tiên
-                    getAllServiceItemByServiceId(serviceITSupports.get(0).getServiceITSupportId());
-                    for (ServiceITSupport item : serviceITSupports) {
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                        params.weight = 1.0f;
-                        Button bt = new Button(getActivity());
-                        bt.setLayoutParams(params);
-                        bt.setText(item.getServiceName());
-                        final int serviceId = item.getServiceITSupportId();
-                        bt.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                getAllServiceItemByServiceId(serviceId);
-                            }
-                        });
-                        layout.addView(bt);
-                    }
-                } else {
-                    ImageView iv = new ImageView(getActivity());
-                    iv.setImageResource(R.drawable.ic_warning_black_24dp);
-                    TextView tx = new TextView(getActivity());
-                    tx.setText("Bạn chưa kích hoạt dịch vụ nào");
-                    tx.setTextSize(30);
-                    layout.addView(iv);
-                    layout.addView(tx);
+
+                // Load ServiceItem của Service đầu tiên
+                getAllServiceItemByServiceId(serviceITSupports.get(0).getServiceITSupportId());
+                for (ServiceITSupport item : serviceITSupports) {
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                    params.weight = 1.0f;
+                    Button bt = new Button(getActivity());
+                    bt.setLayoutParams(params);
+                    bt.setText(item.getServiceName());
+                    final int serviceId = item.getServiceITSupportId();
+                    bt.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            getAllServiceItemByServiceId(serviceId);
+                        }
+                    });
+                    layout.addView(bt);
                 }
             }
+
             @Override
             public void onFail(String message) {
 
@@ -95,7 +88,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    public void getAllServiceItemByServiceId (int serviceId){
+    public void getAllServiceItemByServiceId(int serviceId) {
         _serviceItem.getAllServiceItemByServiceId(getActivity(), serviceId, new CallBackData<ArrayList<ServiceItem>>() {
             @Override
             public void onSuccess(ArrayList<ServiceItem> serviceItems) {
@@ -103,6 +96,7 @@ public class HomeFragment extends Fragment {
                 ServiceItemAdapter serviceItemAdapter = new ServiceItemAdapter(getActivity(), R.layout.service_item_list, serviceItems);
                 lvServiceItem.setAdapter(serviceItemAdapter);
             }
+
             @Override
             public void onFail(String message) {
 

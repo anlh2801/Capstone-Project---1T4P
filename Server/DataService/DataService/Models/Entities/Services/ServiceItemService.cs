@@ -22,7 +22,7 @@ namespace DataService.Models.Entities.Services
             List<ServiceItemAPIViewModel> rsList = new List<ServiceItemAPIViewModel>();
             var serviceItemRepo = DependencyUtils.Resolve<IServiceItemRepository>();
             var serviceItems = serviceItemRepo.GetActive(p => p.ServiceITSupportId == serviceId).ToList();
-            if (serviceItems.Count < 0)
+            if (serviceItems.Count <= 0)
             {
                 return new ResponseObject<List<ServiceItemAPIViewModel>> { IsError = true, WarningMessage = "Không có dịch vụ nào hỗ trợ" };
             }

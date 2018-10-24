@@ -26,7 +26,7 @@ namespace DataService.Models.Entities.Services
             List<ServiceITSupportAPIViewModel> rsList = new List<ServiceITSupportAPIViewModel>();
             var serviceITSupportRepo = DependencyUtils.Resolve<IServiceITSupportRepository>();
             var serviceITSupports = serviceITSupportRepo.GetActive().ToList();
-            if (serviceITSupports.Count < 0)
+            if (serviceITSupports.Count <= 0)
             {
                 return new ResponseObject<List<ServiceITSupportAPIViewModel>> { IsError = true, WarningMessage = "Không có hợp đồng" };
             }
@@ -137,7 +137,7 @@ namespace DataService.Models.Entities.Services
             var serviceITSupports = serviceITSupportRepo.GetActive(
                 p => p.ContractServiceITSupports.Any(
                     c => (c.EndDate == null || c.EndDate > DateTime.Now) && c.Contract.Company.Agencies.Any(a => a.AgencyId == agencyId))).ToList();
-            if (serviceITSupports.Count < 0)
+            if (serviceITSupports.Count <= 0)
             {
                 return new ResponseObject<List<ServiceITSupportAPIViewModel>> { IsError = true, WarningMessage = "Không có hợp đồng" };
             }

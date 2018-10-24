@@ -29,7 +29,7 @@ namespace DataService.Models.Entities.Services
                 List<ContractAPIViewModel> rsList = new List<ContractAPIViewModel>();
                 var contractRepo = DependencyUtils.Resolve<IContractRepository>();
                 var contracts = contractRepo.GetActive().ToList();
-                if (contracts.Count < 0)
+                if (contracts.Count <= 0)
                 {
                     return new ResponseObject<List<ContractAPIViewModel>> { IsError = true, WarningMessage = "Không có hợp đồng" };
                 }

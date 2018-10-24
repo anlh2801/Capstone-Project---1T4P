@@ -47,7 +47,7 @@ namespace DataService.Models.Entities.Services
                 List<AgencyAPIViewModel> rsList = new List<AgencyAPIViewModel>();
                 var agencyDeviceRepo = DependencyUtils.Resolve<IAgencyRepository>();
                 var agencyDevices = agencyDeviceRepo.GetActive(p => p.CompanyId == company_id).ToList();
-                if (agencyDevices.Count < 0)
+                if (agencyDevices.Count <= 0)
                 {
                     return new ResponseObject<List<AgencyAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy thiết bị nào!" };
                 }
@@ -146,7 +146,7 @@ namespace DataService.Models.Entities.Services
                 List<AgencyAPIViewModel> rsList = new List<AgencyAPIViewModel>();
                 var agencyRepo = DependencyUtils.Resolve<IAgencyRepository>();
                 var agencies = agencyRepo.GetActive().ToList();
-                if (agencies.Count < 0)
+                if (agencies.Count <= 0)
                 {
                     return new ResponseObject<List<AgencyAPIViewModel>> { IsError = true, WarningMessage = "Lấy thông tin tất cả công ty thất bại!" };
                 }
@@ -241,7 +241,7 @@ namespace DataService.Models.Entities.Services
                 if (current_IT_supporter_Id > 0)
                 {
                     CreateTicket(model.Ticket, createRequest.RequestId, current_IT_supporter_Id);
-                    createRequest.RequestStatus = (int)RequestStatusEnum.Processing;
+                    //createRequest.RequestStatus = (int)RequestStatusEnum.Processing;
                     requestRepo.Save();
                 }
                 else
@@ -369,7 +369,7 @@ namespace DataService.Models.Entities.Services
                 List<TicketAPIViewModel> rsList = new List<TicketAPIViewModel>();
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
                 var tickets = ticketRepo.GetActive().Where(a => a.RequestId == requestId).ToList();
-                if (tickets.Count < 0)
+                if (tickets.Count <= 0)
                 {
                     return new ResponseObject<List<TicketAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy danh sách!", ObjReturn = null };
                 }
@@ -406,7 +406,7 @@ namespace DataService.Models.Entities.Services
                 List<AgencyDeviceAPIViewModel> rsList = new List<AgencyDeviceAPIViewModel>();
                 var deviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
                 var devices = deviceRepo.GetActive().Where(a => a.DeviceTypeId == deviceTypeId && a.AgencyId == agencyId).ToList();
-                if (devices.Count < 0)
+                if (devices.Count <= 0)
                 {
                     return new ResponseObject<List<AgencyDeviceAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy danh sách thiết bị!", ObjReturn = null };
                 }

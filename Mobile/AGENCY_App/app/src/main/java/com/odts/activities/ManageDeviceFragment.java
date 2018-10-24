@@ -30,10 +30,11 @@ public class ManageDeviceFragment extends Fragment {
     private DeviceService _deviceService;
     Integer agencyId;
 
-    public  ManageDeviceFragment(){
+    public ManageDeviceFragment() {
         _serviceITSupportService = new ServiceITSupportService();
         _deviceService = new DeviceService();
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +43,7 @@ public class ManageDeviceFragment extends Fragment {
         SharedPreferences.Editor edit = share.edit();
         agencyId = share.getInt("agencyId", 0);
 
-        getAllServiceITSupportForAgency (agencyId);
+        getAllServiceITSupportForAgency(agencyId);
     }
 
     @Override
@@ -53,41 +54,32 @@ public class ManageDeviceFragment extends Fragment {
     }
 
 
-    private void getAllServiceITSupportForAgency (final int agencyId){
+    private void getAllServiceITSupportForAgency(final int agencyId) {
         _serviceITSupportService.getAllServiceITSupport(getActivity(), agencyId, new CallBackData<ArrayList<ServiceITSupport>>() {
             @Override
             public void onSuccess(ArrayList<ServiceITSupport> serviceITSupports) {
                 LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.layout_ServicesManagerDevice);
-                if (serviceITSupports.size() > 0) {
-                    // Load ServiceItem của Service đầu tiên
-                    getAllDeviceByAgencyIdAndServiceItem( agencyId ,serviceITSupports.get(0).getServiceITSupportId());
-                    for (ServiceITSupport item : serviceITSupports) {
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                        params.weight = 1.0f;
-                        Button bt = new Button(getActivity());
-                        bt.setLayoutParams(params);
-                        bt.setText(item.getServiceName());
-                        final int serviceId = item.getServiceITSupportId();
-                        bt.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                getAllDeviceByAgencyIdAndServiceItem(agencyId, serviceId);
-                            }
-                        });
-                        layout.addView(bt);
-                    }
-                } else {
-                    ImageView iv = new ImageView(getActivity());
-                    iv.setImageResource(R.drawable.ic_warning_black_24dp);
-                    TextView tx = new TextView(getActivity());
-                    tx.setText("Bạn chưa kích hoạt dịch vụ và thiết bị");
-                    tx.setTextSize(30);
-                    layout.addView(iv);
-                    layout.addView(tx);
-                }
 
+                // Load ServiceItem của Service đầu tiên
+                getAllDeviceByAgencyIdAndServiceItem(agencyId, serviceITSupports.get(0).getServiceITSupportId());
+                for (ServiceITSupport item : serviceITSupports) {
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                    params.weight = 1.0f;
+                    Button bt = new Button(getActivity());
+                    bt.setLayoutParams(params);
+                    bt.setText(item.getServiceName());
+                    final int serviceId = item.getServiceITSupportId();
+                    bt.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            getAllDeviceByAgencyIdAndServiceItem(agencyId, serviceId);
+                        }
+                    });
+                    layout.addView(bt);
+                }
             }
+
             @Override
             public void onFail(String message) {
 
@@ -95,14 +87,15 @@ public class ManageDeviceFragment extends Fragment {
         });
     }
 
-    private void getAllDeviceByAgencyIdAndServiceItem (int agencyId, int serviceId){
-        _deviceService.getAllDeviceByAgencyIdAndServiceItem(getActivity(), agencyId ,serviceId, new CallBackData<ArrayList<Device>>() {
+    private void getAllDeviceByAgencyIdAndServiceItem(int agencyId, int serviceId) {
+        _deviceService.getAllDeviceByAgencyIdAndServiceItem(getActivity(), agencyId, serviceId, new CallBackData<ArrayList<Device>>() {
             @Override
             public void onSuccess(ArrayList<Device> devices) {
                 ListView lvDeviceToManage = getActivity().findViewById(R.id.lvDeviceToManage);
                 DeviceManageAdapter deviceManageAdapter = new DeviceManageAdapter(getActivity(), R.layout.device_manage_item_list, devices);
                 lvDeviceToManage.setAdapter(deviceManageAdapter);
             }
+
             @Override
             public void onFail(String message) {
 

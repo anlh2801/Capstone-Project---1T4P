@@ -30,7 +30,7 @@ namespace DataService.Models.Entities.Services
                 List<DeviceTypeAPIViewModel> rsList = new List<DeviceTypeAPIViewModel>();
                 var devicetypeRepo = DependencyUtils.Resolve<IDeviceTypeRepository>();
                 var devicetypes = devicetypeRepo.GetActive().ToList();
-                if (devicetypes.Count < 0)
+                if (devicetypes.Count <= 0)
                 {
                     return new ResponseObject<List<DeviceTypeAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy loại thiết bị nào" };
                 }

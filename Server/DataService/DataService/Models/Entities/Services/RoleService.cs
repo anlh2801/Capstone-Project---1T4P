@@ -24,7 +24,7 @@ namespace DataService.Models.Entities.Services
                 List<RoleAPIViewModel> rsList = new List<RoleAPIViewModel>();
                 var RoleRepo = DependencyUtils.Resolve<IRoleRepository>();
                 var roles = RoleRepo.GetActive().ToList();
-                if (roles.Count < 0)
+                if (roles.Count <= 0)
                 {
                     return new ResponseObject<List<RoleAPIViewModel>> { IsError = true, WarningMessage = "Thất bại" };
                 }

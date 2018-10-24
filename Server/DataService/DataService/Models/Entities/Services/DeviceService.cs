@@ -29,7 +29,7 @@ namespace DataService.Models.Entities.Services
                 List<AgencyDeviceAPIViewModel> rsList = new List<AgencyDeviceAPIViewModel>();
                 var agencyDeviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
                 var agencyDevices = agencyDeviceRepo.GetActive(p => p.AgencyId == agency_id).ToList();
-                if (agencyDevices.Count < 0)
+                if (agencyDevices.Count <= 0)
                 {
                     return new ResponseObject<List<AgencyDeviceAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy thiết bị nào!" };
                 }
@@ -70,7 +70,7 @@ namespace DataService.Models.Entities.Services
                 List<DeviceAPIViewModel> rsList = new List<DeviceAPIViewModel>();
                 var deviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
                 var devices = deviceRepo.GetActive().ToList();
-                if (devices.Count < 0)
+                if (devices.Count <= 0)
                 {
                     return new ResponseObject<List<DeviceAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy thiết bị nào" };
                 }
@@ -185,7 +185,7 @@ namespace DataService.Models.Entities.Services
                 List<AgencyDeviceAPIViewModel> rsList = new List<AgencyDeviceAPIViewModel>();
                 var agencyDeviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
                 var agencyDevices = agencyDeviceRepo.GetActive(p => p.AgencyId == agencyId && p.DeviceType.ServiceId == serviceId).ToList();
-                if (agencyDevices.Count < 0)
+                if (agencyDevices.Count <= 0)
                 {
                     return new ResponseObject<List<AgencyDeviceAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy thiết bị nào!" };
                 }
