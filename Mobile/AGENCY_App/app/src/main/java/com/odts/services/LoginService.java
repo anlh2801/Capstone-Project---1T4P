@@ -1,10 +1,13 @@
 package com.odts.services;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.odts.activities.LoginActivity;
+import com.odts.activities.MainActivity;
 import com.odts.apiCaller.ILoginApiCaller;
 import com.odts.models.Agency;
 import com.odts.utils.ResponseObject;
@@ -23,12 +26,13 @@ public class LoginService {
             @Override
             public void onResponse(Call<ResponseObject<Agency>> call, Response<ResponseObject<Agency>> response) {
                 if(!response.body().isError()){
-                    Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
-//                    final Integer agencyID = response.body().getObjReturn().getAgencyId();
+                    //Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
                     SharedPreferences share = context.getSharedPreferences("ODTS", 0);
                     SharedPreferences.Editor edit = share.edit();
                     edit.putInt("agencyId", response.body().getObjReturn().getAgencyId());
                     edit.commit();
+                    Intent intent = new Intent(context, MainActivity.class);
+                    context.startActivity(intent);
                 }
                 else
                     Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();

@@ -1,6 +1,7 @@
 package com.odts.activities;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,6 +27,8 @@ public class HomeFragment extends Fragment {
     private ServiceITSupportService _serviceITSupportService;
     private ServiceItemService _serviceItem;
 
+    Integer agencyId = 0;
+
     public  HomeFragment(){
         _serviceITSupportService = new ServiceITSupportService();
         _serviceItem = new ServiceItemService();
@@ -41,7 +44,12 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getAllServiceITSupportForAgency(3);
+
+        SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
+        SharedPreferences.Editor edit = share.edit();
+        agencyId = share.getInt("agencyId", 0);
+
+        getAllServiceITSupportForAgency(agencyId);
     }
 
     private void getAllServiceITSupportForAgency (int agencyId){

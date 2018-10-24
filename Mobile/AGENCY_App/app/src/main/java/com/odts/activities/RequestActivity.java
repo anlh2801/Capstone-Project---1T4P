@@ -71,7 +71,7 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
 
         initData ();
         initDeviceListToRequest();
-        getAllDeviceByAgencyIdAndServiceItem(3,serviceId);
+        getAllDeviceByAgencyIdAndServiceItem(agencyId, serviceId);
 
         btnSave = (Button) findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +107,6 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
                 new IntentFilter("custom-message"));
     }
     private void initData () {
-
         SharedPreferences share = getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         agencyId = share.getInt("agencyId", 0);
@@ -213,8 +212,7 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
         }
 
         Request request = new Request();
-//        request.setAgencyId(agencyId);
-        request.setAgencyId(3);
+        request.setAgencyId(agencyId);
         request.setRequestCategoryId(3);
         request.setServiceItemId(serviceItemId);
         EditText txtRequestDesciption = (EditText) findViewById(R.id.txtRequestDesciption);

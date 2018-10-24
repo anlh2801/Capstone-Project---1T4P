@@ -29,8 +29,6 @@ public class LoginActivity extends AppCompatActivity {
                 String usernameStr = username.getText().toString();
                 String passwordStr = password.getText().toString();
                 loginService.checkLogin(LoginActivity.this, usernameStr, passwordStr, 3);
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
             }
         });
     }
