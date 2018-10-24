@@ -24,7 +24,7 @@ namespace DataService.Models.Entities
     
         public int ITSupporterId { get; set; }
         public string ITSupporterName { get; set; }
-        public Nullable<int> AccountId { get; set; }
+        public int AccountId { get; set; }
         public string Telephone { get; set; }
         public string Email { get; set; }
         public Nullable<int> Gender { get; set; }

@@ -115,7 +115,7 @@ namespace DataService.Models.Entities.Services
                     {
                         ITSupporterId = itSupporter.ITSupporterId,
                         ITSupporterName = itSupporter.ITSupporterName,
-                        AccountId = itSupporter.AccountId ?? 0,
+                        AccountId = itSupporter.AccountId,
                         Telephone = itSupporter.Telephone,
                         Email = itSupporter.Email,
                         Gender = itSupporter.Gender != null ? Enum.GetName(typeof(TicketStatusEnum), itSupporter.Gender) : string.Empty,

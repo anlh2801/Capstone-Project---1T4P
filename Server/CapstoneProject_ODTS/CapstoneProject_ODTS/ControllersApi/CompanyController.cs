@@ -15,13 +15,11 @@ namespace CapstoneProject_ODTS.Controllers
 
     public class CompanyController : ApiController, ICompanyController
     {
-        private CompanyDomain _companyDomain;
-        private AccountDomain _accountDomain;
+        private CompanyDomain _companyDomain;        
 
         public CompanyController()
         {
-            _companyDomain = new CompanyDomain();
-            _accountDomain = new AccountDomain();
+            _companyDomain = new CompanyDomain();            
         }
 
         [HttpGet]
@@ -31,14 +29,7 @@ namespace CapstoneProject_ODTS.Controllers
             var result = _companyDomain.GetAllCompany();
             
             return Request.CreateResponse(HttpStatusCode.OK, result);
-        }
-
-        [HttpPost]
-        [Route("login")]
-        public HttpResponseMessage checkLogin(string username, string password, int roleId) { 
-            var result = _accountDomain.CheckLogin(username, password, roleId);
-            return Request.CreateResponse(HttpStatusCode.OK, result);
-        }
+        }        
     }
 }
 

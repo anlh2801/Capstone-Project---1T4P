@@ -32,6 +32,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage GetAllServiceItemByServiceId(int serviceId);
 
         HttpResponseMessage GetAllDeviceByAgencyIdAndServiceId(int agencyId, int serviceId);
+
+        HttpResponseMessage LoginAgency(string username, string password, int roleId);
     }
 
     public class AgencyController : ApiController, IAgencyController
@@ -44,12 +46,23 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         private DeviceDomain _deviceDomain;
 
+        private AccountDomain _accountDomain;
+
         public AgencyController()
         {
             _agencyDomain = new AgencyDomain();
             _serviceITSupportDomain = new ServiceITSupportDomain();
             _serviceItemDomain = new ServiceItemDomain();
             _deviceDomain = new DeviceDomain();
+            _accountDomain = new AccountDomain();
+        }
+
+        [HttpPost]
+        [Route("agency/login")]
+        public HttpResponseMessage LoginAgency(string username, string password, int roleId)
+        {
+            var result = _accountDomain.CheckLoginForAgency(username, password, roleId);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpGet]

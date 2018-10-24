@@ -17,7 +17,7 @@ namespace DataService.ViewModels
     	
     			public virtual int ITSupporterId { get; set; }
     			public virtual string ITSupporterName { get; set; }
-    			public virtual Nullable<int> AccountId { get; set; }
+    			public virtual int AccountId { get; set; }
     			public virtual string Telephone { get; set; }
     			public virtual string Email { get; set; }
     			public virtual Nullable<int> Gender { get; set; }

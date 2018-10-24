@@ -119,8 +119,8 @@
             <PropertyRef Name="ITSupporterId" />
           </Key>
           <Property Name="ITSupporterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ITSupporterName" Type="nvarchar" MaxLength="50" />
-          <Property Name="AccountId" Type="int" />
+          <Property Name="ITSupporterName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AccountId" Type="int" Nullable="false" />
           <Property Name="Telephone" Type="nvarchar" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="Gender" Type="int" />
@@ -375,7 +375,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ITSupporter_Account">
-          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
           <End Role="ITSupporter" Type="Self.ITSupporter" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
@@ -891,8 +891,8 @@
             <PropertyRef Name="ITSupporterId" />
           </Key>
           <Property Name="ITSupporterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ITSupporterName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AccountId" Type="Int32" />
+          <Property Name="ITSupporterName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AccountId" Type="Int32" Nullable="false" />
           <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="Int32" />
@@ -1078,7 +1078,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ITSupporter_Account">
-          <End Type="DataModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="DataModel.Account" Role="Account" Multiplicity="1" />
           <End Type="DataModel.ITSupporter" Role="ITSupporter" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">

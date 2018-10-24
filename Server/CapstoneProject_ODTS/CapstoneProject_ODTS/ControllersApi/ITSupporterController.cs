@@ -30,15 +30,27 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         HttpResponseMessage GetGuidelineByServiceItemID(int service_item_Id);
 
+        HttpResponseMessage LoginITSupporter(string username, string password, int roleId);
     }
 
     public class ITSupporterController : ApiController, IITSupporterController
     {
         private ITSupporterDomain _ITSupporterDomain;
 
+        private AccountDomain _accountDomain;
+
         public ITSupporterController()
         {
             _ITSupporterDomain = new ITSupporterDomain();
+            _accountDomain = new AccountDomain();
+        }
+
+        [HttpPost]
+        [Route("ITsuportter/login")]
+        public HttpResponseMessage LoginITSupporter(string username, string password, int roleId)
+        {
+            var result = _accountDomain.CheckLoginForITSupporter(username, password, roleId);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpPut]

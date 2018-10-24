@@ -8,7 +8,7 @@ import retrofit2.http.Query;
 
 public interface ILoginApiCaller {
 
-    @POST("login")
+    @POST("agency/login")
     Call<ResponseObject<Agency>> checkLogin(@Query("username") String username,
                                             @Query("password") String password,
                                             @Query("roleId") Integer roleId);

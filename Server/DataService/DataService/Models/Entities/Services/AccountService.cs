@@ -13,7 +13,8 @@ namespace DataService.Models.Entities.Services
 {
     public partial interface IAccountService
     {
-        ResponseObject<AgencyAPIViewModel> CheckLogin(string username, string password, int roleid);
+        ResponseObject<AgencyAPIViewModel> CheckLoginForAgency(string username, string password, int roleid);
+        ResponseObject<ITSupporterAPIViewModel> CheckLoginForITSupporter(string username, string password, int roleid);
         ResponseObject<List<AccountAPIViewModel>> GetAllAccount();
         ResponseObject<AccountAPIViewModel> ViewProfile(int account_id);
         ResponseObject<bool> CreateAccount(AccountAPIViewModel model);
@@ -23,7 +24,7 @@ namespace DataService.Models.Entities.Services
 
     public partial class AccountService
     {
-        public ResponseObject<AgencyAPIViewModel> CheckLogin(string username, string password, int roleid)
+        public ResponseObject<AgencyAPIViewModel> CheckLoginForAgency(string username, string password, int roleid)
         {
             try
             {
@@ -39,9 +40,7 @@ namespace DataService.Models.Entities.Services
                     agencymodel.UserName = agency.Account.Username;
                     return new ResponseObject<AgencyAPIViewModel> { IsError = false, ObjReturn = agencymodel, SuccessMessage = "Đăng nhập thành công" };
                 }
-
-
-                    
+                                                   
                 return new ResponseObject<AgencyAPIViewModel> { IsError = true, ObjReturn = null , WarningMessage = "Sai Tên Tài Khoản Hoặc Mật Khẩu." };
 
             }
@@ -50,6 +49,33 @@ namespace DataService.Models.Entities.Services
                 return new ResponseObject<AgencyAPIViewModel> { IsError = true, ObjReturn = null, WarningMessage = "Sai Tên Tài Khoản Hoặc Mật Khẩu.", ErrorMessage = e.ToString() };
             }
         }
+
+        public ResponseObject<ITSupporterAPIViewModel> CheckLoginForITSupporter(string username, string password, int roleid)
+        {
+            try
+            {
+                var accountRepo = DependencyUtils.Resolve<IAccountRepository>();
+                var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var account = accountRepo.GetActive(a => a.Username == username && a.Password == password && a.RoleId == roleid).SingleOrDefault();
+                if (account != null)
+                {
+                    var itSupporter = itSupporterRepo.GetActive(b => b.AccountId == account.AccountId).SingleOrDefault();
+                    var itSupporterAPIViewModel = new ITSupporterAPIViewModel();
+                    itSupporterAPIViewModel.ITSupporterId = itSupporter.ITSupporterId;
+                    itSupporterAPIViewModel.AccountId = itSupporter.AccountId;
+                    itSupporterAPIViewModel.Username = itSupporter.Account.Username;
+                    return new ResponseObject<ITSupporterAPIViewModel> { IsError = false, ObjReturn = itSupporterAPIViewModel, SuccessMessage = "Đăng nhập thành công" };
+                }
+
+                return new ResponseObject<ITSupporterAPIViewModel> { IsError = true, ObjReturn = null, WarningMessage = "Sai Tên Tài Khoản Hoặc Mật Khẩu." };
+
+            }
+            catch (Exception e)
+            {
+                return new ResponseObject<ITSupporterAPIViewModel> { IsError = true, ObjReturn = null, WarningMessage = "Sai Tên Tài Khoản Hoặc Mật Khẩu.", ErrorMessage = e.ToString() };
+            }
+        }
+
         public ResponseObject<List<AccountAPIViewModel>> GetAllAccount()
         {
             try
