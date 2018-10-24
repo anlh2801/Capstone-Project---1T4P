@@ -122,12 +122,14 @@
     <Compile Include="APIViewModels\ITSupporterUpdateEstimateTimeAPIViewModel.cs" />
     <Compile Include="APIViewModels\ITSupporterUpdateProfileAPIViewModel.cs" />
     <Compile Include="APIViewModels\ITSupporterUpdateTaskStatusAPIViewModel.cs" />
+    <Compile Include="APIViewModels\RequestAllTicketWithStatusAgencyAPIViewModel.cs" />
     <Compile Include="APIViewModels\RequestCancelAPIViewModel.cs" />
     <Compile Include="APIViewModels\RequestDetailAPIViewModel.cs" />
     <Compile Include="APIViewModels\RoleAPIViewModel.cs" />
     <Compile Include="APIViewModels\ServiceItemAPIViewModel.cs" />
     <Compile Include="APIViewModels\ServiceITSupportAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketAPIViewModel.cs" />
+    <Compile Include="APIViewModels\TicketForRequestAllTicketStatusAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketHistoryAPIViewModel.cs" />
     <Compile Include="APIViewModels\RequestAPIViewModel.cs" />
     <Compile Include="APIViewModels\AccountAPIViewModel.cs" />

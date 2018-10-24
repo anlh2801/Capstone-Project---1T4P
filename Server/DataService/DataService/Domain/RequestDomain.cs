@@ -18,7 +18,7 @@ namespace DataService.Domain
 
         ResponseObject<List<RequestAPIViewModel>> GetRequestWithStatus(int status);
 
-        ResponseObject<List<RequestAPIViewModel>> GetAllRequestByAgencyIDAndStatus(int acency_id, int status);
+        ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> GetAllRequestByAgencyIDAndStatus(int acency_id, int status);
 
         ResponseObject<bool> CreateFeedbackForRequest(FeedbackAPIViewModel feedback);
 
@@ -56,7 +56,7 @@ namespace DataService.Domain
             return result;
         }
 
-        public ResponseObject<List<RequestAPIViewModel>> GetAllRequestByAgencyIDAndStatus(int acency_id, int status)
+        public ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> GetAllRequestByAgencyIDAndStatus(int acency_id, int status)
         {
             var requestService = this.Service<IRequestService>();
             

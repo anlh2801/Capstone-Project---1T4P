@@ -19,7 +19,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<List<RequestAPIViewModel>> GetRequestWithStatus(int status);
 
-        ResponseObject<List<RequestAPIViewModel>> GetAllRequestByAgencyIDAndStatus(int acency_id, int status);
+        ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> GetAllRequestByAgencyIDAndStatus(int acency_id, int status);
 
         ResponseObject<bool> CreateFeedbackForRequest(int RequestId, string feedbackContent);
 
@@ -205,34 +205,64 @@ namespace DataService.Models.Entities.Services
 
         }
 
-        public ResponseObject<List<RequestAPIViewModel>> GetAllRequestByAgencyIDAndStatus(int acency_id, int status)
+        public ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> GetAllRequestByAgencyIDAndStatus(int acency_id, int status)
         {
             try
             {
-                List<RequestAPIViewModel> rsList = new List<RequestAPIViewModel>();
+                List<RequestAllTicketWithStatusAgencyAPIViewModel> requestList = new List<RequestAllTicketWithStatusAgencyAPIViewModel>();
+                List<TicketForRequestAllTicketStatusAPIViewModel> ticketList = new List<TicketForRequestAllTicketStatusAPIViewModel>();
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var requests = requestRepo.GetActive(x => x.RequestStatus == status && x.AgencyId == acency_id).ToList();
+                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+
                 if (requests.Count < 0)
                 {
-                    return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Thất bại", ObjReturn = rsList };
+                    return new ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> { IsError = true, WarningMessage = "Thất bại", ObjReturn = requestList };
                 }
                 foreach (var item in requests)
                 {
+                    var tickets = ticketRepo.GetActive(p => p.RequestId == item.RequestId).ToList();
+                    foreach (var ticketItem in tickets)
+                    {
+                        var ticket = new TicketForRequestAllTicketStatusAPIViewModel()
+                        {
+                            TicketId = ticketItem.TicketId,
+                            ITSupporterId = ticketItem.CurrentITSupporter_Id,
+                            DeviceId = ticketItem.DeviceId,
+                            DeviceName = ticketItem.Device.DeviceName,
+                            StartTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
+                            EndTime = ticketItem.Endtime != null ? ticketItem.Endtime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
+                            ITSupporterName = ticketItem.ITSupporter.ITSupporterName,
+                            TicketEstimationTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.AddHours(ticketItem.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm") : string.Empty,
+                            Current_TicketStatus = ticketItem.Current_TicketStatus != null ? ticketItem.Current_TicketStatus.Value : 0,
+                            Desciption = ticketItem.Desciption,
+                            Estimation = ticketItem.Estimation ?? 0,
+                            CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty
+                        };
+                        ticketList.Add(ticket);
+                    }
                     var timeAgo = TimeAgo(item.CreateDate.Value);
-                    var a = new RequestAPIViewModel()
+                    var request = new RequestAllTicketWithStatusAgencyAPIViewModel()
                     {
                         RequestId = item.RequestId,
                         RequestName = item.RequestName,
                         CreateDate = timeAgo,
+                        AgencyName = item.Agency.AgencyName,
+                        RequestStatus = item.RequestStatus,
+                        RequestEstimationTime = item.CreateDate.Value.AddHours(ticketList.Sum(p => p.Estimation)).ToString("dd/MM/yyyy HH:mm"),
+                        NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
+                        NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
+                        NumberOfTicket = ticketList.Count,
+                        TicketList = ticketList
                     };
-                    rsList.Add(a);
+                    requestList.Add(request);
                 }
 
-                return new ResponseObject<List<RequestAPIViewModel>> { IsError = false, SuccessMessage = "Thành công", ObjReturn = rsList };
+                return new ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> { IsError = false, SuccessMessage = "Thành công", ObjReturn = requestList };
             }
             catch (Exception e)
             {
-                return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Thất bại", ObjReturn = null, ErrorMessage = e.ToString() };
+                return new ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> { IsError = true, WarningMessage = "Thất bại", ObjReturn = null, ErrorMessage = e.ToString() };
             }
 
         }
