@@ -32,7 +32,7 @@ namespace DataService.Models.Entities
         public Nullable<System.DateTime> StartTime { get; set; }
         public Nullable<System.DateTime> Endtime { get; set; }
         public bool IsDelete { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
+        public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
         public virtual Device Device { get; set; }

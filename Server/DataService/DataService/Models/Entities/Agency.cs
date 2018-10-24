@@ -28,7 +28,7 @@ namespace DataService.Models.Entities
         public string Address { get; set; }
         public string Telephone { get; set; }
         public bool IsDelete { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
+        public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
         public virtual Account Account { get; set; }

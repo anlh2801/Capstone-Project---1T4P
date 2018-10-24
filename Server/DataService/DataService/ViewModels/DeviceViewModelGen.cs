@@ -29,7 +29,7 @@ namespace DataService.ViewModels
     			public virtual Nullable<System.DateTime> SettingDate { get; set; }
     			public virtual string Other { get; set; }
     			public virtual bool IsDelete { get; set; }
-    			public virtual Nullable<System.DateTime> CreateDate { get; set; }
+    			public virtual System.DateTime CreateDate { get; set; }
     			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	
     	public DeviceViewModel() : base() { }

@@ -42,7 +42,7 @@ namespace DataService.Models.Entities.Services
                         ServiceName = item.ServiceName,
                         Description = item.Description,
                         IsDelete = item.IsDelete,
-                        CreateDate = item.CreateDate.Value.ToString("dd/MM/yyyy"),
+                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy")
                     });
                 }
@@ -63,7 +63,7 @@ namespace DataService.Models.Entities.Services
                     ServiceITSupportId = serviceitsupport.ServiceITSupportId,
                     ServiceName = serviceitsupport.ServiceName,
                     Description = serviceitsupport.Description,
-                    CreateDate = serviceitsupport.CreateDate.Value.ToString("dd/MM/yyyy"),
+                    CreateDate = serviceitsupport.CreateDate.ToString("dd/MM/yyyy"),
                     UpdateDate = serviceitsupport.UpdateDate.Value.ToString("dd/MM/yyyy"),
                 };
                 return new ResponseObject<ServiceITSupportAPIViewModel> { IsError = false, ObjReturn = devicetypeAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
@@ -153,7 +153,7 @@ namespace DataService.Models.Entities.Services
                         ServiceName = item.ServiceName,
                         Description = item.Description,
                         IsDelete = item.IsDelete,
-                        CreateDate = item.CreateDate.Value.ToString("dd/MM/yyyy"),
+                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy")
                     });
                 }

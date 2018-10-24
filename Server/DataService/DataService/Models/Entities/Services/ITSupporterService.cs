@@ -64,7 +64,7 @@ namespace DataService.Models.Entities.Services
                         Address = item.Address,
                         RatingAVG = item.RatingAVG ?? 0,
                         IsBusy = item.IsBusy.Value == true ? "Đang bận!" : "Chờ việc",
-                        CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                     });
                 }
@@ -122,7 +122,7 @@ namespace DataService.Models.Entities.Services
                         Address = itSupporter.Address,
                         RatingAVG = itSupporter.RatingAVG ?? 0,
                         IsBusy = itSupporter.IsBusy.Value == true ? "Đang bận!" : "Chờ việc",
-                        CreateDate = itSupporter.CreateDate != null ? itSupporter.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        CreateDate = itSupporter.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateDate = itSupporter.UpdateDate != null ? itSupporter.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                     };
                     return new ResponseObject<ITSupporterAPIViewModel> { IsError = false, ObjReturn = itSupporterAPIViewModel, SuccessMessage = "Thành công" };
@@ -162,7 +162,7 @@ namespace DataService.Models.Entities.Services
                         Estimation = item.Estimation ?? 0,
                         StartTime = item.StartTime != null ? item.StartTime.Value.ToString("MM/dd/yyyy") : string.Empty,
                         Endtime = item.Endtime != null ? item.Endtime.Value.ToString("MM/dd/yyyy") : string.Empty,
-                        CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        CreateDate = item.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                     });
                 }
@@ -356,7 +356,7 @@ namespace DataService.Models.Entities.Services
                         GuidelineName = guideline.GuidelineName,
                         StartDate = guideline.StartDate != null ? guideline.StartDate.Value.ToString("dd/MM/yyyy") : string.Empty,
                         EndDate = guideline.EndDate != null ? guideline.EndDate.Value.ToString("dd/MM/yyyy") : string.Empty,
-                        CreateDate = guideline.CreateDate != null ? guideline.CreateDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                        CreateDate = guideline.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = guideline.UpdateDate != null ? guideline.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                     };
                     return new ResponseObject<GuidelineAPIViewModel> { IsError = false, ObjReturn = guidelineAPIViewModel, SuccessMessage = "Thành công" };

@@ -32,7 +32,7 @@ namespace DataService.Models.Entities
         public Nullable<double> RatingAVG { get; set; }
         public Nullable<bool> IsBusy { get; set; }
         public Nullable<bool> IsDelete { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
+        public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
         public virtual Account Account { get; set; }

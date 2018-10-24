@@ -50,7 +50,7 @@ namespace DataService.Models.Entities.Services
                         DevicePassword = item.DevicePassword,
                         SettingDate = item.SettingDate != null ? item.SettingDate.Value.ToString("MM/dd/yyyy") : string.Empty,
                         Other = item.Other,
-                        CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        CreateDate = item.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                     });
                 }
@@ -92,7 +92,7 @@ namespace DataService.Models.Entities.Services
                         SettingDate = item.SettingDate.Value.ToString("MM/dd/yyyy"),
                         Other = item.Other,
                         IsDelete = item.IsDelete,
-                        CreateDate = item.CreateDate.Value.ToString("MM/dd/yyyy"),
+                        CreateDate = item.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateDate = item.UpdateDate.Value.ToString("MM/dd/yyyy"),
                     });
                 }
@@ -130,7 +130,7 @@ namespace DataService.Models.Entities.Services
                         SettingDate = device.SettingDate.Value.ToString("MM/dd/yyyy"),
                         Other = device.Other,
                         IsDelete = device.IsDelete,
-                        CreateDate = device.CreateDate.Value.ToString("MM/dd/yyyy"),
+                        CreateDate = device.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateDate = device.UpdateDate.Value.ToString("MM/dd/yyyy"),
                     };
                     return new ResponseObject<DeviceAPIViewModel> { IsError = false, ObjReturn = deviceAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
@@ -206,7 +206,7 @@ namespace DataService.Models.Entities.Services
                         DevicePassword = item.DevicePassword,
                         SettingDate = item.SettingDate != null ? item.SettingDate.Value.ToString("MM/dd/yyyy") : string.Empty,
                         Other = item.Other,
-                        CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        CreateDate = item.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                     });
                 }

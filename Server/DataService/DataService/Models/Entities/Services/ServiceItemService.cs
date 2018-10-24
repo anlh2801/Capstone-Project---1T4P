@@ -37,7 +37,7 @@ namespace DataService.Models.Entities.Services
                     ServiceItemName = item.ServiceItemName,
                     ServiceItemPrice = item.Price ?? item.Price.Value,
                     Description = item.Description,
-                    CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                    CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                     UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                 });
 

@@ -44,7 +44,7 @@ namespace DataService.Models.Entities.Services
                 }
                 foreach (var item in requests)
                 {
-                    var timeAgo = TimeAgo(item.CreateDate.Value);
+                    var timeAgo = TimeAgo(item.CreateDate);
                     foreach (int enumm in Enum.GetValues(typeof(RequestStatusEnum)))
                     {
                         if (item.RequestStatus == enumm)
@@ -84,7 +84,7 @@ namespace DataService.Models.Entities.Services
                 }
                 foreach (var item in requests)
                 {
-                    var timeAgo = TimeAgo(item.CreateDate.Value);
+                    var timeAgo = TimeAgo(item.CreateDate);
                     var a = new RequestAPIViewModel()
                     {
                         RequestId = item.RequestId,
@@ -131,7 +131,7 @@ namespace DataService.Models.Entities.Services
                 }
 
 
-                var timeAgo = TimeAgo(request.CreateDate.Value);
+                var timeAgo = TimeAgo(request.CreateDate);
                 var requestAPIViewModel = new RequestAPIViewModel()
                 {
                     RequestId = request.RequestId,
@@ -218,7 +218,7 @@ namespace DataService.Models.Entities.Services
                 }
                 foreach (var item in requests)
                 {
-                    var timeAgo = TimeAgo(item.CreateDate.Value);
+                    var timeAgo = TimeAgo(item.CreateDate);
                     var a = new RequestAPIViewModel()
                     {
                         RequestId = item.RequestId,
@@ -307,7 +307,7 @@ namespace DataService.Models.Entities.Services
                         StartDate = request.StartDate != null ? request.StartDate.Value.ToString("MM/dd/yyyy") : string.Empty,
                         EndDate = request.EndDate != null ? request.EndDate.Value.ToString("MM/dd/yyyy") : string.Empty,
                         Feedback = request.Feedback,
-                        CreateDate = request.CreateDate != null ? request.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        CreateDate = request.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                     };
                     return new ResponseObject<RequestDetailAPIViewModel> { IsError = false, ObjReturn = RequestDetailAPIViewModel, SuccessMessage = "Tìm thấy thông tin yêu cầu!" };

@@ -20,7 +20,7 @@ namespace DataService.ViewModels
     			public virtual string Username { get; set; }
     			public virtual string Password { get; set; }
     			public virtual bool IsDelete { get; set; }
-    			public virtual Nullable<System.DateTime> CreateDate { get; set; }
+    			public virtual System.DateTime CreateDate { get; set; }
     			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	
     	public AccountViewModel() : base() { }

@@ -63,7 +63,7 @@ namespace DataService.Models.Entities.Services
                         AgencyName = item.AgencyName,
                         Address = item.Address,
                         Telephone = item.Telephone,
-                        CreateAt = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        CreateAt = item.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateAt = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
 
                     });
@@ -97,7 +97,7 @@ namespace DataService.Models.Entities.Services
                         AgencyName = agency.AgencyName,
                         Address = agency.Address,
                         Telephone = agency.Telephone,
-                        CreateAt = agency.CreateDate != null ? agency.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        CreateAt = agency.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateAt = agency.UpdateDate != null ? agency.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                     };
                     return new ResponseObject<AgencyAPIViewModel> { IsError = false, ObjReturn = agencyAPIViewModel, SuccessMessage = "Tìm thấy thông tin chi nhánh!" };
@@ -160,7 +160,7 @@ namespace DataService.Models.Entities.Services
                         AgencyName = item.AgencyName,
                         Address = item.Address,
                         Telephone = item.Telephone,
-                        CreateAt = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        CreateAt = item.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateAt = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                     });
                 }
@@ -351,7 +351,7 @@ namespace DataService.Models.Entities.Services
                     DevicePassword = devices.DevicePassword,
                     SettingDate = devices.SettingDate != null ? devices.SettingDate.Value.ToString("MM/dd/yyyy") : string.Empty,
                     Other = devices.Other,
-                    CreateDate = devices.CreateDate != null ? devices.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    CreateDate = devices.CreateDate.ToString("MM/dd/yyyy"),
                     UpdateDate = devices.UpdateDate != null ? devices.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                 };
                 return new ResponseObject<AgencyDeviceAPIViewModel> { IsError = false, SuccessMessage = "Tìm thấy thiết bị!", ObjReturn = agencyDeviceAPIViewModel };
@@ -387,7 +387,7 @@ namespace DataService.Models.Entities.Services
                         Estimation = item.Estimation ?? 0,
                         StartTime = item.StartTime != null ? item.StartTime.Value.ToString("dd/MM/yyyy") : string.Empty,
                         Endtime = item.Endtime != null ? item.Endtime.Value.ToString("dd/MM/yyyy") : string.Empty,
-                        CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                     });
                 }
@@ -427,7 +427,7 @@ namespace DataService.Models.Entities.Services
                         DevicePassword = item.DevicePassword,
                         SettingDate = item.SettingDate != null ? item.SettingDate.Value.ToString("MM/dd/yyyy") : string.Empty,
                         Other = item.Other,
-                        CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        CreateDate = item.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                     });
                 }

@@ -43,7 +43,7 @@ namespace DataService.Models.Entities.Services
                                 CompanyId = item.CompanyId,
                                 CompanyName = item.CompanyName,
                                 Description = item.Description,
-                                CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                                CreateDate = item.CreateDate.ToString("MM/dd/yyyy"),
                                 UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                             });
                         }
@@ -73,7 +73,7 @@ namespace DataService.Models.Entities.Services
                     CompanyId = company.CompanyId,
                     CompanyName = company.CompanyName,
                     Description = company.Description,
-                    CreateDate = company.CreateDate.Value.ToString("dd/MM/yyyy"),
+                    CreateDate = company.CreateDate.ToString("dd/MM/yyyy"),
                     UpdateDate = company.UpdateDate.Value.ToString("dd/MM/yyyy"),
                 };
                 return new ResponseObject<CompanyAPIViewModel> { IsError = false, ObjReturn = companyAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };

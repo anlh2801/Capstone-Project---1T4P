@@ -20,7 +20,7 @@ namespace DataService.ViewModels
     			public virtual Nullable<int> ServiceITSupportId { get; set; }
     			public virtual Nullable<int> MonthExperience { get; set; }
     			public virtual Nullable<bool> IsDelete { get; set; }
-    			public virtual Nullable<System.DateTime> CreateDate { get; set; }
+    			public virtual System.DateTime CreateDate { get; set; }
     			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	
     	public SkillViewModel() : base() { }

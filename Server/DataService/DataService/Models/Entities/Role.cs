@@ -23,7 +23,7 @@ namespace DataService.Models.Entities
         public int RoleId { get; set; }
         public string RoleName { get; set; }
         public bool IsDelete { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
+        public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
