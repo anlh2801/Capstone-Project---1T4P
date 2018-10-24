@@ -123,7 +123,7 @@
           <Property Name="AccountId" Type="int" />
           <Property Name="Telephone" Type="nvarchar" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
-          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gender" Type="int" />
           <Property Name="Address" Type="nvarchar" MaxLength="50" />
           <Property Name="RatingAVG" Type="float" />
           <Property Name="IsBusy" Type="bit" />
@@ -895,7 +895,7 @@
           <Property Name="AccountId" Type="Int32" />
           <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="Int32" />
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RatingAVG" Type="Double" />
           <Property Name="IsBusy" Type="Boolean" />

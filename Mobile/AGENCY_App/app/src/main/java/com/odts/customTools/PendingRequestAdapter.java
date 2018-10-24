@@ -7,15 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.odts.activities.ListRequestActivity;
-import com.odts.activities.LoginActivity;
 import com.odts.activities.R;
 import com.odts.activities.RequestDetailActivity;
 import com.odts.models.ListRequest;
 import com.odts.services.RequestService;
-import com.odts.utils.CallBackData;
 
 import java.util.List;
 

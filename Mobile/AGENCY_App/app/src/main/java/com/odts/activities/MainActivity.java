@@ -30,16 +30,9 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
 
-    private ServiceITSupportService _serviceITSupportService;
-    private ServiceItemService _serviceItem;
-
     FragmentManager fragmentManager = getFragmentManager();
     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-    
-    public  MainActivity(){
-        _serviceITSupportService = new ServiceITSupportService();
-        _serviceItem = new ServiceItemService();
-    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         initBottomMenu ();
         loadFragment(new HomeFragment());
-        SharedPreferences share = getApplicationContext().getSharedPreferences("ODTS", 0);
-        SharedPreferences.Editor edit = share.edit();
-        Integer agencyId = share.getInt("agencyId", 0);
-
-
     }
 
     private boolean loadFragment(Fragment fragment) {

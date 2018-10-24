@@ -1,6 +1,7 @@
 package com.odts.activities;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -26,6 +27,8 @@ public class ManageDeviceFragment extends Fragment {
     private ServiceITSupportService _serviceITSupportService;
     private DeviceService _deviceService;
 
+    Integer agencyId = 0;
+
     public  ManageDeviceFragment(){
         _serviceITSupportService = new ServiceITSupportService();
         _deviceService = new DeviceService();
@@ -33,7 +36,12 @@ public class ManageDeviceFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getAllServiceITSupportForAgency (3);
+
+        SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
+        SharedPreferences.Editor edit = share.edit();
+        agencyId = share.getInt("agencyId", 0);
+
+        getAllServiceITSupportForAgency (agencyId);
     }
 
     @Override
