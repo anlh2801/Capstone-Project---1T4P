@@ -21,7 +21,7 @@ namespace DataService.ViewModels
     			public virtual Nullable<double> Price { get; set; }
     			public virtual string Description { get; set; }
     			public virtual Nullable<bool> IsDelete { get; set; }
-    			public virtual Nullable<System.DateTime> CreateDate { get; set; }
+    			public virtual System.DateTime CreateDate { get; set; }
     			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	
     	public ServiceItemViewModel() : base() { }

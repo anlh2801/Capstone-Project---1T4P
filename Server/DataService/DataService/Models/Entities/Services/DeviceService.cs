@@ -29,7 +29,7 @@ namespace DataService.Models.Entities.Services
                 List<AgencyDeviceAPIViewModel> rsList = new List<AgencyDeviceAPIViewModel>();
                 var agencyDeviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
                 var agencyDevices = agencyDeviceRepo.GetActive(p => p.AgencyId == agency_id).ToList();
-                if (agencyDevices.Count < 0)
+                if (agencyDevices.Count <= 0)
                 {
                     return new ResponseObject<List<AgencyDeviceAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy thiết bị nào!" };
                 }
@@ -50,7 +50,7 @@ namespace DataService.Models.Entities.Services
                         DevicePassword = item.DevicePassword,
                         SettingDate = item.SettingDate != null ? item.SettingDate.Value.ToString("MM/dd/yyyy") : string.Empty,
                         Other = item.Other,
-                        CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        CreateDate = item.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                     });
                 }
@@ -70,7 +70,7 @@ namespace DataService.Models.Entities.Services
                 List<DeviceAPIViewModel> rsList = new List<DeviceAPIViewModel>();
                 var deviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
                 var devices = deviceRepo.GetActive().ToList();
-                if (devices.Count < 0)
+                if (devices.Count <= 0)
                 {
                     return new ResponseObject<List<DeviceAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy thiết bị nào" };
                 }
@@ -92,7 +92,7 @@ namespace DataService.Models.Entities.Services
                         SettingDate = item.SettingDate.Value.ToString("MM/dd/yyyy"),
                         Other = item.Other,
                         IsDelete = item.IsDelete,
-                        CreateDate = item.CreateDate.Value.ToString("MM/dd/yyyy"),
+                        CreateDate = item.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateDate = item.UpdateDate.Value.ToString("MM/dd/yyyy"),
                     });
                 }
@@ -130,7 +130,7 @@ namespace DataService.Models.Entities.Services
                         SettingDate = device.SettingDate.Value.ToString("MM/dd/yyyy"),
                         Other = device.Other,
                         IsDelete = device.IsDelete,
-                        CreateDate = device.CreateDate.Value.ToString("MM/dd/yyyy"),
+                        CreateDate = device.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateDate = device.UpdateDate.Value.ToString("MM/dd/yyyy"),
                     };
                     return new ResponseObject<DeviceAPIViewModel> { IsError = false, ObjReturn = deviceAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
@@ -185,7 +185,7 @@ namespace DataService.Models.Entities.Services
                 List<AgencyDeviceAPIViewModel> rsList = new List<AgencyDeviceAPIViewModel>();
                 var agencyDeviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
                 var agencyDevices = agencyDeviceRepo.GetActive(p => p.AgencyId == agencyId && p.DeviceType.ServiceId == serviceId).ToList();
-                if (agencyDevices.Count < 0)
+                if (agencyDevices.Count <= 0)
                 {
                     return new ResponseObject<List<AgencyDeviceAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy thiết bị nào!" };
                 }
@@ -206,7 +206,7 @@ namespace DataService.Models.Entities.Services
                         DevicePassword = item.DevicePassword,
                         SettingDate = item.SettingDate != null ? item.SettingDate.Value.ToString("MM/dd/yyyy") : string.Empty,
                         Other = item.Other,
-                        CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        CreateDate = item.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                     });
                 }

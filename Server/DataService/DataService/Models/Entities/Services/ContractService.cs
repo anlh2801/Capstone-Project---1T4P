@@ -29,7 +29,7 @@ namespace DataService.Models.Entities.Services
                 List<ContractAPIViewModel> rsList = new List<ContractAPIViewModel>();
                 var contractRepo = DependencyUtils.Resolve<IContractRepository>();
                 var contracts = contractRepo.GetActive().ToList();
-                if (contracts.Count < 0)
+                if (contracts.Count <= 0)
                 {
                     return new ResponseObject<List<ContractAPIViewModel>> { IsError = true, WarningMessage = "Không có hợp đồng" };
                 }
@@ -48,7 +48,7 @@ namespace DataService.Models.Entities.Services
                             StartDate = item.StartDate.Value.ToString("dd/MM/yyyy"),
                             EndDate = item.EndDate.Value.ToString("dd/MM/yyyy"),
                             IsDelete = item.IsDelete,
-                            CreateDate = item.CreateDate.Value.ToString("dd/MM/yyyy"),
+                            CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                             UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy")
                         });
                     }

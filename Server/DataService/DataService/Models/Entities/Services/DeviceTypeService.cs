@@ -30,7 +30,7 @@ namespace DataService.Models.Entities.Services
                 List<DeviceTypeAPIViewModel> rsList = new List<DeviceTypeAPIViewModel>();
                 var devicetypeRepo = DependencyUtils.Resolve<IDeviceTypeRepository>();
                 var devicetypes = devicetypeRepo.GetActive().ToList();
-                if (devicetypes.Count < 0)
+                if (devicetypes.Count <= 0)
                 {
                     return new ResponseObject<List<DeviceTypeAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy loại thiết bị nào" };
                 }
@@ -48,7 +48,7 @@ namespace DataService.Models.Entities.Services
                             ServiceName = item.ServiceITSupport.ServiceName,
                             Description = item.Description,
                             IsDelete = item.IsDelete,
-                            CreateDate = item.CreateDate.Value.ToString("dd/MM/yyyy"),
+                            CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                             UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy"),
                         });
                     }
@@ -76,7 +76,7 @@ namespace DataService.Models.Entities.Services
                     ServiceId = devicetype.ServiceId,
                     ServiceName = devicetype.ServiceITSupport.ServiceName,
                     Description = devicetype.Description,
-                    CreateDate = devicetype.CreateDate.Value.ToString("dd/MM/yyyy"),
+                    CreateDate = devicetype.CreateDate.ToString("dd/MM/yyyy"),
                     UpdateDate = devicetype.UpdateDate.Value.ToString("dd/MM/yyyy"),
                 };
                 return new ResponseObject<DeviceTypeAPIViewModel> { IsError = false, ObjReturn = devicetypeAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };

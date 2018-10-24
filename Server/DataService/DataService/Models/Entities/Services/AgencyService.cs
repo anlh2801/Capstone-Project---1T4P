@@ -47,7 +47,7 @@ namespace DataService.Models.Entities.Services
                 List<AgencyAPIViewModel> rsList = new List<AgencyAPIViewModel>();
                 var agencyDeviceRepo = DependencyUtils.Resolve<IAgencyRepository>();
                 var agencyDevices = agencyDeviceRepo.GetActive(p => p.CompanyId == company_id).ToList();
-                if (agencyDevices.Count < 0)
+                if (agencyDevices.Count <= 0)
                 {
                     return new ResponseObject<List<AgencyAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy thiết bị nào!" };
                 }
@@ -63,7 +63,7 @@ namespace DataService.Models.Entities.Services
                         AgencyName = item.AgencyName,
                         Address = item.Address,
                         Telephone = item.Telephone,
-                        CreateAt = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        CreateAt = item.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateAt = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
 
                     });
@@ -97,7 +97,7 @@ namespace DataService.Models.Entities.Services
                         AgencyName = agency.AgencyName,
                         Address = agency.Address,
                         Telephone = agency.Telephone,
-                        CreateAt = agency.CreateDate != null ? agency.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        CreateAt = agency.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateAt = agency.UpdateDate != null ? agency.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                     };
                     return new ResponseObject<AgencyAPIViewModel> { IsError = false, ObjReturn = agencyAPIViewModel, SuccessMessage = "Tìm thấy thông tin chi nhánh!" };
@@ -146,7 +146,7 @@ namespace DataService.Models.Entities.Services
                 List<AgencyAPIViewModel> rsList = new List<AgencyAPIViewModel>();
                 var agencyRepo = DependencyUtils.Resolve<IAgencyRepository>();
                 var agencies = agencyRepo.GetActive().ToList();
-                if (agencies.Count < 0)
+                if (agencies.Count <= 0)
                 {
                     return new ResponseObject<List<AgencyAPIViewModel>> { IsError = true, WarningMessage = "Lấy thông tin tất cả công ty thất bại!" };
                 }
@@ -160,7 +160,7 @@ namespace DataService.Models.Entities.Services
                         AgencyName = item.AgencyName,
                         Address = item.Address,
                         Telephone = item.Telephone,
-                        CreateAt = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        CreateAt = item.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateAt = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                     });
                 }
@@ -241,7 +241,7 @@ namespace DataService.Models.Entities.Services
                 if (current_IT_supporter_Id > 0)
                 {
                     CreateTicket(model.Ticket, createRequest.RequestId, current_IT_supporter_Id);
-                    createRequest.RequestStatus = (int)RequestStatusEnum.Processing;
+                    //createRequest.RequestStatus = (int)RequestStatusEnum.Processing;
                     requestRepo.Save();
                 }
                 else
@@ -351,7 +351,7 @@ namespace DataService.Models.Entities.Services
                     DevicePassword = devices.DevicePassword,
                     SettingDate = devices.SettingDate != null ? devices.SettingDate.Value.ToString("MM/dd/yyyy") : string.Empty,
                     Other = devices.Other,
-                    CreateDate = devices.CreateDate != null ? devices.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    CreateDate = devices.CreateDate.ToString("MM/dd/yyyy"),
                     UpdateDate = devices.UpdateDate != null ? devices.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                 };
                 return new ResponseObject<AgencyDeviceAPIViewModel> { IsError = false, SuccessMessage = "Tìm thấy thiết bị!", ObjReturn = agencyDeviceAPIViewModel };
@@ -369,7 +369,7 @@ namespace DataService.Models.Entities.Services
                 List<TicketAPIViewModel> rsList = new List<TicketAPIViewModel>();
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
                 var tickets = ticketRepo.GetActive().Where(a => a.RequestId == requestId).ToList();
-                if (tickets.Count < 0)
+                if (tickets.Count <= 0)
                 {
                     return new ResponseObject<List<TicketAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy danh sách!", ObjReturn = null };
                 }
@@ -387,7 +387,7 @@ namespace DataService.Models.Entities.Services
                         Estimation = item.Estimation ?? 0,
                         StartTime = item.StartTime != null ? item.StartTime.Value.ToString("dd/MM/yyyy") : string.Empty,
                         Endtime = item.Endtime != null ? item.Endtime.Value.ToString("dd/MM/yyyy") : string.Empty,
-                        CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                     });
                 }
@@ -406,7 +406,7 @@ namespace DataService.Models.Entities.Services
                 List<AgencyDeviceAPIViewModel> rsList = new List<AgencyDeviceAPIViewModel>();
                 var deviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
                 var devices = deviceRepo.GetActive().Where(a => a.DeviceTypeId == deviceTypeId && a.AgencyId == agencyId).ToList();
-                if (devices.Count < 0)
+                if (devices.Count <= 0)
                 {
                     return new ResponseObject<List<AgencyDeviceAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy danh sách thiết bị!", ObjReturn = null };
                 }
@@ -427,7 +427,7 @@ namespace DataService.Models.Entities.Services
                         DevicePassword = item.DevicePassword,
                         SettingDate = item.SettingDate != null ? item.SettingDate.Value.ToString("MM/dd/yyyy") : string.Empty,
                         Other = item.Other,
-                        CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        CreateDate = item.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                     });
                 }

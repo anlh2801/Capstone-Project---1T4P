@@ -1,6 +1,7 @@
 package com.odts.activities;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.odts.customTools.ServiceItemAdapter;
 import com.odts.models.ServiceITSupport;
@@ -26,10 +29,13 @@ public class HomeFragment extends Fragment {
     private ServiceITSupportService _serviceITSupportService;
     private ServiceItemService _serviceItem;
 
-    public  HomeFragment(){
+    Integer agencyId = 0;
+
+    public HomeFragment() {
         _serviceITSupportService = new ServiceITSupportService();
         _serviceItem = new ServiceItemService();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,10 +47,15 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getAllServiceITSupportForAgency(3);
+
+        SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
+        SharedPreferences.Editor edit = share.edit();
+        agencyId = share.getInt("agencyId", 0);
+
+        getAllServiceITSupportForAgency(agencyId);
     }
 
-    private void getAllServiceITSupportForAgency (int agencyId){
+    private void getAllServiceITSupportForAgency(int agencyId) {
         _serviceITSupportService.getAllServiceITSupport(getActivity(), agencyId, new CallBackData<ArrayList<ServiceITSupport>>() {
             @Override
             public void onSuccess(ArrayList<ServiceITSupport> serviceITSupports) {
@@ -69,6 +80,7 @@ public class HomeFragment extends Fragment {
                     layout.addView(bt);
                 }
             }
+
             @Override
             public void onFail(String message) {
 
@@ -76,7 +88,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void getAllServiceItemByServiceId (int serviceId){
+    public void getAllServiceItemByServiceId(int serviceId) {
         _serviceItem.getAllServiceItemByServiceId(getActivity(), serviceId, new CallBackData<ArrayList<ServiceItem>>() {
             @Override
             public void onSuccess(ArrayList<ServiceItem> serviceItems) {
@@ -84,6 +96,7 @@ public class HomeFragment extends Fragment {
                 ServiceItemAdapter serviceItemAdapter = new ServiceItemAdapter(getActivity(), R.layout.service_item_list, serviceItems);
                 lvServiceItem.setAdapter(serviceItemAdapter);
             }
+
             @Override
             public void onFail(String message) {
 

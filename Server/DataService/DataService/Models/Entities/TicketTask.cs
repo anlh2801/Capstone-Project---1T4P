@@ -23,7 +23,7 @@ namespace DataService.Models.Entities
         public Nullable<int> Priority { get; set; }
         public Nullable<int> PreTaskCondition { get; set; }
         public bool IsDelete { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
+        public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
         public virtual Ticket Ticket { get; set; }

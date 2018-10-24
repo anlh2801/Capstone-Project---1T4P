@@ -47,7 +47,7 @@ namespace DataService.Models.Entities.Services
                 List<ITSupporterAPIViewModel> rsList = new List<ITSupporterAPIViewModel>();
                 var ITSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
                 var itSupporters = ITSupporterRepo.GetActive().ToList();
-                if (itSupporters.Count < 0)
+                if (itSupporters.Count <= 0)
                 {
                     return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy người hỗ trợ" };
                 }
@@ -60,11 +60,11 @@ namespace DataService.Models.Entities.Services
                         Username = item.Account.Username,
                         Telephone = item.Telephone,
                         Email = item.Email,
-                        Gender = item.Gender,
+                        Gender = item.Gender != null ? Enum.GetName(typeof(TicketStatusEnum), item.Gender) : string.Empty,
                         Address = item.Address,
                         RatingAVG = item.RatingAVG ?? 0,
                         IsBusy = item.IsBusy.Value == true ? "Đang bận!" : "Chờ việc",
-                        CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                     });
                 }
@@ -118,11 +118,11 @@ namespace DataService.Models.Entities.Services
                         AccountId = itSupporter.AccountId ?? 0,
                         Telephone = itSupporter.Telephone,
                         Email = itSupporter.Email,
-                        Gender = itSupporter.Gender,
+                        Gender = itSupporter.Gender != null ? Enum.GetName(typeof(TicketStatusEnum), itSupporter.Gender) : string.Empty,
                         Address = itSupporter.Address,
                         RatingAVG = itSupporter.RatingAVG ?? 0,
                         IsBusy = itSupporter.IsBusy.Value == true ? "Đang bận!" : "Chờ việc",
-                        CreateDate = itSupporter.CreateDate != null ? itSupporter.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        CreateDate = itSupporter.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateDate = itSupporter.UpdateDate != null ? itSupporter.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                     };
                     return new ResponseObject<ITSupporterAPIViewModel> { IsError = false, ObjReturn = itSupporterAPIViewModel, SuccessMessage = "Thành công" };
@@ -144,7 +144,7 @@ namespace DataService.Models.Entities.Services
                 List<TicketAPIViewModel> rsList = new List<TicketAPIViewModel>();
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
                 var ticket = ticketRepo.GetActive(p => p.CurrentITSupporter_Id == ITsupporter_id).ToList();
-                if (ticket.Count < 0)
+                if (ticket.Count <= 0)
                 {
                     return new ResponseObject<List<TicketAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy" };
                 }
@@ -162,7 +162,7 @@ namespace DataService.Models.Entities.Services
                         Estimation = item.Estimation ?? 0,
                         StartTime = item.StartTime != null ? item.StartTime.Value.ToString("MM/dd/yyyy") : string.Empty,
                         Endtime = item.Endtime != null ? item.Endtime.Value.ToString("MM/dd/yyyy") : string.Empty,
-                        CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        CreateDate = item.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                     });
                 }
@@ -356,7 +356,7 @@ namespace DataService.Models.Entities.Services
                         GuidelineName = guideline.GuidelineName,
                         StartDate = guideline.StartDate != null ? guideline.StartDate.Value.ToString("dd/MM/yyyy") : string.Empty,
                         EndDate = guideline.EndDate != null ? guideline.EndDate.Value.ToString("dd/MM/yyyy") : string.Empty,
-                        CreateDate = guideline.CreateDate != null ? guideline.CreateDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                        CreateDate = guideline.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = guideline.UpdateDate != null ? guideline.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                     };
                     return new ResponseObject<GuidelineAPIViewModel> { IsError = false, ObjReturn = guidelineAPIViewModel, SuccessMessage = "Thành công" };

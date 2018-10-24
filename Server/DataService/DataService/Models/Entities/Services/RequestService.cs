@@ -23,7 +23,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> CreateFeedbackForRequest(int RequestId, string feedbackContent);
 
-        ResponseObject<bool> CancelRequest(RequestCancelAPIViewModel model);
+        ResponseObject<bool> CancelRequest(int request_id, int status);
 
         ResponseObject<RequestDetailAPIViewModel> ViewRequestDetail(int requestId);
 
@@ -38,13 +38,13 @@ namespace DataService.Models.Entities.Services
                 List<RequestAPIViewModel> rsList = new List<RequestAPIViewModel>();
                 var RequestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var requests = RequestRepo.GetActive().ToList();
-                if (requests.Count < 0)
+                if (requests.Count <= 0)
                 {
                     return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại" };
                 }
                 foreach (var item in requests)
                 {
-                    var timeAgo = TimeAgo(item.CreateDate.Value);
+                    var timeAgo = TimeAgo(item.CreateDate);
                     foreach (int enumm in Enum.GetValues(typeof(RequestStatusEnum)))
                     {
                         if (item.RequestStatus == enumm)
@@ -78,13 +78,13 @@ namespace DataService.Models.Entities.Services
                 List<RequestAPIViewModel> rsList = new List<RequestAPIViewModel>();
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var requests = requestRepo.GetActive(x => x.RequestStatus == status).ToList();
-                if (requests.Count < 0)
+                if (requests.Count <= 0)
                 {
                     return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Không lấy được" };
                 }
                 foreach (var item in requests)
                 {
-                    var timeAgo = TimeAgo(item.CreateDate.Value);
+                    var timeAgo = TimeAgo(item.CreateDate);
                     var a = new RequestAPIViewModel()
                     {
                         RequestId = item.RequestId,
@@ -131,7 +131,7 @@ namespace DataService.Models.Entities.Services
                 }
 
 
-                var timeAgo = TimeAgo(request.CreateDate.Value);
+                var timeAgo = TimeAgo(request.CreateDate);
                 var requestAPIViewModel = new RequestAPIViewModel()
                 {
                     RequestId = request.RequestId,
@@ -213,9 +213,13 @@ namespace DataService.Models.Entities.Services
                 List<TicketForRequestAllTicketStatusAPIViewModel> ticketList = new List<TicketForRequestAllTicketStatusAPIViewModel>();
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var requests = requestRepo.GetActive(x => x.RequestStatus == status && x.AgencyId == acency_id).ToList();
+
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
 
-                if (requests.Count < 0)
+                
+
+                if (requests.Count <= 0)
+
                 {
                     return new ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> { IsError = true, WarningMessage = "Thất bại", ObjReturn = requestList };
                 }
@@ -237,19 +241,20 @@ namespace DataService.Models.Entities.Services
                             Current_TicketStatus = ticketItem.Current_TicketStatus != null ? ticketItem.Current_TicketStatus.Value : 0,
                             Desciption = ticketItem.Desciption,
                             Estimation = ticketItem.Estimation ?? 0,
-                            CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty
+                            CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty
                         };
                         ticketList.Add(ticket);
                     }
-                    var timeAgo = TimeAgo(item.CreateDate.Value);
+                    var timeAgo = TimeAgo(item.CreateDate);
                     var request = new RequestAllTicketWithStatusAgencyAPIViewModel()
+
                     {
                         RequestId = item.RequestId,
                         RequestName = item.RequestName,
                         CreateDate = timeAgo,
                         AgencyName = item.Agency.AgencyName,
                         RequestStatus = item.RequestStatus,
-                        RequestEstimationTime = item.CreateDate.Value.AddHours(ticketList.Sum(p => p.Estimation)).ToString("dd/MM/yyyy HH:mm"),
+                        RequestEstimationTime = item.CreateDate.AddHours(ticketList.Sum(p => p.Estimation)).ToString("dd/MM/yyyy HH:mm"),
                         NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
                         NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
                         NumberOfTicket = ticketList.Count,
@@ -292,17 +297,17 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<bool> CancelRequest(RequestCancelAPIViewModel model)
+        public ResponseObject<bool> CancelRequest(int request_id, int status)
         {
             try
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
-                var cancelTicket = requestRepo.GetActive().SingleOrDefault(a => a.RequestId == model.RequestId);
-                if (cancelTicket.RequestId == model.RequestId)
+                var cancelTicket = requestRepo.GetActive().SingleOrDefault(a => a.RequestId == request_id);
+                if (cancelTicket.RequestId == request_id)
                 {
 
-                    cancelTicket.RequestId = model.RequestId;
-                    cancelTicket.RequestStatus = model.CurrentStatus;
+                    cancelTicket.RequestId = request_id;
+                    cancelTicket.RequestStatus = status;
 
                     requestRepo.Edit(cancelTicket);
                     requestRepo.Save();
@@ -337,7 +342,7 @@ namespace DataService.Models.Entities.Services
                         StartDate = request.StartDate != null ? request.StartDate.Value.ToString("MM/dd/yyyy") : string.Empty,
                         EndDate = request.EndDate != null ? request.EndDate.Value.ToString("MM/dd/yyyy") : string.Empty,
                         Feedback = request.Feedback,
-                        CreateDate = request.CreateDate != null ? request.CreateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        CreateDate = request.CreateDate.ToString("MM/dd/yyyy"),
                         UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
                     };
                     return new ResponseObject<RequestDetailAPIViewModel> { IsError = false, ObjReturn = RequestDetailAPIViewModel, SuccessMessage = "Tìm thấy thông tin yêu cầu!" };

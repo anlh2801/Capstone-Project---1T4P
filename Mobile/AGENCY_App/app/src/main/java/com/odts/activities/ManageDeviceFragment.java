@@ -1,6 +1,7 @@
 package com.odts.activities;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -9,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.odts.customTools.DeviceManageAdapter;
 import com.odts.models.Device;
@@ -25,15 +28,22 @@ import java.util.ArrayList;
 public class ManageDeviceFragment extends Fragment {
     private ServiceITSupportService _serviceITSupportService;
     private DeviceService _deviceService;
+    Integer agencyId;
 
-    public  ManageDeviceFragment(){
+    public ManageDeviceFragment() {
         _serviceITSupportService = new ServiceITSupportService();
         _deviceService = new DeviceService();
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getAllServiceITSupportForAgency (3);
+
+        SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
+        SharedPreferences.Editor edit = share.edit();
+        agencyId = share.getInt("agencyId", 0);
+
+        getAllServiceITSupportForAgency(agencyId);
     }
 
     @Override
@@ -44,14 +54,14 @@ public class ManageDeviceFragment extends Fragment {
     }
 
 
-    private void getAllServiceITSupportForAgency (final int agencyId){
+    private void getAllServiceITSupportForAgency(final int agencyId) {
         _serviceITSupportService.getAllServiceITSupport(getActivity(), agencyId, new CallBackData<ArrayList<ServiceITSupport>>() {
             @Override
             public void onSuccess(ArrayList<ServiceITSupport> serviceITSupports) {
                 LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.layout_ServicesManagerDevice);
 
                 // Load ServiceItem của Service đầu tiên
-                getAllDeviceByAgencyIdAndServiceItem( agencyId ,serviceITSupports.get(0).getServiceITSupportId());
+                getAllDeviceByAgencyIdAndServiceItem(agencyId, serviceITSupports.get(0).getServiceITSupportId());
                 for (ServiceITSupport item : serviceITSupports) {
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -69,6 +79,7 @@ public class ManageDeviceFragment extends Fragment {
                     layout.addView(bt);
                 }
             }
+
             @Override
             public void onFail(String message) {
 
@@ -76,14 +87,15 @@ public class ManageDeviceFragment extends Fragment {
         });
     }
 
-    private void getAllDeviceByAgencyIdAndServiceItem (int agencyId, int serviceId){
-        _deviceService.getAllDeviceByAgencyIdAndServiceItem(getActivity(), agencyId ,serviceId, new CallBackData<ArrayList<Device>>() {
+    private void getAllDeviceByAgencyIdAndServiceItem(int agencyId, int serviceId) {
+        _deviceService.getAllDeviceByAgencyIdAndServiceItem(getActivity(), agencyId, serviceId, new CallBackData<ArrayList<Device>>() {
             @Override
             public void onSuccess(ArrayList<Device> devices) {
                 ListView lvDeviceToManage = getActivity().findViewById(R.id.lvDeviceToManage);
                 DeviceManageAdapter deviceManageAdapter = new DeviceManageAdapter(getActivity(), R.layout.device_manage_item_list, devices);
                 lvDeviceToManage.setAdapter(deviceManageAdapter);
             }
+
             @Override
             public void onFail(String message) {
 

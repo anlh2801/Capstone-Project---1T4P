@@ -31,7 +31,7 @@ namespace DataService.Models.Entities
         public Nullable<System.DateTime> EndDate { get; set; }
         public string Feedback { get; set; }
         public bool IsDelete { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
+        public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
         public virtual Agency Agency { get; set; }

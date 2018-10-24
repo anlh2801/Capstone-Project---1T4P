@@ -26,7 +26,7 @@ namespace DataService.Models.Entities.Services
                 List<TicketHistoryAPIViewModel> rsList = new List<TicketHistoryAPIViewModel>();
                 var ticketHistoryRepo = DependencyUtils.Resolve<ITicketHistoryRepository>();
                 var ticketHistoryOfTicket = ticketHistoryRepo.GetActive().Where(p => p.TicketId == ticketId).ToList();
-                if (ticketHistoryOfTicket.Count < 0)
+                if (ticketHistoryOfTicket.Count <= 0)
                 {
                     return new ResponseObject<List<TicketHistoryAPIViewModel>> { IsError = false, WarningMessage = "Lịch sử yêu cầu thất bại" };
                 }
@@ -58,7 +58,7 @@ namespace DataService.Models.Entities.Services
                 List<TicketHistoryAPIViewModel> rsList = new List<TicketHistoryAPIViewModel>();
                 var ticketHistoryRepo = DependencyUtils.Resolve<ITicketHistoryRepository>();
                 var ticketHistoryOfTicket = ticketHistoryRepo.GetActive().ToList();
-                if (ticketHistoryOfTicket.Count < 0)
+                if (ticketHistoryOfTicket.Count <= 0)
                 {
                     return new ResponseObject<List<TicketHistoryAPIViewModel>> { IsError = true, SuccessMessage = "Lấy lịch sử thất bại" };
                 }

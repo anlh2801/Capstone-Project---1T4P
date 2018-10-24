@@ -22,7 +22,7 @@ namespace DataService.Models.Entities.Services
             List<ServiceItemAPIViewModel> rsList = new List<ServiceItemAPIViewModel>();
             var serviceItemRepo = DependencyUtils.Resolve<IServiceItemRepository>();
             var serviceItems = serviceItemRepo.GetActive(p => p.ServiceITSupportId == serviceId).ToList();
-            if (serviceItems.Count < 0)
+            if (serviceItems.Count <= 0)
             {
                 return new ResponseObject<List<ServiceItemAPIViewModel>> { IsError = true, WarningMessage = "Không có dịch vụ nào hỗ trợ" };
             }
@@ -37,7 +37,7 @@ namespace DataService.Models.Entities.Services
                     ServiceItemName = item.ServiceItemName,
                     ServiceItemPrice = item.Price ?? item.Price.Value,
                     Description = item.Description,
-                    CreateDate = item.CreateDate != null ? item.CreateDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                    CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                     UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                 });
 

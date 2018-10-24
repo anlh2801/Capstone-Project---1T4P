@@ -26,7 +26,7 @@ namespace DataService.Models.Entities.Services
             List<ServiceITSupportAPIViewModel> rsList = new List<ServiceITSupportAPIViewModel>();
             var serviceITSupportRepo = DependencyUtils.Resolve<IServiceITSupportRepository>();
             var serviceITSupports = serviceITSupportRepo.GetActive().ToList();
-            if (serviceITSupports.Count < 0)
+            if (serviceITSupports.Count <= 0)
             {
                 return new ResponseObject<List<ServiceITSupportAPIViewModel>> { IsError = true, WarningMessage = "Không có hợp đồng" };
             }
@@ -42,7 +42,7 @@ namespace DataService.Models.Entities.Services
                         ServiceName = item.ServiceName,
                         Description = item.Description,
                         IsDelete = item.IsDelete,
-                        CreateDate = item.CreateDate.Value.ToString("dd/MM/yyyy"),
+                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy")
                     });
                 }
@@ -63,7 +63,7 @@ namespace DataService.Models.Entities.Services
                     ServiceITSupportId = serviceitsupport.ServiceITSupportId,
                     ServiceName = serviceitsupport.ServiceName,
                     Description = serviceitsupport.Description,
-                    CreateDate = serviceitsupport.CreateDate.Value.ToString("dd/MM/yyyy"),
+                    CreateDate = serviceitsupport.CreateDate.ToString("dd/MM/yyyy"),
                     UpdateDate = serviceitsupport.UpdateDate.Value.ToString("dd/MM/yyyy"),
                 };
                 return new ResponseObject<ServiceITSupportAPIViewModel> { IsError = false, ObjReturn = devicetypeAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
@@ -137,9 +137,9 @@ namespace DataService.Models.Entities.Services
             var serviceITSupports = serviceITSupportRepo.GetActive(
                 p => p.ContractServiceITSupports.Any(
                     c => (c.EndDate == null || c.EndDate > DateTime.Now) && c.Contract.Company.Agencies.Any(a => a.AgencyId == agencyId))).ToList();
-            if (serviceITSupports.Count < 0)
+            if (serviceITSupports.Count <= 0)
             {
-                return new ResponseObject<List<ServiceITSupportAPIViewModel>> { IsError = true, WarningMessage = "Không có hợp đồng" };
+                return new ResponseObject<List<ServiceITSupportAPIViewModel>> { IsError = true, WarningMessage = "Không có dịch vụ nào" };
             }
             int count = 1;
             foreach (var item in serviceITSupports)
@@ -153,14 +153,14 @@ namespace DataService.Models.Entities.Services
                         ServiceName = item.ServiceName,
                         Description = item.Description,
                         IsDelete = item.IsDelete,
-                        CreateDate = item.CreateDate.Value.ToString("dd/MM/yyyy"),
+                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy")
                     });
                 }
                 count++;
             }
 
-            return new ResponseObject<List<ServiceITSupportAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Hiển thị hợp đồng thành công" };
+            return new ResponseObject<List<ServiceITSupportAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Hiển thị thành công" };
         }
 
     }

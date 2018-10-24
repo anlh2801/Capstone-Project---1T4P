@@ -26,7 +26,7 @@ namespace DataService.Models.Entities
         public string Username { get; set; }
         public string Password { get; set; }
         public bool IsDelete { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
+        public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
         public virtual Role Role { get; set; }
