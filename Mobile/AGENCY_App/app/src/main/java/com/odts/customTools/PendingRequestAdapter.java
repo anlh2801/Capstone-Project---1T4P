@@ -10,14 +10,14 @@ import android.widget.TextView;
 
 import com.odts.activities.R;
 import com.odts.activities.RequestDetailActivity;
-import com.odts.models.ListRequest;
+import com.odts.models.Request;
 import com.odts.services.RequestService;
 
 import java.util.List;
 
 public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAdapter.MyViewHolder> {
     private Context context;
-    private List<ListRequest> listRequest;
+    private List<Request> listRequest;
     RequestService requestService;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -54,7 +54,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
             });
         }
     }
-    public PendingRequestAdapter(Context context, List<ListRequest> listRequest) {
+    public PendingRequestAdapter(Context context, List<Request> listRequest) {
         this.context = context;
         this.listRequest = listRequest;
     }
@@ -67,7 +67,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
     }
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        ListRequest album = listRequest.get(position);
+        Request album = listRequest.get(position);
         holder.rqName.setText(album.getRequestName());
         holder.crDate.setText(album.getCreateDate());
 //        holder.rqNameDT.setText(album.getCreateDate());

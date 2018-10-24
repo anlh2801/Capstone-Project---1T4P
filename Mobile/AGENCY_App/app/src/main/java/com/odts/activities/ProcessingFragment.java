@@ -1,8 +1,6 @@
 package com.odts.activities;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.odts.customTools.PendingRequestAdapter;
 import com.odts.models.ListRequest;
+import com.odts.models.Request;
 import com.odts.services.RequestService;
 import com.odts.utils.CallBackData;
 import com.odts.utils.Enums;
@@ -36,9 +35,9 @@ public class ProcessingFragment extends Fragment {
         agencyId = share.getInt("agencyId", 0);
 
         requestService = new RequestService();
-        requestService.getRequestByStatus(getActivity(), agencyId, Enums.RequestStatusEnum.Processing.getIntValue(), new CallBackData<ArrayList<ListRequest>>() {
+        requestService.getRequestByStatus(getActivity(), agencyId, Enums.RequestStatusEnum.Processing.getIntValue(), new CallBackData<ArrayList<Request>>() {
             @Override
-            public void onSuccess(ArrayList<ListRequest> listRequests) {
+            public void onSuccess(ArrayList<Request> listRequests) {
                 recyclerView = (RecyclerView) getActivity().findViewById(R.id.listpro);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 pendingRequestAdapter = new PendingRequestAdapter(getActivity(), listRequests);
