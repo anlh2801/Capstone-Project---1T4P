@@ -23,7 +23,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> CreateFeedbackForRequest(int RequestId, string feedbackContent);
 
-        ResponseObject<bool> CancelRequest(RequestCancelAPIViewModel model);
+        ResponseObject<bool> CancelRequest(int request_id, int status);
 
         ResponseObject<RequestDetailAPIViewModel> ViewRequestDetail(int requestId);
 
@@ -262,17 +262,17 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<bool> CancelRequest(RequestCancelAPIViewModel model)
+        public ResponseObject<bool> CancelRequest(int request_id, int status)
         {
             try
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
-                var cancelTicket = requestRepo.GetActive().SingleOrDefault(a => a.RequestId == model.RequestId);
-                if (cancelTicket.RequestId == model.RequestId)
+                var cancelTicket = requestRepo.GetActive().SingleOrDefault(a => a.RequestId == request_id);
+                if (cancelTicket.RequestId == request_id)
                 {
 
-                    cancelTicket.RequestId = model.RequestId;
-                    cancelTicket.RequestStatus = model.CurrentStatus;
+                    cancelTicket.RequestId = request_id;
+                    cancelTicket.RequestStatus = status;
 
                     requestRepo.Edit(cancelTicket);
                     requestRepo.Save();

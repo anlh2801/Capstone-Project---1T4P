@@ -105,9 +105,9 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         [HttpPost]
         [Route("ticket/cancel_ticket")]
-        public HttpResponseMessage CancelTicket(RequestCancelAPIViewModel model)
+        public HttpResponseMessage CancelTicket(int request_id, int status)
         {            
-            var result = _requestDomain.CancelRequest(model);
+            var result = _requestDomain.CancelRequest(request_id, status);
             
             return Request.CreateResponse(HttpStatusCode.OK, "Cancel Thành Công!");
         }
