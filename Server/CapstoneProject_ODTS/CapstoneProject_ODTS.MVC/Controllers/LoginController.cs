@@ -21,12 +21,12 @@ namespace CapstoneProject_ODTS.Controllers
 
             return View();
         }
-        public ActionResult CheckLogin(string username,string password,int roleId)
-        {
-            var isSucess = _accountDomain.CheckLogin(username, password, roleId);
+        //public ActionResult CheckLogin(string username,string password,int roleId)
+        //{
+        //    var isSucess = _accountDomain.CheckLogin(username, password, roleId);
             
-            return Json(new { isSucess = isSucess, urlReturn = "/Home/Index" }, JsonRequestBehavior.AllowGet);
+        //    return Json(new { isSucess = isSucess, urlReturn = "/Home/Index" }, JsonRequestBehavior.AllowGet);
             
-        }
+        //}
     }
 }
