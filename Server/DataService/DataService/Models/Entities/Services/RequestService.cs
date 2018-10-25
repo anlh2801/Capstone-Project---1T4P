@@ -210,7 +210,7 @@ namespace DataService.Models.Entities.Services
             try
             {
                 List<RequestAllTicketWithStatusAgencyAPIViewModel> requestList = new List<RequestAllTicketWithStatusAgencyAPIViewModel>();
-                List<TicketForRequestAllTicketStatusAPIViewModel> ticketList = new List<TicketForRequestAllTicketStatusAPIViewModel>();
+                
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var requests = requestRepo.GetActive(x => x.RequestStatus == status && x.AgencyId == acency_id).ToList();
 
@@ -225,6 +225,7 @@ namespace DataService.Models.Entities.Services
                 }
                 foreach (var item in requests)
                 {
+                    List<TicketForRequestAllTicketStatusAPIViewModel> ticketList = new List<TicketForRequestAllTicketStatusAPIViewModel>();
                     var tickets = ticketRepo.GetActive(p => p.RequestId == item.RequestId).ToList();
                     foreach (var ticketItem in tickets)
                     {
