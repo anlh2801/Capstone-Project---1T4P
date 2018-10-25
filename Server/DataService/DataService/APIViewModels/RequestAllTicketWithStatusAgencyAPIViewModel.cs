@@ -15,6 +15,7 @@ namespace DataService.APIViewModels
         public int RequestId { get; set; }
         public string RequestName { get; set; }
         public string CreateDate { get; set; }
+        public string UpdateDate { get; set; }
         public string AgencyName { get; set; }       
         public int RequestStatus { get; set; }
         public string RequestEstimationTime { get; set; }

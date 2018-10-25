@@ -7,34 +7,40 @@
     card_view:cardElevation="3dp"
     card_view:cardUseCompatPadding="true">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/txtRequestNamee"
-            android:layout_width="215dp"
+            android:id="@+id/txtRequestNamePro"
+            android:layout_width="196dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/txtCreateDatee"
-            android:layout_width="112dp"
-            android:layout_height="45dp"
-            android:layout_marginLeft="27dp"
-            android:layout_toRightOf="@id/txtRequestNamee"
+            android:id="@+id/txtNoDPro"
+            android:layout_width="265dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtRequestNamePro"
             android:padding="3dp" />
 
         <TextView
-            android:id="@+id/txtNoD"
-            android:layout_width="215dp"
+            android:id="@+id/txtHero"
+            android:layout_width="267dp"
+            android:layout_below="@id/txtNoDPro"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txtRequestNamee"
             android:padding="3dp" />
 
+        <TextView
+            android:id="@+id/estimatesTime"
+            android:layout_below="@id/txtHero"
+            android:layout_width="269dp"
+            android:layout_height="wrap_content"
+            android:padding="3dp" />
 
     </RelativeLayout>
 

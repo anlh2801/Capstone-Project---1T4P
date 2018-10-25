@@ -255,6 +255,7 @@ namespace DataService.Models.Entities.Services
                         RequestId = item.RequestId,
                         RequestName = item.RequestName,
                         CreateDate = timeAgo,
+                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
                         AgencyName = item.Agency.AgencyName,
                         RequestStatus = item.RequestStatus,
                         RequestEstimationTime = item.CreateDate.AddHours(ticketList.Sum(p => p.Estimation)).ToString("dd/MM/yyyy HH:mm"),

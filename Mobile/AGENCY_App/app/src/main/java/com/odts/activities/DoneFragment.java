@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.odts.customTools.DoneRequestAdapter;
 import com.odts.customTools.PendingRequestAdapter;
 import com.odts.models.ListRequest;
 import com.odts.models.Request;
@@ -28,7 +29,7 @@ public class DoneFragment extends Fragment {
 
     private RequestService requestService;
     private RecyclerView recyclerView;
-    private PendingRequestAdapter pendingRequestAdapter;
+    private DoneRequestAdapter pendingRequestAdapter;
 
     Integer agencyId = 0;
     @Override
@@ -45,7 +46,7 @@ public class DoneFragment extends Fragment {
             public void onSuccess(ArrayList<Request> listRequests) {
                 recyclerView = (RecyclerView) getActivity().findViewById(R.id.listDone);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                pendingRequestAdapter = new PendingRequestAdapter(getActivity(), listRequests);
+                pendingRequestAdapter = new DoneRequestAdapter(getActivity(), listRequests);
                 recyclerView.setAdapter(pendingRequestAdapter);
             }
 

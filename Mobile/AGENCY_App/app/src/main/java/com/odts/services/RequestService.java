@@ -82,4 +82,20 @@ public class RequestService {
         });
 
     }
+    public void cancelTicket(final Context context, Integer request_id, Integer status_id) {
+        IRequestApiCaller = RetrofitInstance.getRequestService();
+        Call<ResponseObject<Boolean>> call = IRequestApiCaller.cancelTicket(request_id, status_id);
+        call.enqueue(new Callback<ResponseObject<Boolean>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
+                Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<Boolean>> call, Throwable t) {
+
+            }
+        });
+
+    }
 }

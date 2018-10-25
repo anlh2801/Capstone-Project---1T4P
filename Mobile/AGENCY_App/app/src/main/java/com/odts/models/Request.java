@@ -19,10 +19,20 @@ public class Request {
     private String RequestDesciption;
     @SerializedName("CreateDate")
     private String createDate;
+    @SerializedName("UpdateDate")
+    private String updateDate;
     @SerializedName("NumberOfTicket")
     private String nod;
-    @SerializedName("ticket")
+    @SerializedName("Ticket")
     private List<Ticket> ticket;
+
+    public String getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(String updateDate) {
+        this.updateDate = updateDate;
+    }
 
     public String getNod() {
         return nod;

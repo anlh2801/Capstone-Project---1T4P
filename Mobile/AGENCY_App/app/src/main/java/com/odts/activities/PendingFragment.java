@@ -29,8 +29,6 @@ public class PendingFragment extends Fragment {
     Integer agencyId = 0;
 
     public PendingFragment() {
-
-        _requestService = new RequestService();
     }
 
     @Override

@@ -33,20 +33,6 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     if(position != RecyclerView.NO_POSITION) {
-//                        Toast.makeText(context,String.valueOf(listRequest.get(position).getRequestId()),Toast.LENGTH_SHORT).show();
-//                        requestService = new RequestService();
-//                        requestService.requestDetail(context, listRequest.get(position).getRequestId(), new CallBackData<ListRequest>() {
-//                            @Override
-//                            public void onSuccess(ListRequest listRequest) {
-////                                rqNameDT.setText(listRequest.getRequestName());
-//                                Toast.makeText(context,listRequest.getRequestName(),Toast.LENGTH_SHORT).show();
-//                            }
-//
-//                            @Override
-//                            public void onFail(String message) {
-//
-//                            }
-//                        });
                         Intent intent = new Intent(context, RequestDetailActivity.class);
                         intent.putExtra("requestID", listRequest.get(position).getRequestId());
                         context.startActivity(intent);
@@ -71,7 +57,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
         Request album = listRequest.get(position);
         holder.rqName.setText(album.getRequestName());
         holder.crDate.setText(album.getCreateDate());
-        holder.nod.setText("Số thiết bị:" +album.getNod());
+        holder.nod.setText("Thiết bị cần xử lý:" +album.getNod());
 //        holder.rqNameDT.setText(album.getCreateDate());
 
     }
