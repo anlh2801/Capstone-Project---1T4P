@@ -21,6 +21,6 @@ namespace DataService.APIViewModels
         public int NumberOfTicketDone { get; set; }
         public int NumberTicketInProcessing { get; set; }
         public int NumberOfTicket { get; set; }
-        public List<TicketForRequestAllTicketStatusAPIViewModel> TicketList { get; set; }
+        public List<TicketForRequestAllTicketStatusAPIViewModel> Ticket { get; set; }
     }
 }

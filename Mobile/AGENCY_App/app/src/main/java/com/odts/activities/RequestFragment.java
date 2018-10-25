@@ -66,13 +66,19 @@ public class RequestFragment extends Fragment {
                 case 1:
                     frag = new ProcessingFragment();
                     break;
+                case 2:
+                    frag = new DoneFragment();
+                    break;
+                case 3:
+                    frag = new CancleFragment();
+                    break;
             }
             return frag;
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 4;
         }
 
         @Override
@@ -85,6 +91,13 @@ public class RequestFragment extends Fragment {
                 case 1:
                     title = "Đang xử lý";
                     break;
+                case 2:
+                    title = "Hoàn thành";
+                    break;
+                case 3:
+                    title = "Hủy bỏ";
+                    break;
+
             }
             return title;
         }

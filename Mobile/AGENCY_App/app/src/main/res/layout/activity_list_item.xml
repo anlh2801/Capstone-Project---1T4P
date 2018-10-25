@@ -11,19 +11,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:orientation="vertical"
+
         android:padding="5dp">
 
         <TextView
             android:id="@+id/txtRequestNamee"
-            android:layout_width="match_parent"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:padding="3dp"/>
+            android:padding="3dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtCreateDatee"
-            android:layout_width="match_parent"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:padding="3dp" />
+        <TextView
+            android:id="@+id/txtNoD"
+            android:layout_width="168dp"
             android:layout_height="wrap_content"
             android:padding="3dp" />
 

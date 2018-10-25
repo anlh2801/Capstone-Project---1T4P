@@ -42,14 +42,14 @@ public class RequestService {
             }
         });
     }
-    public void getRequestByStatus(final Context context, Integer agency_id, Integer status, final CallBackData<ArrayList<ListRequest>> callBackData) {
+    public void getRequestByStatus(final Context context, Integer agency_id, Integer status, final CallBackData<ArrayList<Request>> callBackData) {
         IRequestApiCaller = RetrofitInstance.getRequestService();
-        Call<ResponseObjectReturnList<ListRequest>> call = IRequestApiCaller.getRequestByStatus(agency_id, status);
-        call.enqueue(new Callback<ResponseObjectReturnList<ListRequest>>() {
+        Call<ResponseObjectReturnList<Request>> call = IRequestApiCaller.getRequestByStatus(agency_id, status);
+        call.enqueue(new Callback<ResponseObjectReturnList<Request>>() {
             @Override
-            public void onResponse(Call<ResponseObjectReturnList<ListRequest>> call, Response<ResponseObjectReturnList<ListRequest>> response) {
+            public void onResponse(Call<ResponseObjectReturnList<Request>> call, Response<ResponseObjectReturnList<Request>> response) {
                 if(!response.body().isError()){
-                    Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
                     callBackData.onSuccess(response.body().getObjList());
                 }
                 else
@@ -57,7 +57,7 @@ public class RequestService {
             }
 
             @Override
-            public void onFailure(Call<ResponseObjectReturnList<ListRequest>> call, Throwable t) {
+            public void onFailure(Call<ResponseObjectReturnList<Request>> call, Throwable t) {
 
             }
         });

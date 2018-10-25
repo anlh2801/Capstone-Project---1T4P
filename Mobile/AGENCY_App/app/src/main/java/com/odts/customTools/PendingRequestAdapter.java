@@ -10,22 +10,23 @@ import android.widget.TextView;
 
 import com.odts.activities.R;
 import com.odts.activities.RequestDetailActivity;
-import com.odts.models.ListRequest;
+import com.odts.models.Request;
 import com.odts.services.RequestService;
 
 import java.util.List;
 
 public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAdapter.MyViewHolder> {
     private Context context;
-    private List<ListRequest> listRequest;
+    private List<Request> listRequest;
     RequestService requestService;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView rqName, crDate, rqNameDT;
+        public TextView rqName, crDate, nod;
         public MyViewHolder(View view) {
             super(view);
             rqName = (TextView) view.findViewById(R.id.txtRequestNamee);
             crDate = (TextView) view.findViewById(R.id.txtCreateDatee);
+            nod = (TextView) view.findViewById(R.id.txtNoD);
 //            rqNameDT = (TextView) view.findViewById(R.id.requestNameDetail);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -54,7 +55,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
             });
         }
     }
-    public PendingRequestAdapter(Context context, List<ListRequest> listRequest) {
+    public PendingRequestAdapter(Context context, List<Request> listRequest) {
         this.context = context;
         this.listRequest = listRequest;
     }
@@ -67,9 +68,10 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
     }
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        ListRequest album = listRequest.get(position);
+        Request album = listRequest.get(position);
         holder.rqName.setText(album.getRequestName());
         holder.crDate.setText(album.getCreateDate());
+        holder.nod.setText("Số thiết bị:" +album.getNod());
 //        holder.rqNameDT.setText(album.getCreateDate());
 
     }
