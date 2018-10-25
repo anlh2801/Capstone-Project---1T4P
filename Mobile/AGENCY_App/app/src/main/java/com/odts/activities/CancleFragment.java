@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.odts.customTools.CancleRequestAdapter;
 import com.odts.customTools.PendingRequestAdapter;
 import com.odts.models.ListRequest;
 import com.odts.models.Request;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 public class CancleFragment extends Fragment {
     private RequestService requestService;
     private RecyclerView recyclerView;
-    private PendingRequestAdapter pendingRequestAdapter;
+    private CancleRequestAdapter pendingRequestAdapter;
 
     Integer agencyId = 0;
 
@@ -52,7 +53,7 @@ public class CancleFragment extends Fragment {
             public void onSuccess(ArrayList<Request> listRequests) {
                 recyclerView = (RecyclerView) getActivity().findViewById(R.id.listCancel);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                pendingRequestAdapter = new PendingRequestAdapter(getActivity(), listRequests);
+                pendingRequestAdapter = new CancleRequestAdapter(getActivity(), listRequests);
                 recyclerView.setAdapter(pendingRequestAdapter);
             }
 
