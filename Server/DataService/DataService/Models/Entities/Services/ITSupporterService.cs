@@ -157,7 +157,7 @@ namespace DataService.Models.Entities.Services
                         DeviceId = item.DeviceId,
                         Desciption = item.Desciption,
                         Current_TicketStatus = item.Current_TicketStatus != null ? Enum.GetName(typeof(TicketStatusEnum), item.Current_TicketStatus) : string.Empty,
-                        CurrentITSupporter_Id = item.CurrentITSupporter_Id,
+                        CurrentITSupporter_Id = item.CurrentITSupporter_Id ?? 0,
                         Rating = item.Rating ?? 0,
                         Estimation = item.Estimation ?? 0,
                         StartTime = item.StartTime != null ? item.StartTime.Value.ToString("MM/dd/yyyy") : string.Empty,
@@ -239,7 +239,7 @@ namespace DataService.Models.Entities.Services
                     updateProfile.Email = model.Email;
                     updateProfile.Gender = model.Gender;
                     updateProfile.Address = model.Address;
-                    updateProfile.UpdateDate = DateTime.Now;
+                    updateProfile.UpdateDate = DateTime.UtcNow.AddHours(7);
 
                     ITSupporterRepo.Edit(updateProfile);
 
@@ -271,7 +271,7 @@ namespace DataService.Models.Entities.Services
                 createTask.EndTime = DateTime.Parse(model.EndTime);
                 createTask.Priority = model.Priority;
                 createTask.PreTaskCondition = model.PreTaskCondition;
-                createTask.CreateDate = DateTime.Now;
+                createTask.CreateDate = DateTime.UtcNow.AddHours(7);
 
                 ticketTaskRepo.Add(createTask);
 

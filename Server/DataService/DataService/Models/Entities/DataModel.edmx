@@ -215,7 +215,7 @@
           <Property Name="DeviceId" Type="int" Nullable="false" />
           <Property Name="Desciption" Type="nvarchar(max)" />
           <Property Name="Current_TicketStatus" Type="int" />
-          <Property Name="CurrentITSupporter_Id" Type="int" Nullable="false" />
+          <Property Name="CurrentITSupporter_Id" Type="int" />
           <Property Name="Rating" Type="int" />
           <Property Name="Estimation" Type="float" />
           <Property Name="StartTime" Type="datetime" />
@@ -483,7 +483,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TicketDetail_ITSupporter">
-          <End Role="ITSupporter" Type="Self.ITSupporter" Multiplicity="1" />
+          <End Role="ITSupporter" Type="Self.ITSupporter" Multiplicity="0..1" />
           <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ITSupporter">
@@ -1006,7 +1006,7 @@
           <Property Name="DeviceId" Type="Int32" Nullable="false" />
           <Property Name="Desciption" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Current_TicketStatus" Type="Int32" />
-          <Property Name="CurrentITSupporter_Id" Type="Int32" Nullable="false" />
+          <Property Name="CurrentITSupporter_Id" Type="Int32" />
           <Property Name="Rating" Type="Int32" />
           <Property Name="Estimation" Type="Double" />
           <Property Name="StartTime" Type="DateTime" Precision="3" />
@@ -1222,7 +1222,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TicketDetail_ITSupporter">
-          <End Type="DataModel.ITSupporter" Role="ITSupporter" Multiplicity="1" />
+          <End Type="DataModel.ITSupporter" Role="ITSupporter" Multiplicity="0..1" />
           <End Type="DataModel.Ticket" Role="Ticket" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ITSupporter">

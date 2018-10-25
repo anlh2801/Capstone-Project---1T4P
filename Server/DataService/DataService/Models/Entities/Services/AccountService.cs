@@ -158,8 +158,8 @@ namespace DataService.Models.Entities.Services
                 createAccount.Username = model.Username;
                 createAccount.Password = model.Password;
                 createAccount.IsDelete = false;
-                createAccount.CreateDate = DateTime.Now;
-                createAccount.UpdateDate = DateTime.Now;
+                createAccount.CreateDate = DateTime.UtcNow.AddHours(7);
+                createAccount.UpdateDate = DateTime.UtcNow.AddHours(7);
 
                 accountRepo.Add(createAccount);
 
@@ -199,7 +199,7 @@ namespace DataService.Models.Entities.Services
                 {
                     updateAccount.Username = model.Username;
                     updateAccount.Password = model.Password;
-                    updateAccount.UpdateDate = DateTime.Now;
+                    updateAccount.UpdateDate = DateTime.UtcNow.AddHours(7);
 
                     accountRepo.Edit(updateAccount);
                     accountRepo.Save();

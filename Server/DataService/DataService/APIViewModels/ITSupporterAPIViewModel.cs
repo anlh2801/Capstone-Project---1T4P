@@ -18,6 +18,7 @@ namespace DataService.APIViewModels
         public string Address { get; set; }
         public double RatingAVG { get; set; }
         public string IsBusy { get; set; }
+        public bool IsBusyValue { get; set; }
         public string CreateDate { get; set; }
         public string UpdateDate { get; set; }
     }

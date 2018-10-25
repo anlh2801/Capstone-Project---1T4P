@@ -22,7 +22,9 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> CreateRequest(AgencyCreateRequestAPIViewModel model);
 
-        ResponseObject<bool> CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId, int current_IT_supporter_Id);
+        ResponseObject<bool> CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId);
+
+        ResponseObject<ITSupporterAPIViewModel> FindITSupporter(int serviceItemId);
 
         ResponseObject<bool> RemoveAgency(int agency_id);
 
@@ -35,6 +37,7 @@ namespace DataService.Models.Entities.Services
         ResponseObject<List<AgencyDeviceAPIViewModel>> GetDevicesByDeviceTypeId(int deviceTypeId, int agencyId);
 
         ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id);
+
         ResponseObject<List<AgencyAPIViewModel>> ViewAllAgencyByCompanyId(int agency_id);
     }
 
@@ -123,7 +126,7 @@ namespace DataService.Models.Entities.Services
                     updateAgency.AgencyName = model.AgencyName;
                     updateAgency.Address = model.Address;
                     updateAgency.Telephone = model.Telephone;
-                    updateAgency.UpdateDate = DateTime.Now;
+                    updateAgency.UpdateDate = DateTime.UtcNow.AddHours(7);
 
                     agencyRepo.Edit(updateAgency);
                     agencyRepo.Save();
@@ -206,7 +209,7 @@ namespace DataService.Models.Entities.Services
                 createTask.Address = model.Address;
                 createTask.Telephone = model.Telephone;
                 createTask.IsDelete = false;
-                createTask.CreateDate = DateTime.Now;
+                createTask.CreateDate = DateTime.UtcNow.AddHours(7);
                 ticketTaskRepo.Add(createTask);
                 ticketTaskRepo.Save();
                 return new ResponseObject<bool> { IsError = false, SuccessMessage = "Tạo chi nhánh thành công!", ObjReturn = true };
@@ -233,22 +236,12 @@ namespace DataService.Models.Entities.Services
                 createRequest.RequestName = model.RequestName;
                 createRequest.RequestDesciption = model.RequestDesciption;
                 createRequest.ServiceItemId = model.ServiceItemId;
-                createRequest.CreateDate = DateTime.UtcNow;
+                createRequest.CreateDate = DateTime.UtcNow.AddHours(7);
                 requestRepo.Add(createRequest);
-                requestRepo.Save();                
+                requestRepo.Save();
 
-                var current_IT_supporter_Id = AssignITSupporter(model.ServiceItemId);
-                if (current_IT_supporter_Id > 0)
-                {
-                    CreateTicket(model.Ticket, createRequest.RequestId, current_IT_supporter_Id);
-                    createRequest.RequestStatus = (int)RequestStatusEnum.Processing;
-                    createRequest.StartDate = DateTime.UtcNow;
-                    requestRepo.Save();
-                }
-                else
-                {
-                    return new ResponseObject<bool> { IsError = true, WarningMessage = "Chưa assign được cho Hero nào", ObjReturn = false };
-                }
+                CreateTicket(model.Ticket, createRequest.RequestId);
+                
                 return new ResponseObject<bool> { IsError = false, SuccessMessage = "Tạo yêu cầu thành công!", ObjReturn = true };
             }
             catch (Exception e)
@@ -259,7 +252,7 @@ namespace DataService.Models.Entities.Services
 
         }
 
-        public ResponseObject<bool> CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId, int current_IT_supporter_Id)
+        public ResponseObject<bool> CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId)
         {
             try
             {
@@ -272,12 +265,9 @@ namespace DataService.Models.Entities.Services
                     createTicket.DeviceId = item.DeviceId;
                     createTicket.Current_TicketStatus = (int)TicketStatusEnum.Await;
                     createTicket.Desciption = item.Desciption;
-                    createTicket.CreateDate = DateTime.UtcNow;
-                    createTicket.StartTime = DateTime.UtcNow;
-                    createTicket.CurrentITSupporter_Id = current_IT_supporter_Id;
-                    ticketRepo.Add(createTicket);
-
-                    createTicket.Current_TicketStatus = (int)TicketStatusEnum.In_Process;
+                    createTicket.CreateDate = DateTime.UtcNow.AddHours(7);                    
+                    
+                    ticketRepo.Add(createTicket);                    
                 }
                 ticketRepo.Save();
 
@@ -285,16 +275,15 @@ namespace DataService.Models.Entities.Services
             }
             catch (Exception e)
             {
-
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Tạo thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
             }
 
 
         }
 
-        private int AssignITSupporter(int serviceItemId)
+        public ResponseObject<ITSupporterAPIViewModel> FindITSupporter(int serviceItemId)
         {
-            int itSupporterId = 0;
+            ITSupporterAPIViewModel itSupporterFound = null;
             try
             {
                 var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
@@ -308,21 +297,25 @@ namespace DataService.Models.Entities.Services
                     var itSupporter = itSupporterRepo.GetActive(p => p.ITSupporterId == item.ITSupporterId && p.IsBusy == false).FirstOrDefault();
                     if (itSupporter != null)
                     {
-                        itSupporter.IsBusy = true;
-
-                        itSupporterRepo.Edit(itSupporter);
-                        itSupporterId = itSupporter.ITSupporterId;
-                        break;                       
+                        itSupporterFound = new ITSupporterAPIViewModel();
+                        itSupporterFound.ITSupporterId = itSupporter.ITSupporterId;
+                        itSupporterFound.ITSupporterName = itSupporter.ITSupporterName;
+                        itSupporterFound.AccountId = itSupporter.AccountId;
+                        itSupporterFound.Username = itSupporter.Account.Username;
+                        itSupporterFound.IsBusyValue = itSupporter.IsBusy ?? false;
+                        break;
                     }
 
                 }
-                itSupporterRepo.Save();
-                return itSupporterId;
+                if (itSupporterFound != null)
+                {
+                    return new ResponseObject<ITSupporterAPIViewModel> { IsError = false, WarningMessage = $"Tìm được Hero {itSupporterFound.ITSupporterName}! Vùi lòng đợi xác nhận", ObjReturn = itSupporterFound };
+                }
+                return new ResponseObject<ITSupporterAPIViewModel> { IsError = true, WarningMessage = "Chưa tìm được Hero nào thích hợp!" };
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                itSupporterId = 0;
-                return itSupporterId;
+                return new ResponseObject<ITSupporterAPIViewModel> { IsError = true, WarningMessage = "Chưa tìm được Hero nào thích hợp!", ErrorMessage = ex.ToString() };
             }
 
         }
@@ -383,7 +376,7 @@ namespace DataService.Models.Entities.Services
                         DeviceId = item.DeviceId,
                         Desciption = item.Desciption,
                         Current_TicketStatus = item.Current_TicketStatus != null ? Enum.GetName(typeof(TicketStatusEnum), item.Current_TicketStatus) : string.Empty,
-                        CurrentITSupporter_Id = item.CurrentITSupporter_Id,
+                        CurrentITSupporter_Id = item.CurrentITSupporter_Id ?? 0,
                         Rating = item.Rating ?? 0,
                         Estimation = item.Estimation ?? 0,
                         StartTime = item.StartTime != null ? item.StartTime.Value.ToString("dd/MM/yyyy") : string.Empty,

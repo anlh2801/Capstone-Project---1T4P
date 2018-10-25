@@ -164,7 +164,16 @@ namespace CapstoneProject_ODTS.ControllersApi
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
-        
+
+        [HttpGet]
+        [Route("agency/find_itSupporter/{serviceItemId}")]
+        public HttpResponseMessage FindItSupporter(int serviceItemId)
+        {
+            var result = _agencyDomain.FindItSupporter(serviceItemId);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
     }
 }
 

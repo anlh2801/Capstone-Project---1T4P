@@ -26,7 +26,7 @@ namespace DataService.Models.Entities
         public int DeviceId { get; set; }
         public string Desciption { get; set; }
         public Nullable<int> Current_TicketStatus { get; set; }
-        public int CurrentITSupporter_Id { get; set; }
+        public Nullable<int> CurrentITSupporter_Id { get; set; }
         public Nullable<int> Rating { get; set; }
         public Nullable<double> Estimation { get; set; }
         public Nullable<System.DateTime> StartTime { get; set; }

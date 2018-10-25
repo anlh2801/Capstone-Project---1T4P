@@ -31,6 +31,8 @@ namespace DataService.Domain
         ResponseObject<List<AgencyDeviceAPIViewModel>> GetDevicesByDeviceTypeId(int deviceTypeId, int agencyId);
 
         ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id);
+
+        ResponseObject<ITSupporterAPIViewModel> FindItSupporter(int serviceItemId);
     }
 
     public class AgencyDomain : BaseDomain, IAgencyDomain
@@ -136,6 +138,15 @@ namespace DataService.Domain
 
             return agency;
         }
-        
+
+        public ResponseObject<ITSupporterAPIViewModel> FindItSupporter(int serviceItemId)
+        {
+            var agencyService = this.Service<IAgencyService>();
+
+            var itSupporter = agencyService.FindITSupporter(serviceItemId);
+
+            return itSupporter;
+        }
+
     }
 }

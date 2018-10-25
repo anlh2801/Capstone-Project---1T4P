@@ -25,6 +25,8 @@ namespace DataService.Domain
         ResponseObject<bool> CancelRequest(int request_id, int status);
 
         ResponseObject<RequestDetailAPIViewModel> ViewRequestDetail(int requestId);
+
+        ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept);
     }
 
     public  class RequestDomain : BaseDomain, IRequestDomain
@@ -90,6 +92,15 @@ namespace DataService.Domain
             var requestService = this.Service<IRequestService>();
 
             var result = requestService.ViewRequestDetail(requestId);
+
+            return result;
+        }
+
+        public ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept)
+        {
+            var requestService = this.Service<IRequestService>();
+
+            var result = requestService.AcceptRequestFromITSupporter(itSupporterId, requestId, isAccept);
 
             return result;
         }

@@ -106,8 +106,8 @@ namespace DataService.Models.Entities.Services
                 createContract.StartDate = model.StartDate.ToDateTime();
                 createContract.EndDate = model.EndDate.ToDateTime();
                 createContract.IsDelete = false;
-                createContract.CreateDate = DateTime.Now;
-                createContract.UpdateDate = DateTime.Now;
+                createContract.CreateDate = DateTime.UtcNow.AddHours(7);
+                createContract.UpdateDate = DateTime.UtcNow.AddHours(7);
 
                 contractRepo.Add(createContract);
 
@@ -134,7 +134,7 @@ namespace DataService.Models.Entities.Services
                     //updateContract.EndDate = DateTime.ParseExact(model.EndDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                     updateContract.StartDate = model.StartDate.ToDateTime();
                     updateContract.EndDate = model.EndDate.ToDateTime();
-                    updateContract.UpdateDate = DateTime.Now;
+                    updateContract.UpdateDate = DateTime.UtcNow.AddHours(7);
 
                     contractRepo.Edit(updateContract);
                     contractRepo.Save();

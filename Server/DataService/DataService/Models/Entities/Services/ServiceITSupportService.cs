@@ -82,8 +82,8 @@ namespace DataService.Models.Entities.Services
                 createServiceitsupport.ServiceName = model.ServiceName;
                 createServiceitsupport.Description = model.Description;
                 createServiceitsupport.IsDelete = false;
-                createServiceitsupport.CreateDate = DateTime.Now;
-                createServiceitsupport.UpdateDate = DateTime.Now;
+                createServiceitsupport.CreateDate = DateTime.UtcNow.AddHours(7);
+                createServiceitsupport.UpdateDate = DateTime.UtcNow.AddHours(7);
 
                 serviceITSupportRepo.Add(createServiceitsupport);
 
@@ -105,7 +105,7 @@ namespace DataService.Models.Entities.Services
             {
                 updateServiceitsupport.ServiceName = model.ServiceName;
                 updateServiceitsupport.Description = model.Description;
-                updateServiceitsupport.UpdateDate = DateTime.Now;
+                updateServiceitsupport.UpdateDate = DateTime.UtcNow.AddHours(7);
 
                 serviceITSupportRepo.Edit(updateServiceitsupport);
                 serviceITSupportRepo.Save();
@@ -136,7 +136,7 @@ namespace DataService.Models.Entities.Services
             var serviceITSupportRepo = DependencyUtils.Resolve<IServiceITSupportRepository>();
             var serviceITSupports = serviceITSupportRepo.GetActive(
                 p => p.ContractServiceITSupports.Any(
-                    c => (c.EndDate == null || c.EndDate > DateTime.Now) && c.Contract.Company.Agencies.Any(a => a.AgencyId == agencyId))).ToList();
+                    c => (c.EndDate == null || c.EndDate > DateTime.UtcNow.AddHours(7)) && c.Contract.Company.Agencies.Any(a => a.AgencyId == agencyId))).ToList();
             if (serviceITSupports.Count <= 0)
             {
                 return new ResponseObject<List<ServiceITSupportAPIViewModel>> { IsError = true, WarningMessage = "Không có dịch vụ nào" };

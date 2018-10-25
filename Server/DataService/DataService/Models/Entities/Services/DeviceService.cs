@@ -164,8 +164,8 @@ namespace DataService.Models.Entities.Services
                 createDevice.SettingDate = model.SettingDate.ToDateTime();
                 createDevice.Other = model.Other;
                 createDevice.IsDelete = false;
-                createDevice.CreateDate = DateTime.Now;
-                createDevice.UpdateDate = DateTime.Now;
+                createDevice.CreateDate = DateTime.UtcNow.AddHours(7);
+                createDevice.UpdateDate = DateTime.UtcNow.AddHours(7);
 
                 deviceRepo.Add(createDevice);
 
@@ -244,7 +244,7 @@ namespace DataService.Models.Entities.Services
         //        updateDeviceType.ServiceId = model.ServiceId;
         //        updateDeviceType.DeviceTypeName = model.DeviceTypeName;
         //        updateDeviceType.Description = model.Description;
-        //        updateDeviceType.UpdateDate = DateTime.Now;
+        //        updateDeviceType.UpdateDate = DateTime.UtcNow.AddHours(7);
 
         //        devicetypeRepo.Edit(updateDeviceType);
         //        devicetypeRepo.Save();

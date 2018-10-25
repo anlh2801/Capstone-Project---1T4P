@@ -92,8 +92,8 @@ namespace DataService.Models.Entities.Services
                 createCompany.CompanyName = model.CompanyName;
                 createCompany.Description = model.Description;
                 createCompany.IsDelete = false;
-                createCompany.CreateDate = DateTime.Now;
-                createCompany.UpdateDate = DateTime.Now;
+                createCompany.CreateDate = DateTime.UtcNow.AddHours(7);
+                createCompany.UpdateDate = DateTime.UtcNow.AddHours(7);
 
                 companyeRepo.Add(createCompany);
 
@@ -115,7 +115,7 @@ namespace DataService.Models.Entities.Services
             {
                 updateCompany.CompanyName = model.CompanyName;
                 updateCompany.Description = model.Description;
-                updateCompany.UpdateDate = DateTime.Now;
+                updateCompany.UpdateDate = DateTime.UtcNow.AddHours(7);
 
                 companyeRepo.Edit(updateCompany);
                 companyeRepo.Save();

@@ -64,7 +64,7 @@ namespace DataService.Domain
             var devices = deviceService.ViewAllDeviceByAgencyIdAndServiceId(agencyId, serviceId);
 
             return devices;
-        }
+        }        
     }
     
 }

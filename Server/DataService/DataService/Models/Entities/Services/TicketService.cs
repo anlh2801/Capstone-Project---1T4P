@@ -32,12 +32,12 @@ namespace DataService.Models.Entities.Services
                 {
                     ticketDetails.Rating = rate.Rating;
                     ticketDetails.Desciption = rate.Description;
-                    ticketDetails.UpdateDate = DateTime.Now;
+                    ticketDetails.UpdateDate = DateTime.UtcNow.AddHours(7);
                     ticketRepo.Edit(ticketDetails);
                     ticketRepo.Save();
 
                     itupporter.RatingAVG = itupporter.RatingAVG != null ? (itupporter.RatingAVG + rate.Rating) / 2 : rate.Rating;
-                    itupporter.UpdateDate = DateTime.Now;
+                    itupporter.UpdateDate = DateTime.UtcNow.AddHours(7);
                     itSupporterlRepo.Edit(itupporter);
                     itSupporterlRepo.Save();
 

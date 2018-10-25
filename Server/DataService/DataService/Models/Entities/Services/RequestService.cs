@@ -27,6 +27,8 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<RequestDetailAPIViewModel> ViewRequestDetail(int requestId);
 
+        ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept);
+
     }
 
     public partial class RequestService
@@ -158,7 +160,7 @@ namespace DataService.Models.Entities.Services
             try
             {
                 string result = string.Empty;
-                var timeSpan = DateTime.Now.Subtract(dateTime);
+                var timeSpan = DateTime.UtcNow.AddHours(7).Subtract(dateTime);
 
                 if (timeSpan <= TimeSpan.FromSeconds(60))
                 {
@@ -232,7 +234,7 @@ namespace DataService.Models.Entities.Services
                         var ticket = new TicketForRequestAllTicketStatusAPIViewModel()
                         {
                             TicketId = ticketItem.TicketId,
-                            ITSupporterId = ticketItem.CurrentITSupporter_Id,
+                            ITSupporterId = ticketItem.CurrentITSupporter_Id ?? 0,
                             DeviceId = ticketItem.DeviceId,
                             DeviceName = ticketItem.Device.DeviceName,
                             StartTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
@@ -279,7 +281,7 @@ namespace DataService.Models.Entities.Services
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
 
-                var request = requestRepo.Get(requestId);
+                var request = requestRepo.GetActive().SingleOrDefault(p => p.RequestId == requestId);
 
                 if (request != null)
                 {
@@ -356,5 +358,54 @@ namespace DataService.Models.Entities.Services
                 return new ResponseObject<RequestDetailAPIViewModel> { IsError = false, WarningMessage = "Lấy thất bại!", ObjReturn = null, ErrorMessage = e.ToString() };
             }
         }
+
+        public ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept)
+        {
+            try
+            {
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+
+                if (isAccept)
+                {
+                    var request = requestRepo.GetActive().SingleOrDefault(p => p.RequestId == requestId);
+                    var itSupporter = itSupporterRepo.GetActive().SingleOrDefault(p => p.ITSupporterId == itSupporterId);
+
+                    if (request != null && itSupporter != null)
+                    {
+                        request.RequestStatus = (int)RequestStatusEnum.Processing;
+                        request.StartDate = DateTime.UtcNow.AddHours(7);
+                        requestRepo.Edit(request);
+
+                        itSupporterRepo.Edit(itSupporter);
+                        itSupporter.IsBusy = true;
+
+                        var ticketsOfRequest = ticketRepo.GetActive(p => p.RequestId == requestId).ToList();
+                        foreach (var ticket in ticketsOfRequest)
+                        {
+                            ticket.Current_TicketStatus = (int)TicketStatusEnum.In_Process;
+                            ticket.CurrentITSupporter_Id = itSupporter.ITSupporterId;
+                            ticket.StartTime = DateTime.UtcNow.AddHours(7);
+                            ticket.UpdateDate = DateTime.UtcNow;
+                            ticketRepo.Edit(ticket);
+                        }
+                        ticketRepo.Save();
+                        requestRepo.Save();
+                        itSupporterRepo.Save();
+
+                        return new ResponseObject<bool> { IsError = false, SuccessMessage = "Nhận thành công", ObjReturn = true };
+                    }
+                }
+                
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Nhận thất bại", ObjReturn = false };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Nhận thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
+            }
+        }
+
     }
 }
