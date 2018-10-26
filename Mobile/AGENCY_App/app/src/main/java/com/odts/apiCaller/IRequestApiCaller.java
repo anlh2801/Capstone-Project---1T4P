@@ -19,7 +19,7 @@ public interface IRequestApiCaller {
     Call<ResponseObjectReturnList<Request>> getRequestByStatus(@Query("agency_id") Integer agency_id,
                                                                    @Query("status") Integer status_id);
     @GET("request/view_request_detail")
-    Call<ResponseObject<ListRequest>> requestDetail(@Query("requestId") Integer request_id);
+    Call<ResponseObject<Request>> requestDetail(@Query("requestId") Integer request_id);
     @POST("ticket/cancel_ticket")
     Call<ResponseObject<Boolean>> cancelTicket(@Query("request_id") Integer request_id,
                                         @Query("status") Integer status_id);

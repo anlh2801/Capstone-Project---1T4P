@@ -11,6 +11,54 @@ public class Ticket {
     private String iTSupporterName;
     @SerializedName("TicketEstimationTime")
     private String ticketEstimationTime;
+    @SerializedName("StartTime")
+    private String startTime;
+
+    @SerializedName("EndTime")
+    private String endTime;
+
+    @SerializedName("CreateDate")
+    private String createDate;
+
+    @SerializedName(("Current_TicketStatus"))
+    private Integer crStatus;
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public Integer getCrStatus() {
+        return crStatus;
+    }
+
+    public void setCrStatus(Integer crStatus) {
+        this.crStatus = crStatus;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+    public Ticket(String iTSupporterName, Integer crStatus, String ticketEstimationTime) {
+        this.iTSupporterName = iTSupporterName;
+        this.crStatus = crStatus;
+        this.ticketEstimationTime = ticketEstimationTime;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
 
     public String getTicketEstimationTime() {
         return ticketEstimationTime;
@@ -20,10 +68,6 @@ public class Ticket {
         this.ticketEstimationTime = ticketEstimationTime;
     }
 
-    public Ticket(Integer deviceId, String desciption) {
-        this.deviceId = deviceId;
-        this.desciption = desciption;
-    }
 
     public String getiTSupporterName() {
         return iTSupporterName;

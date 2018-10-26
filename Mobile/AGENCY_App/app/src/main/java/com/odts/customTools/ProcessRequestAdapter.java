@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.odts.activities.R;
 import com.odts.activities.RequestDetailActivity;
+import com.odts.activities.TimeLineActivity;
 import com.odts.models.Request;
 import com.odts.services.RequestService;
 
@@ -33,9 +35,10 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Toast.makeText(context, "ádsa", Toast.LENGTH_SHORT).show();
                     int position = getAdapterPosition();
                     if(position != RecyclerView.NO_POSITION) {
-                        Intent intent = new Intent(context, RequestDetailActivity.class);
+                        Intent intent = new Intent(context, TimeLineActivity.class);
                         intent.putExtra("requestID", listRequest.get(position).getRequestId());
                         context.startActivity(intent);
                     }

@@ -4,12 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
-
-import com.odts.activities.RequestActivity;
 import com.odts.apiCaller.IRequestApiCaller;
-import com.odts.models.ListRequest;
 import com.odts.models.Request;
-import com.odts.models.ServiceItem;
 import com.odts.utils.CallBackData;
 import com.odts.utils.ResponseObject;
 import com.odts.utils.ResponseObjectReturnList;
@@ -62,12 +58,12 @@ public class RequestService {
             }
         });
     }
-    public void requestDetail(final Context context, Integer request_id, final CallBackData<ListRequest> callBackData) {
+    public void requestDetail(final Context context, Integer request_id, final CallBackData<Request> callBackData) {
         IRequestApiCaller = RetrofitInstance.getRequestService();
-        Call<ResponseObject<ListRequest>> call = IRequestApiCaller.requestDetail(request_id);
-        call.enqueue(new Callback<ResponseObject<ListRequest>>() {
+        Call<ResponseObject<Request>> call = IRequestApiCaller.requestDetail(request_id);
+        call.enqueue(new Callback<ResponseObject<Request>>() {
             @Override
-            public void onResponse(Call<ResponseObject<ListRequest>> call, Response<ResponseObject<ListRequest>> response) {
+            public void onResponse(Call<ResponseObject<Request>> call, Response<ResponseObject<Request>> response) {
                 callBackData.onSuccess(response.body().getObjReturn());
                 SharedPreferences share = context.getSharedPreferences("ODTS", 0);
                 SharedPreferences.Editor edit = share.edit();
@@ -76,7 +72,7 @@ public class RequestService {
             }
 
             @Override
-            public void onFailure(Call<ResponseObject<ListRequest>> call, Throwable t) {
+            public void onFailure(Call<ResponseObject<Request>> call, Throwable t) {
 
             }
         });
