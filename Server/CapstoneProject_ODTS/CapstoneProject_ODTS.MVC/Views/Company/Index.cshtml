@@ -146,6 +146,7 @@
                 <th><label>Thông Tin</label></th>
                 <th><label>Ngày Tạo</label></th>
                 <th><label>Chi Nhánh</label></th>
+                <th><label>Hợp Đồng</label></th>
                 <th><label>Chức Năng</label></th>
             </tr>
         </thead>
@@ -207,7 +208,7 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1, 2, 3,4],
+                        "aTargets": [0, 1, 2, 3,4 ,5],
                         "bSortable": false,
                         "sClass": "text-center"
                     },
@@ -224,7 +225,13 @@
                         }
                     },
                     {
-                        "aTargets": [4],
+                        "data": "RequestName",
+                        "mRender": function (data, type, full) {
+                            return '<a href="CompanyContract/' + full.CompanyId + '">Xem Hợp Đồng</a>';
+                        }
+                    },
+                    {
+                        "aTargets": [5],
                         "mRender": function (data, type, full) {
                             var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.CompanyId + ')"></button>';
                             var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.CompanyId + ')"></button>';
