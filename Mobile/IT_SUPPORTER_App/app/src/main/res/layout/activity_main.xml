@@ -25,6 +25,27 @@
         android:text="Button"
         tools:layout_editor_absoluteX="104dp"
         tools:layout_editor_absoluteY="323dp" />
+
+    <TextView
+        android:id="@+id/txtIncidentNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/txtShortDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/txtDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="TextView" />
 </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
