@@ -231,21 +231,21 @@ namespace DataService.Models.Entities.Services
                     var tickets = ticketRepo.GetActive(p => p.RequestId == item.RequestId).ToList();
                     foreach (var ticketItem in tickets)
                     {
-                        var ticket = new TicketForRequestAllTicketStatusAPIViewModel()
-                        {
-                            TicketId = ticketItem.TicketId,
-                            ITSupporterId = ticketItem.CurrentITSupporter_Id ?? 0,
-                            DeviceId = ticketItem.DeviceId,
-                            DeviceName = ticketItem.Device.DeviceName,
-                            StartTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
-                            EndTime = ticketItem.Endtime != null ? ticketItem.Endtime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
-                            ITSupporterName = ticketItem.ITSupporter.ITSupporterName,
-                            TicketEstimationTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.AddHours(ticketItem.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm") : string.Empty,
-                            Current_TicketStatus = ticketItem.Current_TicketStatus != null ? ticketItem.Current_TicketStatus.Value : 0,
-                            Desciption = ticketItem.Desciption,
-                            Estimation = ticketItem.Estimation ?? 0,
-                            CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty
-                        };
+                        var ticket = new TicketForRequestAllTicketStatusAPIViewModel();
+
+                        ticket.TicketId = ticketItem.TicketId;
+                        ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
+                        ticket.DeviceId = ticketItem.DeviceId;
+                        ticket.DeviceName = ticketItem.Device.DeviceName;
+                        ticket.StartTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+                        ticket.EndTime = ticketItem.Endtime != null ? ticketItem.Endtime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+                        ticket.ITSupporterName = ticketItem.ITSupporter != null ? ticketItem.ITSupporter.ITSupporterName : string.Empty;
+                        ticket.TicketEstimationTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.AddHours(ticketItem.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm") : string.Empty;
+                        ticket.Current_TicketStatus = ticketItem.Current_TicketStatus != null ? ticketItem.Current_TicketStatus.Value : 0;
+                        ticket.Desciption = ticketItem.Desciption;
+                        ticket.Estimation = ticketItem.Estimation ?? 0;
+                        ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+                        
                         ticketList.Add(ticket);
                     }
                     var timeAgo = TimeAgo(item.CreateDate);
