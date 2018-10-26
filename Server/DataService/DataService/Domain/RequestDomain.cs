@@ -24,7 +24,7 @@ namespace DataService.Domain
 
         ResponseObject<bool> CancelRequest(int request_id, int status);
 
-        ResponseObject<RequestDetailAPIViewModel> ViewRequestDetail(int requestId);
+        ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> ViewRequestDetail(int requestId);
 
         ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept);
     }
@@ -87,7 +87,7 @@ namespace DataService.Domain
             return result;
         }
 
-        public ResponseObject<RequestDetailAPIViewModel> ViewRequestDetail(int requestId)
+        public ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> ViewRequestDetail(int requestId)
         {
             var requestService = this.Service<IRequestService>();
 

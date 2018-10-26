@@ -10,7 +10,7 @@ namespace DataService.APIViewModels
     public class TicketForRequestAllTicketStatusAPIViewModel
     {
         public int TicketId { get; set; }
-        public int ITSupporterId { get; set; }
+        public Nullable <int> ITSupporterId { get; set; }
         public int DeviceId { get; set; }
         public string DeviceName { get; set; }
         public string StartTime { get; set; }
