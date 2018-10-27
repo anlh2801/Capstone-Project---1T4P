@@ -22,7 +22,7 @@ namespace DataService.Domain
 
         ResponseObject<List<AgencyAPIViewModel>> GetAllAgency();
 
-        ResponseObject<bool> CreateRequest(AgencyCreateRequestAPIViewModel model);
+        ResponseObject<int> CreateRequest(AgencyCreateRequestAPIViewModel model);
 
         ResponseObject<AgencyDeviceAPIViewModel> GetDeviceDetails(int deviceId);
 
@@ -32,7 +32,7 @@ namespace DataService.Domain
 
         ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id);
 
-        ResponseObject<ITSupporterAPIViewModel> FindItSupporter(int serviceItemId);
+        ResponseObject<ITSupporterAPIViewModel> FindITSupporterByRequestId(int requestId);
     }
 
     public class AgencyDomain : BaseDomain, IAgencyDomain
@@ -78,7 +78,7 @@ namespace DataService.Domain
 
 
 
-        public ResponseObject<bool> CreateRequest(AgencyCreateRequestAPIViewModel model)
+        public ResponseObject<int> CreateRequest(AgencyCreateRequestAPIViewModel model)
         {
             var agencyService = this.Service<IAgencyService>();
 
@@ -139,11 +139,11 @@ namespace DataService.Domain
             return agency;
         }
 
-        public ResponseObject<ITSupporterAPIViewModel> FindItSupporter(int serviceItemId)
+        public ResponseObject<ITSupporterAPIViewModel> FindITSupporterByRequestId(int requestId)
         {
             var agencyService = this.Service<IAgencyService>();
 
-            var itSupporter = agencyService.FindITSupporter(serviceItemId);
+            var itSupporter = agencyService.FindITSupporterByRequestId(requestId);
 
             return itSupporter;
         }

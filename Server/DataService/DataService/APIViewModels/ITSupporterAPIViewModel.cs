@@ -21,5 +21,6 @@ namespace DataService.APIViewModels
         public bool IsBusyValue { get; set; }
         public string CreateDate { get; set; }
         public string UpdateDate { get; set; }
+        public int RequestWattingForAccept { get; set; }
     }
 }

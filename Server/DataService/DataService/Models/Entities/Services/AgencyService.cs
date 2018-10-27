@@ -20,11 +20,11 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<List<AgencyAPIViewModel>> GetAllAgency();
 
-        ResponseObject<bool> CreateRequest(AgencyCreateRequestAPIViewModel model);
+        ResponseObject<int> CreateRequest(AgencyCreateRequestAPIViewModel model);
 
         ResponseObject<bool> CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId);
 
-        ResponseObject<ITSupporterAPIViewModel> FindITSupporter(int serviceItemId);
+        ResponseObject<ITSupporterAPIViewModel> FindITSupporterByRequestId(int requestId);
 
         ResponseObject<bool> RemoveAgency(int agency_id);
 
@@ -220,7 +220,7 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<bool> CreateRequest(AgencyCreateRequestAPIViewModel model)
+        public ResponseObject<int> CreateRequest(AgencyCreateRequestAPIViewModel model)
         {
             try
             {
@@ -242,12 +242,12 @@ namespace DataService.Models.Entities.Services
 
                 CreateTicket(model.Ticket, createRequest.RequestId);
                 
-                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Tạo yêu cầu thành công!", ObjReturn = true };
+                return new ResponseObject<int> { IsError = false, SuccessMessage = "Tạo yêu cầu thành công!", ObjReturn = createRequest.RequestId };
             }
             catch (Exception e)
             {
 
-                return new ResponseObject<bool> { IsError = true, WarningMessage = "Tạo yêu cầu thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
+                return new ResponseObject<int> { IsError = true, WarningMessage = "Tạo yêu cầu thất bại!", ObjReturn = 0, ErrorMessage = e.ToString() };
             }
 
         }
@@ -281,14 +281,16 @@ namespace DataService.Models.Entities.Services
 
         }
 
-        public ResponseObject<ITSupporterAPIViewModel> FindITSupporter(int serviceItemId)
+        public ResponseObject<ITSupporterAPIViewModel> FindITSupporterByRequestId(int requestId)
         {
             ITSupporterAPIViewModel itSupporterFound = null;
             try
             {
                 var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var skillRepo = DependencyUtils.Resolve<ISkillRepository>();
                 var serviceItemRepo = DependencyUtils.Resolve<IServiceItemRepository>();
+                var serviceItemId = requestRepo.GetActive(p => p.RequestId == requestId).SingleOrDefault().ServiceItemId;
                 var serviceITSupportId = serviceItemRepo.GetActive(p => p.ServiceItemId == serviceItemId).SingleOrDefault().ServiceITSupportId;
                 var skills = skillRepo.GetActive(a => a.ServiceITSupportId == serviceITSupportId).OrderByDescending(p => p.MonthExperience);                
                 
@@ -303,6 +305,7 @@ namespace DataService.Models.Entities.Services
                         itSupporterFound.AccountId = itSupporter.AccountId;
                         itSupporterFound.Username = itSupporter.Account.Username;
                         itSupporterFound.IsBusyValue = itSupporter.IsBusy ?? false;
+                        itSupporterFound.RequestWattingForAccept = requestId;
                         break;
                     }
 

@@ -29,7 +29,7 @@ public class MyFirebaseMessagingService extends  com.google.firebase.messaging.F
                 "Title: " + strTitle + "\n" +
                 "Message: "+ message);
 
-        sendNotification(strTitle,message);
+        //sendNotification(strTitle,message);
     }
 
     @Override
@@ -37,28 +37,28 @@ public class MyFirebaseMessagingService extends  com.google.firebase.messaging.F
 
     }
 
-    private  void sendNotification(String title,String messageBody) {
-        Intent[] intents= new Intent[1];
-        Intent intent= new Intent(this,MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("IncidentNo", title);
-        intent.putExtra("ShortDesc", messageBody);
-        intent.putExtra("Description",messageBody);
-        intents[0]=intent;
-        PendingIntent pendingIntent=PendingIntent.getActivities(this,0, intents,PendingIntent.FLAG_ONE_SHOT);
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationbuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("Service Now")
-                .setContentText(messageBody)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent)
-                .setLargeIcon(BitmapFactory.decodeResource
-                        (getResources(), R.mipmap.ic_launcher));;
-
-        NotificationManager notificationManager=(NotificationManager)
-                getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notificationbuilder.build());
-    }
+//    private  void sendNotification(String title,String messageBody) {
+//        Intent[] intents= new Intent[1];
+//        Intent intent= new Intent(this,MainActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        intent.putExtra("IncidentNo", title);
+//        intent.putExtra("ShortDesc", messageBody);
+//        intent.putExtra("Description",messageBody);
+//        intents[0]=intent;
+//        PendingIntent pendingIntent=PendingIntent.getActivities(this,0, intents,PendingIntent.FLAG_ONE_SHOT);
+//        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//        NotificationCompat.Builder notificationbuilder = new NotificationCompat.Builder(this)
+//                .setSmallIcon(R.drawable.ic_launcher_foreground)
+//                .setContentTitle("Service Now")
+//                .setContentText(messageBody)
+//                .setAutoCancel(true)
+//                .setSound(defaultSoundUri)
+//                .setContentIntent(pendingIntent)
+//                .setLargeIcon(BitmapFactory.decodeResource
+//                        (getResources(), R.mipmap.ic_launcher));;
+//
+//        NotificationManager notificationManager=(NotificationManager)
+//                getSystemService(Context.NOTIFICATION_SERVICE);
+//        notificationManager.notify(0, notificationbuilder.build());
+//    }
 }

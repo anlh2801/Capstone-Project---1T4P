@@ -21,23 +21,43 @@ public class RequestService {
     IRequestApiCaller IRequestApiCaller;
     public void createRequest(final Context context, Request request) {
         IRequestApiCaller = RetrofitInstance.getRequestService();
-        Call<ResponseObject<Boolean>> call = IRequestApiCaller.createRequest(request);
-        call.enqueue(new Callback<ResponseObject<Boolean>>() {
+        Call<ResponseObject<Integer>> call = IRequestApiCaller.createRequest(request);
+        call.enqueue(new Callback<ResponseObject<Integer>>() {
             @Override
-            public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
+            public void onResponse(Call<ResponseObject<Integer>> call, Response<ResponseObject<Integer>> response) {
                 if(!response.body().isError()){
                     Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
+                    if (response.body().getObjReturn() != null && response.body().getObjReturn() > 0) {
+                        findITSupporterByRequestId(context, response.body().getObjReturn());
+                    }
                 }
                 else
                     Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onFailure(Call<ResponseObject<Boolean>> call, Throwable t) {
+            public void onFailure(Call<ResponseObject<Integer>> call, Throwable t) {
                 Log.e("ERROR: ", t.getMessage());
             }
         });
     }
+
+    public void findITSupporterByRequestId(final Context context, int requestId) {
+        IRequestApiCaller = RetrofitInstance.getRequestService();
+        Call<String> call = IRequestApiCaller.findITSupporterByRequestId(requestId);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                    Toast.makeText(context, response.body(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
+
     public void getRequestByStatus(final Context context, Integer agency_id, Integer status, final CallBackData<ArrayList<Request>> callBackData) {
         IRequestApiCaller = RetrofitInstance.getRequestService();
         Call<ResponseObjectReturnList<Request>> call = IRequestApiCaller.getRequestByStatus(agency_id, status);

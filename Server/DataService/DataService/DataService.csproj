@@ -157,6 +157,7 @@
     <Compile Include="BaseConnect\RemoveCastsVisitor.cs" />
     <Compile Include="BaseConnect\UnitOfWork.cs" />
     <Compile Include="Constant.cs" />
+    <Compile Include="CustomTools\FirebaseService.cs" />
     <Compile Include="DataAPIGen\AccountApiGen.cs">
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
@@ -503,7 +504,7 @@
     <Compile Include="Privacy\PGP\PGPEncryptHelper.cs" />
     <Compile Include="Privacy\RSA\RSAHelper.cs" />
     <Compile Include="Privacy\TripleDes\TripleDesHelper.cs" />
-    <Compile Include="ResponseModel\ResponseObject.cs" />
+    <Compile Include="CustomTools\ResponseObject.cs" />
     <Compile Include="Utilities\Enums.cs" />
     <Compile Include="Models\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

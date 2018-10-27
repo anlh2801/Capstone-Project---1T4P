@@ -120,14 +120,14 @@ namespace CapstoneProject_ODTS.ControllersApi
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-        //[HttpPut]
-        //[Route("request/accept_request/{itSupporterId}/{requestId}/{isAccept}")]
-        //public HttpResponseMessage AcceptRequest(int itSupporterId, int requestId, bool isAccept)
-        //{
-        //    var result = _requestDomain.AcceptRequestFromITSupporter(itSupporterId, requestId, isAccept);
+        [HttpPut]
+        [Route("request/accept_request/{itSupporterId}/{requestId}/{isAccept}")]
+        public HttpResponseMessage AcceptRequest(int itSupporterId, int requestId, bool isAccept)
+        {
+            var result = _requestDomain.AcceptRequestFromITSupporter(itSupporterId, requestId, isAccept);
 
-        //    return Request.CreateResponse(HttpStatusCode.OK, "Cancel Thành Công!");
-        //}
+            return Request.CreateResponse(HttpStatusCode.OK, "Cancel Thành Công!");
+        }
 
     }
 }

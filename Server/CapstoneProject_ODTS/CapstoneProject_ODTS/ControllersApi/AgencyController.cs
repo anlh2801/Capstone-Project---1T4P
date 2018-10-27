@@ -1,4 +1,5 @@
 ﻿using DataService.APIViewModels;
+using DataService.CustomTools;
 using DataService.Domain;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage GetAllDeviceByAgencyIdAndServiceId(int agencyId, int serviceId);
 
         HttpResponseMessage LoginAgency(string username, string password, int roleId);
+
+        HttpResponseMessage FindITSupporterByRequestId(int requestId);
     }
 
     public class AgencyController : ApiController, IAgencyController
@@ -166,12 +169,19 @@ namespace CapstoneProject_ODTS.ControllersApi
         }
 
         [HttpGet]
-        [Route("agency/find_itSupporter/{serviceItemId}")]
-        public HttpResponseMessage FindItSupporter(int serviceItemId)
+        [Route("agency/find_itSupporter_by_requestId/{requestId}")]
+        public HttpResponseMessage FindITSupporterByRequestId(int requestId)
         {
-            var result = _agencyDomain.FindItSupporter(serviceItemId);
+            var result = _agencyDomain.FindITSupporterByRequestId(requestId);
 
-            return Request.CreateResponse(HttpStatusCode.OK, result);
+            if (!result.IsError && result.ObjReturn != null)
+            {
+                FirebaseService firebaseService = new FirebaseService();
+                firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn);
+                return Request.CreateResponse(HttpStatusCode.OK, result.SuccessMessage);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result.WarningMessage);
         }
 
     }
