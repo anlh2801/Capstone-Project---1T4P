@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.odts.customTools.PendingRequestAdapter;
 import com.odts.customTools.ProcessRequestAdapter;
@@ -28,10 +29,19 @@ public class ProcessingFragment extends Fragment {
     private ProcessRequestAdapter pendingRequestAdapter;
 
     Integer agencyId = 0;
+
+    public ProcessingFragment (){
+
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         agencyId = share.getInt("agencyId", 0);
@@ -52,12 +62,6 @@ public class ProcessingFragment extends Fragment {
             }
         });
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_processing, container, false);
     }
 

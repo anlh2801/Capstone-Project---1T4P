@@ -39,6 +39,7 @@ public class RequestFragment extends Fragment {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         viewPager = (ViewPager) v.findViewById(R.id.viewpager);
         setupViewPager(viewPager);
+        viewPager.setOffscreenPageLimit(4);
         tabLayout = (TabLayout) v.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         return v;

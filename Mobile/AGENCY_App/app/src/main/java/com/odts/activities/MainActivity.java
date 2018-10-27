@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                         loadFragment(new ManageDeviceFragment());
                         break;
                     case  R.id.navigation_accountDetail:
-                        Toast.makeText(MainActivity.this, "tai khoan nek", Toast.LENGTH_SHORT).show();
+                        loadFragment(new ProfileFragment());
                         break;
                 }
                 return true;
