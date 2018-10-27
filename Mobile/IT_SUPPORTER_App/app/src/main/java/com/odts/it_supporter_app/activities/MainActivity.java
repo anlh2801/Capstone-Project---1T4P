@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     static String strIncidentNo = "IncidentNo";
     static String strDesc="IncidentNo";
     static String topic="1";
-    Integer itSupporterId = 1;
+    Integer itSupporterId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences share = getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         TextView tx = findViewById(R.id.testID);
-        //itSupporterId = share.getInt("itSupporterId", 0);
+        itSupporterId = share.getInt("itSupporterId", 0);
 
         tx.setText(itSupporterId.toString());
 

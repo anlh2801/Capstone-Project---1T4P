@@ -1,5 +1,7 @@
 package com.odts.it_supporter_app.activities;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,10 +16,15 @@ public class LoginActivity extends AppCompatActivity {
     EditText username;
     EditText password;
     LoginService loginService;
+    SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sp = getSharedPreferences("loginHero",MODE_PRIVATE);
+        if(sp.getBoolean("logged",false)){
+            goToMainActivity();
+        }
         btnLogin = (Button) findViewById(R.id.btn_login);
         username = (EditText) findViewById(R.id.input_username);
         password = (EditText) findViewById(R.id.input_password);
@@ -31,5 +38,9 @@ public class LoginActivity extends AppCompatActivity {
                 loginService.checkLogin(LoginActivity.this, usernameStr, passwordStr, 2);
             }
         });
+    }
+    public void goToMainActivity(){
+        Intent i = new Intent(this,MainActivity.class);
+        startActivity(i);
     }
 }
