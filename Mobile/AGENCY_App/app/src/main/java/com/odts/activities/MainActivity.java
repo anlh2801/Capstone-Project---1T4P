@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                         loadFragment(new ManageDeviceFragment());
                         break;
                     case  R.id.navigation_accountDetail:
-                        loadFragment(new ProfileFragment());
+//                        loadFragment(new ProfileFragment());
                         break;
                 }
                 return true;
