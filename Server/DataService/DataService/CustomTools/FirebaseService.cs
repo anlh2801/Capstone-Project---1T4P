@@ -15,7 +15,7 @@ namespace DataService.CustomTools
 {
     public class FirebaseService
     {
-        public String SendNotificationFromFirebaseCloudForITSupporterReceive(ITSupporterAPIViewModel itSupporterAPIViewModel)
+        public String SendNotificationFromFirebaseCloudForITSupporterReceive(int itSupporterId, int requestId)
         {
             var result = "-1";
             var fcmKey = "AIzaSyCKceBvEIUixxsE77aNJot5oRYsSCZs7Zg";
@@ -26,11 +26,11 @@ namespace DataService.CustomTools
             httpWebRequest.Method = "POST";
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                var data = RenderDataForITSupporterReceive(itSupporterAPIViewModel);
+                var data = RenderDataForITSupporterReceive(itSupporterId, requestId);
                 var noti = new Notification()
                 {
-                    title = "Title Dep1",
-                    text = "Text Dep",
+                    title = $"Chi nhánh {data.AgencyName} cần sửa {data.RequestName}",
+                    text = $"Số lượng: {data.NumberOfTicket}",
                     sound = "default"
                 };
 
@@ -58,16 +58,34 @@ namespace DataService.CustomTools
 
         }
 
-        public ITSupporterReceive RenderDataForITSupporterReceive(ITSupporterAPIViewModel iTSupporterAPIViewModel)
+        public ITSupporterReceiveFirebaseViewModel RenderDataForITSupporterReceive(int itSupporterId, int requestId)
         {
-            var requestService = new RequestService();
-            var requestModel = requestService.ViewRequestDetail(iTSupporterAPIViewModel.RequestWattingForAccept).ObjReturn;
-            var ITSupporterReceive = new ITSupporterReceive();
-            ITSupporterReceive.ITSupporterViewModel = iTSupporterAPIViewModel;
-            ITSupporterReceive.RequestAPIViewModel = requestModel;
+            var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+            var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+            var itSupporterService = new ITSupporterService();
+            var request = requestRepo.GetActive().SingleOrDefault(p => p.RequestId == requestId);
+            var itSupporter = itSupporterRepo.GetActive().SingleOrDefault(p => p.ITSupporterId == itSupporterId);
+            var itSupporterReceiveFirebaseViewModel = new ITSupporterReceiveFirebaseViewModel()
+            {
+                AgencyName = request.Agency.AgencyName,
+                AgencyAddress = request.Agency.Address,
+                RequestId = request.RequestId,
+                RequestName = request.RequestName,
+                NumberOfTicket = request.Tickets.Count(),
+                ITSupporterId = itSupporter.ITSupporterId,
+                ITSupporterName = itSupporter.ITSupporterName,
+                AccountId = itSupporter.AccountId,
+                Username = itSupporter.Account.Username
+            };
+            StringBuilder ticketInfo = new StringBuilder();
+            foreach (var item in request.Tickets)
+            {
+                ticketInfo.AppendLine($"Thiết bị: {item.Device.DeviceType.DeviceTypeName} - {item.Device.DeviceName}");
+            }
+            itSupporterReceiveFirebaseViewModel.TicketsInfo = ticketInfo.ToString();
 
-            return ITSupporterReceive;
-        }
+            return itSupporterReceiveFirebaseViewModel;
+        }       
     }
 
     public class Notification
@@ -84,9 +102,17 @@ namespace DataService.CustomTools
         //}
     }
 
-    public class ITSupporterReceive
-    {
-        public ITSupporterAPIViewModel ITSupporterViewModel { get; set; }
-        public RequestAllTicketWithStatusAgencyAPIViewModel RequestAPIViewModel { get; set; }
+    public class ITSupporterReceiveFirebaseViewModel
+    {      
+        public int RequestId { get; set; }
+        public string RequestName { get; set; }
+        public string AgencyName { get; set; }
+        public string AgencyAddress { get; set; }
+        public int NumberOfTicket { get; set; }
+        public string TicketsInfo { get; set; }
+        public int ITSupporterId { get; set; }
+        public string ITSupporterName { get; set; }
+        public int AccountId { get; set; }
+        public string Username { get; set; }
     }
 }

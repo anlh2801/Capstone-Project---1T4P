@@ -25,6 +25,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage CancelRequest(RequestCancelAPIViewModel model);
 
         HttpResponseMessage ViewRequestDetail(int requestId);
+
+        HttpResponseMessage AcceptRequest(int itSupporterId, int requestId, bool isAccept);
     }
 
     public class RequestController : ApiController

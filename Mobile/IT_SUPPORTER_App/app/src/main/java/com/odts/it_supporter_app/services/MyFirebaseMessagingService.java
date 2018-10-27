@@ -24,6 +24,7 @@ public class MyFirebaseMessagingService extends  com.google.firebase.messaging.F
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         String strTitle=remoteMessage.getData().get("title");
+
         String message=remoteMessage.getNotification().getBody();
         Log.d(TAG,"onMessageReceived: Message Received: \n" +
                 "Title: " + strTitle + "\n" +

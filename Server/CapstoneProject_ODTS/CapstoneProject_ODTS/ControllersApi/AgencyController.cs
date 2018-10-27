@@ -3,6 +3,7 @@ using DataService.CustomTools;
 using DataService.Domain;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -174,10 +175,11 @@ namespace CapstoneProject_ODTS.ControllersApi
         {
             var result = _agencyDomain.FindITSupporterByRequestId(requestId);
 
-            if (!result.IsError && result.ObjReturn != null)
+            if (!result.IsError && result.ObjReturn > 0)
             {
                 FirebaseService firebaseService = new FirebaseService();
-                firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn);
+                firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
+
                 return Request.CreateResponse(HttpStatusCode.OK, result.SuccessMessage);
             }
 

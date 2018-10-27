@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.odts.it_supporter_app.R;
+import com.odts.it_supporter_app.models.Request;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,9 +26,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences share = getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         TextView tx = findViewById(R.id.testID);
-        itSupporterId = share.getInt("itSupporterId", 0);
+        //itSupporterId = share.getInt("itSupporterId", 0);
+        itSupporterId = 1;
 
         tx.setText(itSupporterId.toString());
+
 
         onNewIntent(getIntent());
         FirebaseMessaging.getInstance().subscribeToTopic(itSupporterId.toString());
@@ -42,9 +45,11 @@ public class MainActivity extends AppCompatActivity {
             final TextView SDescTextView = (TextView) findViewById(R.id.txtShortDesc);
 
             final TextView DescTextView = (TextView) findViewById(R.id.txtDesc);
-            strSDesc = extras.getString("ShortDesc","ShortDesc");
-            strIncidentNo = extras.getString("IncidentNo", "IncidentNo");
-            strDesc=extras.getString("Description","IncidentNo");
+            strSDesc = extras.getString("AgencyName");
+            strIncidentNo = extras.getString("RequestName");
+            strDesc=extras.getString("TicketsInfo");
+            //String a = extras.getString("ITSupporterName");
+
 
             IncidentTextView.setText(strIncidentNo);
             SDescTextView.setText(strSDesc);
