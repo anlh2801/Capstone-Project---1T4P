@@ -32,7 +32,7 @@ namespace DataService.Domain
 
         ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id);
 
-        ResponseObject<int> FindITSupporterByRequestId(int requestId);
+        ResponseObject<int> FindITSupporterByRequestId(int requestId, List<int> ignoreITSupport);
     }
 
     public class AgencyDomain : BaseDomain, IAgencyDomain
@@ -139,11 +139,11 @@ namespace DataService.Domain
             return agency;
         }
 
-        public ResponseObject<int> FindITSupporterByRequestId(int requestId)
+        public ResponseObject<int> FindITSupporterByRequestId(int requestId, List<int> ignoreITSupport)
         {
             var agencyService = this.Service<IAgencyService>();
 
-            var itSupporter = agencyService.FindITSupporterByRequestId(requestId);
+            var itSupporter = agencyService.FindITSupporterByRequestId(requestId, ignoreITSupport);
 
             return itSupporter;
         }

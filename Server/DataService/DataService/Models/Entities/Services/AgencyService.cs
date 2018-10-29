@@ -24,7 +24,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId);
 
-        ResponseObject<int> FindITSupporterByRequestId(int requestId);
+        ResponseObject<int> FindITSupporterByRequestId(int requestId, List<int> ignoreITSupport);
 
         ResponseObject<bool> RemoveAgency(int agency_id);
 
@@ -281,10 +281,14 @@ namespace DataService.Models.Entities.Services
 
         }
 
-        public ResponseObject<int> FindITSupporterByRequestId(int requestId)
+        public ResponseObject<int> FindITSupporterByRequestId(int requestId, List<int> ignoreITSupport)
         {
             int itSupporterIdFound = 0;
             string itSupporterNameFound = "";
+            if (ignoreITSupport == null)
+            {
+                ignoreITSupport = new List<int>();
+            }
             try
             {
                 var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
@@ -298,7 +302,7 @@ namespace DataService.Models.Entities.Services
                 foreach (var item in skills)
                 {
                     var itSupporter = itSupporterRepo.GetActive(p => p.ITSupporterId == item.ITSupporterId && p.IsBusy == false).FirstOrDefault();
-                    if (itSupporter != null)
+                    if (itSupporter != null && !ignoreITSupport.Contains(itSupporter.ITSupporterId))
                     {
                         itSupporterIdFound = itSupporter.ITSupporterId;
                         break;

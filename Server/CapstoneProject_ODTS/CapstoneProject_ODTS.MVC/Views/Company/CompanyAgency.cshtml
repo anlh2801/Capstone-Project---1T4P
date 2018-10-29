@@ -255,8 +255,8 @@
                     //{ "data": "UpdateAt" },
                     {
                         "data": "RequestName",
-                        "mRender": function(data, type, full) {
-                            return '<a href="AgencyDevice/' + full.AgencyId + '">Thiết bị</a>';
+                        "mRender": function (data, type, full) {                            
+                            return '<a href="@Url.Action("AgencyDevice", "Agency")?id=' + full.AgencyId + '">Thiết bị</a>';
                         }
                     },
                     {
