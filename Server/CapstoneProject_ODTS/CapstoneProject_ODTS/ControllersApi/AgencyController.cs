@@ -173,7 +173,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         [Route("agency/find_itSupporter_by_requestId/{requestId}")]
         public HttpResponseMessage FindITSupporterByRequestId(int requestId)
         {
-            var result = _agencyDomain.FindITSupporterByRequestId(requestId);
+            var result = _agencyDomain.FindITSupporterByRequestId(requestId, null);
 
             if (!result.IsError && result.ObjReturn > 0)
             {

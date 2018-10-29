@@ -33,6 +33,8 @@ namespace DataService.Models.Entities.Services
 
     public partial class RequestService
     {
+        List<int> ITSupporterReject = new List<int>();
+
         public ResponseObject<List<RequestAPIViewModel>> GetAllRequest()
         {
             try
@@ -390,7 +392,7 @@ namespace DataService.Models.Entities.Services
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
-                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();               
 
                 if (isAccept)
                 {
@@ -421,6 +423,12 @@ namespace DataService.Models.Entities.Services
 
                         return new ResponseObject<bool> { IsError = false, SuccessMessage = "Nhận thành công", ObjReturn = true };
                     }
+                }
+                else
+                {
+                    ITSupporterReject.Add(itSupporterId);
+                    AgencyService agencyService = new AgencyService();
+                    agencyService.FindITSupporterByRequestId(requestId, ITSupporterReject);
                 }
                 
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Nhận thất bại", ObjReturn = false };
