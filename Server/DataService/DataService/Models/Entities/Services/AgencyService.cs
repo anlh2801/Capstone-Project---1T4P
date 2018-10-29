@@ -307,7 +307,7 @@ namespace DataService.Models.Entities.Services
                 }
                 if (itSupporterIdFound > 0)
                 {
-                    return new ResponseObject<int> { IsError = false, WarningMessage = $"Tìm được Hero {itSupporterNameFound}! Vùi lòng đợi xác nhận", ObjReturn = itSupporterIdFound };
+                    return new ResponseObject<int> { IsError = false, SuccessMessage = $"Tìm được Hero {itSupporterNameFound}! Vùi lòng đợi xác nhận", ObjReturn = itSupporterIdFound };
                 }
                 return new ResponseObject<int> { IsError = true, WarningMessage = "Chưa tìm được Hero nào thích hợp!" };
             }
