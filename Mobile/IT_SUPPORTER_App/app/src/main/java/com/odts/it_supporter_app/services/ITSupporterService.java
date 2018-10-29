@@ -19,7 +19,7 @@ import retrofit2.Response;
 
 public class ITSupporterService {
     IITSupporterApiCaller iitSupporterApiCaller;
-    public void checkLogin(final Context context, int requestId, int itSupporterId, boolean isAccept) {
+    public void acceptRequest(final Context context, int requestId, int itSupporterId, boolean isAccept) {
         iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
         Call<ResponseObject<Boolean>> call = iitSupporterApiCaller.acceptRequest(itSupporterId, requestId, isAccept);
         call.enqueue(new Callback<ResponseObject<Boolean>>() {
