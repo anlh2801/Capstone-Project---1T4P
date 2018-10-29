@@ -2,6 +2,7 @@ package com.odts.it_supporter_app.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -13,48 +14,49 @@ import com.odts.it_supporter_app.models.Request;
 
 public class MainActivity extends AppCompatActivity {
 
-    static   String strSDesc = "ShortDesc";
-    static String strIncidentNo = "IncidentNo";
-    static String strDesc="IncidentNo";
-    static String topic="1";
-    Integer itSupporterId = 0;
+    Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SharedPreferences share = getApplicationContext().getSharedPreferences("ODTS", 0);
-        SharedPreferences.Editor edit = share.edit();
-        TextView tx = findViewById(R.id.testID);
-        //itSupporterId = share.getInt("itSupporterId", 0);
-        itSupporterId = 1;
+        loadFragment(new RecieveRequestFragment());
+        //onNewIntent(getIntent());
+    }
 
-        tx.setText(itSupporterId.toString());
-
-
-        onNewIntent(getIntent());
-        FirebaseMessaging.getInstance().subscribeToTopic(itSupporterId.toString());
+    private boolean loadFragment(Fragment fragment) {
+        //switching fragment
+        if (fragment != null) {
+            fragment.onResume();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fmHome, fragment)
+                    .commit();
+            fragment.onPause();
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public void onNewIntent(Intent intent) {
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
         Bundle extras = intent.getExtras();
         if (extras != null) {
             setContentView(R.layout.activity_main);
-            final TextView IncidentTextView = (TextView) findViewById(R.id.txtIncidentNo);
-            final TextView SDescTextView = (TextView) findViewById(R.id.txtShortDesc);
+            if (fragment instanceof RecieveRequestFragment) {
+                RecieveRequestFragment my = (RecieveRequestFragment) fragment;
+                // Pass intent or its data to the fragment's method
+                my.initData(extras.getString("AgencyName"),
+                        extras.getString("AgencyAddress"),
+                        extras.getString("TicketsInfo"),
+                        extras.getString("RequestName"),
+                        extras.getString("RequestId"));
+            }
 
-            final TextView DescTextView = (TextView) findViewById(R.id.txtDesc);
-            strSDesc = extras.getString("AgencyName");
-            strIncidentNo = extras.getString("RequestName");
-            strDesc=extras.getString("TicketsInfo");
-            //String a = extras.getString("ITSupporterName");
-
-
-            IncidentTextView.setText(strIncidentNo);
-            SDescTextView.setText(strSDesc);
-            DescTextView.setText(strDesc);
         }
-    }
+        // Check if the fragment is an instance of the right fragment
 
+
+    }
 }
