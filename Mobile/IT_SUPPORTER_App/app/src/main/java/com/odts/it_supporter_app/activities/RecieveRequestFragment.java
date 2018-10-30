@@ -33,6 +33,7 @@ public class RecieveRequestFragment extends Fragment {
     TextView txtAgencyNameRecieveRequest;
     TextView txtRequestNameRecieveRequest;
     TextView txtTicketInfoRecieveRequest;
+    SharedPreferences share2;
 
     public RecieveRequestFragment() {
         _itSupporterService = new ITSupporterService();
@@ -48,21 +49,12 @@ public class RecieveRequestFragment extends Fragment {
         txtAgencyNameRecieveRequest = (TextView) v.findViewById(R.id.txtAgencyNameRecieveRequest);
         txtRequestNameRecieveRequest = (TextView) v.findViewById(R.id.txtRequestNameRecieveRequest);
         txtTicketInfoRecieveRequest = (TextView) v.findViewById(R.id.txtTicketInfoRecieveRequest);
-        // Inflate the layout for this fragment
-        return v;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
-        //itSupporterId = share.getInt("itSupporterId", 0);
-        itSupporterId = 1;
-
+        itSupporterId = share.getInt("itSupporterId", 0);
+//        itSupporterId = 1;
         FirebaseMessaging.getInstance().subscribeToTopic(itSupporterId.toString());
-
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,23 +68,38 @@ public class RecieveRequestFragment extends Fragment {
                 getAllServiceITSupportForAgency(false);
             }
         });
+            share2 = getActivity().getSharedPreferences("firebaseData", Context.MODE_PRIVATE);
+            txtAgencyNameRecieveRequest.setText(share2.getString("a", "").toString());
+            txtAgencyAddressRecieveRequest.setText(share2.getString("b", "").toString());
+            txtTicketInfoRecieveRequest.setText(share2.getString("c", "").toString());
+            txtRequestNameRecieveRequest.setText(share2.getString("d", "").toString());
+            this.requestId = Integer.parseInt(share2.getString("e", "0"));
+        return v;
     }
 
-    public void initData(String agencyName, String agencyAddress, String ticketsInfo, String requestName, String requestId) {
-        if (agencyName != null)
-            txtAgencyNameRecieveRequest.setText(agencyName);
-        if (agencyAddress != null)
-            txtAgencyAddressRecieveRequest.setText(agencyAddress);
-        if (ticketsInfo != null)
-            txtTicketInfoRecieveRequest.setText(ticketsInfo);
-        if (requestName != null)
-            txtRequestNameRecieveRequest.setText(requestName);
-        if (requestId != null)
-            this.requestId = Integer.parseInt(requestId);
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
+
+//    public void initData(String agencyName, String agencyAddress, String ticketsInfo, String requestName, String requestId) {
+//        if (agencyName != null)
+//            txtAgencyNameRecieveRequest.setText(agencyName);
+//        if (agencyAddress != null)
+//            txtAgencyAddressRecieveRequest.setText(agencyAddress);
+//        if (ticketsInfo != null)
+//            txtTicketInfoRecieveRequest.setText(ticketsInfo);
+//        if (requestName != null)
+//            txtRequestNameRecieveRequest.setText(requestName);
+//        if (requestId != null)
+//            this.requestId = Integer.parseInt(requestId);
+//    }
 
     private void getAllServiceITSupportForAgency(boolean isAccept) {
         _itSupporterService.acceptRequest(getActivity(), requestId, itSupporterId, isAccept);
+        share2 = getActivity().getSharedPreferences("firebaseData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = share2.edit();
+        editor2.clear().commit();
     }
 
 }

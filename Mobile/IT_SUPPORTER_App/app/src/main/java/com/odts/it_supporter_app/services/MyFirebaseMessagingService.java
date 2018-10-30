@@ -23,10 +23,10 @@ public class MyFirebaseMessagingService extends  com.google.firebase.messaging.F
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        String strTitle=remoteMessage.getData().get("title");
+        String strTitle=remoteMessage.getData().get("AgencyName");
 
         String message=remoteMessage.getNotification().getBody();
-        Log.d(TAG,"onMessageReceived: Message Received: \n" +
+        Log.e(TAG,"onMessageReceived: Message Received: \n" +
                 "Title: " + strTitle + "\n" +
                 "Message: "+ message);
 
