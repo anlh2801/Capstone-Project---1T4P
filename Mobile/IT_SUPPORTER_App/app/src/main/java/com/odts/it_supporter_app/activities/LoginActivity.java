@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         onNewIntent(getIntent());
         Intent i = new Intent(getBaseContext(),MainActivity.class);
         startActivity(i);
-        finish();
+//        finish();
     }
     @Override
     protected void onNewIntent(Intent intent) {
