@@ -1,6 +1,8 @@
 package com.odts.it_supporter_app.activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -58,7 +60,23 @@ public class RecieveRequestFragment extends Fragment {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getAllServiceITSupportForAgency(true);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                builder
+                        .setMessage("Are you sure?")
+                        .setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                getAllServiceITSupportForAgency(true);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        })
+                        .show();
             }
         });
 
@@ -100,6 +118,10 @@ public class RecieveRequestFragment extends Fragment {
         share2 = getActivity().getSharedPreferences("firebaseData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor2 = share2.edit();
         editor2.clear().commit();
+        Intent restartIntent = getActivity().getPackageManager()
+                .getLaunchIntentForPackage(getActivity().getPackageName());
+        restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(restartIntent);
     }
 
 }
