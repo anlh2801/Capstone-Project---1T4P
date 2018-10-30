@@ -34,7 +34,7 @@ namespace DataService.CustomTools
                     sound = "default"
                 };
 
-                string strNJson = ConverMessageJson(data, noti);
+                string strNJson = ConverMessageJsonForITSupporterReceiveFirebaseViewModel(data, noti);
                 streamWriter.Write(strNJson);
                 streamWriter.Flush();
             }
@@ -47,10 +47,10 @@ namespace DataService.CustomTools
             return result;
         }
 
-        public string ConverMessageJson(object data, Notification noti)
+        public string ConverMessageJsonForITSupporterReceiveFirebaseViewModel(ITSupporterReceiveFirebaseViewModel data, Notification noti)
         {
             Dictionary<string, object> androidMessageDic = new Dictionary<string, object>();
-            androidMessageDic.Add("to", "/topics/1");
+            androidMessageDic.Add("to", $"/topics/{data.ITSupporterId}");
             androidMessageDic.Add("data", data);
             androidMessageDic.Add("notification", noti);
 

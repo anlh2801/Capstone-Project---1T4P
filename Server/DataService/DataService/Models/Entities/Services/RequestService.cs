@@ -1,4 +1,5 @@
 ﻿using DataService.APIViewModels;
+using DataService.CustomTools;
 using DataService.Models.Entities.Repositories;
 using DataService.ResponseModel;
 using DataService.Utilities;
@@ -420,7 +421,7 @@ namespace DataService.Models.Entities.Services
                         ticketRepo.Save();
                         requestRepo.Save();
                         itSupporterRepo.Save();
-
+                        ITSupporterReject.Clear();
                         return new ResponseObject<bool> { IsError = false, SuccessMessage = "Nhận thành công", ObjReturn = true };
                     }
                 }
@@ -428,7 +429,13 @@ namespace DataService.Models.Entities.Services
                 {
                     ITSupporterReject.Add(itSupporterId);
                     AgencyService agencyService = new AgencyService();
-                    agencyService.FindITSupporterByRequestId(requestId, ITSupporterReject);
+                    var result = agencyService.FindITSupporterByRequestId(requestId, ITSupporterReject);
+                    if (!result.IsError && result.ObjReturn > 0)
+                    {
+                        FirebaseService firebaseService = new FirebaseService();
+                        firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
+                        return new ResponseObject<bool> { IsError = false, SuccessMessage = "Hủy thành công", ObjReturn = true };
+                    }
                 }
                 
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Nhận thất bại", ObjReturn = false };
