@@ -33,8 +33,7 @@ namespace DataService.Models.Entities.Services
     }
 
     public partial class RequestService
-    {
-        List<int> ITSupporterReject = new List<int>();
+    {       
 
         public ResponseObject<List<RequestAPIViewModel>> GetAllRequest()
         {
@@ -389,6 +388,7 @@ namespace DataService.Models.Entities.Services
 
         public ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept)
         {
+            MemoryCacher memoryCacher = new MemoryCacher();            
             try
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
@@ -421,15 +421,29 @@ namespace DataService.Models.Entities.Services
                         ticketRepo.Save();
                         requestRepo.Save();
                         itSupporterRepo.Save();
-                        ITSupporterReject.Clear();
+                                              
+                        memoryCacher.Delete("ITSupporterReject");
+                        var its = memoryCacher.GetValue("ITSupporterReject");
                         return new ResponseObject<bool> { IsError = false, SuccessMessage = "Nhận thành công", ObjReturn = true };
                     }
                 }
                 else
-                {
-                    ITSupporterReject.Add(itSupporterId);
+                {                   
+                    var its = memoryCacher.GetValue("ITSupporterReject");
+                    List<int> itSupporterReject;
+                    if (its != null)
+                    {
+                        itSupporterReject = (List<int>) its;
+                    }
+                    else                    
+                    {
+                        itSupporterReject = new List<int>();
+                    }
+                    itSupporterReject.Add(itSupporterId);
+                    
+                    memoryCacher.Add("ITSupporterReject", itSupporterReject, DateTimeOffset.UtcNow.AddHours(1));
                     AgencyService agencyService = new AgencyService();
-                    var result = agencyService.FindITSupporterByRequestId(requestId, ITSupporterReject);
+                    var result = agencyService.FindITSupporterByRequestId(requestId, itSupporterReject);
                     if (!result.IsError && result.ObjReturn > 0)
                     {
                         FirebaseService firebaseService = new FirebaseService();

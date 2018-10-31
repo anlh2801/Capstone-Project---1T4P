@@ -40,6 +40,7 @@ namespace DataService.CustomTools
             }
 
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
                 result = streamReader.ReadToEnd();
