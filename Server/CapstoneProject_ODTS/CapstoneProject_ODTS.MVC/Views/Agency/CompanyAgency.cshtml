@@ -1,4 +1,7 @@
-﻿<!--Modal: modalConfirmDelete-->
+﻿@{
+    var dataAgency = ViewData["ID"];
+}
+<!--Modal: modalConfirmDelete-->
 <div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
@@ -148,24 +151,23 @@
 </div>
 <!-- Datatable -->
 <div class="row col-md-12">
+    <h3>Tất Cả Chi Nhánh</h3>
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
             <tr>
                 <th><label>STT</label></th>
-                <th><label>Company Name</label></th>
-                @*<th><label>Account Name</label></th>*@
-                <th><label>Name</label></th>
-                <th><label>Detail</label></th>
-                @*<th><label>Address</label></th>
-                    <th><label>Telephone</label></th>
-                    <th><label>Create Date</label></th>
-                    <th><label>Update Date  </label></th>*@
+                <th><label>Công Ty</label></th>
+                <th><label>Tên Chi Nhánh</label></th>
+                <th><label>Địa Chỉ</label></th>
+                <th><label>Thiết Bị</label></th>
+                <th><label>Chức Năng</label></th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
     <div class="test">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="showCreateModal()">New Agency</button>
+        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Chi Nhánh</button>
+        <button type="button" class="btn btn-primary fa fa-mail-reply-all" data-toggle="modal" data-target="" onclick="window.location.href='http://localhost:51436/Company/Index'"><font face="verdana"> Quay Lại Trang Công Ty</button>
     </div>
 </div>
 
@@ -188,8 +190,8 @@
 
         function loadCompany() {
             $.ajax({
-                type: 'GET',
-                url: '@Url.Action("GetAllAgency", "Agency")',
+                type: 'POST',
+                url: '@Url.Action("GetAllAgency", "Company", new { company_id = dataAgency })',
                 data: {
                 },
                 success: function(result) {
@@ -227,7 +229,7 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1, 2, 3, 4, 5, 6],
+                        "aTargets": [0, 1, 2, 3, 4, 5],
                         "bSortable": false,
                         "sClass": "text-center"
                     },
@@ -246,35 +248,29 @@
                     { "data": "CompanyName" },
                     //{ "data": "UserName" },
                     { "data": "AgencyName" },
-                    //{ "data": "Address" },
+                    { "data": "Address" },
                     //{ "data": "Telephone" },
                     //{ "data": "CreateAt" },
                     //{ "data": "UpdateAt" },
                     {
                         "data": "RequestName",
-                        "mRender": function(data, type, full) {
-                            return '<a href="AgencyDevice/' + full.AgencyId + '">Thiết bị</a>';
+                        "mRender": function (data, type, full) {
+                            return '<a href="@Url.Action("AgencyDevice", "Agency")?id=' + full.AgencyId + '">Xem Thiết bị</a>';
                         }
                     },
                     {
-                        "mRender": function(data, type, full) {
-                            return ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' +
+                        "aTargets": [5],
+                        "mRender": function (data, type, full) {
+                            var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' +
                                 full.AgencyId +
                                 ')"></button>';
-                        }
-                    },
-                    {
-                        "mRender": function(data, type, full) {
-                            return ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' +
+                            var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' +
                                 full.AgencyId +
                                 ')"></button>';
-                        }
-                    },
-                    {
-                        "mRender": function(data, type, full) {
-                            return ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeAgency(' +
+                            var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeAgency(' +
                                 full.AgencyId +
                                 ')"></button>';
+                            return view + " " + edit + " " + del;
                         }
                     },
                 ],

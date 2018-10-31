@@ -27,6 +27,11 @@ namespace CapstoneProject_ODTS.MVC.Controllers
             ViewData["ID"] = id.ToString();
             return View();
         }
+        public ActionResult Contract(int id)
+        {
+            ViewData["ID"] = id.ToString();
+            return View();
+        }
         public ActionResult GetAllCompany()
         {
             var companys = _companyDomain.GetAllCompany();
