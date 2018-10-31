@@ -1,5 +1,7 @@
 package com.odts.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,29 +30,45 @@ public class RequestDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_detail);
-//        rqName = (TextView) findViewById(R.id.requestNameDetail);
-//        Intent myIntent = getIntent();
-//        int requestID = myIntent.getIntExtra("requestID", 0);
-////        Toast.makeText(RequestDetailActivity.this,String.valueOf(requestID), Toast.LENGTH_SHORT ).show();
-//        requestService = new RequestService();
-//        requestService.requestDetail(RequestDetailActivity.this, requestID, new CallBackData<ListRequest>() {
-//            @Override
-//            public void onSuccess(final ListRequest listRequest) {
-//                rqName.setText(listRequest.getCreateDate());
-//                btnCancel = findViewById(R.id.btnCancle);
-//                btnCancel.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        requestService.cancelTicket(RequestDetailActivity.this, 3, 4);
-//                    }
-//                });
-//
-//            }
-//            @Override
-//            public void onFail(String message) {
-//
-//            }
-//        });
+        rqName = (TextView) findViewById(R.id.requestNameDetail);
+        Intent myIntent = getIntent();
+        final int requestID = myIntent.getIntExtra("requestID", 0);
+//        Toast.makeText(RequestDetailActivity.this,String.valueOf(requestID), Toast.LENGTH_SHORT ).show();
+        requestService = new RequestService();
+        requestService.requestDetail(RequestDetailActivity.this, requestID, new CallBackData<Request>() {
+            @Override
+            public void onSuccess(final Request listRequest) {
+                rqName.setText(listRequest.getCreateDate());
+                btnCancel = findViewById(R.id.btnCancle);
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(RequestDetailActivity.this);
+
+                        builder
+                                .setMessage("Are you sure?")
+                                .setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        requestService.cancelTicket(RequestDetailActivity.this, requestID, 4);
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        dialog.cancel();
+                                    }
+                                })
+                                .show();
+                    }
+                });
+
+            }
+            @Override
+            public void onFail(String message) {
+
+            }
+        });
 
     }
 }
