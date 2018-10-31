@@ -39,7 +39,11 @@ namespace CapstoneProject_ODTS.Controllers
             ViewData["ID"] = id.ToString();
             return View();
         }
-
+        public ActionResult CompanyAgency(int id)
+        {
+            ViewData["ID"] = id.ToString();
+            return View();
+        }
 
         public ActionResult GetAllDevice(int agency_id)
         {
