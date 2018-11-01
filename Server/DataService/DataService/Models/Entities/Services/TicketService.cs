@@ -21,20 +21,20 @@ namespace DataService.Models.Entities.Services
         {
             try
             {
-                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var itSupporterlRepo = DependencyUtils.Resolve<IITSupporterRepository>();
-                var ticketDetails = ticketRepo.GetActive(p => p.TicketId == rate.TicketId &&
+                var ticketDetails = requestRepo.GetActive(p => p.RequestId == rate.RequestId &&
                                                                p.CurrentITSupporter_Id == rate.CurrentITSupporter_Id &&
-                                                               p.Request.ServiceItemId == rate.ServiceItemId).SingleOrDefault();
+                                                               p.ServiceItemId == rate.ServiceItemId).SingleOrDefault();
                 var itupporter = itSupporterlRepo.Get(rate.CurrentITSupporter_Id);
 
                 if (ticketDetails != null && itupporter != null)
                 {
                     ticketDetails.Rating = rate.Rating;
-                    ticketDetails.Desciption = rate.Description;
+                    ticketDetails.Feedback = rate.Description;
                     ticketDetails.UpdateDate = DateTime.UtcNow.AddHours(7);
-                    ticketRepo.Edit(ticketDetails);
-                    ticketRepo.Save();
+                    requestRepo.Edit(ticketDetails);
+                    requestRepo.Save();
 
                     itupporter.RatingAVG = itupporter.RatingAVG != null ? (itupporter.RatingAVG + rate.Rating) / 2 : rate.Rating;
                     itupporter.UpdateDate = DateTime.UtcNow.AddHours(7);

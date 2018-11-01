@@ -21,8 +21,6 @@ namespace DataService.ViewModels
     			public virtual string Desciption { get; set; }
     			public virtual Nullable<int> Current_TicketStatus { get; set; }
     			public virtual Nullable<int> CurrentITSupporter_Id { get; set; }
-    			public virtual Nullable<int> Rating { get; set; }
-    			public virtual Nullable<double> Estimation { get; set; }
     			public virtual Nullable<System.DateTime> StartTime { get; set; }
     			public virtual Nullable<System.DateTime> Endtime { get; set; }
     			public virtual bool IsDelete { get; set; }

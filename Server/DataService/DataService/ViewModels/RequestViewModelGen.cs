@@ -22,8 +22,11 @@ namespace DataService.ViewModels
     			public virtual int RequestCategoryId { get; set; }
     			public virtual int RequestStatus { get; set; }
     			public virtual string RequestName { get; set; }
-    			public virtual Nullable<System.DateTime> StartDate { get; set; }
-    			public virtual Nullable<System.DateTime> EndDate { get; set; }
+    			public virtual Nullable<double> Estimation { get; set; }
+    			public virtual Nullable<System.DateTime> StartTime { get; set; }
+    			public virtual Nullable<System.DateTime> EndTime { get; set; }
+    			public virtual Nullable<int> CurrentITSupporter_Id { get; set; }
+    			public virtual Nullable<int> Rating { get; set; }
     			public virtual string Feedback { get; set; }
     			public virtual bool IsDelete { get; set; }
     			public virtual System.DateTime CreateDate { get; set; }

@@ -283,7 +283,8 @@ namespace DataService.Models.Entities.Services
 
         public ResponseObject<int> FindITSupporterByRequestId(int requestId, List<int> ignoreITSupport)
         {
-            int itSupporterIdFound = 0;
+            double itSupporterIdFound = 0;
+
             string itSupporterNameFound = "";
             if (ignoreITSupport == null)
             {
@@ -291,27 +292,32 @@ namespace DataService.Models.Entities.Services
             }
             try
             {
-                var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();               
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var skillRepo = DependencyUtils.Resolve<ISkillRepository>();
                 var serviceItemRepo = DependencyUtils.Resolve<IServiceItemRepository>();
-                var serviceItemId = requestRepo.GetActive(p => p.RequestId == requestId).SingleOrDefault().ServiceItemId;
+                var request = requestRepo.GetActive(p => p.RequestId == requestId).SingleOrDefault();
+                var serviceItemId = request.ServiceItemId;
                 var serviceITSupportId = serviceItemRepo.GetActive(p => p.ServiceItemId == serviceItemId).SingleOrDefault().ServiceITSupportId;
-                var skills = skillRepo.GetActive(a => a.ServiceITSupportId == serviceITSupportId).OrderByDescending(p => p.MonthExperience);                
+                var skills = skillRepo.GetActive(a => a.ServiceITSupportId == serviceITSupportId);
                 
+                var company = request.Agency.Company;
                 foreach (var item in skills)
                 {
-                    var itSupporter = itSupporterRepo.GetActive(p => p.ITSupporterId == item.ITSupporterId && p.IsBusy == false).FirstOrDefault();
-                    if (itSupporter != null && !ignoreITSupport.Contains(itSupporter.ITSupporterId))
+                    var itSupporter = itSupporterRepo.GetActive(p => p.ITSupporterId == item.ITSupporterId && p.IsBusy == false).SingleOrDefault();
+                    if (itSupporter != null)
                     {
-                        itSupporterIdFound = itSupporter.ITSupporterId;
+                        var weightForITSupporterFamiliarWithAgency = requestRepo.GetActive(p => p.CurrentITSupporter_Id == itSupporter.ITSupporterId && p.AgencyId == request.AgencyId).Count() + ((company.PercentForITSupporterFamiliarWithAgency ?? 30) / 100);
+                        var weightForITSupporterRate = (itSupporter.RatingAVG ?? 0) * ((company.PercentForITSupporterRate ?? 40) / 100);
+                        var weightForITSupporterExp = (item.MonthExperience ?? 0) * ((company.PercentForITSupporterExp ?? 30) / 100);
+                        itSupporterIdFound = weightForITSupporterFamiliarWithAgency + weightForITSupporterRate + weightForITSupporterExp;
                         break;
                     }
 
                 }
                 if (itSupporterIdFound > 0)
                 {
-                    return new ResponseObject<int> { IsError = false, SuccessMessage = $"Tìm được Hero {itSupporterNameFound}! Vùi lòng đợi xác nhận", ObjReturn = itSupporterIdFound };
+                    return new ResponseObject<int> { IsError = false, SuccessMessage = $"Tìm được Hero {itSupporterNameFound}! Vùi lòng đợi xác nhận", ObjReturn = 0 };
                 }
                 return new ResponseObject<int> { IsError = true, WarningMessage = "Chưa tìm được Hero nào thích hợp!" };
             }
@@ -379,8 +385,6 @@ namespace DataService.Models.Entities.Services
                         Desciption = item.Desciption,
                         Current_TicketStatus = item.Current_TicketStatus != null ? Enum.GetName(typeof(TicketStatusEnum), item.Current_TicketStatus) : string.Empty,
                         CurrentITSupporter_Id = item.CurrentITSupporter_Id ?? 0,
-                        Rating = item.Rating ?? 0,
-                        Estimation = item.Estimation ?? 0,
                         StartTime = item.StartTime != null ? item.StartTime.Value.ToString("dd/MM/yyyy") : string.Empty,
                         Endtime = item.Endtime != null ? item.Endtime.Value.ToString("dd/MM/yyyy") : string.Empty,
                         CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),

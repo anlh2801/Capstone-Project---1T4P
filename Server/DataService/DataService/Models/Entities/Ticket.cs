@@ -27,8 +27,6 @@ namespace DataService.Models.Entities
         public string Desciption { get; set; }
         public Nullable<int> Current_TicketStatus { get; set; }
         public Nullable<int> CurrentITSupporter_Id { get; set; }
-        public Nullable<int> Rating { get; set; }
-        public Nullable<double> Estimation { get; set; }
         public Nullable<System.DateTime> StartTime { get; set; }
         public Nullable<System.DateTime> Endtime { get; set; }
         public bool IsDelete { get; set; }
@@ -36,7 +34,6 @@ namespace DataService.Models.Entities
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
         public virtual Device Device { get; set; }
-        public virtual ITSupporter ITSupporter { get; set; }
         public virtual Request Request { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TicketHistory> TicketHistories { get; set; }

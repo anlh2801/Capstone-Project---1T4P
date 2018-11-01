@@ -13,6 +13,5 @@ namespace DataService.APIViewModels
 
         public int CurrentITSupporter_Id { get; set; }
         public int TicketId { get; set; }
-        public double Estimation { get; set; }
     }
 }
