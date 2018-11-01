@@ -1,9 +1,13 @@
 package com.odts.services;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.odts.activities.MainActivity;
+import com.odts.activities.PendingFragment;
 import com.odts.apiCaller.IRequestApiCaller;
 import com.odts.models.Request;
 import com.odts.utils.CallBackData;
@@ -16,9 +20,9 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 public class RequestService {
     IRequestApiCaller IRequestApiCaller;
+    private MainActivity main;
     public void createRequest(final Context context, Request request) {
         IRequestApiCaller = RetrofitInstance.getRequestService();
         Call<ResponseObject<Integer>> call = IRequestApiCaller.createRequest(request);
@@ -29,6 +33,8 @@ public class RequestService {
                     Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
                     if (response.body().getObjReturn() != null && response.body().getObjReturn() > 0) {
                         findITSupporterByRequestId(context, response.body().getObjReturn());
+                        Intent intent = new Intent(context, MainActivity.class);
+                        context.startActivity(intent);
                     }
                 }
                 else
