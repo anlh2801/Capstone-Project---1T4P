@@ -1,6 +1,7 @@
 package com.odts.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,7 +14,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.melnykov.fab.ScrollDirectionListener;
 import com.odts.customTools.PendingRequestAdapter;
 import com.odts.services.RequestService;
 
@@ -28,6 +33,7 @@ public class RequestFragment extends Fragment {
     private ViewPager viewPager;
     private RecyclerView recyclerView;
     private PendingRequestAdapter pendingRequestAdapter;
+    private com.melnykov.fab.FloatingActionButton btnCreate;
 
 
     @Override
@@ -42,6 +48,25 @@ public class RequestFragment extends Fragment {
         viewPager.setOffscreenPageLimit(4);
         tabLayout = (TabLayout) v.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+//        btnCreate = (com.melnykov.fab.FloatingActionButton) v.findViewById(R.id.fab);
+//        ListView listView = (ListView) v.findViewById(R.id.listPending);
+//        btnCreate.attachToListView(listView, new ScrollDirectionListener() {
+//            @Override
+//            public void onScrollDown() {
+//                Toast.makeText(getContext(), "down", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onScrollUp() {
+//                Toast.makeText(getContext(), "up", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        btnCreate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Toast.makeText(getContext(), "float", Toast.LENGTH_SHORT).show();
+//            }
+//        });
         return v;
     }
 

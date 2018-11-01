@@ -24,6 +24,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RequestDetailActivity" />
         <activity android:name=".TimeLineActivity" />
+        <activity android:name=".CreateRequestActivity" />
     </application>
 
 </manifest>
