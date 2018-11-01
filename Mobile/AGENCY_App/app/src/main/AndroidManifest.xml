@@ -23,6 +23,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RequestDetailActivity" />
+        <activity android:name=".TimeLineActivity" />
     </application>
 
 </manifest>

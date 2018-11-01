@@ -22,9 +22,28 @@ public class Request {
     @SerializedName("UpdateDate")
     private String updateDate;
     @SerializedName("NumberOfTicket")
-    private String nod;
+    private Integer nod;
     @SerializedName("Ticket")
     private List<Ticket> ticket;
+    @SerializedName("RequestStatus")
+    private Integer status;
+
+    public Request() {
+    }
+
+//    public Request(String requestName, String createDate, String updateDate) {
+//        this.requestName = requestName;
+//        this.createDate = createDate;
+//        this.updateDate = updateDate;
+//    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public String getUpdateDate() {
         return updateDate;
@@ -34,11 +53,11 @@ public class Request {
         this.updateDate = updateDate;
     }
 
-    public String getNod() {
+    public Integer getNod() {
         return nod;
     }
 
-    public void setNod(String nod) {
+    public void setNod(Integer nod) {
         this.nod = nod;
     }
 
@@ -105,4 +124,5 @@ public class Request {
     public void setTicket(List<Ticket> ticket) {
         this.ticket = ticket;
     }
+
 }

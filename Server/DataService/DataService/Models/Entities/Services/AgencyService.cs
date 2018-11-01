@@ -20,11 +20,11 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<List<AgencyAPIViewModel>> GetAllAgency();
 
-        ResponseObject<bool> CreateRequest(AgencyCreateRequestAPIViewModel model);
+        ResponseObject<int> CreateRequest(AgencyCreateRequestAPIViewModel model);
 
         ResponseObject<bool> CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId);
 
-        ResponseObject<ITSupporterAPIViewModel> FindITSupporter(int serviceItemId);
+        ResponseObject<int> FindITSupporterByRequestId(int requestId, List<int> ignoreITSupport);
 
         ResponseObject<bool> RemoveAgency(int agency_id);
 
@@ -220,7 +220,7 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<bool> CreateRequest(AgencyCreateRequestAPIViewModel model)
+        public ResponseObject<int> CreateRequest(AgencyCreateRequestAPIViewModel model)
         {
             try
             {
@@ -242,12 +242,12 @@ namespace DataService.Models.Entities.Services
 
                 CreateTicket(model.Ticket, createRequest.RequestId);
                 
-                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Tạo yêu cầu thành công!", ObjReturn = true };
+                return new ResponseObject<int> { IsError = false, SuccessMessage = "Tạo yêu cầu thành công!", ObjReturn = createRequest.RequestId };
             }
             catch (Exception e)
             {
 
-                return new ResponseObject<bool> { IsError = true, WarningMessage = "Tạo yêu cầu thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
+                return new ResponseObject<int> { IsError = true, WarningMessage = "Tạo yêu cầu thất bại!", ObjReturn = 0, ErrorMessage = e.ToString() };
             }
 
         }
@@ -281,41 +281,43 @@ namespace DataService.Models.Entities.Services
 
         }
 
-        public ResponseObject<ITSupporterAPIViewModel> FindITSupporter(int serviceItemId)
+        public ResponseObject<int> FindITSupporterByRequestId(int requestId, List<int> ignoreITSupport)
         {
-            ITSupporterAPIViewModel itSupporterFound = null;
+            int itSupporterIdFound = 0;
+            string itSupporterNameFound = "";
+            if (ignoreITSupport == null)
+            {
+                ignoreITSupport = new List<int>();
+            }
             try
             {
                 var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var skillRepo = DependencyUtils.Resolve<ISkillRepository>();
                 var serviceItemRepo = DependencyUtils.Resolve<IServiceItemRepository>();
+                var serviceItemId = requestRepo.GetActive(p => p.RequestId == requestId).SingleOrDefault().ServiceItemId;
                 var serviceITSupportId = serviceItemRepo.GetActive(p => p.ServiceItemId == serviceItemId).SingleOrDefault().ServiceITSupportId;
                 var skills = skillRepo.GetActive(a => a.ServiceITSupportId == serviceITSupportId).OrderByDescending(p => p.MonthExperience);                
                 
                 foreach (var item in skills)
                 {
                     var itSupporter = itSupporterRepo.GetActive(p => p.ITSupporterId == item.ITSupporterId && p.IsBusy == false).FirstOrDefault();
-                    if (itSupporter != null)
+                    if (itSupporter != null && !ignoreITSupport.Contains(itSupporter.ITSupporterId))
                     {
-                        itSupporterFound = new ITSupporterAPIViewModel();
-                        itSupporterFound.ITSupporterId = itSupporter.ITSupporterId;
-                        itSupporterFound.ITSupporterName = itSupporter.ITSupporterName;
-                        itSupporterFound.AccountId = itSupporter.AccountId;
-                        itSupporterFound.Username = itSupporter.Account.Username;
-                        itSupporterFound.IsBusyValue = itSupporter.IsBusy ?? false;
+                        itSupporterIdFound = itSupporter.ITSupporterId;
                         break;
                     }
 
                 }
-                if (itSupporterFound != null)
+                if (itSupporterIdFound > 0)
                 {
-                    return new ResponseObject<ITSupporterAPIViewModel> { IsError = false, WarningMessage = $"Tìm được Hero {itSupporterFound.ITSupporterName}! Vùi lòng đợi xác nhận", ObjReturn = itSupporterFound };
+                    return new ResponseObject<int> { IsError = false, SuccessMessage = $"Tìm được Hero {itSupporterNameFound}! Vùi lòng đợi xác nhận", ObjReturn = itSupporterIdFound };
                 }
-                return new ResponseObject<ITSupporterAPIViewModel> { IsError = true, WarningMessage = "Chưa tìm được Hero nào thích hợp!" };
+                return new ResponseObject<int> { IsError = true, WarningMessage = "Chưa tìm được Hero nào thích hợp!" };
             }
             catch (Exception ex)
             {
-                return new ResponseObject<ITSupporterAPIViewModel> { IsError = true, WarningMessage = "Chưa tìm được Hero nào thích hợp!", ErrorMessage = ex.ToString() };
+                return new ResponseObject<int> { IsError = true, WarningMessage = "Chưa tìm được Hero nào thích hợp!", ErrorMessage = ex.ToString() };
             }
 
         }

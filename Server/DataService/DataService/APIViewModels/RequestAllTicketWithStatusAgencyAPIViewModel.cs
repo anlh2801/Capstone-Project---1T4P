@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataService.ResponseModel;
 using DataService.ViewModels;
 
 namespace DataService.APIViewModels
 {
-    public class RequestAllTicketWithStatusAgencyAPIViewModel : DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.Request>
+    public class RequestAllTicketWithStatusAgencyAPIViewModel
     {
-        public RequestAllTicketWithStatusAgencyAPIViewModel() : base() { }
-        public RequestAllTicketWithStatusAgencyAPIViewModel(DataService.Models.Entities.Request entity) : base(entity) { }
-
         public int RequestId { get; set; }
         public string RequestName { get; set; }
         public string CreateDate { get; set; }

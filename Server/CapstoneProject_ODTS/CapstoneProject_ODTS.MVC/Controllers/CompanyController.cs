@@ -27,6 +27,11 @@ namespace CapstoneProject_ODTS.MVC.Controllers
             ViewData["ID"] = id.ToString();
             return View();
         }
+        public ActionResult Contract(int id)
+        {
+            ViewData["ID"] = id.ToString();
+            return View();
+        }
         public ActionResult GetAllCompany()
         {
             var companys = _companyDomain.GetAllCompany();
@@ -67,6 +72,11 @@ namespace CapstoneProject_ODTS.MVC.Controllers
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult GetAllContract(int company_id)
+        {
+            var result = _companyDomain.ViewAllContractByCompanyId(company_id);
 
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

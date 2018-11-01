@@ -16,6 +16,7 @@ import retrofit2.Response;
 
 public class LoginService {
     ILoginApiCaller iLoginApiCaller;
+    SharedPreferences share, sp;
     public void checkLogin(final Context context, String username, String password, Integer roleId) {
         iLoginApiCaller = RetrofitInstance.getLoginService();
         Call<ResponseObject<ITSupporter>> call = iLoginApiCaller.checkLogin(username, password, roleId);
@@ -24,12 +25,14 @@ public class LoginService {
             public void onResponse(Call<ResponseObject<ITSupporter>> call, Response<ResponseObject<ITSupporter>> response) {
                 if(!response.body().isError()){
                     //Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
-                    SharedPreferences share = context.getSharedPreferences("ODTS", 0);
+                    share = context.getSharedPreferences("ODTS", Context.MODE_PRIVATE);
                     SharedPreferences.Editor edit = share.edit();
                     edit.putInt("itSupporterId", response.body().getObjReturn().getItSupporterId());
                     edit.commit();
                     Intent intent = new Intent(context, MainActivity.class);
                     context.startActivity(intent);
+                    sp = context.getSharedPreferences("loginHero", Context.MODE_PRIVATE);
+                    sp.edit().putBoolean("logged",true).commit();
                 }
                 else
                     Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();

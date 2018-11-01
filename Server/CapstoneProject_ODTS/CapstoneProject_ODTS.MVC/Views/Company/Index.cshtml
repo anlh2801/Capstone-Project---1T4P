@@ -137,7 +137,7 @@
 
 <!-- Datatable -->
 <div class="row col-md-12">
-    <h4>Tất Cả Công Ty</h4>
+    <h3>Tất Cả Công Ty</h3>
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
             <tr>
@@ -146,6 +146,7 @@
                 <th><label>Thông Tin</label></th>
                 <th><label>Ngày Tạo</label></th>
                 <th><label>Chi Nhánh</label></th>
+                <th><label>Hợp Đồng</label></th>
                 <th><label>Chức Năng</label></th>
             </tr>
         </thead>
@@ -207,7 +208,7 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1, 2, 3,4],
+                        "aTargets": [0, 1, 2, 3,4 ,5],
                         "bSortable": false,
                         "sClass": "text-center"
                     },
@@ -220,11 +221,17 @@
                     {
                         "data": "RequestName",
                         "mRender": function (data, type, full) {
-                            return '<a href="CompanyAgency/' + full.CompanyId + '">Xem Chi Nhánh</a>';
+                            return '<a href="@Url.Action("CompanyAgency", "Agency")?id=' + full.CompanyId + '">Xem Chi Nhánh</a>';
                         }
                     },
                     {
-                        "aTargets": [4],
+                        "data": "RequestName",
+                        "mRender": function (data, type, full) {
+                            return '<a href="@Url.Action("CompanyContract", "Contract")?id=' + full.CompanyId + '">Xem Hợp Đồng</a>';
+                        }
+                    },
+                    {
+                        "aTargets": [5],
                         "mRender": function (data, type, full) {
                             var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.CompanyId + ')"></button>';
                             var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.CompanyId + ')"></button>';

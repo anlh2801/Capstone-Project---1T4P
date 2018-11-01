@@ -154,7 +154,7 @@
     </div>
 </div>
 <div class="row col-md-12">
-
+    <h3>Tất Cả Thiết Bị</h3>
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
             <tr>
@@ -171,6 +171,7 @@
     </table>
     <div class="NewThing">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="showCreateModal()">Tạo Thiết Bị</button>
+        <button type="button" class="btn btn-primary fa fa-mail-reply-all" data-toggle="modal" data-target="" onclick="window.history.go(-1); return false;"><font face="verdana"> Quay Lại Trang Chi Nhánh</button>
     </div>
 </div>
 
@@ -229,7 +230,7 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1, 2, 3, 4, 5],
+                        "aTargets": [0, 1, 2, 3, 4, 5,6],
                         "bSortable": false,
                         "sClass": "text-center"
                     },
@@ -242,18 +243,12 @@
                     { "data": "GuarantyEndDate" },
                     { "data": "CreateDate" },
                     {
-                        "mRender": function(data, type, full) {
-                            return ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' +full.DeviceId +')"></button>';
-                        }
-                    },
-                    {
-                        "mRender": function(data, type, full) {
-                            return ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' +full.DeviceId +')"></button>';
-                        }
-                    },
-                    {
-                        "mRender": function(data, type, full) {
-                            return ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeAgency(' +full.DeviceId +')"></button>';
+                        "aTargets": [6],
+                        "mRender": function (data, type, full) {
+                            var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.DeviceId + ')"></button>';
+                            var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.DeviceId + ')"></button>';
+                            var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeAgency(' + full.DeviceId + ')"></button>';
+                            return view + " " + edit + " " + del;
                         }
                     },
                 ],

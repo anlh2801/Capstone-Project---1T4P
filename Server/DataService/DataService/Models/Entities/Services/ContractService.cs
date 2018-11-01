@@ -18,6 +18,7 @@ namespace DataService.Models.Entities.Services
         ResponseObject<bool> CreateContract(ContractAPIViewModel model);
         ResponseObject<bool> UpdateContract(ContractAPIViewModel model);
         ResponseObject<bool> RemoveContract(int contract_id);
+        ResponseObject<List<ContractAPIViewModel>> ViewAllContractByCompanyId(int company_id);
     }
 
     public partial class ContractService
@@ -64,6 +65,7 @@ namespace DataService.Models.Entities.Services
 
             }
         }
+
         public ResponseObject<ContractAPIViewModel> ViewDetail(int contract_id)
         {
             try
@@ -164,6 +166,45 @@ namespace DataService.Models.Entities.Services
             catch (Exception ex)
             {
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa hợp đồng thất bại", ErrorMessage = ex.ToString(), ObjReturn = false };
+            }
+        }
+        public ResponseObject<List<ContractAPIViewModel>> ViewAllContractByCompanyId(int company_id)
+        {
+            try
+            {
+                List<ContractAPIViewModel> rsList = new List<ContractAPIViewModel>();
+                var contractRepo = DependencyUtils.Resolve<IContractRepository>();
+                var companyContract = contractRepo.GetActive(p => p.CompanyId == company_id).ToList();
+                if (companyContract.Count <= 0)
+                {
+                    return new ResponseObject<List<ContractAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy hợp đòng nào!" };
+                }
+                int count = 1;
+                foreach (var item in companyContract)
+                {
+                    rsList.Add(new ContractAPIViewModel
+                    {
+                        NumericalOrder = count,
+                        ContractId = item.ContractId,
+                        CompanyId = item.CompanyId,
+                        CompanyName = item.Company.CompanyName,
+                        ContractName = item.ContractName,
+                        StartDate = item.StartDate.Value.ToString("dd/MM/yyyy"),
+                        EndDate = item.EndDate.Value.ToString("dd/MM/yyyy"),
+                        IsDelete = item.IsDelete,
+                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
+                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+
+                    });
+                    count++;
+                }
+
+                return new ResponseObject<List<ContractAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Tìm thấy hợp đòng" };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<List<ContractAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy hợp đòng nào!", ObjReturn = null, ErrorMessage = e.ToString() };
             }
         }
     }

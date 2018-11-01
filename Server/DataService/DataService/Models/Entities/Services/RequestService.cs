@@ -1,4 +1,5 @@
 ﻿using DataService.APIViewModels;
+using DataService.CustomTools;
 using DataService.Models.Entities.Repositories;
 using DataService.ResponseModel;
 using DataService.Utilities;
@@ -25,14 +26,15 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> CancelRequest(int request_id, int status);
 
-        ResponseObject<RequestDetailAPIViewModel> ViewRequestDetail(int requestId);
+        ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> ViewRequestDetail(int requestId);
 
         ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept);
 
     }
 
     public partial class RequestService
-    {
+    {       
+
         public ResponseObject<List<RequestAPIViewModel>> GetAllRequest()
         {
             try
@@ -231,21 +233,21 @@ namespace DataService.Models.Entities.Services
                     var tickets = ticketRepo.GetActive(p => p.RequestId == item.RequestId).ToList();
                     foreach (var ticketItem in tickets)
                     {
-                        var ticket = new TicketForRequestAllTicketStatusAPIViewModel()
-                        {
-                            TicketId = ticketItem.TicketId,
-                            ITSupporterId = ticketItem.CurrentITSupporter_Id ?? 0,
-                            DeviceId = ticketItem.DeviceId,
-                            DeviceName = ticketItem.Device.DeviceName,
-                            StartTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
-                            EndTime = ticketItem.Endtime != null ? ticketItem.Endtime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
-                            ITSupporterName = ticketItem.ITSupporter.ITSupporterName,
-                            TicketEstimationTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.AddHours(ticketItem.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm") : string.Empty,
-                            Current_TicketStatus = ticketItem.Current_TicketStatus != null ? ticketItem.Current_TicketStatus.Value : 0,
-                            Desciption = ticketItem.Desciption,
-                            Estimation = ticketItem.Estimation ?? 0,
-                            CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty
-                        };
+                        var ticket = new TicketForRequestAllTicketStatusAPIViewModel();
+
+                        ticket.TicketId = ticketItem.TicketId;
+                        ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
+                        ticket.DeviceId = ticketItem.DeviceId;
+                        ticket.DeviceName = ticketItem.Device.DeviceName;
+                        ticket.StartTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+                        ticket.EndTime = ticketItem.Endtime != null ? ticketItem.Endtime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+                        ticket.ITSupporterName = ticketItem.ITSupporter != null ? ticketItem.ITSupporter.ITSupporterName : string.Empty;
+                        ticket.TicketEstimationTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.AddHours(ticketItem.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm") : string.Empty;
+                        ticket.Current_TicketStatus = ticketItem.Current_TicketStatus != null ? ticketItem.Current_TicketStatus.Value : 0;
+                        ticket.Desciption = ticketItem.Desciption;
+                        ticket.Estimation = ticketItem.Estimation ?? 0;
+                        ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+                        
                         ticketList.Add(ticket);
                     }
                     var timeAgo = TimeAgo(item.CreateDate);
@@ -327,46 +329,71 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<RequestDetailAPIViewModel> ViewRequestDetail(int requestId)
+        public ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> ViewRequestDetail(int requestId)
         {
             try
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
                 var request = requestRepo.GetActive().FirstOrDefault(x => x.RequestId == requestId);
                 if (request != null)
                 {
-                    var RequestDetailAPIViewModel = new RequestDetailAPIViewModel
+                    List<TicketForRequestAllTicketStatusAPIViewModel> ticketList = new List<TicketForRequestAllTicketStatusAPIViewModel>();
+                    var tickets = ticketRepo.GetActive(p => p.RequestId == requestId).ToList();
+                    foreach (var ticketItem in tickets)
+                    {
+                        var ticket = new TicketForRequestAllTicketStatusAPIViewModel();
+
+                        ticket.TicketId = ticketItem.TicketId;
+                        ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
+                        ticket.DeviceId = ticketItem.DeviceId;
+                        ticket.DeviceName = ticketItem.Device.DeviceName;
+                        ticket.StartTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+                        ticket.EndTime = ticketItem.Endtime != null ? ticketItem.Endtime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+                        ticket.ITSupporterName = ticketItem.ITSupporter != null ? ticketItem.ITSupporter.ITSupporterName : string.Empty;
+                        ticket.TicketEstimationTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.AddHours(ticketItem.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm") : string.Empty;
+                        ticket.Current_TicketStatus = ticketItem.Current_TicketStatus != null ? ticketItem.Current_TicketStatus.Value : 0;
+                        ticket.Desciption = ticketItem.Desciption;
+                        ticket.Estimation = ticketItem.Estimation ?? 0;
+                        ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+
+                        ticketList.Add(ticket);
+                    }
+                    var timeAgo = TimeAgo(request.CreateDate);
+                    var requestMd = new RequestAllTicketWithStatusAgencyAPIViewModel()
+
                     {
                         RequestId = request.RequestId,
-                        AgencyId = request.AgencyId,
-                        ServiceItemId = request.ServiceItemId,
-                        RequestCategoryId = request.RequestCategoryId,
-                        RequestStatus = request.RequestStatus,
                         RequestName = request.RequestName,
-                        StartDate = request.StartDate != null ? request.StartDate.Value.ToString("MM/dd/yyyy") : string.Empty,
-                        EndDate = request.EndDate != null ? request.EndDate.Value.ToString("MM/dd/yyyy") : string.Empty,
-                        Feedback = request.Feedback,
-                        CreateDate = request.CreateDate.ToString("MM/dd/yyyy"),
-                        UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                        CreateDate = timeAgo,
+                        UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
+                        AgencyName = request.Agency.AgencyName,
+                        RequestStatus = request.RequestStatus,
+                        RequestEstimationTime = request.CreateDate.AddHours(ticketList.Sum(p => p.Estimation)).ToString("dd/MM/yyyy HH:mm"),
+                        NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
+                        NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
+                        NumberOfTicket = ticketList.Count,
+                        Ticket = ticketList
                     };
-                    return new ResponseObject<RequestDetailAPIViewModel> { IsError = false, ObjReturn = RequestDetailAPIViewModel, SuccessMessage = "Tìm thấy thông tin yêu cầu!" };
+                    return new ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> { IsError = false, ObjReturn = requestMd, SuccessMessage = "Tìm thấy thông tin yêu cầu!" };
                 }
-                return new ResponseObject<RequestDetailAPIViewModel> { IsError = true, WarningMessage = "Không tìm thấy thông tin yêu cầu!" };
+                return new ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> { IsError = true, WarningMessage = "Không tìm thấy thông tin yêu cầu!" };
             }
             catch (Exception e)
             {
 
-                return new ResponseObject<RequestDetailAPIViewModel> { IsError = false, WarningMessage = "Lấy thất bại!", ObjReturn = null, ErrorMessage = e.ToString() };
+                return new ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> { IsError = false, WarningMessage = "Lấy thất bại!", ObjReturn = null, ErrorMessage = e.ToString() };
             }
         }
 
         public ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept)
         {
+            MemoryCacher memoryCacher = new MemoryCacher();            
             try
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
-                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();               
 
                 if (isAccept)
                 {
@@ -394,8 +421,34 @@ namespace DataService.Models.Entities.Services
                         ticketRepo.Save();
                         requestRepo.Save();
                         itSupporterRepo.Save();
-
+                                              
+                        memoryCacher.Delete("ITSupporterReject");
+                        var its = memoryCacher.GetValue("ITSupporterReject");
                         return new ResponseObject<bool> { IsError = false, SuccessMessage = "Nhận thành công", ObjReturn = true };
+                    }
+                }
+                else
+                {                   
+                    var its = memoryCacher.GetValue("ITSupporterReject");
+                    List<int> itSupporterReject;
+                    if (its != null)
+                    {
+                        itSupporterReject = (List<int>) its;
+                    }
+                    else                    
+                    {
+                        itSupporterReject = new List<int>();
+                    }
+                    itSupporterReject.Add(itSupporterId);
+                    
+                    memoryCacher.Add("ITSupporterReject", itSupporterReject, DateTimeOffset.UtcNow.AddHours(1));
+                    AgencyService agencyService = new AgencyService();
+                    var result = agencyService.FindITSupporterByRequestId(requestId, itSupporterReject);
+                    if (!result.IsError && result.ObjReturn > 0)
+                    {
+                        FirebaseService firebaseService = new FirebaseService();
+                        firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
+                        return new ResponseObject<bool> { IsError = false, SuccessMessage = "Hủy thành công", ObjReturn = true };
                     }
                 }
                 
