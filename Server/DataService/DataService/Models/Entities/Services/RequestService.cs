@@ -33,7 +33,7 @@ namespace DataService.Models.Entities.Services
     }
 
     public partial class RequestService
-    {       
+    {
 
         public ResponseObject<List<RequestAPIViewModel>> GetAllRequest()
         {
@@ -214,13 +214,13 @@ namespace DataService.Models.Entities.Services
             try
             {
                 List<RequestAllTicketWithStatusAgencyAPIViewModel> requestList = new List<RequestAllTicketWithStatusAgencyAPIViewModel>();
-                
+
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var requests = requestRepo.GetActive(x => x.RequestStatus == status && x.AgencyId == acency_id).ToList();
 
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
 
-                
+
 
                 if (requests.Count <= 0)
 
@@ -244,7 +244,7 @@ namespace DataService.Models.Entities.Services
                         ticket.Current_TicketStatus = ticketItem.Current_TicketStatus != null ? ticketItem.Current_TicketStatus.Value : 0;
                         ticket.Desciption = ticketItem.Desciption;
                         ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
-                        
+
                         ticketList.Add(ticket);
                     }
                     var timeAgo = TimeAgo(item.CreateDate);
@@ -346,9 +346,9 @@ namespace DataService.Models.Entities.Services
                         ticket.DeviceId = ticketItem.DeviceId;
                         ticket.DeviceName = ticketItem.Device.DeviceName;
                         ticket.StartTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
-                        ticket.EndTime = ticketItem.Endtime != null ? ticketItem.Endtime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;                        
+                        ticket.EndTime = ticketItem.Endtime != null ? ticketItem.Endtime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
                         ticket.Current_TicketStatus = ticketItem.Current_TicketStatus != null ? ticketItem.Current_TicketStatus.Value : 0;
-                        ticket.Desciption = ticketItem.Desciption;                        
+                        ticket.Desciption = ticketItem.Desciption;
                         ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
 
                         ticketList.Add(ticket);
@@ -383,12 +383,12 @@ namespace DataService.Models.Entities.Services
 
         public ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept)
         {
-            MemoryCacher memoryCacher = new MemoryCacher();            
+            MemoryCacher memoryCacher = new MemoryCacher();
             try
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
-                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();               
+                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
 
                 if (isAccept)
                 {
@@ -398,6 +398,7 @@ namespace DataService.Models.Entities.Services
                     if (request != null && itSupporter != null)
                     {
                         request.RequestStatus = (int)RequestStatusEnum.Processing;
+                        request.CurrentITSupporter_Id = itSupporter.ITSupporterId;
                         request.StartTime = DateTime.UtcNow.AddHours(7);
                         requestRepo.Edit(request);
 
@@ -416,32 +417,47 @@ namespace DataService.Models.Entities.Services
                         ticketRepo.Save();
                         requestRepo.Save();
                         itSupporterRepo.Save();
-                                              
-                        memoryCacher.Delete("ITSupporterListWithWeights");                        
+
+                        memoryCacher.Delete("ITSupporterListWithWeights");
                         return new ResponseObject<bool> { IsError = false, SuccessMessage = "Nhận thành công", ObjReturn = true };
                     }
                 }
                 else
-                {                   
+                {
                     var its = memoryCacher.GetValue("ITSupporterListWithWeights");
                     List<RenderITSupporterListWithWeight> idSupporterListWithWeights;
                     if (its != null)
                     {
-                        idSupporterListWithWeights = (List<RenderITSupporterListWithWeight>) its;
-                        idSupporterListWithWeights.RemoveAt(0);
-                        var idSupporterListWithWeightNext = idSupporterListWithWeights.FirstOrDefault();
-                        memoryCacher.Add("ITSupporterListWithWeights", idSupporterListWithWeights, DateTimeOffset.UtcNow.AddHours(1));
-                       
-                        if (idSupporterListWithWeightNext != null)
+                        idSupporterListWithWeights = (List<RenderITSupporterListWithWeight>)its;
+                        if (idSupporterListWithWeights.Count > 0)
                         {
-                            FirebaseService firebaseService = new FirebaseService();
-                            firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(idSupporterListWithWeightNext.ITSupporterId, requestId);
-                            return new ResponseObject<bool> { IsError = false, SuccessMessage = "Hủy thành công", ObjReturn = true };
-                        }
-                    } 
-                   
+                            idSupporterListWithWeights.RemoveAt(0);
+                            var idSupporterListWithWeightNext = idSupporterListWithWeights.FirstOrDefault();
+                            memoryCacher.Add("ITSupporterListWithWeights", idSupporterListWithWeights, DateTimeOffset.UtcNow.AddHours(1));
+
+                            if (idSupporterListWithWeightNext != null)
+                            {
+                                FirebaseService firebaseService = new FirebaseService();
+                                firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(idSupporterListWithWeightNext.ITSupporterId, requestId);
+                                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Hủy thành công", ObjReturn = true };
+                            }
+                            else
+                            {
+                                memoryCacher.Delete("ITSupporterListWithWeights");
+                                var agencyService = new AgencyService();
+                                var result = agencyService.FindITSupporterByRequestId(requestId);
+                                if (!result.IsError && result.ObjReturn > 0)
+                                {
+                                    FirebaseService firebaseService = new FirebaseService();
+                                    firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
+                                }
+                            }
+                        }                        
+                        
+                    }
                 }
-                
+
+
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Nhận thất bại", ObjReturn = false };
             }
             catch (Exception e)
