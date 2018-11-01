@@ -1,4 +1,5 @@
 ﻿using DataService.APIViewModels;
+using DataService.CustomTools;
 using DataService.Models.Entities.Repositories;
 using DataService.ResponseModel;
 using DataService.Utilities;
@@ -24,7 +25,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId);
 
-        ResponseObject<int> FindITSupporterByRequestId(int requestId, List<int> ignoreITSupport);
+        ResponseObject<int> FindITSupporterByRequestId(int requestId);
 
         ResponseObject<bool> RemoveAgency(int agency_id);
 
@@ -39,7 +40,7 @@ namespace DataService.Models.Entities.Services
         ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id);
 
         ResponseObject<List<AgencyAPIViewModel>> ViewAllAgencyByCompanyId(int agency_id);
-    }
+    }    
 
     public partial class AgencyService
     {
@@ -277,19 +278,10 @@ namespace DataService.Models.Entities.Services
             {
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Tạo thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
             }
-
-
         }
 
-        public ResponseObject<int> FindITSupporterByRequestId(int requestId, List<int> ignoreITSupport)
+        public ResponseObject<int> FindITSupporterByRequestId(int requestId)
         {
-            double itSupporterIdFound = 0;
-
-            string itSupporterNameFound = "";
-            if (ignoreITSupport == null)
-            {
-                ignoreITSupport = new List<int>();
-            }
             try
             {
                 var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();               
@@ -299,25 +291,40 @@ namespace DataService.Models.Entities.Services
                 var request = requestRepo.GetActive(p => p.RequestId == requestId).SingleOrDefault();
                 var serviceItemId = request.ServiceItemId;
                 var serviceITSupportId = serviceItemRepo.GetActive(p => p.ServiceItemId == serviceItemId).SingleOrDefault().ServiceITSupportId;
-                var skills = skillRepo.GetActive(a => a.ServiceITSupportId == serviceITSupportId);
-                
+                var skills = skillRepo.GetActive(a => a.ServiceITSupportId == serviceITSupportId);                
                 var company = request.Agency.Company;
+                List<RenderITSupporterListWithWeight> itSupporterListWithWeights = new List<RenderITSupporterListWithWeight>();
                 foreach (var item in skills)
                 {
                     var itSupporter = itSupporterRepo.GetActive(p => p.ITSupporterId == item.ITSupporterId && p.IsBusy == false).SingleOrDefault();
                     if (itSupporter != null)
                     {
-                        var weightForITSupporterFamiliarWithAgency = requestRepo.GetActive(p => p.CurrentITSupporter_Id == itSupporter.ITSupporterId && p.AgencyId == request.AgencyId).Count() + ((company.PercentForITSupporterFamiliarWithAgency ?? 30) / 100);
-                        var weightForITSupporterRate = (itSupporter.RatingAVG ?? 0) * ((company.PercentForITSupporterRate ?? 40) / 100);
-                        var weightForITSupporterExp = (item.MonthExperience ?? 0) * ((company.PercentForITSupporterExp ?? 30) / 100);
-                        itSupporterIdFound = weightForITSupporterFamiliarWithAgency + weightForITSupporterRate + weightForITSupporterExp;
-                        break;
+                        double weightForITSupporter = 0;
+                        var a = requestRepo.GetActive(p => p.CurrentITSupporter_Id == itSupporter.ITSupporterId && p.AgencyId == request.AgencyId).Count();
+                        var weightForITSupporterFamiliarWithAgency = a * (company.PercentForITSupporterFamiliarWithAgency != null ? company.PercentForITSupporterFamiliarWithAgency.Value : 30);
+                        var weightForITSupporterRate = (itSupporter.RatingAVG ?? 0) * (company.PercentForITSupporterRate != null ? company.PercentForITSupporterRate.Value : 40);
+                        var weightForITSupporterExp = (item.MonthExperience ?? 0) * (company.PercentForITSupporterExp != null ? company.PercentForITSupporterExp.Value : 30);
+                        weightForITSupporter = weightForITSupporterFamiliarWithAgency + weightForITSupporterRate + weightForITSupporterExp;
+                        var renderITSupporterListWithWeight = new RenderITSupporterListWithWeight()
+                        {
+                            ITSupporterId = itSupporter.ITSupporterId,
+                            ITSupporterName = itSupporter.ITSupporterName,
+                            ITSupporterListWeight = weightForITSupporter
+                        };
+                        itSupporterListWithWeights.Add(renderITSupporterListWithWeight);
                     }
-
                 }
+                // Add redis
+                itSupporterListWithWeights = itSupporterListWithWeights.OrderByDescending(p => p.ITSupporterListWeight).ToList();
+                MemoryCacher memoryCacher = new MemoryCacher();
+                memoryCacher.Add("ITSupporterListWithWeights", itSupporterListWithWeights, DateTimeOffset.UtcNow.AddHours(1));
+
+                // Get first
+                var itSupporterNameFound = itSupporterListWithWeights.FirstOrDefault().ITSupporterName;
+                int itSupporterIdFound = itSupporterListWithWeights.FirstOrDefault().ITSupporterId;
                 if (itSupporterIdFound > 0)
                 {
-                    return new ResponseObject<int> { IsError = false, SuccessMessage = $"Tìm được Hero {itSupporterNameFound}! Vùi lòng đợi xác nhận", ObjReturn = 0 };
+                    return new ResponseObject<int> { IsError = false, SuccessMessage = $"Tìm được Hero {itSupporterNameFound}! Vùi lòng đợi xác nhận", ObjReturn = itSupporterIdFound };
                 }
                 return new ResponseObject<int> { IsError = true, WarningMessage = "Chưa tìm được Hero nào thích hợp!" };
             }
@@ -326,7 +333,8 @@ namespace DataService.Models.Entities.Services
                 return new ResponseObject<int> { IsError = true, WarningMessage = "Chưa tìm được Hero nào thích hợp!", ErrorMessage = ex.ToString() };
             }
 
-        }
+        }       
+       
 
         public ResponseObject<AgencyDeviceAPIViewModel> GetDeviceByDeviceId(int deviceId)
         {

@@ -160,6 +160,7 @@
     <Compile Include="Constant.cs" />
     <Compile Include="CustomTools\FirebaseService.cs" />
     <Compile Include="CustomTools\MemoryCacher.cs" />
+    <Compile Include="CustomTools\RenderITSupporterListWithWeight.cs" />
     <Compile Include="DataAPIGen\AccountApiGen.cs">
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>

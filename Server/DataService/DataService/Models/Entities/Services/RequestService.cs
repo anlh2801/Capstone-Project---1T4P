@@ -417,34 +417,29 @@ namespace DataService.Models.Entities.Services
                         requestRepo.Save();
                         itSupporterRepo.Save();
                                               
-                        memoryCacher.Delete("ITSupporterReject");
-                        var its = memoryCacher.GetValue("ITSupporterReject");
+                        memoryCacher.Delete("ITSupporterListWithWeights");                        
                         return new ResponseObject<bool> { IsError = false, SuccessMessage = "Nhận thành công", ObjReturn = true };
                     }
                 }
                 else
                 {                   
-                    var its = memoryCacher.GetValue("ITSupporterReject");
-                    List<int> itSupporterReject;
+                    var its = memoryCacher.GetValue("ITSupporterListWithWeights");
+                    List<RenderITSupporterListWithWeight> idSupporterListWithWeights;
                     if (its != null)
                     {
-                        itSupporterReject = (List<int>) its;
-                    }
-                    else                    
-                    {
-                        itSupporterReject = new List<int>();
-                    }
-                    itSupporterReject.Add(itSupporterId);
-                    
-                    memoryCacher.Add("ITSupporterReject", itSupporterReject, DateTimeOffset.UtcNow.AddHours(1));
-                    AgencyService agencyService = new AgencyService();
-                    var result = agencyService.FindITSupporterByRequestId(requestId, itSupporterReject);
-                    if (!result.IsError && result.ObjReturn > 0)
-                    {
-                        FirebaseService firebaseService = new FirebaseService();
-                        firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
-                        return new ResponseObject<bool> { IsError = false, SuccessMessage = "Hủy thành công", ObjReturn = true };
-                    }
+                        idSupporterListWithWeights = (List<RenderITSupporterListWithWeight>) its;
+                        idSupporterListWithWeights.RemoveAt(0);
+                        var idSupporterListWithWeightNext = idSupporterListWithWeights.FirstOrDefault();
+                        memoryCacher.Add("ITSupporterListWithWeights", idSupporterListWithWeights, DateTimeOffset.UtcNow.AddHours(1));
+                       
+                        if (idSupporterListWithWeightNext != null)
+                        {
+                            FirebaseService firebaseService = new FirebaseService();
+                            firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(idSupporterListWithWeightNext.ITSupporterId, requestId);
+                            return new ResponseObject<bool> { IsError = false, SuccessMessage = "Hủy thành công", ObjReturn = true };
+                        }
+                    } 
+                   
                 }
                 
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Nhận thất bại", ObjReturn = false };
