@@ -42,9 +42,9 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void goToMainActivity(){
         onNewIntent(getIntent());
-        Intent i = new Intent(getBaseContext(),MainActivity.class);
+        Intent i = new Intent(this,MainActivity.class);
         startActivity(i);
-//        finish();
+        finish();
     }
     @Override
     protected void onNewIntent(Intent intent) {

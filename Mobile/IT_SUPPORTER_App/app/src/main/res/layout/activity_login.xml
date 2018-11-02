@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:hint="Tên đăng nhập"
-                android:text="hero"/>
+                android:text=""/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:text="hero"
+                android:text="123456"
                 android:hint="Mật khẩu"/>
         </android.support.design.widget.TextInputLayout>
 

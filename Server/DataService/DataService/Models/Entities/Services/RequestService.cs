@@ -34,7 +34,6 @@ namespace DataService.Models.Entities.Services
 
     public partial class RequestService
     {
-        List<int> ITSupporterReject = new List<int>();
 
         public ResponseObject<List<RequestAPIViewModel>> GetAllRequest()
         {
@@ -215,13 +214,13 @@ namespace DataService.Models.Entities.Services
             try
             {
                 List<RequestAllTicketWithStatusAgencyAPIViewModel> requestList = new List<RequestAllTicketWithStatusAgencyAPIViewModel>();
-                
+
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var requests = requestRepo.GetActive(x => x.RequestStatus == status && x.AgencyId == acency_id).ToList();
 
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
 
-                
+
 
                 if (requests.Count <= 0)
 
@@ -242,13 +241,10 @@ namespace DataService.Models.Entities.Services
                         ticket.DeviceName = ticketItem.Device.DeviceName;
                         ticket.StartTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
                         ticket.EndTime = ticketItem.Endtime != null ? ticketItem.Endtime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
-                        ticket.ITSupporterName = ticketItem.ITSupporter != null ? ticketItem.ITSupporter.ITSupporterName : string.Empty;
-                        ticket.TicketEstimationTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.AddHours(ticketItem.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm") : string.Empty;
                         ticket.Current_TicketStatus = ticketItem.Current_TicketStatus != null ? ticketItem.Current_TicketStatus.Value : 0;
                         ticket.Desciption = ticketItem.Desciption;
-                        ticket.Estimation = ticketItem.Estimation ?? 0;
                         ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
-                        
+
                         ticketList.Add(ticket);
                     }
                     var timeAgo = TimeAgo(item.CreateDate);
@@ -261,7 +257,7 @@ namespace DataService.Models.Entities.Services
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
                         AgencyName = item.Agency.AgencyName,
                         RequestStatus = item.RequestStatus,
-                        RequestEstimationTime = item.CreateDate.AddHours(ticketList.Sum(p => p.Estimation)).ToString("dd/MM/yyyy HH:mm"),
+                        RequestEstimationTime = item.CreateDate.AddHours(item.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
                         NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
                         NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
                         NumberOfTicket = ticketList.Count,
@@ -351,11 +347,8 @@ namespace DataService.Models.Entities.Services
                         ticket.DeviceName = ticketItem.Device.DeviceName;
                         ticket.StartTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
                         ticket.EndTime = ticketItem.Endtime != null ? ticketItem.Endtime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
-                        ticket.ITSupporterName = ticketItem.ITSupporter != null ? ticketItem.ITSupporter.ITSupporterName : string.Empty;
-                        ticket.TicketEstimationTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.AddHours(ticketItem.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm") : string.Empty;
                         ticket.Current_TicketStatus = ticketItem.Current_TicketStatus != null ? ticketItem.Current_TicketStatus.Value : 0;
                         ticket.Desciption = ticketItem.Desciption;
-                        ticket.Estimation = ticketItem.Estimation ?? 0;
                         ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
 
                         ticketList.Add(ticket);
@@ -370,7 +363,8 @@ namespace DataService.Models.Entities.Services
                         UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
                         AgencyName = request.Agency.AgencyName,
                         RequestStatus = request.RequestStatus,
-                        RequestEstimationTime = request.CreateDate.AddHours(ticketList.Sum(p => p.Estimation)).ToString("dd/MM/yyyy HH:mm"),
+                        ITSupporterName = request.ITSupporter != null ? request.ITSupporter.ITSupporterName : string.Empty,
+                        RequestEstimationTime = request.CreateDate.AddHours(request.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
                         NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
                         NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
                         NumberOfTicket = ticketList.Count,
@@ -389,11 +383,12 @@ namespace DataService.Models.Entities.Services
 
         public ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept)
         {
+            MemoryCacher memoryCacher = new MemoryCacher();
             try
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
-                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();               
+                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
 
                 if (isAccept)
                 {
@@ -403,7 +398,8 @@ namespace DataService.Models.Entities.Services
                     if (request != null && itSupporter != null)
                     {
                         request.RequestStatus = (int)RequestStatusEnum.Processing;
-                        request.StartDate = DateTime.UtcNow.AddHours(7);
+                        request.CurrentITSupporter_Id = itSupporter.ITSupporterId;
+                        request.StartTime = DateTime.UtcNow.AddHours(7);
                         requestRepo.Edit(request);
 
                         itSupporterRepo.Edit(itSupporter);
@@ -421,23 +417,47 @@ namespace DataService.Models.Entities.Services
                         ticketRepo.Save();
                         requestRepo.Save();
                         itSupporterRepo.Save();
-                        ITSupporterReject.Clear();
+
+                        memoryCacher.Delete("ITSupporterListWithWeights");
                         return new ResponseObject<bool> { IsError = false, SuccessMessage = "Nhận thành công", ObjReturn = true };
                     }
                 }
                 else
                 {
-                    ITSupporterReject.Add(itSupporterId);
-                    AgencyService agencyService = new AgencyService();
-                    var result = agencyService.FindITSupporterByRequestId(requestId, ITSupporterReject);
-                    if (!result.IsError && result.ObjReturn > 0)
+                    var its = memoryCacher.GetValue("ITSupporterListWithWeights");
+                    List<RenderITSupporterListWithWeight> idSupporterListWithWeights;
+                    if (its != null)
                     {
-                        FirebaseService firebaseService = new FirebaseService();
-                        firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
-                        return new ResponseObject<bool> { IsError = false, SuccessMessage = "Hủy thành công", ObjReturn = true };
+                        idSupporterListWithWeights = (List<RenderITSupporterListWithWeight>)its;
+                        if (idSupporterListWithWeights.Count > 0)
+                        {
+                            idSupporterListWithWeights.RemoveAt(0);
+                            var idSupporterListWithWeightNext = idSupporterListWithWeights.FirstOrDefault();
+                            memoryCacher.Add("ITSupporterListWithWeights", idSupporterListWithWeights, DateTimeOffset.UtcNow.AddHours(1));
+
+                            if (idSupporterListWithWeightNext != null)
+                            {
+                                FirebaseService firebaseService = new FirebaseService();
+                                firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(idSupporterListWithWeightNext.ITSupporterId, requestId);
+                                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Hủy thành công", ObjReturn = true };
+                            }
+                            else
+                            {
+                                memoryCacher.Delete("ITSupporterListWithWeights");
+                                var agencyService = new AgencyService();
+                                var result = agencyService.FindITSupporterByRequestId(requestId);
+                                if (!result.IsError && result.ObjReturn > 0)
+                                {
+                                    FirebaseService firebaseService = new FirebaseService();
+                                    firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
+                                }
+                            }
+                        }                        
+                        
                     }
                 }
-                
+
+
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Nhận thất bại", ObjReturn = false };
             }
             catch (Exception e)

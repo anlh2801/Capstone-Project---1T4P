@@ -27,14 +27,18 @@ namespace DataService.Models.Entities
         public int RequestCategoryId { get; set; }
         public int RequestStatus { get; set; }
         public string RequestName { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
+        public Nullable<double> Estimation { get; set; }
+        public Nullable<System.DateTime> StartTime { get; set; }
+        public Nullable<System.DateTime> EndTime { get; set; }
+        public Nullable<int> CurrentITSupporter_Id { get; set; }
+        public Nullable<int> Rating { get; set; }
         public string Feedback { get; set; }
         public bool IsDelete { get; set; }
         public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
         public virtual Agency Agency { get; set; }
+        public virtual ITSupporter ITSupporter { get; set; }
         public virtual RequestCategory RequestCategory { get; set; }
         public virtual ServiceItem ServiceItem { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

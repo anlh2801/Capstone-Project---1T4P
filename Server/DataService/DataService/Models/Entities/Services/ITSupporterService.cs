@@ -158,8 +158,6 @@ namespace DataService.Models.Entities.Services
                         Desciption = item.Desciption,
                         Current_TicketStatus = item.Current_TicketStatus != null ? Enum.GetName(typeof(TicketStatusEnum), item.Current_TicketStatus) : string.Empty,
                         CurrentITSupporter_Id = item.CurrentITSupporter_Id ?? 0,
-                        Rating = item.Rating ?? 0,
-                        Estimation = item.Estimation ?? 0,
                         StartTime = item.StartTime != null ? item.StartTime.Value.ToString("MM/dd/yyyy") : string.Empty,
                         Endtime = item.Endtime != null ? item.Endtime.Value.ToString("MM/dd/yyyy") : string.Empty,
                         CreateDate = item.CreateDate.ToString("MM/dd/yyyy"),
@@ -184,8 +182,6 @@ namespace DataService.Models.Entities.Services
                 var updateEstimateTimeTicket = ticketRepo.GetActive().SingleOrDefault(a => a.CurrentITSupporter_Id == model.CurrentITSupporter_Id && a.TicketId == model.TicketId);
                 if (updateEstimateTimeTicket != null)
                 {
-                    updateEstimateTimeTicket.Estimation = model.Estimation;
-
                     ticketRepo.Edit(updateEstimateTimeTicket);
 
                     ticketRepo.Save();

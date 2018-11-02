@@ -192,6 +192,7 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
         _deviceService.getAllDeviceByAgencyIdAndServiceItem(RequestActivity.this, agencyId, serviceId, new CallBackData<ArrayList<Device>>() {
             @Override
             public void onSuccess(ArrayList<Device> devices) {
+                int a = 0;
                 deviceList = devices;
             }
 

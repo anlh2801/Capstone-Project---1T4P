@@ -18,6 +18,9 @@ namespace DataService.ViewModels
     			public virtual int CompanyId { get; set; }
     			public virtual string CompanyName { get; set; }
     			public virtual string Description { get; set; }
+    			public virtual Nullable<int> PercentForITSupporterRate { get; set; }
+    			public virtual Nullable<int> PercentForITSupporterExp { get; set; }
+    			public virtual Nullable<int> PercentForITSupporterFamiliarWithAgency { get; set; }
     			public virtual bool IsDelete { get; set; }
     			public virtual System.DateTime CreateDate { get; set; }
     			public virtual Nullable<System.DateTime> UpdateDate { get; set; }

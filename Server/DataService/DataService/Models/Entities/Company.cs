@@ -24,6 +24,9 @@ namespace DataService.Models.Entities
         public int CompanyId { get; set; }
         public string CompanyName { get; set; }
         public string Description { get; set; }
+        public Nullable<int> PercentForITSupporterRate { get; set; }
+        public Nullable<int> PercentForITSupporterExp { get; set; }
+        public Nullable<int> PercentForITSupporterFamiliarWithAgency { get; set; }
         public bool IsDelete { get; set; }
         public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
