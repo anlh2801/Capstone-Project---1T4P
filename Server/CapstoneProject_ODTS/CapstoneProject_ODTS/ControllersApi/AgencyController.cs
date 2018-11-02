@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
+using System.Timers;
 using System.Web.Http;
 
 namespace CapstoneProject_ODTS.ControllersApi
@@ -52,6 +54,8 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         private AccountDomain _accountDomain;
 
+        private RequestDomain _requestDomain;
+
         public AgencyController()
         {
             _agencyDomain = new AgencyDomain();
@@ -59,6 +63,7 @@ namespace CapstoneProject_ODTS.ControllersApi
             _serviceItemDomain = new ServiceItemDomain();
             _deviceDomain = new DeviceDomain();
             _accountDomain = new AccountDomain();
+            _requestDomain = new RequestDomain();
         }
 
         [HttpPost]
@@ -81,7 +86,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         [HttpPut]
         [Route("agency/update_profile_agency")]
         public HttpResponseMessage UpdateProfile(AgencyUpdateAPIViewModel model)
-        {            
+        {
             var result = _agencyDomain.UpdateProfile(model);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -180,11 +185,27 @@ namespace CapstoneProject_ODTS.ControllersApi
                 FirebaseService firebaseService = new FirebaseService();
                 firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
 
+                int counter = 10;
+
+                while (counter > 0)
+                {
+                    counter--;
+                    Thread.Sleep(1000);
+                }
+                var a = _requestDomain.AcceptRequestFromITSupporter(result.ObjReturn, requestId, false);
+
                 return Request.CreateResponse(HttpStatusCode.OK, result.SuccessMessage);
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, result.WarningMessage);
+
         }
+        //private void OnTimedEvent(object source, ElapsedEventArgs e)
+        //{
+        //    counter--;
+        //    if (counter < 1)
+        //        aTimer.Stop();
+        //}
 
     }
 }

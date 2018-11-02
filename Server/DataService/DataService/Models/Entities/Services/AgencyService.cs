@@ -43,7 +43,8 @@ namespace DataService.Models.Entities.Services
     }    
 
     public partial class AgencyService
-    {
+    {      
+
         public ResponseObject<List<AgencyAPIViewModel>> ViewAllAgencyByCompanyId(int company_id)
         {
             try
@@ -296,7 +297,7 @@ namespace DataService.Models.Entities.Services
                 List<RenderITSupporterListWithWeight> itSupporterListWithWeights = new List<RenderITSupporterListWithWeight>();
                 foreach (var item in skills)
                 {
-                    var itSupporter = itSupporterRepo.GetActive(p => p.ITSupporterId == item.ITSupporterId && p.IsBusy == false).SingleOrDefault();
+                    var itSupporter = itSupporterRepo.GetActive(p => p.ITSupporterId == item.ITSupporterId && p.IsBusy == false && p.IsOnline == true).SingleOrDefault();
                     if (itSupporter != null)
                     {
                         double weightForITSupporter = 0;

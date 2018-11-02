@@ -54,7 +54,7 @@ namespace DataService.Models
         [Display(Name = "Nữ")]
         Female = 2,
         [Display(Name = "Khác")]
-        Others = 3        
+        Others = 3
     }
 
 }

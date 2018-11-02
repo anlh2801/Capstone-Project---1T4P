@@ -130,6 +130,7 @@
           <Property Name="Address" Type="nvarchar" MaxLength="50" />
           <Property Name="RatingAVG" Type="float" />
           <Property Name="IsBusy" Type="bit" />
+          <Property Name="IsOnline" Type="bit" />
           <Property Name="IsDelete" Type="bit" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" />
@@ -906,6 +907,7 @@
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RatingAVG" Type="Double" />
           <Property Name="IsBusy" Type="Boolean" />
+          <Property Name="IsOnline" Type="Boolean" />
           <Property Name="IsDelete" Type="Boolean" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
@@ -1469,6 +1471,7 @@
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsOnline" ColumnName="IsOnline" />
                 <ScalarProperty Name="IsBusy" ColumnName="IsBusy" />
                 <ScalarProperty Name="RatingAVG" ColumnName="RatingAVG" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
