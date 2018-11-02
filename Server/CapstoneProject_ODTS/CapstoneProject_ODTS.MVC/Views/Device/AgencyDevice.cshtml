@@ -1,111 +1,10 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿<!-- Datatable -->
+@{
+    var dataAgency = ViewData["ID"];
 }
-<!-- /.modal -->
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Modal title</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    <b>Message:</b><br>
-                    <input class="message-edit-text" type="text" size="20">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<div class="container">
-    <!-- Modal -->
-    <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
 
-                </div>
-                <div class="modal-body">
 
-                    <p>
-                        <b>Tên Thiết Bị:</b><br>
-                    <p id="dvName"></p>
-                    <p>
-                        <b>Loại Thiết Bị:</b><br>
-                    <p id="dvType"></p>
-                    <p>
-                        <b>Mã Thiết Bị:</b><br>
-                    <p id="dvCode"></p>
-                    <p>
-                        <b>Ngày Ký Bảo Hành:</b><br>
-                    <p id="dvGDate"></p>
-                    <p>
-                        <b>Hạn Bảo Hành:</b><br>
-                    <p id="dvEndDate"></p>
-                    <p>
-                        <b>Ip:</b><br>
-                    <p id="dvIp"></p>
-                    <p>
-                        <b>Port:</b><br>
-                    <p id="dvPort"></p>
-                    <p>
-                        <b>DeviceAccount:</b><br>
-                    <p id="dvAcc"></p>
-                    <p>
-                        <b>DevicePassword:</b><br>
-                    <p id="dvPass"></p>
-                    <p>
-                        <b>Ngày Cài Đặt:</b><br>
-                    <p id="dvSetupDate"></p>
-                    <p>
-                        <b>Thông Tin THêm:</b><br>
-                    <p id="dvOther"></p>
-                    <p>
-                        <b>Lần Chỉnh Sửa Cuối:</b><br>
-                    <p id="dvLastEdit"></p>  
-                   
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-</div>
-<!--deletemodal-->
-<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
-        <!--Content-->
-        <div class="modal-content text-center">
-            <!--Header-->
-            <div class="modal-header d-flex justify-content-center">
-                <p class="heading">Are you sure you want to delete this item?</p>
-            </div>
-
-            <!--Body-->
-            <div class="modal-body">
-
-                <i class="fa fa-times fa-4x animated rotateIn"></i>
-
-            </div>
-
-            <!--Footer-->
-            <div class="modal-footer flex-center">
-                <a href="#" onClick="deleteContract(); return false;" class="btn  btn-outline-danger">Yes</a>
-                <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
-            </div>
-        </div>
-        <!--/.Content-->
-    </div>
-</div>
-<input type="hidden" id="contractHidden" />
 <div class="container">
     <!-- Modal -->
     <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -165,6 +64,63 @@
     </div>
 
 </div>
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+
+                </div>
+                <div class="modal-body">
+
+                    <p>
+                        <b>Tên Thiết Bị:</b><br>
+                    <p id="dvName"></p>
+                    <p>
+                        <b>Loại Thiết Bị:</b><br>
+                    <p id="dvType"></p>
+                    <p>
+                        <b>Mã Thiết Bị:</b><br>
+                    <p id="dvCode"></p>
+                    <p>
+                        <b>Ngày Ký Bảo Hành:</b><br>
+                    <p id="dvGDate"></p>
+                    <p>
+                        <b>Hạn Bảo Hành:</b><br>
+                    <p id="dvEndDate"></p>
+                    <p>
+                        <b>Ip:</b><br>
+                    <p id="dvIp"></p>
+                    <p>
+                        <b>Port:</b><br>
+                    <p id="dvPort"></p>
+                    <p>
+                        <b>DeviceAccount:</b><br>
+                    <p id="dvAcc"></p>
+                    <p>
+                        <b>DevicePassword:</b><br>
+                    <p id="dvPass"></p>
+                    <p>
+                        <b>Ngày Cài Đặt:</b><br>
+                    <p id="dvSetupDate"></p>
+                    <p>
+                        <b>Thông Tin THêm:</b><br>
+                    <p id="dvOther"></p>
+                    <p>
+                        <b>Lần Chỉnh Sửa Cuối:</b><br>
+                    <p id="dvLastEdit"></p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -197,10 +153,8 @@
         </div>
     </div>
 </div>
-
-<!-- Datatable -->
 <div class="row col-md-12">
-
+    <h3>Tất Cả Thiết Bị</h3>
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
             <tr>
@@ -217,6 +171,7 @@
     </table>
     <div class="NewThing">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="showCreateModal()">Tạo Thiết Bị</button>
+        <button type="button" class="btn btn-primary fa fa-mail-reply-all" data-toggle="modal" data-target="" onclick="window.history.go(-1); return false;"><font face="verdana"> Quay Lại Trang Chi Nhánh</button>
     </div>
 </div>
 
@@ -229,7 +184,7 @@
     <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             loadDevice();
             showCompany();
             showDeviceType();
@@ -238,7 +193,7 @@
         function loadDevice() {
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("GetAllDevice", "Device")',
+                url: '@Url.Action("GetAllDevice", "Agency", new { agency_id = dataAgency })',
                 data: {
                 },
                 success: function(result) {
@@ -275,25 +230,25 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1, 2, 3, 4, 5],
+                        "aTargets": [0, 1, 2, 3, 4, 5,6],
                         "bSortable": false,
                         "sClass": "text-center"
                     },
                 ],
                 "columns": [
-                    { "data": "NumericalOrder" },
+                    { "data": "DeviceId" },
                     { "data": "DeviceName" },
                     { "data": "DeviceCode" },
                     { "data": "GuarantyStartDate" },
                     { "data": "GuarantyEndDate" },
                     { "data": "CreateDate" },
                     {
-                        "aTargets": [5],
+                        "aTargets": [6],
                         "mRender": function (data, type, full) {
                             var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.DeviceId + ')"></button>';
-                            var del = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.ContractId + ')"></button>';
-                            var edit = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeContract(' + full.ContractId + ')"></button>';
-                            return view + " " + del + " " + edit;
+                            var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.DeviceId + ')"></button>';
+                            var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeAgency(' + full.DeviceId + ')"></button>';
+                            return view + " " + edit + " " + del;
                         }
                     },
                 ],
@@ -424,33 +379,10 @@
             });
             $('#EditModal').modal('show');
         }
-        function UpdateContract() {
-            var empObj = {
-                ContractId: $('#id').val(),
-                ContractName: $('#conNameE').val(),
-                StartDate: $('#conStartDateE').val(),
-                EndDate: $('#conEndDateE').val(),
-            }
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("UpdateContract", "Contract")',
-                data: JSON.stringify(empObj),
-                dataType: 'json',
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    $('#EditModal').modal('hide');
-                    if (!data.result.isError) {
-                        alert(data.result.SuccessMessage);
-                    }
-                    else
-                        alert(data.result.WarningMessage);
-                        loadContract();
-                }
-            });
-        }
+
         function createDevice() {
             var empObj = {
-                AgencyId: $('#comboCompany').val(),
+                AgencyId: @ViewData["ID"],
                 DeviceTypeId: $('#comboDeviceType').val(),
                 DeviceName: $('#dvNameC').val(),
                 DeviceCode: $('#dvCodeC').val(),
@@ -465,41 +397,19 @@
             }
              $.ajax({
                 type: 'POST',
-                url: '@Url.Action("CreateDevice", "Device")',
+                url: '@Url.Action("CreateDevice", "Agency")',
                 data: JSON.stringify(empObj),
 
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
                     $('#CreateModal').modal('hide');
-                        if (!data.result.isError) {
-                            alert(data.result.SuccessMessage);
-                        }
-                        else
-                            alert(data.result.WarningMessage);
-
-                        loadDevice();
-                }
-            });
-        }
-        function removeContract(id) {
-            $('#modalConfirmDelete').modal('show');
-            $('#contractHidden').val(id);
-        }
-        function deleteContract() {
-            var contract_id = $('#contractHidden').val();
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("RemoveContract", "Contract")',
-                data: {
-                    contract_id: contract_id
-                },
-
-                dataType: 'json',
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    $('#modalConfirmDelete').modal('hide')
-                    loadContract();
+                    if (!data.result.IsError) {
+                        swal(data.result.SuccessMessage, "", "success");
+                    }
+                    else
+                         swal(data.result.WarningMessage, "", "error");
+                         loadDevice();
                 }
             });
         }

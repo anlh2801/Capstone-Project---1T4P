@@ -125,7 +125,7 @@
             <div class="modal-body">
 
                 <label for="qq">Company:</label>
-                <select class="form-control" id="qq"></select>
+                <select class="form-control" id="qq" disabled ="true"></select>
 
                 <label for="ww">Account:</label>
                 <select class="form-control" id="ww"></select>
@@ -255,7 +255,7 @@
                     {
                         "data": "RequestName",
                         "mRender": function (data, type, full) {
-                            return '<a href="@Url.Action("AgencyDevice", "Agency")?id=' + full.AgencyId + '">Xem Thiết bị</a>';
+                            return '<a href="@Url.Action("AgencyDevice", "Device")?id=' + full.AgencyId + '">Xem Thiết bị</a>';
                         }
                     },
                     {

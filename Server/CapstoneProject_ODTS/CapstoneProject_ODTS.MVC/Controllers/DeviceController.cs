@@ -22,6 +22,11 @@ namespace CapstoneProject_ODTS.MVC.Controllers
 
             return View();
         }
+        public ActionResult AgencyDevice(int id)
+        {
+            ViewData["ID"] = id.ToString();
+            return View();
+        }
         public ActionResult GetAllDevice()
         {
             var devices = _deviceDomain.GetAllDevice();
