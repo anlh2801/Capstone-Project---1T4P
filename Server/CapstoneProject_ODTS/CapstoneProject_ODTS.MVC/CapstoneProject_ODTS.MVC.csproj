@@ -7408,11 +7408,9 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Request\Index.cshtml" />
     <Content Include="Views\Request\RequestStatus.cshtml" />
-    <Content Include="Views\Device\Index.cshtml" />
+    <Content Include="Views\Device\AgencyDevice.cshtml" />
     <Content Include="Views\Company\Index.cshtml" />
-    <Content Include="Views\Agency\AgencyDevice.cshtml" />
     <Content Include="Views\ServiceITSupport\Index.cshtml" />
-    <Content Include="Views\Company\CompanyAgency.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
