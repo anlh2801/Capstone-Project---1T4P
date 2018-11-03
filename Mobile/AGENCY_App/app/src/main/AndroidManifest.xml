@@ -19,12 +19,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".RequestActivity" />
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RequestDetailActivity" />
         <activity android:name=".TimeLineActivity" />
         <activity android:name=".CreateRequestActivity" />
+        <activity android:name=".AddRequestActivity"></activity>
     </application>
 
 </manifest>

@@ -31,7 +31,6 @@ import com.odts.models.Ticket;
 import com.odts.services.DeviceService;
 import com.odts.services.RequestService;
 import com.odts.utils.CallBackData;
-import com.odts.utils.RetrofitInstance;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -192,7 +191,6 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
         _deviceService.getAllDeviceByAgencyIdAndServiceItem(RequestActivity.this, agencyId, serviceId, new CallBackData<ArrayList<Device>>() {
             @Override
             public void onSuccess(ArrayList<Device> devices) {
-                int a = 0;
                 deviceList = devices;
             }
 

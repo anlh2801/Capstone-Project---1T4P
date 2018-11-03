@@ -3,24 +3,15 @@ package com.odts.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.odts.models.ListRequest;
-import com.odts.models.Orientation;
 import com.odts.models.Request;
 import com.odts.services.RequestService;
 import com.odts.utils.CallBackData;
-
-import java.util.ArrayList;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class RequestDetailActivity extends AppCompatActivity {
     TextView rqName;
