@@ -24,6 +24,7 @@ namespace DataService.ViewModels
     			public virtual string Address { get; set; }
     			public virtual Nullable<double> RatingAVG { get; set; }
     			public virtual Nullable<bool> IsBusy { get; set; }
+    			public virtual Nullable<bool> IsOnline { get; set; }
     			public virtual Nullable<bool> IsDelete { get; set; }
     			public virtual System.DateTime CreateDate { get; set; }
     			public virtual Nullable<System.DateTime> UpdateDate { get; set; }

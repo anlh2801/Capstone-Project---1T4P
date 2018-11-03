@@ -13,23 +13,18 @@ namespace CapstoneProject_ODTS.ControllersApi
     public interface IRequestDomain
     {
         HttpResponseMessage GetAllRequest();
-
-        HttpResponseMessage GetTicketByRequestId(int RequestId);
-
-        HttpResponseMessage GetRequestWithStatus(int status);
-
-        HttpResponseMessage GetAllRequestByAgencyIDAndStatus(int acency_id, int status);
-
-        HttpResponseMessage CreateFeedbackForRequest(FeedbackAPIViewModel feedback);
-
-        HttpResponseMessage CancelRequest(RequestCancelAPIViewModel model);
-
+        HttpResponseMessage GetTicketWithStatus();
+        HttpResponseMessage GetAllTicketByAgencyIDAndStatus(Int32 agency_id, Int32 status);
+        HttpResponseMessage GetTicketHistoryByTicketId(int ticketid);
+        HttpResponseMessage GetAllTicketHistory();
+        HttpResponseMessage GetAllCompany(RatingAPIViewModel rate);
+        HttpResponseMessage FeedbackTicket(FeedbackAPIViewModel feedback);
+        HttpResponseMessage UpdateStatusRequest(int request_id, int status);
         HttpResponseMessage ViewRequestDetail(int requestId);
-
         HttpResponseMessage AcceptRequest(int itSupporterId, int requestId, bool isAccept);
     }
 
-    public class RequestController : ApiController
+    public class RequestController : ApiController, IRequestDomain
     {
         private RequestDomain _requestDomain;
         private TicketDomain _ticketDomain;
@@ -44,7 +39,7 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         [HttpGet]
         [Route("ticket/all_ticket")]
-        public HttpResponseMessage GetAllCompany(RequestAPIViewModel agency_id)
+        public HttpResponseMessage GetAllRequest()
         {
             var result = _requestDomain.GetAllRequest();
             
@@ -107,9 +102,9 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         [HttpPost]
         [Route("ticket/cancel_ticket")]
-        public HttpResponseMessage CancelTicket(int request_id, int status)
+        public HttpResponseMessage UpdateStatusRequest(int request_id, int status)
         {            
-            var result = _requestDomain.CancelRequest(request_id, status);           
+            var result = _requestDomain.UpdateStatusRequest(request_id, status);           
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

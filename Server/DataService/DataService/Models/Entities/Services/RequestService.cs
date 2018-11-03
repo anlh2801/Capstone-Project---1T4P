@@ -8,7 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace DataService.Models.Entities.Services
 {
@@ -24,7 +26,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> CreateFeedbackForRequest(int RequestId, string feedbackContent);
 
-        ResponseObject<bool> CancelRequest(int request_id, int status);
+        ResponseObject<bool> UpdateStatusRequest(int request_id, int status);
 
         ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> ViewRequestDetail(int requestId);
 
@@ -34,6 +36,8 @@ namespace DataService.Models.Entities.Services
 
     public partial class RequestService
     {
+        private System.Timers.Timer aTimer = new System.Timers.Timer();
+        private int counter = 10;
 
         public ResponseObject<List<RequestAPIViewModel>> GetAllRequest()
         {
@@ -300,24 +304,38 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<bool> CancelRequest(int request_id, int status)
+        public ResponseObject<bool> UpdateStatusRequest(int request_id, int status)
         {
             try
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
-                var cancelTicket = requestRepo.GetActive().SingleOrDefault(a => a.RequestId == request_id);
-                if (cancelTicket.RequestId == request_id)
+                var request = requestRepo.GetActive().SingleOrDefault(a => a.RequestId == request_id);
+                if (request != null)
                 {
+                    if (status == (int)RequestStatusEnum.Done)
+                    {
+                        request.RequestStatus = status;
+                        request.ITSupporter.IsBusy = false;
+                        request.EndTime = DateTime.UtcNow.AddHours(7);
+                        request.UpdateDate = DateTime.UtcNow.AddHours(7);
+                        foreach (var item in request.Tickets)
+                        {
+                            item.Current_TicketStatus = (int)TicketStatusEnum.Done;
+                            item.Endtime = DateTime.UtcNow.AddHours(7);
+                        }
+                    }
+                    else
+                    {
+                        request.RequestStatus = status;
+                        request.UpdateDate = DateTime.UtcNow.AddHours(7);
 
-                    cancelTicket.RequestId = request_id;
-                    cancelTicket.RequestStatus = status;
-
-                    requestRepo.Edit(cancelTicket);
+                    }
+                    requestRepo.Edit(request);
                     requestRepo.Save();
-                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Hủy yêu cầu thành công", ObjReturn = true };
+                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Cập nhật trạng thái thành công", ObjReturn = true };
                 }
 
-                return new ResponseObject<bool> { IsError = true, WarningMessage = "Hủy yêu cầu thất bại", ObjReturn = false };
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật trạng thái thất bại", ObjReturn = false };
             }
             catch (Exception e)
             {
@@ -417,13 +435,13 @@ namespace DataService.Models.Entities.Services
                         ticketRepo.Save();
                         requestRepo.Save();
                         itSupporterRepo.Save();
-
+                        aTimer.Stop();
                         memoryCacher.Delete("ITSupporterListWithWeights");
                         return new ResponseObject<bool> { IsError = false, SuccessMessage = "Nhận thành công", ObjReturn = true };
                     }
                 }
                 else
-                {
+                {                   
                     var its = memoryCacher.GetValue("ITSupporterListWithWeights");
                     List<RenderITSupporterListWithWeight> idSupporterListWithWeights;
                     if (its != null)
@@ -439,7 +457,18 @@ namespace DataService.Models.Entities.Services
                             {
                                 FirebaseService firebaseService = new FirebaseService();
                                 firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(idSupporterListWithWeightNext.ITSupporterId, requestId);
-                                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Hủy thành công", ObjReturn = true };
+
+                                int counter = 10;
+
+                                while (counter > 0)
+                                {
+                                    counter--;
+                                    Thread.Sleep(1000);
+                                }
+                                var a = this.AcceptRequestFromITSupporter(idSupporterListWithWeightNext.ITSupporterId, requestId, false);
+
+
+                                return new ResponseObject<bool> { IsError = false, WarningMessage = "Nhận oki", ObjReturn = true };
                             }
                             else
                             {
@@ -450,10 +479,19 @@ namespace DataService.Models.Entities.Services
                                 {
                                     FirebaseService firebaseService = new FirebaseService();
                                     firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
+
+                                    int counter = 10;
+
+                                    while (counter > 0)
+                                    {
+                                        counter--;
+                                        Thread.Sleep(1000);
+                                    }
+                                    var a = this.AcceptRequestFromITSupporter(result.ObjReturn, requestId, false);
                                 }
                             }
-                        }                        
-                        
+                        }
+
                     }
                 }
 
@@ -466,6 +504,14 @@ namespace DataService.Models.Entities.Services
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Nhận thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
             }
         }
+        //private void OnTimedEvent(object source, EventArgs e)
+        //{
+        //    counter--;
+        //    //if (counter <= 0)
+        //    if (counter < 1)
+        //        aTimer.Stop();
+
+        //}
 
     }
 }

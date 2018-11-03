@@ -22,7 +22,7 @@ namespace DataService.Domain
 
         ResponseObject<bool> CreateFeedbackForRequest(FeedbackAPIViewModel feedback);
 
-        ResponseObject<bool> CancelRequest(int request_id, int status);
+        ResponseObject<bool> UpdateStatusRequest(int request_id, int status);
 
         ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> ViewRequestDetail(int requestId);
 
@@ -78,11 +78,11 @@ namespace DataService.Domain
 
         }
 
-        public ResponseObject<bool> CancelRequest(int request_id, int status)
+        public ResponseObject<bool> UpdateStatusRequest(int request_id, int status)
         {
             var requestService = this.Service<IRequestService>();
 
-            var result = requestService.CancelRequest(request_id, status);
+            var result = requestService.UpdateStatusRequest(request_id, status);
 
             return result;
         }
