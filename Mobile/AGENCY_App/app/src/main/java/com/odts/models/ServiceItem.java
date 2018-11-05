@@ -77,4 +77,8 @@ public class ServiceItem {
     public void setServiceId(Integer serviceId) {
         this.serviceId = serviceId;
     }
+    @Override
+    public String toString() {
+        return serviceItemName;
+    }
 }
