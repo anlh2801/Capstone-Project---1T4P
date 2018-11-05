@@ -110,6 +110,7 @@
     <Compile Include="APIViewModels\AccountCreateAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyDeviceAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyUpdateAPIViewModel.cs" />
+    <Compile Include="APIViewModels\CreateRequestHistoryAPIViewModel.cs" />
     <Compile Include="APIViewModels\DeviceAPIViewModel.cs" />
     <Compile Include="APIViewModels\FeedbackAPIViewModel.cs" />
     <Compile Include="APIViewModels\GuidelineAPIViewModel.cs" />
