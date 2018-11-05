@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace DataService.APIViewModels
 {
-    public class ITSupporterAssumptionAPIViewModel
+    public class ITSupporterStatisticAPIViewModel
     {
         public string ITSupporterName { get; set; }
         public int SupportTimeInMonth { get; set; }
-        public List<ITSupporterAssumptionServiceTimeAPIViewModel> TotalTimeEveryService { get; set; }
+        public List<ITSupporterStatisticServiceTimeAPIViewModel> TotalTimeEveryService { get; set; }
         public double AverageTimeSupport { get; set; }
     }
 }

@@ -36,7 +36,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<GuidelineAPIViewModel> GetGuidelineByServiceItemID(int service_item_Id);
 
-        ResponseObject<ITSupporterAssumptionAPIViewModel> ITSuppoterStatistic(int itsupporterId);
+        ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId);
 
 
     }
@@ -369,7 +369,7 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<ITSupporterAssumptionAPIViewModel> ITSuppoterStatistic(int itsupporterId)
+        public ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId)
         {
             try
             {
@@ -380,7 +380,7 @@ namespace DataService.Models.Entities.Services
                 var averageTime = 0.0;
                 if (itsupporter != null)
                 {
-                    List<ITSupporterAssumptionServiceTimeAPIViewModel> rsList = new List<ITSupporterAssumptionServiceTimeAPIViewModel>();
+                    List<ITSupporterStatisticServiceTimeAPIViewModel> rsList = new List<ITSupporterStatisticServiceTimeAPIViewModel>();
                     var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
                     var ticketInMonth = ticketRepo.GetActive().Where(t => t.CurrentITSupporter_Id == itsupporterId && t.CreateDate.Year == DateTime.Now.Year && t.CreateDate.Month == DateTime.Now.Month);
 
@@ -392,7 +392,7 @@ namespace DataService.Models.Entities.Services
                         }
                     }
 
-                    var ticket = ticketRepo.GetActive().Where(t => t.CurrentITSupporter_Id == itsupporterId).ToList();
+                    var ticket = ticketRepo.GetActive().Where(t => t.CurrentITSupporter_Id == itsupporterId && t.CreateDate.Year == DateTime.Now.Year && t.CreateDate.Month == DateTime.Now.Month).ToList();
 
                     if (ticket.Count() > 0)
                     {
@@ -405,7 +405,7 @@ namespace DataService.Models.Entities.Services
                                 var time = new TimeSpan();
                                 time = (ticketItem.StartTime - ticketItem.Endtime).Value.Duration();
                                 totalSupportTime += time;
-                                rsList.Add(new ITSupporterAssumptionServiceTimeAPIViewModel
+                                rsList.Add(new ITSupporterStatisticServiceTimeAPIViewModel
                                 {
                                     ServiceName = ticketItem.Device.DeviceType.ServiceITSupport.ServiceName,
 
@@ -416,21 +416,21 @@ namespace DataService.Models.Entities.Services
                     }
 
 
-                    var ITSupporterAssumptionAPIViewModel = new ITSupporterAssumptionAPIViewModel
+                    var ITSupporterAssumptionAPIViewModel = new ITSupporterStatisticAPIViewModel
                     {
                         ITSupporterName = itsupporter.ITSupporterName,
                         SupportTimeInMonth = supportTime,
                         //TotalTimeEveryService =,
                         AverageTimeSupport = averageTime
                     };
-                    return new ResponseObject<ITSupporterAssumptionAPIViewModel> { IsError = false, ObjReturn = ITSupporterAssumptionAPIViewModel, SuccessMessage = "Thành công" };
+                    return new ResponseObject<ITSupporterStatisticAPIViewModel> { IsError = false, ObjReturn = ITSupporterAssumptionAPIViewModel, SuccessMessage = "Thành công" };
                 }
 
-                return new ResponseObject<ITSupporterAssumptionAPIViewModel> { IsError = true, WarningMessage = "Không có thống kê nào!" };
+                return new ResponseObject<ITSupporterStatisticAPIViewModel> { IsError = true, WarningMessage = "Không có thống kê nào!" };
             }
             catch (Exception e)
             {
-                return new ResponseObject<ITSupporterAssumptionAPIViewModel> { IsError = true, WarningMessage = "Không có thống kê nào!", ObjReturn = null, ErrorMessage = e.ToString() };
+                return new ResponseObject<ITSupporterStatisticAPIViewModel> { IsError = true, WarningMessage = "Không có thống kê nào!", ObjReturn = null, ErrorMessage = e.ToString() };
             }
         }
     }

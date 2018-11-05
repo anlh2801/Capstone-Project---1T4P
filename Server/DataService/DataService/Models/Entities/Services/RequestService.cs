@@ -315,7 +315,9 @@ namespace DataService.Models.Entities.Services
                 {
                     if (status == (int)RequestStatusEnum.Done)
                     {
-                        var requestHistory = 
+                        var requestHistory = new RequestHistoryAPIViewModel();
+                        requestHistory.RequestId = request_id;
+
                         request.RequestStatus = status;
                         request.ITSupporter.IsBusy = false;
                         request.EndTime = DateTime.UtcNow.AddHours(7);
@@ -442,7 +444,13 @@ namespace DataService.Models.Entities.Services
                     }
                 }
                 else
-                {                   
+                {
+                    var itsupporter = itSupporterRepo.GetActive().SingleOrDefault(i => i.ITSupporterId == itSupporterId);
+                    var requestHistory = new RequestHistoryAPIViewModel();
+                    requestHistory.RequestId = requestId;
+                    requestHistory.PreStatus = (int)RequestStatusEnum.Processing;
+                    requestHistory.PreSupporter_Name = itsupporter.ITSupporterName;
+
                     var its = memoryCacher.GetValue("ITSupporterListWithWeights");
                     List<RenderITSupporterListWithWeight> idSupporterListWithWeights;
                     if (its != null)

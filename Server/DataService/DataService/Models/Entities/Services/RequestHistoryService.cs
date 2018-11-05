@@ -51,7 +51,7 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<List<RequestHistoryAPIViewModel>> GetAllTicketHistory()
+        public ResponseObject<List<RequestHistoryAPIViewModel>> GetAllRequestHistory()
         {
             try
             {

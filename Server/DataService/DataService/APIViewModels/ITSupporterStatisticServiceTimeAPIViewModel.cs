@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataService.APIViewModels
 {
-    public class ITSupporterAssumptionServiceTimeAPIViewModel
+    public class ITSupporterStatisticServiceTimeAPIViewModel
     {
         public string ServiceName { get; set; }
-        public string SupportTime { get; set; }
+        public double SupportTime { get; set; }
     }
 }
