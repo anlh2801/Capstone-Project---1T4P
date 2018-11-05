@@ -34,6 +34,7 @@ namespace DataService.Domain
 
         ResponseObject<GuidelineAPIViewModel> GetGuidelineByServiceItemID(int service_item_Id);
 
+        ResponseObject<ITSupporterAssumptionAPIViewModel> ITSuppoterStatistic(int itsupporterId);
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain
@@ -134,6 +135,15 @@ namespace DataService.Domain
             var iTSupporterService = this.Service<IITSupporterService>();
 
             var result = iTSupporterService.GetGuidelineByServiceItemID(service_item_Id);
+
+            return result;
+        }
+
+        public ResponseObject<ITSupporterAssumptionAPIViewModel> ITSuppoterStatistic(int itsupporterId)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.ITSuppoterStatistic(itsupporterId);
 
             return result;
         }

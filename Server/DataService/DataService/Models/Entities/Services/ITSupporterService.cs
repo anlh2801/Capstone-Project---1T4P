@@ -36,6 +36,9 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<GuidelineAPIViewModel> GetGuidelineByServiceItemID(int service_item_Id);
 
+        ResponseObject<ITSupporterAssumptionAPIViewModel> ITSuppoterStatistic(int itsupporterId);
+
+
     }
 
     public partial class ITSupporterService
@@ -363,6 +366,71 @@ namespace DataService.Models.Entities.Services
             catch (Exception e)
             {
                 return new ResponseObject<GuidelineAPIViewModel> { IsError = true, WarningMessage = "Không tìm thấy hướng dẫn nào", ObjReturn = null, ErrorMessage = e.ToString() };
+            }
+        }
+
+        public ResponseObject<ITSupporterAssumptionAPIViewModel> ITSuppoterStatistic(int itsupporterId)
+        {
+            try
+            {
+                var itsupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var itsupporter  = itsupporterRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == itsupporterId);
+                var supportTime = 0;
+                var totalSupportTime = new TimeSpan();
+                var averageTime = 0.0;
+                if (itsupporter != null)
+                {
+                    List<ITSupporterAssumptionServiceTimeAPIViewModel> rsList = new List<ITSupporterAssumptionServiceTimeAPIViewModel>();
+                    var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+                    var ticketInMonth = ticketRepo.GetActive().Where(t => t.CurrentITSupporter_Id == itsupporterId && t.CreateDate.Year == DateTime.Now.Year && t.CreateDate.Month == DateTime.Now.Month);
+
+                    if (ticketInMonth.Count() > 0)
+                    {
+                        foreach (var ticketItem in ticketInMonth)
+                        {
+                            supportTime++;
+                        }
+                    }
+
+                    var ticket = ticketRepo.GetActive().Where(t => t.CurrentITSupporter_Id == itsupporterId).ToList();
+
+                    if (ticket.Count() > 0)
+                    {
+                        var ticketCount = 0;
+                        foreach (var ticketItem in ticket)
+                        {
+                            if(ticketItem.StartTime != null && ticketItem.Endtime != null)
+                            {
+                                ticketCount++;
+                                var time = new TimeSpan();
+                                time = (ticketItem.StartTime - ticketItem.Endtime).Value.Duration();
+                                totalSupportTime += time;
+                                rsList.Add(new ITSupporterAssumptionServiceTimeAPIViewModel
+                                {
+                                    ServiceName = ticketItem.Device.DeviceType.ServiceITSupport.ServiceName,
+
+                                });
+                            }
+                        }
+                        averageTime = totalSupportTime.TotalHours / ticketCount;
+                    }
+
+
+                    var ITSupporterAssumptionAPIViewModel = new ITSupporterAssumptionAPIViewModel
+                    {
+                        ITSupporterName = itsupporter.ITSupporterName,
+                        SupportTimeInMonth = supportTime,
+                        //TotalTimeEveryService =,
+                        AverageTimeSupport = averageTime
+                    };
+                    return new ResponseObject<ITSupporterAssumptionAPIViewModel> { IsError = false, ObjReturn = ITSupporterAssumptionAPIViewModel, SuccessMessage = "Thành công" };
+                }
+
+                return new ResponseObject<ITSupporterAssumptionAPIViewModel> { IsError = true, WarningMessage = "Không có thống kê nào!" };
+            }
+            catch (Exception e)
+            {
+                return new ResponseObject<ITSupporterAssumptionAPIViewModel> { IsError = true, WarningMessage = "Không có thống kê nào!", ObjReturn = null, ErrorMessage = e.ToString() };
             }
         }
     }

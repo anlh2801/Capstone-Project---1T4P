@@ -31,6 +31,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage GetGuidelineByServiceItemID(int service_item_Id);
 
         HttpResponseMessage LoginITSupporter(string username, string password, int roleId);
+
+        HttpResponseMessage ITSuppoterStatistic(int itsupporterId);
     }
 
     public class ITSupporterController : ApiController, IITSupporterController
@@ -146,7 +148,14 @@ namespace CapstoneProject_ODTS.ControllersApi
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-        
+        [HttpGet]
+        [Route("ITsupporter/view_itsupporter_statistic")]
+        public HttpResponseMessage ITSuppoterStatistic(int itsupporterId)
+        {
+            var result = _ITSupporterDomain.ITSuppoterStatistic(itsupporterId);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
         
     }
 }

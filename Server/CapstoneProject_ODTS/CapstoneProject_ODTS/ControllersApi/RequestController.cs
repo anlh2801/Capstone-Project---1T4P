@@ -15,8 +15,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage GetAllRequest();
         HttpResponseMessage GetTicketWithStatus();
         HttpResponseMessage GetAllTicketByAgencyIDAndStatus(Int32 agency_id, Int32 status);
-        HttpResponseMessage GetTicketHistoryByTicketId(int ticketid);
-        HttpResponseMessage GetAllTicketHistory();
+        HttpResponseMessage GetRequestHistoryByRequestId(int requestid);
+        HttpResponseMessage GetAllRequestHistory();
         HttpResponseMessage GetAllCompany(RatingAPIViewModel rate);
         HttpResponseMessage FeedbackTicket(FeedbackAPIViewModel feedback);
         HttpResponseMessage UpdateStatusRequest(int request_id, int status);
@@ -28,13 +28,13 @@ namespace CapstoneProject_ODTS.ControllersApi
     {
         private RequestDomain _requestDomain;
         private TicketDomain _ticketDomain;
-        private TicketHistoryDomain _ticketHistoryDomain;
+        private RequestHistoryDomain _requestHistoryDomain;
 
         public RequestController()
         {
             _requestDomain = new RequestDomain();
             _ticketDomain = new TicketDomain();
-            _ticketHistoryDomain = new TicketHistoryDomain();
+            _requestHistoryDomain = new RequestHistoryDomain();
         }
 
         [HttpGet]
@@ -65,19 +65,19 @@ namespace CapstoneProject_ODTS.ControllersApi
         }
 
         [HttpGet]
-        [Route("ticket/ticket_history_in_ticket")]
-        public HttpResponseMessage GetTicketHistoryByTicketId(int ticketid)
+        [Route("ticket/request_history_in_request")]
+        public HttpResponseMessage GetRequestHistoryByRequestId(int ticketid)
         {
-            var result = _ticketHistoryDomain.GetTicketHistoryByTicketId(ticketid);
+            var result = _requestHistoryDomain.GetRequestHistoryByRequestId(ticketid);
             
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpGet]
-        [Route("ticket/all_ticket_history")]
-        public HttpResponseMessage GetAllTicketHistory()
+        [Route("ticket/all_request_history")]
+        public HttpResponseMessage GetAllRequestHistory()
         {
-            var result = _ticketHistoryDomain.GetAllTicketHistory();
+            var result = _requestHistoryDomain.GetAllRequestHistory();
            
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
@@ -101,7 +101,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         }
 
         [HttpPost]
-        [Route("ticket/cancel_ticket")]
+        [Route("ticket/update_status_ticket")]
         public HttpResponseMessage UpdateStatusRequest(int request_id, int status)
         {            
             var result = _requestDomain.UpdateStatusRequest(request_id, status);           

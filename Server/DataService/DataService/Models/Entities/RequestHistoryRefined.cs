@@ -12,7 +12,7 @@ namespace DataService.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class TicketHistory : DataService.BaseConnect.IEntity
+    public partial class RequestHistory : DataService.BaseConnect.IEntity
     {
     }
 }

@@ -12,7 +12,7 @@ namespace DataService.DataAPIGen
     using System;
     using System.Collections.Generic;
     
-    public partial class TicketHistoryApi : DataService.DataAPIGen.BaseApi<DataService.Models.Entities.TicketHistory, DataService.ViewModels.TicketHistoryViewModel, DataService.Models.Entities.Services.ITicketHistoryService>
+    public partial class RequestHistoryApi : DataService.DataAPIGen.BaseApi<DataService.Models.Entities.RequestHistory, DataService.ViewModels.RequestHistoryViewModel, DataService.Models.Entities.Services.IRequestHistoryService>
     {
     	
     }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DataService.APIViewModels
 {
-    public class TicketHistoryAPIViewModel
+    public class RequestHistoryAPIViewModel
     {
-        public int TicketHistoryId { get; set; }
-        public int TicketId { get; set; }
+        public int RequestHistoryId { get; set; }
+        public int RequestId { get; set; }
         public String PreSupporter_Name { get; set; }
         public int PreStatus { get; set; }
         public string StartDate { get; set; }

@@ -12,21 +12,22 @@ namespace DataService.ViewModels
     using System;
     using System.Collections.Generic;
     
-    public partial class TicketHistoryViewModel : DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.TicketHistory>
+    public partial class RequestHistoryViewModel : DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.RequestHistory>
     {
     	
-    			public virtual int TicketHistoryId { get; set; }
-    			public virtual int TicketId { get; set; }
+    			public virtual int RequestHistoryId { get; set; }
+    			public virtual int RequestId { get; set; }
     			public virtual Nullable<int> Pre_It_SupporterId { get; set; }
     			public virtual Nullable<int> Pre_Status { get; set; }
+    			public virtual Nullable<bool> IsITSupportAccept { get; set; }
     			public virtual Nullable<System.DateTime> StartTime { get; set; }
     			public virtual Nullable<System.DateTime> EndTime { get; set; }
     			public virtual Nullable<bool> IsDelete { get; set; }
     			public virtual System.DateTime CreateDate { get; set; }
     			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	
-    	public TicketHistoryViewModel() : base() { }
-    	public TicketHistoryViewModel(DataService.Models.Entities.TicketHistory entity) : base(entity) { }
+    	public RequestHistoryViewModel() : base() { }
+    	public RequestHistoryViewModel(DataService.Models.Entities.RequestHistory entity) : base(entity) { }
     
     }
 }

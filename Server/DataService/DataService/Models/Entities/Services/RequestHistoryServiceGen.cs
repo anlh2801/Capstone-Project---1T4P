@@ -13,16 +13,16 @@ namespace DataService.Models.Entities.Services
     using System.Collections.Generic;
     using DataService.ViewModels;
     
-    public partial interface ITicketHistoryService : DataService.BaseConnect.IBaseService<TicketHistory, TicketHistoryViewModel>
+    public partial interface IRequestHistoryService : DataService.BaseConnect.IBaseService<RequestHistory, RequestHistoryViewModel>
     {
     }
     
-    public partial class TicketHistoryService : DataService.BaseConnect.BaseService<TicketHistory, TicketHistoryViewModel>, ITicketHistoryService
+    public partial class RequestHistoryService : DataService.BaseConnect.BaseService<RequestHistory, RequestHistoryViewModel>, IRequestHistoryService
     {
-         public TicketHistoryService()
+         public RequestHistoryService()
          {
          }
-        public TicketHistoryService(DataService.BaseConnect.IUnitOfWork unitOfWork, Repositories.ITicketHistoryRepository repository) : base(unitOfWork, repository)
+        public RequestHistoryService(DataService.BaseConnect.IUnitOfWork unitOfWork, Repositories.IRequestHistoryRepository repository) : base(unitOfWork, repository)
         {
         }
     }
