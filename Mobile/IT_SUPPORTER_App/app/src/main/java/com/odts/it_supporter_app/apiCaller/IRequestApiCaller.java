@@ -16,7 +16,7 @@ public interface IRequestApiCaller {
     Call<ResponseObject<Request>> getRequestByRequestIdAndITSupporterId(@Path("requestId") Integer requestId,
                                                                @Path("itSupporterId") Integer itSupporterId);
 
-    @POST("ticket/cancel_ticket")
+    @POST("ticket/update_status_ticket")
     Call<ResponseObject<Boolean>> updateStatusRequest(@Query("request_id") Integer request_id,
                                                       @Query("status") Integer status);
 }

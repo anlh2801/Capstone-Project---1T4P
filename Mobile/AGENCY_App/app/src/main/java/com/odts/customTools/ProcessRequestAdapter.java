@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.odts.activities.R;
-import com.odts.activities.RequestDetailActivity;
 import com.odts.activities.TimeLineActivity;
 import com.odts.models.Request;
 import com.odts.services.RequestService;
@@ -62,8 +61,10 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
         Request album = listRequest.get(position);
         holder.rqName.setText(album.getRequestName());
         holder.nod.setText("Thiết bị cần xử lý: "+album.getNod());
-        holder.hero.setText("ĐƯợc xử lý bởi: "+ album.getTicket().get(0).getiTSupporterName());
-        holder.estimes.setText("Dự kiến hoàn thành: " +album.getTicket().get(0).getTicketEstimationTime());
+//        holder.hero.setText("ĐƯợc xử lý bởi: "+ album.getTicket().get(0).getiTSupporterName());
+                holder.hero.setText("ĐƯợc xử lý bởi: ");
+        holder.estimes.setText("Dự kiến hoàn thành: ");
+//        holder.estimes.setText("Dự kiến hoàn thành: " +album.getTicket().get(0).getTicketEstimationTime());
     }
 
     @Override

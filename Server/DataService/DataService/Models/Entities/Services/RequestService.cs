@@ -418,7 +418,8 @@ namespace DataService.Models.Entities.Services
 
         public ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept)
         {
-            MemoryCacher memoryCacher = new MemoryCacher();
+            //MemoryCacher memoryCacher = new MemoryCacher();
+            RedisTools redis = new RedisTools();
             try
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
@@ -451,7 +452,8 @@ namespace DataService.Models.Entities.Services
                         ticketRepo.Save();
                         requestRepo.Save();
                         itSupporterRepo.Save();
-                        memoryCacher.Delete("ITSupporterListWithWeights");
+                        //memoryCacher.Delete("ITSupporterListWithWeights");
+                        redis.Clear("ITSupporterListWithWeights");
                         return new ResponseObject<bool> { IsError = false, SuccessMessage = "Nhận thành công", ObjReturn = true };
                     }
                 }
@@ -466,17 +468,18 @@ namespace DataService.Models.Entities.Services
                         CreateDate = DateTime.Now.ToString()
                     };
 
-                    var its = memoryCacher.GetValue("ITSupporterListWithWeights");
+                    //var its = memoryCacher.GetValue("ITSupporterListWithWeights");
+                    var itSupporterFound = redis.Get("ITSupporterListWithWeights");
                     List<RenderITSupporterListWithWeight> idSupporterListWithWeights;
-                    if (its != null)
+                    if (itSupporterFound != null)
                     {
-                        idSupporterListWithWeights = (List<RenderITSupporterListWithWeight>)its;
+                        idSupporterListWithWeights = (List<RenderITSupporterListWithWeight>)itSupporterFound;
                         if (idSupporterListWithWeights.Count > 0)
                         {
                             idSupporterListWithWeights.RemoveAt(0);
                             var idSupporterListWithWeightNext = idSupporterListWithWeights.FirstOrDefault();
-                            memoryCacher.Add("ITSupporterListWithWeights", idSupporterListWithWeights, DateTimeOffset.UtcNow.AddHours(1));
-
+                            //memoryCacher.Add("ITSupporterListWithWeights", idSupporterListWithWeights, DateTimeOffset.UtcNow.AddHours(1));
+                            redis.Save("ITSupporterListWithWeights", idSupporterListWithWeights);
                             if (idSupporterListWithWeightNext != null)
                             {
                                 FirebaseService firebaseService = new FirebaseService();
@@ -496,7 +499,7 @@ namespace DataService.Models.Entities.Services
                             }
                             else
                             {
-                                memoryCacher.Delete("ITSupporterListWithWeights");
+                                redis.Clear("ITSupporterListWithWeights");
                                 var agencyService = new AgencyService();
                                 var result = agencyService.FindITSupporterByRequestId(requestId);
                                 if (!result.IsError && result.ObjReturn > 0)

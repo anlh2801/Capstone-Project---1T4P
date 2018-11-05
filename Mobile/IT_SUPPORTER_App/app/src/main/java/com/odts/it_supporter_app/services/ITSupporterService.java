@@ -29,12 +29,9 @@ public class ITSupporterService {
             @Override
             public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
                 if(!response.body().isError()){
-                    //Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
-                    //isErrorResult = response.body().isError() ;
                     callBackData.onSuccess(response.body().isError());
                 }
                 else {
-                    Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
                 }
 
             }
