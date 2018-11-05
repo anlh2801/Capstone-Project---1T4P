@@ -10,7 +10,9 @@ import com.odts.it_supporter_app.activities.MainActivity;
 import com.odts.it_supporter_app.apiCaller.IITSupporterApiCaller;
 import com.odts.it_supporter_app.apiCaller.ILoginApiCaller;
 import com.odts.it_supporter_app.models.ITSupporter;
+import com.odts.it_supporter_app.utils.CallBackData;
 import com.odts.it_supporter_app.utils.ResponseObject;
+import com.odts.it_supporter_app.utils.ResponseObjectReturnList;
 import com.odts.it_supporter_app.utils.RetrofitInstance;
 
 import retrofit2.Call;
@@ -19,22 +21,28 @@ import retrofit2.Response;
 
 public class ITSupporterService {
     IITSupporterApiCaller iitSupporterApiCaller;
-    public void acceptRequest(final Context context, int requestId, int itSupporterId, boolean isAccept) {
+
+    public void acceptRequest(final Context context, int requestId, int itSupporterId, boolean isAccept, final CallBackData<Boolean> callBackData) {
         iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
         Call<ResponseObject<Boolean>> call = iitSupporterApiCaller.acceptRequest(itSupporterId, requestId, isAccept);
         call.enqueue(new Callback<ResponseObject<Boolean>>() {
             @Override
             public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
                 if(!response.body().isError()){
-                    Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
+                    //isErrorResult = response.body().isError() ;
+                    callBackData.onSuccess(response.body().isError());
                 }
-                else
+                else {
                     Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
+                }
+
             }
             @Override
             public void onFailure(Call<ResponseObject<Boolean>> call, Throwable t) {
                 Log.e("ERROR: ", t.getMessage());
             }
         });
+
     }
 }

@@ -32,13 +32,12 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept);
 
+        ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestByRequestIdAndITSupporterId(int requestId, int itSupporterId);
+
     }
 
     public partial class RequestService
     {
-        private System.Timers.Timer aTimer = new System.Timers.Timer();
-        private int counter = 10;
-
         public ResponseObject<List<RequestAPIViewModel>> GetAllRequest()
         {
             try
@@ -265,7 +264,7 @@ namespace DataService.Models.Entities.Services
                         NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
                         NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
                         NumberOfTicket = ticketList.Count,
-                        Ticket = ticketList
+                        Tickets = ticketList
                     };
                     requestList.Add(request);
                 }
@@ -386,7 +385,7 @@ namespace DataService.Models.Entities.Services
                         NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
                         NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
                         NumberOfTicket = ticketList.Count,
-                        Ticket = ticketList
+                        Tickets = ticketList
                     };
                     return new ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> { IsError = false, ObjReturn = requestMd, SuccessMessage = "Tìm thấy thông tin yêu cầu!" };
                 }
@@ -435,13 +434,12 @@ namespace DataService.Models.Entities.Services
                         ticketRepo.Save();
                         requestRepo.Save();
                         itSupporterRepo.Save();
-                        aTimer.Stop();
                         memoryCacher.Delete("ITSupporterListWithWeights");
                         return new ResponseObject<bool> { IsError = false, SuccessMessage = "Nhận thành công", ObjReturn = true };
                     }
                 }
                 else
-                {                   
+                {
                     var its = memoryCacher.GetValue("ITSupporterListWithWeights");
                     List<RenderITSupporterListWithWeight> idSupporterListWithWeights;
                     if (its != null)
@@ -458,7 +456,7 @@ namespace DataService.Models.Entities.Services
                                 FirebaseService firebaseService = new FirebaseService();
                                 firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(idSupporterListWithWeightNext.ITSupporterId, requestId);
 
-                                int counter = 10;
+                                int counter = 30;
 
                                 while (counter > 0)
                                 {
@@ -480,7 +478,7 @@ namespace DataService.Models.Entities.Services
                                     FirebaseService firebaseService = new FirebaseService();
                                     firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
 
-                                    int counter = 10;
+                                    int counter = 30;
 
                                     while (counter > 0)
                                     {
@@ -504,14 +502,67 @@ namespace DataService.Models.Entities.Services
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Nhận thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
             }
         }
-        //private void OnTimedEvent(object source, EventArgs e)
-        //{
-        //    counter--;
-        //    //if (counter <= 0)
-        //    if (counter < 1)
-        //        aTimer.Stop();
 
-        //}
+        public ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestByRequestIdAndITSupporterId(int requestId, int itSupporterId)
+        {
+            try
+            {
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var request = requestRepo.GetActive(x => x.RequestId == requestId
+                && x.CurrentITSupporter_Id == itSupporterId
+                && x.RequestStatus != (int)RequestStatusEnum.Done 
+                && x.RequestStatus != (int)RequestStatusEnum.Cancel).SingleOrDefault();
+
+                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+                               
+                if (request == null)
+                {
+                    return new ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> { IsError = true, WarningMessage = "Thất bại", ObjReturn = null };
+                }
+
+                List<TicketForRequestAllTicketStatusAPIViewModel> ticketList = new List<TicketForRequestAllTicketStatusAPIViewModel>();
+                var tickets = ticketRepo.GetActive(p => p.RequestId == requestId).ToList();
+                foreach (var ticketItem in tickets)
+                {
+                    var ticket = new TicketForRequestAllTicketStatusAPIViewModel();
+
+                    ticket.TicketId = ticketItem.TicketId;
+                    ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
+                    ticket.DeviceId = ticketItem.DeviceId;
+                    ticket.DeviceName = ticketItem.Device.DeviceName;
+                    ticket.StartTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+                    ticket.EndTime = ticketItem.Endtime != null ? ticketItem.Endtime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+                    ticket.Current_TicketStatus = ticketItem.Current_TicketStatus != null ? ticketItem.Current_TicketStatus.Value : 0;
+                    ticket.Desciption = ticketItem.Desciption;
+                    ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+
+                    ticketList.Add(ticket);
+                }
+                var timeAgo = TimeAgo(request.CreateDate);
+                var requestViewModel = new RequestAllTicketWithStatusAgencyAPIViewModel()
+                {
+                    RequestId = request.RequestId,
+                    RequestName = request.RequestName,
+                    CreateDate = timeAgo,
+                    UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
+                    AgencyName = request.Agency.AgencyName,
+                    RequestStatus = request.RequestStatus,
+                    RequestEstimationTime = request.CreateDate.AddHours(request.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
+                    NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
+                    NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
+                    NumberOfTicket = ticketList.Count,
+                    Tickets = ticketList
+                };
+
+
+                return new ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> { IsError = false, SuccessMessage = "Thành công", ObjReturn = requestViewModel };
+            }
+            catch (Exception e)
+            {
+                return new ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> { IsError = true, WarningMessage = "Thất bại", ObjReturn = null, ErrorMessage = e.ToString() };
+            }
+
+        }
 
     }
 }

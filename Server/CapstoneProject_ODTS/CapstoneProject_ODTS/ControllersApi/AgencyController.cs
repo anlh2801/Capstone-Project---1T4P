@@ -185,7 +185,7 @@ namespace CapstoneProject_ODTS.ControllersApi
                 FirebaseService firebaseService = new FirebaseService();
                 firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
 
-                int counter = 10;
+                int counter = 30;
 
                 while (counter > 0)
                 {
@@ -200,13 +200,6 @@ namespace CapstoneProject_ODTS.ControllersApi
             return Request.CreateResponse(HttpStatusCode.OK, result.WarningMessage);
 
         }
-        //private void OnTimedEvent(object source, ElapsedEventArgs e)
-        //{
-        //    counter--;
-        //    if (counter < 1)
-        //        aTimer.Stop();
-        //}
-
     }
 }
 
