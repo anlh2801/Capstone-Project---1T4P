@@ -1,14 +1,20 @@
 package com.odts.activities;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.abdeveloper.library.MultiSelectDialog;
@@ -37,10 +43,17 @@ public class AddRequestActivity extends AppCompatActivity {
     Button btnSave;
     String requestName;
     List<Device> listDv;
-    Button show_dialog_btn;
-    ArrayList<Device> listTicket= new ArrayList<>();
+    ImageButton show_dialog_btn;
+    ArrayList<Device> listTicket;
+    String reQ;
+    EditText deviceText;
 
     MultiSelectDialog multiSelectDialog;
+    EditText txtRequestDesciption;
+    EditText userInputDialogEditText;
+    boolean[] mSelection = null;
+    String[] _items = null;
+    RadioGroup rg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +74,39 @@ public class AddRequestActivity extends AppCompatActivity {
             }
         });
         show_dialog_btn = findViewById(R.id.show_dialog);
+        deviceText = (EditText)findViewById(R.id.listDevice);
+        txtRequestDesciption = (EditText) findViewById(R.id.txtRequestDesciptionadd);
+        txtRequestDesciption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater layoutInflaterAndroid = LayoutInflater.from(AddRequestActivity.this);
+                View mView = layoutInflaterAndroid.inflate(R.layout.user_input_dialog_box, null);
+                AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(AddRequestActivity.this);
+                alertDialogBuilderUserInput.setView(mView);
+
+                userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
+                alertDialogBuilderUserInput
+                        .setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogBox, int id) {
+                                // ToDo get user input here
+//                                reQ = userInputDialogEditText.getText().toString();
+
+                                txtRequestDesciption.setText(userInputDialogEditText.getText().toString());
+                            }
+                        })
+
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialogBox, int id) {
+                                        dialogBox.cancel();
+                                    }
+                                });
+
+                AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+                alertDialogAndroid.show();
+            }
+        });
     }
 
 
@@ -74,13 +120,22 @@ public class AddRequestActivity extends AppCompatActivity {
                 // Load ServiceItem của Service đầu tiên
                 getAllServiceItemByServiceId(serviceITSupports.get(0).getServiceITSupportId());
                 getAllDeviceByAgencyIdAndServiceItem(3, (serviceITSupports.get(0).getServiceITSupportId()));
+//                RadioGroup fr = new RadioGroup(AddRequestActivity.this);
+//                fr.setOrientation(RadioGroup.HORIZONTAL);
+                rg = (RadioGroup) findViewById(R.id.rgDevide);
+                int i =0;
                 for (final ServiceITSupport item : serviceITSupports) {
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
                     params.weight = 1.0f;
-                    Button bt = new Button(AddRequestActivity.this);
-                    bt.setLayoutParams(params);
+
+                    RadioButton bt = new RadioButton(AddRequestActivity.this);
+//                    bt.setLayoutParams(params);
                     bt.setText(item.getServiceName());
+                    bt.setId(i);
+                    i++;
+                    rg.addView(bt);
+                    rg.check(0);
                     final int serviceId = item.getServiceITSupportId();
                     bt.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -89,8 +144,10 @@ public class AddRequestActivity extends AppCompatActivity {
                             getAllDeviceByAgencyIdAndServiceItem(3, serviceId);
                         }
                     });
-                    layout.addView(bt);
+
                 }
+
+//                layout.addView(fr);
             }
 
             @Override
@@ -146,31 +203,46 @@ public class AddRequestActivity extends AppCompatActivity {
                 for (int i =0; i< devices.size(); i++) {
                     listOfCountries.add(new MultiSelectModel(devices.get(i).getDeviceId(),devices.get(i).getDeviceName()));
                 }
-
+                final ArrayList<Integer> alreadySelectedCountries = new ArrayList<>();
                 show_dialog_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         multiSelectDialog = new MultiSelectDialog()
-                                .title("DEVICE") //setting title for dialog
+                                .title("Thiết bị") //setting title for dialog
                                 .titleSize(25)
-                                .positiveText("Done")
+                                .positiveText("OK")
                                 .negativeText("Cancel")
                                 .setMinSelectionLimit(0)
                                 .setMaxSelectionLimit(listOfCountries.size())
-//                                .preSelectIDsList(alreadySelectedCountries) //List of ids that you need to be selected
+                                .preSelectIDsList(alreadySelectedCountries) //List of ids that you need to be selected
                                 .multiSelectList(listOfCountries) // the multi select model list with ids and name
                                 .onSubmit(new MultiSelectDialog.SubmitCallbackListener() {
                                     @Override
                                     public void onSelected(ArrayList<Integer> selectedIds, ArrayList<String> selectedNames, String dataString) {
                                         //will return list of selected IDS
+                                        listTicket= new ArrayList<>();
                                         Device tic = new Device();
                                         for (int i = 0; i < selectedIds.size(); i++) {
                                             tic.setDeviceId(selectedIds.get(i));
 //                                            Toast.makeText(AddRequestActivity.this, "Selected Ids : " + selectedIds.get(i) + "\n" +
 //                                                    "Selected Names : " + selectedNames.get(i) + "\n" +
 //                                                    "DataString : " + dataString, Toast.LENGTH_SHORT).show();
+//                                            alreadySelectedCountries.add(selectedIds.get(i));
                                             listTicket.add(tic);
                                         }
+                                        StringBuilder sb = new StringBuilder();
+                                        boolean foundOne = false;
+                                        for (int i = 0; i < selectedIds.size(); ++i) {
+//                                            if (mSelection[i]) {
+                                                if (foundOne) {
+                                                    sb.append(", ");
+                                                }
+                                                foundOne = true;
+
+                                                sb.append(selectedNames.get(i));
+//                                            }
+                                        }
+                                        deviceText.setText(sb.toString());
                                     }
 
                                     @Override
@@ -222,7 +294,6 @@ public class AddRequestActivity extends AppCompatActivity {
         request.setAgencyId(agencyId);
         request.setRequestCategoryId(3);
         request.setServiceItemId(serviceItemId);
-        EditText txtRequestDesciption = (EditText) findViewById(R.id.txtRequestDesciption);
         request.setRequestDesciption(txtRequestDesciption.getText().toString());
         request.setRequestName(requestName.toString());
         request.setTicket(listTickett);

@@ -18,6 +18,7 @@ namespace DataService.Models.Entities
         public Request()
         {
             this.Tickets = new HashSet<Ticket>();
+            this.RequestHistories = new HashSet<RequestHistory>();
         }
     
         public int RequestId { get; set; }
@@ -43,5 +44,7 @@ namespace DataService.Models.Entities
         public virtual ServiceItem ServiceItem { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ticket> Tickets { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RequestHistory> RequestHistories { get; set; }
     }
 }

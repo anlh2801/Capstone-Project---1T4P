@@ -13,13 +13,13 @@ namespace DataService.Models.Entities.Repositories
     using System.Collections.Generic;
     
     
-    public partial interface ITicketHistoryRepository : DataService.BaseConnect.IBaseRepository<TicketHistory>
+    public partial interface IRequestHistoryRepository : DataService.BaseConnect.IBaseRepository<RequestHistory>
     {
     }
     
-    public partial class TicketHistoryRepository : DataService.BaseConnect.BaseRepository<TicketHistory>, ITicketHistoryRepository
+    public partial class RequestHistoryRepository : DataService.BaseConnect.BaseRepository<RequestHistory>, IRequestHistoryRepository
     {
-    	public TicketHistoryRepository(System.Data.Entity.DbContext dbContext) : base(dbContext)
+    	public RequestHistoryRepository(System.Data.Entity.DbContext dbContext) : base(dbContext)
     	{
     	}
     }

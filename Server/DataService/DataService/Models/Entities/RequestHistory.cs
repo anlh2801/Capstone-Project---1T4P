@@ -12,12 +12,13 @@ namespace DataService.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class TicketHistory
+    public partial class RequestHistory
     {
-        public int TicketHistoryId { get; set; }
-        public int TicketId { get; set; }
+        public int RequestHistoryId { get; set; }
+        public int RequestId { get; set; }
         public Nullable<int> Pre_It_SupporterId { get; set; }
         public Nullable<int> Pre_Status { get; set; }
+        public Nullable<bool> IsITSupportAccept { get; set; }
         public Nullable<System.DateTime> StartTime { get; set; }
         public Nullable<System.DateTime> EndTime { get; set; }
         public Nullable<bool> IsDelete { get; set; }
@@ -25,6 +26,6 @@ namespace DataService.Models.Entities
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
         public virtual ITSupporter ITSupporter { get; set; }
-        public virtual Ticket Ticket { get; set; }
+        public virtual Request Request { get; set; }
     }
 }

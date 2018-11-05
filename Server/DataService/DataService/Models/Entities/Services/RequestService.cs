@@ -307,12 +307,14 @@ namespace DataService.Models.Entities.Services
         {
             try
             {
+                var requestHistoryRepo = DependencyUtils.Resolve<IRequestHistoryRepository>();
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var request = requestRepo.GetActive().SingleOrDefault(a => a.RequestId == request_id);
                 if (request != null)
                 {
                     if (status == (int)RequestStatusEnum.Done)
                     {
+                        var requestHistory = 
                         request.RequestStatus = status;
                         request.ITSupporter.IsBusy = false;
                         request.EndTime = DateTime.UtcNow.AddHours(7);
@@ -406,7 +408,6 @@ namespace DataService.Models.Entities.Services
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
-
                 if (isAccept)
                 {
                     var request = requestRepo.GetActive().SingleOrDefault(p => p.RequestId == requestId);
