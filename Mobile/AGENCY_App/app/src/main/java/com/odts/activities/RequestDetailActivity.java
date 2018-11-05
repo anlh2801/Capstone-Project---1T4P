@@ -17,6 +17,7 @@ public class RequestDetailActivity extends AppCompatActivity {
     TextView rqName;
     RequestService requestService;
     Button btnCancel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +39,7 @@ public class RequestDetailActivity extends AppCompatActivity {
 
                         builder
                                 .setMessage("Are you sure?")
-                                .setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int id) {
                                         requestService.cancelTicket(RequestDetailActivity.this, requestID, 4);
@@ -46,7 +47,7 @@ public class RequestDetailActivity extends AppCompatActivity {
                                 })
                                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialog,int id) {
+                                    public void onClick(DialogInterface dialog, int id) {
                                         dialog.cancel();
                                     }
                                 })
@@ -55,6 +56,7 @@ public class RequestDetailActivity extends AppCompatActivity {
                 });
 
             }
+
             @Override
             public void onFail(String message) {
 

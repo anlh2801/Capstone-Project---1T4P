@@ -1,8 +1,6 @@
 package com.odts.apiCaller;
 
-import com.odts.models.ListRequest;
 import com.odts.models.Request;
-import com.odts.models.ServiceItem;
 import com.odts.utils.ResponseObject;
 import com.odts.utils.ResponseObjectReturnList;
 
@@ -23,7 +21,7 @@ public interface IRequestApiCaller {
     @GET("request/view_request_detail")
     Call<ResponseObject<Request>> requestDetail(@Query("requestId") Integer request_id);
 
-    @POST("ticket/cancel_ticket")
+    @POST("ticket/update_status_ticket")
     Call<ResponseObject<Boolean>> cancelTicket(@Query("request_id") Integer request_id,
                                         @Query("status") Integer status_id);
 

@@ -102,7 +102,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         }
 
         [HttpPost]
-        [Route("ticket/update_status_ticket")]
+        [Route("ticket/cancel_ticket")]
         public HttpResponseMessage UpdateStatusRequest(int request_id, int status)
         {            
             var result = _requestDomain.UpdateStatusRequest(request_id, status);           
