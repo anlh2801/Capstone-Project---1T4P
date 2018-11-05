@@ -22,6 +22,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage UpdateStatusRequest(int request_id, int status);
         HttpResponseMessage ViewRequestDetail(int requestId);
         HttpResponseMessage AcceptRequest(int itSupporterId, int requestId, bool isAccept);
+        HttpResponseMessage GetRequestByRequestIdAndITSupporterId(int requestId, int itSupporterId);
     }
 
     public class RequestController : ApiController, IRequestDomain
@@ -123,8 +124,16 @@ namespace CapstoneProject_ODTS.ControllersApi
         {
             var result = _requestDomain.AcceptRequestFromITSupporter(itSupporterId, requestId, isAccept);
 
-            return Request.CreateResponse(HttpStatusCode.OK, "Cancel Thành Công!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        [HttpGet]
+        [Route("request/request_by_id_and_ITSupporterId/{requestId}/{itSupporterId}")]
+        public HttpResponseMessage GetRequestByRequestIdAndITSupporterId(int requestId, int itSupporterId)
+        {
+            var result = _requestDomain.GetRequestByRequestIdAndITSupporterId(requestId, itSupporterId);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
     }
 }

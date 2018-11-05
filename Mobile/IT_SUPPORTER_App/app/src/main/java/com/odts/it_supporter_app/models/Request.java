@@ -2,6 +2,8 @@ package com.odts.it_supporter_app.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Request {
     @SerializedName("RequestId")
     private Integer requestId;
@@ -9,8 +11,8 @@ public class Request {
     private String requestName;
     @SerializedName("AgencyName")
     private String agencyName;
-    @SerializedName("Ticket")
-    private Ticket ticket;
+    @SerializedName("Tickets")
+    private List<Ticket> tickets;
 
     public Integer getRequestId() {
         return requestId;
@@ -36,11 +38,11 @@ public class Request {
         this.agencyName = agencyName;
     }
 
-    public Ticket getTicket() {
-        return ticket;
+    public List<Ticket> getTicket() {
+        return tickets;
     }
 
     public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
+        this.tickets = tickets;
     }
 }

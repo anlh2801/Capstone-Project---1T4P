@@ -19,13 +19,14 @@ import android.widget.TextView;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.odts.it_supporter_app.R;
 import com.odts.it_supporter_app.services.ITSupporterService;
+import com.odts.it_supporter_app.utils.CallBackData;
 
 import java.util.ArrayList;
 
 
 public class RecieveRequestFragment extends Fragment {
     private ITSupporterService _itSupporterService;
-
+    Boolean rs;
     Integer itSupporterId = 0;
     Integer requestId = 0;
 
@@ -35,7 +36,9 @@ public class RecieveRequestFragment extends Fragment {
     TextView txtAgencyNameRecieveRequest;
     TextView txtRequestNameRecieveRequest;
     TextView txtTicketInfoRecieveRequest;
+    SharedPreferences share;
     SharedPreferences share2;
+    SharedPreferences shareRequest;
 
     public RecieveRequestFragment() {
         _itSupporterService = new ITSupporterService();
@@ -52,7 +55,7 @@ public class RecieveRequestFragment extends Fragment {
         txtRequestNameRecieveRequest = (TextView) v.findViewById(R.id.txtRequestNameRecieveRequest);
         txtTicketInfoRecieveRequest = (TextView) v.findViewById(R.id.txtTicketInfoRecieveRequest);
 
-        SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
+        share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         itSupporterId = share.getInt("itSupporterId", 0);
 //        itSupporterId = 1;
@@ -61,18 +64,19 @@ public class RecieveRequestFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
                 builder
                         .setMessage("Are you sure?")
-                        .setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
-                                getAllServiceITSupportForAgency(true);
+                                Boolean a = getAllServiceITSupportForAgency(true);
+                                if (a)
+                                moveToDoRequestFragment();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog,int id) {
+                            public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
                         })
@@ -86,12 +90,12 @@ public class RecieveRequestFragment extends Fragment {
                 getAllServiceITSupportForAgency(false);
             }
         });
-            share2 = getActivity().getSharedPreferences("firebaseData", Context.MODE_PRIVATE);
-            txtAgencyNameRecieveRequest.setText(share2.getString("a", "").toString());
-            txtAgencyAddressRecieveRequest.setText(share2.getString("b", "").toString());
-            txtTicketInfoRecieveRequest.setText(share2.getString("c", "").toString());
-            txtRequestNameRecieveRequest.setText(share2.getString("d", "").toString());
-            this.requestId = Integer.parseInt(share2.getString("e", "0"));
+        share2 = getActivity().getSharedPreferences("firebaseData", Context.MODE_PRIVATE);
+        txtAgencyNameRecieveRequest.setText(share2.getString("a", "").toString());
+        txtAgencyAddressRecieveRequest.setText(share2.getString("b", "").toString());
+        txtTicketInfoRecieveRequest.setText(share2.getString("c", "").toString());
+        txtRequestNameRecieveRequest.setText(share2.getString("d", "").toString());
+        this.requestId = Integer.parseInt(share2.getString("e", "0"));
         return v;
     }
 
@@ -113,8 +117,19 @@ public class RecieveRequestFragment extends Fragment {
 //            this.requestId = Integer.parseInt(requestId);
 //    }
 
-    private void getAllServiceITSupportForAgency(boolean isAccept) {
-        _itSupporterService.acceptRequest(getActivity(), requestId, itSupporterId, isAccept);
+    private Boolean getAllServiceITSupportForAgency(boolean isAccept) {
+        rs = true;
+        _itSupporterService.acceptRequest(getActivity(), requestId, itSupporterId, isAccept, new CallBackData<Boolean>() {
+            @Override
+            public void onSuccess(Boolean aBoolean) {
+                rs = aBoolean;
+            }
+
+            @Override
+            public void onFail(String message) {
+                rs = true;
+            }
+        });
         share2 = getActivity().getSharedPreferences("firebaseData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor2 = share2.edit();
         editor2.clear().commit();
@@ -122,6 +137,15 @@ public class RecieveRequestFragment extends Fragment {
                 .getLaunchIntentForPackage(getActivity().getPackageName());
         restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(restartIntent);
+        return rs;
     }
-
+    private void moveToDoRequestFragment() {
+        SharedPreferences.Editor edit = share.edit();
+        edit.putInt("requestId", requestId);
+        edit.commit();
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fmHome, new DoRequestFragment())
+                .commit();
+    }
 }
