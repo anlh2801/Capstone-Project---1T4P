@@ -307,6 +307,7 @@ namespace DataService.Models.Entities.Services
         {
             try
             {
+                var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
                 var requestHistoryRepo = DependencyUtils.Resolve<IRequestHistoryRepository>();
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var request = requestRepo.GetActive().SingleOrDefault(a => a.RequestId == request_id);
@@ -314,8 +315,13 @@ namespace DataService.Models.Entities.Services
                 {
                     if (status == (int)RequestStatusEnum.Done)
                     {
-                        var requestHistory = new RequestHistoryAPIViewModel();
-                        requestHistory.RequestId = request_id;
+                        var requestHistory = new CreateRequestHistoryAPIViewModel()
+                        {
+                            RequestId = request_id,
+                            PreSupporter_Name = request.ITSupporter.ITSupporterName,
+                            PreStatus = request.RequestStatus,
+                            CreateDate = DateTime.Now.ToString()
+                        };
 
                         request.RequestStatus = status;
                         request.ITSupporter.IsBusy = false;
@@ -329,6 +335,14 @@ namespace DataService.Models.Entities.Services
                     }
                     else
                     {
+                        var requestHistory = new CreateRequestHistoryAPIViewModel()
+                        {
+                            RequestId = request_id,
+                            PreSupporter_Name = request.ITSupporter.ITSupporterName,
+                            PreStatus = request.RequestStatus,
+                            CreateDate = DateTime.Now.ToString()
+                        };
+
                         request.RequestStatus = status;
                         request.UpdateDate = DateTime.UtcNow.AddHours(7);
 
@@ -405,6 +419,7 @@ namespace DataService.Models.Entities.Services
         public ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept)
         {
             MemoryCacher memoryCacher = new MemoryCacher();
+            
             try
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
@@ -438,29 +453,33 @@ namespace DataService.Models.Entities.Services
                         requestRepo.Save();
                         itSupporterRepo.Save();
                         memoryCacher.Delete("ITSupporterListWithWeights");
+                        
                         return new ResponseObject<bool> { IsError = false, SuccessMessage = "Nhận thành công", ObjReturn = true };
                     }
                 }
                 else
                 {
-
-                    var itsupporter = itSupporterRepo.GetActive().SingleOrDefault(i => i.ITSupporterId == itSupporterId);
-                    var requestHistory = new RequestHistoryAPIViewModel();
-                    requestHistory.RequestId = requestId;
-                    requestHistory.PreStatus = (int)RequestStatusEnum.Processing;
-                    requestHistory.PreSupporter_Name = itsupporter.ITSupporterName;
-
-                    var its = memoryCacher.GetValue("ITSupporterListWithWeights");
-                    List<RenderITSupporterListWithWeight> idSupporterListWithWeights;
-                    if (its != null)
+                    var request = requestRepo.GetActive().SingleOrDefault(p => p.RequestId == requestId);
+                    var requestHistory = new CreateRequestHistoryAPIViewModel()
                     {
-                        idSupporterListWithWeights = (List<RenderITSupporterListWithWeight>)its;
+                        RequestId = requestId,
+                        PreSupporter_Name = request.ITSupporter.ITSupporterName,
+                        PreStatus = request.RequestStatus,
+                        CreateDate = DateTime.Now.ToString()
+                    };
+
+                    var itSupporterFound = memoryCacher.GetValue("ITSupporterListWithWeights");
+                    
+                    List<RenderITSupporterListWithWeight> idSupporterListWithWeights;
+                    if (itSupporterFound != null)
+                    {
+                        idSupporterListWithWeights = (List<RenderITSupporterListWithWeight>)itSupporterFound;
                         if (idSupporterListWithWeights.Count > 0)
                         {
                             idSupporterListWithWeights.RemoveAt(0);
                             var idSupporterListWithWeightNext = idSupporterListWithWeights.FirstOrDefault();
                             memoryCacher.Add("ITSupporterListWithWeights", idSupporterListWithWeights, DateTimeOffset.UtcNow.AddHours(1));
-
+                           
                             if (idSupporterListWithWeightNext != null)
                             {
                                 FirebaseService firebaseService = new FirebaseService();

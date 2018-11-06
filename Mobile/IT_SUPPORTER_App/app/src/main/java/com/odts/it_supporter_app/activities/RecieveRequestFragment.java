@@ -58,7 +58,6 @@ public class RecieveRequestFragment extends Fragment {
         share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         itSupporterId = share.getInt("itSupporterId", 0);
-//        itSupporterId = 1;
         FirebaseMessaging.getInstance().subscribeToTopic(itSupporterId.toString());
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,9 +68,7 @@ public class RecieveRequestFragment extends Fragment {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
-                                Boolean a = getAllServiceITSupportForAgency(true);
-                                if (a)
-                                moveToDoRequestFragment();
+                                getAllServiceITSupportForAgency(true);
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -104,41 +101,22 @@ public class RecieveRequestFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-//    public void initData(String agencyName, String agencyAddress, String ticketsInfo, String requestName, String requestId) {
-//        if (agencyName != null)
-//            txtAgencyNameRecieveRequest.setText(agencyName);
-//        if (agencyAddress != null)
-//            txtAgencyAddressRecieveRequest.setText(agencyAddress);
-//        if (ticketsInfo != null)
-//            txtTicketInfoRecieveRequest.setText(ticketsInfo);
-//        if (requestName != null)
-//            txtRequestNameRecieveRequest.setText(requestName);
-//        if (requestId != null)
-//            this.requestId = Integer.parseInt(requestId);
-//    }
 
-    private Boolean getAllServiceITSupportForAgency(boolean isAccept) {
-        rs = true;
+    private void getAllServiceITSupportForAgency(boolean isAccept) {
         _itSupporterService.acceptRequest(getActivity(), requestId, itSupporterId, isAccept, new CallBackData<Boolean>() {
             @Override
             public void onSuccess(Boolean aBoolean) {
-                rs = aBoolean;
+                SharedPreferences.Editor editor2 = share2.edit();
+                editor2.clear().commit();
             }
 
             @Override
             public void onFail(String message) {
-                rs = true;
             }
         });
-        share2 = getActivity().getSharedPreferences("firebaseData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor2 = share2.edit();
-        editor2.clear().commit();
-        Intent restartIntent = getActivity().getPackageManager()
-                .getLaunchIntentForPackage(getActivity().getPackageName());
-        restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(restartIntent);
-        return rs;
+        moveToDoRequestFragment();
     }
+
     private void moveToDoRequestFragment() {
         SharedPreferences.Editor edit = share.edit();
         edit.putInt("requestId", requestId);

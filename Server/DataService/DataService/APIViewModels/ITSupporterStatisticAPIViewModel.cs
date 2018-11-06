@@ -13,5 +13,6 @@ namespace DataService.APIViewModels
         public int SupportTimeInMonth { get; set; }
         public List<ITSupporterStatisticServiceTimeAPIViewModel> TotalTimeEveryService { get; set; }
         public double AverageTimeSupport { get; set; }
+        public int TotalRejectTime { get; set; }
     }
 }

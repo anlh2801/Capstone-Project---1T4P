@@ -109,7 +109,6 @@ public class AddRequestActivity extends AppCompatActivity {
         });
     }
 
-
     private void getAllServiceITSupportForAgency(int agencyId) {
         _serviceITSupportService = new ServiceITSupportService();
         _serviceITSupportService.getAllServiceITSupport(this, agencyId, new CallBackData<ArrayList<ServiceITSupport>>() {
@@ -146,7 +145,6 @@ public class AddRequestActivity extends AppCompatActivity {
                     });
 
                 }
-
 //                layout.addView(fr);
             }
 
@@ -174,8 +172,6 @@ public class AddRequestActivity extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         ServiceItem serviceItem = (ServiceItem) adapterView.getSelectedItem();
-//                        Toast.makeText(AddRequestActivity.this, "ID: " +serviceItem.getServiceItemId(),
-//                                Toast.LENGTH_SHORT).show();
                         serviceItemId = serviceItem.getServiceItemId();
                         requestName = serviceItem.getServiceItemName();
                     }
@@ -183,7 +179,6 @@ public class AddRequestActivity extends AppCompatActivity {
                     public void onNothingSelected(AdapterView<?> adapter) {  }
                 });
             }
-
 
             @Override
             public void onFail(String message) {
@@ -258,20 +253,6 @@ public class AddRequestActivity extends AppCompatActivity {
 
 
                 });
-
-//                MultiSelectionSpinner spinner = (MultiSelectionSpinner) findViewById(R.id.input1);
-//                spinner.setItems(list);
-//                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//                    @Override
-//                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                        Device device = (Device) adapterView.getSelectedItem();
-//                    }
-//
-//                    @Override
-//                    public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//                    }
-//                });
             }
 
             @Override

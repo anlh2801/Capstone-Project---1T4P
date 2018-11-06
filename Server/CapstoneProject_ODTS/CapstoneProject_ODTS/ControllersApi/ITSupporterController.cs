@@ -32,7 +32,7 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         HttpResponseMessage LoginITSupporter(string username, string password, int roleId);
 
-        HttpResponseMessage ITSuppoterStatistic(int itsupporterId);
+        HttpResponseMessage ITSuppoterStatistic(int itsupporterId, int year, int month);
     }
 
     public class ITSupporterController : ApiController, IITSupporterController
@@ -150,9 +150,9 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         [HttpGet]
         [Route("ITsupporter/view_itsupporter_statistic")]
-        public HttpResponseMessage ITSuppoterStatistic(int itsupporterId)
+        public HttpResponseMessage ITSuppoterStatistic(int itsupporterId, int year, int month)
         {
-            var result = _ITSupporterDomain.ITSuppoterStatistic(itsupporterId);
+            var result = _ITSupporterDomain.ITSuppoterStatistic(itsupporterId, year, month);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }

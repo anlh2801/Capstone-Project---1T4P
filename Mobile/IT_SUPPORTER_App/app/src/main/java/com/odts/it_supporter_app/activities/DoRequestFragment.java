@@ -29,6 +29,8 @@ public class DoRequestFragment extends Fragment {
 
     Integer itSupporterId = 0;
     Integer requestId = 0;
+    RequestService requestService;
+    TextView rqName;
 
     public DoRequestFragment() {
         _requestService = new RequestService();
@@ -43,14 +45,32 @@ public class DoRequestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_do_request, container, false);
-        // Inflate the layout for this fragment
-        SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
+        final View v = inflater.inflate(R.layout.fragment_do_request, container, false);
+        requestService = new RequestService();
+        rqName = (TextView) v.findViewById(R.id.txtRequestName);
+         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         itSupporterId = share.getInt("itSupporterId", 0);
         requestId = share.getInt("requestId", 0);
-        txtRequestName = v.findViewById(R.id.txtRequestName);
-        getAllServiceITSupportForAgency(requestId, itSupporterId);
+        requestService.getRequestByRequestIdAndITSupporterId(getActivity(), requestId, itSupporterId, new CallBackData<Request>() {
+            @Override
+            public void onSuccess(Request request) {
+                rqName.setText(request.getRequestName());
+            }
+
+            @Override
+            public void onFail(String message) {
+
+            }
+        });
+        // Inflate the layout for this fragment
+//        SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
+//        SharedPreferences.Editor edit = share.edit();
+//        itSupporterId = share.getInt("itSupporterId", 0);
+//        requestId = share.getInt("requestId", 0);
+//
+//        txtRequestName = v.findViewById(R.id.txtRequestName);
+//        getAllServiceITSupportForAgency(requestId, itSupporterId);
         btnDone = v.findViewById(R.id.btnDone);
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,19 +81,6 @@ public class DoRequestFragment extends Fragment {
         return v;
     }
 
-    private void getAllServiceITSupportForAgency(int requestId, int itSupporterId) {
-        _requestService.getRequestByRequestIdAndITSupporterId(getActivity(), requestId, itSupporterId, new CallBackData<Request>() {
-            @Override
-            public void onSuccess(Request request) {
-                txtRequestName.setText(request.getRequestName());
-            }
-
-            @Override
-            public void onFail(String message) {
-
-            }
-        });
-    }
 
 
 }

@@ -36,7 +36,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<GuidelineAPIViewModel> GetGuidelineByServiceItemID(int service_item_Id);
 
-        ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId);
+        ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId, int year, int month);
 
 
     }
@@ -386,11 +386,12 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId)
+        public ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId, int year, int month)
         {
             try
             {
                 var itsupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var servieceRepo = DependencyUtils.Resolve<IServiceITSupportRepository>();
                 var itsupporter  = itsupporterRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == itsupporterId);
                 var supportTime = 0;
                 var totalSupportTime = new TimeSpan();
@@ -398,47 +399,80 @@ namespace DataService.Models.Entities.Services
                 if (itsupporter != null)
                 {
                     List<ITSupporterStatisticServiceTimeAPIViewModel> rsList = new List<ITSupporterStatisticServiceTimeAPIViewModel>();
-                    var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
-                    var ticketInMonth = ticketRepo.GetActive().Where(t => t.CurrentITSupporter_Id == itsupporterId && t.CreateDate.Year == DateTime.Now.Year && t.CreateDate.Month == DateTime.Now.Month);
+                    var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                    var requestInMonth = requestRepo.GetActive().Where(r => r.CurrentITSupporter_Id == itsupporterId && (r.StartTime != null && r.StartTime.Value.Year == year) && (r.EndTime != null && r.EndTime.Value.Month == month)).ToList();
 
-                    if (ticketInMonth.Count() > 0)
+                    if (requestInMonth.Count() > 0)
                     {
-                        foreach (var ticketItem in ticketInMonth)
+                        foreach (var requestItem in requestInMonth)
                         {
                             supportTime++;
                         }
                     }
 
-                    var ticket = ticketRepo.GetActive().Where(t => t.CurrentITSupporter_Id == itsupporterId && t.CreateDate.Year == DateTime.Now.Year && t.CreateDate.Month == DateTime.Now.Month).ToList();
-
-                    if (ticket.Count() > 0)
+                    var request = requestRepo.GetActive().Where(r => r.CurrentITSupporter_Id == itsupporterId && (r.StartTime != null && r.StartTime.Value.Year == year) && (r.StartTime != null && r.StartTime.Value.Month == month)).ToList();
+                    //var serviceGroup = requestRepo.GetActive().Where(r => r.CurrentITSupporter_Id == itsupporterId && (r.StartTime != null && r.StartTime.Value.Year == DateTime.Now.Year) && (r.EndTime != null && r.EndTime.Value.Month == DateTime.Now.Month)).ToList();
+                    var requestGroupBy = request.GroupBy(a => a.ServiceItem.ServiceITSupport.ServiceITSupportId);
+                    var requestSelect = requestGroupBy.Select(b => new { ServiceId = b.Key, ServiceItems = b.ToList() }).ToList();
+                    //var s = w.Sum(a => a.)
+                    
+                    
+                    if (request.Count() > 0)
                     {
-                        var ticketCount = 0;
-                        foreach (var ticketItem in ticket)
+                        foreach (var item in requestSelect)
                         {
-                            if(ticketItem.StartTime != null && ticketItem.Endtime != null)
+                            var totalServiceSupportTime = new TimeSpan();
+                            foreach (var item2 in item.ServiceItems)
                             {
-                                ticketCount++;
-                                var time = new TimeSpan();
-                                time = (ticketItem.StartTime - ticketItem.Endtime).Value.Duration();
-                                totalSupportTime += time;
-                                rsList.Add(new ITSupporterStatisticServiceTimeAPIViewModel
+                                if (item2.StartTime != null && item2.EndTime != null)
                                 {
-                                    ServiceName = ticketItem.Device.DeviceType.ServiceITSupport.ServiceName,
-
-                                });
+                                    var time = new TimeSpan();
+                                    time = (item2.StartTime - item2.EndTime).Value.Duration();
+                                    totalServiceSupportTime += time;
+                                }                                
+                            }
+                            rsList.Add(new ITSupporterStatisticServiceTimeAPIViewModel
+                            {
+                                ServiceName = servieceRepo.GetActive().SingleOrDefault(q => q.ServiceITSupportId == item.ServiceId).ServiceName,
+                                SupportTime = totalServiceSupportTime.ToString()
+                            });
+                        }
+                        
+                    }
+                    if (request.Count() > 0)
+                    {
+                        var requestCount = 0;
+                        foreach (var requestItem in request)
+                        {
+                            if(requestItem.StartTime != null && requestItem.EndTime != null)
+                            {
+                                requestCount++;
+                                var time = new TimeSpan();
+                                time = (requestItem.StartTime - requestItem.EndTime).Value.Duration();
+                                totalSupportTime += time;
                             }
                         }
-                        averageTime = totalSupportTime.TotalHours / ticketCount;
+                        averageTime = totalSupportTime.TotalHours / requestCount;
                     }
 
+                    var requestHistoryRepo = DependencyUtils.Resolve<IRequestHistoryRepository>();
+                    var requestHistory = requestHistoryRepo.GetActive().Where(r => r.Pre_It_SupporterId == itsupporterId && r.IsITSupportAccept == false && (r.StartTime != null && r.StartTime.Value.Year == DateTime.Now.Year) && (r.EndTime != null && r.EndTime.Value.Month == DateTime.Now.Month)).ToList();
+                    var totalRejectTime = 0;
+                    if(requestHistory.Count > 0)
+                    {
+                        foreach (var item in requestHistory)
+                        {
+                            totalRejectTime++;
+                        }
+                    }
 
                     var ITSupporterAssumptionAPIViewModel = new ITSupporterStatisticAPIViewModel
                     {
                         ITSupporterName = itsupporter.ITSupporterName,
                         SupportTimeInMonth = supportTime,
-                        //TotalTimeEveryService =,
-                        AverageTimeSupport = averageTime
+                        TotalTimeEveryService =rsList,
+                        AverageTimeSupport = averageTime,
+                        TotalRejectTime = totalRejectTime
                     };
                     return new ResponseObject<ITSupporterStatisticAPIViewModel> { IsError = false, ObjReturn = ITSupporterAssumptionAPIViewModel, SuccessMessage = "Thành công" };
                 }
