@@ -317,9 +317,11 @@ namespace DataService.Models.Entities.Services
                 }
                 // Add redis
                 itSupporterListWithWeights = itSupporterListWithWeights.OrderByDescending(p => p.ITSupporterListWeight).ToList();
-                MemoryCacher memoryCacher = new MemoryCacher();
-                memoryCacher.Add("ITSupporterListWithWeights", itSupporterListWithWeights, DateTimeOffset.UtcNow.AddHours(1));
+                //MemoryCacher memoryCacher = new MemoryCacher();
+                //memoryCacher.Add("ITSupporterListWithWeights", itSupporterListWithWeights, DateTimeOffset.UtcNow.AddHours(1));
 
+                RedisTools redis = new RedisTools();
+                redis.Save("ITSupporterListWithWeights", itSupporterListWithWeights);
                 // Get first
                 var itSupporterNameFound = itSupporterListWithWeights.FirstOrDefault().ITSupporterName;
                 int itSupporterIdFound = itSupporterListWithWeights.FirstOrDefault().ITSupporterId;
