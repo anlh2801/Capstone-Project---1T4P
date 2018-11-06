@@ -38,6 +38,8 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId, int year, int month);
 
+        ResponseObject<bool> UpdateStatusIT(int itsupporter_id, bool isOnline);
+
 
     }
 
@@ -465,6 +467,29 @@ namespace DataService.Models.Entities.Services
             catch (Exception e)
             {
                 return new ResponseObject<ITSupporterStatisticAPIViewModel> { IsError = true, WarningMessage = "Không có thống kê nào!", ObjReturn = null, ErrorMessage = e.ToString() };
+            }
+        }
+
+        public ResponseObject<bool> UpdateStatusIT(int itsupporter_id, bool isOnline)
+        {
+            try
+            {
+                var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var request = itSupporterRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == itsupporter_id);
+                if (request != null)
+                {
+                    request.IsOnline = isOnline;
+                    itSupporterRepo.Edit(request);
+                    itSupporterRepo.Save();
+                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Cập nhật trạng thái thành công", ObjReturn = true };
+                }
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật trạng thái thất bại", ObjReturn = false };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Hủy yêu cầu thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
             }
         }
     }

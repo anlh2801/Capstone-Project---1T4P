@@ -33,6 +33,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage LoginITSupporter(string username, string password, int roleId);
 
         HttpResponseMessage ITSuppoterStatistic(int itsupporterId, int year, int month);
+
+        HttpResponseMessage UpdateStatusIT(int itsupporter_id, bool isOnline);
     }
 
     public class ITSupporterController : ApiController, IITSupporterController
@@ -156,7 +158,14 @@ namespace CapstoneProject_ODTS.ControllersApi
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
-        
+
+        [HttpPost]
+        [Route("ITsupporter/update_status_it")]
+        public HttpResponseMessage UpdateStatusIT(int itsupporter_id, bool isOnline)
+        {
+            var result = _ITSupporterDomain.UpdateStatusIT(itsupporter_id, isOnline);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
     }
 }
 

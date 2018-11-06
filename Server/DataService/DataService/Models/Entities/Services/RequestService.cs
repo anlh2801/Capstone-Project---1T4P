@@ -574,6 +574,7 @@ namespace DataService.Models.Entities.Services
                     RequestName = request.RequestName,
                     CreateDate = timeAgo,
                     UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
+                    AgencyTelephone = request.Agency.Telephone,
                     AgencyName = request.Agency.AgencyName,
                     RequestStatus = request.RequestStatus,
                     RequestEstimationTime = request.CreateDate.AddHours(request.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
