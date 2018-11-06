@@ -43,43 +43,60 @@ namespace DataService.Models.Entities.Services
 
     public partial class ITSupporterService
     {
-        public ResponseObject<List<ITSupporterAPIViewModel>> GetAllITSupporter()
-        {
-            try
-            {
-                List<ITSupporterAPIViewModel> rsList = new List<ITSupporterAPIViewModel>();
-                var ITSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
-                var itSupporters = ITSupporterRepo.GetActive().ToList();
-                if (itSupporters.Count <= 0)
+        public ResponseObject<List<ITSupporterAPIViewModel>> GetAllITSupporter() { 
+
+                try
                 {
-                    return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy người hỗ trợ" };
-                }
-                foreach (var item in itSupporters)
-                {
-                    rsList.Add(new ITSupporterAPIViewModel
+                    List<ITSupporterAPIViewModel> rsList = new List<ITSupporterAPIViewModel>();
+                    var skillRepo = DependencyUtils.Resolve<ISkillRepository>();
+                    var skill = skillRepo.GetActive().ToList();
+                    var ITSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                    var itSupporters = ITSupporterRepo.GetActive().ToList();
+
+                    if (itSupporters.Count > 0)
                     {
-                        ITSupporterId = item.ITSupporterId,
-                        ITSupporterName = item.ITSupporterName,
-                        Username = item.Account.Username,
-                        Telephone = item.Telephone,
-                        Email = item.Email,
-                        Gender = item.Gender != null ? Enum.GetName(typeof(TicketStatusEnum), item.Gender) : string.Empty,
-                        Address = item.Address,
-                        RatingAVG = item.RatingAVG ?? 0,
-                        IsBusy = item.IsBusy.Value == true ? "Đang bận!" : "Chờ việc",
-                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
-                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
-                    });
+                        int count = 1;
+                        foreach (var item in itSupporters)
+                        {
+                            if (!item.IsDelete)
+                            {
+                            var itemskill = skill.SingleOrDefault(i => i.ITSupporterId == item.ITSupporterId);
+
+                            rsList.Add(new ITSupporterAPIViewModel
+                            {
+                                NumericalOrder = count,
+                                ITSupporterId = item.ITSupporterId,
+                                ITSupporterName = item.ITSupporterName,
+                                Username = item.Account.Username,
+                                Telephone = item.Telephone,
+                                Email = item.Email,
+                                Gender = item.Gender != null ? Enum.GetName(typeof(TicketStatusEnum), item.Gender) : string.Empty,
+                                Address = item.Address,
+                                RatingAVG = item.RatingAVG ?? 0,
+                                IsOnline = item.IsOnline != null && item.IsOnline.Value == true ? "Online" : "Ofline",
+                                Skill = itemskill.MonthExperience + " Tháng",
+                                IsBusy = item.IsBusy.Value == true ? "Đang bận!" : "Chờ việc",
+                                CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
+                                UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                                    
+                                });
+                                
+                            }
+                            count++;
+                        }
+                        return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Tìm thấy nhân viên!" };
+                    }
+                    else
+                    {
+                        return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy nhân viên!", ObjReturn = rsList };
+                    }
                 }
-                return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
-            }
-            catch (Exception ex)
-            {
-                return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = true, ErrorMessage = ex.ToString(), WarningMessage = "Không tìm thấy người hỗ trợ", ObjReturn = null };
-            }
+                catch (Exception e)
+                {
 
-
-        }
+                    return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy nhân viên!", ObjReturn = null, ErrorMessage = e.ToString() };
+                }
+            }
 
         public ResponseObject<bool> UpdateTicketStatus(ITSupporterUpdateAPIViewModel model)
         {
@@ -467,5 +484,6 @@ namespace DataService.Models.Entities.Services
                 return new ResponseObject<ITSupporterStatisticAPIViewModel> { IsError = true, WarningMessage = "Không có thống kê nào!", ObjReturn = null, ErrorMessage = e.ToString() };
             }
         }
+
     }
 }

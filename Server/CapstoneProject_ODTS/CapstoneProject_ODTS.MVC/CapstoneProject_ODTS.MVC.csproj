@@ -159,6 +159,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AgencyController.cs" />
+    <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\ContractController.cs" />
     <Compile Include="Controllers\DeviceController.cs" />
@@ -7411,6 +7412,8 @@
     <Content Include="Views\Device\AgencyDevice.cshtml" />
     <Content Include="Views\Company\Index.cshtml" />
     <Content Include="Views\ServiceITSupport\Index.cshtml" />
+    <Content Include="Views\Statistic\Index.cshtml" />
+    <Content Include="Views\ITSupporter\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

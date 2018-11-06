@@ -1,4 +1,5 @@
-﻿using DataService.Domain;
+﻿using DataService.APIViewModels;
+using DataService.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,5 +29,41 @@ namespace CapstoneProject_ODTS.MVC.Controllers
             
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult ITSuppoterStatistic(int itsupporterId)
+        {
+            // var result = _ITSupporterDomain.ITSuppoterStatistic(itsupporterId);
+            var result = new ITSupporterStatisticAPIViewModel
+            {
+                ITSupporterName = "long",
+                AverageTimeSupport = 10,
+                TotalTimeEveryService = new List<ITSupporterStatisticServiceTimeAPIViewModel>()
+                {
+                    new ITSupporterStatisticServiceTimeAPIViewModel ()
+                    {
+                        ServiceName = "wifi",
+                        SupportTime = 10
+                        
+                    },
+                     new ITSupporterStatisticServiceTimeAPIViewModel ()
+                    {
+                        ServiceName = "camera",
+                        SupportTime = 10
+
+                    },
+                     new ITSupporterStatisticServiceTimeAPIViewModel ()
+                    {
+                        ServiceName = "pos",
+                        SupportTime = 15
+
+                    }
+                },
+
+            
+
+
+            };
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
