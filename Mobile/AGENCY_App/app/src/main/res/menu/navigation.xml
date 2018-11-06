@@ -8,7 +8,7 @@
     <item
         android:id="@+id/navigation_request"
         android:icon="@drawable/ic_sms_failed_black_24dp"
-        android:title="Báo cáo"/>
+        android:title="Sự cố"/>
 
     <item
         android:id="@+id/navigation_devices"
