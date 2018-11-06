@@ -10,6 +10,6 @@ namespace DataService.APIViewModels
     public class ITSupporterStatisticServiceTimeAPIViewModel
     {
         public string ServiceName { get; set; }
-        public TimeSpan SupportTime { get; set; }
+        public string SupportTime { get; set; }
     }
 }

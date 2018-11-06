@@ -36,7 +36,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<GuidelineAPIViewModel> GetGuidelineByServiceItemID(int service_item_Id);
 
-        ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId);
+        ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId, int year, int month);
 
 
     }
@@ -369,7 +369,7 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId)
+        public ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId, int year, int month)
         {
             try
             {
@@ -383,7 +383,7 @@ namespace DataService.Models.Entities.Services
                 {
                     List<ITSupporterStatisticServiceTimeAPIViewModel> rsList = new List<ITSupporterStatisticServiceTimeAPIViewModel>();
                     var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
-                    var requestInMonth = requestRepo.GetActive().Where(r => r.CurrentITSupporter_Id == itsupporterId && (r.StartTime != null && r.StartTime.Value.Year == DateTime.Now.Year) && (r.EndTime != null && r.EndTime.Value.Month == DateTime.Now.Month)).ToList();
+                    var requestInMonth = requestRepo.GetActive().Where(r => r.CurrentITSupporter_Id == itsupporterId && (r.StartTime != null && r.StartTime.Value.Year == year) && (r.EndTime != null && r.EndTime.Value.Month == month)).ToList();
 
                     if (requestInMonth.Count() > 0)
                     {
@@ -393,7 +393,7 @@ namespace DataService.Models.Entities.Services
                         }
                     }
 
-                    var request = requestRepo.GetActive().Where(r => r.CurrentITSupporter_Id == itsupporterId && (r.StartTime != null && r.StartTime.Value.Year == DateTime.Now.Year) && (r.StartTime != null && r.StartTime.Value.Month == DateTime.Now.Month)).ToList();
+                    var request = requestRepo.GetActive().Where(r => r.CurrentITSupporter_Id == itsupporterId && (r.StartTime != null && r.StartTime.Value.Year == year) && (r.StartTime != null && r.StartTime.Value.Month == month)).ToList();
                     //var serviceGroup = requestRepo.GetActive().Where(r => r.CurrentITSupporter_Id == itsupporterId && (r.StartTime != null && r.StartTime.Value.Year == DateTime.Now.Year) && (r.EndTime != null && r.EndTime.Value.Month == DateTime.Now.Month)).ToList();
                     var requestGroupBy = request.GroupBy(a => a.ServiceItem.ServiceITSupport.ServiceITSupportId);
                     var requestSelect = requestGroupBy.Select(b => new { ServiceId = b.Key, ServiceItems = b.ToList() }).ToList();
@@ -417,20 +417,10 @@ namespace DataService.Models.Entities.Services
                             rsList.Add(new ITSupporterStatisticServiceTimeAPIViewModel
                             {
                                 ServiceName = servieceRepo.GetActive().SingleOrDefault(q => q.ServiceITSupportId == item.ServiceId).ServiceName,
-                                SupportTime = totalServiceSupportTime
+                                SupportTime = totalServiceSupportTime.ToString()
                             });
                         }
-                        //foreach (var item in serviceGroup)
-                        //{
-                        //    if (item.StartTime != null && item.EndTime != null)
-                        //    {
-                        //        rsList.Add(new ITSupporterStatisticServiceTimeAPIViewModel
-                        //        {
-                        //            ServiceName = item.ServiceItem.ServiceITSupport.ServiceName,
-                        //            SupportTime = totalServiceSupportTime
-                        //        });
-                        //    }
-                        //}
+                        
                     }
                     if (request.Count() > 0)
                     {
