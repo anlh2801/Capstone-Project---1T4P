@@ -14,4 +14,8 @@ public interface IITSupporterApiCaller {
     Call<ResponseObject<Boolean>> acceptRequest(@Path("itSupporterId") int itSupporterId,
                                              @Path("requestId") int requestId,
                                              @Path("isAccept") boolean isAccept);
+
+    @POST("ITsupporter/update_status_it ")
+    Call<ResponseObject<Boolean>> updateStatusIt(@Query("itsupporter_id") int itsupporter_id,
+                                                 @Query("isOnline") boolean isOnline);
 }

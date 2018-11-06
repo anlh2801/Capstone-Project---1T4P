@@ -42,4 +42,19 @@ public class ITSupporterService {
         });
 
     }
+    public void updateStatusIT(final  Context context, int itsupporter_id, boolean isOnline) {
+        iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
+        Call<ResponseObject<Boolean>> call = iitSupporterApiCaller.updateStatusIt(itsupporter_id, isOnline);
+        call.enqueue(new Callback<ResponseObject<Boolean>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<Boolean>> call, Throwable t) {
+
+            }
+        });
+    }
 }

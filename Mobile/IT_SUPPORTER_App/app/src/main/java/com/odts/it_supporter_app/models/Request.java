@@ -11,8 +11,18 @@ public class Request {
     private String requestName;
     @SerializedName("AgencyName")
     private String agencyName;
+    @SerializedName("AgencyTelephone")
+    private String agencyTelephone;
     @SerializedName("Tickets")
     private List<Ticket> tickets;
+
+    public String getAgencyTelephone() {
+        return agencyTelephone;
+    }
+
+    public void setAgencyTelephone(String agencyTelephone) {
+        this.agencyTelephone = agencyTelephone;
+    }
 
     public Integer getRequestId() {
         return requestId;

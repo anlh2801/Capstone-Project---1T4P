@@ -1,7 +1,9 @@
 package com.odts.it_supporter_app.activities;
 
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -11,12 +13,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.odts.it_supporter_app.R;
 import com.odts.it_supporter_app.models.Request;
+import com.odts.it_supporter_app.services.ITSupporterService;
 
 import java.io.File;
 
@@ -26,14 +31,46 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences share;
     SharedPreferences sp;
     Button btnLogout;
+    Switch swStatus;
+    ITSupporterService itSupporterService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        itSupporterService = new ITSupporterService();
         loadFragment(new RecieveRequestFragment());
 
         Bundle extras=  getIntent().getExtras();
         onNewIntent(getIntent());
+        swStatus = (Switch) findViewById(R.id.switch2);
+        swStatus.setChecked(true);
+        swStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
+                if(!b) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder
+                            .setMessage("Bạn có muốn offline?")
+                            .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    itSupporterService.updateStatusIT(MainActivity.this, 5, b);
+                                }
+                            })
+                            .setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                    swStatus.setChecked(true);
+                                }
+                            })
+                            .show();
+                }
+                else
+                    itSupporterService.updateStatusIT(MainActivity.this, 5, b);
+
+            }
+        });
         btnLogout = (Button) findViewById(R.id.btn_logout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override

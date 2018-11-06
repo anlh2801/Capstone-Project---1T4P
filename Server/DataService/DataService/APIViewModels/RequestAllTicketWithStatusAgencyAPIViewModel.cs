@@ -10,6 +10,7 @@ namespace DataService.APIViewModels
 {
     public class RequestAllTicketWithStatusAgencyAPIViewModel
     {
+        public string AgencyTelephone { get; set; }
         public int RequestId { get; set; }
         public string RequestName { get; set; }
         public string CreateDate { get; set; }
