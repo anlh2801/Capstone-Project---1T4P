@@ -67,7 +67,7 @@
           <Property Name="ServiceITSupportId" Type="int" />
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
-          <Property Name="IsDelete" Type="bit" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
@@ -113,7 +113,7 @@
           <Property Name="GuidelineName" Type="nvarchar" MaxLength="50" />
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="date" />
-          <Property Name="IsDelete" Type="bit" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
@@ -131,7 +131,7 @@
           <Property Name="RatingAVG" Type="float" />
           <Property Name="IsBusy" Type="bit" />
           <Property Name="IsOnline" Type="bit" />
-          <Property Name="IsDelete" Type="bit" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
@@ -178,7 +178,7 @@
           <Property Name="IsITSupportAccept" Type="bit" />
           <Property Name="StartTime" Type="datetime" />
           <Property Name="EndTime" Type="datetime" />
-          <Property Name="IsDelete" Type="bit" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
@@ -201,7 +201,7 @@
           <Property Name="ServiceItemName" Type="nvarchar" MaxLength="50" />
           <Property Name="Price" Type="float" />
           <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="IsDelete" Type="bit" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
@@ -224,7 +224,7 @@
           <Property Name="ITSupporterId" Type="int" Nullable="false" />
           <Property Name="ServiceITSupportId" Type="int" />
           <Property Name="MonthExperience" Type="int" />
-          <Property Name="IsDelete" Type="bit" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
@@ -308,7 +308,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ContractService_Contract">
+        <Association Name="FK_ContractServiceITSupport_Contract">
           <End Role="Contract" Type="Self.Contract" Multiplicity="1" />
           <End Role="ContractServiceITSupport" Type="Self.ContractServiceITSupport" Multiplicity="*" />
           <ReferentialConstraint>
@@ -320,7 +320,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ContractService_Service">
+        <Association Name="FK_ContractServiceITSupport_ServiceITSupport">
           <End Role="ServiceITSupport" Type="Self.ServiceITSupport" Multiplicity="0..1" />
           <End Role="ContractServiceITSupport" Type="Self.ContractServiceITSupport" Multiplicity="*" />
           <ReferentialConstraint>
@@ -571,11 +571,11 @@
             <End Role="Company" EntitySet="Company" />
             <End Role="Contract" EntitySet="Contract" />
           </AssociationSet>
-          <AssociationSet Name="FK_ContractService_Contract" Association="Self.FK_ContractService_Contract">
+          <AssociationSet Name="FK_ContractServiceITSupport_Contract" Association="Self.FK_ContractServiceITSupport_Contract">
             <End Role="Contract" EntitySet="Contract" />
             <End Role="ContractServiceITSupport" EntitySet="ContractServiceITSupport" />
           </AssociationSet>
-          <AssociationSet Name="FK_ContractService_Service" Association="Self.FK_ContractService_Service">
+          <AssociationSet Name="FK_ContractServiceITSupport_ServiceITSupport" Association="Self.FK_ContractServiceITSupport_ServiceITSupport">
             <End Role="ServiceITSupport" EntitySet="ServiceITSupport" />
             <End Role="ContractServiceITSupport" EntitySet="ContractServiceITSupport" />
           </AssociationSet>
@@ -699,11 +699,11 @@
             <End Role="Company" EntitySet="Companies" />
             <End Role="Contract" EntitySet="Contracts" />
           </AssociationSet>
-          <AssociationSet Name="FK_ContractService_Contract" Association="DataModel.FK_ContractService_Contract">
+          <AssociationSet Name="FK_ContractServiceITSupport_Contract" Association="DataModel.FK_ContractServiceITSupport_Contract">
             <End Role="Contract" EntitySet="Contracts" />
             <End Role="ContractServiceITSupport" EntitySet="ContractServiceITSupports" />
           </AssociationSet>
-          <AssociationSet Name="FK_ContractService_Service" Association="DataModel.FK_ContractService_Service">
+          <AssociationSet Name="FK_ContractServiceITSupport_ServiceITSupport" Association="DataModel.FK_ContractServiceITSupport_ServiceITSupport">
             <End Role="ServiceITSupport" EntitySet="ServiceITSupports" />
             <End Role="ContractServiceITSupport" EntitySet="ContractServiceITSupports" />
           </AssociationSet>
@@ -826,7 +826,7 @@
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Company" Relationship="DataModel.FK_Contract_Company" FromRole="Contract" ToRole="Company" />
-          <NavigationProperty Name="ContractServiceITSupports" Relationship="DataModel.FK_ContractService_Contract" FromRole="Contract" ToRole="ContractServiceITSupport" />
+          <NavigationProperty Name="ContractServiceITSupports" Relationship="DataModel.FK_ContractServiceITSupport_Contract" FromRole="Contract" ToRole="ContractServiceITSupport" />
         </EntityType>
         <EntityType Name="ContractServiceITSupport">
           <Key>
@@ -837,11 +837,11 @@
           <Property Name="ServiceITSupportId" Type="Int32" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
-          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Contract" Relationship="DataModel.FK_ContractService_Contract" FromRole="ContractServiceITSupport" ToRole="Contract" />
-          <NavigationProperty Name="ServiceITSupport" Relationship="DataModel.FK_ContractService_Service" FromRole="ContractServiceITSupport" ToRole="ServiceITSupport" />
+          <NavigationProperty Name="Contract" Relationship="DataModel.FK_ContractServiceITSupport_Contract" FromRole="ContractServiceITSupport" ToRole="Contract" />
+          <NavigationProperty Name="ServiceITSupport" Relationship="DataModel.FK_ContractServiceITSupport_ServiceITSupport" FromRole="ContractServiceITSupport" ToRole="ServiceITSupport" />
         </EntityType>
         <EntityType Name="Device">
           <Key>
@@ -890,7 +890,7 @@
           <Property Name="GuidelineName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="0" />
-          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ServiceItem" Relationship="DataModel.FK_Guideline_ServiceItem" FromRole="Guideline" ToRole="ServiceItem" />
@@ -909,7 +909,7 @@
           <Property Name="RatingAVG" Type="Double" />
           <Property Name="IsBusy" Type="Boolean" />
           <Property Name="IsOnline" Type="Boolean" />
-          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="DataModel.FK_ITSupporter_Account" FromRole="ITSupporter" ToRole="Account" />
@@ -967,7 +967,7 @@
           <Property Name="IsITSupportAccept" Type="Boolean" />
           <Property Name="StartTime" Type="DateTime" Precision="3" />
           <Property Name="EndTime" Type="DateTime" Precision="3" />
-          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ITSupporter" Relationship="DataModel.FK_TicketHistory_ITSupporter" FromRole="RequestHistory" ToRole="ITSupporter" />
@@ -993,7 +993,7 @@
           <Property Name="ServiceItemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Price" Type="Double" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Guidelines" Relationship="DataModel.FK_Guideline_ServiceItem" FromRole="ServiceItem" ToRole="Guideline" />
@@ -1010,7 +1010,7 @@
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ContractServiceITSupports" Relationship="DataModel.FK_ContractService_Service" FromRole="ServiceITSupport" ToRole="ContractServiceITSupport" />
+          <NavigationProperty Name="ContractServiceITSupports" Relationship="DataModel.FK_ContractServiceITSupport_ServiceITSupport" FromRole="ServiceITSupport" ToRole="ContractServiceITSupport" />
           <NavigationProperty Name="DeviceTypes" Relationship="DataModel.FK_DeviceType_ServiceITSupport" FromRole="ServiceITSupport" ToRole="DeviceType" />
           <NavigationProperty Name="ServiceItems" Relationship="DataModel.FK_ServiceItem_Service" FromRole="ServiceITSupport" ToRole="ServiceItem" />
           <NavigationProperty Name="Skills" Relationship="DataModel.FK_Skill_ServiceITSupport" FromRole="ServiceITSupport" ToRole="Skill" />
@@ -1023,7 +1023,7 @@
           <Property Name="ITSupporterId" Type="Int32" Nullable="false" />
           <Property Name="ServiceITSupportId" Type="Int32" />
           <Property Name="MonthExperience" Type="Int32" />
-          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ITSupporter" Relationship="DataModel.FK_Skill_ITSupporter" FromRole="Skill" ToRole="ITSupporter" />
@@ -1149,7 +1149,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ContractService_Contract">
+        <Association Name="FK_ContractServiceITSupport_Contract">
           <End Type="DataModel.Contract" Role="Contract" Multiplicity="1" />
           <End Type="DataModel.ContractServiceITSupport" Role="ContractServiceITSupport" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1161,7 +1161,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ContractService_Service">
+        <Association Name="FK_ContractServiceITSupport_ServiceITSupport">
           <End Type="DataModel.ServiceITSupport" Role="ServiceITSupport" Multiplicity="0..1" />
           <End Type="DataModel.ContractServiceITSupport" Role="ContractServiceITSupport" Multiplicity="*" />
           <ReferentialConstraint>

@@ -8,6 +8,7 @@ namespace DataService.APIViewModels
 {
     public class ITSupporterAPIViewModel
     {
+        public int NumericalOrder { get; set; }
         public int ITSupporterId { get; set; }
         public string ITSupporterName { get; set; }
         public int AccountId { get; set; }
@@ -19,8 +20,11 @@ namespace DataService.APIViewModels
         public double RatingAVG { get; set; }
         public string IsBusy { get; set; }
         public bool IsBusyValue { get; set; }
+        public bool IsDelete { get; set; }
+        public string IsOnline { get; set; }
         public string CreateDate { get; set; }
         public string UpdateDate { get; set; }
         public int RequestWattingForAccept { get; set; }
+        public string Skill { get; set; }
     }
 }
