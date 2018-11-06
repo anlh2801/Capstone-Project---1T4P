@@ -17,6 +17,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.odts.it_supporter_app.R;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnLogout;
     Switch swStatus;
     ITSupporterService itSupporterService;
+    android.support.v7.widget.Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle extras=  getIntent().getExtras();
         onNewIntent(getIntent());
+        toolbar = findViewById(R.id.toolbar);
         swStatus = (Switch) findViewById(R.id.switch2);
         swStatus.setChecked(true);
         swStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -49,12 +52,14 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
                 if(!b) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setCancelable(false);
                     builder
                             .setMessage("Bạn có muốn offline?")
                             .setPositiveButton("Có", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
                                     itSupporterService.updateStatusIT(MainActivity.this, 5, b);
+                                    toolbar.setTitle("Ngoại tuyến");
                                 }
                             })
                             .setNegativeButton("Không", new DialogInterface.OnClickListener() {
@@ -65,8 +70,10 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             })
                             .show();
+
                 }
                 else
+                    toolbar.setTitle("Trực tuyến");
                     itSupporterService.updateStatusIT(MainActivity.this, 5, b);
 
             }
