@@ -38,28 +38,28 @@ public class ServiceItemAdapter extends ArrayAdapter<ServiceItem> {
 
         TextView txtServiceItemTitle = (TextView) row.findViewById(R.id.txtServiceItemTitle);
         TextView txtDescription = (TextView) row.findViewById(R.id.txtDescription);
-        TextView txtPrice = (TextView) row.findViewById(R.id.txtPrice);
-        Button btnCreateRequest = (Button) row.findViewById(R.id.btnCreateRequest);
+//        TextView txtPrice = (TextView) row.findViewById(R.id.txtPrice);
+//        Button btnCreateRequest = (Button) row.findViewById(R.id.btnCreateRequest);
         /** Set data to row*/
         final ServiceItem serviceItem = this.objects.get(position);
         txtServiceItemTitle.setText(serviceItem.getServiceItemName());
         txtDescription.setText(serviceItem.getDescription());
-        txtPrice.setText(serviceItem.getServiceItemPrice().toString());
-
-        /**Set Event Onclick*/
-        btnCreateRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, RequestActivity.class);
-                intent.putExtra("serviceItemId",serviceItem.getServiceItemId());
-                intent.putExtra("serviceId",serviceItem.getServiceId());
-                intent.putExtra("serviceItemName",serviceItem.getServiceItemName());
-                intent.putExtra("firstKeyName","FirstKeyValue");
-
-                context.startActivity(intent);
-                //Toast.makeText(context, serviceItem.getServiceItemId().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        txtPrice.setText(serviceItem.getServiceItemPrice().toString());
+//
+//        /**Set Event Onclick*/
+//        btnCreateRequest.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(context, RequestActivity.class);
+//                intent.putExtra("serviceItemId",serviceItem.getServiceItemId());
+//                intent.putExtra("serviceId",serviceItem.getServiceId());
+//                intent.putExtra("serviceItemName",serviceItem.getServiceItemName());
+//                intent.putExtra("firstKeyName","FirstKeyValue");
+//
+//                context.startActivity(intent);
+//                //Toast.makeText(context, serviceItem.getServiceItemId().toString(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         return row;
     }

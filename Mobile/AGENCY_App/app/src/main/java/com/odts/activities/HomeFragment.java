@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.odts.customTools.ServiceItemAdapter;
+import com.odts.customTools.ViewPagerAdapter;
 import com.odts.models.ServiceITSupport;
 import com.odts.models.ServiceItem;
 import com.odts.services.ServiceITSupportService;
@@ -21,6 +23,8 @@ import com.odts.utils.CallBackData;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
+
+    ViewPager viewPager;
 
     private ServiceITSupportService _serviceITSupportService;
     private ServiceItemService _serviceItem;
@@ -36,7 +40,13 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View v = inflater.inflate(R.layout.fragment_home, container, false);
+        viewPager = (ViewPager) v.findViewById(R.id.viewPager);
+
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(v.getContext());
+
+        viewPager.setAdapter(viewPagerAdapter);
+        return v;
 
     }
 

@@ -35,6 +35,11 @@ public class RequestFragment extends Fragment {
     private PendingRequestAdapter pendingRequestAdapter;
     private com.melnykov.fab.FloatingActionButton btnCreate;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ;
+            }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
