@@ -106,6 +106,8 @@ public class RecieveRequestFragment extends Fragment {
         _itSupporterService.acceptRequest(getActivity(), requestId, itSupporterId, isAccept, new CallBackData<Boolean>() {
             @Override
             public void onSuccess(Boolean aBoolean) {
+                SharedPreferences.Editor editor2 = share2.edit();
+                editor2.clear().commit();
             }
 
             @Override
