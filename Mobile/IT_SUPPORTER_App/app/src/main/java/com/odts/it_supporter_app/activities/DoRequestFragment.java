@@ -71,13 +71,13 @@ public class DoRequestFragment extends Fragment {
 //
 //        txtRequestName = v.findViewById(R.id.txtRequestName);
 //        getAllServiceITSupportForAgency(requestId, itSupporterId);
-//        btnDone = v.findViewById(R.id.btnDone);
-//        btnDone.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                _requestService.updateStatusRequest(getContext(), requestId, Enums.RequestStatusEnum.Done.getIntValue());
-//            }
-//        });
+        btnDone = v.findViewById(R.id.btnDone);
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _requestService.updateStatusRequest(getContext(), requestId, Enums.RequestStatusEnum.Done.getIntValue());
+            }
+        });
         return v;
     }
 

@@ -34,7 +34,7 @@ namespace DataService.Domain
 
         ResponseObject<GuidelineAPIViewModel> GetGuidelineByServiceItemID(int service_item_Id);
 
-        ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId);
+        ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId, int year, int month);
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain
@@ -139,11 +139,11 @@ namespace DataService.Domain
             return result;
         }
 
-        public ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId)
+        public ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId, int year, int month)
         {
             var iTSupporterService = this.Service<IITSupporterService>();
 
-            var result = iTSupporterService.ITSuppoterStatistic(itsupporterId);
+            var result = iTSupporterService.ITSuppoterStatistic(itsupporterId, year, month);
 
             return result;
         }
