@@ -36,6 +36,7 @@ namespace DataService.Domain
 
         ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId, int year, int month);
         ResponseObject<bool> UpdateStatusIT(int itsupporter_id, bool isOnline);
+        ResponseObject<bool> UpdateStartTime(int request_id, DateTime start_time)
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain
@@ -157,5 +158,13 @@ namespace DataService.Domain
             return result;
         }
 
+        public ResponseObject<bool> UpdateStartTime(int request_id, DateTime start_time)
+        {
+            var agencyService = this.Service<IAgencyService>();
+
+            var result = agencyService.UpdateStartTime(request_id, start_time);
+
+            return result;
+        }
     }
 }
