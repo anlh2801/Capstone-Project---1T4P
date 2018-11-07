@@ -1,10 +1,14 @@
 package com.odts.it_supporter_app.activities;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +30,7 @@ public class DoRequestFragment extends Fragment {
 
     TextView txtRequestName;
     Button btnDone;
+    Button btnCall;
 
     Integer itSupporterId = 0;
     Integer requestId = 0;
@@ -54,13 +59,26 @@ public class DoRequestFragment extends Fragment {
         requestId = share.getInt("requestId", 0);
         requestService.getRequestByRequestIdAndITSupporterId(getActivity(), requestId, itSupporterId, new CallBackData<Request>() {
             @Override
-            public void onSuccess(Request request) {
+            public void onSuccess(final Request request) {
                 rqName.setText(request.getRequestName());
+                btnCall = v.findViewById(R.id.btnCall);
+                btnCall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                        callIntent.setData(Uri.parse("tel: "+ request.getAgencyTelephone()));
+//                startActivity(callIntent);
+                        if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                            startActivity(callIntent);
+                        } else {
+                            requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, 1);
+                        }
+                    }
+                });
             }
 
             @Override
             public void onFail(String message) {
-
             }
         });
         // Inflate the layout for this fragment
@@ -78,6 +96,7 @@ public class DoRequestFragment extends Fragment {
                 _requestService.updateStatusRequest(getContext(), requestId, Enums.RequestStatusEnum.Done.getIntValue());
             }
         });
+
         return v;
     }
 

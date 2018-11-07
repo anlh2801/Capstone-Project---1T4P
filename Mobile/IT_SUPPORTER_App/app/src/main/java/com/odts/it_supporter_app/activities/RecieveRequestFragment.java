@@ -13,8 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.odts.it_supporter_app.R;
@@ -29,7 +32,7 @@ public class RecieveRequestFragment extends Fragment {
     Boolean rs;
     Integer itSupporterId = 0;
     Integer requestId = 0;
-
+    Switch swStatus;
     Button btnReject;
     Button btnAccept;
     TextView txtAgencyAddressRecieveRequest;
@@ -64,14 +67,14 @@ public class RecieveRequestFragment extends Fragment {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder
-                        .setMessage("Are you sure?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setMessage("Bạn chắc chắn muốn hủy?")
+                        .setPositiveButton("Có", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 getAllServiceITSupportForAgency(true);
                             }
                         })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("Không", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
@@ -106,15 +109,22 @@ public class RecieveRequestFragment extends Fragment {
         _itSupporterService.acceptRequest(getActivity(), requestId, itSupporterId, isAccept, new CallBackData<Boolean>() {
             @Override
             public void onSuccess(Boolean aBoolean) {
-                SharedPreferences.Editor editor2 = share2.edit();
-                editor2.clear().commit();
             }
 
             @Override
             public void onFail(String message) {
             }
         });
-        moveToDoRequestFragment();
+        SharedPreferences.Editor editor2 = share2.edit();
+        editor2.clear().commit();
+        if(isAccept) {
+            moveToDoRequestFragment();
+        }
+        else {
+            Intent restartIntent = getActivity().getPackageManager().getLaunchIntentForPackage(getActivity().getPackageName());
+            restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(restartIntent);
+        }
     }
 
     private void moveToDoRequestFragment() {

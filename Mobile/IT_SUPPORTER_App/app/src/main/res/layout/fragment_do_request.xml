@@ -7,7 +7,7 @@
     tools:context=".activities.DoRequestFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <android.support.constraint.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -20,24 +20,24 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:text="@string/hello_blank_fragment"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="@string/hello_blank_fragment" />
 
         <Button
             android:id="@+id/btnDone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="80dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:text="Done"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtRequestName" />
-    </android.support.constraint.ConstraintLayout>
+            android:text="Done" />
+        <Button
+            android:id="@+id/btnCall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="180dp"
+            android:layout_marginRight="8dp"
+            android:text="Call"/>
+    </RelativeLayout>
 
 </FrameLayout>

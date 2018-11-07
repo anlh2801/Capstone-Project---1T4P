@@ -38,65 +38,52 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId, int year, int month);
 
+        ResponseObject<bool> UpdateStatusIT(int itsupporter_id, bool isOnline);
+
+        ResponseObject<bool> UpdateStartTime(int request_id, DateTime start_time);
+
 
     }
 
     public partial class ITSupporterService
     {
-        public ResponseObject<List<ITSupporterAPIViewModel>> GetAllITSupporter() { 
-
-                try
+        public ResponseObject<List<ITSupporterAPIViewModel>> GetAllITSupporter()
+        {
+            try
+            {
+                List<ITSupporterAPIViewModel> rsList = new List<ITSupporterAPIViewModel>();
+                var ITSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var itSupporters = ITSupporterRepo.GetActive().ToList();
+                if (itSupporters.Count <= 0)
                 {
-                    List<ITSupporterAPIViewModel> rsList = new List<ITSupporterAPIViewModel>();
-                    var skillRepo = DependencyUtils.Resolve<ISkillRepository>();
-                    var skill = skillRepo.GetActive().ToList();
-                    var ITSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
-                    var itSupporters = ITSupporterRepo.GetActive().ToList();
-
-                    if (itSupporters.Count > 0)
-                    {
-                        int count = 1;
-                        foreach (var item in itSupporters)
-                        {
-                            if (!item.IsDelete)
-                            {
-                            var itemskill = skill.SingleOrDefault(i => i.ITSupporterId == item.ITSupporterId);
-
-                            rsList.Add(new ITSupporterAPIViewModel
-                            {
-                                NumericalOrder = count,
-                                ITSupporterId = item.ITSupporterId,
-                                ITSupporterName = item.ITSupporterName,
-                                Username = item.Account.Username,
-                                Telephone = item.Telephone,
-                                Email = item.Email,
-                                Gender = item.Gender != null ? Enum.GetName(typeof(TicketStatusEnum), item.Gender) : string.Empty,
-                                Address = item.Address,
-                                RatingAVG = item.RatingAVG ?? 0,
-                                IsOnline = item.IsOnline != null && item.IsOnline.Value == true ? "Online" : "Ofline",
-                                Skill = itemskill.MonthExperience + " Tháng",
-                                IsBusy = item.IsBusy.Value == true ? "Đang bận!" : "Chờ việc",
-                                CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
-                                UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty,
-                                    
-                                });
-                                
-                            }
-                            count++;
-                        }
-                        return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Tìm thấy nhân viên!" };
-                    }
-                    else
-                    {
-                        return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy nhân viên!", ObjReturn = rsList };
-                    }
+                    return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy người hỗ trợ" };
                 }
-                catch (Exception e)
+                foreach (var item in itSupporters)
                 {
-
-                    return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy nhân viên!", ObjReturn = null, ErrorMessage = e.ToString() };
+                    rsList.Add(new ITSupporterAPIViewModel
+                    {
+                        ITSupporterId = item.ITSupporterId,
+                        ITSupporterName = item.ITSupporterName,
+                        Username = item.Account.Username,
+                        Telephone = item.Telephone,
+                        Email = item.Email,
+                        Gender = item.Gender != null ? Enum.GetName(typeof(TicketStatusEnum), item.Gender) : string.Empty,
+                        Address = item.Address,
+                        RatingAVG = item.RatingAVG ?? 0,
+                        IsBusy = item.IsBusy.Value == true ? "Đang bận!" : "Chờ việc",
+                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
+                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
+                    });
                 }
+                return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
             }
+            catch (Exception ex)
+            {
+                return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = true, ErrorMessage = ex.ToString(), WarningMessage = "Không tìm thấy người hỗ trợ", ObjReturn = null };
+            }
+
+
+        }
 
         public ResponseObject<bool> UpdateTicketStatus(ITSupporterUpdateAPIViewModel model)
         {
@@ -434,7 +421,8 @@ namespace DataService.Models.Entities.Services
                             rsList.Add(new ITSupporterStatisticServiceTimeAPIViewModel
                             {
                                 ServiceName = servieceRepo.GetActive().SingleOrDefault(q => q.ServiceITSupportId == item.ServiceId).ServiceName,
-                                SupportTime = totalServiceSupportTime.ToString()
+                                SupportTimeByDay = totalServiceSupportTime.TotalDays,
+                                SupportTimeByHour = totalServiceSupportTime.TotalHours
                             });
                         }
                         
@@ -485,5 +473,49 @@ namespace DataService.Models.Entities.Services
             }
         }
 
+        public ResponseObject<bool> UpdateStatusIT(int itsupporter_id, bool isOnline)
+        {
+            try
+            {
+                var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var request = itSupporterRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == itsupporter_id);
+                if (request != null)
+                {
+                    request.IsOnline = isOnline;
+                    itSupporterRepo.Edit(request);
+                    itSupporterRepo.Save();
+                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Cập nhật trạng thái thành công", ObjReturn = true };
+                }
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật trạng thái thất bại", ObjReturn = false };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Hủy yêu cầu thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
+            }
+        }
+        public ResponseObject<bool> UpdateStartTime(int request_id, DateTime start_time)
+        {
+            try
+            {
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var request = requestRepo.GetActive().SingleOrDefault(a => a.RequestId == request_id);
+                if (request != null)
+                {
+                    request.StartTime = start_time;
+                    requestRepo.Edit(request);
+                    requestRepo.Save();
+                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Cập nhật thời gian thành công", ObjReturn = true };
+                }
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật thời gian thất bại", ObjReturn = false };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật thời gian thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
+            }
+        }
     }
 }

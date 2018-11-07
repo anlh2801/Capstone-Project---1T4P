@@ -41,19 +41,19 @@ namespace CapstoneProject_ODTS.MVC.Controllers
                     new ITSupporterStatisticServiceTimeAPIViewModel ()
                     {
                         ServiceName = "wifi",
-                        SupportTime = 10
+                        SupportTimeByHour = 10
                         
                     },
                      new ITSupporterStatisticServiceTimeAPIViewModel ()
                     {
                         ServiceName = "camera",
-                        SupportTime = 10
+                        SupportTimeByHour = 10
 
                     },
                      new ITSupporterStatisticServiceTimeAPIViewModel ()
                     {
                         ServiceName = "pos",
-                        SupportTime = 15
+                        SupportTimeByHour = 15
 
                     }
                 },

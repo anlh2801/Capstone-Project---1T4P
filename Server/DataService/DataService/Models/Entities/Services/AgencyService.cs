@@ -241,6 +241,7 @@ namespace DataService.Models.Entities.Services
                 createRequest.RequestDesciption = model.RequestDesciption;
                 createRequest.ServiceItemId = model.ServiceItemId;
                 createRequest.CreateDate = DateTime.UtcNow.AddHours(7);
+                createRequest.Phone = model.PhoneNumber;
                 requestRepo.Add(createRequest);
                 requestRepo.Save();
 
