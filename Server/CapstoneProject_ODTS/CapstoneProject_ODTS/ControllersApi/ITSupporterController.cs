@@ -37,6 +37,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage UpdateStatusIT(int itsupporter_id, bool isOnline);
 
         HttpResponseMessage UpdateStartTime(int request_id, DateTime start_time);
+
+        HttpResponseMessage UpdateEndTime(int request_id, DateTime end_time);
     }
 
     public class ITSupporterController : ApiController, IITSupporterController
@@ -174,6 +176,14 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage UpdateStartTime(int request_id, DateTime start_time)
         {
             var result = _ITSupporterDomain.UpdateStartTime(request_id, start_time);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPost]
+        [Route("ITsupporter/update_endtime")]
+        public HttpResponseMessage UpdateEndTime(int request_id, DateTime end_time)
+        {
+            var result = _ITSupporterDomain.UpdateEndTime(request_id, end_time);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

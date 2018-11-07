@@ -39,6 +39,8 @@ namespace DataService.Domain
         ResponseObject<bool> UpdateStatusIT(int itsupporter_id, bool isOnline);
 
         ResponseObject<bool> UpdateStartTime(int request_id, DateTime start_time);
+
+        ResponseObject<bool> UpdateEndTime(int request_id, DateTime end_time);
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain
@@ -165,6 +167,15 @@ namespace DataService.Domain
             var iTSupporterService = this.Service<IITSupporterService>();
 
             var result = iTSupporterService.UpdateStartTime(request_id, start_time);
+
+            return result;
+        }
+
+        public ResponseObject<bool> UpdateEndTime(int request_id, DateTime end_time)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.UpdateEndTime(request_id, end_time);
 
             return result;
         }
