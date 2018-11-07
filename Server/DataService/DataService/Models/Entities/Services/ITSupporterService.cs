@@ -42,6 +42,8 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> UpdateStartTime(int request_id, DateTime start_time);
 
+        ResponseObject<bool> UpdateEndTime(int request_id, DateTime end_time);
+
 
     }
 
@@ -504,6 +506,29 @@ namespace DataService.Models.Entities.Services
                 if (request != null)
                 {
                     request.StartTime = start_time;
+                    requestRepo.Edit(request);
+                    requestRepo.Save();
+                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Cập nhật thời gian thành công", ObjReturn = true };
+                }
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật thời gian thất bại", ObjReturn = false };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật thời gian thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
+            }
+        }
+
+        public ResponseObject<bool> UpdateEndTime(int request_id, DateTime end_time)
+        {
+            try
+            {
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var request = requestRepo.GetActive().SingleOrDefault(a => a.RequestId == request_id);
+                if (request != null)
+                {
+                    request.EndTime = end_time;
                     requestRepo.Edit(request);
                     requestRepo.Save();
                     return new ResponseObject<bool> { IsError = false, SuccessMessage = "Cập nhật thời gian thành công", ObjReturn = true };
