@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Request {
+    @SerializedName("PhoneNumber")
+    private String phoneNumber;
     @SerializedName("RequestId")
     private Integer requestId;
     @SerializedName("agencyId")
@@ -27,6 +29,14 @@ public class Request {
     private List<Ticket> ticket;
     @SerializedName("RequestStatus")
     private Integer status;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public Request() {
     }

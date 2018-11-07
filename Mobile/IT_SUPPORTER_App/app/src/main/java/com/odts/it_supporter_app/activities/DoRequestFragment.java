@@ -18,11 +18,16 @@ import android.widget.TextView;
 
 import com.odts.it_supporter_app.R;
 import com.odts.it_supporter_app.models.Request;
+import com.odts.it_supporter_app.services.ITSupporterService;
 import com.odts.it_supporter_app.services.RequestService;
 import com.odts.it_supporter_app.utils.CallBackData;
 import com.odts.it_supporter_app.utils.Enums;
 
+import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class DoRequestFragment extends Fragment {
@@ -31,14 +36,16 @@ public class DoRequestFragment extends Fragment {
     TextView txtRequestName;
     Button btnDone;
     Button btnCall;
-
+    Button btnStart;
     Integer itSupporterId = 0;
     Integer requestId = 0;
     RequestService requestService;
+    ITSupporterService itSupporterService;
     TextView rqName;
 
     public DoRequestFragment() {
         _requestService = new RequestService();
+
     }
 
     @Override
@@ -52,6 +59,8 @@ public class DoRequestFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_do_request, container, false);
         requestService = new RequestService();
+        itSupporterService = new ITSupporterService();
+
         rqName = (TextView) v.findViewById(R.id.txtRequestName);
          SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
@@ -96,7 +105,13 @@ public class DoRequestFragment extends Fragment {
                 _requestService.updateStatusRequest(getContext(), requestId, Enums.RequestStatusEnum.Done.getIntValue());
             }
         });
-
+        btnStart = v.findViewById(R.id.btnStart);
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itSupporterService.updateStartTime(getContext(), requestId, DateFormat.getDateTimeInstance().format(new Date()));
+            }
+        });
         return v;
     }
 
