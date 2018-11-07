@@ -54,7 +54,7 @@ public class PendingFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 //                        Toast.makeText(getContext(), "float", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getContext(), AddRequestActivity.class);
+                        Intent intent = new Intent(getContext(), AddRequestLayoutActivity.class);
                         startActivity(intent);
                     }
                 });
