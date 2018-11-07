@@ -40,6 +40,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage LoginAgency(string username, string password, int roleId);
 
         HttpResponseMessage FindITSupporterByRequestId(int requestId);
+
+        HttpResponseMessage AgencyStatistic(int agencyId);
     }
 
     public class AgencyController : ApiController, IAgencyController
@@ -170,6 +172,15 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage GetAllDeviceByAgencyIdAndServiceId(int agencyId, int serviceId)
         {
             var result = _deviceDomain.ViewAllDeviceByAgencyIdAndServiceId(agencyId, serviceId);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        [Route("agency/dashboard/{agencyId}")]
+        public HttpResponseMessage AgencyStatistic(int agencyId)
+        {
+            var result = _agencyDomain.AgencyStatistic(agencyId);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }

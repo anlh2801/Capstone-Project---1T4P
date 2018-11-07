@@ -476,8 +476,21 @@ namespace DataService.Models.Entities.Services
                         idSupporterListWithWeights = (List<RenderITSupporterListWithWeight>)itSupporterFound;
                         if (idSupporterListWithWeights.Count > 0)
                         {
+                            var rejected = idSupporterListWithWeights.FirstOrDefault();
                             idSupporterListWithWeights.RemoveAt(0);
                             var idSupporterListWithWeightNext = idSupporterListWithWeights.FirstOrDefault();
+                            if (rejected.TimesReject < 3)
+                            {
+                                rejected.TimesReject++;
+                                idSupporterListWithWeights.Add(rejected);
+                            }
+                            else
+                            {
+                                var itSupporter = itSupporterRepo.GetActive(p => p.ITSupporterId == rejected.ITSupporterId).SingleOrDefault();
+                                itSupporter.IsOnline = false;
+                                itSupporterRepo.Edit(itSupporter);
+                                itSupporterRepo.Save();
+                            }
                             memoryCacher.Add("ITSupporterListWithWeights", idSupporterListWithWeights, DateTimeOffset.UtcNow.AddHours(1));
                            
                             if (idSupporterListWithWeightNext != null)
@@ -492,7 +505,7 @@ namespace DataService.Models.Entities.Services
                                     counter--;
                                     Thread.Sleep(1000);
                                 }
-                                var a = this.AcceptRequestFromITSupporter(idSupporterListWithWeightNext.ITSupporterId, requestId, false);
+                                this.AcceptRequestFromITSupporter(idSupporterListWithWeightNext.ITSupporterId, requestId, false);
 
 
                                 return new ResponseObject<bool> { IsError = false, WarningMessage = "Nhận oki", ObjReturn = true };
@@ -514,7 +527,7 @@ namespace DataService.Models.Entities.Services
                                         counter--;
                                         Thread.Sleep(1000);
                                     }
-                                    var a = this.AcceptRequestFromITSupporter(result.ObjReturn, requestId, false);
+                                    this.AcceptRequestFromITSupporter(result.ObjReturn, requestId, false);
                                 }
                             }
                         }
