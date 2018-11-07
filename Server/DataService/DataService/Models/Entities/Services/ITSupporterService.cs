@@ -40,7 +40,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> UpdateStatusIT(int itsupporter_id, bool isOnline);
 
-        ResponseObject<bool> UpdateStartTime(int request_id, DateTime start_time)
+        ResponseObject<bool> UpdateStartTime(int request_id, DateTime start_time);
 
 
     }
