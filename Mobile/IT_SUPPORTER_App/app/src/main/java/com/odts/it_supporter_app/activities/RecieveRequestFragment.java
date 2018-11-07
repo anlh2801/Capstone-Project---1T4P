@@ -67,7 +67,7 @@ public class RecieveRequestFragment extends Fragment {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder
-                        .setMessage("Bạn chắc chắn muốn hủy?")
+                        .setMessage("Bạn chắc chắn nhận sửa không?")
                         .setPositiveButton("Có", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
