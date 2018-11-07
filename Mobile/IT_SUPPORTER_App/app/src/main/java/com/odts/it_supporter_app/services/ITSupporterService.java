@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.odts.it_supporter_app.activities.MainActivity;
@@ -14,6 +15,9 @@ import com.odts.it_supporter_app.utils.CallBackData;
 import com.odts.it_supporter_app.utils.ResponseObject;
 import com.odts.it_supporter_app.utils.ResponseObjectReturnList;
 import com.odts.it_supporter_app.utils.RetrofitInstance;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,5 +60,35 @@ public class ITSupporterService {
 
             }
         });
+    }
+    public  void updateStartTime(final Context context, int request_id, String start_time) {
+        iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
+        Call<ResponseObject<Boolean>> call = iitSupporterApiCaller.updateStartTime(request_id, start_time);
+        call.enqueue((new Callback<ResponseObject<Boolean>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<Boolean>> call, Throwable t) {
+
+            }
+        }));
+    }
+    public  void updateEndTime(final Context context, int request_id, String end_time) {
+        iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
+        Call<ResponseObject<Boolean>> call = iitSupporterApiCaller.updateEndTime(request_id, end_time);
+        call.enqueue((new Callback<ResponseObject<Boolean>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<Boolean>> call, Throwable t) {
+
+            }
+        }));
     }
 }

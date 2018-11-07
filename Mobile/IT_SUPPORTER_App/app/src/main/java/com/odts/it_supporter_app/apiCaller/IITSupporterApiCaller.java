@@ -3,6 +3,9 @@ package com.odts.it_supporter_app.apiCaller;
 import com.odts.it_supporter_app.models.ITSupporter;
 import com.odts.it_supporter_app.utils.ResponseObject;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -15,7 +18,14 @@ public interface IITSupporterApiCaller {
                                              @Path("requestId") int requestId,
                                              @Path("isAccept") boolean isAccept);
 
-    @POST("ITsupporter/update_status_it ")
+    @POST("ITsupporter/update_status_it")
     Call<ResponseObject<Boolean>> updateStatusIt(@Query("itsupporter_id") int itsupporter_id,
                                                  @Query("isOnline") boolean isOnline);
+
+    @POST("/ITsupporter/update_starttime")
+    Call<ResponseObject<Boolean>> updateStartTime(@Query("request_id") int request_id,
+                                                  @Query("start_time") String start_time);
+    @POST("/ITsupporter/update_endtime")
+    Call<ResponseObject<Boolean>> updateEndTime(@Query("request_id") int request_id,
+                                                  @Query("end_time") String start_time);
 }

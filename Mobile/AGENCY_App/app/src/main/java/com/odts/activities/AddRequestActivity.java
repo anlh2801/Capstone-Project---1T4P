@@ -272,6 +272,7 @@ public class AddRequestActivity extends AppCompatActivity {
         }
 
         Request request = new Request();
+        request.setPhoneNumber("11111111");
         request.setAgencyId(agencyId);
         request.setRequestCategoryId(3);
         request.setServiceItemId(serviceItemId);
