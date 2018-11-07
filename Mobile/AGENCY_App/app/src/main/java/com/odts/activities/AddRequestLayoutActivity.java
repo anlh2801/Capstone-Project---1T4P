@@ -31,6 +31,7 @@ import com.odts.services.ServiceITSupportService;
 import com.odts.services.ServiceItemService;
 import com.odts.utils.CallBackData;
 
+import java.sql.BatchUpdateException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,10 +39,11 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
     private ServiceITSupportService _serviceITSupportService;
     private ServiceItemService _serviceItem;
     private DeviceService _deviceService;
-    private  RequestService _requestService;
+    private RequestService _requestService;
     Integer agencyId = 0;
     int serviceItemId;
     Button btnSave;
+    Button btnCancle;
     String requestName;
     ArrayList<Device> listTicket;
     MultiSelectDialog multiSelectDialog;
@@ -65,9 +67,17 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
                 createRequest();
             }
         });
+        btnCancle = (Button) findViewById(R.id.btnCancle);
+        btnCancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
 
     }
+
     private void getAllServiceITSupportForAgency(final int agencyId) {
         _serviceITSupportService = new ServiceITSupportService();
         _serviceITSupportService.getAllServiceITSupport(this, agencyId, new CallBackData<ArrayList<ServiceITSupport>>() {
@@ -76,7 +86,7 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
                 getAllServiceItemByServiceId(serviceITSupports.get(0).getServiceITSupportId());
                 getAllDeviceByAgencyIdAndServiceItem(agencyId, (serviceITSupports.get(0).getServiceITSupportId()));
                 final List<ServiceITSupport> ServiceITSupportList = new ArrayList<ServiceITSupport>();
-                Spinner spinnerService = (Spinner)findViewById(R.id.spinner1);
+                Spinner spinnerService = (Spinner) findViewById(R.id.spinner1);
                 for (final ServiceITSupport item : serviceITSupports) {
                     ServiceITSupportList.add(item);
                 }
@@ -87,12 +97,12 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         ServiceITSupport serviceITSupport = (ServiceITSupport) adapterView.getSelectedItem();
-                            getAllServiceItemByServiceId(serviceITSupport.getServiceITSupportId());
-//                            getAllDeviceByAgencyIdAndServiceItem(3, item.getServiceITSupportId());
-//                        Toast.makeText(AddRequestLayoutActivity.this, String.valueOf(serviceITSupport.getServiceITSupportId()), Toast.LENGTH_SHORT).show();
+                        getAllServiceItemByServiceId(serviceITSupport.getServiceITSupportId());
                     }
+
                     @Override
-                    public void onNothingSelected(AdapterView<?> adapter) {  }
+                    public void onNothingSelected(AdapterView<?> adapter) {
+                    }
                 });
 
             }
@@ -124,8 +134,10 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
                         serviceItemId = serviceItem.getServiceItemId();
                         requestName = serviceItem.getServiceItemName();
                     }
+
                     @Override
-                    public void onNothingSelected(AdapterView<?> adapter) {  }
+                    public void onNothingSelected(AdapterView<?> adapter) {
+                    }
                 });
             }
 
@@ -139,46 +151,15 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
     private void getAllDeviceByAgencyIdAndServiceItem(int agencyId, int serviceId) {
         _deviceService = new DeviceService();
         editDevice = (EditText) findViewById(R.id.editTextDevice);
-        txtPhone = (EditText) findViewById(R.id.editText) ;
+        txtPhone = (EditText) findViewById(R.id.editText);
         txtRequestDesciption = (EditText) findViewById(R.id.editText2);
-//        txtRequestDesciption.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                LayoutInflater layoutInflaterAndroid = LayoutInflater.from(AddRequestLayoutActivity.this);
-//                View mView = layoutInflaterAndroid.inflate(R.layout.user_input_dialog_box, null);
-//                AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(AddRequestLayoutActivity.this);
-//                alertDialogBuilderUserInput.setView(mView);
-//
-//                userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
-//                alertDialogBuilderUserInput
-//                        .setCancelable(false)
-//                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialogBox, int id) {
-//                                // ToDo get user input here
-////                                reQ = userInputDialogEditText.getText().toString();
-//
-//                                txtRequestDesciption.setText(userInputDialogEditText.getText().toString());
-//                            }
-//                        })
-//
-//                        .setNegativeButton("Cancel",
-//                                new DialogInterface.OnClickListener() {
-//                                    public void onClick(DialogInterface dialogBox, int id) {
-//                                        dialogBox.cancel();
-//                                    }
-//                                });
-//
-//                AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
-//                alertDialogAndroid.show();
-//            }
-//        });
-        final ArrayList<MultiSelectModel> listDevices= new ArrayList<>();
+        final ArrayList<MultiSelectModel> listDevices = new ArrayList<>();
         _deviceService.getAllDeviceByAgencyIdAndServiceItem(AddRequestLayoutActivity.this, agencyId, serviceId, new CallBackData<ArrayList<Device>>() {
             @Override
             public void onSuccess(ArrayList<Device> devices) {
 
-                for (int i =0; i< devices.size(); i++) {
-                    listDevices.add(new MultiSelectModel(devices.get(i).getDeviceId(),devices.get(i).getDeviceName()));
+                for (int i = 0; i < devices.size(); i++) {
+                    listDevices.add(new MultiSelectModel(devices.get(i).getDeviceId(), devices.get(i).getDeviceName()));
                 }
                 final ArrayList<Integer> alreadyTickets = new ArrayList<>();
                 editDevice.setOnClickListener(new View.OnClickListener() {
@@ -197,7 +178,7 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
                                     @Override
                                     public void onSelected(ArrayList<Integer> selectedIds, ArrayList<String> selectedNames, String dataString) {
                                         //will return list of selected IDS
-                                        listTicket= new ArrayList<>();
+                                        listTicket = new ArrayList<>();
                                         Device tic = new Device();
                                         for (int i = 0; i < selectedIds.size(); i++) {
                                             tic.setDeviceId(selectedIds.get(i));
@@ -231,6 +212,7 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
             }
         });
     }
+
     public void createRequest() {
         _requestService = new RequestService();
         List listTickets = new ArrayList<Ticket>();
