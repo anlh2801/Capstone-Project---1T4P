@@ -419,7 +419,8 @@ namespace DataService.Models.Entities.Services
                             rsList.Add(new ITSupporterStatisticServiceTimeAPIViewModel
                             {
                                 ServiceName = servieceRepo.GetActive().SingleOrDefault(q => q.ServiceITSupportId == item.ServiceId).ServiceName,
-                                SupportTime = totalServiceSupportTime.ToString()
+                                SupportTimeByDay = totalServiceSupportTime.TotalDays,
+                                SupportTimeByHour = totalServiceSupportTime.TotalHours
                             });
                         }
                         
