@@ -29,6 +29,7 @@ namespace DataService.Models.Entities
         public int RequestStatus { get; set; }
         public string RequestName { get; set; }
         public Nullable<double> Estimation { get; set; }
+        public string Phone { get; set; }
         public Nullable<System.DateTime> StartTime { get; set; }
         public Nullable<System.DateTime> EndTime { get; set; }
         public Nullable<int> CurrentITSupporter_Id { get; set; }

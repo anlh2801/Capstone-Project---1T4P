@@ -23,6 +23,7 @@ namespace DataService.ViewModels
     			public virtual int RequestStatus { get; set; }
     			public virtual string RequestName { get; set; }
     			public virtual Nullable<double> Estimation { get; set; }
+    			public virtual string Phone { get; set; }
     			public virtual Nullable<System.DateTime> StartTime { get; set; }
     			public virtual Nullable<System.DateTime> EndTime { get; set; }
     			public virtual Nullable<int> CurrentITSupporter_Id { get; set; }

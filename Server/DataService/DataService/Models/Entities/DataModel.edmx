@@ -147,6 +147,7 @@
           <Property Name="RequestStatus" Type="int" Nullable="false" />
           <Property Name="RequestName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Estimation" Type="float" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
           <Property Name="StartTime" Type="datetime" />
           <Property Name="EndTime" Type="datetime" />
           <Property Name="CurrentITSupporter_Id" Type="int" />
@@ -929,6 +930,7 @@
           <Property Name="RequestStatus" Type="Int32" Nullable="false" />
           <Property Name="RequestName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Estimation" Type="Double" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StartTime" Type="DateTime" Precision="3" />
           <Property Name="EndTime" Type="DateTime" Precision="3" />
           <Property Name="CurrentITSupporter_Id" Type="Int32" />
@@ -1497,6 +1499,7 @@
                 <ScalarProperty Name="CurrentITSupporter_Id" ColumnName="CurrentITSupporter_Id" />
                 <ScalarProperty Name="EndTime" ColumnName="EndTime" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Estimation" ColumnName="Estimation" />
                 <ScalarProperty Name="RequestName" ColumnName="RequestName" />
                 <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
