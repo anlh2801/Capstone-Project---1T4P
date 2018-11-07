@@ -14,6 +14,7 @@ namespace DataService.APIViewModels
         public int ServiceItemId { get; set; }
         public string RequestName { get; set; }
         public string RequestDesciption { get; set; }
+        public string PhoneNumber { get; set; }
         public List<AgencyCreateTicketAPIViewModel> Ticket { get; set; }
     }
 }
