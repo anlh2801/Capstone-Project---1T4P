@@ -119,6 +119,7 @@
     <Compile Include="ApiEndpoint.cs" />
     <Compile Include="APIViewModels\AccountCreateAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyDeviceAPIViewModel.cs" />
+    <Compile Include="APIViewModels\AgencyStatisticalAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyUpdateAPIViewModel.cs" />
     <Compile Include="APIViewModels\CreateRequestHistoryAPIViewModel.cs" />
     <Compile Include="APIViewModels\DeviceAPIViewModel.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="APIViewModels\RoleAPIViewModel.cs" />
     <Compile Include="APIViewModels\ServiceItemAPIViewModel.cs" />
     <Compile Include="APIViewModels\ServiceITSupportAPIViewModel.cs" />
+    <Compile Include="APIViewModels\StatusAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketForRequestAllTicketStatusAPIViewModel.cs" />
     <Compile Include="APIViewModels\RequestHistoryAPIViewModel.cs" />

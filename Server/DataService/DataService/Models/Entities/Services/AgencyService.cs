@@ -40,10 +40,12 @@ namespace DataService.Models.Entities.Services
         ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id);
 
         ResponseObject<List<AgencyAPIViewModel>> ViewAllAgencyByCompanyId(int agency_id);
-    }    
+
+        ResponseObject<List<AgencyStatisticalAPIViewModel>> AgencyStatistic(int agencyId);
+    }
 
     public partial class AgencyService
-    {      
+    {
 
         public ResponseObject<List<AgencyAPIViewModel>> ViewAllAgencyByCompanyId(int company_id)
         {
@@ -243,7 +245,7 @@ namespace DataService.Models.Entities.Services
                 requestRepo.Save();
 
                 CreateTicket(model.Ticket, createRequest.RequestId);
-                
+
                 return new ResponseObject<int> { IsError = false, SuccessMessage = "Tạo yêu cầu thành công!", ObjReturn = createRequest.RequestId };
             }
             catch (Exception e)
@@ -267,9 +269,9 @@ namespace DataService.Models.Entities.Services
                     createTicket.DeviceId = item.DeviceId;
                     createTicket.Current_TicketStatus = (int)TicketStatusEnum.Await;
                     createTicket.Desciption = item.Desciption;
-                    createTicket.CreateDate = DateTime.UtcNow.AddHours(7);                    
-                    
-                    ticketRepo.Add(createTicket);                    
+                    createTicket.CreateDate = DateTime.UtcNow.AddHours(7);
+
+                    ticketRepo.Add(createTicket);
                 }
                 ticketRepo.Save();
 
@@ -285,14 +287,14 @@ namespace DataService.Models.Entities.Services
         {
             try
             {
-                var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();               
+                var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var skillRepo = DependencyUtils.Resolve<ISkillRepository>();
                 var serviceItemRepo = DependencyUtils.Resolve<IServiceItemRepository>();
                 var request = requestRepo.GetActive(p => p.RequestId == requestId).SingleOrDefault();
                 var serviceItemId = request.ServiceItemId;
                 var serviceITSupportId = serviceItemRepo.GetActive(p => p.ServiceItemId == serviceItemId).SingleOrDefault().ServiceITSupportId;
-                var skills = skillRepo.GetActive(a => a.ServiceITSupportId == serviceITSupportId);                
+                var skills = skillRepo.GetActive(a => a.ServiceITSupportId == serviceITSupportId);
                 var company = request.Agency.Company;
                 List<RenderITSupporterListWithWeight> itSupporterListWithWeights = new List<RenderITSupporterListWithWeight>();
                 foreach (var item in skills)
@@ -310,7 +312,8 @@ namespace DataService.Models.Entities.Services
                         {
                             ITSupporterId = itSupporter.ITSupporterId,
                             ITSupporterName = itSupporter.ITSupporterName,
-                            ITSupporterListWeight = weightForITSupporter
+                            ITSupporterListWeight = weightForITSupporter,
+                            TimesReject = 0
                         };
                         itSupporterListWithWeights.Add(renderITSupporterListWithWeight);
                     }
@@ -334,8 +337,8 @@ namespace DataService.Models.Entities.Services
                 return new ResponseObject<int> { IsError = true, WarningMessage = "Chưa tìm được Hero nào thích hợp!", ErrorMessage = ex.ToString() };
             }
 
-        }       
-       
+        }
+
 
         public ResponseObject<AgencyDeviceAPIViewModel> GetDeviceByDeviceId(int deviceId)
         {
@@ -470,6 +473,47 @@ namespace DataService.Models.Entities.Services
             {
 
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉ định người hỗ trợ thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
+            }
+        }
+
+        public ResponseObject<List<AgencyStatisticalAPIViewModel>> AgencyStatistic(int agencyId)
+        {
+            try
+            {
+                var servieceRepo = DependencyUtils.Resolve<IServiceITSupportRepository>();
+
+                List<AgencyStatisticalAPIViewModel> rsList = new List<AgencyStatisticalAPIViewModel>();
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var now = DateTime.UtcNow.AddHours(7).Date;
+                var serviceITSupports = servieceRepo.GetActive(
+                p => p.ContractServiceITSupports.Any(
+                    c => (c.EndDate == null || c.EndDate >= now) && c.Contract.Company.Agencies.Any(a => a.AgencyId == agencyId))).ToList();
+                foreach (var service in serviceITSupports)
+                {
+                    var requestByAgency = requestRepo.GetActive().Where(r => r.AgencyId == agencyId && r.ServiceItem.ServiceITSupportId == service.ServiceITSupportId).ToList();
+
+                    var groupRequestByStatus = requestByAgency.GroupBy(p => p.RequestStatus).Select(p => new { Status = p.Key, Requests = p.ToList() }).ToList();
+                    
+                    List<StatusAPIViewModel> statusList = new List<StatusAPIViewModel>();
+                    foreach (var status in groupRequestByStatus)
+                    {
+                        var statusItem = new StatusAPIViewModel();
+                        statusItem.StatusId = status.Status;
+                        statusItem.StatusName = Enum.GetName(typeof(RequestStatusEnum), status.Status);
+                        statusItem.NumberOfStatus = status.Requests.Count();
+                        statusList.Add(statusItem);
+                    }
+                    var agencyStatisticalAPIViewModel = new AgencyStatisticalAPIViewModel();
+                    agencyStatisticalAPIViewModel.ServiceId = service.ServiceITSupportId;
+                    agencyStatisticalAPIViewModel.ServiceName = service.ServiceName;
+                    agencyStatisticalAPIViewModel.Statuses = statusList;
+                    rsList.Add(agencyStatisticalAPIViewModel);
+                }
+                return new ResponseObject<List<AgencyStatisticalAPIViewModel>> { IsError = false, SuccessMessage = "Chi nhánh thống kê thành công!", ObjReturn = rsList };                
+            }
+            catch (Exception e)
+            {
+                return new ResponseObject<List<AgencyStatisticalAPIViewModel>> { IsError = true, WarningMessage = "Không có thống kê nào!", ObjReturn = null, ErrorMessage = e.ToString() };
             }
         }
 

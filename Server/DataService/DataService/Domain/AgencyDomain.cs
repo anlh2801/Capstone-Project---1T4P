@@ -33,6 +33,8 @@ namespace DataService.Domain
         ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id);
 
         ResponseObject<int> FindITSupporterByRequestId(int requestId);
+
+        ResponseObject<List<AgencyStatisticalAPIViewModel>> AgencyStatistic(int agencyId);
     }
 
     public class AgencyDomain : BaseDomain, IAgencyDomain
@@ -144,9 +146,16 @@ namespace DataService.Domain
             var agencyService = this.Service<IAgencyService>();
 
             var itSupporter = agencyService.FindITSupporterByRequestId(requestId);
-
             return itSupporter;
         }
 
+        public ResponseObject<List<AgencyStatisticalAPIViewModel>> AgencyStatistic(int agencyId)
+        {
+            var agencyService = this.Service<IAgencyService>();
+
+            var itSupporter = agencyService.AgencyStatistic(agencyId);
+           
+            return itSupporter;
+        }
     }
 }
