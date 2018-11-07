@@ -35,7 +35,10 @@ namespace DataService.Domain
         ResponseObject<GuidelineAPIViewModel> GetGuidelineByServiceItemID(int service_item_Id);
 
         ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId, int year, int month);
+
         ResponseObject<bool> UpdateStatusIT(int itsupporter_id, bool isOnline);
+
+        ResponseObject<bool> UpdateStartTime(int request_id, DateTime start_time);
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain
@@ -157,5 +160,13 @@ namespace DataService.Domain
             return result;
         }
 
+        public ResponseObject<bool> UpdateStartTime(int request_id, DateTime start_time)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.UpdateStartTime(request_id, start_time);
+
+            return result;
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace DataService.CustomTools
         public int ITSupporterId { get; set; }
         public string ITSupporterName { get; set; }
         public double ITSupporterListWeight { get; set; }
+        public int TimesReject { get; set; }
     }
 }
