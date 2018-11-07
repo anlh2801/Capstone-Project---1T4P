@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.odts.activities.RequestActivity;
 import com.odts.apiCaller.IServiceITSupportApiCaller;
 import com.odts.apiCaller.IServiceItemApiCaller;
+import com.odts.models.AgencyStatistical;
 import com.odts.models.ServiceITSupport;
 import com.odts.models.ServiceItem;
 import com.odts.utils.CallBackData;
@@ -49,6 +50,39 @@ public class ServiceItemService {
 
             @Override
             public void onFailure(Call<ResponseObjectReturnList<ServiceItem>> call, Throwable t) {
+                Toast.makeText(context, "Có lỗi", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void getAgencyStatistic (final Context context, final int agencyId, final CallBackData<ArrayList<AgencyStatistical>> callBackData) {
+        IServiceItemApiCaller service = RetrofitInstance.getRetrofitInstance().create(IServiceItemApiCaller.class);
+
+        /** Call the method with parameter in the interface to get the notice data*/
+        Call<ResponseObjectReturnList<AgencyStatistical>> call = service.getAgencyStatistic(agencyId);
+
+        /**Log the URL called*/
+        Log.wtf("URL Called", call.request().url() + "");
+
+        call.enqueue(new Callback<ResponseObjectReturnList<AgencyStatistical>>() {
+            @Override
+            public void onResponse(Call<ResponseObjectReturnList<AgencyStatistical>> call, Response<ResponseObjectReturnList<AgencyStatistical>> response) {
+                if(response.code() == 200 && response.body() != null){
+                    if (!response.body().isError()) {
+                        callBackData.onSuccess(response.body().getObjList());
+
+                    }
+                    else {
+                        Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Log.e("MainActivity", "error" );
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObjectReturnList<AgencyStatistical>> call, Throwable t) {
                 Toast.makeText(context, "Có lỗi", Toast.LENGTH_SHORT).show();
             }
         });

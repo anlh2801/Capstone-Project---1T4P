@@ -41,7 +41,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<List<AgencyAPIViewModel>> ViewAllAgencyByCompanyId(int agency_id);
 
-        ResponseObject<List<AgencyStatisticalAPIViewModel>> AgencyStatistic(int agencyId);
+        ResponseObject<List<AgencyStatisticalAPIViewModel>> GetAgencyStatistic(int agencyId);
     }
 
     public partial class AgencyService
@@ -321,8 +321,11 @@ namespace DataService.Models.Entities.Services
                 }
                 // Add redis
                 itSupporterListWithWeights = itSupporterListWithWeights.OrderByDescending(p => p.ITSupporterListWeight).ToList();
-                MemoryCacher memoryCacher = new MemoryCacher();
-                memoryCacher.Add("ITSupporterListWithWeights", itSupporterListWithWeights, DateTimeOffset.UtcNow.AddHours(1));
+                //MemoryCacher memoryCacher = new MemoryCacher();
+                //memoryCacher.Add("ITSupporterListWithWeights", itSupporterListWithWeights, DateTimeOffset.UtcNow.AddHours(1));
+
+                RedisTools redisTools = new RedisTools();
+                redisTools.Save("ITSupporterListWithWeights", itSupporterListWithWeights);
 
                 // Get first
                 var itSupporterNameFound = itSupporterListWithWeights.FirstOrDefault().ITSupporterName;
@@ -477,7 +480,7 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<List<AgencyStatisticalAPIViewModel>> AgencyStatistic(int agencyId)
+        public ResponseObject<List<AgencyStatisticalAPIViewModel>> GetAgencyStatistic(int agencyId)
         {
             try
             {

@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case  R.id.navigation_home:
-                        loadFragment(new HomeFragment());
+                        loadFragment(new NewHomeFragment());
                         break;
                     case  R.id.navigation_request:
                         loadFragment(new RequestFragment());

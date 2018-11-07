@@ -3,7 +3,9 @@ package com.odts.customTools;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,13 +39,15 @@ public class ServiceItemAdapter extends ArrayAdapter<ServiceItem> {
         View row = inflater.inflate(this.resource,null);
 
         TextView txtServiceItemTitle = (TextView) row.findViewById(R.id.txtServiceItemTitle);
-        TextView txtDescription = (TextView) row.findViewById(R.id.txtDescription);
+        //TextView txtDescription = (TextView) row.findViewById(R.id.txtDescription);
+        CardView cardView = (CardView) row.findViewById(R.id.cv);
+        cardView.setCardBackgroundColor(Color.parseColor("#81C784"));
 //        TextView txtPrice = (TextView) row.findViewById(R.id.txtPrice);
 //        Button btnCreateRequest = (Button) row.findViewById(R.id.btnCreateRequest);
         /** Set data to row*/
         final ServiceItem serviceItem = this.objects.get(position);
         txtServiceItemTitle.setText(serviceItem.getServiceItemName());
-        txtDescription.setText(serviceItem.getDescription());
+       // txtDescription.setText(serviceItem.getDescription());
 //        txtPrice.setText(serviceItem.getServiceItemPrice().toString());
 //
 //        /**Set Event Onclick*/

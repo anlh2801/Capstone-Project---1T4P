@@ -41,7 +41,7 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         HttpResponseMessage FindITSupporterByRequestId(int requestId);
 
-        HttpResponseMessage AgencyStatistic(int agencyId);
+        HttpResponseMessage GetAgencyStatistic(int agencyId);
     }
 
     public class AgencyController : ApiController, IAgencyController
@@ -178,9 +178,9 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         [HttpGet]
         [Route("agency/dashboard/{agencyId}")]
-        public HttpResponseMessage AgencyStatistic(int agencyId)
+        public HttpResponseMessage GetAgencyStatistic(int agencyId)
         {
-            var result = _agencyDomain.AgencyStatistic(agencyId);
+            var result = _agencyDomain.GetAgencyStatistic(agencyId);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }

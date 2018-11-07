@@ -31,6 +31,8 @@ public class LoginService {
                     share = context.getSharedPreferences("ODTS", Context.MODE_PRIVATE);
                     SharedPreferences.Editor edit = share.edit();
                     edit.putInt("agencyId", response.body().getObjReturn().getAgencyId());
+                    edit.putString("agencyName", response.body().getObjReturn().getAgencyName());
+                    edit.putString("agencyAddr", response.body().getObjReturn().getAddress());
                     edit.commit();
                     Intent intent = new Intent(context, MainActivity.class);
                     context.startActivity(intent);

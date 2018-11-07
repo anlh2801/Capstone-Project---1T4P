@@ -38,6 +38,8 @@ namespace DataService.Models.Entities.Services
                     agencymodel.AgencyId = agency.AgencyId;
                     agencymodel.AccountId = agency.AccountId;
                     agencymodel.UserName = agency.Account.Username;
+                    agencymodel.AgencyName = agency.AgencyName;
+                    agencymodel.Address = agency.Address;
                     return new ResponseObject<AgencyAPIViewModel> { IsError = false, ObjReturn = agencymodel, SuccessMessage = "Đăng nhập thành công" };
                 }
                                                    

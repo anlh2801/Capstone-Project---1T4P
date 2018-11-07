@@ -34,7 +34,7 @@ namespace DataService.Domain
 
         ResponseObject<int> FindITSupporterByRequestId(int requestId);
 
-        ResponseObject<List<AgencyStatisticalAPIViewModel>> AgencyStatistic(int agencyId);
+        ResponseObject<List<AgencyStatisticalAPIViewModel>> GetAgencyStatistic(int agencyId);
     }
 
     public class AgencyDomain : BaseDomain, IAgencyDomain
@@ -149,11 +149,11 @@ namespace DataService.Domain
             return itSupporter;
         }
 
-        public ResponseObject<List<AgencyStatisticalAPIViewModel>> AgencyStatistic(int agencyId)
+        public ResponseObject<List<AgencyStatisticalAPIViewModel>> GetAgencyStatistic(int agencyId)
         {
             var agencyService = this.Service<IAgencyService>();
 
-            var itSupporter = agencyService.AgencyStatistic(agencyId);
+            var itSupporter = agencyService.GetAgencyStatistic(agencyId);
            
             return itSupporter;
         }

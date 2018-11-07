@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+
 using ServiceStack.Redis;
 
 namespace DataService.CustomTools
@@ -13,10 +12,8 @@ namespace DataService.CustomTools
     {
         public const string host = "35.197.154.50:6379";
 
-        private bool Save(string host, string key, List<object> list)
-
+        public bool Save(string key, List<RenderITSupporterListWithWeight> list)
         {
-
             bool isSuccess = false;
 
             var redisClient = new RedisClient();
@@ -31,9 +28,7 @@ namespace DataService.CustomTools
         }
 
 
-
-
-        private static string Get(string host, string key)
+        public string Get(string key)
         {
             var redisClient = new RedisClient(host);
             var list = redisClient.GetValue(key);
@@ -41,7 +36,7 @@ namespace DataService.CustomTools
             return list;
         }
 
-        public static void Clear(string host, string key)
+        public void Clear(string key)
         {
             var redisClient = new RedisClient(host);
             redisClient.Del(key);
