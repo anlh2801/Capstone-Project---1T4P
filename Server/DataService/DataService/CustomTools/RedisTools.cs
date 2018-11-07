@@ -16,30 +16,37 @@ namespace DataService.CustomTools
         {
             bool isSuccess = false;
 
-            var redisClient = new RedisClient();
-
-            if (redisClient.Get<string>(key) == null)
+            using (RedisClient redisClient = new RedisClient(host))
             {
 
-                isSuccess = redisClient.Set(key, list);
+                if (redisClient.Get<string>(key) == null)
+                {
 
+                    isSuccess = redisClient.Set(key, list);
+
+                }
             }
+
             return isSuccess;
         }
 
 
         public string Get(string key)
         {
-            var redisClient = new RedisClient(host);
-            var list = redisClient.GetValue(key);
+            using (RedisClient redisClient = new RedisClient(host))
+            {
+                var list = redisClient.GetValue(key);
 
-            return list;
+                return list;
+            }
         }
 
         public void Clear(string key)
         {
-            var redisClient = new RedisClient(host);
-            redisClient.Del(key);
+            using (RedisClient redisClient = new RedisClient(host))
+            {
+                redisClient.Del(key);
+            }
         }
     }
 

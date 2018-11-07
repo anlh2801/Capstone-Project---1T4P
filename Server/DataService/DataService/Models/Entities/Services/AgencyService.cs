@@ -504,6 +504,15 @@ namespace DataService.Models.Entities.Services
                         var statusItem = new StatusAPIViewModel();
                         statusItem.StatusId = status.Status;
                         statusItem.StatusName = Enum.GetName(typeof(RequestStatusEnum), status.Status);
+                        var i = 0;
+                        foreach (RequestStatusEnum item in Enum.GetValues(typeof(RequestStatusEnum)))
+                        {
+                            if (status.Status == i)
+                            {
+                                statusItem.StatusName = item.DisplayName();
+                            }
+                            i++;
+                        }
                         statusItem.NumberOfStatus = status.Requests.Count();
                         statusList.Add(statusItem);
                     }
