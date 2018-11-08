@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.odts.activities.R;
@@ -34,15 +35,25 @@ public class DeviceManageAdapter extends ArrayAdapter<Device> {
         LayoutInflater inflater= this.context.getLayoutInflater();
         View row = inflater.inflate(this.resource,null);
 
+        ImageView imgManageDevice = (ImageView) row.findViewById(R.id.imgManageDevice);
         TextView txtDeviceCodeManage = (TextView) row.findViewById(R.id.txtDeviceCodeManage);
         TextView txtDeviceNameManage = (TextView) row.findViewById(R.id.txtDeviceNameManage);
 
         ImageButton btnDetailsDevice = (ImageButton) row.findViewById(R.id.btnDetailsDevice);
         /** Set data to row*/
         final Device device = this.objects.get(position);
-        txtDeviceCodeManage.setText(device.getDeviceCode());
+        txtDeviceCodeManage.setText("Mã: " + device.getDeviceCode());
         txtDeviceNameManage.setText(device.getDeviceName());
 
+        if (device.getDeviceTypeId() == 1) {
+            imgManageDevice.setImageResource(R.drawable.ic_wifi_white_64dp);
+        } else if (device.getDeviceTypeId() == 2) {
+            imgManageDevice.setImageResource(R.drawable.ic_videocam_whilte_64dp);
+        } else if (device.getDeviceTypeId() == 4) {
+            imgManageDevice.setImageResource(R.drawable.ic_computer_whilte_64dp);
+        } else {
+            imgManageDevice.setImageResource(R.drawable.ic_widgets_white_24dp);
+        }
 
         /**Set Event Onclick*/
         btnDetailsDevice.setOnClickListener(new View.OnClickListener() {
