@@ -494,6 +494,9 @@ namespace DataService.Models.Entities.Services
                                 itSupporter.IsOnline = false;
                                 itSupporterRepo.Edit(itSupporter);
                                 itSupporterRepo.Save();
+
+                                FirebaseService firebaseService = new FirebaseService();
+                                firebaseService.SendNotificationFromFirebaseCloudForITSupporterOffline(rejected.ITSupporterId);
                             }
                             //memoryCacher.Add("ITSupporterListWithWeights", idSupporterListWithWeights, DateTimeOffset.UtcNow.AddHours(1));
                             redisTools.Save("ITSupporterListWithWeights", idSupporterListWithWeights);
@@ -502,14 +505,14 @@ namespace DataService.Models.Entities.Services
                                 FirebaseService firebaseService = new FirebaseService();
                                 firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(idSupporterListWithWeightNext.ITSupporterId, requestId);
 
-                                //int counter = 30;
+                                int counter = 60;
 
-                                //while (counter > 0)
-                                //{
-                                //    counter--;
-                                //    Thread.Sleep(1000);
-                                //}
-                                //this.AcceptRequestFromITSupporter(idSupporterListWithWeightNext.ITSupporterId, requestId, false);
+                                while (counter > 0)
+                                {
+                                    counter--;
+                                    Thread.Sleep(1000);
+                                }
+                                this.AcceptRequestFromITSupporter(idSupporterListWithWeightNext.ITSupporterId, requestId, false);
 
 
                                 return new ResponseObject<bool> { IsError = false, WarningMessage = "Nhận oki", ObjReturn = true };
@@ -525,7 +528,7 @@ namespace DataService.Models.Entities.Services
                                     FirebaseService firebaseService = new FirebaseService();
                                     firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
 
-                                    int counter = 30;
+                                    int counter = 60;
 
                                     while (counter > 0)
                                     {

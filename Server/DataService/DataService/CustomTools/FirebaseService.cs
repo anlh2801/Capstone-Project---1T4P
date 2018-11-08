@@ -15,11 +15,12 @@ namespace DataService.CustomTools
 {
     public class FirebaseService
     {
+        public const string fcmKey = "AIzaSyCKceBvEIUixxsE77aNJot5oRYsSCZs7Zg";
+        public const string webAddr = "https://fcm.googleapis.com/fcm/send";
+
         public String SendNotificationFromFirebaseCloudForITSupporterReceive(int itSupporterId, int requestId)
         {
-            var result = "-1";
-            var fcmKey = "AIzaSyCKceBvEIUixxsE77aNJot5oRYsSCZs7Zg";
-            var webAddr = "https://fcm.googleapis.com/fcm/send";
+            var result = "-1";            
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Headers.Add(HttpRequestHeader.Authorization, "key=" + fcmKey);
@@ -48,7 +49,49 @@ namespace DataService.CustomTools
             return result;
         }
 
+        public String SendNotificationFromFirebaseCloudForITSupporterOffline(int itSupporterId)
+        {
+            var result = "-1";
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Headers.Add(HttpRequestHeader.Authorization, "key=" + fcmKey);
+            httpWebRequest.Method = "POST";
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                var data = RenderDataForITSupporterOffline(itSupporterId);
+                var noti = new Notification()
+                {
+                    title = $"Thông báo offline",
+                    text = $"Bạn đã hủy 3 lần! Hệ thống tự động offline cho bạn",
+                    sound = "default"
+                };
+
+                string strNJson = ConverMessageJsonForITSupporterOfflineFirebaseViewModel(data, noti);
+                streamWriter.Write(strNJson);
+                streamWriter.Flush();
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                result = streamReader.ReadToEnd();
+            }
+            return result;
+        }
+
         public string ConverMessageJsonForITSupporterReceiveFirebaseViewModel(ITSupporterReceiveFirebaseViewModel data, Notification noti)
+        {
+            Dictionary<string, object> androidMessageDic = new Dictionary<string, object>();
+            androidMessageDic.Add("to", $"/topics/{data.ITSupporterId}");
+            androidMessageDic.Add("data", data);
+            androidMessageDic.Add("notification", noti);
+
+            return JsonConvert.SerializeObject(androidMessageDic);
+
+        }
+
+        public string ConverMessageJsonForITSupporterOfflineFirebaseViewModel(ITSupporterOfflineFirebaseViewModel data, Notification noti)
         {
             Dictionary<string, object> androidMessageDic = new Dictionary<string, object>();
             androidMessageDic.Add("to", $"/topics/{data.ITSupporterId}");
@@ -86,7 +129,26 @@ namespace DataService.CustomTools
             itSupporterReceiveFirebaseViewModel.TicketsInfo = ticketInfo.ToString();
 
             return itSupporterReceiveFirebaseViewModel;
-        }       
+        }
+
+        public ITSupporterOfflineFirebaseViewModel RenderDataForITSupporterOffline(int itSupporterId)
+        {
+            var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+            var itSupporter = itSupporterRepo.GetActive().SingleOrDefault(p => p.ITSupporterId == itSupporterId);
+
+
+            var itSupporterOfflineFirebaseViewModel = new ITSupporterOfflineFirebaseViewModel()
+            {
+                ITSupporterName = itSupporter.ITSupporterName,
+                ITSupporterId = itSupporter.ITSupporterId,
+                isOnline =  itSupporter.IsOnline ?? false,
+                AccountId = itSupporter.AccountId,
+                Username = itSupporter.Account.Username
+            };
+            
+
+            return itSupporterOfflineFirebaseViewModel;
+        }
     }
 
     public class Notification
@@ -115,5 +177,14 @@ namespace DataService.CustomTools
         public string ITSupporterName { get; set; }
         public int AccountId { get; set; }
         public string Username { get; set; }
+    }
+
+    public class ITSupporterOfflineFirebaseViewModel
+    {        
+        public int ITSupporterId { get; set; }
+        public string ITSupporterName { get; set; }
+        public int AccountId { get; set; }
+        public string Username { get; set; }
+        public bool isOnline { get; set; }
     }
 }

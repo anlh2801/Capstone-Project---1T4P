@@ -196,14 +196,14 @@ namespace CapstoneProject_ODTS.ControllersApi
                 FirebaseService firebaseService = new FirebaseService();
                 firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
 
-                //int counter = 30;
+                int counter = 60;
 
-                //while (counter > 0)
-                //{
-                //    counter--;
-                //    Thread.Sleep(1000);
-                //}
-                //var a = _requestDomain.AcceptRequestFromITSupporter(result.ObjReturn, requestId, false);
+                while (counter > 0)
+                {
+                    counter--;
+                    Thread.Sleep(1000);
+                }
+                var a = _requestDomain.AcceptRequestFromITSupporter(result.ObjReturn, requestId, false);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result.SuccessMessage);
             }
