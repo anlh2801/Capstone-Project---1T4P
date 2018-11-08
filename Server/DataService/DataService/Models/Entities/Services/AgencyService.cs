@@ -393,13 +393,23 @@ namespace DataService.Models.Entities.Services
                 }
                 foreach (var item in tickets)
                 {
+                    var i = 1;
+                    var ticketStatus = "";
+                    foreach (TicketStatusEnum ticketItem in Enum.GetValues(typeof(TicketStatusEnum)))
+                    {
+                        if (item.Current_TicketStatus == i)
+                        {
+                            ticketStatus = ticketItem.DisplayName();
+                        }
+                        i++;
+                    }
                     rsList.Add(new TicketAPIViewModel
                     {
                         TicketId = item.TicketId,
                         RequestId = item.RequestId,
                         DeviceId = item.DeviceId,
                         Desciption = item.Desciption,
-                        Current_TicketStatus = item.Current_TicketStatus != null ? Enum.GetName(typeof(TicketStatusEnum), item.Current_TicketStatus) : string.Empty,
+                        Current_TicketStatus = ticketStatus,
                         CurrentITSupporter_Id = item.CurrentITSupporter_Id ?? 0,
                         StartTime = item.StartTime != null ? item.StartTime.Value.ToString("dd/MM/yyyy") : string.Empty,
                         Endtime = item.Endtime != null ? item.Endtime.Value.ToString("dd/MM/yyyy") : string.Empty,
@@ -503,8 +513,8 @@ namespace DataService.Models.Entities.Services
                     {
                         var statusItem = new StatusAPIViewModel();
                         statusItem.StatusId = status.Status;
-                        statusItem.StatusName = Enum.GetName(typeof(RequestStatusEnum), status.Status);
-                        var i = 0;
+                        //statusItem.StatusName = Enum.GetName(typeof(RequestStatusEnum), status.Status);
+                        var i = 1;
                         foreach (RequestStatusEnum item in Enum.GetValues(typeof(RequestStatusEnum)))
                         {
                             if (status.Status == i)

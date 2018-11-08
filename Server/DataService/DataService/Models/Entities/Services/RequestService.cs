@@ -53,21 +53,25 @@ namespace DataService.Models.Entities.Services
                 foreach (var item in requests)
                 {
                     var timeAgo = TimeAgo(item.CreateDate);
-                    foreach (int enumm in Enum.GetValues(typeof(RequestStatusEnum)))
+                    var i = 1;
+                    var requestStatus = "";
+                    foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
                     {
-                        if (item.RequestStatus == enumm)
+                        if (item.RequestStatus == i)
                         {
-                            var a = new RequestAPIViewModel()
+                            requestStatus = requestItem.DisplayName();
+                        }
+                        i++;
+                    }
+                    var a = new RequestAPIViewModel()
                             {
                                 RequestId = item.RequestId,
                                 RequestName = item.RequestName,
                                 CreateDate = timeAgo,
                                 AgencyName = item.Agency.AgencyName,
-                                StatusName = Enum.GetNames(typeof(RequestStatusEnum))[enumm - 1],
+                                StatusName = requestStatus,
                             };
                             rsList.Add(a);
-                        }
-                    }
                 }
                 return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, SuccessMessage = "Hiển thị yêu cầu thành công", ObjReturn = rsList };
             }
@@ -93,12 +97,22 @@ namespace DataService.Models.Entities.Services
                 foreach (var item in requests)
                 {
                     var timeAgo = TimeAgo(item.CreateDate);
+                    var i = 1;
+                    var requestStatus = "";
+                    foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
+                    {
+                        if (item.RequestStatus == i)
+                        {
+                            requestStatus = requestItem.DisplayName();
+                        }
+                        i++;
+                    }
                     var a = new RequestAPIViewModel()
                     {
                         RequestId = item.RequestId,
                         RequestName = item.RequestName,
                         CreateDate = timeAgo,
-                        RequestStatus = item.RequestStatus,
+                        RequestStatus = requestStatus,
                     };
                     rsList.Add(a);
                 }
@@ -140,6 +154,16 @@ namespace DataService.Models.Entities.Services
 
 
                 var timeAgo = TimeAgo(request.CreateDate);
+                var ii = 1;
+                var requestStatus = "";
+                foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
+                {
+                    if (request.RequestStatus == ii)
+                    {
+                        requestStatus = requestItem.DisplayName();
+                    }
+                    ii++;
+                }
                 var requestAPIViewModel = new RequestAPIViewModel()
                 {
                     RequestId = request.RequestId,
@@ -148,7 +172,7 @@ namespace DataService.Models.Entities.Services
                     AgencyName = request.Agency.AgencyName,
                     IssueName = listIssue,
                     ITName = listIT,
-                    RequestStatus = request.RequestStatus,
+                    RequestStatus = requestStatus,
 
                 };
 
@@ -252,15 +276,24 @@ namespace DataService.Models.Entities.Services
                         ticketList.Add(ticket);
                     }
                     var timeAgo = TimeAgo(item.CreateDate);
+                    var i = 1;
+                    var requestStatus = "";
+                    foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
+                    {
+                        if (item.RequestStatus == i)
+                        {
+                            requestStatus = requestItem.DisplayName();
+                        }
+                        i++;
+                    }
                     var request = new RequestAllTicketWithStatusAgencyAPIViewModel()
-
                     {
                         RequestId = item.RequestId,
                         RequestName = item.RequestName,
                         CreateDate = timeAgo,
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
                         AgencyName = item.Agency.AgencyName,
-                        RequestStatus = item.RequestStatus,
+                        RequestStatus = requestStatus,
                         RequestEstimationTime = item.CreateDate.AddHours(item.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
                         NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
                         NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
@@ -390,15 +423,24 @@ namespace DataService.Models.Entities.Services
                         ticketList.Add(ticket);
                     }
                     var timeAgo = TimeAgo(request.CreateDate);
+                    var i = 1;
+                    var requestStatus = "";
+                    foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
+                    {
+                        if (request.RequestStatus == i)
+                        {
+                            requestStatus = requestItem.DisplayName();
+                        }
+                        i++;
+                    }
                     var requestMd = new RequestAllTicketWithStatusAgencyAPIViewModel()
-
                     {
                         RequestId = request.RequestId,
                         RequestName = request.RequestName,
                         CreateDate = timeAgo,
                         UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
                         AgencyName = request.Agency.AgencyName,
-                        RequestStatus = request.RequestStatus,
+                        RequestStatus = requestStatus,
                         ITSupporterName = request.ITSupporter != null ? request.ITSupporter.ITSupporterName : string.Empty,
                         RequestEstimationTime = request.CreateDate.AddHours(request.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
                         NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
@@ -584,6 +626,16 @@ namespace DataService.Models.Entities.Services
                     ticketList.Add(ticket);
                 }
                 var timeAgo = TimeAgo(request.CreateDate);
+                var i = 1;
+                var requestStatus = "";
+                foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
+                {
+                    if (request.RequestStatus == i)
+                    {
+                        requestStatus = requestItem.DisplayName();
+                    }
+                    i++;
+                }
                 var requestViewModel = new RequestAllTicketWithStatusAgencyAPIViewModel()
                 {
                     RequestId = request.RequestId,
@@ -592,7 +644,7 @@ namespace DataService.Models.Entities.Services
                     UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
                     AgencyTelephone = request.Phone!=null ? request.Phone : request.Agency.Telephone,
                     AgencyName = request.Agency.AgencyName,
-                    RequestStatus = request.RequestStatus,
+                    RequestStatus = requestStatus,
                     RequestEstimationTime = request.CreateDate.AddHours(request.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
                     NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
                     NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
