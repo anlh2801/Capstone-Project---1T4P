@@ -145,10 +145,18 @@
         </div>
     </div>
 </div>
-
+<style>
+    .city {
+        background-color: azure;
+        color: black;
+        padding: 15px;
+        border-left: solid cadetblue;
+        width: 97%;
+    }
+</style>
 <!-- Datatable -->
+<h3 class="city">Tất Cả Loại Thiết Bị</h3>
 <div class="row col-md-12">
-    <h3>Tất Cả Loại Thiết Bị</h3>
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
             <tr>
@@ -297,8 +305,8 @@
                 });
             $('#ViewModal').modal('show');
         }
-        
-           
+
+
         function getDataEdit(id) {
             $.ajax({
                 url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "DeviceType" })',

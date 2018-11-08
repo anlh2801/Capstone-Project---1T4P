@@ -1,4 +1,6 @@
 ﻿@{
+    /**/
+
     var dataAgency = ViewData["ID"];
 }
 <!--Modal: modalConfirmDelete-->
@@ -125,7 +127,7 @@
             <div class="modal-body">
 
                 <label for="qq">Company:</label>
-                <select class="form-control" id="qq" disabled ="true"></select>
+                <select class="form-control" id="qq" disabled="true"></select>
 
                 <label for="ww">Account:</label>
                 <select class="form-control" id="ww"></select>
@@ -150,8 +152,24 @@
     </div>
 </div>
 <!-- Datatable -->
+<style>
+    .city {
+        background-color: azure;
+        color: black;
+        padding: 1%;
+        border-left: solid cadetblue;
+        width: 97%;
+    }
+    H3 {
+        display: inline;
+    }
+</style>
+<!-- Datatable -->
+<div class="city">
+    <h3 class="H3">Tất Cả Chi Nhánh Của Công Ty </h3><h3 id="comName"></h3>
+</div>
+
 <div class="row col-md-12">
-    <h3>Tất Cả Chi Nhánh</h3>
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
             <tr>
@@ -171,23 +189,38 @@
     </div>
 </div>
 
-
+<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
-
     <script>
         $(document).ready(function() {
             loadCompany();
             showAccount();
-            showCompany()
+            showCompany();
+            getComName();
         });
         $('#createAgencyModal').on('hidden.bs.modal', function () {
             $('.modal-body').find('input').val('');
         });
+        function getComName() {
 
+            $.ajax({
+                url: '@Url.RouteUrl(new { action = "ViewDetail", controller = "Company" })',
+
+                data: {
+                    company_id: @dataAgency
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $("#comName").text(data.result.ObjReturn.CompanyName);
+                }
+                });
+        }
         function loadCompany() {
             $.ajax({
                 type: 'POST',

@@ -467,6 +467,7 @@ namespace DataService.Models.Entities.Services
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var requestHistoryRepo = DependencyUtils.Resolve<IRequestHistoryRepository>();
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
                 if (isAccept)
                 {
@@ -501,32 +502,33 @@ namespace DataService.Models.Entities.Services
                     }
                 }
                 else
-                {
-                    var request = requestRepo.GetActive().SingleOrDefault(p => p.RequestId == requestId);
-                    var requestHistory = new CreateRequestHistoryAPIViewModel()
-                    {
-                        RequestId = requestId,
-                        PreSupporter_Name = request.ITSupporter.ITSupporterName,
-                        PreStatus = request.RequestStatus,
-                        CreateDate = DateTime.Now.ToString()
-                    };
-
+                {  
                     //var itSupporterFound = memoryCacher.GetValue("ITSupporterListWithWeights");
                     var itSupporterFound = redisTools.Get("ITSupporterListWithWeights");
-                    List<RenderITSupporterListWithWeight> idSupporterListWithWeights;
+                    Queue<RenderITSupporterListWithWeight> idSupporterListWithWeights;
                     if (itSupporterFound != null)
                     {
-                        idSupporterListWithWeights = JsonConvert.DeserializeObject<List<RenderITSupporterListWithWeight>>(itSupporterFound); ;
+                        idSupporterListWithWeights = JsonConvert.DeserializeObject<Queue<RenderITSupporterListWithWeight>>(itSupporterFound); 
 
                         if (idSupporterListWithWeights.Count > 0)
                         {
-                            var rejected = idSupporterListWithWeights.FirstOrDefault();
-                            idSupporterListWithWeights.RemoveAt(0);
+                            var rejected = idSupporterListWithWeights.Dequeue();
+                            rejected.TimesReject++;
+                            var requestHistory = new RequestHistory()
+                            {
+                                IsITSupportAccept = false,
+                                IsDelete = false,                                
+                                Pre_It_SupporterId = rejected.ITSupporterId,
+                                RequestId = requestId,                                
+                                CreateDate = DateTime.UtcNow.AddHours(7)
+                            };
+                            requestHistoryRepo.Add(requestHistory);
+                            requestHistoryRepo.Save();
+
                             var idSupporterListWithWeightNext = idSupporterListWithWeights.FirstOrDefault();
                             if (rejected.TimesReject < 3)
-                            {
-                                rejected.TimesReject++;
-                                idSupporterListWithWeights.Add(rejected);
+                            {                                
+                                idSupporterListWithWeights.Enqueue(rejected);
                             }
                             else
                             {
@@ -542,14 +544,14 @@ namespace DataService.Models.Entities.Services
                                 FirebaseService firebaseService = new FirebaseService();
                                 firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(idSupporterListWithWeightNext.ITSupporterId, requestId);
 
-                                int counter = 30;
+                                //int counter = 30;
 
-                                while (counter > 0)
-                                {
-                                    counter--;
-                                    Thread.Sleep(1000);
-                                }
-                                this.AcceptRequestFromITSupporter(idSupporterListWithWeightNext.ITSupporterId, requestId, false);
+                                //while (counter > 0)
+                                //{
+                                //    counter--;
+                                //    Thread.Sleep(1000);
+                                //}
+                                //this.AcceptRequestFromITSupporter(idSupporterListWithWeightNext.ITSupporterId, requestId, false);
 
 
                                 return new ResponseObject<bool> { IsError = false, WarningMessage = "Nhận oki", ObjReturn = true };
@@ -597,11 +599,11 @@ namespace DataService.Models.Entities.Services
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var request = requestRepo.GetActive(x => x.RequestId == requestId
                 && x.CurrentITSupporter_Id == itSupporterId
-                && x.RequestStatus != (int)RequestStatusEnum.Done 
+                && x.RequestStatus != (int)RequestStatusEnum.Done
                 && x.RequestStatus != (int)RequestStatusEnum.Cancel).SingleOrDefault();
 
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
-                               
+
                 if (request == null)
                 {
                     return new ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> { IsError = true, WarningMessage = "Thất bại", ObjReturn = null };
@@ -642,7 +644,7 @@ namespace DataService.Models.Entities.Services
                     RequestName = request.RequestName,
                     CreateDate = timeAgo,
                     UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
-                    AgencyTelephone = request.Phone!=null ? request.Phone : request.Agency.Telephone,
+                    AgencyTelephone = request.Phone != null ? request.Phone : request.Agency.Telephone,
                     AgencyName = request.Agency.AgencyName,
                     RequestStatus = requestStatus,
                     RequestEstimationTime = request.CreateDate.AddHours(request.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),

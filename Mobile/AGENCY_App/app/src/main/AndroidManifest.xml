@@ -23,14 +23,23 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RequestDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".TimeLineActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".CreateRequestActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".AddRequestActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".RequestDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TimeLineActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CreateRequestActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddRequestActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:name=".AddRequestLayoutActivity">
+
+        </activity>
     </application>
 
 </manifest>

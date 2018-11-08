@@ -44,6 +44,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> UpdateEndTime(int request_id, DateTime end_time);
 
+        ResponseObject<bool> GetIsOnlineOFITSupporter(int itsupporterId);
 
     }
 
@@ -510,11 +511,11 @@ namespace DataService.Models.Entities.Services
             try
             {
                 var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
-                var request = itSupporterRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == itsupporter_id);
-                if (request != null)
+                var itsupporter = itSupporterRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == itsupporter_id);
+                if (itsupporter != null)
                 {
-                    request.IsOnline = isOnline;
-                    itSupporterRepo.Edit(request);
+                    itsupporter.IsOnline = isOnline;
+                    itSupporterRepo.Edit(itsupporter);
                     itSupporterRepo.Save();
                     return new ResponseObject<bool> { IsError = false, SuccessMessage = "Cập nhật trạng thái thành công", ObjReturn = true };
                 }
@@ -570,6 +571,26 @@ namespace DataService.Models.Entities.Services
             {
 
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật thời gian thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
+            }
+        }
+
+        public ResponseObject<bool> GetIsOnlineOFITSupporter(int itsupporterId)
+        {
+            try
+            {
+                var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var itSupporter = itSupporterRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == itsupporterId);
+                if (itSupporter != null && itSupporter.IsOnline != null)
+                {                   
+                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Lấy trạng trạng thái thành công", ObjReturn = itSupporter.IsOnline.Value };
+                }
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật trạng thái thất bại", ObjReturn = false };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Hủy yêu cầu thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
             }
         }
     }

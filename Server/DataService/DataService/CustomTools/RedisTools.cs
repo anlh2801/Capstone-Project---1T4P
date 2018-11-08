@@ -12,19 +12,13 @@ namespace DataService.CustomTools
     {
         public const string host = "35.197.154.50:6379";
 
-        public bool Save(string key, List<RenderITSupporterListWithWeight> list)
+        public bool Save(string key, Queue<RenderITSupporterListWithWeight> queue)
         {
             bool isSuccess = false;
 
             using (RedisClient redisClient = new RedisClient(host))
             {
-
-                if (redisClient.Get<string>(key) == null)
-                {
-
-                    isSuccess = redisClient.Set(key, list);
-
-                }
+                isSuccess = redisClient.Set(key, queue);
             }
 
             return isSuccess;
