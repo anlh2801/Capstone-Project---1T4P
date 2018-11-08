@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences share;
     SharedPreferences sp;
     Button btnLogout;
+    Button btnChat;
     Switch swStatus;
     ITSupporterService itSupporterService;
     android.support.v7.widget.Toolbar toolbar;
@@ -44,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
         itSupporterService = new ITSupporterService();
         loadFragment(new RecieveRequestFragment());
         isOnline = true;
+        btnChat = findViewById(R.id.btnChatMain);
+        btnChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Bundle extras=  getIntent().getExtras();
         onNewIntent(getIntent());
