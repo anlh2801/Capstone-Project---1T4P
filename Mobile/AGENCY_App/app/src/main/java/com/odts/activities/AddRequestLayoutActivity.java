@@ -83,8 +83,8 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
         _serviceITSupportService.getAllServiceITSupport(this, agencyId, new CallBackData<ArrayList<ServiceITSupport>>() {
             @Override
             public void onSuccess(ArrayList<ServiceITSupport> serviceITSupports) {
-                getAllServiceItemByServiceId(serviceITSupports.get(0).getServiceITSupportId());
-                getAllDeviceByAgencyIdAndServiceItem(agencyId, (serviceITSupports.get(0).getServiceITSupportId()));
+//                getAllServiceItemByServiceId(serviceITSupports.get(0).getServiceITSupportId());
+//                getAllDeviceByAgencyIdAndServiceItem(agencyId, (serviceITSupports.get(0).getServiceITSupportId()));
                 final List<ServiceITSupport> ServiceITSupportList = new ArrayList<ServiceITSupport>();
                 Spinner spinnerService = (Spinner) findViewById(R.id.spinner1);
                 for (final ServiceITSupport item : serviceITSupports) {
@@ -98,6 +98,7 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         ServiceITSupport serviceITSupport = (ServiceITSupport) adapterView.getSelectedItem();
                         getAllServiceItemByServiceId(serviceITSupport.getServiceITSupportId());
+                        getAllDeviceByAgencyIdAndServiceItem(agencyId, (serviceITSupport.getServiceITSupportId()));
                     }
 
                     @Override

@@ -28,7 +28,7 @@ public class Request {
     @SerializedName("Ticket")
     private List<Ticket> ticket;
     @SerializedName("RequestStatus")
-    private Integer status;
+    private String status;
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -47,11 +47,11 @@ public class Request {
 //        this.updateDate = updateDate;
 //    }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
