@@ -39,6 +39,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage UpdateStartTime(int request_id, DateTime start_time);
 
         HttpResponseMessage UpdateEndTime(int request_id, DateTime end_time);
+
+        HttpResponseMessage GetIsOnlineOFITSupporter(int itsupporter_id);
     }
 
     public class ITSupporterController : ApiController, IITSupporterController
