@@ -23,6 +23,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.odts.it_supporter_app.R;
 import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.services.ITSupporterService;
+import com.odts.it_supporter_app.utils.CallBackData;
 
 import java.io.File;
 
@@ -35,18 +36,31 @@ public class MainActivity extends AppCompatActivity {
     Switch swStatus;
     ITSupporterService itSupporterService;
     android.support.v7.widget.Toolbar toolbar;
+    boolean isOnline;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         itSupporterService = new ITSupporterService();
         loadFragment(new RecieveRequestFragment());
+        isOnline = true;
 
         Bundle extras=  getIntent().getExtras();
         onNewIntent(getIntent());
         toolbar = findViewById(R.id.toolbar);
+        itSupporterService.getIsOnline(this, 5, new CallBackData<Boolean>() {
+            @Override
+            public void onSuccess(Boolean aBoolean) {
+                swStatus.setChecked(aBoolean);
+            }
+
+            @Override
+            public void onFail(String message) {
+
+            }
+        });
         swStatus = (Switch) findViewById(R.id.switch2);
-        swStatus.setChecked(true);
+
         swStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {

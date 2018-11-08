@@ -20,16 +20,16 @@ namespace DataService.Models.APIModels
         [JsonProperty("data")]
         public T Data { get; set; }
 
-        public static BaseResponse<string> GetInternalServerError(Exception ex, string messagePrefix)
-        {
-            return new BaseResponse<string>()
-            {
-                ResultCode = (int)ResultEnum.InternalError,
-                Success = false,
-                Message = messagePrefix,
-                Data = ex.ToString()
-            };
-        }
+        //public static BaseResponse<string> GetInternalServerError(Exception ex, string messagePrefix)
+        //{
+        //    return new BaseResponse<string>()
+        //    {
+        //        ResultCode = (int)ResultEnum.InternalError,
+        //        Success = false,
+        //        Message = messagePrefix,
+        //        Data = ex.ToString()
+        //    };
+        //}
 
     }
 }

@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 import retrofit2.Call;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -28,4 +29,7 @@ public interface IITSupporterApiCaller {
     @POST("/ITsupporter/update_endtime")
     Call<ResponseObject<Boolean>> updateEndTime(@Query("request_id") int request_id,
                                                   @Query("end_time") String start_time);
+
+    @GET("ITsupporter/get_Is_Online")
+    Call<ResponseObject<Boolean>> getIsOnline(@Query("itsupporter_id") int itsupporter_id);
 }

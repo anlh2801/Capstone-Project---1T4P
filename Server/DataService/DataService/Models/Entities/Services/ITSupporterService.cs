@@ -63,6 +63,16 @@ namespace DataService.Models.Entities.Services
                 }
                 foreach (var item in itSupporters)
                 {
+                    var i = 1;
+                    var genderStatus = "";
+                    foreach (Gender genderItem in Enum.GetValues(typeof(Gender)))
+                    {
+                        if (item.Gender == i)
+                        {
+                            genderStatus = genderItem.DisplayName();
+                        }
+                        i++;
+                    }
                     rsList.Add(new ITSupporterAPIViewModel
                     {
                         ITSupporterId = item.ITSupporterId,
@@ -70,7 +80,7 @@ namespace DataService.Models.Entities.Services
                         Username = item.Account.Username,
                         Telephone = item.Telephone,
                         Email = item.Email,
-                        Gender = item.Gender != null ? Enum.GetName(typeof(TicketStatusEnum), item.Gender) : string.Empty,
+                        Gender = genderStatus,
                         Address = item.Address,
                         RatingAVG = item.RatingAVG ?? 0,
                         IsBusy = item.IsBusy.Value == true ? "Đang bận!" : "Chờ việc",
@@ -121,6 +131,16 @@ namespace DataService.Models.Entities.Services
                 var itSupporter = ITSupporterRepo.GetActive().SingleOrDefault(i => i.ITSupporterId == itSupporter_id);
                 if (itSupporter != null)
                 {
+                    var i = 1;
+                    var genderStatus = "";
+                    foreach (Gender genderItem in Enum.GetValues(typeof(Gender)))
+                    {
+                        if (itSupporter.Gender == i)
+                        {
+                            genderStatus = genderItem.DisplayName();
+                        }
+                        i++;
+                    }
                     var itSupporterAPIViewModel = new ITSupporterAPIViewModel
                     {
                         ITSupporterId = itSupporter.ITSupporterId,
@@ -128,7 +148,7 @@ namespace DataService.Models.Entities.Services
                         AccountId = itSupporter.AccountId,
                         Telephone = itSupporter.Telephone,
                         Email = itSupporter.Email,
-                        Gender = itSupporter.Gender != null ? Enum.GetName(typeof(TicketStatusEnum), itSupporter.Gender) : string.Empty,
+                        Gender = genderStatus,
                         Address = itSupporter.Address,
                         RatingAVG = itSupporter.RatingAVG ?? 0,
                         IsBusy = itSupporter.IsBusy.Value == true ? "Đang bận!" : "Chờ việc",
@@ -160,13 +180,23 @@ namespace DataService.Models.Entities.Services
                 }
                 foreach (var item in ticket)
                 {
+                    var i = 1;
+                    var ticketStatus = "";
+                    foreach (TicketStatusEnum ticketItem in Enum.GetValues(typeof(TicketStatusEnum)))
+                    {
+                        if (item.Current_TicketStatus == i)
+                        {
+                            ticketStatus = ticketItem.DisplayName();
+                        }
+                        i++;
+                    }
                     rsList.Add(new TicketAPIViewModel
                     {
                         TicketId = item.TicketId,
                         RequestId = item.RequestId,
                         DeviceId = item.DeviceId,
                         Desciption = item.Desciption,
-                        Current_TicketStatus = item.Current_TicketStatus != null ? Enum.GetName(typeof(TicketStatusEnum), item.Current_TicketStatus) : string.Empty,
+                        Current_TicketStatus = ticketStatus,
                         CurrentITSupporter_Id = item.CurrentITSupporter_Id ?? 0,
                         StartTime = item.StartTime != null ? item.StartTime.Value.ToString("MM/dd/yyyy") : string.Empty,
                         Endtime = item.Endtime != null ? item.Endtime.Value.ToString("MM/dd/yyyy") : string.Empty,
