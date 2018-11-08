@@ -32,12 +32,18 @@
 
         <Spinner
             android:id="@+id/spinner1"
-            android:layout_width="120dp"
+            android:layout_width="208dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/textView4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.536" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
@@ -66,12 +72,18 @@
 
         <Spinner
             android:id="@+id/spinner2"
-            android:layout_width="120dp"
+            android:layout_width="208dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/textView5"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.487" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
@@ -97,9 +109,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <EditText
             android:id="@+id/editTextDevice"
-            android:layout_width="120dp"
+            android:layout_width="208dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:ems="10"
@@ -133,7 +146,7 @@
 
         <EditText
             android:id="@+id/editText"
-            android:layout_width="120dp"
+            android:layout_width="208dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:ems="10"

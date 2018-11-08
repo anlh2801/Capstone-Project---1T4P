@@ -79,12 +79,26 @@ public class AgencyStatisticalAdapter extends ArrayAdapter<AgencyStatistical> {
 
                 if (stt.getStatusId() ==  RequestStatusEnum.Pending.getIntValue()) {
                     txtAwaintingHome.setText(stt.getNumberOfStatus());
-                } else if (stt.getStatusId() ==  RequestStatusEnum.Processing.getIntValue()) {
+                } else {
+                    txtAwaintingHome.setText("0");
+                }
+
+                if (stt.getStatusId() ==  RequestStatusEnum.Processing.getIntValue()) {
                     txtProcessingHome.setText(stt.getNumberOfStatus());
-                } else if (stt.getStatusId() ==  RequestStatusEnum.Done.getIntValue()) {
+                } else {
+                    txtProcessingHome.setText("0");
+                }
+
+                if (stt.getStatusId() ==  RequestStatusEnum.Done.getIntValue()) {
                     txtDoneHome.setText(stt.getNumberOfStatus());
-                } else if (stt.getStatusId() ==  RequestStatusEnum.Cancel.getIntValue()) {
+                } else
+                {
+                    txtDoneHome.setText("0");
+                }
+                if (stt.getStatusId() ==  RequestStatusEnum.Cancel.getIntValue()) {
                     txtCancelHome.setText(stt.getNumberOfStatus());
+                } else {
+                    txtCancelHome.setText("0");
                 }
             }
 
