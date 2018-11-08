@@ -74,34 +74,25 @@ public class AgencyStatisticalAdapter extends ArrayAdapter<AgencyStatistical> {
         txtServiceItemTitle.setText(agencyStatistical.getServiceName());
         List<Status> statusList = agencyStatistical.getStatuses();
         if (statusList.size() > 0) {
-            StringBuilder sb = new StringBuilder();
+            String awaintingHome = "0";
+            String processingHome = "0";
+            String doneHome = "0";
+            String cancelHome = "0";
             for (Status stt: statusList ) {
-
                 if (stt.getStatusId() ==  RequestStatusEnum.Pending.getIntValue()) {
-                    txtAwaintingHome.setText(stt.getNumberOfStatus());
-                } else {
-                    txtAwaintingHome.setText("0");
-                }
-
-                if (stt.getStatusId() ==  RequestStatusEnum.Processing.getIntValue()) {
-                    txtProcessingHome.setText(stt.getNumberOfStatus());
-                } else {
-                    txtProcessingHome.setText("0");
-                }
-
-                if (stt.getStatusId() ==  RequestStatusEnum.Done.getIntValue()) {
-                    txtDoneHome.setText(stt.getNumberOfStatus());
-                } else
-                {
-                    txtDoneHome.setText("0");
-                }
-                if (stt.getStatusId() ==  RequestStatusEnum.Cancel.getIntValue()) {
-                    txtCancelHome.setText(stt.getNumberOfStatus());
-                } else {
-                    txtCancelHome.setText("0");
+                    awaintingHome = stt.getNumberOfStatus();
+                } else if (stt.getStatusId() ==  RequestStatusEnum.Processing.getIntValue()) {
+                    processingHome = stt.getNumberOfStatus();
+                } else if (stt.getStatusId() ==  RequestStatusEnum.Done.getIntValue()) {
+                    doneHome = stt.getNumberOfStatus();
+                } else if (stt.getStatusId() ==  RequestStatusEnum.Cancel.getIntValue()) {
+                    cancelHome = stt.getNumberOfStatus();
                 }
             }
-
+            txtAwaintingHome.setText(awaintingHome);
+            txtProcessingHome.setText(processingHome);
+            txtDoneHome.setText(doneHome);
+            txtCancelHome.setText(cancelHome);
         } else {
             txtAwaintingHome.setText("0");
             txtProcessingHome.setText("0");
