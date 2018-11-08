@@ -15,24 +15,27 @@
 
         <TextView
             android:id="@+id/txtRequestNamee"
-            android:layout_width="215dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/txtCreateDatee"
-            android:layout_width="112dp"
-            android:layout_height="45dp"
-            android:layout_marginLeft="27dp"
-            android:layout_toRightOf="@id/txtRequestNamee"
+            android:id="@+id/txtNoD"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtRequestNamee"
             android:padding="3dp" />
 
         <TextView
-            android:id="@+id/txtNoD"
-            android:layout_width="215dp"
+            android:id="@+id/txtCreateDatee"
+            android:layout_width="133dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txtRequestNamee"
+            android:layout_alignTop="@+id/txtNoD"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="-12dp"
+            android:layout_toRightOf="@id/txtRequestNamee"
+            android:gravity="right"
             android:padding="3dp" />
 
 
