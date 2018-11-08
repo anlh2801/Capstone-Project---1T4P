@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.odts.activities.R;
@@ -22,11 +23,18 @@ public class DoneRequestAdapter extends RecyclerView.Adapter<DoneRequestAdapter.
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView rqName, estimes;
+        public Button btnRating;
         public MyViewHolder(View view) {
             super(view);
             rqName = (TextView) view.findViewById(R.id.txtRequestNameDone);
             estimes = (TextView) view.findViewById(R.id.udDateDone);
+            btnRating = (Button) view.findViewById(R.id.btnRatinng);
+            btnRating.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
+                }
+            });
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override

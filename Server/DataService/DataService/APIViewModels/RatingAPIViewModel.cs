@@ -8,8 +8,7 @@ namespace DataService.APIViewModels
 {
     public class RatingAPIViewModel
     {
-        public int RequestId { get; set; }
-        public int ServiceItemId { get; set; }
+        public int RequestId { get; set; }        
         public int CurrentITSupporter_Id { get; set; }
         public int Rating { get; set; }
         public string Description { get; set; }        

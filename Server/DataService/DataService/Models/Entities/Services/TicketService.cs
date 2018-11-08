@@ -24,8 +24,7 @@ namespace DataService.Models.Entities.Services
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var itSupporterlRepo = DependencyUtils.Resolve<IITSupporterRepository>();
                 var ticketDetails = requestRepo.GetActive(p => p.RequestId == rate.RequestId &&
-                                                               p.CurrentITSupporter_Id == rate.CurrentITSupporter_Id &&
-                                                               p.ServiceItemId == rate.ServiceItemId).SingleOrDefault();
+                                                               p.CurrentITSupporter_Id == rate.CurrentITSupporter_Id).SingleOrDefault();
                 var itupporter = itSupporterlRepo.Get(rate.CurrentITSupporter_Id);
 
                 if (ticketDetails != null && itupporter != null)

@@ -17,7 +17,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage GetAllTicketByAgencyIDAndStatus(Int32 agency_id, Int32 status);
         HttpResponseMessage GetRequestHistoryByRequestId(int requestid);
         HttpResponseMessage GetAllRequestHistory();
-        HttpResponseMessage GetAllCompany(RatingAPIViewModel rate);
+        HttpResponseMessage CreateRatingForHero(RatingAPIViewModel rate);
         HttpResponseMessage FeedbackTicket(FeedbackAPIViewModel feedback);
         HttpResponseMessage UpdateStatusRequest(int request_id, int status);
         HttpResponseMessage ViewRequestDetail(int requestId);
@@ -84,8 +84,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         }
 
         [HttpPost]
-        [Route("ticket/ticketDetail/rate_ITSupporter")]
-        public HttpResponseMessage GetAllCompany(RatingAPIViewModel rate)
+        [Route("request/rate_ITSupporter")]
+        public HttpResponseMessage CreateRatingForHero(RatingAPIViewModel rate)
         {
             var result = _ticketDomain.CreateRatingForHero(rate);
 
