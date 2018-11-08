@@ -187,6 +187,14 @@ namespace CapstoneProject_ODTS.ControllersApi
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        [HttpGet]
+        [Route("ITsupporter/get_Is_Online")]
+        public HttpResponseMessage GetIsOnlineOFITSupporter(int itsupporter_id)
+        {
+            var result = _ITSupporterDomain.GetIsOnlineOFITSupporter(itsupporter_id);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
     }
 }
 

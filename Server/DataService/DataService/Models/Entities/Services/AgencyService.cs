@@ -323,9 +323,10 @@ namespace DataService.Models.Entities.Services
                 itSupporterListWithWeights = itSupporterListWithWeights.OrderByDescending(p => p.ITSupporterListWeight).ToList();
                 //MemoryCacher memoryCacher = new MemoryCacher();
                 //memoryCacher.Add("ITSupporterListWithWeights", itSupporterListWithWeights, DateTimeOffset.UtcNow.AddHours(1));
-
+                Queue<RenderITSupporterListWithWeight> itSupporterListWithWeightQueue = new Queue<RenderITSupporterListWithWeight>(itSupporterListWithWeights);
+                
                 RedisTools redisTools = new RedisTools();
-                redisTools.Save("ITSupporterListWithWeights", itSupporterListWithWeights);
+                redisTools.Save("ITSupporterListWithWeights", itSupporterListWithWeightQueue);
 
                 // Get first
                 var itSupporterNameFound = itSupporterListWithWeights.FirstOrDefault().ITSupporterName;
