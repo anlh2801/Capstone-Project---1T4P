@@ -91,4 +91,19 @@ public class ITSupporterService {
             }
         }));
     }
+    public  void getIsOnline(final Context context, int itsupporter_id, final CallBackData<Boolean> callBackData) {
+        iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
+        Call<ResponseObject<Boolean>> call = iitSupporterApiCaller.getIsOnline(itsupporter_id);
+        call.enqueue((new Callback<ResponseObject<Boolean>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
+                callBackData.onSuccess(response.body().getObjReturn());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<Boolean>> call, Throwable t) {
+
+            }
+        }));
+    }
 }
