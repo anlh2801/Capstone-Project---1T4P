@@ -12,23 +12,23 @@
                 <div class="modal-body">
                     <p>
                         <b>RequestId:</b><br>
-                        <p class="rqID"></p>
+                    <p class="rqID"></p>
                     <p>
                         <b>RequestName:</b><br>
-                        <p class="rqName"></p>
+                    <p class="rqName"></p>
                     <p>
                         <b>Date:</b><br>
-                        <p class="rqCD"></p>
+                    <p class="rqCD"></p>
                     <p>
                         <b>AgencyName:</b><br>
-                        <p class="rqAN"></p>
+                    <p class="rqAN"></p>
                     <p>
                         <b>ITName:</b><br>
-                        <p class="rqIT"></p>
+                    <p class="rqIT"></p>
                     <p>
                         <b>Issue Name:</b><br>
-                        <p class="rqIN"></p>
-                    
+                    <p class="rqIN"></p>
+
 
                 </div>
                 <div class="modal-footer">
@@ -38,7 +38,7 @@
             </div>
         </div>
     </div>
-  
+
 </div>
 <!-- Datatable -->
 <div class="row">
@@ -101,31 +101,40 @@
     </div>
     <!-- /.col -->
 </div>
-<div class="row col-md-12">
-    <h4>Tất Cả Đơn Hàng</h4>
+<style>
+    .city {
+        background-color: azure;
+        color: black;
+        padding: 15px;
+        border-left: solid cadetblue;
+        width: 97%;
+    }
+</style>
+<!-- Datatable -->
+<h3 class="city">Tất Cả Đơn Hàng</h3>
+    <div class="row col-md-12">
+            <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
+                <thead>
+                    <tr>
+                        <th><label>STTTT</label></th>
+                        <th><label>Tên</label></th>
+                        <th><label>Thời gian</label></th>
+                        <th><label>Tạo bởi</label></th>
+                        <th><label>Trạng thái</label></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+    </div>
 
-    <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
-        <thead>
-            <tr>
-                <th><label>STTTT</label></th>
-                <th><label>Tên</label></th>
-                <th><label>Thời gian</label></th>
-                <th><label>Tạo bởi</label></th>
-                <th><label>Trạng thái</label></th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
-
-<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
-@section scripts {
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
-    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script>
+    <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+    @section scripts {
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+        <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script>
         $(document).ready(function() {
             loadCompany();
         });
@@ -231,6 +240,6 @@
         }
 
 
-    </script>
+        </script>
 
-}
+    }
