@@ -19,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.odts.it_supporter_app.R;
 import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.services.ITSupporterService;
@@ -42,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        share = getSharedPreferences("ODTS", Context.MODE_PRIVATE);
+        final int itSupporterId = share.getInt("itSupporterId", 0);
         itSupporterService = new ITSupporterService();
         loadFragment(new RecieveRequestFragment());
         isOnline = true;
@@ -53,11 +54,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         Bundle extras=  getIntent().getExtras();
         onNewIntent(getIntent());
         toolbar = findViewById(R.id.toolbar);
-        itSupporterService.getIsOnline(this, 5, new CallBackData<Boolean>() {
+        itSupporterService.getIsOnline(this, itSupporterId, new CallBackData<Boolean>() {
             @Override
             public void onSuccess(Boolean aBoolean) {
                 swStatus.setChecked(aBoolean);
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                             .setPositiveButton("Có", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
-                                    itSupporterService.updateStatusIT(MainActivity.this, 5, b);
+                                    itSupporterService.updateStatusIT(MainActivity.this, itSupporterId, b);
                                     toolbar.setTitle("Ngoại tuyến");
                                 }
                             })
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else
                     toolbar.setTitle("Trực tuyến");
-                    itSupporterService.updateStatusIT(MainActivity.this, 5, b);
+                    itSupporterService.updateStatusIT(MainActivity.this, itSupporterId, b);
 
             }
         });
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                share = getSharedPreferences("ODTS", Context.MODE_PRIVATE);
+//                share = getSharedPreferences("ODTS", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = share.edit();
                 editor.clear();
                 editor.commit();

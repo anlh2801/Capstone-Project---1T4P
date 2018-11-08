@@ -1,4 +1,5 @@
-package com.odts.it_supporter_app.activities;
+package com.odts.activities;
+
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +20,7 @@ import com.firebase.client.FirebaseError;
 
 import java.util.HashMap;
 import java.util.Map;
-import com.odts.it_supporter_app.R;
+import com.odts.activities.R;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -42,8 +43,8 @@ public class ChatActivity extends AppCompatActivity {
         scrollView = (ScrollView)findViewById(R.id.scrollView);
 
         Firebase.setAndroidContext(this);
-        reference1 = new Firebase("https://androidchatapp-c60cb.firebaseio.com/messages/" + "hero1" + "_" + "passio1");
-        reference2 = new Firebase("https://androidchatapp-c60cb.firebaseio.com/messages/" + "passio1" + "_" + "hero1");
+        reference1 = new Firebase("https://androidchatapp-c60cb.firebaseio.com/messages/" + "passio1" + "_" + "hero1");
+        reference2 = new Firebase("https://androidchatapp-c60cb.firebaseio.com/messages/" + "hero1" + "_" + "passio1");
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +54,7 @@ public class ChatActivity extends AppCompatActivity {
                 if(!messageText.equals("")){
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("message", messageText);
-                    map.put("user", "hero1");
+                    map.put("user", "passio1");
                     reference1.push().setValue(map);
                     reference2.push().setValue(map);
                     messageArea.setText("");
@@ -68,11 +69,11 @@ public class ChatActivity extends AppCompatActivity {
                 String message = map.get("message").toString();
                 String userName = map.get("user").toString();
 
-                if(userName.equals("hero1")){
+                if(userName.equals("passio1")){
                     addMessageBox("You:-\n" + message, 1);
                 }
                 else{
-                    addMessageBox("passio1" + ":-\n" + message, 2);
+                    addMessageBox("hero1" + ":-\n" + message, 2);
                 }
             }
 

@@ -45,4 +45,7 @@ dependencies {
     compile 'me.riddhimanadib.form-master:form-master:1.1.0'
     compile 'com.github.abumoallim:Android-Multi-Select-Dialog:v1.9'
     compile 'com.github.ceryle:RadioRealButton:v2.1.1'
+    compile 'com.google.firebase:firebase-messaging:17.3.4'
+    compile 'com.firebase:firebase-client-android:2.5.2+'
+    compile 'com.stepstone.apprating:app-rating:2.3.0'
 }

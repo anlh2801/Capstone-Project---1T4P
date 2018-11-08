@@ -9,6 +9,22 @@
     tools:context="com.odts.activities.TimeLineActivity">
 
 
-    <include layout="@layout/content_timeline" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_timeline" />
+
+    <Button
+        android:id="@+id/btnChat"
+        android:layout_width="177dp"
+        android:layout_height="wrap_content"
+        android:text="Chat"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="bottom|center" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="172dp"
+        android:layout_height="wrap_content"
+        android:text="FeedBack" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,11 +1,15 @@
 package com.odts.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
 import com.odts.customTools.TimeLineAdapter;
 import com.odts.models.Request;
 import com.odts.models.Ticket;
@@ -14,16 +18,20 @@ import com.odts.utils.CallBackData;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.stepstone.apprating.AppRatingDialog;
+import com.stepstone.apprating.listener.RatingDialogListener;
 
 /**
  * Created by HP-HP on 05-12-2015.
  */
-public class TimeLineActivity extends AppCompatActivity {
+public class TimeLineActivity extends AppCompatActivity implements RatingDialogListener {
 
     private RecyclerView mRecyclerView;
     private TimeLineAdapter mTimeLineAdapter;
     private List<Ticket> mDataList = new ArrayList<>();
     RequestService requestService;
+    Button btnChat;
+    Button btnFeedback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +42,41 @@ public class TimeLineActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
         initView();
+        btnChat = (Button) findViewById(R.id.btnChat);
+        btnChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TimeLineActivity.this, ChatActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnFeedback = findViewById(R.id.button4);
+        btnFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AppRatingDialog.Builder()
+                        .setPositiveButtonText("Submit")
+                        .setNegativeButtonText("Cancel")
+                        .setNeutralButtonText("Later")
+                        .setNumberOfStars(5)
+                        .setStarColor(R.color.starColor)
+                        .setNoteDescriptionTextColor(R.color.noteDescriptionTextColor)
+                        .setTitleTextColor(R.color.colorPrimary)
+                        .setDescriptionTextColor(R.color.colorPrimary)
+                        .setCommentTextColor(R.color.commentTextColor)
+                        .setCommentBackgroundColor(R.color.colorPrimaryDark)
+                        .setWindowAnimation(R.style.MyDialogSlideHorizontalAnimation)
+                        .setTitle("App Rating")
+                        .setDescription("Please select some stars and give your feedback")
+                        .setHint("Please write your comment here ...")
+                        .setHintTextColor(R.color.hintTextColor)
+                        .setCancelable(false)
+                        .setCanceledOnTouchOutside(false)
+                        .create(TimeLineActivity.this)
+                        .show();
+            }
+
+        });
     }
 
     private void initView() {
@@ -47,10 +90,11 @@ public class TimeLineActivity extends AppCompatActivity {
         requestService.requestDetail(TimeLineActivity.this, 216, new CallBackData<Request>() {
             @Override
             public void onSuccess(Request listRequest) {
-                listRequest.getTicket().get(0).getiTSupporterName();
-                mDataList.add(new Ticket("Thực hiện bởii: " +listRequest.getTicket().get(0).getiTSupporterName(),1, listRequest.getTicket().get(0).getStartTime()  ));
-                mDataList.add(new Ticket("Thời gian dự kiến:",  2, listRequest.getTicket().get(0).getTicketEstimationTime() ));
-                mDataList.add(new Ticket("Thời gian kết thúc",  3, listRequest.getTicket().get(0).getEndTime() ));
+//                listRequest.getTicket().get(0).getiTSupporterName();
+//                mDataList.add(new Ticket("Thực hiện bởii: " +listRequest.getServiceItemId(),1, listRequest.getTicket().get(0).getStartTime()  ));
+//                mDataList.add(new Ticket("Thời gian dự kiến:",  2, listRequest.getTicket().get(0).getTicketEstimationTime() ));
+//                mDataList.add(new Ticket("Thời gian kết thúc",  3, listRequest.getTicket().get(0).getEndTime() ));
+                mDataList.add(new Ticket("asd", 1, ""));
             }
             @Override
             public void onFail(String message) {
@@ -78,5 +122,20 @@ public class TimeLineActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onNegativeButtonClicked() {
+
+    }
+
+    @Override
+    public void onNeutralButtonClicked() {
+
+    }
+
+    @Override
+    public void onPositiveButtonClicked(int i, String s) {
+        
     }
 }

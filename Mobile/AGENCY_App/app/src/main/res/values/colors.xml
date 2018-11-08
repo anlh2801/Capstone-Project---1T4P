@@ -7,4 +7,10 @@
     <color name="ripple">#C0CA33</color>
     <color name="accent">#AFB42B</color>
     <color name="accent_pressed">#9E9D24</color>
+    <color name="starColor">#45b9ad</color>
+    <color name="noteDescriptionTextColor">#45b9ad</color>
+    <color name="titleTextColor">#FFFFFF</color>
+    <color name="descriptionTextColor">#A6FFFFFF</color>
+    <color name="commentTextColor">#FFFFFF</color>
+    <color name="hintTextColor">#55000000</color>
 </resources>
