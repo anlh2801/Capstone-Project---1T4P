@@ -35,6 +35,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestByRequestIdAndITSupporterId(int requestId, int itSupporterId);
 
+        ResponseObject<List<StatusAPIViewModel>> GetRequestStatistic();
     }
 
     public partial class RequestService
@@ -50,6 +51,7 @@ namespace DataService.Models.Entities.Services
                 {
                     return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại" };
                 }
+                int no = 1;
                 foreach (var item in requests)
                 {
                     var timeAgo = TimeAgo(item.CreateDate);
@@ -64,14 +66,15 @@ namespace DataService.Models.Entities.Services
                         i++;
                     }
                     var a = new RequestAPIViewModel()
-                            {
-                                RequestId = item.RequestId,
-                                RequestName = item.RequestName,
-                                CreateDate = timeAgo,
-                                AgencyName = item.Agency.AgencyName,
-                                StatusName = requestStatus,
-                            };
-                            rsList.Add(a);
+                    {
+                        NumberOfRecord = no,
+                        RequestName = item.RequestName,
+                        CreateDate = timeAgo,
+                        AgencyName = item.Agency.AgencyName,
+                        StatusName = requestStatus,
+                    };
+                    rsList.Add(a);
+                    no++;
                 }
                 return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, SuccessMessage = "Hiển thị yêu cầu thành công", ObjReturn = rsList };
             }
@@ -214,7 +217,7 @@ namespace DataService.Models.Entities.Services
                     //    String.Format("about {0} days ago", timeSpan.Days) :
                     //    "hôm qua";
                     result = timeSpan.Days > 1 ?
-                        dateTime.ToString ("dd/MM/yyyy") :
+                        dateTime.ToString("dd/MM/yyyy") :
                         "hôm qua";
                 }
                 //else if (timeSpan <= TimeSpan.FromDays(365))
@@ -509,13 +512,13 @@ namespace DataService.Models.Entities.Services
                     }
                 }
                 else
-                {  
+                {
                     //var itSupporterFound = memoryCacher.GetValue("ITSupporterListWithWeights");
                     var itSupporterFound = redisTools.Get("ITSupporterListWithWeights");
                     Queue<RenderITSupporterListWithWeight> idSupporterListWithWeights;
                     if (itSupporterFound != null)
                     {
-                        idSupporterListWithWeights = JsonConvert.DeserializeObject<Queue<RenderITSupporterListWithWeight>>(itSupporterFound); 
+                        idSupporterListWithWeights = JsonConvert.DeserializeObject<Queue<RenderITSupporterListWithWeight>>(itSupporterFound);
 
                         if (idSupporterListWithWeights.Count > 0)
                         {
@@ -524,9 +527,9 @@ namespace DataService.Models.Entities.Services
                             var requestHistory = new RequestHistory()
                             {
                                 IsITSupportAccept = false,
-                                IsDelete = false,                                
+                                IsDelete = false,
                                 Pre_It_SupporterId = rejected.ITSupporterId,
-                                RequestId = requestId,                                
+                                RequestId = requestId,
                                 CreateDate = DateTime.UtcNow.AddHours(7)
                             };
                             requestHistoryRepo.Add(requestHistory);
@@ -534,7 +537,7 @@ namespace DataService.Models.Entities.Services
 
                             var idSupporterListWithWeightNext = idSupporterListWithWeights.FirstOrDefault();
                             if (rejected.TimesReject < 3)
-                            {                                
+                            {
                                 idSupporterListWithWeights.Enqueue(rejected);
                             }
                             else
@@ -672,6 +675,43 @@ namespace DataService.Models.Entities.Services
                 return new ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> { IsError = true, WarningMessage = "Thất bại", ObjReturn = null, ErrorMessage = e.ToString() };
             }
 
+        }
+
+        public ResponseObject<List<StatusAPIViewModel>> GetRequestStatistic()
+        {
+            try
+            {
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var requests = requestRepo.GetActive().ToList();
+
+                var groupRequestByStatus = requests.GroupBy(p => p.RequestStatus).Select(p => new { Status = p.Key, Requests = p.ToList() }).ToList();
+
+                List<StatusAPIViewModel> statusList = new List<StatusAPIViewModel>();
+                foreach (var status in groupRequestByStatus)
+                {
+                    var statusItem = new StatusAPIViewModel();
+                    statusItem.StatusId = status.Status;
+                    //statusItem.StatusName = Enum.GetName(typeof(RequestStatusEnum), status.Status);
+                    var i = 1;
+                    foreach (RequestStatusEnum item in Enum.GetValues(typeof(RequestStatusEnum)))
+                    {
+                        if (status.Status == i)
+                        {
+                            statusItem.StatusName = item.DisplayName();
+                        }
+                        i++;
+                    }
+                    statusItem.NumberOfStatus = status.Requests.Count();
+                    statusList.Add(statusItem);
+                }
+
+
+                return new ResponseObject<List<StatusAPIViewModel>> { IsError = false, SuccessMessage = "Thống kê thành công!", ObjReturn = statusList };
+            }
+            catch (Exception e)
+            {
+                return new ResponseObject<List<StatusAPIViewModel>> { IsError = true, WarningMessage = "Không có thống kê nào!", ObjReturn = null, ErrorMessage = e.ToString() };
+            }
         }
 
     }

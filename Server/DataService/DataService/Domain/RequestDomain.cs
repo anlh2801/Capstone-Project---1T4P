@@ -29,6 +29,8 @@ namespace DataService.Domain
         ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept);
 
         ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestByRequestIdAndITSupporterId(int requestId, int itSupporterId);
+
+        ResponseObject<List<StatusAPIViewModel>> GetRequestStatistic();
     }
 
     public  class RequestDomain : BaseDomain, IRequestDomain
@@ -114,7 +116,16 @@ namespace DataService.Domain
             var result = requestService.GetRequestByRequestIdAndITSupporterId(requestId, itSupporterId);
 
             return result;
-
         }
+
+        public ResponseObject<List<StatusAPIViewModel>> GetRequestStatistic()
+        {
+            var requestService = this.Service<IRequestService>();
+
+            var result = requestService.GetRequestStatistic();
+
+            return result;
+        }
+        
     }
 }

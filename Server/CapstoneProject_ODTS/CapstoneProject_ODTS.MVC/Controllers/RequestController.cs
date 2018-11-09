@@ -27,6 +27,14 @@ namespace CapstoneProject_ODTS.Controllers
             
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetRequestStatistic()
+        {
+            var result = _requestDomain.GetRequestStatistic();
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult RequestDetail(int id)
         {
             ViewBag.Title = "Home Page";

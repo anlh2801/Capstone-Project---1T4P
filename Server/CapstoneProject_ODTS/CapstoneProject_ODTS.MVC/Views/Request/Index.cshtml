@@ -1,4 +1,5 @@
-﻿<div class="container">
+﻿
+<div class="container">
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -40,18 +41,18 @@
     </div>
 
 </div>
-<!-- Datatable -->
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <h4>Thống Kê Đơn Hàng</h4>
-    </div>
+
+<div class="row col-md-12">
+    <h3 class="city">Thống kê trạng thái sự cố</h3>
+</div>
+<div class="row">    
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+            <span class="info-box-icon bg-yellow"><i class="fa fa-cogs" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text">Status 1</span>
-                <span class="info-box-number">90</span>
+                <span class="info-box-text">Chờ xử lý</span>
+                <span class="info-box-number" id="wailting">0</span>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -60,11 +61,11 @@
     <!-- /.col -->
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
+            <span class="info-box-icon bg-aqua"><i class="fa fa-wrench" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text">Status 2</span>
-                <span class="info-box-number">41</span>
+                <span class="info-box-text">Đang xử lý</span>
+                <span class="info-box-number" id="processing">0</span>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -76,11 +77,11 @@
 
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+            <span class="info-box-icon bg-green"><i class="fa fa-check" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text">Status 3</span>
-                <span class="info-box-number">70</span>
+                <span class="info-box-text">Hoàn thành</span>
+                <span class="info-box-number" id="done">0</span>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -89,11 +90,11 @@
     <!-- /.col -->
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+            <span class="info-box-icon bg-red"><i class="fa fa-times" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text">Status 4</span>
-                <span class="info-box-number">20</span>
+                <span class="info-box-text">Hủy bỏ</span>
+                <span class="info-box-number" id="cancel">0</span>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -111,48 +112,82 @@
     }
 </style>
 <!-- Datatable -->
-<h3 class="city">Tất Cả Đơn Hàng</h3>
-    <div class="row col-md-12">
-            <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
-                <thead>
-                    <tr>
-                        <th><label>STTTT</label></th>
-                        <th><label>Tên</label></th>
-                        <th><label>Thời gian</label></th>
-                        <th><label>Tạo bởi</label></th>
-                        <th><label>Trạng thái</label></th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-    </div>
+<div class="row col-md-12">
+    <h3 class="city">Sự cố đã báo</h3>
+</div>
+<div class="row col-md-12">
+    <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
+        <thead>
+            <tr>
+                <th><label>STT</label></th>
+                <th><label>Tên</label></th>
+                <th><label>Thời gian</label></th>
+                <th><label>Tạo bởi</label></th>
+                <th><label>Trạng thái</label></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
-    <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
-    @section scripts {
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
-        <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-        <script>
+<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts {
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script>
         $(document).ready(function() {
-            loadCompany();
+            loadRequest();
+            loadRequestStatistic();
         });
 
-        function loadCompany() {
+            function loadRequestStatistic() {
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("GetAllRequest", "Request")',
+                url: '@Url.Action("GetRequestStatistic", "Request")',
                 data: {
                 },
                 success: function(result) {
-                    initDatatable(result.result);
+                    var statusList = result.result.ObjReturn;
+                    var i;
+                    for (i = 0; i < statusList.length; ++i) {
+                        if (statusList[i].StatusId === 1) {
+                                $('#wailting').text(statusList[i].NumberOfStatus);
+                        } 
+                        else if (statusList[i].StatusId === 2) {
+                            $('#processing').text(statusList[i].NumberOfStatus);
+                        }
+                        else if (statusList[i].StatusId === 3) {
+                            $('#done').text(statusList[i].NumberOfStatus);
+                        }
+                        else if (statusList[i].StatusId === 4) {
+                            $('#cancel').text(statusList[i].NumberOfStatus);
+                        }
+                    }
                 },
                 error: function(error) {
                     showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
                 }
             });
         }
+
+        function loadRequest() {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetAllRequest", "Request")',
+                data: {
+                },
+                success: function(result) {
+                    initDatatable(result.result.ObjReturn);
+                },
+                error: function(error) {
+                    showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                }
+            });
+        }
+
         function initDatatable(data) {
             $("#detail-table").dataTable({
                 stateSave: true,
@@ -194,7 +229,7 @@
                     //}
                 ],
                 "columns": [
-                    { "data": "RequestId" },
+                    { "data": "NumberOfRecord" },
                     {
                         "data": "RequestName",
                         "mRender": function(data, type, full) {
@@ -203,7 +238,21 @@
                     },
                     { "data": "CreateDate" },
                     { "data": "AgencyName" },
-                    { "data": "StatusName" },
+                    //{ "data": "StatusName" },
+                    {
+                        "mRender": function (data, type, full) {
+                            if (full.StatusName === "Chờ Xử lý")
+                                return '<span class = "label label-warning">' + full.StatusName + '</span>';
+                            else if (full.StatusName === "Đang xử lý")
+                                return '<span class = "label label-primary">' + full.StatusName + '</span>';
+                            else if (full.StatusName === "Hoàn thành")
+                                return '<span class = "label label-success">' + full.StatusName + '</span>';
+                            else if (full.StatusName === "Hủy bỏ")
+                                return '<span class = "label label-danger">' + full.StatusName + '</span>';
+                            else
+                                return '<span class = "label label-default">' + full.StatusName + '</span>';
+                        }
+                    },
                     {
                         "mRender": function(data, type, full) {
                             return ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData('+full.RequestId+')"></button>';
@@ -240,6 +289,6 @@
         }
 
 
-        </script>
+    </script>
 
-    }
+}
