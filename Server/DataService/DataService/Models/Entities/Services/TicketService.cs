@@ -23,25 +23,29 @@ namespace DataService.Models.Entities.Services
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var itSupporterlRepo = DependencyUtils.Resolve<IITSupporterRepository>();
-                var ticketDetails = requestRepo.GetActive(p => p.RequestId == rate.RequestId &&
-                                                               p.CurrentITSupporter_Id == rate.CurrentITSupporter_Id).SingleOrDefault();
-                var itupporter = itSupporterlRepo.Get(rate.CurrentITSupporter_Id);
-
-                if (ticketDetails != null && itupporter != null)
+                var request = requestRepo.GetActive(p => p.RequestId == rate.RequestId 
+                                                            && p.RequestStatus == (int)RequestStatusEnum.Done).SingleOrDefault();
+                if (request != null)
                 {
-                    ticketDetails.Rating = rate.Rating;
-                    ticketDetails.Feedback = rate.Description;
-                    ticketDetails.UpdateDate = DateTime.UtcNow.AddHours(7);
-                    requestRepo.Edit(ticketDetails);
-                    requestRepo.Save();
+                    var itupporter = itSupporterlRepo.Get(request.CurrentITSupporter_Id);
 
-                    itupporter.RatingAVG = itupporter.RatingAVG != null ? (itupporter.RatingAVG + rate.Rating) / 2 : rate.Rating;
-                    itupporter.UpdateDate = DateTime.UtcNow.AddHours(7);
-                    itSupporterlRepo.Edit(itupporter);
-                    itSupporterlRepo.Save();
+                    if (request != null && itupporter != null)
+                    {
+                        request.Rating = rate.Rating;
+                        request.Feedback = rate.Description;
+                        request.UpdateDate = DateTime.UtcNow.AddHours(7);
+                        requestRepo.Edit(request);
+                        requestRepo.Save();
 
-                    return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Đánh giá thành công" };
+                        itupporter.RatingAVG = itupporter.RatingAVG != null ? (itupporter.RatingAVG + rate.Rating) / 2 : rate.Rating;
+                        itupporter.UpdateDate = DateTime.UtcNow.AddHours(7);
+                        itSupporterlRepo.Edit(itupporter);
+                        itSupporterlRepo.Save();
+
+                        return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Đánh giá thành công" };
+                    }
                 }
+                
                 return new ResponseObject<bool> { IsError = true, ObjReturn = false, SuccessMessage = "Đánh giá thất bại" };
             }
             catch (Exception e)
