@@ -61,7 +61,7 @@
     <!-- /.col -->
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="fa fa-wrench" aria-hidden="true"></i></span>
+            <span class="info-box-icon bg-primary"><i class="fa fa-wrench" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
                 <span class="info-box-text">Đang xử lý</span>
@@ -124,10 +124,11 @@
                 <th><label>Thời gian</label></th>
                 <th><label>Tạo bởi</label></th>
                 <th><label>Trạng thái</label></th>
+                <th><label>Xử lý bởi</label></th>
             </tr>
         </thead>
         <tbody></tbody>
-    </table>
+    </table>    
 </div>
 
 <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -142,7 +143,8 @@
             loadRequest();
             loadRequestStatistic();
         });
-
+        var isWaitingHeroAccept = false;
+        var currentRequestId = 0;
             function loadRequestStatistic() {
             $.ajax({
                 type: 'POST',
@@ -189,6 +191,7 @@
         }
 
         function initDatatable(data) {
+            $("#detail-table").dataTable().fnDestroy();
             $("#detail-table").dataTable({
                 stateSave: true,
                 "bFilter": true,
@@ -213,7 +216,7 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1, 2, 3, 4],
+                        "aTargets": [0, 1, 2, 3, 4, 5],
                         "bSortable": false,
                         "sClass": "text-center",
                     },
@@ -254,12 +257,41 @@
                         }
                     },
                     {
-                        "mRender": function(data, type, full) {
-                            return ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData('+full.RequestId+')"></button>';
+                        "mRender": function (data, type, full) {                           
+                            if (full.ITSupporterName !== "")
+                                return full.ITSupporterName;
+                            else if (isWaitingHeroAccept === true && full.RequestId === currentRequestId)
+                                return '<span class = "label label-warning">Đợi nhân viên phản hồi</span>';
+                            else
+                                return '<button type="button" class="btn btn fa fa-user-plus" data-toggle="modal" data-target="" onclick="asignHero(' + full.RequestId + ')"></button>';
+                             
                         }
                     },
                 ],
                 "bAutoWidth": false,
+            });
+        }
+        function asignHero(requestId) {
+            currentRequestId = requestId
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "FindITSupporterByRequestId", controller = "Request"})',
+
+                data: {
+                    requestId: requestId
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    if (!data.result.IsError) {
+                        swal(data.result.SuccessMessage, "", "success");
+                        isWaitingHeroAccept = true;
+                        currentRequestId = requestId
+                        loadRequest();
+                        loadRequestStatistic();
+                    } else
+                        swal(data.result.WarningMessage, "", "error");
+                }
             });
         }
 

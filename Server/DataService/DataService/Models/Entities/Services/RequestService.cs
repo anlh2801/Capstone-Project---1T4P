@@ -72,6 +72,8 @@ namespace DataService.Models.Entities.Services
                         CreateDate = timeAgo,
                         AgencyName = item.Agency.AgencyName,
                         StatusName = requestStatus,
+                        ITSupporterName = item.ITSupporter != null ? item.ITSupporter.ITSupporterName : string.Empty,
+                        RequestId = item.RequestId
                     };
                     rsList.Add(a);
                     no++;
