@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.odts.activities.MainActivity;
 import com.odts.activities.PendingFragment;
 import com.odts.apiCaller.IRequestApiCaller;
+import com.odts.models.Rating;
 import com.odts.models.Request;
 import com.odts.utils.CallBackData;
 import com.odts.utils.ResponseObject;
@@ -119,5 +120,30 @@ public class RequestService {
             }
         });
 
+    }
+
+    public void ratingHero(final Context context, Rating rating) {
+        IRequestApiCaller = RetrofitInstance.getRequestService();
+        Call<ResponseObject<Boolean>> call = IRequestApiCaller.ratingHero(rating);
+        call.enqueue(new Callback<ResponseObject<Boolean>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
+                if(!response.body().isError()){
+                    Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
+                    if (response.body().getObjReturn() != null && response.body().getObjReturn() == true) {
+//                        findITSupporterByRequestId(context, response.body().getObjReturn());
+                        Intent intent = new Intent(context, MainActivity.class);
+                        context.startActivity(intent);
+                    }
+                }
+                else
+                    Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<Boolean>> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
     }
 }
