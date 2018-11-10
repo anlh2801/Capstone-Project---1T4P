@@ -1,7 +1,9 @@
-﻿using DataService.Domain;
+﻿using DataService.CustomTools;
+using DataService.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -11,9 +13,12 @@ namespace CapstoneProject_ODTS.Controllers
     {
         private RequestDomain _requestDomain;
 
+        private AgencyDomain _agencyDomain;
+
         public RequestController()
         {
             _requestDomain = new RequestDomain();
+            _agencyDomain = new AgencyDomain();
         }
         public ActionResult Index()
         {
@@ -27,6 +32,14 @@ namespace CapstoneProject_ODTS.Controllers
             
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetRequestStatistic()
+        {
+            var result = _requestDomain.GetRequestStatistic();
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult RequestDetail(int id)
         {
             ViewBag.Title = "Home Page";
@@ -57,6 +70,30 @@ namespace CapstoneProject_ODTS.Controllers
         {
             var result = _requestDomain.GetRequestWithStatus(status);
             
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult FindITSupporterByRequestId(int requestId)
+        {
+            var result = _agencyDomain.FindITSupporterByRequestId(requestId);
+
+            if (!result.IsError && result.ObjReturn > 0)
+            {
+                FirebaseService firebaseService = new FirebaseService();
+                firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
+
+                //int counter = 60;
+
+                //while (counter > 0)
+                //{
+                //    counter--;
+                //    Thread.Sleep(1000);
+                //}
+                //_requestDomain.AcceptRequestFromITSupporter(result.ObjReturn, requestId, false);
+
+                return Json(new { result }, JsonRequestBehavior.AllowGet);
+            }
+
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 

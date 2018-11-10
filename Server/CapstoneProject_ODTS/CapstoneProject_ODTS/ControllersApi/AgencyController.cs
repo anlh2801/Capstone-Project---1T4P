@@ -203,7 +203,7 @@ namespace CapstoneProject_ODTS.ControllersApi
                     counter--;
                     Thread.Sleep(1000);
                 }
-                var a = _requestDomain.AcceptRequestFromITSupporter(result.ObjReturn, requestId, false);
+                _requestDomain.AcceptRequestFromITSupporter(result.ObjReturn, requestId, false);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result.SuccessMessage);
             }

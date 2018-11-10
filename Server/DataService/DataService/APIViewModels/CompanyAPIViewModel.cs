@@ -17,5 +17,8 @@ namespace DataService.APIViewModels
         public string CreateDate { get; set; }
         public string UpdateDate { get; set; }
         public int NumericalOrder { get; set; }
+        public int PercentForITSupporterRate { get; set; }
+        public int PercentForITSupporterExp { get; set; }
+        public int PercentForITSupporterFamiliarWithAgency { get; set; }
     }
 }

@@ -343,10 +343,10 @@
                 success: function (data) {
                     $('#EditModal').modal('hide');
                     if (!data.result.isError) {
-                        alert(data.result.SuccessMessage);
+                        swal(data.result.SuccessMessage, "", "success");
                     }
                     else
-                        alert(data.result.WarningMessage);
+                        swal(data.result.WarningMessage, "", "error");
                     loadDeviceType();
                 }
             });
@@ -367,17 +367,32 @@
                 success: function(data) {
                     $('#CreateModal').modal('hide');
                         if (!data.result.isError) {
-                            alert(data.result.SuccessMessage);
+                            swal(data.result.SuccessMessage, "", "success");
                         }
                         else
-                            alert(data.result.WarningMessage);
+                            swal(data.result.WarningMessage, "", "error");
 
                     loadDeviceType();
                 }
             });
         }
         function removeDeviceType(id) {
-            $('#modalConfirmDelete').modal('show');
+            swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(function () {
+                deleteDeviceType();
+                swal(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            });
             $('#devicetypeHidden').val(id);
         }
         function deleteDeviceType() {
