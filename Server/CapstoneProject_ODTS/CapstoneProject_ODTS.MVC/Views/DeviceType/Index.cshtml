@@ -27,7 +27,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h3 class="modal-title" id="exampleModalLabel"><b>Thông tin chi tiết</b></h3>
 
                 </div>
                 <div class="modal-body">
@@ -51,7 +51,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
         </div>
@@ -66,20 +66,22 @@
         <div class="modal-content text-center">
             <!--Header-->
             <div class="modal-header d-flex justify-content-center">
-                <p class="heading">Are you sure you want to delete this item?</p>
+                <p class="heading">
+                    <h3><b>Thông báo</b></h3>                
+                </p>
             </div>
 
             <!--Body-->
             <div class="modal-body">
 
                 <i class="fa fa-times fa-4x animated rotateIn"></i>
-
+                <p class="heading">Bạn có muốn xóa loại thiết bị này?</p>
             </div>
 
             <!--Footer-->
             <div class="modal-footer flex-center">
-                <a href="#" onClick="deleteDeviceType(); return false;" class="btn  btn-outline-danger">Yes</a>
-                <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
+                <a href="#" onClick="deleteDeviceType(); return false;" class="btn btn-danger waves-effect">Xóa</a>
+                <a type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Không</a>
             </div>
         </div>
         <!--/.Content-->
@@ -92,24 +94,24 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h3 class="modal-title" id="exampleModalLabel"><b>Tạo mới loại thiết bị</b></h3>
                 </div>
                 <div class="modal-body">
                     <p>
                     <p id="id"></p>
                     <p>
                         <b>Tên Loại Thiết Bị:</b><br>
-                        <input type="text" id="dtNameCreate"></input>
+                        <input type="text" id="dtNameCreate" class="form-control"></input>
                     <p>
                         <b>Dịch Vụ Hỗ Trợ:</b><br>
-                        <select id="comboService"></select>
+                        <select id="comboService" class="form-control"></select>
                     <p>
                         <b>Mô Tả Loại Thiết Bị:</b><br>
-                        <input type="text" id="dtDescriptionCreate"></input>
+                        <input type="text" id="dtDescriptionCreate" class="form-control"></input>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="createDeviceType()">Create New</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="createDeviceType()">Tạo mới</button>
                 </div>
             </div>
         </div>
@@ -120,7 +122,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h3 class="modal-title" id="exampleModalLabel"><b>Chỉnh sửa thông tin</b></h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -129,17 +131,17 @@
 
                 <p>
                     <b>Tên Loại Thiết Bị:</b><br>
-                    <input type="text" id="dtNameCreateEdit"></input>
+                    <input type="text" id="dtNameCreateEdit" class="form-control"></input>
                 <p>
                     <b>Dịch Vụ Hỗ Trợ:</b><br>
-                    <select id="comboServiceEdit"></select>
+                    <select id="comboServiceEdit" class="form-control"></select>
                 <p>
                     <b>Mô Tả Loại Thiết Bị:</b><br>
-                    <input type="text" id="dtDescriptionCreateEdit"></input>
+                    <input type="text" id="dtDescriptionCreateEdit" class="form-control"></input>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 <button type="button" class="btn btn-primary" onclick="UpdateDeviceType()">Chỉnh Sửa</button>
             </div>
         </div>
@@ -151,11 +153,14 @@
         color: black;
         padding: 15px;
         border-left: solid cadetblue;
-        width: 97%;
+        width: 100%;
     }
 </style>
 <!-- Datatable -->
-<h3 class="city">Tất Cả Loại Thiết Bị</h3>
+<div class="row col-md-12">
+    <h3 class="city">Quản Lý Loại Thiết Bị</h3>
+</div>
+
 <div class="row col-md-12">
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
@@ -368,28 +373,27 @@
                     $('#CreateModal').modal('hide');
                         if (!data.result.isError) {
                             swal(data.result.SuccessMessage, "", "success");
+                            loadDeviceType();
                         }
                         else
-                            swal(data.result.WarningMessage, "", "error");
-
-                    loadDeviceType();
+                            swal(data.result.WarningMessage, "", "error");                    
                 }
             });
         }
         function removeDeviceType(id) {
             swal({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                title: "Thông báo xác nhận",
+                text: "Bạn có muốn xóa loại thiết bị này",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: 'Xóa'
             }).then(function () {
                 deleteDeviceType();
                 swal(
-                    'Deleted!',
-                    'Your file has been deleted.',
+                    'Thông báo',
+                    'Xóa thành công',
                     'success'
                 )
             });
