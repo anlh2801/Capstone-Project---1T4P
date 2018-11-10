@@ -27,7 +27,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h3 class="modal-title" id="exampleModalLabel"><b>Thông tin chi tiết</b></h3>
 
                 </div>
                 <div class="modal-body">
@@ -48,7 +48,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
         </div>
@@ -63,20 +63,22 @@
         <div class="modal-content text-center">
             <!--Header-->
             <div class="modal-header d-flex justify-content-center">
-                <p class="heading">Are you sure you want to delete this item?</p>
+                <p class="heading">
+                    <h3><b>Thông báo</b></h3>
+                </p>
             </div>
 
             <!--Body-->
             <div class="modal-body">
 
                 <i class="fa fa-times fa-4x animated rotateIn"></i>
-
+                <p class="heading">Bạn có muốn xóa dịch vụ này?</p>
             </div>
 
             <!--Footer-->
             <div class="modal-footer flex-center">
-                <a href="#" onClick="deleteServiceITSupport(); return false;" class="btn  btn-outline-danger">Yes</a>
-                <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
+                <a href="#" onClick="deleteServiceITSupport(); return false;" class="btn btn-danger waves-effect">Xóa</a>
+                <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">Không</a>
             </div>
         </div>
         <!--/.Content-->
@@ -89,21 +91,21 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h3 class="modal-title" id="exampleModalLabel"><b>Tạo mới</b></h3>
                 </div>
                 <div class="modal-body">
                     <p>
                     <p id="id"></p>
                     <p>
                         <b>Tên Dịch Vụ:</b><br>
-                        <input type="text" id="stsNameCreate"></input>
+                        <input type="text" id="stsNameCreate" class="form-control"></input>
                     <p>
                         <b>Mô Tả:</b><br>
-                        <input type="text" id="sisDescriptionCreate"></input>
+                        <input type="text" id="sisDescriptionCreate" class="form-control"></input>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="createServiceITSupport()">Create New</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="createServiceITSupport()">Tạo mới</button>
                 </div>
             </div>
         </div>
@@ -114,7 +116,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h3 class="modal-title" id="exampleModalLabel"><b>Sửa thông tin</b></h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -123,14 +125,14 @@
 
                 <p>
                     <b>Tên Loại Dịch Vụ:</b><br>
-                    <input type="text" id="stsNameEdit"></input>
+                    <input type="text" id="stsNameEdit" class="form-control"></input>
                 <p>
                     <b>Mô Tả:</b><br>
-                    <input type="text" id="stsDescriptionEdit"></input>
+                    <input type="text" id="stsDescriptionEdit" class="form-control"></input>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 <button type="button" class="btn btn-primary" onclick="UpdateServiceITSupport()">Chỉnh Sửa</button>
             </div>
         </div>
@@ -142,18 +144,21 @@
         color: black;
         padding: 15px;
         border-left: solid cadetblue;
-        width: 97%;
+        width: 100%;
     }
 </style>
+<div class="row col-md-12">
+    <h3 class="city">Loại Dịch Vụ</h3>
+</div>
 <!-- Datatable -->
-<h3 class="city">Tất Cả Loại Dịch Vụ</h3>
+
 <div class="row col-md-12">
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
             <tr>
                 <th><label>STT</label></th>
                 <th><label>Tên Loại Dịch Vụ</label></th>
-                <th><label>Mo Tả</label></th>
+                <th><label>Mô Tả</label></th>
                 <th><label>Ngày Tạo</label></th>
                 <th><label>Dịch Vụ</label></th>
                 <th><label>Chức Năng</label></th>
@@ -206,7 +211,7 @@
                 "bProcessing": true,
                 "oLanguage": {
                     "sSearch": "Tìm kiếm:",
-                    "sSearchPlaceholder": "Thành phần con",
+                    "sSearchPlaceholder": "",
                     "sZeroRecords": "Không có dữ liệu phù hợp",
                     "sInfo": "Hiển thị từ _START_ đến _END_ trên tổng số _TOTAL_ dòng",
                     "sEmptyTable": "Không có dữ liệu",
@@ -336,10 +341,10 @@
                 success: function (data) {
                     $('#EditModal').modal('hide');
                     if (!data.result.isError) {
-                        alert(data.result.SuccessMessage);
+                        swal(data.result.SuccessMessage, "", "success");
                     }
                     else
-                        alert(data.result.WarningMessage);
+                        swal(data.result.WarningMessage, "", "error");
                     loadServiceITSupport();
                 }
             });
@@ -359,11 +364,10 @@
                 success: function(data) {
                     $('#CreateModal').modal('hide');
                         if (!data.result.isError) {
-                            alert(data.result.SuccessMessage);
+                            swal(data.result.SuccessMessage, "", "success");
                         }
                         else
-                            alert(data.result.WarningMessage);
-
+                            swal(data.result.WarningMessage, "", "error");
                     loadServiceITSupport();
                 }
             });
