@@ -28,7 +28,7 @@ public class TimeLineActivity extends AppCompatActivity implements RatingDialogL
 
     private RecyclerView mRecyclerView;
     private TimeLineAdapter mTimeLineAdapter;
-    private List<Ticket> mDataList = new ArrayList<>();
+    private List<Request> mDataList = new ArrayList<>();
     RequestService requestService;
     Button btnChat;
 
@@ -41,7 +41,7 @@ public class TimeLineActivity extends AppCompatActivity implements RatingDialogL
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
         setDataListItems();
-        initView();
+//        initView();
         btnChat = (Button) findViewById(R.id.btnChat);
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +53,7 @@ public class TimeLineActivity extends AppCompatActivity implements RatingDialogL
     }
 
     private void initView() {
-//        setDataListItems();
+        setDataListItems();
         mTimeLineAdapter = new TimeLineAdapter(mDataList);
         mRecyclerView.setAdapter(mTimeLineAdapter);
     }
@@ -67,7 +67,11 @@ public class TimeLineActivity extends AppCompatActivity implements RatingDialogL
 //                mDataList.add(new Ticket("Thực hiện bởii: " +listRequest.getServiceItemId(),1, listRequest.getTicket().get(0).getStartTime()  ));
 //                mDataList.add(new Ticket("Thời gian dự kiến:",  2, listRequest.getTicket().get(0).getTicketEstimationTime() ));
 //                mDataList.add(new Ticket("Thời gian kết thúc",  3, listRequest.getTicket().get(0).getEndTime() ));
-                mDataList.add(new Ticket("asd", 1, ""));
+                mDataList.add(new Request( listRequest.getiTSupporterName(),"Người nhận việc", "IT"));
+                mDataList.add(new Request(listRequest.getCreateDate(),"Bắt đầu lúc" , "START"));
+                mDataList.add(new Request(listRequest.getRequestEstimationTime(),"Dự kiến hoàn thành", "EST"));
+                mTimeLineAdapter = new TimeLineAdapter(mDataList);
+                mRecyclerView.setAdapter(mTimeLineAdapter);
             }
             @Override
             public void onFail(String message) {

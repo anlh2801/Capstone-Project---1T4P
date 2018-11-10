@@ -29,6 +29,26 @@ public class Request {
     private List<Ticket> ticket;
     @SerializedName("RequestStatus")
     private String status;
+    @SerializedName("ITSupporterName")
+    private String iTSupporterName;
+    @SerializedName("RequestEstimationTime")
+    private String requestEstimationTime;
+
+    public String getRequestEstimationTime() {
+        return requestEstimationTime;
+    }
+
+    public void setRequestEstimationTime(String requestEstimationTime) {
+        this.requestEstimationTime = requestEstimationTime;
+    }
+
+    public String getiTSupporterName() {
+        return iTSupporterName;
+    }
+
+    public void setiTSupporterName(String iTSupporterName) {
+        this.iTSupporterName = iTSupporterName;
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -41,7 +61,13 @@ public class Request {
     public Request() {
     }
 
-//    public Request(String requestName, String createDate, String updateDate) {
+    public Request(String iTSupporterName, String createDate, String status) {
+        this.iTSupporterName = iTSupporterName;
+        this.createDate = createDate;
+        this.status = status;
+    }
+
+    //    public Request(String requestName, String createDate, String updateDate) {
 //        this.requestName = requestName;
 //        this.createDate = createDate;
 //        this.updateDate = updateDate;

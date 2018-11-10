@@ -34,7 +34,6 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, "ádsa", Toast.LENGTH_SHORT).show();
                     int position = getAdapterPosition();
                     if(position != RecyclerView.NO_POSITION) {
                         Intent intent = new Intent(context, TimeLineActivity.class);
