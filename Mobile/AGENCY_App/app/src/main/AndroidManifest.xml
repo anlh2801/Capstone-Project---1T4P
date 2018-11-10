@@ -37,8 +37,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddRequestLayoutActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
-        <activity android:name=".ChatActivity"></activity>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".DoneDetailActivity"></activity>
     </application>
 
 </manifest>
