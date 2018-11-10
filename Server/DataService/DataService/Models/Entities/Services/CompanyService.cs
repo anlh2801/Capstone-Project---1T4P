@@ -73,6 +73,9 @@ namespace DataService.Models.Entities.Services
                     CompanyId = company.CompanyId,
                     CompanyName = company.CompanyName,
                     Description = company.Description,
+                    PercentForITSupporterRate = company.PercentForITSupporterRate.Value,
+                    PercentForITSupporterExp = company.PercentForITSupporterExp.Value,
+                    PercentForITSupporterFamiliarWithAgency = company.PercentForITSupporterFamiliarWithAgency.Value,
                     CreateDate = company.CreateDate.ToString("dd/MM/yyyy"),
                     UpdateDate = company.UpdateDate.Value.ToString("dd/MM/yyyy"),
                 };
@@ -94,6 +97,10 @@ namespace DataService.Models.Entities.Services
                 createCompany.IsDelete = false;
                 createCompany.CreateDate = DateTime.UtcNow.AddHours(7);
                 createCompany.UpdateDate = DateTime.UtcNow.AddHours(7);
+                createCompany.PercentForITSupporterExp = model.PercentForITSupporterExp;
+                createCompany.PercentForITSupporterFamiliarWithAgency = model.PercentForITSupporterFamiliarWithAgency;
+                createCompany.PercentForITSupporterRate = model.PercentForITSupporterRate;
+
 
                 companyeRepo.Add(createCompany);
 
@@ -116,6 +123,9 @@ namespace DataService.Models.Entities.Services
                 updateCompany.CompanyName = model.CompanyName;
                 updateCompany.Description = model.Description;
                 updateCompany.UpdateDate = DateTime.UtcNow.AddHours(7);
+                updateCompany.PercentForITSupporterRate = model.PercentForITSupporterRate;
+                updateCompany.PercentForITSupporterExp = model.PercentForITSupporterExp;
+                updateCompany.PercentForITSupporterFamiliarWithAgency = model.PercentForITSupporterFamiliarWithAgency;
 
                 companyeRepo.Edit(updateCompany);
                 companyeRepo.Save();

@@ -61,8 +61,9 @@ namespace DataService.Models.Entities.Services
                 {
                     return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy người hỗ trợ" };
                 }
+                int count = 1;
                 foreach (var item in itSupporters)
-                {
+                {       
                     var i = 1;
                     var genderStatus = "";
                     foreach (Gender genderItem in Enum.GetValues(typeof(Gender)))
@@ -73,20 +74,27 @@ namespace DataService.Models.Entities.Services
                         }
                         i++;
                     }
-                    rsList.Add(new ITSupporterAPIViewModel
+                    if (!item.IsDelete)
                     {
-                        ITSupporterId = item.ITSupporterId,
-                        ITSupporterName = item.ITSupporterName,
-                        Username = item.Account.Username,
-                        Telephone = item.Telephone,
-                        Email = item.Email,
-                        Gender = genderStatus,
-                        Address = item.Address,
-                        RatingAVG = item.RatingAVG ?? 0,
-                        IsBusy = item.IsBusy.Value == true ? "Đang bận!" : "Chờ việc",
-                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
-                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
-                    });
+                        rsList.Add(new ITSupporterAPIViewModel
+                        {
+                            NumericalOrder = count,
+                            ITSupporterId = item.ITSupporterId,
+                            ITSupporterName = item.ITSupporterName,
+                            Username = item.Account.Username,
+                            Telephone = item.Telephone,
+                            Email = item.Email,
+                            Gender = genderStatus,
+                            Address = item.Address,
+                            RatingAVG = item.RatingAVG ?? 0,
+                            IsOnline = item.IsOnline.Value == true ? "Online" : "Offline",
+                            IsBusy = item.IsBusy.Value == true ? "Đang bận!" : "Chờ việc",
+                            CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
+                            UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+
+                        });
+                    }
+                    count++;
                 }
                 return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
             }

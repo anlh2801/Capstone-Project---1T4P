@@ -1,5 +1,6 @@
 package com.odts.apiCaller;
 
+import com.odts.models.Rating;
 import com.odts.models.Request;
 import com.odts.utils.ResponseObject;
 import com.odts.utils.ResponseObjectReturnList;
@@ -27,4 +28,7 @@ public interface IRequestApiCaller {
 
     @GET("/agency/find_itSupporter_by_requestId/{requestId}")
     Call<String> findITSupporterByRequestId(@Path("requestId") int requestId);
+
+    @POST("/request/rate_ITSupporter")
+    Call<ResponseObject<Boolean>> ratingHero(@Body Rating rating);
 }

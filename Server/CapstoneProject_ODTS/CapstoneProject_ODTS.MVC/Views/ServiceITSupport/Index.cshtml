@@ -173,166 +173,169 @@
 
 <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts {
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
-    <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            loadServiceITSupport();
-            showService();
-        });
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+<script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        loadServiceITSupport();
+        showService();
+    });
 
-        function loadServiceITSupport() {
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("GetAllServiceITSupport", "ServiceITSupport")',
-                data: {
-                },
-                success: function (result) {
-                    initDatatable(result.result.ObjReturn);
-                },
-                error: function(error) {
-                    showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
-                }
-            });
-        }
-        function initDatatable(data) {
-            $("#detail-table").dataTable().fnDestroy();
-            $("#detail-table").dataTable({
-                stateSave: true,
-                "bFilter": true,
-                "bSort": false,
-                "data": data,
-                "bRetrieve": true,
-                "bScrollCollapse": true,
-                "bProcessing": true,
-                "oLanguage": {
-                    "sSearch": "Tìm kiếm:",
-                    "sSearchPlaceholder": "",
-                    "sZeroRecords": "Không có dữ liệu phù hợp",
-                    "sInfo": "Hiển thị từ _START_ đến _END_ trên tổng số _TOTAL_ dòng",
-                    "sEmptyTable": "Không có dữ liệu",
-                    "sInfoFiltered": " - lọc ra từ _MAX_ dòng",
-                    "sLengthMenu": "Hiển thị _MENU_ dòng",
-                    "sProcessing": "Đang xử lý...",
-                    "oPaginate": {
-                        "sNext": "<i class='fa fa-chevron-right'></i>",
-                        "sPrevious": "<i class='fa fa-chevron-left'></i>"
-                    }
-                },
-                "aoColumnDefs": [
-                    {
-                        "aTargets": [0, 1, 2, 3, 4],
-                        "bSortable": false,
-                        "sClass": "text-center"
-                    },
-                ],
-                "columns": [
-                    { "data": "NumericalOrder" },
-                    { "data": "ServiceName" },
-                    { "data": "Description" },
-                    { "data": "CreateDate" },
-                    {
-                        "data": "RequestName",
-                        "mRender": function (data, type, full) {
-                            return '<a href="#' + full.ServiceITSupportId + '">Xem Dịch Vụ</a>';
-                        }
-                    },
-                    {
-                        "aTargets": [4],
-                        "mRender": function (data, type, full) {
-                            var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.ServiceITSupportId + ')"></button>';
-                            var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.ServiceITSupportId + ')"></button>';
-                            var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeServiceITSupport(' + full.ServiceITSupportId + ')"></button>';
-                            return view + " " + edit + " " + del;
-                        }
-                    },
-                ],
-                "bAutoWidth": false,
-            });
-        }
-        function showCreateModal() {
-            $('#CreateModal').modal('show');
-        }
-        function showService() {
-            $('#comboService, #comboServiceEdit')
-                .find('option')
-                .remove()
-                .end();
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("GetAllServiceITSupport", "ServiceITSupport")',
-                data: {
-                },
-
-                dataType: 'json',
-                contentType: "application/json; charset=utf-8",
-                success: function(data) {
-                    var obj = data.result.ObjReturn;
-                    var html = '';
-                    for (var i = 0; i < obj.length; i++) {
-                        html += '<option value="' +
-                            obj[i].ServiceITSupportId +
-                            '">' +
-                            obj[i].ServiceName
-                            '</option>';
-                    }
-                    $('#comboService').append(html);
-                    $('#comboServiceEdit').append(html);
-                }
-            });
-        }
-        function getData(idd) {
-
-            $.ajax({
-                url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "ServiceITSupport" })',
-
-                data: {
-                    serviceitsupport_id: idd
-                },
-                type: 'GET',
-                dataType: 'json',
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    $("#stsName").text(data.result.ObjReturn.ServiceName);
-                    $("#stsDescription").text(data.result.ObjReturn.Description);
-                    $("#stsCreateDate").text(data.result.ObjReturn.CreateDate);
-                    $("#stsUpdateDate").text(data.result.ObjReturn.UpdateDate);
-
-                }
-                });
-            $('#ViewModal').modal('show');
-        }
-
-
-        function getDataEdit(id) {
-            $.ajax({
-                url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "ServiceITSupport" })',
-
-                data: {
-                    serviceitsupport_id: id
-                },
-                type: 'GET',
-                dataType: 'json',
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    $("#id").val(data.result.ObjReturn.ServiceITSupportId);
-                    $("#stsNameEdit").val(data.result.ObjReturn.ServiceName);
-                    $("#stsDescriptionEdit").val(data.result.ObjReturn.Description);
-                }
-            });
-            $('#EditModal').modal('show');
-        }
-        function UpdateServiceITSupport() {
-            var empObj = {
-                ServiceITSupportId: $('#id').val(),
-                ServiceName: $('#stsNameEdit').val(),
-                Description: $('#stsDescriptionEdit').val(),
+    function loadServiceITSupport() {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetAllServiceITSupport", "ServiceITSupport")',
+            data: {
+            },
+            success: function (result) {
+                initDatatable(result.result.ObjReturn);
+            },
+            error: function (error) {
+                showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
             }
-            $.ajax({
+        });
+    }
+    function initDatatable(data) {
+        $("#detail-table").dataTable().fnDestroy();
+        $("#detail-table").dataTable({
+            stateSave: true,
+            "bFilter": true,
+            "bSort": false,
+            "data": data,
+            "bRetrieve": true,
+            "bScrollCollapse": true,
+            "bProcessing": true,
+            "oLanguage": {
+                "sSearch": "Tìm kiếm:",
+                "sSearchPlaceholder": "",
+                "sZeroRecords": "Không có dữ liệu phù hợp",
+                "sInfo": "Hiển thị từ _START_ đến _END_ trên tổng số _TOTAL_ dòng",
+                "sEmptyTable": "Không có dữ liệu",
+                "sInfoFiltered": " - lọc ra từ _MAX_ dòng",
+                "sLengthMenu": "Hiển thị _MENU_ dòng",
+                "sProcessing": "Đang xử lý...",
+                "oPaginate": {
+                    "sNext": "<i class='fa fa-chevron-right'></i>",
+                    "sPrevious": "<i class='fa fa-chevron-left'></i>"
+                }
+            },
+            "aoColumnDefs": [
+                {
+                    "aTargets": [0, 1, 2, 3, 4],
+                    "bSortable": false,
+                    "sClass": "text-center"
+                },
+            ],
+            "columns": [
+                { "data": "NumericalOrder" },
+                { "data": "ServiceName" },
+                { "data": "Description" },
+                { "data": "CreateDate" },
+                {
+                    "data": "RequestName",
+                    "mRender": function (data, type, full) {
+                        return '<a href="#' + full.ServiceITSupportId + '">Xem Dịch Vụ</a>';
+
+                    }
+                },
+                {
+                    "aTargets": [4],
+                    "mRender": function (data, type, full) {
+                        var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.ServiceITSupportId + ')"></button>';
+                        var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.ServiceITSupportId + ')"></button>';
+                        var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeServiceITSupport(' + full.ServiceITSupportId + ')"></button>';
+                        return view + " " + edit + " " + del;
+                    }
+                },
+            ],
+            "bAutoWidth": false,
+        });
+    }
+    function showCreateModal() {
+        $('#CreateModal').modal('show');
+    }
+    function showService() {
+        $('#comboService, #comboServiceEdit')
+            .find('option')
+            .remove()
+            .end();
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetAllServiceITSupport", "ServiceITSupport")',
+            data: {
+            },
+
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                var obj = data.result.ObjReturn;
+                var html = '';
+                for (var i = 0; i < obj.length; i++) {
+                    html += '<option value="' +
+                        obj[i].ServiceITSupportId +
+                        '">' +
+                        obj[i].ServiceName
+                    '</option>';
+                }
+                $('#comboService').append(html);
+                $('#comboServiceEdit').append(html);
+            }
+        });
+    }
+    function getData(idd) {
+
+        $.ajax({
+            url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "ServiceITSupport" })',
+
+            data: {
+                serviceitsupport_id: idd
+            },
+            type: 'GET',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $("#stsName").text(data.result.ObjReturn.ServiceName);
+                $("#stsDescription").text(data.result.ObjReturn.Description);
+                $("#stsCreateDate").text(data.result.ObjReturn.CreateDate);
+                $("#stsUpdateDate").text(data.result.ObjReturn.UpdateDate);
+
+            }
+        });
+        $('#ViewModal').modal('show');
+    }
+
+
+    function getDataEdit(id) {
+        $.ajax({
+            url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "ServiceITSupport" })',
+
+            data: {
+                serviceitsupport_id: id
+            },
+            type: 'GET',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $("#id").val(data.result.ObjReturn.ServiceITSupportId);
+                $("#stsNameEdit").val(data.result.ObjReturn.ServiceName);
+                $("#stsDescriptionEdit").val(data.result.ObjReturn.Description);
+                $('#EditModal').modal('show');
+            }
+
+        });
+       
+    }
+    function UpdateServiceITSupport() {
+        var empObj = {
+            ServiceITSupportId: $('#id').val(),
+            ServiceName: $('#stsNameEdit').val(),
+            Description: $('#stsDescriptionEdit').val(),
+        }
+        $.ajax({
                 type: 'POST',
                 url: '@Url.Action("UpdateServiceITSupport", "ServiceITSupport")',
                 data: JSON.stringify(empObj),
@@ -349,7 +352,7 @@
                 }
             });
         }
-        function createServiceITSupport() {
+    function createServiceITSupport() {
             var empObj = {
                 ServiceName: $('#stsNameCreate').val(),
                 Description: $('#sisDescriptionCreate').val(),
@@ -369,32 +372,32 @@
                         else
                             swal(data.result.WarningMessage, "", "error");
                     loadServiceITSupport();
-                }
-            });
-        }
-        function removeServiceITSupport(id) {
-            $('#modalConfirmDelete').modal('show');
-            $('#serviceitsupportHidden').val(id);
-        }
-        function deleteServiceITSupport() {
-            var serviceitsupport_id = $('#serviceitsupportHidden').val();
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("RemoveServiceITSupport", "ServiceITSupport")',
-                data: {
-                    serviceitsupport_id: serviceitsupport_id
-                },
+            }
+        });
+    }
+    function removeServiceITSupport(id) {
+        $('#modalConfirmDelete').modal('show');
+        $('#serviceitsupportHidden').val(id);
+    }
+    function deleteServiceITSupport() {
+        var serviceitsupport_id = $('#serviceitsupportHidden').val();
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("RemoveServiceITSupport", "ServiceITSupport")',
+            data: {
+                serviceitsupport_id: serviceitsupport_id
+            },
 
-                dataType: 'json',
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    $('#modalConfirmDelete').modal('hide')
-                    loadServiceITSupport();
-                }
-            });
-        }
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $('#modalConfirmDelete').modal('hide')
+                loadServiceITSupport();
+            }
+        });
+    }
 
-    </script>
+</script>
 
 }
 
