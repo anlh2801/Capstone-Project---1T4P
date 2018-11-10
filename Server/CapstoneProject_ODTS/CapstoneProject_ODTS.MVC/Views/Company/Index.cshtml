@@ -1,6 +1,4 @@
 ﻿@{
-    /**/
-
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!-- /.modal -->
@@ -41,6 +39,15 @@
                         <b>Mô Tả:</b><br>
                     <p id="comDescription"></p>
                     <p>
+                        <b>Số Điểm Bình Chọn Của Nhân Viên:</b><br>
+                    <p id="viewPercentForITSupporterRate"></p>
+                    <p>
+                        <b>Kinh Nghiệm Của Nhân Viên:</b><br>
+                    <p id="viewPercentForITSupporterExp"></p>
+                    <p>
+                        <b>Độ Thân Thuộc Của Nhân Viên :</b><br>
+                    <p id="viewPercentForITSupporterFami"></p>
+                    <p>
                         <b>Ngày Tạo:</b><br>
                     <p id="comCreateDate"></p>
                     <p>
@@ -56,6 +63,7 @@
 
 </div>
 <!--deletemodal-->
+<!--Modal: modalConfirmDelete-->
 <div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
@@ -75,7 +83,9 @@
 
             <!--Footer-->
             <div class="modal-footer flex-center">
+                @*@Html.ActionLink("Yess", "GetAgencyDetail", "Agency", new { agency_id = 4 }, null)*@
                 <a href="#" onClick="deleteCompany(); return false;" class="btn  btn-outline-danger">Yes</a>
+                @*<a href="@Url.Action("removeAgency", "Agency", new {agency_id = 4})" class="btn  btn-outline-danger">Yes</a>*@
                 <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
             </div>
         </div>
@@ -100,6 +110,15 @@
                     <p>
                         <b>Mô Tả:</b><br>
                         <input type="text" id="comDescriptionCreate"></input>
+                    <p>
+                        <b>Số Điểm Bình Chọn Của Nhân Viên:</b><br>
+                        <input type="text" id="comPercentForITSupporterRate"></input>
+                    <p>
+                        <b>Kinh Nghiệm Của Nhân Viên:</b><br>
+                        <input type="text" id="comPercentForITSupporterExp"></input>
+                    <p>
+                        <b>Độ Thân Thuộc Của Nhân Viên :</b><br>
+                        <input type="text" id="comPercentForITSupporterFami"></input>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -122,11 +141,20 @@
             <div class="modal-body">
 
                 <p>
-                    <b>Tên Công TY:</b><br>
+                    <b>Tên Công Ty:</b><br>
                     <input type="text" id="comNameEdit"></input>
                 <p>
                     <b>Mô Tả:</b><br>
                     <input type="text" id="comDescriptionEdit"></input>
+                <p>
+                    <b>Số Điểm Bình Chọn Của Nhân Viên:</b><br>
+                    <input type="text" id="editPercentForITSupporterRate"></input>
+                <p>
+                    <b>Kinh Nghiệm Của Nhân Viên:</b><br>
+                    <input type="text" id="editPercentForITSupporterExp"></input>
+                <p>
+                    <b>Độ Thân Thuộc Của Nhân Viên :</b><br>
+                    <input type="text" id="editPercentForITSupporterFami"></input>
 
             </div>
             <div class="modal-footer">
@@ -276,6 +304,9 @@
                     $("#comDescription").text(data.result.ObjReturn.Description);
                     $("#comCreateDate").text(data.result.ObjReturn.CreateDate);
                     $("#comUpdateDate").text(data.result.ObjReturn.UpdateDate);
+                    $("#viewPercentForITSupporterRate").text(data.result.ObjReturn.PercentForITSupporterRate);
+                    $("#viewPercentForITSupporterExp").text(data.result.ObjReturn.PercentForITSupporterExp);
+                    $("#viewPercentForITSupporterFami").text(data.result.ObjReturn.PercentForITSupporterFamiliarWithAgency);
                 }
                 });
             $('#ViewModal').modal('show');
@@ -296,6 +327,9 @@
                     $("#id").val(data.result.ObjReturn.CompanyId);
                     $("#comNameEdit").val(data.result.ObjReturn.CompanyName);
                     $("#comDescriptionEdit").val(data.result.ObjReturn.Description);
+                    $("#editPercentForITSupporterRate").val(data.result.ObjReturn.PercentForITSupporterRate);
+                    $("#editPercentForITSupporterExp").val(data.result.ObjReturn.PercentForITSupporterExp);
+                    $("#editPercentForITSupporterFami").val(data.result.ObjReturn.PercentForITSupporterFamiliarWithAgency);
                 }
             });
             $('#EditModal').modal('show');
@@ -305,6 +339,9 @@
                 CompanyId: $('#id').val(),
                 CompanyName: $('#comNameEdit').val(),
                 Description: $('#comDescriptionEdit').val(),
+                PercentForITSupporterRate: $('#editPercentForITSupporterRate').val(),
+                PercentForITSupporterExp: $('#editPercentForITSupporterExp').val(),
+                PercentForITSupporterFamiliarWithAgency: $('#editPercentForITSupporterFami').val(),
             }
             $.ajax({
                 type: 'POST',
@@ -315,10 +352,11 @@
                 success: function (data) {
                     $('#EditModal').modal('hide');
                     if (!data.result.isError) {
-                        alert(data.result.SuccessMessage);
+                        swal(data.result.SuccessMessage, "", "success");
                     }
                     else
-                        alert(data.result.WarningMessage);
+                        swal(data.result.WarningMessage, "", "error");
+
                     loadCompany();
                 }
             });
@@ -327,6 +365,9 @@
             var empObj = {
                 CompanyName: $('#comNameCreate').val(),
                 Description: $('#comDescriptionCreate').val(),
+                PercentForITSupporterRate: $('#comPercentForITSupporterRate').val(),
+                PercentForITSupporterExp: $('#comPercentForITSupporterExp').val(),
+                PercentForITSupporterFamiliarWithAgency: $('#comPercentForITSupporterFami').val(),
             }
              $.ajax({
                 type: 'POST',
@@ -348,7 +389,22 @@
             });
         }
         function removeCompany(id) {
-            $('#modalConfirmDelete').modal('show');
+            swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(function () {
+                deleteCompany();
+                swal(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            });
             $('#companyHidden').val(id);
         }
         function deleteCompany() {

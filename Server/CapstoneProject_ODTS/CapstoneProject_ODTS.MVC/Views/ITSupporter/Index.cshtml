@@ -93,20 +93,75 @@
                     <p>
                     <p id="id"></p>
                     <p>
-                        <b>Tên Công Ty:</b><br>
+                        <b>Tên Nhân Viên:</b><br>
                         <input type="text" id="comNameCreate"></input>
                     <p>
-                        <b>Mô Tả:</b><br>
+                        <b>Tên Đăng Nhập:</b><br>
                         <input type="text" id="comDescriptionCreate"></input>
+                    <p>
+                        <b>Mật Khẩu:</b><br>
+                        <input type="text" id="comDescriptionCreate"></input>
+                    <p>
+                        <b>Số Điện Thoại:</b><br>
+                        <input type="text" id="comDescriptionCreate"></input>
+                    <p>
+                        <b>Email:</b><br>
+                        <input type="text" id="comDescriptionCreate"></input>
+                    <p>
+                        <b>Địa Chỉ Thường Trú:</b><br>
+                        <input type="text" id="comDescriptionCreate"></input>
+                    <p>
+                        <b>Thêm Kinh Nghiệm Hỗ Trợ:</b><br>
+
+                </div>
+                <div class="row col-md-12 tablebottom">
+                    <table id="service-table" class="table table-bordered table-hover" cellspacing="0" style="table-layout: auto">
+                        <thead>
+                            <button type="button" class="btn btn-primary fa fa-plus plusbutton" data-toggle="modal" data-target="" onclick="showCreateServiceModal()"></button>
+
+                            <tr>
+                                <th><label>Tên Dịch Vụ</label></th>
+                                <th><label>Thời Gian Làm Việc</label></th>
+                                <th><label>Chức Năng</label></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="createCompany()">Create New</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="createCompany()">Tạo Mới</button>
                 </div>
             </div>
         </div>
     </div>
 
+</div>
+<div class="modal fade" id="CreateServiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <p>
+                    <b>Tên Dịch Vụ:</b><br>
+                    <input type="text" id="comNameEdit"></input>
+                <p>
+                    <b>Thời Gian làm Việc:</b><br>
+                    <input type="text" id="comDescriptionEdit"></input>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="UpdateCompany()">Chỉnh Sửa</button>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -138,16 +193,25 @@
     .city {
         background-color: azure;
         color: black;
-        padding: 15px;
+        padding: 1%;
         border-left: solid cadetblue;
-        width: 97%;
+        width: 97.5%;
+    }
+</style>
+<style>
+    .plusbutton {
+        margin-left: 3%;
+    }
+
+    .tablebottom {
+        margin-bottom: 5%;
     }
 </style>
 <!-- Datatable -->
-    <h3 class="city">Tất Cả Nhân Viên</h3>
+<h3 class="city">Tất Cả Nhân Viên</h3>
 
 <div class="row col-md-12">
-    
+
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
             <tr>
@@ -155,7 +219,6 @@
                 <th><label>Tên Nhân Viên</label></th>
                 <th><label>Tài Khoản</label></th>
                 <th><label>Số Điện Thoại</label></th>
-                <th><label>Kinh Nghiệm</label></th>
                 <th><label>Trạng Thái</label></th>
                 <th><label>Chức Năng</label></th>
             </tr>
@@ -163,7 +226,7 @@
         <tbody></tbody>
     </table>
     <div class="NewThing">
-        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Công Ty</button>
+        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Nhân Viên</button>
     </div>
 </div>
 
@@ -176,6 +239,7 @@
     <script>
         $(document).ready(function() {
             loadCompany();
+            loadService();
         });
 
         function loadCompany() {
@@ -192,6 +256,22 @@
                 }
             });
         }
+
+        function loadService() {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetAllITSupporter", "ITSupporter")',
+                data: {
+                },
+                success: function (result) {
+                    initServiceDatatable(result.result.ObjReturn);
+                },
+                error: function(error) {
+                    showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                }
+            });
+        }
+
         function initDatatable(data) {
             $("#detail-table").dataTable().fnDestroy();
             $("#detail-table").dataTable({
@@ -218,7 +298,7 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1, 2, 3, 4 ,5 , 6],
+                        "aTargets": [0, 1, 2, 3, 4 ,5],
                         "bSortable": false,
                         "sClass": "text-center"
                     },
@@ -226,25 +306,11 @@
                 "columns": [
                     { "data": "NumericalOrder" },
                     { "data": "ITSupporterName" },
-                    { "data": "Username" }, 
+                    { "data": "Username" },
                     { "data": "Telephone" },
-                    { "data": "Skill" },
                     { "data": "IsOnline" },
-                    
-                    @*{
-                        "data": "RequestName",
-                        "mRender": function (data, type, full) {
-                            return '<a href="@Url.Action("CompanyAgency", "Agency")?id=' + full.CompanyId + '">Xem Chi Nhánh</a>';
-                        }
-                    },
                     {
-                        "data": "RequestName",
-                        "mRender": function (data, type, full) {
-                            return '<a href="@Url.Action("CompanyContract", "Contract")?id=' + full.CompanyId + '">Xem Hợp Đồng</a>';
-                        }
-                    },*@
-                    {
-                        "aTargets": [6],
+                        "aTargets": [5],
                         "mRender": function (data, type, full) {
                             var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.CompanyId + ')"></button>';
                             var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.CompanyId + ')"></button>';
@@ -256,8 +322,59 @@
                 "bAutoWidth": false,
             });
         }
+
+        function initServiceDatatable(data) {
+            $("#service-table").dataTable().fnDestroy();
+            $("#service-table").dataTable({
+                stateSave: true,
+                "bFilter": false,
+                "bSort": false,
+                "data": data,
+                "bRetrieve": true,
+                "bScrollCollapse": true,
+                "bProcessing": true,
+                "oLanguage": {
+                    "sSearch": "Tìm kiếm:",
+                    "sSearchPlaceholder": "Thành phần con",
+                    "sZeroRecords": "Không có dữ liệu phù hợp",
+                    "sInfo": "",
+                    "sEmptyTable": "Không có dữ liệu",
+                    "sInfoFiltered": " - lọc ra từ _MAX_ dòng",
+                    "sLengthMenu": "",
+                    "sProcessing": "Đang xử lý...",
+                    "oPaginate": {
+                        "sNext": "<i class='fa fa-chevron-right'></i>",
+                        "sPrevious": "<i class='fa fa-chevron-left'></i>"
+                    }
+                },
+                "aoColumnDefs": [
+                    {
+                        "aTargets": [0, 1, 2],
+                        "bSortable": false,
+                        "sClass": "text-center"
+                    },
+                ],
+                "columns": [
+                    { "data": "NumericalOrder" },
+                    { "data": "ITSupporterName" },
+                    {
+                        "aTargets": [3],
+                        "mRender": function (data, type, full) {
+                            var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.CompanyId + ')"></button>';
+                            var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeCompany(' + full.CompanyId + ')"></button>';
+                            return edit + " " + del;
+                        }
+                    },
+                ],
+                "bAutoWidth": false,
+            });
+        }
+
         function showCreateModal() {
             $('#CreateModal').modal('show');
+        }
+        function showCreateServiceModal() {
+            $('#CreateServiceModal').modal('show');
         }
         function getData(idd) {
 

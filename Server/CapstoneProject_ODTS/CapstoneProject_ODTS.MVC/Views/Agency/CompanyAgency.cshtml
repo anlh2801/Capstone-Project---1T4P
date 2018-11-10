@@ -160,6 +160,7 @@
         border-left: solid cadetblue;
         width: 97%;
     }
+
     H3 {
         display: inline;
     }
@@ -487,9 +488,13 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $('#editModal').modal('hide'),
+                    $('#editModal').modal('hide');
+                         if (!data.result.isError) {
                         swal(data.result.SuccessMessage, "", "success");
-                        loadCompany();
+                        }
+                        else
+                        swal(data.result.WarningMessage, "", "error");
+                    loadCompany();
                 }
             });
         }
@@ -510,9 +515,13 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                    $('#createAgencyModal').modal('hide'),
+                    $('#createAgencyModal').modal('hide');
+                         if (!data.result.isError) {
                         swal(data.result.SuccessMessage, "", "success");
-                        loadCompany();
+                        }
+                        else
+                        swal(data.result.WarningMessage, "", "error");
+                    loadCompany();
 
                 }
             });
