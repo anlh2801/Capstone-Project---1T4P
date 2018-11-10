@@ -31,7 +31,6 @@ public class TimeLineActivity extends AppCompatActivity implements RatingDialogL
     private List<Ticket> mDataList = new ArrayList<>();
     RequestService requestService;
     Button btnChat;
-    Button btnFeedback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +40,7 @@ public class TimeLineActivity extends AppCompatActivity implements RatingDialogL
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
+        setDataListItems();
         initView();
         btnChat = (Button) findViewById(R.id.btnChat);
         btnChat.setOnClickListener(new View.OnClickListener() {
@@ -50,38 +50,10 @@ public class TimeLineActivity extends AppCompatActivity implements RatingDialogL
                 startActivity(intent);
             }
         });
-        btnFeedback = findViewById(R.id.button4);
-        btnFeedback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new AppRatingDialog.Builder()
-                        .setPositiveButtonText("Đánh giá")
-                        .setNegativeButtonText("Hủy")
-                        //.setNeutralButtonText("Later")
-                        .setDefaultRating(0)
-                        .setNumberOfStars(5)
-                        .setStarColor(R.color.accent)
-                        .setNoteDescriptionTextColor(R.color.accent)
-                        .setTitleTextColor(R.color.colorAccent)
-                        .setDescriptionTextColor(R.color.descriptionTextColor)
-                        .setCommentTextColor(R.color.colorAccent)
-                        .setCommentBackgroundColor(R.color.noteDescriptionTextColor)
-                        .setWindowAnimation(R.style.MyDialogSlideHorizontalAnimation)
-                        .setTitle("Đánh giá nhân viên sửa chữa")
-                        .setDescription("Vui lòng đóng góp cho chúng tôi, để có thể phục vụ tốt hơn")
-                        .setHint("Ghi chú thêm...")
-                        .setHintTextColor(R.color.hintTextColor)
-                        .setCancelable(false)
-                        .setCanceledOnTouchOutside(false)
-                        .create(TimeLineActivity.this)
-                        .show();
-            }
-
-        });
     }
 
     private void initView() {
-        setDataListItems();
+//        setDataListItems();
         mTimeLineAdapter = new TimeLineAdapter(mDataList);
         mRecyclerView.setAdapter(mTimeLineAdapter);
     }

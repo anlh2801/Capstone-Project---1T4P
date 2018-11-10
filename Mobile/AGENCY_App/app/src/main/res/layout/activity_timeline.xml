@@ -21,10 +21,4 @@
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="bottom|center" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="172dp"
-        android:layout_height="wrap_content"
-        android:text="FeedBack" />
-
 </android.support.design.widget.CoordinatorLayout>
