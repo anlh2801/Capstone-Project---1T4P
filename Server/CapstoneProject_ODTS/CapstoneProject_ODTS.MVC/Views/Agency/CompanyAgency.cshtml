@@ -1,6 +1,4 @@
 ﻿@{
-    /**/
-
     var dataAgency = ViewData["ID"];
 }
 <!--Modal: modalConfirmDelete-->
@@ -127,10 +125,10 @@
             <div class="modal-body">
 
                 <label for="qq">Company:</label>
-                <select class="form-control" id="qq" disabled="true"></select>
+                <select class="form-control select2" style="width: 100%;" id="qq" disabled="true"></select>
 
                 <label for="ww">Account:</label>
-                <select class="form-control" id="ww"></select>
+                <select class="form-control select2" style="width: 100%;" id="ww"></select>
 
                 <label for="ee">Name</label>
                 <input id="ee" type="text" class="form-control" required>
@@ -158,7 +156,7 @@
         color: black;
         padding: 1%;
         border-left: solid cadetblue;
-        width: 97%;
+        width: 100%;
     }
 
     H3 {
@@ -166,8 +164,8 @@
     }
 </style>
 <!-- Datatable -->
-<div class="city">
-    <h3 class="H3">Tất Cả Chi Nhánh Của Công Ty </h3><h3 id="comName"></h3>
+<div class="row col-md-12 city">
+    <h3 class="H3">Tất Cả Chi Nhánh Của Công Ty </h3><h3 id="comNameShow"></h3>
 </div>
 
 <div class="row col-md-12">
@@ -196,6 +194,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script type="text/javascript" src="~/AdminLTE/bower_components/ckeditor/adapters/jquery.js"></script>
+    <script type="text/javascript" src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
+    <script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
     <script>
         $(document).ready(function() {
             loadCompany();
@@ -203,8 +205,12 @@
             showCompany();
             getComName();
         });
+
         $('#createAgencyModal').on('hidden.bs.modal', function () {
             $('.modal-body').find('input').val('');
+        });
+        $('#ww').select2({
+        dropdownParent: $('#createAgencyModal')
         });
         function getComName() {
 
@@ -218,7 +224,9 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#comName").text(data.result.ObjReturn.CompanyName);
+                    var html = '';
+                    html = data.result.ObjReturn.CompanyName;
+                    $('#comNameShow').append(html);
                 }
                 });
         }
@@ -414,7 +422,7 @@
                     .end();
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("GetAllCompany", "Home")',
+                url: '@Url.Action("GetCompanyDetail", "Company", new { company_id = dataAgency })',
                 data: {
                 },
 
