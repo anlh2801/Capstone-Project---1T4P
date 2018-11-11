@@ -15,13 +15,14 @@
                 </div>
                 <div class="modal-body">
                     <p>
-                    <p id="id"></p>
+                        <b>Tên Công Ty Sở Hữu::</b><br>
+                        <select class="form-control select2" style="width: 100%;" id="comboCompany" disabled="true"></select>
                     <p>
-                        <b>Tên Công Ty:</b><br>
-                        <select id="comboCompany"></select>
+                        <b>Tên Chi Nhánh:</b><br>
+                        <select class="form-control select2" style="width: 100%;" id="comboCompanyAgency" disabled="true"></select>
                     <p>
                         <b>Loại Thiết Bị:</b><br>
-                        <select id="comboDeviceType"></select>
+                        <select class="form-control select2" style="width: 100%;" id="comboDeviceType"></select>
                     <p>
                     <p>
                         <b>Tên Thiết Bị:</b><br>
@@ -131,7 +132,8 @@
                 </button>
             </div>
             <div class="modal-body">
-
+                <p>
+                <p id="id"></p>
                 <p>
                     <b>Tên Công Ty:</b><br>
                     <select id="comboCompanyE" disabled="true"></select>
@@ -177,19 +179,26 @@
 
 <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts {
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
-<script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
+    <script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <script>
         $(document).ready(function () {
             loadDevice();
             showCompany();
             showDeviceType();
+            showCompanyAgency();
         });
-
+        
+        $('#comboDeviceType').select2({
+            dropdownParent: $('#CreateModal')
+        });
         function loadDevice() {
             $.ajax({
                 type: 'POST',
@@ -265,7 +274,7 @@
                 .end();
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("GetAllCompany", "Home")',
+                url: '@Url.Action("GetAllDevice", "Agency", new { agency_id = dataAgency })',
                 data: {
                 },
 
@@ -274,15 +283,43 @@
                 success: function(data) {
                     var obj = data.result.ObjReturn;
                     var html = '';
-                    for (var i = 0; i < obj.length; i++) {
+                    for (var i = 0; i < 2; i++) {
                         html += '<option value="' +
-                            obj[i].CompanyId +
+                            data.result.ObjReturn[i].CompanyId +
                             '">' +
-                            obj[i].CompanyName
+                            data.result.ObjReturn[i].CompanyName +
                             '</option>';
                     }
                     $('#comboCompany').append(html);
                     $('#comboCompanyE').append(html);
+                }
+            });
+        }
+        function showCompanyAgency() {
+            $('#comboCompanyAgency, #comboCompanyAgencyE')
+                .find('option')
+                .remove()
+                .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllDevice", "Agency", new { agency_id = dataAgency })',
+                data: {
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var obj = data.result.ObjReturn;
+                    var html = '';
+                    for (var i = 0; i < 2; i++) {
+                        html += '<option value="' +
+                            data.result.ObjReturn[i].AgencyId +
+                            '">' +
+                            data.result.ObjReturn[i].AgencyName +
+                            '</option>';
+                    }
+                    $('#comboCompanyAgency').append(html);
+                    $('#comboCompanyAgencyE').append(html);
                 }
             });
         }
@@ -414,7 +451,7 @@
             });
         }
 
-</script>
+    </script>
 
 }
 

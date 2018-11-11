@@ -17,6 +17,8 @@ namespace DataService.Domain
         ResponseObject<bool> CreateDevice(DeviceAPIViewModel model);
         ResponseObject<DeviceAPIViewModel> ViewDetail(int device_id);
         ResponseObject<List<AgencyDeviceAPIViewModel>> ViewAllDeviceByAgencyIdAndServiceId(int agencyId, int serviceId);
+        ResponseObject<bool> RemoveDevice(int device_id);
+        ResponseObject<bool> UpdateDevice(AgencyDeviceAPIViewModel model);
     }
 
     public class DeviceDomain : BaseDomain, IDeviceDomain
@@ -64,7 +66,25 @@ namespace DataService.Domain
             var devices = deviceService.ViewAllDeviceByAgencyIdAndServiceId(agencyId, serviceId);
 
             return devices;
-        }        
+        }
+
+        public ResponseObject<bool> RemoveDevice(int device_id)
+        {
+            var deviceList = new List<AgencyDeviceAPIViewModel>();
+
+            var deviceService = this.Service<IDeviceService>();
+            var rs = deviceService.RemoveDevice(device_id);
+            return rs;
+        }
+
+        public ResponseObject<bool> UpdateDevice(AgencyDeviceAPIViewModel model)
+        {
+            var deviceService = this.Service<IDeviceService>();
+
+            var result = deviceService.UpdateDevice(model);
+
+            return result;
+        }
     }
     
 }

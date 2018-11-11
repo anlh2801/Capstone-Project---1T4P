@@ -26,8 +26,8 @@
     <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel" style="font-weight:bold;">Thông Tin Chi Tiết</h4>
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Thông Tin Chi Tiết</h4>
 
                 </div>
                 <div class="modal-body">
@@ -38,6 +38,14 @@
                     <p>
                         <b>Mô Tả:</b><br>
                     <p id="comDescription"></p>
+
+                    <p>
+                        <b>Ngày Tạo:</b><br>
+                    <p id="comCreateDate"></p>
+                    <p>
+                        <b>Lần Chỉnh Sửa Cuối:</b><br>
+                    <p id="comUpdateDate"></p>
+                    <p class="one"><b>Ba Chỉ Số Đánh Giá Theo % Để Chọn Người Hỗ Trợ.</b><br></p>
                     <p>
                         <b>Số Điểm Bình Chọn Của Nhân Viên:</b><br>
                     <p id="viewPercentForITSupporterRate"></p>
@@ -47,12 +55,6 @@
                     <p>
                         <b>Độ Thân Thuộc Của Nhân Viên :</b><br>
                     <p id="viewPercentForITSupporterFami"></p>
-                    <p>
-                        <b>Ngày Tạo:</b><br>
-                    <p id="comCreateDate"></p>
-                    <p>
-                        <b>Lần Chỉnh Sửa Cuối:</b><br>
-                    <p id="comUpdateDate"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -98,27 +100,26 @@
     <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel" style="font-weight:bold">Nhập Thông Tin</h4>
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Nhập Thông Tin</h4>
                 </div>
                 <div class="modal-body">
                     <p>
-                    <p id="id"></p>
-                    <p>
                         <b>Tên Công Ty:</b><br>
-                        <input class="form-control" type="text" id="comNameCreate"></input>
+                        <input class="form-control" type="text" id="comNameCreate" required></input>
                     <p>
                         <b>Mô Tả:</b><br>
-                        <input class="form-control" type="text" id="comDescriptionCreate"></input>
+                        <input class="form-control" type="text" id="comDescriptionCreate" required></input>
+                    <p class="one"><b>Thêm Ba Chỉ Số Đánh Giá Theo % Để Chọn Người Hỗ Trợ.</b><br></p>
                     <p>
                         <b>Số Điểm Bình Chọn Của Nhân Viên:</b><br>
-                        <input class="form-control" type="text" id="comPercentForITSupporterRate"></input>
+                        <input class="form-control" type="text" id="comPercentForITSupporterRate" required></input>
                     <p>
                         <b>Kinh Nghiệm Của Nhân Viên:</b><br>
-                        <input class="form-control" type="text" id="comPercentForITSupporterExp"></input>
+                        <input class="form-control" type="text" id="comPercentForITSupporterExp" required></input>
                     <p>
                         <b>Độ Thân Thuộc Của Nhân Viên :</b><br>
-                        <input class="form-control" type="text" id="comPercentForITSupporterFami"></input>
+                        <input class="form-control" type="text" id="comPercentForITSupporterFami" required></input>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -132,17 +133,19 @@
 <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel" style="font-weight:bold;">Chỉnh Sửa Chi Tiết</h4>
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Chỉnh Sửa Thông Tin</h4>
             </div>
             <div class="modal-body">
-
+                <p>
+                <p id="id"></p>
                 <p>
                     <b>Tên Công Ty:</b><br>
                     <input class="form-control" type="text" id="comNameEdit"></input>
                 <p>
                     <b>Mô Tả:</b><br>
                     <input class="form-control" type="text" id="comDescriptionEdit"></input>
+                <p class="one"><b>Ba Chỉ Số Đánh Giá Theo % Để Chọn Người Hỗ Trợ.</b><br></p>
                 <p>
                     <b>Số Điểm Bình Chọn Của Nhân Viên:</b><br>
                     <input class="form-control" type="text" id="editPercentForITSupporterRate"></input>
@@ -170,6 +173,13 @@
         border-left: solid cadetblue;
         width: 100%;
     }
+    p.one {
+        margin-top: 5%;
+        padding: 2%;
+        border-top: 1px solid lightgrey;
+        width: 100%;
+    }
+
 </style>
 <div class="row col-md-12">
     <h3 class="city">Quản Lý Công Ty</h3>
@@ -398,8 +408,8 @@
             }).then(function () {
                 deleteCompany();
                 swal(
-                    'Deleted!',
-                    'Your file has been deleted.',
+                    'Đã Xóa!',
+                    'Dữ Liệu Của Bạn Đã Được Xóa.',
                     'success'
                 )
             });
