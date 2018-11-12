@@ -16,7 +16,7 @@
                 <div class="modal-body">
                     <p>
                         <b>Tên Công Ty Sở Hữu::</b><br>
-                        <select class="form-control select2" style="width: 100%;" id="comboCompany" ></select>
+                        <select class="form-control select2" style="width: 100%;" id="comboCompany"></select>
                     <p>
                         <b>Tên Chi Nhánh:</b><br>
                         <select class="form-control select2" style="width: 100%;" id="comboCompanyAgency"></select>
@@ -149,28 +149,28 @@
                     <input type="text" id="dvNameE" type="text" class="form-control"></input>
                 <p>
                     <b>Code:</b><br>
-                    <input type="text" id="dvCodeE" type="text" class="form-control" ></input>
+                    <input type="text" id="dvCodeE" type="text" class="form-control"></input>
                 <p>
                     <b>Ngày Bảo Hành:</b><br>
-                    <input type="text" id="dvGDateE" type="text" class="form-control" ></input>
+                    <input type="text" id="dvGDateE" type="text" class="form-control"></input>
                 <p>
                     <b>Hạn Bảo Hành:</b><br>
-                    <input type="text" id="dvGEndDateE" type="text" class="form-control" ></input>
+                    <input type="text" id="dvGEndDateE" type="text" class="form-control"></input>
                 <p>
                     <b>Ip:</b><br>
-                    <input type="text" id="dvIpE" type="text" class="form-control" ></input>
+                    <input type="text" id="dvIpE" type="text" class="form-control"></input>
                 <p>
                     <b>Port:</b><br>
-                    <input type="text" id="dvPortE" type="text" class="form-control" ></input>
+                    <input type="text" id="dvPortE" type="text" class="form-control"></input>
                 <p>
                     <b>Device Account:</b><br>
-                    <input type="text" id="dvAccE" type="text" class="form-control" ></input>
+                    <input type="text" id="dvAccE" type="text" class="form-control"></input>
                 <p>
                     <b>Device Password:</b><br>
-                    <input type="text" id="dvPassE" type="text" class="form-control" ></input>
+                    <input type="text" id="dvPassE" type="text" class="form-control"></input>
                 <p>
                     <b>Thông Tin:</b><br>
-                    <input type="text" id="dvOtherE" type="text" class="form-control" ></input>
+                    <input type="text" id="dvOtherE" type="text" class="form-control"></input>
 
             </div>
             <div class="modal-footer">
@@ -216,11 +216,11 @@
     <script>
         $(document).ready(function () {
             loadDevice();
-            showCompany();
+           // showCompany();
             showDeviceType();
             showCompanyAgency();
         });
-        
+
         $('#comboDeviceType').select2({
             dropdownParent: $('#CreateModal')
         });
@@ -292,7 +292,7 @@
         function showCreateModal() {
             $('#CreateModal').modal('show');
         }
-        function showCompany() {
+        @*function showCompany() {
             $('#comboCompany, #comboCompanyE')
                 .find('option')
                 .remove()
@@ -319,7 +319,7 @@
                     $('#comboCompanyE').append(html);
                 }
             });
-        }
+        }*@
         function showCompanyAgency() {
             $('#comboCompanyAgency, #comboCompanyAgencyE')
                 .find('option')
@@ -336,15 +336,23 @@
                 success: function(data) {
                     var obj = data.result.ObjReturn;
                     var html = '';
-                    for (var i = 0; i < 2; i++) {
+                    var htmlCompany ='';
+                    if(obj.length > 0) {
                         html += '<option value="' +
-                            data.result.ObjReturn[i].AgencyId +
+                            obj[0].AgencyId +
                             '">' +
-                            data.result.ObjReturn[i].AgencyName +
+                            obj[0].AgencyName +
+                            '</option>';
+                        htmlCompany += '<option value="' +
+                            obj[0].CompanyId +
+                            '">' +
+                           obj[0].CompanyName +
                             '</option>';
                     }
                     $('#comboCompanyAgency').append(html);
                     $('#comboCompanyAgencyE').append(html);
+                    $('#comboCompany').append(html);
+                    $('#comboCompanyE').append(html);
                 }
             });
         }
