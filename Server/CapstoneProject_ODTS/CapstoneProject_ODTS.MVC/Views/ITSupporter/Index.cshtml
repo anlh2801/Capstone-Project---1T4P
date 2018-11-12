@@ -87,47 +87,55 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tạo mới nhân viên</h5>
                 </div>
                 <div class="modal-body">
-                    <p>
-                    <p id="id"></p>
-                    <p>
-                        <b>Tên Nhân Viên:</b><br>
-                        <input  type="text" class="form-control" id="comNameCreate"></input>
-                    <p>
-                        <b>Tên Đăng Nhập:</b><br>
-                        <input type="text" class="form-control" id="comDescriptionCreate"></input>
-                    <p>
-                        <b>Mật Khẩu:</b><br>
-                        <input type="text" class="form-control" id="comDescriptionCreate"></input>
-                    <p>
-                        <b>Số Điện Thoại:</b><br>
-                        <input type="text" class="form-control" id="comDescriptionCreate"></input>
-                    <p>
-                        <b>Email:</b><br>
-                        <input type="text" class="form-control" id="comDescriptionCreate"></input>
-                    <p>
-                        <b>Địa Chỉ Thường Trú:</b><br>
-                        <input type="text" class="form-control" id="comDescriptionCreate"></input>
-                    <p>
-                        <b>Thêm Kinh Nghiệm Hỗ Trợ:</b><br>
+                    <div class="row">
+                        <input type="hidden" id="id" />
+                        <div class="col-md-6">
+                            <b>Tên Đăng Nhập:</b><br>
+                            <input type="text" class="form-control" id="comDescriptionCreate" />
+                        </div>
+                        <div class="col-md-6">
+                            <b>Mật Khẩu:</b><br>
+                            <input type="text" class="form-control" id="comDescriptionCreate" />
+                        </div>
+                        <div class="col-md-6" style="margin-top: 10px">
+                            <b>Họ Và Tên:</b><br>
+                            <input type="text" class="form-control" id="comDescriptionCreate" />
+                        </div>
+                        <div class="col-md-6" style="margin-top: 10px">
+                            <b>Số Điện Thoại:</b><br>
+                            <input type="text" class="form-control" id="comDescriptionCreate" />
+                        </div>
+                        <div class="col-md-6" style="margin-top: 10px">
+                            <b>Email:</b><br>
+                            <input type="text" class="form-control" id="comDescriptionCreate" />
+                        </div>
+                        <div class="col-md-6" style="margin-top: 10px">
+                            <b>Địa Chỉ Thường Trú:</b><br>
+                            <input type="text" class="form-control" id="comDescriptionCreate" />
+                        </div>                       
+                        <div class="col-md-12" style="margin-top: 20px">
+                            <button type="button" class="btn btn-primary fa fa-plus pull-right" data-toggle="modal" data-target="" onclick="showCreateServiceModal()"><font face="verdana"> Thêm Kinh Nghiệm</button>
+                            <table id="service-table" class="table table-bordered table-hover" cellspacing="0" style="table-layout: auto">
+                                <thead>
+
+                                    <tr>
+                                        <th><label>Tên Dịch Vụ</label></th>
+                                        <th><label>Thời Gian Làm Việc</label></th>
+                                        <th><label>Chức Năng</label></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+
 
                 </div>
-                <div class="row col-md-12 tablebottom">
-                    <table id="service-table" class="table table-bordered table-hover" cellspacing="0" style="table-layout: auto">
-                        <thead>
-                            <button type="button" class="btn btn-primary fa fa-plus plusbutton" data-toggle="modal" data-target="" onclick="showCreateServiceModal()"></button>
 
-                            <tr>
-                                <th><label>Tên Dịch Vụ</label></th>
-                                <th><label>Thời Gian Làm Việc</label></th>
-                                <th><label>Chức Năng</label></th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                     <button type="button" class="btn btn-primary" onclick="createCompany()">Tạo Mới</button>
