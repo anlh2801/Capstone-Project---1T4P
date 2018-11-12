@@ -305,9 +305,9 @@ namespace DataService.Models.Entities.Services
                     {
                         double weightForITSupporter = 0;
                         var a = requestRepo.GetActive(p => p.CurrentITSupporter_Id == itSupporter.ITSupporterId && p.AgencyId == request.AgencyId).Count();
-                        var weightForITSupporterFamiliarWithAgency = a * (company.PercentForITSupporterFamiliarWithAgency != null ? company.PercentForITSupporterFamiliarWithAgency.Value : 30);
-                        var weightForITSupporterRate = (itSupporter.RatingAVG ?? 0) * (company.PercentForITSupporterRate != null ? company.PercentForITSupporterRate.Value : 40);
-                        var weightForITSupporterExp = (item.MonthExperience ?? 0) * (company.PercentForITSupporterExp != null ? company.PercentForITSupporterExp.Value : 30);
+                        var weightForITSupporterFamiliarWithAgency = a * ((company.PercentForITSupporterFamiliarWithAgency != null && company.PercentForITSupporterFamiliarWithAgency.Value != 0) ? company.PercentForITSupporterFamiliarWithAgency.Value : 30);
+                        var weightForITSupporterRate = (itSupporter.RatingAVG ?? 0) * ((company.PercentForITSupporterRate != null && company.PercentForITSupporterRate.Value != 0) ? company.PercentForITSupporterRate.Value : 40);
+                        var weightForITSupporterExp = (item.MonthExperience ?? 0) * ((company.PercentForITSupporterExp != null && company.PercentForITSupporterExp.Value != 0) ? company.PercentForITSupporterExp.Value : 30);
                         weightForITSupporter = weightForITSupporterFamiliarWithAgency + weightForITSupporterRate + weightForITSupporterExp;
                         var renderITSupporterListWithWeight = new RenderITSupporterListWithWeight()
                         {

@@ -26,36 +26,42 @@
     <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header text-center">
-                    <h4 class="modal-title w-100 font-weight-bold">Thông Tin Chi Tiết</h4>
-
+                <div class="modal-header">
+                    <h3 class="modal-title"><b>Thông tin chi tiết</b></h3>
                 </div>
                 <div class="modal-body">
-
-                    <p>
-                        <b>Tên Công Ty:</b><br>
-                    <p id="comName"></p>
-                    <p>
-                        <b>Mô Tả:</b><br>
-                    <p id="comDescription"></p>
-
-                    <p>
-                        <b>Ngày Tạo:</b><br>
-                    <p id="comCreateDate"></p>
-                    <p>
-                        <b>Lần Chỉnh Sửa Cuối:</b><br>
-                    <p id="comUpdateDate"></p>
-                    <p class="one"><b>Ba Chỉ Số Đánh Giá Theo % Để Chọn Người Hỗ Trợ.</b><br></p>
-                    <p>
-                        <b>Số Điểm Bình Chọn Của Nhân Viên:</b><br>
-                    <p id="viewPercentForITSupporterRate"></p>
-                    <p>
-                        <b>Kinh Nghiệm Của Nhân Viên:</b><br>
-                    <p id="viewPercentForITSupporterExp"></p>
-                    <p>
-                        <b>Độ Thân Thuộc Của Nhân Viên :</b><br>
-                    <p id="viewPercentForITSupporterFami"></p>
-                </div>
+                    <div class="row">
+                        <input type="hidden" id="id" />
+                        <div class="col-md-12">
+                            <b>Tên Công Ty:</b><br>
+                            <p id="comName"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Mô Tả:</b><br>
+                            <p id="comDescription"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top:10px">
+                            <b>Ngày Tạo:</b><br>
+                            <p id="comCreateDate"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top:10px">
+                            <b>Lần Chỉnh Sửa Cuối:</b><br>
+                            <p id="comUpdateDate"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <h4 class="city"><b>Chỉ số chọn người hỗ trợ phù hợp</b><br></h4>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <i class="fa fa-percent" aria-hidden="true"></i> <b>Số Điểm Bình Chọn Của Nhân Viên: </b><span id="viewPercentForITSupporterRate"></span>                            
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <i class="fa fa-percent" aria-hidden="true"></i> <b>Kinh Nghiệm Của Nhân Viên: </b><span id="viewPercentForITSupporterExp"></span>                            
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <i class="fa fa-percent" aria-hidden="true"></i> <b>Độ Thân Thuộc Của Nhân Viên: </b><span id="viewPercentForITSupporterFami"></span>                            
+                        </div>
+                    </div>
+                </div>                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 </div>
@@ -95,138 +101,152 @@
     </div>
 </div>
 <input type="hidden" id="companyHidden" />
-<div class="container">
-    <!-- Modal -->
-    <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<form onsubmit="createCompany(); return false">
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title"><b>Tạo mới công ty</b></h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <b>Tên Công Ty:</b><br>
+                                <input class="form-control" type="text" id="comNameCreate" required title="Vui lòng nhập tên công ty"/>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <b>Mô Tả:</b><br>
+                                <input class="form-control" type="text" id="comDescriptionCreate" />
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <h4 class="city"><b>Vui lòng thêm chỉ số để chọn người hỗ trợ phù hợp</b><br></h4>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <b>Điểm Bình Chọn(%)</b><br>
+                                <input class="form-control" type="text" id="comPercentForITSupporterRate" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên" />
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <b>Kinh Nghiệm(%)</b><br>
+                                <input class="form-control" type="text" id="comPercentForITSupporterExp" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên" />
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <b>Độ Thân Thuộc(%)</b><br>
+                                <input class="form-control" type="text" id="comPercentForITSupporterFami" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
+                        @*<button type="button" class="btn btn-primary" onclick="createCompany(); clearModal();">Tạo Mới</button>*@
+                        <button type="submit" class="btn btn-primary">Tạo Mới</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+<form onsubmit="UpdateCompany(); return false">
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title"><b>Tạo mới công ty</b></h3>
+                    <h3 class="modal-title"><b>Chỉnh sửa thông tin</b></h3>
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <input type="hidden" id="id" />
                         <div class="col-md-12">
                             <b>Tên Công Ty:</b><br>
-                            <input class="form-control" type="text" id="comNameCreate" required />
+                            <input class="form-control" type="text" id="comNameEdit" required title="Vui lòng nhập tên công ty"/>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
                             <b>Mô Tả:</b><br>
-                            <input class="form-control" type="text" id="comDescriptionCreate" required />
+                            <input class="form-control" type="text" id="comDescriptionEdit" />
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <h4 class="city"><b>Vui lòng thêm chỉ số để chọn người hỗ trợ phù hợp</b><br></h4>                            
-                        </div>
-                        <div class="col-md-12" style="margin-top:10px">    
-                                <b>Điểm Bình Chọn(%)</b><br>
-                                <input class="form-control" type="text" id="comPercentForITSupporterRate" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên" />
+                            <h4 class="city"><b>Chỉ số chọn người hỗ trợ phù hợp</b><br></h4>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                                <b>Kinh Nghiệm(%)</b><br>
-                                <input class="form-control" type="text" id="comPercentForITSupporterExp" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên" />                        
+                            <b>Số Điểm Bình Chọn Của Nhân Viên:</b><br>
+                            <input class="form-control" type="text" id="editPercentForITSupporterRate" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên"/>
                         </div>
-                        <div class="col-md-12" style="margin-top:10px"> 
-                                <b>Độ Thân Thuộc(%)</b><br>
-                                <input class="form-control" type="text" id="comPercentForITSupporterFami" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên" />                        
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Kinh Nghiệm Của Nhân Viên:</b><br>
+                            <input class="form-control" type="text" id="editPercentForITSupporterExp" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên"/>
                         </div>
-                    </div>                 
-                                            
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Độ Thân Thuộc Của Nhân Viên :</b><br>
+                            <input class="form-control" type="text" id="editPercentForITSupporterFami" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên"/>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
-                    <button type="button" class="btn btn-primary" onclick="createCompany(); clearModal();">Tạo Mới</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    @*<button type="button" class="btn btn-primary" onclick="UpdateCompany()">Chỉnh Sửa</button>*@
+                    <button type="submit" class="btn btn-primary">Chỉnh Sửa</button>
                 </div>
             </div>
         </div>
     </div>
+</form>
+   
 
-</div>
-<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Chỉnh Sửa Thông Tin</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                <p id="id"></p>
-                <p>
-                    <b>Tên Công Ty:</b><br>
-                    <input class="form-control" type="text" id="comNameEdit"></input>
-                <p>
-                    <b>Mô Tả:</b><br>
-                    <input class="form-control" type="text" id="comDescriptionEdit"></input>
-                <p class="one"><b>Ba Chỉ Số Đánh Giá Theo % Để Chọn Người Hỗ Trợ.</b><br></p>
-                <p>
-                    <b>Số Điểm Bình Chọn Của Nhân Viên:</b><br>
-                    <input class="form-control" type="text" id="editPercentForITSupporterRate"></input>
-                <p>
-                    <b>Kinh Nghiệm Của Nhân Viên:</b><br>
-                    <input class="form-control" type="text" id="editPercentForITSupporterExp"></input>
-                <p>
-                    <b>Độ Thân Thuộc Của Nhân Viên :</b><br>
-                    <input class="form-control" type="text" id="editPercentForITSupporterFami"></input>
+    <style>
+        .city {
+            background-color: azure;
+            color: black;
+            padding: 1%;
+            border-left: solid cadetblue;
+            width: 100%;
+        }
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary" onclick="UpdateCompany()">Chỉnh Sửa</button>
-            </div>
+        p.one {
+            margin-top: 5%;
+            padding: 2%;
+            border-top: 1px solid lightgrey;
+            width: 100%;
+        }
+    </style>
+    <div class="row col-md-12">
+        <h3 class="city">Quản Lý Công Ty</h3>
+    </div>
+    <!-- Datatable -->
+
+    <div class="row col-md-12">
+        <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
+            <thead>
+                <tr>
+                    <th><label>STT</label></th>
+                    <th><label>Tên Công Ty</label></th>
+                    <th><label>Thông Tin</label></th>
+                    <th><label>Ngày Tạo</label></th>
+                    <th><label>Chi Nhánh</label></th>
+                    <th><label>Hợp Đồng</label></th>
+                    <th><label>Chức Năng</label></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div class="NewThing">
+            <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Công Ty</button>
         </div>
     </div>
-</div>
 
-<style>
-    .city {
-        background-color: azure;
-        color: black;
-        padding: 1%;
-        border-left: solid cadetblue;
-        width: 100%;
-    }
-    p.one {
-        margin-top: 5%;
-        padding: 2%;
-        border-top: 1px solid lightgrey;
-        width: 100%;
-    }
-
-</style>
-<div class="row col-md-12">
-    <h3 class="city">Quản Lý Công Ty</h3>
-</div>
-<!-- Datatable -->
-
-<div class="row col-md-12">
-    <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
-        <thead>
-            <tr>
-                <th><label>STT</label></th>
-                <th><label>Tên Công Ty</label></th>
-                <th><label>Thông Tin</label></th>
-                <th><label>Ngày Tạo</label></th>
-                <th><label>Chi Nhánh</label></th>
-                <th><label>Hợp Đồng</label></th>
-                <th><label>Chức Năng</label></th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-    <div class="NewThing">
-        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Công Ty</button>
-    </div>
-</div>
-
-<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
-@section scripts {
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
-    <script>
+    <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+    @section scripts {
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+        <script>
         $(document).ready(function() {
             loadCompany();
         });
-        
+
         function loadCompany() {
             $.ajax({
                 type: 'POST',
@@ -315,7 +335,7 @@
                     .prop("checked", "")
                     .end();
             })
-        }      
+        }
         function getData(idd) {
 
             $.ajax({
@@ -406,13 +426,15 @@
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
                         if (!data.result.isError) {
-                            swal(data.result.SuccessMessage, "", "success");
                             $('#CreateModal').modal('hide');
+                            clearModal();
+                            loadCompany();
+                            swal(data.result.SuccessMessage, "", "success");
                         }
                         else
                             swal(data.result.WarningMessage, "", "error");
 
-                    loadCompany();
+
                 }
             });
         }
@@ -454,7 +476,7 @@
             });
         }
 
-    </script>
+        </script>
 
-}
+    }
 

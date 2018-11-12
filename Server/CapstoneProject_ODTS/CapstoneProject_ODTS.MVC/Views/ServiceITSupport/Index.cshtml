@@ -237,9 +237,8 @@
                 { "data": "CreateDate" },
                 {
                     "data": "RequestName",
-                    "mRender": function (data, type, full) {
-                        return '<a href="#' + full.ServiceITSupportId + '">Xem Dịch Vụ</a>';
-
+                    "mRender": function (data, type, full) {                        
+                        return '<a href="@Url.Action("Index", "ServiceItem")?id=' + full.ServiceITSupportId + '">Xem Dịch Vụ</a>';
                     }
                 },
                 {
