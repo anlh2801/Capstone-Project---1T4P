@@ -100,26 +100,36 @@
     <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header text-center">
-                    <h4 class="modal-title w-100 font-weight-bold">Nhập Thông Tin</h4>
+                <div class="modal-header">
+                    <h3 class="modal-title"><b>Tạo mới công ty</b></h3>
                 </div>
                 <div class="modal-body">
-                    <p>
-                        <b>Tên Công Ty:</b><br>
-                        <input class="form-control" type="text" id="comNameCreate" required></input>
-                    <p>
-                        <b>Mô Tả:</b><br>
-                        <input class="form-control" type="text" id="comDescriptionCreate" required></input>
-                    <p class="one"><b>Thêm Ba Chỉ Số Đánh Giá Theo % Để Chọn Người Hỗ Trợ.</b><br></p>
-                    <p>
-                        <b>Số Điểm Bình Chọn Của Nhân Viên:</b><br>
-                        <input class="form-control" type="text" id="comPercentForITSupporterRate" required></input>
-                    <p>
-                        <b>Kinh Nghiệm Của Nhân Viên:</b><br>
-                        <input class="form-control" type="text" id="comPercentForITSupporterExp" required></input>
-                    <p>
-                        <b>Độ Thân Thuộc Của Nhân Viên :</b><br>
-                        <input class="form-control" type="text" id="comPercentForITSupporterFami" required></input>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>Tên Công Ty:</b><br>
+                            <input class="form-control" type="text" id="comNameCreate" required />
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Mô Tả:</b><br>
+                            <input class="form-control" type="text" id="comDescriptionCreate" required />
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <h4 class="city"><b>Vui lòng thêm chỉ số để chọn người hỗ trợ phù hợp</b><br></h4>                            
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">    
+                                <b>Điểm Bình Chọn(%)</b><br>
+                                <input class="form-control" type="text" id="comPercentForITSupporterRate" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên" />
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                                <b>Kinh Nghiệm(%)</b><br>
+                                <input class="form-control" type="text" id="comPercentForITSupporterExp" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên" />                        
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px"> 
+                                <b>Độ Thân Thuộc(%)</b><br>
+                                <input class="form-control" type="text" id="comPercentForITSupporterFami" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên" />                        
+                        </div>
+                    </div>                 
+                                            
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
