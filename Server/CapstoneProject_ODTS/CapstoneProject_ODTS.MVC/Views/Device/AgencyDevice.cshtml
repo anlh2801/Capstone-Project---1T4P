@@ -337,7 +337,7 @@
                     var obj = data.result.ObjReturn;
                     var html = '';
                     var htmlCompany ='';
-                    if(obj.length > 0) {
+                    if(obj != null && obj.length > 0) {
                         html += '<option value="' +
                             obj[0].AgencyId +
                             '">' +
@@ -372,13 +372,16 @@
                 success: function(data) {
                     var obj = data.result.ObjReturn;
                     var html = '';
-                    for (var i = 0; i < obj.length; i++) {
-                        html += '<option value="' +
-                            obj[i].DeviceTypeId +
-                            '">' +
-                            obj[i].DeviceTypeName
-                            '</option>';
+                    if(obj != null) {
+                            for (var i = 0; i < obj.length; i++) {
+                                    html += '<option value="' +
+                                        obj[i].DeviceTypeId +
+                                        '">' +
+                                        obj[i].DeviceTypeName
+                                        '</option>';
+                                }
                     }
+                    
                     $('#comboDeviceType').append(html);
                     $('#comboDeviceTypeE').append(html);
                 }
