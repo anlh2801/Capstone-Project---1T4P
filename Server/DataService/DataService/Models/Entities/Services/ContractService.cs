@@ -71,15 +71,23 @@ namespace DataService.Models.Entities.Services
             try
             {
                 var contractRepo = DependencyUtils.Resolve<IContractRepository>();
+                var contractServiceRepo = DependencyUtils.Resolve<IContractServiceITSupportRepository>();
                 var contract = contractRepo.GetActive().SingleOrDefault(a => a.ContractId == contract_id);
+                var contractService = contractServiceRepo.GetActive().Where(a => a.ContractId == contract_id).ToList();
                 if (contract != null)
                 {
+                    List<int> list = null;
+                    foreach (var item in contractService)
+                    {
+                        list.Add(item.ContractServiceITSupportId);
+                    }
                     var contractAPIViewModel = new ContractAPIViewModel
                     {
                         ContractId = contract.ContractId,
                         CompanyId = contract.CompanyId,
                         CompanyName = contract.Company.CompanyName,
                         ContractName = contract.ContractName,
+                        ServiceIdList = list,
                         StartDate = contract.StartDate.Value.ToString("dd/MM/yyyy"),
                         EndDate = contract.EndDate.Value.ToString("dd/MM/yyyy"),
                         UpdateDate = contract.UpdateDate.Value.ToString("dd/MM/yyyy"),
@@ -112,8 +120,28 @@ namespace DataService.Models.Entities.Services
                 createContract.UpdateDate = DateTime.UtcNow.AddHours(7);
 
                 contractRepo.Add(createContract);
-
                 contractRepo.Save();
+
+                var contractServiceRepo = DependencyUtils.Resolve<IContractServiceITSupportRepository>();
+
+                foreach (var item in model.ServiceIdList)
+                {
+                    var contractService = new ContractServiceITSupport()
+                    {
+                        ContractId = createContract.ContractId,
+                        ServiceITSupportId = item,
+                        IsDelete = false,
+                        StartDate = model.StartDate.ToDateTime(),
+                        EndDate = model.EndDate.ToDateTime(),
+                        CreateDate = DateTime.UtcNow.AddHours(7),
+                        UpdateDate = DateTime.UtcNow.AddHours(7)
+                    };
+
+                    contractServiceRepo.Add(contractService);
+
+                }
+                contractServiceRepo.Save();
+
                 return new ResponseObject<bool> { IsError = false, SuccessMessage = "Thêm hợp đồng thành công", ObjReturn = true };
             }
             catch (Exception ex)

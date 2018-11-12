@@ -139,6 +139,9 @@
                     <b>Mô Tả Hợp Đồng:</b><br>
                     <input class="form-control" type="text" id="conNameE"></input>
                 <p>
+                    <b>Dịch Vụ Đăng Ký:</b><br>
+                    <select multiple class="form-control select2" style="width: 100%;" id="testE"></select>
+                <p>
                     <b>Ngày Bất Đầu:</b><br>
                     <input type="text" id="conStartDateE" type="text" class="form-control" required></input>
                 <p>
@@ -202,12 +205,12 @@
         loadContract();
         showCompany();
         showSupportService();
+        showSupportServiceE();
     });
-    $('#CreateModal').on('hidden.bs.modal', function () {
-        $('.modal-body').find('input').val('');
-    });
-
     $('#test').select2({
+        dropdownParent: $('#CreateModal')
+        });
+    $('#testE').select2({
         dropdownParent: $('#CreateModal')
     });
     function loadContract() {
@@ -313,7 +316,7 @@
         });
     }
     function showSupportService() {
-    $('#test')
+        $('#test')
         .find('option')
                 .remove()
                 .end();
@@ -336,7 +339,35 @@
                         data.result.ObjReturn[i].ServiceName +
                         '</option>';
                 }
-            $('#test').append(html);
+                $('#test').append(html);
+        }
+    });
+    }
+    function showSupportServiceE() {
+        $('#testE')
+        .find('option')
+                .remove()
+                .end();
+        $.ajax({
+            type: 'GET',
+            url: '@Url.RouteUrl(new {action = "GetAllServiceITSupport", controller = "ServiceITSupport" })',
+            data: {
+            },
+
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function(data) {
+                //$('#createAgency').modal('show');
+                var len = data.result.ObjReturn.length;
+                var html = '';
+                for (var i = 0; i < len; i++) {
+                    html += '<option value="' +
+                        data.result.ObjReturn[i].ServiceITSupportId +
+                        '">' +
+                        data.result.ObjReturn[i].ServiceName +
+                        '</option>';
+                }
+                $('#testE').append(html);
         }
     });
     }
@@ -398,6 +429,7 @@
             success: function (data) {
                 $("#id").val(data.result.ObjReturn.ContractId);
                 $("#comboCompanyE").val(data.result.ObjReturn.CompanyId);
+                //$("#testE").val(data.result.ObjReturn.ServiceIdList);
                 $("#conNameE").val(data.result.ObjReturn.ContractName);
                 $("#conStartDateE").val(data.result.ObjReturn.StartDate);
                 $("#conEndDateE").val(data.result.ObjReturn.EndDate);
@@ -436,6 +468,7 @@
         var empObj = {
             CompanyId: $('#comboCompany').val(),
             ContractName: $('#conNameCreate').val(),
+            ServiceIdList: $('#test').val(),
             StartDate: $('#createDate').val(),
             EndDate: $('#endDate').val(),
         }
@@ -443,13 +476,12 @@
             type: 'POST',
             url: '@Url.Action("CreateContract", "Contract")',
         data: JSON.stringify(empObj),
-
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                $('#CreateModal').modal('hide');
                 if (!data.result.isError) {
                     alert(data.result.SuccessMessage);
+                    $('#CreateModal').modal('hide');
                 }
                 else
                     alert(data.result.WarningMessage);

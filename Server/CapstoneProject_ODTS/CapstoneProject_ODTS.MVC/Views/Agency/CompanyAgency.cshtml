@@ -1,39 +1,7 @@
 ﻿@{
     var dataAgency = ViewData["ID"];
 }
-<!--Modal: modalConfirmDelete-->
-<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
-        <!--Content-->
-        <div class="modal-content text-center">
-            <!--Header-->
-            <div class="modal-header d-flex justify-content-center">
-                <p class="heading">Are you sure you want to delete this item?</p>
-            </div>
-
-            <!--Body-->
-            <div class="modal-body">
-
-                <i class="fa fa-times fa-4x animated rotateIn"></i>
-
-            </div>
-
-            <!--Footer-->
-            <div class="modal-footer flex-center">
-                @*@Html.ActionLink("Yess", "GetAgencyDetail", "Agency", new { agency_id = 4 }, null)*@
-                <a href="#" onClick="deleteAgency(); return false;" class="btn  btn-outline-danger">Yes</a>
-                @*<a href="@Url.Action("removeAgency", "Agency", new {agency_id = 4})" class="btn  btn-outline-danger">Yes</a>*@
-                <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
-            </div>
-        </div>
-        <!--/.Content-->
-    </div>
-</div>
-
 <input type="hidden" id="agencyHidden" />
-<!--Modal: modalConfirmDelete-->
-
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -41,60 +9,68 @@
                 <h4 class="modal-title w-100 font-weight-bold">Thông Tin Chi Tiết</h4>
             </div>
             <div class="modal-body">
-                <p>
-                    <b>Tên Công Ty Sở Hữu:</b><br>
-                <p id="rqName"></p>
-                <p>
-                    <b>Tên Chi Nhánh:</b><br>
-                <p id="rqAN"></p>
-                <p>
-                    <b>Tên Tài Khoản Ứng Dụng:</b><br>
-                <p id="rqCD"></p>
-
-                <p>
-                    <b>Địa Chỉ:</b><br>
-                <p id="rqIT"></p>
-                <p>
-                    <b>Số Điện Thoại:</b><br>
-                <p id="rqIN"></p>
-
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Tên Công Ty Sở Hữu:</b><br>
+                        <p id="rqName"></p>
+                    </div>
+                    <div class="col-md-12" style="margin-top:5px">
+                        <b>Tên Chi Nhánh:</b><br>
+                        <p id="rqAN"></p>
+                    </div>
+                    <div class="col-md-12" style="margin-top:5px">
+                        <b>Tên Tài Khoản Ứng Dụng:</b><br>
+                        <p id="rqCD"></p>
+                    </div>
+                    <div class="col-md-12" style="margin-top:5px">
+                        <b>Địa Chỉ:</b><br>
+                        <p id="rqIT"></p>
+                    </div>
+                    <div class="col-md-12" style="margin-top:5px">
+                        <b>Số Điện Thoại:</b><br>
+                        <p id="rqIN"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    @*<button type="button" class="btn btn-primary">Save changes</button>*@
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
                 <h4 class="modal-title w-100 font-weight-bold">Chỉnh Sửa Thông Tin</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <div class="modal-body">
-                <p>
-                <p id="idd"></p>
-                <p>
-                    <b>Tên Công Ty Sở Hữu:</b>
-                    <select id="q" class="form-control" disabled="true"></select>
-                <p>
-                    <b>Tên Tài Khoản Ứng Dụng:</b><br>
-                    <select id="w" class="form-control" disabled="true"></select>
-                <p>
-                    <b>Tên Chi Nhánh</b><br>
-                    <input id="e" type="text" class="form-control">
-                <p>
-                    <b>Địa Chỉ:</b><br>
-                    <input id="r" type="text" class="form-control">
-                <p>
-                    <b>Số Điện Thoại:</b><br>
-                    <input id="t" type="text" class="form-control">
-                <p>
+                <div class="row">
+                    <p>
+                    <p id="idd"></p>
+                    <div class="col-md-12">
+                        <b>Tên Công Ty Sở Hữu:</b>
+                        <select id="q" class="form-control" disabled="disabled"></select>
+                    </div>
+                    <div class="col-md-12" style="margin-top:10px">
+                        <b>Tên Tài Khoản Ứng Dụng:</b><br>
+                        <select id="w" class="form-control" disabled="disabled"></select>
+                    </div>
+                    <div class="col-md-12" style="margin-top:10px">
+                        <b>Tên Chi Nhánh</b><br>
+                        <input id="e" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-12" style="margin-top:10px">
+                        <b>Địa Chỉ:</b><br>
+                        <input id="r" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-12" style="margin-top:10px">
+                        <b>Số Điện Thoại:</b><br>
+                        <input id="t" type="text" class="form-control">
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -108,12 +84,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Nhập Thông Tin</h4>
+                <h4 class="modal-title w-100 font-weight-bold">Tạo Chi Nhánh Mới</h4>
             </div>
             <div class="modal-body">
-                
+
                 <label for="qq">Tên Công Ty Sở Hữu::</label>
-                <select class="form-control select2" style="width: 100%;" id="qq" disabled="true"></select>
+                <select class="form-control select2" style="width: 100%;" id="qq" disabled="disabled"></select>
 
                 <label for="ww">Chọn Tài Khoản:</label>
                 <select class="form-control select2" style="width: 100%;" id="ww"></select>
