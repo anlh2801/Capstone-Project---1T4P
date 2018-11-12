@@ -132,8 +132,8 @@
                                             
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary" onclick="createCompany()">Tạo Mới</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="createCompany(); clearModal();">Tạo Mới</button>
                 </div>
             </div>
         </div>
@@ -226,7 +226,7 @@
         $(document).ready(function() {
             loadCompany();
         });
-
+        
         function loadCompany() {
             $.ajax({
                 type: 'POST',
@@ -305,6 +305,17 @@
         function showCreateModal() {
             $('#CreateModal').modal('show');
         }
+        function clearModal() {
+            $('#CreateModal').on('hidden.bs.modal', function (e) {
+                $(this)
+                    .find("input,textarea,select")
+                    .val('')
+                    .end()
+                    .find("input[type=checkbox], input[type=radio]")
+                    .prop("checked", "")
+                    .end();
+            })
+        }      
         function getData(idd) {
 
             $.ajax({
@@ -394,9 +405,9 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                    $('#CreateModal').modal('hide');
                         if (!data.result.isError) {
                             swal(data.result.SuccessMessage, "", "success");
+                            $('#CreateModal').modal('hide');
                         }
                         else
                             swal(data.result.WarningMessage, "", "error");
