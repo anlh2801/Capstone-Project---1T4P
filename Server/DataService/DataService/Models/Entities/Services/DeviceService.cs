@@ -18,6 +18,8 @@ namespace DataService.Models.Entities.Services
         ResponseObject<DeviceAPIViewModel> ViewDetail(int device_id);
         ResponseObject<bool> CreateDevice(DeviceAPIViewModel model);
         ResponseObject<List<AgencyDeviceAPIViewModel>> ViewAllDeviceByAgencyIdAndServiceId(int agencyId, int serviceId);
+        ResponseObject<bool> RemoveDevice(int device_id);
+        ResponseObject<bool> UpdateDevice(AgencyDeviceAPIViewModel model);
     }
 
     public partial class DeviceService
@@ -37,6 +39,8 @@ namespace DataService.Models.Entities.Services
                 {
                     rsList.Add(new AgencyDeviceAPIViewModel
                     {
+                        AgencyName = item.Agency.AgencyName,
+                        CompanyName = item.Agency.Company.CompanyName,
                         DeviceId = item.DeviceId,
                         AgencyId = item.AgencyId,
                         DeviceTypeId = item.DeviceTypeId,
@@ -118,6 +122,8 @@ namespace DataService.Models.Entities.Services
                         DeviceId = device.DeviceId,
                         DeviceName = device.DeviceName,
                         AgencyId = device.AgencyId,
+                        CompanyId = device.Agency.CompanyId.Value,
+                        CompanyName = device.Agency.Company.CompanyName,
                         DeviceTypeId = device.DeviceTypeId,
                         DeviceTypeName = device.DeviceType.DeviceTypeName,
                         DeviceCode = device.DeviceCode,
@@ -219,39 +225,54 @@ namespace DataService.Models.Entities.Services
                 return new ResponseObject<List<AgencyDeviceAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy thiết bị nào!", ObjReturn = null, ErrorMessage = e.ToString() };
             }
         }
-        //public ResponseObject<bool> RemoveDevice(int device_id)
-        //{
-        //    var devicetypeRepo = DependencyUtils.Resolve<IDeviceRepository>();
-        //    var devicetype = devicetypeRepo.GetActive().SingleOrDefault(a => a.DeviceTypeId == device_id);
-        //    try
-        //    {
-        //        Deactivate(devicetype);
-        //        return new ResponseObject<bool> { IsError = false, SuccessMessage = "Xóa loại thiết bị thành công", ObjReturn = true };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa loại thiết bị thất bại", ErrorMessage = ex.ToString(), ObjReturn = false };
-        //    }
+        public ResponseObject<bool> RemoveDevice(int device_id)
+        {
+            var deviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
+            var device = deviceRepo.GetActive().SingleOrDefault(a => a.DeviceId == device_id);
+            try
+            {
+                Deactivate(device);
+                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Xóa thiết bị thành công", ObjReturn = true };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa thiết bị thất bại", ErrorMessage = ex.ToString(), ObjReturn = false };
+            }
 
-        //}
-        //public ResponseObject<bool> UpdateDeviceType(DeviceTypeAPIViewModel model)
-        //{
-        //    var devicetypeRepo = DependencyUtils.Resolve<IDeviceTypeRepository>();
-        //    var updateDeviceType = devicetypeRepo.GetActive().SingleOrDefault(a => a.DeviceTypeId == model.DeviceTypeId);
+        }
+        public ResponseObject<bool> UpdateDevice(AgencyDeviceAPIViewModel model)
+        {
+            try
+            {
+                var deviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
+            var updateDevice = deviceRepo.GetActive().SingleOrDefault(a => a.DeviceId == model.DeviceId);
 
-        //    if (updateDeviceType != null)
-        //    {
-        //        updateDeviceType.ServiceId = model.ServiceId;
-        //        updateDeviceType.DeviceTypeName = model.DeviceTypeName;
-        //        updateDeviceType.Description = model.Description;
-        //        updateDeviceType.UpdateDate = DateTime.UtcNow.AddHours(7);
+            if (updateDevice != null)
+            {
+                updateDevice.DeviceName = model.DeviceName;
+                updateDevice.DeviceCode = model.DeviceCode;
+                updateDevice.GuarantyStartDate = model.GuarantyStartDate.ToDateTime();
+                updateDevice.GuarantyEndDate = model.GuarantyEndDate.ToDateTime();
+                updateDevice.Ip = model.Ip;
+                updateDevice.Port = model.Port;
+                updateDevice.DeviceAccount = model.DeviceAccount;
+                updateDevice.DevicePassword = model.DevicePassword;
+                updateDevice.DeviceAccount = model.DeviceAccount;
+                updateDevice.Other = model.Other;
+                updateDevice.UpdateDate = DateTime.UtcNow.AddHours(7);
 
-        //        devicetypeRepo.Edit(updateDeviceType);
-        //        devicetypeRepo.Save();
-        //        return new ResponseObject<bool> { IsError = false, SuccessMessage = "Chỉnh sửa loại thiết bị thành công", ObjReturn = true };
-        //    }
+                deviceRepo.Edit(updateDevice);
+                deviceRepo.Save();
+                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Cập nhật thành công!", ObjReturn = true };
+                }
 
-        //    return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉnh sửa loại thiết bị thất bại", ObjReturn = false };
-        //}
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật thiết bị thất bại!", ObjReturn = false };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật thiết bị thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
+            }
+        }
     }
 }

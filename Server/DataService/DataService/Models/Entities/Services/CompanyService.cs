@@ -18,6 +18,7 @@ namespace DataService.Models.Entities.Services
         ResponseObject<bool> CreateCompany(CompanyAPIViewModel model);
         ResponseObject<bool> UpdateCompany(CompanyAPIViewModel model);
         ResponseObject<bool> RemoveCompany(int company_id);
+        ResponseObject<List<CompanyAPIViewModel>> ViewCompanyByCompanyId(int company_id);
     }
 
     public partial class CompanyService
@@ -148,6 +149,35 @@ namespace DataService.Models.Entities.Services
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa loại công ty thất bại", ErrorMessage = ex.ToString(), ObjReturn = false };
             }
 
+        }
+        public ResponseObject<List<CompanyAPIViewModel>> ViewCompanyByCompanyId(int company_id)
+        {
+            try
+            {
+                List<CompanyAPIViewModel> rsList = new List<CompanyAPIViewModel>();
+                var companyDetailRepo = DependencyUtils.Resolve<ICompanyRepository>();
+                var companyDetail = companyDetailRepo.GetActive(p => p.CompanyId == company_id).ToList();
+                if (companyDetail.Count <= 0)
+                {
+                    return new ResponseObject<List<CompanyAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy công ty!" };
+                }
+                foreach (var item in companyDetail)
+                {
+                    rsList.Add(new CompanyAPIViewModel
+                    {
+                        CompanyId = item.CompanyId,
+                        CompanyName = item.CompanyName,
+
+                    });
+                }
+
+                return new ResponseObject<List<CompanyAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Tìm thấy công ty" };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<List<CompanyAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy công ty nào!", ObjReturn = null, ErrorMessage = e.ToString() };
+            }
         }
     }
 }

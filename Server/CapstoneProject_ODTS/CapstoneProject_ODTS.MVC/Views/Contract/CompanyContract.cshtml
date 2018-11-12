@@ -96,13 +96,14 @@
                 </div>
                 <div class="modal-body">
                     <p>
-                    <p id="id"></p>
-                    <p>
                         <b>Tên Công Ty:</b><br>
-                        <select id="comboCompany"></select>
+                        <select class="form-control select2" id="comboCompany" disabled="true"></select>
                     <p>
                         <b>Mô Tả Hợp Đồng:</b><br>
-                        <input type="text" id="conNameCreate"></input>
+                        <input class="form-control" type="text" id="conNameCreate"></input>
+                    <p>
+                        <b>Dịch Vụ Đăng Ký:</b><br>
+                        <select multiple class="form-control select2" style="width: 100%;" id="test"></select>
                     <p>
                         <b>Ngày Bất Đầu:</b><br>
                         <input type="text" id="createDate" type="text" class="form-control" required></input>
@@ -129,13 +130,14 @@
                 </button>
             </div>
             <div class="modal-body">
-
+                <p>
+                <p id="id"></p>
                 <p>
                     <b>Tên Công Ty:</b><br>
                     <select id="comboCompanyE" disabled="true"></select>
                 <p>
                     <b>Mô Tả Hợp Đồng:</b><br>
-                    <input type="text" id="conNameE"></input>
+                    <input class="form-control" type="text" id="conNameE"></input>
                 <p>
                     <b>Ngày Bất Đầu:</b><br>
                     <input type="text" id="conStartDateE" type="text" class="form-control" required></input>
@@ -185,29 +187,33 @@
 
 <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts {
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
-<script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
+    <script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
 
-<script>
-        $(document).ready(function () {
-            loadContract();
-            showCompany();
-        });
+    <script>
+    $(document).ready(function () {
+        loadContract();
+        showCompany();
+        showSupportService();
+    });
+    $('#CreateModal').on('hidden.bs.modal', function () {
+        $('.modal-body').find('input').val('');
+    });
 
-        function loadContract() {
-            $.ajax({
-                type: 'POST',
-                /**/
-                /**/
-                /**/
-                url: '@Url.Action("GetAllContract",  "Company", new { company_id = dataContract })',
-        /**/
-        /**/
-        /**/
+    $('#test').select2({
+        dropdownParent: $('#CreateModal')
+    });
+    function loadContract() {
+        $.ajax({
+        type: 'POST',
+        url: '@Url.Action("GetAllContract",  "Company", new { company_id = dataContract })',
         data: {
         },
         success: function (result) {
@@ -216,277 +222,282 @@
         error: function (error) {
             showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
         }
-    });
-}
-function initDatatable(data) {
-    $("#detail-table").dataTable().fnDestroy();
-    $("#detail-table").dataTable({
-        stateSave: true,
-        "bFilter": true,
-        "bSort": false,
-        "data": data,
-        "bRetrieve": true,
-        "bScrollCollapse": true,
-        "bProcessing": true,
-        "oLanguage": {
-            "sSearch": "Tìm kiếm:",
-            "sSearchPlaceholder": "Thành phần con",
-            "sZeroRecords": "Không có dữ liệu phù hợp",
-            "sInfo": "Hiển thị từ _START_ đến _END_ trên tổng số _TOTAL_ dòng",
-            "sEmptyTable": "Không có dữ liệu",
-            "sInfoFiltered": " - lọc ra từ _MAX_ dòng",
-            "sLengthMenu": "Hiển thị _MENU_ dòng",
-            "sProcessing": "Đang xử lý...",
-            "oPaginate": {
-                "sNext": "<i class='fa fa-chevron-right'></i>",
-                "sPrevious": "<i class='fa fa-chevron-left'></i>"
+        });
+    }
+    function initDatatable(data) {
+        $("#detail-table").dataTable().fnDestroy();
+        $("#detail-table").dataTable({
+            stateSave: true,
+            "bFilter": true,
+            "bSort": false,
+            "data": data,
+            "bRetrieve": true,
+            "bScrollCollapse": true,
+            "bProcessing": true,
+            "oLanguage": {
+                "sSearch": "Tìm kiếm:",
+                "sSearchPlaceholder": "Thành phần con",
+                "sZeroRecords": "Không có dữ liệu phù hợp",
+                "sInfo": "Hiển thị từ _START_ đến _END_ trên tổng số _TOTAL_ dòng",
+                "sEmptyTable": "Không có dữ liệu",
+                "sInfoFiltered": " - lọc ra từ _MAX_ dòng",
+                "sLengthMenu": "Hiển thị _MENU_ dòng",
+                "sProcessing": "Đang xử lý...",
+                "oPaginate": {
+                    "sNext": "<i class='fa fa-chevron-right'></i>",
+                    "sPrevious": "<i class='fa fa-chevron-left'></i>"
+                }
+            },
+            "aoColumnDefs": [
+                {
+                    "aTargets": [0, 1, 2, 3, 4],
+                    "bSortable": false,
+                    "sClass": "text-center"
+                },
+            ],
+            "columns": [
+                { "data": "NumericalOrder" },
+                { "data": "CompanyName" },
+                { "data": "ContractName" },
+                { "data": "StartDate" },
+                { "data": "EndDate" },
+                {
+                    "data": "RequestName",
+                    "mRender": function (data, type, full) {
+                        return '<a href="#' + full.ContractId + '">Xem Dịch Vụ</a>';
+                    }
+                },
+                {
+                    "aTargets": [4],
+                    "mRender": function (data, type, full) {
+                        var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.ContractId + ')"></button>';
+                        var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.ContractId + ')"></button>';
+                        var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeContract(' + full.ContractId + ')"></button>';
+                        return view + " " + edit + " " + del;
+                    }
+                },
+            ],
+            "bAutoWidth": false,
+        });
+    }
+    function showCreateModal() {
+        $('#CreateModal').modal('show');
+    }
+    function showCompany() {
+        $('#comboCompany, #comboCompanyE')
+            .find('option')
+                    .remove()
+                    .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetCompanyDetail", "Company", new { company_id = dataContract })',
+                data: {
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    //$('#createAgency').modal('show');
+                    var len = data.result.ObjReturn.length;
+                    var html = '';
+                    for (var i = 0; i < len; i++) {
+                        html += '<option value="' +
+                            data.result.ObjReturn[i].CompanyId +
+                            '">' +
+                            data.result.ObjReturn[i].CompanyName +
+                            '</option>';
+                    }
+                $('#comboCompany').append(html);
+                $('#comboCompanyE').append(html);
             }
-        },
-        "aoColumnDefs": [
-            {
-                "aTargets": [0, 1, 2, 3, 4],
-                "bSortable": false,
-                "sClass": "text-center"
-            },
-        ],
-        "columns": [
-            { "data": "NumericalOrder" },
-            { "data": "CompanyName" },
-            { "data": "ContractName" },
-            { "data": "StartDate" },
-            { "data": "EndDate" },
-            {
-                "data": "RequestName",
-                "mRender": function (data, type, full) {
-                    return '<a href="#' + full.ContractId + '">Xem Dịch Vụ</a>';
-                }
-            },
-            {
-                "aTargets": [4],
-                "mRender": function (data, type, full) {
-                    var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.ContractId + ')"></button>';
-                    var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.ContractId + ')"></button>';
-                    var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeContract(' + full.ContractId + ')"></button>';
-                    return view + " " + edit + " " + del;
-                }
-            },
-        ],
-        "bAutoWidth": false,
-    });
-}
-function showCreateModal() {
-    $('#CreateModal').modal('show');
-}
-function showCompany() {
-    $('#comboCompany, #comboCompanyE')
+        });
+    }
+    function showSupportService() {
+    $('#test')
         .find('option')
-        .remove()
-        .end();
-    $.ajax({
-        type: 'GET',
-        /**/
-        /**/
-        /**/
-        url: '@Url.Action("GetAllCompany", "Home")',
-/**/
-/**/
-/**/
-data: {
-        },
+                .remove()
+                .end();
+        $.ajax({
+            type: 'GET',
+            url: '@Url.RouteUrl(new {action = "GetAllServiceITSupport", controller = "ServiceITSupport" })',
+            data: {
+            },
 
-        dataType: 'json',
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-            var obj = data.result.ObjReturn;
-            var html = '';
-            for (var i = 0; i < obj.length; i++) {
-                html += '<option value="' +
-                    obj[i].CompanyId +
-                    '">' +
-                    obj[i].CompanyName
-                '</option>';
-            }
-            $('#comboCompany').append(html);
-            $('#comboCompanyE').append(html);
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function(data) {
+                //$('#createAgency').modal('show');
+                var len = data.result.ObjReturn.length;
+                var html = '';
+                for (var i = 0; i < len; i++) {
+                    html += '<option value="' +
+                        data.result.ObjReturn[i].ServiceITSupportId +
+                        '">' +
+                        data.result.ObjReturn[i].ServiceName +
+                        '</option>';
+                }
+            $('#test').append(html);
         }
     });
-}
-function getData(idd) {
-
-    $.ajax({
-        /**/
-        /**/
-        /**/
-        url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "Contract"})',
-        /**/
-        /**/
-        /**/
-
-        data: {
-            contract_id: idd
-        },
-        type: 'GET',
-        dataType: 'json',
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-            $("#conCompany").text(data.result.ObjReturn.CompanyName);
-            $("#conName").text(data.result.ObjReturn.ContractName);
-            $("#conStartDate").text(data.result.ObjReturn.StartDate);
-            $("#conEndDate").text(data.result.ObjReturn.EndDate);
-            $("#conUpdateDate").text(data.result.ObjReturn.UpdateDate);
-        }
-    });
-    $('#ViewModal').modal('show');
-}
-$('#createDate').datepicker({
-    format: 'dd/mm/yyyy',
-    autoclose: true,
-    forceParse: false,
-})
-$('#endDate').datepicker({
-    format: 'dd/mm/yyyy',
-    autoclose: true,
-    forceParse: false,
-})
-$('#conStartDateE').datepicker({
-    format: 'dd/mm/yyyy',
-    autoclose: true,
-    forceParse: false,
-})
-$('#conEndDateE').datepicker({
-    format: 'dd/mm/yyyy',
-    autoclose: true,
-    forceParse: false,
-})
-
-function getDataEdit(id) {
-    $.ajax({
-        /**/
-        /**/
-        /**/
-        url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "Contract" })',
-        /**/
-        /**/
-        /**/
-
-        data: {
-            contract_id: id
-        },
-        type: 'GET',
-        dataType: 'json',
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-            $("#id").val(data.result.ObjReturn.ContractId);
-            $("#comboCompanyE").val(data.result.ObjReturn.CompanyId);
-            $("#conNameE").val(data.result.ObjReturn.ContractName);
-            $("#conStartDateE").val(data.result.ObjReturn.StartDate);
-            $("#conEndDateE").val(data.result.ObjReturn.EndDate);
-        }
-
-    });
-    $('#EditModal').modal('show');
-}
-function UpdateContract() {
-    var empObj = {
-        ContractId: $('#id').val(),
-        ContractName: $('#conNameE').val(),
-        StartDate: $('#conStartDateE').val(),
-        EndDate: $('#conEndDateE').val(),
     }
-    $.ajax({
-        type: 'POST',
-        /**/
-        /**/
-        /**/
-        url: '@Url.Action("UpdateContract", "Contract")',
-/**/
-/**/
-/**/
-data: JSON.stringify(empObj),
-        dataType: 'json',
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-            $('#EditModal').modal('hide');
-            if (!data.result.isError) {
-                alert(data.result.SuccessMessage);
+    function getData(idd) {
+
+        $.ajax({
+
+            url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "Contract"})',
+
+            data: {
+                contract_id: idd
+            },
+            type: 'GET',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $("#conCompany").text(data.result.ObjReturn.CompanyName);
+                $("#conName").text(data.result.ObjReturn.ContractName);
+                $("#conStartDate").text(data.result.ObjReturn.StartDate);
+                $("#conEndDate").text(data.result.ObjReturn.EndDate);
+                $("#conUpdateDate").text(data.result.ObjReturn.UpdateDate);
             }
-            else
-                alert(data.result.WarningMessage);
-            loadContract();
-        }
-    });
-}
-function createContracttt() {
-    var empObj = {
-        CompanyId: $('#comboCompany').val(),
-        ContractName: $('#conNameCreate').val(),
-        StartDate: $('#createDate').val(),
-        EndDate: $('#endDate').val(),
+        });
+        $('#ViewModal').modal('show');
     }
-    $.ajax({
-        type: 'POST',
-        url: '@Url.Action("CreateContract", "Contract")',
+    $('#createDate').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        forceParse: false,
+    })
+    $('#endDate').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        forceParse: false,
+    })
+    $('#conStartDateE').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        forceParse: false,
+    })
+    $('#conEndDateE').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        forceParse: false,
+    })
+
+    function getDataEdit(id) {
+        $.ajax({
+
+            url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "Contract" })',
+
+
+            data: {
+                contract_id: id
+            },
+            type: 'GET',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $("#id").val(data.result.ObjReturn.ContractId);
+                $("#comboCompanyE").val(data.result.ObjReturn.CompanyId);
+                $("#conNameE").val(data.result.ObjReturn.ContractName);
+                $("#conStartDateE").val(data.result.ObjReturn.StartDate);
+                $("#conEndDateE").val(data.result.ObjReturn.EndDate);
+            }
+
+        });
+        $('#EditModal').modal('show');
+    }
+    function UpdateContract() {
+        var empObj = {
+            ContractId: $('#id').val(),
+            ContractName: $('#conNameE').val(),
+            StartDate: $('#conStartDateE').val(),
+            EndDate: $('#conEndDateE').val(),
+        }
+        $.ajax({
+            type: 'POST',
+
+            url: '@Url.Action("UpdateContract", "Contract")',
+
     data: JSON.stringify(empObj),
-
-        dataType: 'json',
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-            $('#CreateModal').modal('hide');
-            if (!data.result.isError) {
-                alert(data.result.SuccessMessage);
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $('#EditModal').modal('hide');
+                if (!data.result.isError) {
+                    alert(data.result.SuccessMessage);
+                }
+                else
+                    alert(data.result.WarningMessage);
+                loadContract();
             }
-            else
-                alert(data.result.WarningMessage);
-
-            loadContract();
+        });
+    }
+    function createContracttt() {
+        var empObj = {
+            CompanyId: $('#comboCompany').val(),
+            ContractName: $('#conNameCreate').val(),
+            StartDate: $('#createDate').val(),
+            EndDate: $('#endDate').val(),
         }
-    });
-}
-//function removeContract(id) {
-//    $('#modalConfirmDelete').modal('show');
-//    $('#contractHidden').val(id);
-//        }
-        function removeContract(id) {
-            //$('#modalConfirmDelete').modal('show');
-            swal({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then(function () {
-                deleteContract();
-                swal(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                )
-            });
-            $('#contractHidden').val(id);
-        }
-function deleteContract() {
-    var contract_id = $('#contractHidden').val();
-    $.ajax({
-        type: 'GET',
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CreateContract", "Contract")',
+        data: JSON.stringify(empObj),
 
-        url: '@Url.Action("RemoveContract", "Contract")',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $('#CreateModal').modal('hide');
+                if (!data.result.isError) {
+                    alert(data.result.SuccessMessage);
+                }
+                else
+                    alert(data.result.WarningMessage);
 
-    data: {
-            contract_id: contract_id
-        },
+                loadContract();
+            }
+        });
+    }
+            function removeContract(id) {
+                swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then(function () {
+                    deleteContract();
+                    swal(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                });
+                $('#contractHidden').val(id);
+            }
+    function deleteContract() {
+        var contract_id = $('#contractHidden').val();
+        $.ajax({
+            type: 'GET',
 
-        dataType: 'json',
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-            $('#modalConfirmDelete').modal('hide')
-            loadContract();
-        }
-    });
-}
+            url: '@Url.Action("RemoveContract", "Contract")',
 
-</script>
+        data: {
+                contract_id: contract_id
+            },
+
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $('#modalConfirmDelete').modal('hide')
+                loadContract();
+            }
+        });
+    }
+
+    </script>
 
 }
 

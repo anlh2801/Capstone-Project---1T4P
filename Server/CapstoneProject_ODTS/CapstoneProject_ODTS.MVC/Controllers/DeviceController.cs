@@ -51,5 +51,16 @@ namespace CapstoneProject_ODTS.MVC.Controllers
 
             return Json(new { result = devices }, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult UpdateDevice(AgencyDeviceAPIViewModel model)
+        {
+            var result = _deviceDomain.UpdateDevice(model);
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+
+        }
+        public ActionResult RemoveDevice(int device_id)
+        {
+            var deviceDetail = _deviceDomain.RemoveDevice(device_id);
+            return Json(new { result = deviceDetail }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

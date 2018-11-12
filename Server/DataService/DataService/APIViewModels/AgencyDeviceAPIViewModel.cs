@@ -26,6 +26,7 @@ namespace DataService.APIViewModels
         public string Other { get; set; }
         public string CreateDate { get; set; }
         public string UpdateDate { get; set; }
-
+        public string CompanyName { get; set; }
+        public string AgencyName { get; set; }
     }
 }

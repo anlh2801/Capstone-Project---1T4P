@@ -78,5 +78,11 @@ namespace CapstoneProject_ODTS.MVC.Controllers
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult GetCompanyDetail(int company_id)
+        {
+            var result = _companyDomain.ViewCompanyByCompanyId(company_id);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

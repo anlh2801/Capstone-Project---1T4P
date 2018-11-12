@@ -1,6 +1,4 @@
 ﻿@{
-    /**/
-
     var dataAgency = ViewData["ID"];
 }
 <!--Modal: modalConfirmDelete-->
@@ -40,35 +38,30 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Request Detail</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h4 class="modal-title w-100 font-weight-bold">Thông Tin Chi Tiết</h4>
             </div>
             <div class="modal-body">
                 <p>
-                    <b>ID:</b><br>
-                <p id="rqID"></p>
-                <p>
-                    <b>Company:</b><br>
+                    <b>Tên Công Ty Sở Hữu:</b><br>
                 <p id="rqName"></p>
                 <p>
-                    <b>Account:</b><br>
-                <p id="rqCD"></p>
-                <p>
-                    <b>Agency Name:</b><br>
+                    <b>Tên Chi Nhánh:</b><br>
                 <p id="rqAN"></p>
                 <p>
-                    <b>Address:</b><br>
+                    <b>Tên Tài Khoản Ứng Dụng:</b><br>
+                <p id="rqCD"></p>
+
+                <p>
+                    <b>Địa Chỉ:</b><br>
                 <p id="rqIT"></p>
                 <p>
-                    <b>Telephone:</b><br>
+                    <b>Số Điện Thoại:</b><br>
                 <p id="rqIN"></p>
 
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 @*<button type="button" class="btn btn-primary">Save changes</button>*@
             </div>
         </div>
@@ -78,38 +71,34 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Request Detail</h4>
+                <h4 class="modal-title w-100 font-weight-bold">Chỉnh Sửa Thông Tin</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <p>
-                    <b>ID:</b>
+                <p id="idd"></p>
                 <p>
-                    <input id="idd" type="text" disabled="disabled" class="form-control" />
-                <p>
-                    <b>Company:</b>
+                    <b>Tên Công Ty Sở Hữu:</b>
                     <select id="q" class="form-control" disabled="true"></select>
                 <p>
-                    <b>Account:</b><br>
+                    <b>Tên Tài Khoản Ứng Dụng:</b><br>
                     <select id="w" class="form-control" disabled="true"></select>
                 <p>
-                    <b>Name</b><br>
+                    <b>Tên Chi Nhánh</b><br>
                     <input id="e" type="text" class="form-control">
                 <p>
-                    <b>Address:</b><br>
+                    <b>Địa Chỉ:</b><br>
                     <input id="r" type="text" class="form-control">
                 <p>
-                    <b>Telephone:</b><br>
+                    <b>Số Điện Thoại:</b><br>
                     <input id="t" type="text" class="form-control">
                 <p>
             </div>
             <div class="modal-footer">
-                @*<a href="#" onClick="updateAgency();" class="btn  btn-outline-danger">Save Changes</a>*@
-                <button type="button" class="btn btn-primary" onClick="updateAgency();">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" onClick="updateAgency();">Chỉnh Sửa</button>
             </div>
         </div>
     </div>
@@ -119,34 +108,29 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Request Detail</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h4 class="modal-title w-100 font-weight-bold">Nhập Thông Tin</h4>
             </div>
             <div class="modal-body">
+                
+                <label for="qq">Tên Công Ty Sở Hữu::</label>
+                <select class="form-control select2" style="width: 100%;" id="qq" disabled="true"></select>
 
-                <label for="qq">Company:</label>
-                <select class="form-control" id="qq" disabled="true"></select>
+                <label for="ww">Chọn Tài Khoản:</label>
+                <select class="form-control select2" style="width: 100%;" id="ww"></select>
 
-                <label for="ww">Account:</label>
-                <select class="form-control" id="ww"></select>
-
-                <label for="ee">Name</label>
+                <label for="ee">Tên Chi Nhánh:</label>
                 <input id="ee" type="text" class="form-control" required>
 
-                <label for="rr">Address</label>
+                <label for="rr">Địa Chỉ:</label>
                 <input id="rr" type="text" class="form-control" required>
 
-                <label for="tt">Telephone:</label>
+                <label for="tt">Số Điện Thoại:</label>
                 <input id="tt" type="text" class="form-control" required>
 
             </div>
             <div class="modal-footer">
-
-                <button class="btn btn-primary" onClick="createAgency();">Create</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button class="btn btn-primary" onClick="createAgency();">Tạo Mới</button>
             </div>
         </div>
     </div>
@@ -158,17 +142,14 @@
         color: black;
         padding: 1%;
         border-left: solid cadetblue;
-        width: 97%;
-    }
-
-    H3 {
-        display: inline;
+        width: 100%;
     }
 </style>
 <!-- Datatable -->
-<div class="city">
-    <h3 class="H3">Tất Cả Chi Nhánh Của Công Ty </h3><h3 id="comName"></h3>
+<div class="row col-md-12">
+    <h3 class="city" id="comNameShow"></h3>
 </div>
+
 
 <div class="row col-md-12">
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
@@ -196,6 +177,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script type="text/javascript" src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
+    <script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
     <script>
         $(document).ready(function() {
             loadCompany();
@@ -203,9 +187,10 @@
             showCompany();
             getComName();
         });
-        $('#createAgencyModal').on('hidden.bs.modal', function () {
-            $('.modal-body').find('input').val('');
+        $('#ww').select2({
+            dropdownParent: $('#createAgencyModal'),
         });
+
         function getComName() {
 
             $.ajax({
@@ -218,7 +203,9 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#comName").text(data.result.ObjReturn.CompanyName);
+                    var html = '';
+                    html = 'Tất Cả Chi Nhánh Của Công Ty ' + data.result.ObjReturn.CompanyName;
+                    $('#comNameShow').append(html);
                 }
                 });
         }
@@ -364,18 +351,19 @@
         function removeAgency(id) {
             //$('#modalConfirmDelete').modal('show');
             swal({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                title: 'Bạn có Chắc Chắn Muốn Xóa?',
+                text: "Dữ Liệu Đã Xóa Không Thể Hoàn Lại!",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then(function() {
+                cancelButtonText: 'Quay Lại',
+                confirmButtonText: 'Chấp Nhận Xóa!'
+            }).then(function () {
                 deleteAgency();
                 swal(
-                    'Deleted!',
-                    'Your file has been deleted.',
+                    'Đã Xóa!',
+                    'Dữ Liệu Của Bạn Đã Được Xóa.',
                     'success'
                 )
             });
@@ -414,7 +402,7 @@
                     .end();
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("GetAllCompany", "Home")',
+                url: '@Url.Action("GetCompanyDetail", "Company", new { company_id = dataAgency })',
                 data: {
                 },
 
@@ -436,8 +424,6 @@
 
                 }
             });
-
-
         }
 
         //show all account on combo box

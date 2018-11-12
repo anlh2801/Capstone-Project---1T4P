@@ -20,6 +20,7 @@ namespace DataService.Domain
         ResponseObject<bool> RemoveCompany(int company_id);
         ResponseObject<List<AgencyAPIViewModel>> ViewAllAgencyByCompanyId(int company_id);
         ResponseObject<List<ContractAPIViewModel>> ViewAllContractByCompanyId(int company_id);
+        ResponseObject<List<CompanyAPIViewModel>> ViewCompanyByCompanyId(int company_id);
     }
 
     public class CompanyDomain : BaseDomain, ICompanyDomain
@@ -82,6 +83,15 @@ namespace DataService.Domain
             var contracts = contractService.ViewAllContractByCompanyId(company_id);
 
             return contracts;
+        }
+
+        public ResponseObject<List<CompanyAPIViewModel>> ViewCompanyByCompanyId(int company_id)
+        {
+            var companyService = this.Service<ICompanyService>();
+
+            var companies = companyService.ViewCompanyByCompanyId(company_id);
+
+            return companies;
         }
     }
 }

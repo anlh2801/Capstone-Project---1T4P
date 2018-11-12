@@ -26,8 +26,8 @@
     <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Thông Tin Chi Tiết</h5>
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Thông Tin Chi Tiết</h4>
 
                 </div>
                 <div class="modal-body">
@@ -38,6 +38,14 @@
                     <p>
                         <b>Mô Tả:</b><br>
                     <p id="comDescription"></p>
+
+                    <p>
+                        <b>Ngày Tạo:</b><br>
+                    <p id="comCreateDate"></p>
+                    <p>
+                        <b>Lần Chỉnh Sửa Cuối:</b><br>
+                    <p id="comUpdateDate"></p>
+                    <p class="one"><b>Ba Chỉ Số Đánh Giá Theo % Để Chọn Người Hỗ Trợ.</b><br></p>
                     <p>
                         <b>Số Điểm Bình Chọn Của Nhân Viên:</b><br>
                     <p id="viewPercentForITSupporterRate"></p>
@@ -47,12 +55,6 @@
                     <p>
                         <b>Độ Thân Thuộc Của Nhân Viên :</b><br>
                     <p id="viewPercentForITSupporterFami"></p>
-                    <p>
-                        <b>Ngày Tạo:</b><br>
-                    <p id="comCreateDate"></p>
-                    <p>
-                        <b>Lần Chỉnh Sửa Cuối:</b><br>
-                    <p id="comUpdateDate"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -99,30 +101,39 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Nhập Thông Tin</h5>
+                    <h3 class="modal-title"><b>Tạo mới công ty</b></h3>
                 </div>
                 <div class="modal-body">
-                    <p>
-                    <p id="id"></p>
-                    <p>
-                        <b>Tên Công Ty:</b><br>
-                        <input class="form-control" type="text" id="comNameCreate"></input>
-                    <p>
-                        <b>Mô Tả:</b><br>
-                        <input class="form-control" type="text" id="comDescriptionCreate"></input>
-                    <p>
-                        <b>Số Điểm Bình Chọn Của Nhân Viên:</b><br>
-                        <input class="form-control" type="text" id="comPercentForITSupporterRate"></input>
-                    <p>
-                        <b>Kinh Nghiệm Của Nhân Viên:</b><br>
-                        <input class="form-control" type="text" id="comPercentForITSupporterExp"></input>
-                    <p>
-                        <b>Độ Thân Thuộc Của Nhân Viên :</b><br>
-                        <input class="form-control" type="text" id="comPercentForITSupporterFami"></input>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>Tên Công Ty:</b><br>
+                            <input class="form-control" type="text" id="comNameCreate" required />
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Mô Tả:</b><br>
+                            <input class="form-control" type="text" id="comDescriptionCreate" required />
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <h4 class="city"><b>Vui lòng thêm chỉ số để chọn người hỗ trợ phù hợp</b><br></h4>                            
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">    
+                                <b>Điểm Bình Chọn(%)</b><br>
+                                <input class="form-control" type="text" id="comPercentForITSupporterRate" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên" />
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                                <b>Kinh Nghiệm(%)</b><br>
+                                <input class="form-control" type="text" id="comPercentForITSupporterExp" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên" />                        
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px"> 
+                                <b>Độ Thân Thuộc(%)</b><br>
+                                <input class="form-control" type="text" id="comPercentForITSupporterFami" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên" />                        
+                        </div>
+                    </div>                 
+                                            
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary" onclick="createCompany()">Tạo Mới</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="createCompany(); clearModal();">Tạo Mới</button>
                 </div>
             </div>
         </div>
@@ -132,17 +143,19 @@
 <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Chỉnh Sửa Chi Tiết</h5>
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Chỉnh Sửa Thông Tin</h4>
             </div>
             <div class="modal-body">
-
+                <p>
+                <p id="id"></p>
                 <p>
                     <b>Tên Công Ty:</b><br>
                     <input class="form-control" type="text" id="comNameEdit"></input>
                 <p>
                     <b>Mô Tả:</b><br>
                     <input class="form-control" type="text" id="comDescriptionEdit"></input>
+                <p class="one"><b>Ba Chỉ Số Đánh Giá Theo % Để Chọn Người Hỗ Trợ.</b><br></p>
                 <p>
                     <b>Số Điểm Bình Chọn Của Nhân Viên:</b><br>
                     <input class="form-control" type="text" id="editPercentForITSupporterRate"></input>
@@ -170,6 +183,13 @@
         border-left: solid cadetblue;
         width: 100%;
     }
+    p.one {
+        margin-top: 5%;
+        padding: 2%;
+        border-top: 1px solid lightgrey;
+        width: 100%;
+    }
+
 </style>
 <div class="row col-md-12">
     <h3 class="city">Quản Lý Công Ty</h3>
@@ -206,7 +226,7 @@
         $(document).ready(function() {
             loadCompany();
         });
-
+        
         function loadCompany() {
             $.ajax({
                 type: 'POST',
@@ -285,6 +305,17 @@
         function showCreateModal() {
             $('#CreateModal').modal('show');
         }
+        function clearModal() {
+            $('#CreateModal').on('hidden.bs.modal', function (e) {
+                $(this)
+                    .find("input,textarea,select")
+                    .val('')
+                    .end()
+                    .find("input[type=checkbox], input[type=radio]")
+                    .prop("checked", "")
+                    .end();
+            })
+        }      
         function getData(idd) {
 
             $.ajax({
@@ -374,9 +405,9 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                    $('#CreateModal').modal('hide');
                         if (!data.result.isError) {
                             swal(data.result.SuccessMessage, "", "success");
+                            $('#CreateModal').modal('hide');
                         }
                         else
                             swal(data.result.WarningMessage, "", "error");
@@ -398,8 +429,8 @@
             }).then(function () {
                 deleteCompany();
                 swal(
-                    'Deleted!',
-                    'Your file has been deleted.',
+                    'Đã Xóa!',
+                    'Dữ Liệu Của Bạn Đã Được Xóa.',
                     'success'
                 )
             });

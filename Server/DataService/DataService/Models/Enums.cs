@@ -22,6 +22,20 @@ namespace DataService.Models
     }
 
     //For ITSupporter View
+    public enum RequestDoingStatus
+    {
+        [Display(Name = "Đã nhận")]
+        Received = 1,
+        [Display(Name = "Đang di chuyển")]
+        Moving = 2,
+        [Display(Name = "Đang sửa chữa")]
+        Fixing = 3,
+        [Display(Name = "Đợi linh kiện")]
+        Holding = 4,
+        [Display(Name = "Hoàn thành")]
+        Done = 5
+    }
+
     public enum TicketStatusEnum
     {
         [Display(Name = "Đang chờ xử lý")]
