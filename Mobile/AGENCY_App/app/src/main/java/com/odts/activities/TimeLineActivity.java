@@ -60,7 +60,9 @@ public class TimeLineActivity extends AppCompatActivity implements RatingDialogL
 
     private void setDataListItems(){
         requestService = new RequestService();
-        requestService.requestDetail(TimeLineActivity.this, 216, new CallBackData<Request>() {
+        Intent myIntent = getIntent();
+        final int requestID = myIntent.getIntExtra("requestID", 0);
+        requestService.requestDetail(TimeLineActivity.this, requestID, new CallBackData<Request>() {
             @Override
             public void onSuccess(Request listRequest) {
 //                listRequest.getTicket().get(0).getiTSupporterName();

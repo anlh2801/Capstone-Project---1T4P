@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.odts.activities.R;
+import com.odts.activities.StatusTimelineActivity;
 import com.odts.activities.TimeLineActivity;
 import com.odts.models.Request;
 import com.odts.services.RequestService;
@@ -36,7 +37,7 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     if(position != RecyclerView.NO_POSITION) {
-                        Intent intent = new Intent(context, TimeLineActivity.class);
+                        Intent intent = new Intent(context, StatusTimelineActivity.class);
                         intent.putExtra("requestID", listRequest.get(position).getRequestId());
                         context.startActivity(intent);
                     }

@@ -29,7 +29,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".activities.ChatActivity"></activity>
+        <activity android:name=".activities.ChatActivity" />
+        <activity android:name=".activities.StatusTimelineActivity"></activity>
     </application>
 
 </manifest>
