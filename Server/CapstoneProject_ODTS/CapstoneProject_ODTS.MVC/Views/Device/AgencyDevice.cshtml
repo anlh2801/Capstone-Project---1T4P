@@ -16,10 +16,10 @@
                 <div class="modal-body">
                     <p>
                         <b>Tên Công Ty Sở Hữu::</b><br>
-                        <select class="form-control select2" style="width: 100%;" id="comboCompany"></select>
+                        <select class="form-control select2" style="width: 100%;" id="comboCompany" disabled></select>
                     <p>
                         <b>Tên Chi Nhánh:</b><br>
-                        <select class="form-control select2" style="width: 100%;" id="comboCompanyAgency"></select>
+                        <select class="form-control select2" style="width: 100%;" id="comboCompanyAgency" disabled></select>
                     <p>
                         <b>Loại Thiết Bị:</b><br>
                         <select class="form-control select2" style="width: 100%;" id="comboDeviceType"></select>
@@ -327,7 +327,7 @@
                 .end();
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("GetAllDevice", "Agency", new { agency_id = dataAgency })',
+                url: '@Url.Action("GetAgencyDetail", "Agency", new { agency_id = dataAgency })',
                 data: {
                 },
 
@@ -337,16 +337,16 @@
                     var obj = data.result.ObjReturn;
                     var html = '';
                     var htmlCompany ='';
-                    if(obj != null && obj.length > 0) {
+                    if(obj != null) {
                         html += '<option value="' +
-                            obj[0].AgencyId +
+                            obj.AgencyId +
                             '">' +
-                            obj[0].AgencyName +
+                            obj.AgencyName +
                             '</option>';
                         htmlCompany += '<option value="' +
-                            obj[0].CompanyId +
+                            obj.CompanyId +
                             '">' +
-                           obj[0].CompanyName +
+                           obj.CompanyName +
                             '</option>';
                     }
                     $('#comboCompanyAgency').append(html);
