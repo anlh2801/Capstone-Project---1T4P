@@ -42,7 +42,7 @@ public class ChatActivity extends AppCompatActivity {
         messageArea = (EditText)findViewById(R.id.messageArea);
         scrollView = (ScrollView)findViewById(R.id.scrollView);
         SharedPreferences sharedPreferences = getSharedPreferences("ODTS", MODE_PRIVATE);
-        String itName = sharedPreferences.getString("itName", "");
+        final String itName = sharedPreferences.getString("itName", "");
 
         Firebase.setAndroidContext(this);
         reference1 = new Firebase("https://androidchatapp-c60cb.firebaseio.com/messages/" + itName + "_" + "Passio 47 TCV");
@@ -56,7 +56,7 @@ public class ChatActivity extends AppCompatActivity {
                 if(!messageText.equals("")){
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("message", messageText);
-                    map.put("user", "hero1");
+                    map.put("user", itName);
                     reference1.push().setValue(map);
                     reference2.push().setValue(map);
                     messageArea.setText("");
@@ -71,7 +71,7 @@ public class ChatActivity extends AppCompatActivity {
                 String message = map.get("message").toString();
                 String userName = map.get("user").toString();
 
-                if(userName.equals("hero1")){
+                if(userName.equals(itName)){
                     addMessageBox("You:-\n" + message, 1);
                 }
                 else{
