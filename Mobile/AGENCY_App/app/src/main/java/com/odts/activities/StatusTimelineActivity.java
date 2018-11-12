@@ -1,6 +1,7 @@
 package com.odts.activities;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,17 +35,29 @@ public class StatusTimelineActivity extends AppCompatActivity {
     private List<TimeLine> mDataList = new ArrayList<>();
     LinearLayout layout;
     Firebase reference1;
-    TextView status1;
+    private FloatingActionButton flbCall;
+    private FloatingActionButton flbChat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status_timeline);
+        Intent intent = getIntent();
+        final int requestID = intent.getIntExtra("requestID", 0);
+        final String itName = intent.getStringExtra("itName");
+        flbChat = findViewById(R.id.flbChat);
+        flbChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                        Toast.makeText(getContext(), "float", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(StatusTimelineActivity.this, ChatActivity.class);
+                intent.putExtra("itNameChat", itName);
+                startActivity(intent);
+            }
+        });
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
         Firebase.setAndroidContext(this);
-        Intent intent = getIntent();
-        final int requestID = intent.getIntExtra("requestID", 0);
         reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" +requestID);
         reference1.addChildEventListener(new ChildEventListener() {
             @Override
