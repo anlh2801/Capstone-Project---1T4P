@@ -5,8 +5,8 @@
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Thông Tin Chi Tiết</h4>
+            <div class="modal-header">
+                <h3 class="modal-title"><b>Thông tin chi tiết</b></h3>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -14,19 +14,19 @@
                         <b>Tên Công Ty Sở Hữu:</b><br>
                         <p id="rqName"></p>
                     </div>
-                    <div class="col-md-12" style="margin-top:5px">
+                    <div class="col-md-12" style="margin-top: 10px">
                         <b>Tên Chi Nhánh:</b><br>
                         <p id="rqAN"></p>
                     </div>
-                    <div class="col-md-12" style="margin-top:5px">
+                    <div class="col-md-12" style="margin-top: 10px">
                         <b>Tên Tài Khoản Ứng Dụng:</b><br>
                         <p id="rqCD"></p>
                     </div>
-                    <div class="col-md-12" style="margin-top:5px">
+                    <div class="col-md-12" style="margin-top: 10px">
                         <b>Địa Chỉ:</b><br>
                         <p id="rqIT"></p>
                     </div>
-                    <div class="col-md-12" style="margin-top:5px">
+                    <div class="col-md-12" style="margin-top: 10px">
                         <b>Số Điện Thoại:</b><br>
                         <p id="rqIN"></p>
                     </div>
@@ -40,77 +40,90 @@
     </div>
 </div>
 
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Chỉnh Sửa Thông Tin</h4>
+<form onsubmit="updateAgency(); return false">
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b>Chỉnh sửa thông tin</b></h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <p>
+                        <p id="idd"></p>
+                        <div class="col-md-12">
+                            <b>Tên Công Ty Sở Hữu:</b>
+                            <select id="q" class="form-control" disabled="disabled"></select>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Tên Tài Khoản Ứng Dụng:</b><br>
+                            <select id="w" class="form-control" disabled="disabled"></select>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Tên Chi Nhánh</b><br>
+                            <input id="e" type="text" class="form-control">
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Địa Chỉ:</b><br>
+                            <input id="r" type="text" class="form-control">
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Số Điện Thoại:</b><br>
+                            <input id="t" type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Chỉnh Sửa</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <p>
-                    <p id="idd"></p>
-                    <div class="col-md-12">
-                        <b>Tên Công Ty Sở Hữu:</b>
-                        <select id="q" class="form-control" disabled="disabled"></select>
+        </div>
+    </div>
+</form>
+<input type="hidden" id="companyHidden" />
+<form onsubmit="createAgency(); return false">
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade2" id="createAgencyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title"><b>Tạo chinh nhánh mới</b></h3>
                     </div>
-                    <div class="col-md-12" style="margin-top:10px">
-                        <b>Tên Tài Khoản Ứng Dụng:</b><br>
-                        <select id="w" class="form-control" disabled="disabled"></select>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="qq">Tên Công Ty Sở Hữu:</label>
+                                <select class="form-control select2" style="width: 100%;" id="qq" disabled="disabled"></select>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <label for="ww">Chọn Tài Khoản:</label>
+                                <select class="form-control select2" style="width: 100%;" id="ww"></select>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <label for="ee">Tên Chi Nhánh:</label>
+                                <input id="ee" type="text" class="form-control" required>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <label for="rr">Địa Chỉ:</label>
+                                <input id="rr" type="text" class="form-control" required>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <label for="tt">Số Điện Thoại:</label>
+                                <input id="tt" type="text" class="form-control" required>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-12" style="margin-top:10px">
-                        <b>Tên Chi Nhánh</b><br>
-                        <input id="e" type="text" class="form-control">
-                    </div>
-                    <div class="col-md-12" style="margin-top:10px">
-                        <b>Địa Chỉ:</b><br>
-                        <input id="r" type="text" class="form-control">
-                    </div>
-                    <div class="col-md-12" style="margin-top:10px">
-                        <b>Số Điện Thoại:</b><br>
-                        <input id="t" type="text" class="form-control">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Tạo Mới</button>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary" onClick="updateAgency();">Chỉnh Sửa</button>
-            </div>
         </div>
     </div>
-</div>
-
-<div class="modal fade" id="createAgencyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Tạo Chi Nhánh Mới</h4>
-            </div>
-            <div class="modal-body">
-
-                <label for="qq">Tên Công Ty Sở Hữu::</label>
-                <select class="form-control select2" style="width: 100%;" id="qq" disabled="disabled"></select>
-
-                <label for="ww">Chọn Tài Khoản:</label>
-                <select class="form-control select2" style="width: 100%;" id="ww"></select>
-
-                <label for="ee">Tên Chi Nhánh:</label>
-                <input id="ee" type="text" class="form-control" required>
-
-                <label for="rr">Địa Chỉ:</label>
-                <input id="rr" type="text" class="form-control" required>
-
-                <label for="tt">Số Điện Thoại:</label>
-                <input id="tt" type="text" class="form-control" required>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button class="btn btn-primary" onClick="createAgency();">Tạo Mới</button>
-            </div>
-        </div>
-    </div>
-</div>
+</form>
 <!-- Datatable -->
 <style>
     .city {
@@ -158,7 +171,7 @@
     <script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
     <script>
         $(document).ready(function() {
-            loadCompany();
+            loadCompanyAgency();
             showAccount();
             showCompany();
             getComName();
@@ -185,7 +198,7 @@
                 }
                 });
         }
-        function loadCompany() {
+        function loadCompanyAgency() {
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetAllAgency", "Company", new { company_id = dataAgency })',
@@ -212,7 +225,7 @@
                 "bProcessing": true,
                 "oLanguage": {
                     "sSearch": "Tìm kiếm:",
-                    "sSearchPlaceholder": "Thành phần con",
+                    "sSearchPlaceholder": "",
                     "sZeroRecords": "Không có dữ liệu phù hợp",
                     "sInfo": "Hiển thị từ _START_ đến _END_ trên tổng số _TOTAL_ dòng",
                     "sEmptyTable": "Không có dữ liệu",
@@ -317,10 +330,9 @@
                     $("#e").val(data.result.ObjReturn.AgencyName);
                     $("#r").val(data.result.ObjReturn.Address);
                     $("#t").val(data.result.ObjReturn.Telephone);
-
                 }
             });
-            $('#editModal').modal('show');
+            $('#EditModal').modal('show');
         }
 
         //show delete modal
@@ -359,8 +371,7 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                    $('#modalConfirmDelete').modal('hide')
-                    loadCompany();
+                    loadCompanyAgency();
                 }
             });
         }
@@ -369,7 +380,17 @@
         function showCreateModal() {
             $('#createAgencyModal').modal('show');
         }
-
+        function clearModal() {
+            $('#createAgencyModal').on('hidden.bs.modal', function (e) {
+                $(this)
+                    .find("input,textarea")
+                    .val('')
+                    .end()
+                    .find("input[type=checkbox], input[type=radio]")
+                    .prop("checked", "")
+                    .end();
+            })
+        }
         //show all company on combo box
         function showCompany() {
             $('#qq, #q')
@@ -385,7 +406,6 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                    //$('#createAgency').modal('show');
                     var len = data.result.ObjReturn.length;
                     var html = '';
                     for (var i = 0; i < len; i++) {
@@ -417,7 +437,6 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                    //$('#createAgency').modal('show');
                     var len = data.result.ObjReturn.length;
                     var html = '';
                     for (var i = 0; i < len; i++) {
@@ -450,13 +469,14 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $('#editModal').modal('hide');
-                         if (!data.result.isError) {
+                    if (!data.result.isError) {
+                        $('#EditModal').modal('hide');
+                        clearModal();
+                        loadCompanyAgency();
                         swal(data.result.SuccessMessage, "", "success");
-                        }
-                        else
+                    }
+                    else
                         swal(data.result.WarningMessage, "", "error");
-                    loadCompany();
                 }
             });
         }
@@ -476,15 +496,15 @@
 
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
-                success: function(data) {
-                    $('#createAgencyModal').modal('hide');
-                         if (!data.result.isError) {
+                success: function (data) {
+                    if (!data.result.isError) {
+                        $('#createAgencyModal').modal('hide');
+                        clearModal();
+                        loadCompanyAgency();
                         swal(data.result.SuccessMessage, "", "success");
-                        }
-                        else
+                    }
+                    else
                         swal(data.result.WarningMessage, "", "error");
-                    loadCompany();
-
                 }
             });
         }

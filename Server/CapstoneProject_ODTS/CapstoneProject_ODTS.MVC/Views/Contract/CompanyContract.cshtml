@@ -27,135 +27,125 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-
+                    <h3 class="modal-title"><b>Thông tin chi tiết</b></h3>
                 </div>
                 <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>Tên Công Ty:</b><br>
+                            <p id="conCompany"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
 
-                    <p>
-                        <b>Tên Công Ty:</b><br>
-                    <p id="conCompany"></p>
-                    <p>
-                        <b>Mô Tả Hợp Đồng:</b><br>
-                    <p id="conName"></p>
-                    <p>
-                        <b>Ngày Bắt Đầu:</b><br>
-                    <p id="conStartDate"></p>
-                    <p>
-                        <b>Ngày Hết Hạn:</b><br>
-                    <p id="conEndDate"></p>
-                    <p>
-                        <b>Lần Chỉnh Sửa Cuối:</b><br>
-                    <p id="conUpdateDate"></p>
-
-
+                            <b>Mô Tả Hợp Đồng:</b><br>
+                            <p id="conName"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Ngày Bắt Đầu:</b><br>
+                            <p id="conStartDate"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Ngày Hết Hạn:</b><br>
+                            <p id="conEndDate"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Lần Chỉnh Sửa Cuối:</b><br>
+                            <p id="conUpdateDate"></p>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
-<!--deletemodal-->
-<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
-        <!--Content-->
-        <div class="modal-content text-center">
-            <!--Header-->
-            <div class="modal-header d-flex justify-content-center">
-                <p class="heading">Are you sure you want to delete this item?</p>
-            </div>
 
-            <!--Body-->
-            <div class="modal-body">
-
-                <i class="fa fa-times fa-4x animated rotateIn"></i>
-
-            </div>
-
-            <!--Footer-->
-            <div class="modal-footer flex-center">
-                <a href="#" onClick="deleteContract(); return false;" class="btn  btn-outline-danger">Yes</a>
-                <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
+<input type="hidden" id="contractHidden" />
+<form onsubmit="createContracttt(); return false">
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title"><b>Tạo hợp đồng mới</b></h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <b>Tên Công Ty:</b><br>
+                                <select class="form-control select2" id="comboCompany" disabled="disabled"></select>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <b>Mô Tả Hợp Đồng:</b><br>
+                                <input class="form-control" type="text" id="conNameCreate">
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <b>Dịch Vụ Đăng Ký:</b><br>
+                                <select multiple class="form-control select2" style="width: 100%;" id="test"></select>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <b>Ngày Bất Đầu:</b><br>
+                                <input type="text" id="createDate" type="text" class="form-control" required>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <b>Ngày Hết Hạn:</b><br>
+                                <input type="text" id="endDate" type="text" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Tạo Mới</button>
+                    </div>
+                </div>
             </div>
         </div>
-        <!--/.Content-->
     </div>
-</div>
-<input type="hidden" id="contractHidden" />
-<div class="container">
-    <!-- Modal -->
-    <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+</form>
+
+<form onsubmit="UpdateContract(); return false">
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h3 class="modal-title"><b>Chỉnh sửa thông tin</b></h3>
                 </div>
                 <div class="modal-body">
-                    <p>
-                        <b>Tên Công Ty:</b><br>
-                        <select class="form-control select2" id="comboCompany" disabled="true"></select>
-                    <p>
-                        <b>Mô Tả Hợp Đồng:</b><br>
-                        <input class="form-control" type="text" id="conNameCreate"></input>
-                    <p>
-                        <b>Dịch Vụ Đăng Ký:</b><br>
-                        <select multiple class="form-control select2" style="width: 100%;" id="test"></select>
-                    <p>
-                        <b>Ngày Bất Đầu:</b><br>
-                        <input type="text" id="createDate" type="text" class="form-control" required></input>
-                    <p>
-                        <b>Ngày Hết Hạn:</b><br>
-                        <input type="text" id="endDate" type="text" class="form-control" required></input>
+                    <div class="row">
+                        <input type="hidden" id="id" />
+                        <div class="col-md-12">
+                            <b>Tên Công Ty:</b><br>
+                            <select class="form-control select2" id="comboCompanyE" disabled="disabled"></select>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Mô Tả Hợp Đồng:</b><br>
+                            <input class="form-control" type="text" id="conNameE">
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Dịch Vụ Đăng Ký:</b><br>
+                            <select multiple class="form-control select2" style="width: 100%;" id="testE"></select>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Ngày Bất Đầu:</b><br>
+                            <input type="text" id="conStartDateE" type="text" class="form-control" required>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Ngày Hết Hạn:</b><br>
+                            <input type="text" id="conEndDateE" type="text" class="form-control" required>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="createContracttt()">Create New</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Chỉnh Sửa</button>
                 </div>
             </div>
         </div>
     </div>
-
-</div>
-<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>
-                <p id="id"></p>
-                <p>
-                    <b>Tên Công Ty:</b><br>
-                    <select id="comboCompanyE" disabled="true"></select>
-                <p>
-                    <b>Mô Tả Hợp Đồng:</b><br>
-                    <input class="form-control" type="text" id="conNameE"></input>
-                <p>
-                    <b>Dịch Vụ Đăng Ký:</b><br>
-                    <select multiple class="form-control select2" style="width: 100%;" id="testE"></select>
-                <p>
-                    <b>Ngày Bất Đầu:</b><br>
-                    <input type="text" id="conStartDateE" type="text" class="form-control" required></input>
-                <p>
-                    <b>Ngày Hết Hạn:</b><br>
-                    <input type="text" id="conEndDateE" type="text" class="form-control" required></input>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="UpdateContract()">Chỉnh Sửa</button>
-            </div>
-        </div>
-    </div>
-</div>
+</form>
 <style>
     .city {
         background-color: azure;
@@ -286,6 +276,18 @@
     function showCreateModal() {
         $('#CreateModal').modal('show');
     }
+    function clearModal() {
+        $('#CreateModal').on('hidden.bs.modal', function (e) {
+            $(this)
+                .find("input,textarea")
+                .val('')
+                .end()
+                .find("input[type=checkbox], input[type=radio]")
+                .prop("checked", "")
+                .end();
+        })
+    }
+
     function showCompany() {
         $('#comboCompany, #comboCompanyE')
             .find('option')
@@ -480,35 +482,36 @@
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 if (!data.result.isError) {
-                    alert(data.result.SuccessMessage);
                     $('#CreateModal').modal('hide');
+                    clearModal();
+                    loadContract();
+                    swal(data.result.SuccessMessage, "", "success");
                 }
                 else
-                    alert(data.result.WarningMessage);
-
-                loadContract();
+                    swal(data.result.WarningMessage, "", "error");
             }
         });
     }
-            function removeContract(id) {
-                swal({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then(function () {
-                    deleteContract();
-                    swal(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                    )
-                });
-                $('#contractHidden').val(id);
-            }
+    function removeContract(id) {
+        swal({
+            title: 'Bạn có Chắc Chắn Muốn Xóa?',
+            text: "Dữ Liệu Đã Xóa Không Thể Hoàn Lại!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Quay Lại',
+            confirmButtonText: 'Chấp Nhận Xóa!'
+        }).then(function () {
+            deleteContract();
+            swal(
+                'Đã Xóa!',
+                'Dữ Liệu Của Bạn Đã Được Xóa.',
+                'success'
+            )
+        });
+        $('#contractHidden').val(id);
+    }
     function deleteContract() {
         var contract_id = $('#contractHidden').val();
         $.ajax({

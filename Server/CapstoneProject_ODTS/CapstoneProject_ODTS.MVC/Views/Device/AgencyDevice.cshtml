@@ -4,182 +4,221 @@
 }
 
 
+<input type="hidden" id="deviceHidden" />
+<form onsubmit="createDevice(); return false">
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title"><b>Tạo thiết bị mới</b></h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <b>Tên Công Ty Sở Hữu:</b><br>
+                                <select class="form-control select2" style="width: 100%;" id="comboCompany" disabled></select>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 10px">
+                                <b>Tên Chi Nhánh:</b><br>
+                                <select class="form-control select2" style="width: 100%;" id="comboCompanyAgency" disabled></select>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 10px">
+                                <b>Loại Thiết Bị:</b><br>
+                                <select class="form-control select2" style="width: 100%;" id="comboDeviceType"></select>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 10px">
+                                <b>Tên Thiết Bị:</b><br>
+                                <input type="text" id="dvNameC" class="form-control" required></input>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 10px">
+                                <b>Code:</b><br>
+                                <input type="text" id="dvCodeC" class="form-control" required></input>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 10px">
+                                <b>Ngày Bảo Hành:</b><br>
+                                <input type="text" id="dvGDateC" class="form-control" required></input>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 10px">
+                                <b>Hạn Bảo Hành:</b><br>
+                                <input type="text" id="dvGEndDateC" class="form-control" required></input>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 10px">
+                                <b>Ip:</b><br>
+                                <input type="text" id="dvIpC" class="form-control" required></input>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 10px">
+                                <b>Port:</b><br>
+                                <input type="text" id="dvPortC" class="form-control" required></input>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 10px">
+                                <b>Device Account:</b><br>
+                                <input type="text" id="dvAccC" class="form-control" required></input>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 10px">
+                                <b>Device Password:</b><br>
+                                <input type="text" id="dvPassC" class="form-control" required></input>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 10px">
+                                <b>Ngày Lắp:</b><br>
+                                <input type="text" id="dvSettingDateC" class="form-control" required></input>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 10px">
+                                <b>Thông Tin:</b><br>
+                                <input type="text" id="dvOtherC" class="form-control" required></input>
+                            </div>
+                        </div>
+                    </div>
 
-<div class="container">
-    <!-- Modal -->
-    <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        <b>Tên Công Ty Sở Hữu::</b><br>
-                        <select class="form-control select2" style="width: 100%;" id="comboCompany" disabled></select>
-                    <p>
-                        <b>Tên Chi Nhánh:</b><br>
-                        <select class="form-control select2" style="width: 100%;" id="comboCompanyAgency" disabled></select>
-                    <p>
-                        <b>Loại Thiết Bị:</b><br>
-                        <select class="form-control select2" style="width: 100%;" id="comboDeviceType"></select>
-                    <p>
-                    <p>
-                        <b>Tên Thiết Bị:</b><br>
-                        <input type="text" id="dvNameC" type="text" class="form-control" required></input>
-                    <p>
-                        <b>Code:</b><br>
-                        <input type="text" id="dvCodeC" type="text" class="form-control" required></input>
-                    <p>
-                        <b>Ngày Bảo Hành:</b><br>
-                        <input type="text" id="dvGDateC" type="text" class="form-control" required></input>
-                    <p>
-                        <b>Hạn Bảo Hành:</b><br>
-                        <input type="text" id="dvGEndDateC" type="text" class="form-control" required></input>
-                    <p>
-                        <b>Ip:</b><br>
-                        <input type="text" id="dvIpC" type="text" class="form-control" required></input>
-                    <p>
-                        <b>Port:</b><br>
-                        <input type="text" id="dvPortC" type="text" class="form-control" required></input>
-                    <p>
-                        <b>Device Account:</b><br>
-                        <input type="text" id="dvAccC" type="text" class="form-control" required></input>
-                    <p>
-                        <b>Device Password:</b><br>
-                        <input type="text" id="dvPassC" type="text" class="form-control" required></input>
-                    <p>
-                        <b>Ngày Lắp:</b><br>
-                        <input type="text" id="dvSettingDateC" type="text" class="form-control" required></input>
-                    <p>
-                        <b>Thông Tin:</b><br>
-                        <input type="text" id="dvOtherC" type="text" class="form-control" required></input>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="createDevice()">Create New</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Tạo Mới</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-</div>
+</form>
 <div class="container">
     <!-- Modal -->
     <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-
+                    <h3 class="modal-title"><b>Thông tin chi tiết</b></h3>
                 </div>
                 <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>Tên Thiết Bị:</b><br>
+                            <p id="dvName"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top: 10px">
+                            <b>Loại Thiết Bị:</b><br>
+                            <p id="dvType"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top: 10px">
+                            <b>Mã Thiết Bị:</b><br>
+                            <p id="dvCode"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top: 10px">
+                            <b>Ngày Ký Bảo Hành:</b><br>
+                            <p id="dvGDate"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top: 10px">
+                            <b>Hạn Bảo Hành:</b><br>
+                            <p id="dvEndDate"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top: 10px">
+                            <b>Ip:</b><br>
+                            <p id="dvIp"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top: 10px">
+                            <b>Port:</b><br>
+                            <p id="dvPort"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top: 10px">
+                            <b>DeviceAccount:</b><br>
+                            <p id="dvAcc"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top: 10px">
+                            <b>DevicePassword:</b><br>
+                            <p id="dvPass"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top: 10px">
+                            <b>Ngày Lắp Đặt:</b><br>
+                            <p id="dvSetupDate"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top: 10px">
+                            <b>Lần Chỉnh Sửa Cuối:</b><br>
+                            <p id="dvLastEdit"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top: 10px">
+                            <b>Thông Tin THêm:</b><br>
+                            <p id="dvOther"></p>
+                        </div>
 
-                    <p>
-                        <b>Tên Thiết Bị:</b><br>
-                    <p id="dvName"></p>
-                    <p>
-                        <b>Loại Thiết Bị:</b><br>
-                    <p id="dvType"></p>
-                    <p>
-                        <b>Mã Thiết Bị:</b><br>
-                    <p id="dvCode"></p>
-                    <p>
-                        <b>Ngày Ký Bảo Hành:</b><br>
-                    <p id="dvGDate"></p>
-                    <p>
-                        <b>Hạn Bảo Hành:</b><br>
-                    <p id="dvEndDate"></p>
-                    <p>
-                        <b>Ip:</b><br>
-                    <p id="dvIp"></p>
-                    <p>
-                        <b>Port:</b><br>
-                    <p id="dvPort"></p>
-                    <p>
-                        <b>DeviceAccount:</b><br>
-                    <p id="dvAcc"></p>
-                    <p>
-                        <b>DevicePassword:</b><br>
-                    <p id="dvPass"></p>
-                    <p>
-                        <b>Ngày Cài Đặt:</b><br>
-                    <p id="dvSetupDate"></p>
-                    <p>
-                        <b>Thông Tin THêm:</b><br>
-                    <p id="dvOther"></p>
-                    <p>
-                        <b>Lần Chỉnh Sửa Cuối:</b><br>
-                    <p id="dvLastEdit"></p>
-
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
-<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>
-                <p id="id"></p>
-                <p>
-                    <b>Tên Công Ty Sở Hữu::</b><br>
-                    <select class="form-control select2" style="width: 100%;" id="comboCompanyE" disabled="true"></select>
-                <p>
-                    <b>Tên Chi Nhánh:</b><br>
-                    <select class="form-control select2" style="width: 100%;" id="comboCompanyAgencyE" disabled="true"></select>
-                <p>
-                    <b>Loại Thiết Bị:</b><br>
-                    <select class="form-control select2" style="width: 100%;" id="comboDeviceTypeE"></select>
-                <p>
-                <p>
-                    <b>Tên Thiết Bị:</b><br>
-                    <input type="text" id="dvNameE" type="text" class="form-control"></input>
-                <p>
-                    <b>Code:</b><br>
-                    <input type="text" id="dvCodeE" type="text" class="form-control"></input>
-                <p>
-                    <b>Ngày Bảo Hành:</b><br>
-                    <input type="text" id="dvGDateE" type="text" class="form-control"></input>
-                <p>
-                    <b>Hạn Bảo Hành:</b><br>
-                    <input type="text" id="dvGEndDateE" type="text" class="form-control"></input>
-                <p>
-                    <b>Ip:</b><br>
-                    <input type="text" id="dvIpE" type="text" class="form-control"></input>
-                <p>
-                    <b>Port:</b><br>
-                    <input type="text" id="dvPortE" type="text" class="form-control"></input>
-                <p>
-                    <b>Device Account:</b><br>
-                    <input type="text" id="dvAccE" type="text" class="form-control"></input>
-                <p>
-                    <b>Device Password:</b><br>
-                    <input type="text" id="dvPassE" type="text" class="form-control"></input>
-                <p>
-                    <b>Thông Tin:</b><br>
-                    <input type="text" id="dvOtherE" type="text" class="form-control"></input>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary" onclick="UpdateDevice()">Chỉnh Sửa</button>
+
+<form onsubmit="UpdateDevice(); return false">
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b>Chỉnh sửa thông tin</b></h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <p>
+                        <p id="id"></p>
+                        <div class="col-md-12">
+                            <b>Tên Công Ty Sở Hữu::</b><br>
+                            <select class="form-control select2" style="width: 100%;" id="comboCompanyE" disabled="true"></select>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Tên Chi Nhánh:</b><br>
+                            <select class="form-control select2" style="width: 100%;" id="comboCompanyAgencyE" disabled="true"></select>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Loại Thiết Bị:</b><br>
+                            <select class="form-control select2" style="width: 100%;" id="comboDeviceTypeE"></select>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Tên Thiết Bị:</b><br>
+                            <input type="text" id="dvNameE" class="form-control"></input>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Code:</b><br>
+                            <input type="text" id="dvCodeE" class="form-control"></input>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Ngày Bảo Hành:</b><br>
+                            <input type="text" id="dvGDateE" class="form-control"></input>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Hạn Bảo Hành:</b><br>
+                            <input type="text" id="dvGEndDateE" class="form-control"></input>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Ip:</b><br>
+                            <input type="text" id="dvIpE" class="form-control"></input>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Port:</b><br>
+                            <input type="text" id="dvPortE" class="form-control"></input>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Device Account:</b><br>
+                            <input type="text" id="dvAccE" class="form-control"></input>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Device Password:</b><br>
+                            <input type="text" id="dvPassE" class="form-control"></input>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Thông Tin:</b><br>
+                            <input type="text" id="dvOtherE" class="form-control"></input>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Chỉnh Sửa</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</form>
 <div class="row col-md-12">
     <h3>Tất Cả Thiết Bị</h3>
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
@@ -197,7 +236,7 @@
         <tbody></tbody>
     </table>
     <div class="NewThing">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="" onclick="showCreateModal()">Tạo Thiết Bị</button>
+        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Thiết Bị</button>
         <button type="button" class="btn btn-primary fa fa-mail-reply-all" data-toggle="modal" data-target="" onclick="window.history.go(-1); return false;"><font face="verdana"> Quay Lại Trang Chi Nhánh</button>
     </div>
 </div>
@@ -292,34 +331,18 @@
         function showCreateModal() {
             $('#CreateModal').modal('show');
         }
-        @*function showCompany() {
-            $('#comboCompany, #comboCompanyE')
-                .find('option')
-                .remove()
-                .end();
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("GetAllDevice", "Agency", new { agency_id = dataAgency })',
-                data: {
-                },
+        function clearModal() {
+            $('#CreateModal').on('hidden.bs.modal', function (e) {
+                $(this)
+                    .find("input,textarea,select")
+                    .val('')
+                    .end()
+                    .find("input[type=checkbox], input[type=radio]")
+                    .prop("checked", "")
+                    .end();
+            })
+        }
 
-                dataType: 'json',
-                contentType: "application/json; charset=utf-8",
-                success: function(data) {
-                    var obj = data.result.ObjReturn;
-                    var html = '';
-                    for (var i = 0; i < 2; i++) {
-                        html += '<option value="' +
-                            data.result.ObjReturn[i].CompanyId +
-                            '">' +
-                            data.result.ObjReturn[i].CompanyName +
-                            '</option>';
-                    }
-                    $('#comboCompany').append(html);
-                    $('#comboCompanyE').append(html);
-                }
-            });
-        }*@
         function showCompanyAgency() {
             $('#comboCompanyAgency, #comboCompanyAgencyE')
                 .find('option')
@@ -381,7 +404,7 @@
                                         '</option>';
                                 }
                     }
-                    
+
                     $('#comboDeviceType').append(html);
                     $('#comboDeviceTypeE').append(html);
                 }
@@ -496,10 +519,12 @@
                     $('#CreateModal').modal('hide');
                     if (!data.result.IsError) {
                         swal(data.result.SuccessMessage, "", "success");
+                        clearModal();
+                        loadDevice();
                     }
                     else
                          swal(data.result.WarningMessage, "", "error");
-                         loadDevice();
+                    loadDevice();
                 }
             });
         }
@@ -524,7 +549,7 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $('#editModal').modal('hide');
+                    $('#EditModal').modal('hide');
                          if (!data.result.isError) {
                         swal(data.result.SuccessMessage, "", "success");
                         }
@@ -534,6 +559,47 @@
                 }
             });
         }
+         //show delete modal
+        function removeDevice(id) {
+            //$('#modalConfirmDelete').modal('show');
+            swal({
+                title: 'Bạn có Chắc Chắn Muốn Xóa?',
+                text: "Dữ Liệu Đã Xóa Không Thể Hoàn Lại!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Quay Lại',
+                confirmButtonText: 'Chấp Nhận Xóa!'
+            }).then(function () {
+                deleteDevice();         
+            });
+            $('#deviceHidden').val(id);
+        }
+
+        //delete agency
+        function deleteDevice() {
+            var agency_idd = $('#deviceHidden').val();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("RemoveDevice", "Device")',
+                data: {
+                    agency_id: agency_idd
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    swal(
+                        'Đã Xóa!',
+                        'Dữ Liệu Của Bạn Đã Được Xóa.',
+                        'success'
+                    )
+                    loadDevice();
+                }
+            });
+        }
+
     </script>
 
 }

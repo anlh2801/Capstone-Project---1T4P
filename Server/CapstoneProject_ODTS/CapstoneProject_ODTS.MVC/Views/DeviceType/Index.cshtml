@@ -27,28 +27,31 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="exampleModalLabel"><b>Thông tin chi tiết</b></h3>
-
+                    <h3 class="modal-title"><b>Thông tin chi tiết</b></h3>
                 </div>
                 <div class="modal-body">
-
-                    <p>
-                        <b>Tên Loại Thiết Bị:</b><br>
-                    <p id="dtName"></p>
-                    <p>
-                        <b>Dịch Vụ Hỗ Trợ:</b><br>
-                    <p id="dtService"></p>
-                    <p>
-                        <b>Mô Tả:</b><br>
-                    <p id="dtDescription"></p>
-                    <p>
-                        <b>Ngày Tạo:</b><br>
-                    <p id="dtCreateDate"></p>
-                    <p>
-                        <b>Lần Chỉnh Sửa Cuối:</b><br>
-                    <p id="dtUpdateDate"></p>
-
-
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>Tên Loại Thiết Bị:</b><br>
+                            <p id="dtName"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Dịch Vụ Hỗ Trợ:</b><br>
+                            <p id="dtService"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Mô Tả:</b><br>
+                            <p id="dtDescription"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Ngày Tạo:</b><br>
+                            <p id="dtCreateDate"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Lần Chỉnh Sửa Cuối:</b><br>
+                            <p id="dtUpdateDate"></p>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -56,111 +59,97 @@
             </div>
         </div>
     </div>
-
 </div>
-<!--deletemodal-->
-<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
-        <!--Content-->
-        <div class="modal-content text-center">
-            <!--Header-->
-            <div class="modal-header d-flex justify-content-center">
-                <p class="heading">
-                    <h3><b>Thông báo</b></h3>                
-                </p>
-            </div>
 
-            <!--Body-->
-            <div class="modal-body">
-
-                <i class="fa fa-times fa-4x animated rotateIn"></i>
-                <p class="heading">Bạn có muốn xóa loại thiết bị này?</p>
-            </div>
-
-            <!--Footer-->
-            <div class="modal-footer flex-center">
-                <a href="#" onClick="deleteDeviceType(); return false;" class="btn btn-danger waves-effect">Xóa</a>
-                <a type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Không</a>
+<input type="hidden" id="devicetypeHidden" />
+<form onsubmit="createDeviceType(); return false">
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title"><b>Tạo loại thiết bị mới</b></h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <p>
+                            <p id="id"></p>
+                            <div class="col-md-12">
+                                <b>Tên Loại Thiết Bị:</b><br>
+                                <input type="text" id="dtNameCreate" class="form-control">
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <b>Dịch Vụ Hỗ Trợ:</b><br>
+                                <select id="comboService" class="form-control"></select>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <b>Mô Tả Loại Thiết Bị:</b><br>
+                                <input type="text" id="dtDescriptionCreate" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Tạo Mới</button>
+                    </div>
+                </div>
             </div>
         </div>
-        <!--/.Content-->
     </div>
-</div>
-<input type="hidden" id="devicetypeHidden" />
-<div class="container">
-    <!-- Modal -->
-    <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+</form>
+
+
+<form onsubmit="UpdateDeviceType(); return false">
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="exampleModalLabel"><b>Tạo mới loại thiết bị</b></h3>
+                    <h3 class="modal-title"><b>Chỉnh sửa thông tin</b></h3>
                 </div>
                 <div class="modal-body">
-                    <p>
-                    <p id="id"></p>
-                    <p>
-                        <b>Tên Loại Thiết Bị:</b><br>
-                        <input type="text" id="dtNameCreate" class="form-control"></input>
-                    <p>
-                        <b>Dịch Vụ Hỗ Trợ:</b><br>
-                        <select id="comboService" class="form-control"></select>
-                    <p>
-                        <b>Mô Tả Loại Thiết Bị:</b><br>
-                        <input type="text" id="dtDescriptionCreate" class="form-control"></input>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>Tên Loại Thiết Bị:</b><br>
+                            <input type="text" id="dtNameCreateEdit" class="form-control"></input>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Dịch Vụ Hỗ Trợ:</b><br>
+                            <select id="comboServiceEdit" class="form-control"></select>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Mô Tả Loại Thiết Bị:</b><br>
+                            <input type="text" id="dtDescriptionCreateEdit" class="form-control"></input>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary" onclick="createDeviceType()">Tạo mới</button>
+                    <button type="button" class="btn btn-primary" onclick="UpdateDeviceType()">Chỉnh Sửa</button>
                 </div>
             </div>
         </div>
     </div>
-
-</div>
-<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLabel"><b>Chỉnh sửa thông tin</b></h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <p>
-                    <b>Tên Loại Thiết Bị:</b><br>
-                    <input type="text" id="dtNameCreateEdit" class="form-control"></input>
-                <p>
-                    <b>Dịch Vụ Hỗ Trợ:</b><br>
-                    <select id="comboServiceEdit" class="form-control"></select>
-                <p>
-                    <b>Mô Tả Loại Thiết Bị:</b><br>
-                    <input type="text" id="dtDescriptionCreateEdit" class="form-control"></input>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary" onclick="UpdateDeviceType()">Chỉnh Sửa</button>
-            </div>
-        </div>
-    </div>
-</div>
+</form>
 <style>
     .city {
         background-color: azure;
         color: black;
-        padding: 15px;
+        padding: 1%;
         border-left: solid cadetblue;
         width: 100%;
     }
+
+    p.one {
+        margin-top: 5%;
+        padding: 2%;
+        border-top: 1px solid lightgrey;
+        width: 100%;
+    }
 </style>
-<!-- Datatable -->
 <div class="row col-md-12">
     <h3 class="city">Quản Lý Loại Thiết Bị</h3>
 </div>
-
 <div class="row col-md-12">
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
@@ -261,6 +250,18 @@
         function showCreateModal() {
             $('#CreateModal').modal('show');
         }
+        function clearModal() {
+            $('#CreateModal').on('hidden.bs.modal', function (e) {
+                $(this)
+                    .find("input,textarea,select")
+                    .val('')
+                    .end()
+                    .find("input[type=checkbox], input[type=radio]")
+                    .prop("checked", "")
+                    .end();
+            })
+        }
+
         function showService() {
             $('#comboService, #comboServiceEdit')
                 .find('option')
@@ -373,29 +374,26 @@
                     $('#CreateModal').modal('hide');
                         if (!data.result.isError) {
                             swal(data.result.SuccessMessage, "", "success");
+                            clearModal();
                             loadDeviceType();
                         }
                         else
-                            swal(data.result.WarningMessage, "", "error");                    
+                            swal(data.result.WarningMessage, "", "error");
                 }
             });
         }
         function removeDeviceType(id) {
-            swal({
-                title: "Thông báo xác nhận",
-                text: "Bạn có muốn xóa loại thiết bị này",
+           swal({
+                title: 'Bạn có Chắc Chắn Muốn Xóa?',
+                text: "Dữ Liệu Đã Xóa Không Thể Hoàn Lại!",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Xóa'
+                cancelButtonText: 'Quay Lại',
+                confirmButtonText: 'Chấp Nhận Xóa!'
             }).then(function () {
                 deleteDeviceType();
-                swal(
-                    'Thông báo',
-                    'Xóa thành công',
-                    'success'
-                )
             });
             $('#devicetypeHidden').val(id);
         }
@@ -411,7 +409,11 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $('#modalConfirmDelete').modal('hide')
+                     swal(
+                    'Đã Xóa!',
+                    'Dữ Liệu Của Bạn Đã Được Xóa.',
+                    'success'
+                    )
                     loadDeviceType();
                 }
             });

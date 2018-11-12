@@ -28,140 +28,131 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-
+                    <h3 class="modal-title"><b>Thông tin chi tiết</b></h3>
                 </div>
                 <div class="modal-body">
-                    <p>
-                        <b>RoleName:</b><br>
-                    <p id="accRole"></p>
-                    <p>
-                        <b>Username:</b><br>
-                    <p id="accName"></p>
-                    <p>
-                        <b>Password:</b><br>
-                    <p id="accPass"></p>
-                    <p>
-                        <b>CreateDate:</b><br>
-                    <p id="accCreateDate"></p>
-                    <p>
-                        <b>UpdateDate:</b><br>
-                    <p id="accUpdateDate"></p>
-
-
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>RoleName:</b><br>
+                            <p id="accRole"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Username:</b><br>
+                            <p id="accName"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Password:</b><br>
+                            <p id="accPass"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>CreateDate:</b><br>
+                            <p id="accCreateDate"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>UpdateDate:</b><br>
+                            <p id="accUpdateDate"></p>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
-<div class="container">
-    <!-- Modal -->
-    <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<form onsubmit="createAccount(); return false">
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title"><b>Tạo tài khoản mới</b></h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <b>Quyền Của Tài Khoản:</b><br>
+                                <select class="form-control select2" style="width: 100%;" id="comboRole"></select>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <b>Tên Đăng Nhập:</b><br>
+                                <input type="text" id="accNameCreate" class="form-control" required></input>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <b>Mật Khẩu:</b><br>
+                                <input type="text" id="accPassCreate" class="form-control" required></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Tạo Mới</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<input type="hidden" id="accountHidden" />
+@*Edit modal*@
+
+<form onsubmit="UpdateAccount(); return false">
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h3 class="modal-title"><b>Chỉnh sửa thông tin</b></h3>
                 </div>
                 <div class="modal-body">
-                    <p>
-                        <b>RoleId:</b><br>
-                        <select id="comboRole"></select>
-                    <p>
-                        <b>Username:</b><br>
-                        <input type="text" id="accNameCreate"></input>
-                    <p>
-                        <b>Password:</b><br>
-                        <input type="text" id="accPassCreate"></input>
-
-
+                    <div class="row">
+                        <p>
+                        <p id="idE"></p>
+                        <div class="col-md-12">
+                            <b>RoleId:</b><br>
+                            <select id="comboRoleEdit" class="form-control select2" style="width: 100%;" disabled="disabled"></select>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Username:</b><br>
+                            <input type="text" id="accNameEdit" class="form-control">
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Password:</b><br>
+                            <input type="text" id="accPassEdit" class="form-control">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="createAccount()">Create New</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Chỉnh Sửa</button>
                 </div>
             </div>
         </div>
     </div>
-
-</div>
-<!--deletemodal-->
-<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
-        <!--Content-->
-        <div class="modal-content text-center">
-            <!--Header-->
-            <div class="modal-header d-flex justify-content-center">
-                <p class="heading">Are you sure you want to delete this item?</p>
-            </div>
-
-            <!--Body-->
-            <div class="modal-body">
-
-                <i class="fa fa-times fa-4x animated rotateIn"></i>
-
-            </div>
-
-            <!--Footer-->
-            <div class="modal-footer flex-center">
-                <a href="#" onClick="deleteAccount(); return false;" class="btn  btn-outline-danger">Yes</a>
-                <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
-            </div>
-        </div>
-        <!--/.Content-->
-    </div>
-</div>
-<input type="hidden" id="accountHidden" />
-@*Edit modal*@
-<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>
-                <p id="idE"></p>
-                <p>
-                    <b>RoleId:</b><br>
-                    <select id="comboRoleEdit" class="form-control" disabled="true"></select>
-                <p>
-                    <b>Username:</b><br>
-                    <input type="text" id="accNameEdit"></input>
-                <p>
-                    <b>Password:</b><br>
-                    <input type="text" id="accPassEdit"></input>
-
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="UpdateAccount()">Update</button>
-            </div>
-        </div>
-    </div>
-</div>
+</form>
 <style>
     .city {
         background-color: azure;
         color: black;
         padding: 1%;
         border-left: solid cadetblue;
-        width: 97%;
+        width: 100%;
+    }
+
+    p.one {
+        margin-top: 5%;
+        padding: 2%;
+        border-top: 1px solid lightgrey;
+        width: 100%;
     }
 </style>
-<!-- Datatable -->
-<h3 class="city">Tất Cả Tài Khoản</h3>
+<div class="row col-md-12">
+    <h3 class="city">Quản Lý Tài Khoản</h3>
+</div>
+
+
 <div class="row col-md-12">
 
 
@@ -183,13 +174,13 @@
 </div>
 
 @section scripts {
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
-<link rel="stylesheet" href="~/AdminLTE/bower_components/sweetalert2/dist/sweetalert2.all.min.js">
-<script src="~/AdminLTE/bower_components/sweetalert2/dist/sweetalert2.all.min.js"></script>
-<script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <link rel="stylesheet" href="~/AdminLTE/bower_components/sweetalert2/dist/sweetalert2.all.min.js">
+    <script src="~/AdminLTE/bower_components/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script>
         $(document).ready(function() {
             loadAccount();
             showRole();
@@ -314,6 +305,18 @@
         function showCreateModal() {
             $('#CreateModal').modal('show');
         }
+        function clearModal() {
+            $('#CreateModal').on('hidden.bs.modal', function (e) {
+                $(this)
+                    .find("input,textarea,select")
+                    .val('')
+                    .end()
+                    .find("input[type=checkbox], input[type=radio]")
+                    .prop("checked", "")
+                    .end();
+            })
+        }
+
         function createAccount() {
             var empObj = {
                 RoleId: $('#comboRole').val(),
@@ -340,7 +343,18 @@
             });
         }
         function removeAccount(id) {
-            $('#modalConfirmDelete').modal('show');
+            swal({
+                title: 'Bạn có Chắc Chắn Muốn Xóa?',
+                text: "Dữ Liệu Đã Xóa Không Thể Hoàn Lại!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Quay Lại',
+                confirmButtonText: 'Chấp Nhận Xóa!'
+            }).then(function () {
+                deleteAccount();
+            });
             $('#accountHidden').val(id);
         }
         function deleteAccount() {
@@ -356,6 +370,11 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     $('#modalConfirmDelete').modal('hide')
+                    swal(
+                        'Đã Xóa!',
+                        'Dữ Liệu Của Bạn Đã Được Xóa.',
+                        'success'
+                    )
                     loadAccount();
                 }
             });
@@ -403,7 +422,7 @@
                 }
             });
         }
-</script>
+    </script>
 
 }
 
