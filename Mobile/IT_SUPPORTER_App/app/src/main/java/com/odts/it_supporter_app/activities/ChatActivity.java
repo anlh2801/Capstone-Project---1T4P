@@ -1,5 +1,6 @@
 package com.odts.it_supporter_app.activities;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -40,10 +41,12 @@ public class ChatActivity extends AppCompatActivity {
         sendButton = (ImageView)findViewById(R.id.sendButton);
         messageArea = (EditText)findViewById(R.id.messageArea);
         scrollView = (ScrollView)findViewById(R.id.scrollView);
+        SharedPreferences sharedPreferences = getSharedPreferences("ODTS", MODE_PRIVATE);
+        String itName = sharedPreferences.getString("itName", "");
 
         Firebase.setAndroidContext(this);
-        reference1 = new Firebase("https://androidchatapp-c60cb.firebaseio.com/messages/" + "hero1" + "_" + "passio1");
-        reference2 = new Firebase("https://androidchatapp-c60cb.firebaseio.com/messages/" + "passio1" + "_" + "hero1");
+        reference1 = new Firebase("https://androidchatapp-c60cb.firebaseio.com/messages/" + itName + "_" + "Passio 47 TCV");
+        reference2 = new Firebase("https://androidchatapp-c60cb.firebaseio.com/messages/" + "Passio 47 TCV" + "_" + itName);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +75,7 @@ public class ChatActivity extends AppCompatActivity {
                     addMessageBox("You:-\n" + message, 1);
                 }
                 else{
-                    addMessageBox("passio1" + ":-\n" + message, 2);
+                    addMessageBox("Passio 47 TCV" + ":-\n" + message, 2);
                 }
             }
 

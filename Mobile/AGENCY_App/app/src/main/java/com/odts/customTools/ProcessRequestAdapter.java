@@ -2,6 +2,7 @@ package com.odts.customTools;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,6 @@ import java.util.List;
 public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAdapter.MyViewHolder> {
     private Context context;
     private List<Request> listRequest;
-    RequestService requestService;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView rqName, estimes, nod, hero;
@@ -32,7 +32,6 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
             hero = (TextView) view.findViewById(R.id.txtHero);
             estimes = (TextView) view.findViewById(R.id.estimatesTime);
 
-
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -40,6 +39,7 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
                     if (position != RecyclerView.NO_POSITION) {
                         Intent intent = new Intent(context, StatusTimelineActivity.class);
                         intent.putExtra("requestID", listRequest.get(position).getRequestId());
+                        intent.putExtra("itName", listRequest.get(position).getiTSupporterName());
                         context.startActivity(intent);
                     }
                 }

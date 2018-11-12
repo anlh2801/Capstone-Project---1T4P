@@ -3,6 +3,7 @@ package com.odts.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,9 +28,7 @@ public class ProcessingFragment extends Fragment {
     private RequestService requestService;
     private RecyclerView recyclerView;
     private ProcessRequestAdapter pendingRequestAdapter;
-
     Integer agencyId = 0;
-
     public ProcessingFragment (){
 
     }

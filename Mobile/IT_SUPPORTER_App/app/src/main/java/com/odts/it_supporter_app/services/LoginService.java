@@ -28,6 +28,7 @@ public class LoginService {
                     share = context.getSharedPreferences("ODTS", Context.MODE_PRIVATE);
                     SharedPreferences.Editor edit = share.edit();
                     edit.putInt("itSupporterId", response.body().getObjReturn().getItSupporterId());
+                    edit.putString("itName", response.body().getObjReturn().getItSupporterName());
                     edit.commit();
                     Intent intent = new Intent(context, MainActivity.class);
                     context.startActivity(intent);
