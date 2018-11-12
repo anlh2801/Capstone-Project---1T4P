@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sp;
     Button btnLogout;
     Button btnChat;
+    Button btnTimeline;
     Switch swStatus;
     ITSupporterService itSupporterService;
     android.support.v7.widget.Toolbar toolbar;
@@ -51,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnTimeline = findViewById(R.id.btnTimeLine);
+        btnTimeline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, StatusTimelineActivity.class);
                 startActivity(intent);
             }
         });
