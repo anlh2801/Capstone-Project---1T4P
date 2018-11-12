@@ -16,10 +16,10 @@
                 <div class="modal-body">
                     <p>
                         <b>Tên Công Ty Sở Hữu::</b><br>
-                        <select class="form-control select2" style="width: 100%;" id="comboCompany" disabled="true"></select>
+                        <select class="form-control select2" style="width: 100%;" id="comboCompany" ></select>
                     <p>
                         <b>Tên Chi Nhánh:</b><br>
-                        <select class="form-control select2" style="width: 100%;" id="comboCompanyAgency" disabled="true"></select>
+                        <select class="form-control select2" style="width: 100%;" id="comboCompanyAgency"></select>
                     <p>
                         <b>Loại Thiết Bị:</b><br>
                         <select class="form-control select2" style="width: 100%;" id="comboDeviceType"></select>
@@ -135,22 +135,47 @@
                 <p>
                 <p id="id"></p>
                 <p>
-                    <b>Tên Công Ty:</b><br>
-                    <select id="comboCompanyE" disabled="true"></select>
+                    <b>Tên Công Ty Sở Hữu::</b><br>
+                    <select class="form-control select2" style="width: 100%;" id="comboCompanyE" disabled="true"></select>
                 <p>
-                    <b>Mô Tả Hợp Đồng:</b><br>
-                    <input type="text" id="conNameE"></input>
+                    <b>Tên Chi Nhánh:</b><br>
+                    <select class="form-control select2" style="width: 100%;" id="comboCompanyAgencyE" disabled="true"></select>
                 <p>
-                    <b>Ngày Bất Đầu:</b><br>
-                    <input type="text" id="conStartDateE" type="text" class="form-control" required></input>
+                    <b>Loại Thiết Bị:</b><br>
+                    <select class="form-control select2" style="width: 100%;" id="comboDeviceTypeE"></select>
                 <p>
-                    <b>Ngày Hết Hạn:</b><br>
-                    <input type="text" id="conEndDateE" type="text" class="form-control" required></input>
+                <p>
+                    <b>Tên Thiết Bị:</b><br>
+                    <input type="text" id="dvNameE" type="text" class="form-control"></input>
+                <p>
+                    <b>Code:</b><br>
+                    <input type="text" id="dvCodeE" type="text" class="form-control" ></input>
+                <p>
+                    <b>Ngày Bảo Hành:</b><br>
+                    <input type="text" id="dvGDateE" type="text" class="form-control" ></input>
+                <p>
+                    <b>Hạn Bảo Hành:</b><br>
+                    <input type="text" id="dvGEndDateE" type="text" class="form-control" ></input>
+                <p>
+                    <b>Ip:</b><br>
+                    <input type="text" id="dvIpE" type="text" class="form-control" ></input>
+                <p>
+                    <b>Port:</b><br>
+                    <input type="text" id="dvPortE" type="text" class="form-control" ></input>
+                <p>
+                    <b>Device Account:</b><br>
+                    <input type="text" id="dvAccE" type="text" class="form-control" ></input>
+                <p>
+                    <b>Device Password:</b><br>
+                    <input type="text" id="dvPassE" type="text" class="form-control" ></input>
+                <p>
+                    <b>Thông Tin:</b><br>
+                    <input type="text" id="dvOtherE" type="text" class="form-control" ></input>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="UpdateContract()">Chỉnh Sửa</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" onclick="UpdateDevice()">Chỉnh Sửa</button>
             </div>
         </div>
     </div>
@@ -256,7 +281,7 @@
                         "mRender": function (data, type, full) {
                             var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.DeviceId + ')"></button>';
                             var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.DeviceId + ')"></button>';
-                            var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeAgency(' + full.DeviceId + ')"></button>';
+                            var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeDevice(' + full.DeviceId + ')"></button>';
                             return view + " " + edit + " " + del;
                         }
                     },
@@ -394,23 +419,40 @@
             autoclose: true,
             forceParse:false,
         })
+        $('#dvGDateE').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            forceParse: false,
+        })
+        $('#dvGEndDateE').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            forceParse: false,
+        })
 
         function getDataEdit(id) {
             $.ajax({
-                url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "Contract" })',
+                url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "Device" })',
 
                 data: {
-                    contract_id: id
+                    device_id: id
                 },
                 type: 'GET',
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#id").val(data.result.ObjReturn.ContractId);
-                    $("#comboCompanyE").val(data.result.ObjReturn.CompanyId);
-                    $("#conNameE").val(data.result.ObjReturn.ContractName);
-                    $("#conStartDateE").val(data.result.ObjReturn.StartDate);
-                    $("#conEndDateE").val(data.result.ObjReturn.EndDate);
+                    $("#id").val(data.result.ObjReturn.DeviceId);
+                    $("#comboCompanyAgencyE").val(data.result.ObjReturn.AgencyId);
+                    $("#comboDeviceTypeE").val(data.result.ObjReturn.DeviceTypeId);
+                    $("#dvNameE").val(data.result.ObjReturn.DeviceName);
+                    $("#dvCodeE").val(data.result.ObjReturn.DeviceCode);
+                    $("#dvGDateE").val(data.result.ObjReturn.GuarantyStartDate);
+                    $("#dvGEndDateE").val(data.result.ObjReturn.GuarantyEndDate);
+                    $("#dvIpE").val(data.result.ObjReturn.Ip);
+                    $("#dvPortE").val(data.result.ObjReturn.Port);
+                    $("#dvAccE").val(data.result.ObjReturn.DeviceAccount);
+                    $("#dvPassE").val(data.result.ObjReturn.DevicePassword);
+                    $("#dvOtherE").val(data.result.ObjReturn.Other);
                 }
 
             });
@@ -450,7 +492,37 @@
                 }
             });
         }
-
+        function UpdateDevice() {
+            var empObj = {
+                DeviceId: $('#id').val(),
+                DeviceTypeId: $('#comboDeviceTypeE').val(),
+                DeviceName: $('#dvNameE').val(),
+                DeviceCode: $('#dvCodeE').val(),
+                GuarantyStartDate: $('#dvGDateE').val(),
+                GuarantyEndDate: $('#dvGEndDateE').val(),
+                Ip: $('#dvIpE').val(),
+                Port: $('#dvPortE').val(),
+                DeviceAccount: $('#dvAccE').val(),
+                DevicePassword: $('#dvPassE').val(),
+                Other: $('#dvOtherE').val(),
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateDevice", "Device")',
+                data: JSON.stringify(empObj),
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#editModal').modal('hide');
+                         if (!data.result.isError) {
+                        swal(data.result.SuccessMessage, "", "success");
+                        }
+                        else
+                        swal(data.result.WarningMessage, "", "error");
+                    loadCompany();
+                }
+            });
+        }
     </script>
 
 }

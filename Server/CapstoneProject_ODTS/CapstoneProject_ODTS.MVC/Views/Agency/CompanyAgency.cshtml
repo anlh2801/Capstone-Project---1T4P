@@ -61,7 +61,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 @*<button type="button" class="btn btn-primary">Save changes</button>*@
             </div>
         </div>
@@ -97,10 +97,8 @@
                 <p>
             </div>
             <div class="modal-footer">
-                @*<a href="#" onClick="updateAgency();" class="btn  btn-outline-danger">Save Changes</a>*@
-                <button type="button" class="btn btn-primary" onClick="updateAgency();">Chỉnh Sửa</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+                <button type="button" class="btn btn-primary" onClick="updateAgency();">Chỉnh Sửa</button>
             </div>
         </div>
     </div>
@@ -131,10 +129,8 @@
 
             </div>
             <div class="modal-footer">
-
-                <button class="btn btn-primary" onClick="createAgency();">Create</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button class="btn btn-primary" onClick="createAgency();">Tạo Mới</button>
             </div>
         </div>
     </div>
@@ -191,13 +187,10 @@
             showCompany();
             getComName();
         });
-
-        $('#createAgencyModal').on('hidden.bs.modal', function () {
-            $('.modal-body').find('input').val('');
-        });
         $('#ww').select2({
-        dropdownParent: $('#createAgencyModal')
+            dropdownParent: $('#createAgencyModal'),
         });
+
         function getComName() {
 
             $.ajax({
@@ -431,8 +424,6 @@
 
                 }
             });
-
-
         }
 
         //show all account on combo box
