@@ -24,6 +24,7 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView rqName, estimes, nod, hero;
+
         public MyViewHolder(View view) {
             super(view);
             rqName = (TextView) view.findViewById(R.id.txtRequestNamePro);
@@ -36,7 +37,7 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
-                    if(position != RecyclerView.NO_POSITION) {
+                    if (position != RecyclerView.NO_POSITION) {
                         Intent intent = new Intent(context, StatusTimelineActivity.class);
                         intent.putExtra("requestID", listRequest.get(position).getRequestId());
                         context.startActivity(intent);
@@ -45,10 +46,12 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
             });
         }
     }
+
     public ProcessRequestAdapter(Context context, List<Request> listRequest) {
         this.context = context;
         this.listRequest = listRequest;
     }
+
     @Override
     public ProcessRequestAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -56,15 +59,14 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
 
         return new ProcessRequestAdapter.MyViewHolder(itemView);
     }
+
     @Override
     public void onBindViewHolder(final ProcessRequestAdapter.MyViewHolder holder, int position) {
-        Request album = listRequest.get(position);
-        holder.rqName.setText(album.getRequestName());
-        holder.nod.setText("Thiết bị cần xử lý: "+album.getNod());
-//        holder.hero.setText("ĐƯợc xử lý bởi: "+ album.getTicket().get(0).getiTSupporterName());
-                holder.hero.setText("ĐƯợc xử lý bởi: ");
-        holder.estimes.setText("Dự kiến hoàn thành: ");
-//        holder.estimes.setText("Dự kiến hoàn thành: " +album.getTicket().get(0).getTicketEstimationTime());
+        Request request = listRequest.get(position);
+        holder.rqName.setText(request.getRequestName());
+        holder.nod.setText("Thiết bị cần xử lý: " + request.getNod());
+        holder.hero.setText("ĐƯợc xử lý bởi: " + request.getiTSupporterName());
+//        holder.estimes.setText("Dự kiến hoàn thành: " + request.getRequestEstimationTime());
     }
 
     @Override
