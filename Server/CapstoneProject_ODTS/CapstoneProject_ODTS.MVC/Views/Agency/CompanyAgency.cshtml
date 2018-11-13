@@ -470,7 +470,6 @@
                 success: function (data) {
                     if (!data.result.isError) {
                         $('#EditModal').modal('hide');
-                        clearModal();
                         loadCompanyAgency();
                         swal(data.result.SuccessMessage, "", "success");
                     }

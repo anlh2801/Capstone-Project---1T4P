@@ -13,9 +13,11 @@ import android.widget.Toast;
 import com.odts.activities.R;
 import com.odts.activities.StatusTimelineActivity;
 import com.odts.activities.TimeLineActivity;
+import com.odts.models.Device;
 import com.odts.models.Request;
 import com.odts.services.RequestService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAdapter.MyViewHolder> {
@@ -38,8 +40,16 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         Intent intent = new Intent(context, StatusTimelineActivity.class);
+                        intent.putExtra("requestName", listRequest.get(position).getRequestName());
                         intent.putExtra("requestID", listRequest.get(position).getRequestId());
                         intent.putExtra("itName", listRequest.get(position).getiTSupporterName());
+                        ArrayList<String> listDeviceName = new ArrayList<>();
+                        Device device = new Device();
+                        for (int i = 0; i < listRequest.get(position).getTicket().size(); i++) {
+                            listDeviceName.add(listRequest.get(position).getTicket().get(i).getDeviceName());
+                        }
+
+                        intent.putStringArrayListExtra("listDevice", listDeviceName);
                         context.startActivity(intent);
                     }
                 }

@@ -25,7 +25,7 @@ public class Request {
     private String updateDate;
     @SerializedName("NumberOfTicket")
     private Integer nod;
-    @SerializedName("Ticket")
+    @SerializedName("Tickets")
     private List<Ticket> ticket;
     @SerializedName("RequestStatus")
     private String status;
