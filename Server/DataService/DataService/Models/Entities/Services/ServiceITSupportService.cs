@@ -41,7 +41,6 @@ namespace DataService.Models.Entities.Services
                         ServiceITSupportId = item.ServiceITSupportId,
                         ServiceName = item.ServiceName,
                         Description = item.Description,
-                        IsDelete = item.IsDelete,
                         CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy")
                     });
@@ -153,7 +152,6 @@ namespace DataService.Models.Entities.Services
                         ServiceITSupportId = item.ServiceITSupportId,
                         ServiceName = item.ServiceName,
                         Description = item.Description,
-                        IsDelete = item.IsDelete,
                         CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy")
                     });

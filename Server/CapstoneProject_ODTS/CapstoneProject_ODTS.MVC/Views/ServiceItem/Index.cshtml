@@ -3,5 +3,515 @@
     var dataAgency = ViewData["ID"];
 }
 
-<h2>Index @dataAgency</h2>
+
+<input type="hidden" id="serviceItemHidden" />
+<form onsubmit="createServiceItem(); return false">
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title"><b>Tạo loại dịch vụ mới</b></h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top: 10px">
+                                <b>Tên Loại Dịch Vụ:</b><br>
+                                <input type="text" id="siNameC" class="form-control" required></input>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 10px">
+                                <b>Mô Tả:</b><br>
+                                <input type="text" id="siDescriptionC" class="form-control" required></input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Tạo Mới</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b>Thông tin chi tiết</b></h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>Tên Loại Dịch Vụ:</b><br>
+                            <p id="siName"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top: 10px">
+                            <b>Mô Tả:</b><br>
+                            <p id="siDesciption"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top: 10px">
+                            <b>Ngày Tạo Loại Dịch Vụ:</b><br>
+                            <p id="siCreateDate"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top: 10px">
+                            <b>Lần Chỉnh Sửa Cuối:</b><br>
+                            <p id="siLastEdit"></p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<form onsubmit="UpdateServiceItem(); return false">
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b>Chỉnh sửa thông tin</b></h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <p>
+                        <p id="id"></p>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Tên Loại Dịch Vụ:</b><br>
+                            <input type="text" id="siNameE" class="form-control"></input>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Mô Tả:</b><br>
+                            <input type="text" id="siDescriptionE" class="form-control"></input>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Chỉnh Sửa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<style>
+    .city {
+        background-color: azure;
+        color: black;
+        padding: 1%;
+        border-left: solid cadetblue;
+        width: 100%;
+    }
+</style>
+<div class="row col-md-12">
+    <h3 class="city" id="agenNameShow"></h3>
+</div>
+
+<div class="row col-md-12">
+    <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
+        <thead>
+            <tr>
+                <th><label>STT</label></th>
+                <th><label>Tên Loại Dịch Vụ</label></th>
+                <th><label>Mô Tả</label></th>
+                <th><label>Ngày Tạo</label></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <div class="NewThing">
+        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Loại Dịch Vụ</button>
+        <button type="button" class="btn btn-primary fa fa-mail-reply-all" data-toggle="modal" data-target="" onclick="window.history.go(-1); return false;"><font face="verdana"> Quay Lại Trang Loại Dịch Vụ</button>
+    </div>
+</div>
+
+<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts {
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
+    <script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <script>
+        $(document).ready(function () {
+            loadServiceItem();
+            showDeviceType();
+            showCompanyAgency();
+            getAgenName();
+        });
+
+        $('#comboServiceItem').select2({
+            dropdownParent: $('#CreateModal')
+        });
+        function loadServiceItem() {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetAllDevice", "Agency", new { agency_id = dataAgency })',
+                data: {
+                },
+                success: function(result) {
+                    initDatatable(result.result.ObjReturn);
+                },
+                error: function(error) {
+                    showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                }
+            });
+        }
+        function initDatatable(data) {
+            $("#detail-table").dataTable().fnDestroy();
+            $("#detail-table").dataTable({
+                stateSave: true,
+                "bFilter": true,
+                "bSort": false,
+                "data": data,
+                "bRetrieve": true,
+                "bScrollCollapse": true,
+                "bProcessing": true,
+                "oLanguage": {
+                    "sSearch": "Tìm kiếm:",
+                    "sSearchPlaceholder": "Thành phần con",
+                    "sZeroRecords": "Không có dữ liệu phù hợp",
+                    "sInfo": "Hiển thị từ _START_ đến _END_ trên tổng số _TOTAL_ dòng",
+                    "sEmptyTable": "Không có dữ liệu",
+                    "sInfoFiltered": " - lọc ra từ _MAX_ dòng",
+                    "sLengthMenu": "Hiển thị _MENU_ dòng",
+                    "sProcessing": "Đang xử lý...",
+                    "oPaginate": {
+                        "sNext": "<i class='fa fa-chevron-right'></i>",
+                        "sPrevious": "<i class='fa fa-chevron-left'></i>"
+                    }
+                },
+                "aoColumnDefs": [
+                    {
+                        "aTargets": [0, 1, 2, 3, 4],
+                        "bSortable": false,
+                        "sClass": "text-center"
+                    },
+                ],
+                "columns": [
+                    { "data": "ServiceItemId" },
+                    { "data": "ServiceItemName" },
+                    { "data": "DesCription" },
+                    { "data": "CreateDate" },
+                    {
+                        "aTargets": [4],
+                        "mRender": function (data, type, full) {
+                            var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.DeviceId + ')"></button>';
+                            var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.DeviceId + ')"></button>';
+                            var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeDevice(' + full.DeviceId + ')"></button>';
+                            return view + " " + edit + " " + del;
+                        }
+                    },
+                ],
+                "bAutoWidth": false,
+            });
+        }
+        function showCreateModal() {
+            $('#CreateModal').modal('show');
+        }
+        function clearModal() {
+            $('#CreateModal').on('hidden.bs.modal', function (e) {
+                $(this)
+                    .find("input,textarea,select")
+                    .val('')
+                    .end()
+                    .find("input[type=checkbox], input[type=radio]")
+                    .prop("checked", "")
+                    .end();
+            })
+        }
+
+        function getAgenName() {
+
+            $.ajax({
+                url: '@Url.RouteUrl(new { action = "GetAgencyDetail", controller = "Agency" })',
+
+                data: {
+                    agency_id: @dataAgency
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var html = '';
+                    html = 'Tất Cả Thiết Bị Của Chi Nhánh ' + data.result.ObjReturn.CompanyName;
+                    $('#agenNameShow').append(html);
+                }
+                });
+        }
+
+        function showCompanyAgency() {
+            $('#comboCompanyAgency, #comboCompanyAgencyE')
+                .find('option')
+                .remove()
+                .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAgencyDetail", "Agency", new { agency_id = dataAgency })',
+                data: {
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var obj = data.result.ObjReturn;
+                    var html = '';
+                    var htmlCompany ='';
+                    if(obj != null) {
+                        html += '<option value="' +
+                            obj.AgencyId +
+                            '">' +
+                            obj.AgencyName +
+                            '</option>';
+                        htmlCompany += '<option value="' +
+                            obj.CompanyId +
+                            '">' +
+                           obj.CompanyName +
+                            '</option>';
+                    }
+                    $('#comboCompanyAgency').append(html);
+                    $('#comboCompanyAgencyE').append(html);
+                    $('#comboCompany').append(htmlCompany);
+                    $('#comboCompanyE').append(htmlCompany);
+                }
+            });
+        }
+        function showDeviceType() {
+            $('#comboDeviceType, #comboDeviceTypeE')
+                .find('option')
+                .remove()
+                .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllDeviceType", "DeviceType")',
+                data: {
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var obj = data.result.ObjReturn;
+                    var html = '';
+                    if(obj != null) {
+                            for (var i = 0; i < obj.length; i++) {
+                                    html += '<option value="' +
+                                        obj[i].DeviceTypeId +
+                                        '">' +
+                                        obj[i].DeviceTypeName
+                                        '</option>';
+                                }
+                    }
+
+                    $('#comboDeviceType').append(html);
+                    $('#comboDeviceTypeE').append(html);
+                }
+            });
+        }
+        function getData(idd) {
+
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "Device"})',
+
+                data: {
+                    device_id: idd
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $("#dvName").text(data.result.ObjReturn.DeviceName);
+                    $("#dvType").text(data.result.ObjReturn.DeviceTypeName);
+                    $("#dvCode").text(data.result.ObjReturn.DeviceCode);
+                    $("#dvGDate").text(data.result.ObjReturn.GuarantyStartDate);
+                    $("#dvEndDate").text(data.result.ObjReturn.GuarantyEndDate);
+                    $("#dvIp").text(data.result.ObjReturn.Ip);
+                    $("#dvPort").text(data.result.ObjReturn.Port);
+                    $("#dvAcc").text(data.result.ObjReturn.DeviceAccount);
+                    $("#dvPass").text(data.result.ObjReturn.DevicePassword);
+                    $("#dvSetupDate").text(data.result.ObjReturn.SettingDate);
+                    $("#dvOther").text(data.result.ObjReturn.Other);
+                    $("#dvLastEdit").text(data.result.ObjReturn.UpdateDate);
+                }
+            });
+        $('#ViewModal').modal('show');
+            }
+        $('#dvGDateC').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            forceParse: false,
+            })
+        $('#dvGEndDateC').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            forceParse: false,
+        })
+        $('#dvSettingDateC').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            forceParse:false,
+        })
+        $('#dvGDateE').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            forceParse: false,
+        })
+        $('#dvGEndDateE').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            forceParse: false,
+        })
+
+        function getDataEdit(id) {
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "Device" })',
+
+                data: {
+                    device_id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $("#id").val(data.result.ObjReturn.DeviceId);
+                    $("#comboCompanyAgencyE").val(data.result.ObjReturn.AgencyId);
+                    $("#comboDeviceTypeE").val(data.result.ObjReturn.DeviceTypeId);
+                    $("#dvNameE").val(data.result.ObjReturn.DeviceName);
+                    $("#dvCodeE").val(data.result.ObjReturn.DeviceCode);
+                    $("#dvGDateE").val(data.result.ObjReturn.GuarantyStartDate);
+                    $("#dvGEndDateE").val(data.result.ObjReturn.GuarantyEndDate);
+                    $("#dvIpE").val(data.result.ObjReturn.Ip);
+                    $("#dvPortE").val(data.result.ObjReturn.Port);
+                    $("#dvAccE").val(data.result.ObjReturn.DeviceAccount);
+                    $("#dvPassE").val(data.result.ObjReturn.DevicePassword);
+                    $("#dvOtherE").val(data.result.ObjReturn.Other);
+                }
+
+            });
+            $('#EditModal').modal('show');
+        }
+
+        function createDevice() {
+            var empObj = {
+                AgencyId: @ViewData["ID"],
+                DeviceTypeId: $('#comboDeviceType').val(),
+                DeviceName: $('#dvNameC').val(),
+                DeviceCode: $('#dvCodeC').val(),
+                GuarantyStartDate: $('#dvGDateC').val(),
+                GuarantyEndDate: $('#dvGEndDateC').val(),
+                Ip: $('#dvIpC').val(),
+                Port: $('#dvPortC').val(),
+                DeviceAccount: $('#dvAccC').val(),
+                DevicePassword: $('#dvPassC').val(),
+                SettingDate: $('#dvSettingDateC').val(),
+                Other: $('#dvOtherC').val(),
+            }
+             $.ajax({
+                type: 'POST',
+                url: '@Url.Action("CreateDevice", "Agency")',
+                data: JSON.stringify(empObj),
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    $('#CreateModal').modal('hide');
+                    if (!data.result.IsError) {
+                        swal(data.result.SuccessMessage, "", "success");
+                        clearModal();
+                        loadDevice();
+                    }
+                    else
+                         swal(data.result.WarningMessage, "", "error");
+                    loadDevice();
+                }
+            });
+        }
+        function UpdateDevice() {
+            var empObj = {
+                DeviceId: $('#id').val(),
+                DeviceTypeId: $('#comboDeviceTypeE').val(),
+                DeviceName: $('#dvNameE').val(),
+                DeviceCode: $('#dvCodeE').val(),
+                GuarantyStartDate: $('#dvGDateE').val(),
+                GuarantyEndDate: $('#dvGEndDateE').val(),
+                Ip: $('#dvIpE').val(),
+                Port: $('#dvPortE').val(),
+                DeviceAccount: $('#dvAccE').val(),
+                DevicePassword: $('#dvPassE').val(),
+                Other: $('#dvOtherE').val(),
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateDevice", "Device")',
+                data: JSON.stringify(empObj),
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#EditModal').modal('hide');
+                         if (!data.result.isError) {
+                        swal(data.result.SuccessMessage, "", "success");
+                        }
+                        else
+                        swal(data.result.WarningMessage, "", "error");
+                    loadCompany();
+                }
+            });
+        }
+         //show delete modal
+        function removeDevice(id) {
+            //$('#modalConfirmDelete').modal('show');
+            swal({
+                title: 'Bạn có Chắc Chắn Muốn Xóa?',
+                text: "Dữ Liệu Đã Xóa Không Thể Hoàn Lại!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Quay Lại',
+                confirmButtonText: 'Chấp Nhận Xóa!'
+            }).then(function () {
+                deleteDevice();
+            });
+            $('#deviceHidden').val(id);
+        }
+
+        //delete agency
+        function deleteDevice() {
+            var agency_idd = $('#deviceHidden').val();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("RemoveDevice", "Device")',
+                data: {
+                    agency_id: agency_idd
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    swal(
+                        'Đã Xóa!',
+                        'Dữ Liệu Của Bạn Đã Được Xóa.',
+                        'success'
+                    )
+                    loadDevice();
+                }
+            });
+        }
+
+    </script>
+
+}
 
