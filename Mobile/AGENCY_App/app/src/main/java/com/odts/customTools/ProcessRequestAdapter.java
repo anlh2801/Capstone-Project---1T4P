@@ -30,7 +30,7 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
             rqName = (TextView) view.findViewById(R.id.txtRequestNamePro);
             nod = (TextView) view.findViewById(R.id.txtNoDPro);
             hero = (TextView) view.findViewById(R.id.txtHero);
-            estimes = (TextView) view.findViewById(R.id.estimatesTime);
+            //estimes = (TextView) view.findViewById(R.id.estimatesTime);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -65,7 +65,7 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
         Request request = listRequest.get(position);
         holder.rqName.setText(request.getRequestName());
         holder.nod.setText("Thiết bị cần xử lý: " + request.getNod());
-        holder.hero.setText("ĐƯợc xử lý bởi: " + request.getiTSupporterName());
+        holder.hero.setText(" xử lý bởi: " + request.getiTSupporterName());
 //        holder.estimes.setText("Dự kiến hoàn thành: " + request.getRequestEstimationTime());
     }
 
