@@ -37,6 +37,7 @@ public class StatusTimelineActivity extends AppCompatActivity {
     Firebase reference1;
     private FloatingActionButton flbCall;
     private FloatingActionButton flbChat;
+    private TextView itNamee, requestNamee,listDeviceNamee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +46,27 @@ public class StatusTimelineActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final int requestID = intent.getIntExtra("requestID", 0);
         final String itName = intent.getStringExtra("itName");
+        final String requestName = intent.getStringExtra("requestName");
+        ArrayList<String> listDeviceName = intent.getStringArrayListExtra("listDevice");
+        StringBuilder sb = new StringBuilder();
+        boolean foundOne = false;
+        for (int i = 0; i < listDeviceName.size(); ++i) {
+            if (foundOne) {
+                sb.append(", ");
+            }
+            foundOne = true;
+            sb.append(listDeviceName.get(i));
+        }
+        listDeviceNamee = findViewById(R.id.listDeviceNamee);
+        listDeviceNamee.setText(sb.toString());
+        itNamee = findViewById(R.id.itName);
+        itNamee.setText(itName.toString());
+        requestNamee = findViewById(R.id.requestName);
+        requestNamee.setText(requestName.toString());
         flbChat = findViewById(R.id.flbChat);
         flbChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                        Toast.makeText(getContext(), "float", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(StatusTimelineActivity.this, ChatActivity.class);
                 intent.putExtra("itNameChat", itName);
                 startActivity(intent);
