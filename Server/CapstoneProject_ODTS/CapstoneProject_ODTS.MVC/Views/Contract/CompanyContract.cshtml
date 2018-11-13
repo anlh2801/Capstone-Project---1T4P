@@ -169,7 +169,6 @@
                 <th><label>Mô Tả Hợp Đồng</label></th>
                 <th><label>Ngày Bắt Đầu</label></th>
                 <th><label>Hạn Hợp Đồng</label></th>
-                <th><label>Dịch Vụ</label></th>
                 <th><label>Chức Năng</label></th>
             </tr>
         </thead>
@@ -233,7 +232,7 @@
             "bProcessing": true,
             "oLanguage": {
                 "sSearch": "Tìm kiếm:",
-                "sSearchPlaceholder": "Thành phần con",
+                "sSearchPlaceholder": "",
                 "sZeroRecords": "Không có dữ liệu phù hợp",
                 "sInfo": "Hiển thị từ _START_ đến _END_ trên tổng số _TOTAL_ dòng",
                 "sEmptyTable": "Không có dữ liệu",
@@ -247,7 +246,7 @@
             },
             "aoColumnDefs": [
                 {
-                    "aTargets": [0, 1, 2, 3, 4],
+                    "aTargets": [0, 1, 2, 3],
                     "bSortable": false,
                     "sClass": "text-center"
                 },
@@ -259,13 +258,7 @@
                 { "data": "StartDate" },
                 { "data": "EndDate" },
                 {
-                    "data": "RequestName",
-                    "mRender": function (data, type, full) {
-                        return '<a href="#' + full.ContractId + '">Xem Dịch Vụ</a>';
-                    }
-                },
-                {
-                    "aTargets": [4],
+                    "aTargets": [3],
                     "mRender": function (data, type, full) {
                         var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.ContractId + ')"></button>';
                         var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.ContractId + ')"></button>';
