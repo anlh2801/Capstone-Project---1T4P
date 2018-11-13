@@ -362,13 +362,15 @@ namespace DataService.Models.Entities.Services
                 {
                     if (status == (int)RequestStatusEnum.Done)
                     {
-                        var requestHistory = new CreateRequestHistoryAPIViewModel()
+                        var requestHistory = new RequestHistory()
                         {
                             RequestId = request_id,
-                            PreSupporter_Name = request.ITSupporter.ITSupporterName,
-                            PreStatus = request.RequestStatus,
-                            CreateDate = DateTime.Now.ToString()
+                            Pre_Status = request.RequestStatus,
+                            CreateDate = DateTime.UtcNow.AddHours(7),
+                            UpdateDate = DateTime.UtcNow.AddHours(7)
                         };
+                        requestHistoryRepo.Add(requestHistory);
+                        requestHistoryRepo.Save();
 
                         request.RequestStatus = status;
                         request.ITSupporter.IsBusy = false;
@@ -382,13 +384,15 @@ namespace DataService.Models.Entities.Services
                     }
                     else
                     {
-                        var requestHistory = new CreateRequestHistoryAPIViewModel()
+                        var requestHistory = new RequestHistory()
                         {
-                            RequestId = request_id,
-                            PreSupporter_Name = request.ITSupporter.ITSupporterName,
-                            PreStatus = request.RequestStatus,
-                            CreateDate = DateTime.Now.ToString()
+                            RequestId = request_id,                             
+                            Pre_Status = request.RequestStatus,
+                            CreateDate = DateTime.UtcNow.AddHours(7),
+                            UpdateDate = DateTime.UtcNow.AddHours(7)
                         };
+                        requestHistoryRepo.Add(requestHistory);
+                        requestHistoryRepo.Save();
 
                         request.RequestStatus = status;
                         request.UpdateDate = DateTime.UtcNow.AddHours(7);
