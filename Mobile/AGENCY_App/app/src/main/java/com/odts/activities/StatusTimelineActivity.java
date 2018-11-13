@@ -37,6 +37,7 @@ public class StatusTimelineActivity extends AppCompatActivity {
     Firebase reference1;
     private FloatingActionButton flbCall;
     private FloatingActionButton flbChat;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +59,7 @@ public class StatusTimelineActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
         Firebase.setAndroidContext(this);
-        reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" +requestID);
+        reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" + requestID);
         reference1.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -89,10 +90,18 @@ public class StatusTimelineActivity extends AppCompatActivity {
             }
         });
     }
-    private void setDataListItems(String message, String time){
-                mDataList.add(new TimeLine( message, time));
-                mTimeLineAdapter = new StatusTimeLineAdapter(mDataList);
-                mRecyclerView.setAdapter(mTimeLineAdapter);
+
+    private void setDataListItems(String message, String time) {
+        mDataList.add(new TimeLine(message, time));
+        mTimeLineAdapter = new StatusTimeLineAdapter(mDataList);
+        mRecyclerView.setAdapter(mTimeLineAdapter);
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                // Call smooth scroll
+                mRecyclerView.smoothScrollToPosition(mTimeLineAdapter.getItemCount());
+            }
+        });
     }
 
 }
