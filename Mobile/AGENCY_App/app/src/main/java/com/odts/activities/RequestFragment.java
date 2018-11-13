@@ -48,30 +48,11 @@ public class RequestFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_request, container, false);
         toolbar = (Toolbar) v.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        viewPager = (ViewPager) v.findViewById(R.id.viewpager);
+        viewPager = (ViewPager) v.findViewById(R.id.viewpagerrr);
         setupViewPager(viewPager);
         viewPager.setOffscreenPageLimit(4);
         tabLayout = (TabLayout) v.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-//        btnCreate = (com.melnykov.fab.FloatingActionButton) v.findViewById(R.id.fab);
-//        ListView listView = (ListView) v.findViewById(R.id.listPending);
-//        btnCreate.attachToListView(listView, new ScrollDirectionListener() {
-//            @Override
-//            public void onScrollDown() {
-//                Toast.makeText(getContext(), "down", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onScrollUp() {
-//                Toast.makeText(getContext(), "up", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        btnCreate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                Toast.makeText(getContext(), "float", Toast.LENGTH_SHORT).show();
-//            }
-//        });
         return v;
     }
 
