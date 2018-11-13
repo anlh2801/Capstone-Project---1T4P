@@ -87,17 +87,17 @@ namespace DataService.Models.Entities.Services
                         AgencyId = item.AgencyId,
                         DeviceTypeId = item.DeviceTypeId,
                         DeviceCode = item.DeviceCode,
-                        GuarantyStartDate = item.GuarantyStartDate != null ? item.GuarantyStartDate.Value.ToString("MM/dd/yyyy") : "Chưa có ngày",
-                        GuarantyEndDate = item.GuarantyEndDate.Value.ToString("MM/dd/yyyy"),
+                        GuarantyStartDate = item.GuarantyStartDate != null ? item.GuarantyStartDate.Value.ToString("dd/MM/yyyy") : "Chưa có ngày",
+                        GuarantyEndDate = item.GuarantyEndDate.Value.ToString("dd/MM/yyyy"),
                         Ip = item.Ip,
                         Port = item.Port,
                         DeviceAccount = item.DeviceAccount,
                         DevicePassword = item.DevicePassword,
-                        SettingDate = item.SettingDate.Value.ToString("MM/dd/yyyy"),
+                        SettingDate = item.SettingDate.Value.ToString("dd/MM/yyyy"),
                         Other = item.Other,
                         IsDelete = item.IsDelete,
-                        CreateDate = item.CreateDate.ToString("MM/dd/yyyy"),
-                        UpdateDate = item.UpdateDate.Value.ToString("MM/dd/yyyy"),
+                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
+                        UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy"),
                     });
                 }
 
@@ -127,17 +127,17 @@ namespace DataService.Models.Entities.Services
                         DeviceTypeId = device.DeviceTypeId,
                         DeviceTypeName = device.DeviceType.DeviceTypeName,
                         DeviceCode = device.DeviceCode,
-                        GuarantyStartDate = device.GuarantyStartDate.Value.ToString("MM/dd/yyyy"),
-                        GuarantyEndDate = device.GuarantyEndDate.Value.ToString("MM/dd/yyyy"),
+                        GuarantyStartDate = device.GuarantyStartDate.Value.ToString("dd/MM/yyyy"),
+                        GuarantyEndDate = device.GuarantyEndDate.Value.ToString("dd/MM/yyyy"),
                         Ip = device.Ip,
                         Port = device.Port,
                         DeviceAccount = device.DeviceAccount,
                         DevicePassword = device.DevicePassword,
-                        SettingDate = device.SettingDate.Value.ToString("MM/dd/yyyy"),
+                        SettingDate = device.SettingDate.Value.ToString("dd/MM/yyyy"),
                         Other = device.Other,
                         IsDelete = device.IsDelete,
-                        CreateDate = device.CreateDate.ToString("MM/dd/yyyy"),
-                        UpdateDate = device.UpdateDate.Value.ToString("MM/dd/yyyy"),
+                        CreateDate = device.CreateDate.ToString("dd/MM/yyyy"),
+                        UpdateDate = device.UpdateDate.Value.ToString("dd/MM/yyyy"),
                     };
                     return new ResponseObject<DeviceAPIViewModel> { IsError = false, ObjReturn = deviceAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
                 }
@@ -245,33 +245,33 @@ namespace DataService.Models.Entities.Services
             try
             {
                 var deviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
-            var updateDevice = deviceRepo.GetActive().SingleOrDefault(a => a.DeviceId == model.DeviceId);
+                var updateDevice = deviceRepo.GetActive().SingleOrDefault(a => a.DeviceId == model.DeviceId);
 
-            if (updateDevice != null)
-            {
-                updateDevice.DeviceName = model.DeviceName;
-                updateDevice.DeviceCode = model.DeviceCode;
-                updateDevice.GuarantyStartDate = model.GuarantyStartDate.ToDateTime();
-                updateDevice.GuarantyEndDate = model.GuarantyEndDate.ToDateTime();
-                updateDevice.Ip = model.Ip;
-                updateDevice.Port = model.Port;
-                updateDevice.DeviceAccount = model.DeviceAccount;
-                updateDevice.DevicePassword = model.DevicePassword;
-                updateDevice.DeviceAccount = model.DeviceAccount;
-                updateDevice.Other = model.Other;
-                updateDevice.UpdateDate = DateTime.UtcNow.AddHours(7);
+                if (updateDevice != null)
+                {
+                    updateDevice.DeviceTypeId = model.DeviceTypeId;
+                    updateDevice.DeviceName = model.DeviceName;
+                    updateDevice.DeviceCode = model.DeviceCode;
+                    updateDevice.GuarantyStartDate = model.GuarantyStartDate.ToDateTime();
+                    updateDevice.GuarantyEndDate = model.GuarantyEndDate.ToDateTime();
+                    updateDevice.Ip = model.Ip;
+                    updateDevice.Port = model.Port;
+                    updateDevice.DeviceAccount = model.DeviceAccount;
+                    updateDevice.DevicePassword = model.DevicePassword;
+                    updateDevice.Other = model.Other;
+                    updateDevice.UpdateDate = DateTime.UtcNow.AddHours(7);
 
-                deviceRepo.Edit(updateDevice);
-                deviceRepo.Save();
-                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Cập nhật thành công!", ObjReturn = true };
+                    deviceRepo.Edit(updateDevice);
+                    deviceRepo.Save();
+                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Chỉnh sửa thiết bị thành công", ObjReturn = true };
                 }
 
-                return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật thiết bị thất bại!", ObjReturn = false };
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉnh sửa thiết bị thất bại", ObjReturn = false };
             }
             catch (Exception e)
             {
 
-                return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật thiết bị thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉnh sửa thiết bị thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
             }
         }
     }

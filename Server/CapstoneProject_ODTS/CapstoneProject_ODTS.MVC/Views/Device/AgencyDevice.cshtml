@@ -1,9 +1,8 @@
 ﻿<!-- Datatable -->
 @{
     var dataAgency = ViewData["ID"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
 <input type="hidden" id="deviceHidden" />
 <form onsubmit="createDevice(); return false">
     <div class="container">
@@ -581,19 +580,18 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $('#EditModal').modal('hide');
-                         if (!data.result.isError) {
+                    if (!data.result.isError) {
+                        $('#EditModal').modal('hide');
+                        loadDevice();
                         swal(data.result.SuccessMessage, "", "success");
-                        }
-                        else
+                    }
+                    else
                         swal(data.result.WarningMessage, "", "error");
-                    loadCompany();
                 }
             });
         }
          //show delete modal
         function removeDevice(id) {
-            //$('#modalConfirmDelete').modal('show');
             swal({
                 title: 'Bạn có Chắc Chắn Muốn Xóa?',
                 text: "Dữ Liệu Đã Xóa Không Thể Hoàn Lại!",
@@ -611,12 +609,12 @@
 
         //delete agency
         function deleteDevice() {
-            var agency_idd = $('#deviceHidden').val();
+            var device_idd = $('#deviceHidden').val();
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("RemoveDevice", "Device")',
                 data: {
-                    agency_id: agency_idd
+                    device_id: device_idd
                 },
 
                 dataType: 'json',

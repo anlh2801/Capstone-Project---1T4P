@@ -160,8 +160,6 @@ namespace DataService.Models.Entities.Services
                 if (updateContract != null)
                 {
                     updateContract.ContractName = model.ContractName;
-                    //updateContract.StartDate = DateTime.ParseExact(model.CreateDate, "dd-MM-yyyy", CultureInfo.InvariantCulture); 
-                    //updateContract.EndDate = DateTime.ParseExact(model.EndDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                     updateContract.StartDate = model.StartDate.ToDateTime();
                     updateContract.EndDate = model.EndDate.ToDateTime();
                     updateContract.UpdateDate = DateTime.UtcNow.AddHours(7);
