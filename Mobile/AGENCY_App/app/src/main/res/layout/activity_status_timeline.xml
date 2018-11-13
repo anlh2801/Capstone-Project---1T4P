@@ -105,13 +105,13 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="408dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/flbCall"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.939"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_chat_fa_32dp" />
 
     <android.support.design.widget.FloatingActionButton
@@ -121,16 +121,13 @@
         android:layout_alignTop="@+id/flbChat"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="36dp"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.939"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flbChat"
-        app:layout_constraintVertical_bias="0.285"
         app:srcCompat="@drawable/ic_local_phone_fa_32dp" />
 
 </android.support.constraint.ConstraintLayout>

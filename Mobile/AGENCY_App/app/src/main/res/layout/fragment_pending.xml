@@ -7,24 +7,40 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <android.support.v7.widget.RecyclerView
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listPending"/>
-    <com.melnykov.fab.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="56dp"
-        android:layout_marginEnd="56dp"
-        android:src="@drawable/ic_add_white_24dp"
-        fab:fab_colorNormal="@color/accent"
-        fab:fab_colorPressed="@color/accent_pressed"
-        fab:fab_colorRipple="@color/ripple" />
+        android:layout_height="match_parent">
 
+        <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom|right"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_add_white_24dp"
+            fab:fab_colorNormal="@color/accent"
+            fab:fab_colorPressed="@color/accent_pressed"
+            fab:fab_colorRipple="@color/ripple"
+            fab:layout_constraintBottom_toBottomOf="@+id/listPending"
+            fab:layout_constraintEnd_toEndOf="parent"
+            fab:layout_constraintHorizontal_bias="0.926"
+            fab:layout_constraintStart_toStartOf="parent"
+            fab:layout_constraintTop_toTopOf="parent"
+            fab:layout_constraintVertical_bias="0.929" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/listPending"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.constraint.ConstraintLayout>
 
 
 </FrameLayout>
