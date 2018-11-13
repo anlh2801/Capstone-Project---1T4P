@@ -150,13 +150,16 @@
     .city {
         background-color: azure;
         color: black;
-        padding: 15px;
+        padding: 1%;
         border-left: solid cadetblue;
-        width: 97%;
+        width: 100%;
     }
 </style>
 <!-- Datatable -->
-<h3 class="city">Tất Cả Hợp Đồng</h3>
+<div class="row col-md-12">
+    <h3 class="city" id="comNameShow"></h3>
+</div>
+
 <div class="row col-md-12">
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
@@ -196,6 +199,7 @@
         showCompany();
         showSupportService();
         showSupportServiceE();
+        getComName();
     });
     $('#test').select2({
         dropdownParent: $('#CreateModal')
@@ -287,6 +291,25 @@
                 .end();
         })
     }
+
+    function getComName() {
+
+            $.ajax({
+                url: '@Url.RouteUrl(new { action = "ViewDetail", controller = "Company" })',
+
+                data: {
+                    company_id: @dataContract
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var html = '';
+                    html = 'Tất Cả Hợp Đồng Của Công Ty ' + data.result.ObjReturn.CompanyName;
+                    $('#comNameShow').append(html);
+                }
+                });
+        }
 
     function showCompany() {
         $('#comboCompany, #comboCompanyE')

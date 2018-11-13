@@ -419,11 +419,6 @@
                 confirmButtonText: 'Chấp Nhận Xóa!'
             }).then(function () {
                 deleteCompany();
-                swal(
-                    'Đã Xóa!',
-                    'Dữ Liệu Của Bạn Đã Được Xóa.',
-                    'success'
-                )
             });
             $('#companyHidden').val(id);
         }
@@ -440,6 +435,11 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     $('#modalConfirmDelete').modal('hide')
+                    swal(
+                        'Đã Xóa!',
+                        'Dữ Liệu Của Bạn Đã Được Xóa.',
+                        'success'
+                    )
                     loadCompany();
                 }
             });
