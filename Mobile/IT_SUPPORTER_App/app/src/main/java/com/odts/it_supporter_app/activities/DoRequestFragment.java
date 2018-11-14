@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -37,12 +38,13 @@ public class DoRequestFragment extends Fragment {
     Button btnDone;
     Button btnCall;
     Button btnStart;
+    FloatingActionButton flbGuidline;
     Integer itSupporterId = 0;
     Integer requestId = 0;
     RequestService requestService;
     ITSupporterService itSupporterService;
     TextView rqName;
-
+    Integer serviceItemId = 0;
     public DoRequestFragment() {
         _requestService = new RequestService();
 
@@ -69,6 +71,7 @@ public class DoRequestFragment extends Fragment {
         requestService.getRequestByRequestIdAndITSupporterId(getActivity(), requestId, itSupporterId, new CallBackData<Request>() {
             @Override
             public void onSuccess(final Request request) {
+                //serviceItemId = request.getSe
                 rqName.setText(request.getRequestName());
                 btnCall = v.findViewById(R.id.btnCall);
                 btnCall.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +113,14 @@ public class DoRequestFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 itSupporterService.updateStartTime(getContext(), requestId, DateFormat.getDateTimeInstance().format(new Date()));
+            }
+        });
+        flbGuidline = (FloatingActionButton) v.findViewById(R.id.flbGuidline);
+        flbGuidline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), GuidelineActivity.class);
+                startActivity(intent);
             }
         });
         return v;
