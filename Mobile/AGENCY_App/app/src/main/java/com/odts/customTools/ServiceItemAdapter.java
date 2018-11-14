@@ -28,15 +28,15 @@ public class ServiceItemAdapter extends ArrayAdapter<ServiceItem> {
 
     public ServiceItemAdapter(@NonNull Activity context, int resource, @NonNull List<ServiceItem> objects) {
         super(context, resource, objects);
-        this.context= context;
-        this.resource=resource;
-        this.objects=objects;
+        this.context = context;
+        this.resource = resource;
+        this.objects = objects;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater= this.context.getLayoutInflater();
-        View row = inflater.inflate(this.resource,null);
+        LayoutInflater inflater = this.context.getLayoutInflater();
+        View row = inflater.inflate(this.resource, null);
 
         TextView txtServiceItemTitle = (TextView) row.findViewById(R.id.txtServiceItemTitle);
         //TextView txtDescription = (TextView) row.findViewById(R.id.txtDescription);
@@ -47,7 +47,7 @@ public class ServiceItemAdapter extends ArrayAdapter<ServiceItem> {
         /** Set data to row*/
         final ServiceItem serviceItem = this.objects.get(position);
         txtServiceItemTitle.setText(serviceItem.getServiceItemName());
-       // txtDescription.setText(serviceItem.getDescription());
+        // txtDescription.setText(serviceItem.getDescription());
 //        txtPrice.setText(serviceItem.getServiceItemPrice().toString());
 //
 //        /**Set Event Onclick*/

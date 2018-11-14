@@ -44,6 +44,7 @@ public class Enums {
             stringValue = toString;
             intValue = value;
         }
+
         public String getStringValue() {
             return stringValue;
         }
@@ -51,6 +52,7 @@ public class Enums {
         public int getIntValue() {
             return intValue;
         }
+
         @Override
         public String toString() {
             return stringValue;
@@ -62,7 +64,7 @@ public class Enums {
         New("Mới", 1),
         In_Process("Đang xử lý", 2),
         Done("Hoàn thành", 3),
-        Cancel ("Hủy bỏ", 4);
+        Cancel("Hủy bỏ", 4);
 
         private String stringValue;
         private int intValue;
@@ -71,6 +73,7 @@ public class Enums {
             stringValue = toString;
             intValue = value;
         }
+
         public String getStringValue() {
             return stringValue;
         }
@@ -78,6 +81,7 @@ public class Enums {
         public int getIntValue() {
             return intValue;
         }
+
         @Override
         public String toString() {
             return stringValue;
@@ -85,9 +89,9 @@ public class Enums {
     }
 
     enum Gender {
-        Male ("Nam", 1),
-        Female ("Nữ", 2),
-        Others ("Khác", 3);
+        Male("Nam", 1),
+        Female("Nữ", 2),
+        Others("Khác", 3);
 
         private String stringValue;
         private int intValue;
@@ -96,6 +100,7 @@ public class Enums {
             stringValue = toString;
             intValue = value;
         }
+
         public String getStringValue() {
             return stringValue;
         }
@@ -103,6 +108,7 @@ public class Enums {
         public int getIntValue() {
             return intValue;
         }
+
         @Override
         public String toString() {
             return stringValue;

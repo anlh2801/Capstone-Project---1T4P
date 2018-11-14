@@ -29,10 +29,12 @@ public class PendingFragment extends Fragment {
 
     public PendingFragment() {
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,7 +55,6 @@ public class PendingFragment extends Fragment {
                 btnCreate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        Toast.makeText(getContext(), "float", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getContext(), AddRequestLayoutActivity.class);
                         startActivity(intent);
                     }

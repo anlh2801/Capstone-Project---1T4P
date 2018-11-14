@@ -20,7 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AgencyService {
-    public void getAgencyProfile (final Context context, int agencyId, final CallBackData<Agency> callBackData) {
+    public void getAgencyProfile(final Context context, int agencyId, final CallBackData<Agency> callBackData) {
         IAgencyApiCaller service = RetrofitInstance.getRetrofitInstance().create(IAgencyApiCaller.class);
 
         /** Call the method with parameter in the interface to get the notice data*/
@@ -32,16 +32,15 @@ public class AgencyService {
         call.enqueue(new Callback<ResponseObject<Agency>>() {
             @Override
             public void onResponse(Call<ResponseObject<Agency>> call, Response<ResponseObject<Agency>> response) {
-                if(response.code() == 200 && response.body() != null){
+                if (response.code() == 200 && response.body() != null) {
                     if (!response.body().isError()) {
                         callBackData.onSuccess(response.body().getObjReturn());
-                    }
-                    else {
+                    } else {
                         Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
-                    Log.e("MainActivity", "error" );
+                    Log.e("MainActivity", "error");
                 }
             }
 

@@ -22,7 +22,6 @@ public class ResponseObjectReturnList<T> {
     private String successMessage;
 
 
-
     public ArrayList<T> getObjList() {
         return objList;
     }

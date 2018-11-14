@@ -1,16 +1,12 @@
 package com.odts.activities;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,15 +16,11 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.odts.customTools.StatusTimeLineAdapter;
-import com.odts.customTools.TimeLineAdapter;
-import com.odts.models.Request;
 import com.odts.models.TimeLine;
 import com.odts.services.RequestService;
-import com.odts.utils.CallBackData;
 import com.odts.utils.Enums;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,23 +33,24 @@ public class StatusTimelineActivity extends AppCompatActivity {
     private FloatingActionButton flbCall;
     private FloatingActionButton flbChat;
     private Button btnDone;
-    private TextView itNamee, requestNamee,listDeviceNamee;
+    private TextView itNamee, requestNamee, listDeviceNamee;
     private RequestService requestService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status_timeline);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         btnDone = findViewById(R.id.btnDoneTime);
+        listDeviceNamee = findViewById(R.id.listDeviceNamee);
+        itNamee = findViewById(R.id.itName);
+        requestNamee = findViewById(R.id.requestName);
+        flbChat = findViewById(R.id.flbChat);
+
         requestService = new RequestService();
         final Intent intent = getIntent();
         final int requestID = intent.getIntExtra("requestID", 0);
-        btnDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                requestService.cancelTicket(StatusTimelineActivity.this, requestID, Enums.RequestStatusEnum.Done.getIntValue());
-            }
-        });
         final String itName = intent.getStringExtra("itName");
         final String requestName = intent.getStringExtra("requestName");
         final ArrayList<String> listDeviceName = intent.getStringArrayListExtra("listDevice");
@@ -70,13 +63,16 @@ public class StatusTimelineActivity extends AppCompatActivity {
             foundOne = true;
             sb.append(listDeviceName.get(i));
         }
-        listDeviceNamee = findViewById(R.id.listDeviceNamee);
         listDeviceNamee.setText(sb.toString());
-        itNamee = findViewById(R.id.itName);
         itNamee.setText(itName.toString());
-        requestNamee = findViewById(R.id.requestName);
         requestNamee.setText(requestName.toString());
-        flbChat = findViewById(R.id.flbChat);
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestService.cancelTicket(StatusTimelineActivity.this, requestID, Enums.RequestStatusEnum.Done.getIntValue());
+                finish();
+            }
+        });
         flbChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,7 +81,7 @@ public class StatusTimelineActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
         Firebase.setAndroidContext(this);
@@ -97,7 +93,7 @@ public class StatusTimelineActivity extends AppCompatActivity {
                 String message = map.get("status").toString();
                 String time = map.get("time").toString();
                 setDataListItems(message, time);
-                if(message.equalsIgnoreCase("Hoàn thành")) {
+                if (message.equalsIgnoreCase("Hoàn thành")) {
                     btnDone.setVisibility(View.VISIBLE);
                 }
             }
@@ -131,7 +127,6 @@ public class StatusTimelineActivity extends AppCompatActivity {
         mRecyclerView.post(new Runnable() {
             @Override
             public void run() {
-                // Call smooth scroll
                 mRecyclerView.smoothScrollToPosition(mTimeLineAdapter.getItemCount());
             }
         });
