@@ -76,10 +76,16 @@ namespace DataService.Models.Entities.Services
                 var contractService = contractServiceRepo.GetActive().Where(a => a.ContractId == contract_id).ToList();
                 if (contract != null)
                 {
-                    List<int> list = null;
+                    List<int> listId = new List<int>();
+                    List<string> listName = new List<string>();
+
                     foreach (var item in contractService)
                     {
-                        list.Add(item.ContractServiceITSupportId);
+                        listId.Add(item.ServiceITSupportId.Value);
+                    }
+                    foreach (var item in contractService)
+                    {
+                        listName.Add(item.ServiceITSupport.ServiceName);
                     }
                     var contractAPIViewModel = new ContractAPIViewModel
                     {
@@ -87,7 +93,8 @@ namespace DataService.Models.Entities.Services
                         CompanyId = contract.CompanyId,
                         CompanyName = contract.Company.CompanyName,
                         ContractName = contract.ContractName,
-                        ServiceIdList = list,
+                        ServiceIdList = listId,
+                        ServiceName = listName,
                         StartDate = contract.StartDate.Value.ToString("dd/MM/yyyy"),
                         EndDate = contract.EndDate.Value.ToString("dd/MM/yyyy"),
                         UpdateDate = contract.UpdateDate.Value.ToString("dd/MM/yyyy"),
@@ -155,7 +162,37 @@ namespace DataService.Models.Entities.Services
             try
             {
                 var contractRepo = DependencyUtils.Resolve<IContractRepository>();
+                var contractServiceRepo = DependencyUtils.Resolve<IContractServiceITSupportRepository>();
                 var updateContract = contractRepo.GetActive().SingleOrDefault(a => a.ContractId == model.ContractId);
+                var contractService = contractServiceRepo.GetActive().Where(a => a.ContractId == model.ContractId).ToList();
+
+                foreach (var itemFE in model.ServiceIdList)
+                {
+                    if (!contractService.Select(x => x.ServiceITSupportId).ToList().Contains(itemFE))
+                    {
+                        var contractServiceNew = new ContractServiceITSupport()
+                        {
+                            ContractId = model.ContractId,
+                            ServiceITSupportId = itemFE,
+                            IsDelete = false,
+                            StartDate = model.StartDate.ToDateTime(),
+                            EndDate = model.EndDate.ToDateTime(),
+                            CreateDate = DateTime.UtcNow.AddHours(7),
+                            UpdateDate = DateTime.UtcNow.AddHours(7)
+                        };
+                        contractServiceRepo.Add(contractServiceNew);
+                    }
+                }
+
+                foreach (var itemDB in contractService)
+                {
+                    if (!model.ServiceIdList.Contains(itemDB.ServiceITSupportId.Value))
+                    {
+                        itemDB.UpdateDate = DateTime.UtcNow.AddHours(7);
+                        contractServiceRepo.Deactivate(itemDB);
+                    }
+                }
+                contractServiceRepo.Save();
 
                 if (updateContract != null)
                 {
@@ -183,9 +220,17 @@ namespace DataService.Models.Entities.Services
             try
             {
                 var contracttRepo = DependencyUtils.Resolve<IContractRepository>();
+                var contractServiceRepo = DependencyUtils.Resolve<IContractServiceITSupportRepository>();
                 var contract = contracttRepo.GetActive().SingleOrDefault(a => a.ContractId == contract_id);
+                var contractServices = contractServiceRepo.GetActive().Where(a => a.ContractId == contract_id).ToList();
 
                 Deactivate(contract);
+                foreach (var itemDB in contractServices)
+                {
+                        itemDB.UpdateDate = DateTime.UtcNow.AddHours(7);
+                        contractServiceRepo.Deactivate(itemDB);
+                }
+                contractServiceRepo.Save();
 
                 return new ResponseObject<bool> { IsError = false, SuccessMessage = "Xóa hợp đồng thành công", ObjReturn = true };
             }

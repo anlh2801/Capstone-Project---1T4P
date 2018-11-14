@@ -22,5 +22,6 @@ namespace DataService.APIViewModels
         public string CreateDate { get; set; }
         public string UpdateDate { get; set; }
         public List<int> ServiceIdList { get; set; }
+        public List<string> ServiceName { get; set; }
     }
 }

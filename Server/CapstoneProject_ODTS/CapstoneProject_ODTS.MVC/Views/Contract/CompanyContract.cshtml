@@ -41,6 +41,11 @@
                             <p id="conName"></p>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
+
+                            <b>Dịch Vụ Sử Dụng:</b><br>
+                            <p id="ServiceName"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
                             <b>Ngày Bắt Đầu:</b><br>
                             <p id="conStartDate"></p>
                         </div>
@@ -88,11 +93,11 @@
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <b>Ngày Bất Đầu:</b><br>
-                                <input type="text" id="createDate" type="text" class="form-control" required>
+                                <input type="text" id="createDate" class="form-control" required>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <b>Ngày Hết Hạn:</b><br>
-                                <input type="text" id="endDate" type="text" class="form-control" required>
+                                <input type="text" id="endDate" class="form-control" required>
                             </div>
                         </div>
                     </div>
@@ -130,11 +135,11 @@
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
                             <b>Ngày Bất Đầu:</b><br>
-                            <input type="text" id="conStartDateE" type="text" class="form-control" required>
+                            <input type="text" id="conStartDateE" class="form-control" required>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
                             <b>Ngày Hết Hạn:</b><br>
-                            <input type="text" id="conEndDateE" type="text" class="form-control" required>
+                            <input type="text" id="conEndDateE" class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -197,14 +202,13 @@
         loadContract();
         showCompany();
         showSupportService();
-        showSupportServiceE();
         getComName();
     });
     $('#test').select2({
         dropdownParent: $('#CreateModal')
         });
     $('#testE').select2({
-        dropdownParent: $('#CreateModal')
+        dropdownParent: $('#EditModal')
     });
     function loadContract() {
         $.ajax({
@@ -334,7 +338,7 @@
         });
     }
     function showSupportService() {
-        $('#test')
+        $('#test,#testE')
         .find('option')
                 .remove()
                 .end();
@@ -358,37 +362,11 @@
                         '</option>';
                 }
                 $('#test').append(html);
-        }
-    });
-    }
-    function showSupportServiceE() {
-        $('#testE')
-        .find('option')
-                .remove()
-                .end();
-        $.ajax({
-            type: 'GET',
-            url: '@Url.RouteUrl(new {action = "GetAllServiceITSupport", controller = "ServiceITSupport" })',
-            data: {
-            },
-
-            dataType: 'json',
-            contentType: "application/json; charset=utf-8",
-            success: function(data) {
-                //$('#createAgency').modal('show');
-                var len = data.result.ObjReturn.length;
-                var html = '';
-                for (var i = 0; i < len; i++) {
-                    html += '<option value="' +
-                        data.result.ObjReturn[i].ServiceITSupportId +
-                        '">' +
-                        data.result.ObjReturn[i].ServiceName +
-                        '</option>';
-                }
                 $('#testE').append(html);
         }
     });
     }
+    
     function getData(idd) {
 
         $.ajax({
@@ -404,6 +382,7 @@
             success: function (data) {
                 $("#conCompany").text(data.result.ObjReturn.CompanyName);
                 $("#conName").text(data.result.ObjReturn.ContractName);
+                $("#ServiceName").text(data.result.ObjReturn.ServiceName);
                 $("#conStartDate").text(data.result.ObjReturn.StartDate);
                 $("#conEndDate").text(data.result.ObjReturn.EndDate);
                 $("#conUpdateDate").text(data.result.ObjReturn.UpdateDate);
@@ -434,10 +413,7 @@
 
     function getDataEdit(id) {
         $.ajax({
-
             url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "Contract" })',
-
-
             data: {
                 contract_id: id
             },
@@ -445,14 +421,19 @@
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
+                var arr = data.result.ObjReturn.ServiceIdList;               
+                var arr2 = [];               
+                var i;
+                for (i = 0; i < arr.length; i++) {
+                    arr2.push(arr[i].toString());
+                }
                 $("#id").val(data.result.ObjReturn.ContractId);
                 $("#comboCompanyE").val(data.result.ObjReturn.CompanyId);
-                //$("#testE").val(data.result.ObjReturn.ServiceIdList);
+                $('#testE').select2().val(arr2).trigger('change');
                 $("#conNameE").val(data.result.ObjReturn.ContractName);
                 $("#conStartDateE").val(data.result.ObjReturn.StartDate);
                 $("#conEndDateE").val(data.result.ObjReturn.EndDate);
             }
-
         });
         $('#EditModal').modal('show');
     }
@@ -460,6 +441,7 @@
         var empObj = {
             ContractId: $('#id').val(),
             ContractName: $('#conNameE').val(),
+            ServiceIdList: $('#testE').val(),
             StartDate: $('#conStartDateE').val(),
             EndDate: $('#conEndDateE').val(),
         }
@@ -468,16 +450,16 @@
 
             url: '@Url.Action("UpdateContract", "Contract")',
 
-    data: JSON.stringify(empObj),
+            data: JSON.stringify(empObj),
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 $('#EditModal').modal('hide');
                 if (!data.result.isError) {
-                    alert(data.result.SuccessMessage);
+                    swal(data.result.SuccessMessage, "", "success");
                 }
                 else
-                    alert(data.result.WarningMessage);
+                    swal(data.result.WarningMessage, "", "error");
                 loadContract();
             }
         });
