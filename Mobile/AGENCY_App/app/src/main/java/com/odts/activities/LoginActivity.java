@@ -12,22 +12,23 @@ import com.odts.services.LoginService;
 
 public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
-    EditText username;
-    EditText password;
+    EditText username, password;
     LoginService loginService;
     SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        sp = getSharedPreferences("login",MODE_PRIVATE);
 
-        if(sp.getBoolean("logged",false)){
-            goToMainActivity();
-        }
         btnLogin = (Button) findViewById(R.id.btn_login);
         username = (EditText) findViewById(R.id.input_username);
         password = (EditText) findViewById(R.id.input_password);
+
+        sp = getSharedPreferences("login", MODE_PRIVATE);
+        if (sp.getBoolean("logged", false)) {
+            goToMainActivity();
+        }
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,8 +39,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    public void goToMainActivity(){
-        Intent i = new Intent(this,MainActivity.class);
+
+    public void goToMainActivity() {
+        Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
 }

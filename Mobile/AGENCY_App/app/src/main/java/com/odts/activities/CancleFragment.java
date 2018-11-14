@@ -24,14 +24,13 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class CancleFragment extends Fragment {
+
     private RequestService requestService;
     private RecyclerView recyclerView;
     private CancleRequestAdapter pendingRequestAdapter;
-
     Integer agencyId = 0;
 
     public CancleFragment() {
-        // Required empty public constructor
     }
 
 

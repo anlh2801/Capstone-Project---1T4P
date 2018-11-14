@@ -22,7 +22,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ServiceItemService {
-    public void getAllServiceItemByServiceId (final Context context, final int serviceId, final CallBackData<ArrayList<ServiceItem>> callBackData) {
+    public void getAllServiceItemByServiceId(final Context context, final int serviceId, final CallBackData<ArrayList<ServiceItem>> callBackData) {
         IServiceItemApiCaller service = RetrofitInstance.getRetrofitInstance().create(IServiceItemApiCaller.class);
 
         /** Call the method with parameter in the interface to get the notice data*/
@@ -34,17 +34,16 @@ public class ServiceItemService {
         call.enqueue(new Callback<ResponseObjectReturnList<ServiceItem>>() {
             @Override
             public void onResponse(Call<ResponseObjectReturnList<ServiceItem>> call, Response<ResponseObjectReturnList<ServiceItem>> response) {
-                if(response.code() == 200 && response.body() != null){
+                if (response.code() == 200 && response.body() != null) {
                     if (!response.body().isError()) {
                         callBackData.onSuccess(response.body().getObjList());
 
-                    }
-                    else {
+                    } else {
                         Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
-                    Log.e("MainActivity", "error" );
+                    Log.e("MainActivity", "error");
                 }
             }
 
@@ -55,7 +54,7 @@ public class ServiceItemService {
         });
     }
 
-    public void getAgencyStatistic (final Context context, final int agencyId, final CallBackData<ArrayList<AgencyStatistical>> callBackData) {
+    public void getAgencyStatistic(final Context context, final int agencyId, final CallBackData<ArrayList<AgencyStatistical>> callBackData) {
         IServiceItemApiCaller service = RetrofitInstance.getRetrofitInstance().create(IServiceItemApiCaller.class);
 
         /** Call the method with parameter in the interface to get the notice data*/
@@ -67,17 +66,16 @@ public class ServiceItemService {
         call.enqueue(new Callback<ResponseObjectReturnList<AgencyStatistical>>() {
             @Override
             public void onResponse(Call<ResponseObjectReturnList<AgencyStatistical>> call, Response<ResponseObjectReturnList<AgencyStatistical>> response) {
-                if(response.code() == 200 && response.body() != null){
+                if (response.code() == 200 && response.body() != null) {
                     if (!response.body().isError()) {
                         callBackData.onSuccess(response.body().getObjList());
 
-                    }
-                    else {
+                    } else {
                         Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
-                    Log.e("MainActivity", "error" );
+                    Log.e("MainActivity", "error");
                 }
             }
 

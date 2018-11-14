@@ -17,7 +17,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ServiceITSupportService {
-    public void getAllServiceITSupport (final Context context, int agencyId, final CallBackData<ArrayList<ServiceITSupport>> callBackData) {
+    public void getAllServiceITSupport(final Context context, int agencyId, final CallBackData<ArrayList<ServiceITSupport>> callBackData) {
         IServiceITSupportApiCaller service = RetrofitInstance.getRetrofitInstance().create(IServiceITSupportApiCaller.class);
 
         /** Call the method with parameter in the interface to get the notice data*/
@@ -29,16 +29,15 @@ public class ServiceITSupportService {
         call.enqueue(new Callback<ResponseObjectReturnList<ServiceITSupport>>() {
             @Override
             public void onResponse(Call<ResponseObjectReturnList<ServiceITSupport>> call, Response<ResponseObjectReturnList<ServiceITSupport>> response) {
-                if(response.code() == 200 && response.body() != null){
+                if (response.code() == 200 && response.body() != null) {
                     if (!response.body().isError()) {
                         callBackData.onSuccess(response.body().getObjList());
-                    }
-                    else {
+                    } else {
                         Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
-                    Log.e("MainActivity", "error" );
+                    Log.e("MainActivity", "error");
                 }
             }
 

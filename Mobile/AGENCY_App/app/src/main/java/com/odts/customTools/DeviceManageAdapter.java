@@ -25,15 +25,15 @@ public class DeviceManageAdapter extends ArrayAdapter<Device> {
 
     public DeviceManageAdapter(@NonNull Activity context, int resource, @NonNull List<Device> objects) {
         super(context, resource, objects);
-        this.context= context;
-        this.resource=resource;
-        this.objects=objects;
+        this.context = context;
+        this.resource = resource;
+        this.objects = objects;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater= this.context.getLayoutInflater();
-        View row = inflater.inflate(this.resource,null);
+        LayoutInflater inflater = this.context.getLayoutInflater();
+        View row = inflater.inflate(this.resource, null);
 
         ImageView imgManageDevice = (ImageView) row.findViewById(R.id.imgManageDevice);
         TextView txtDeviceCodeManage = (TextView) row.findViewById(R.id.txtDeviceCodeManage);

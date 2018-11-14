@@ -15,13 +15,13 @@ import com.odts.services.RequestService;
 
 import java.util.List;
 
-public class CancleRequestAdapter  extends RecyclerView.Adapter<CancleRequestAdapter.MyViewHolder>{
+public class CancleRequestAdapter extends RecyclerView.Adapter<CancleRequestAdapter.MyViewHolder> {
     private Context context;
     private List<Request> listRequest;
-    RequestService requestService;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView rqName, estimes;
+
         public MyViewHolder(View view) {
             super(view);
             rqName = (TextView) view.findViewById(R.id.txtRequestNameCan);
@@ -30,7 +30,7 @@ public class CancleRequestAdapter  extends RecyclerView.Adapter<CancleRequestAda
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
-                    if(position != RecyclerView.NO_POSITION) {
+                    if (position != RecyclerView.NO_POSITION) {
                         Intent intent = new Intent(context, RequestDetailActivity.class);
                         intent.putExtra("requestID", listRequest.get(position).getRequestId());
                         context.startActivity(intent);
@@ -39,10 +39,12 @@ public class CancleRequestAdapter  extends RecyclerView.Adapter<CancleRequestAda
             });
         }
     }
+
     public CancleRequestAdapter(Context context, List<Request> listRequest) {
         this.context = context;
         this.listRequest = listRequest;
     }
+
     @Override
     public CancleRequestAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -50,11 +52,12 @@ public class CancleRequestAdapter  extends RecyclerView.Adapter<CancleRequestAda
 
         return new CancleRequestAdapter.MyViewHolder(itemView);
     }
+
     @Override
     public void onBindViewHolder(final CancleRequestAdapter.MyViewHolder holder, int position) {
         Request album = listRequest.get(position);
         holder.rqName.setText(album.getRequestName());
-        holder.estimes.setText("Hủy vào lúc: " +album.getUpdateDate());
+        holder.estimes.setText("Hủy vào lúc: " + album.getUpdateDate());
     }
 
     @Override

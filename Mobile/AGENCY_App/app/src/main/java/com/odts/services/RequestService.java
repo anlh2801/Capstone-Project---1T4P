@@ -21,24 +21,25 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 public class RequestService {
     IRequestApiCaller IRequestApiCaller;
     private MainActivity main;
+
     public void createRequest(final Context context, Request request) {
         IRequestApiCaller = RetrofitInstance.getRequestService();
         Call<ResponseObject<Integer>> call = IRequestApiCaller.createRequest(request);
         call.enqueue(new Callback<ResponseObject<Integer>>() {
             @Override
             public void onResponse(Call<ResponseObject<Integer>> call, Response<ResponseObject<Integer>> response) {
-                if(!response.body().isError()){
+                if (!response.body().isError()) {
                     Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
                     if (response.body().getObjReturn() != null && response.body().getObjReturn() > 0) {
                         findITSupporterByRequestId(context, response.body().getObjReturn());
                         Intent intent = new Intent(context, MainActivity.class);
                         context.startActivity(intent);
                     }
-                }
-                else
+                } else
                     Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
             }
 
@@ -55,7 +56,7 @@ public class RequestService {
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                    Toast.makeText(context, response.body(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, response.body(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -71,11 +72,10 @@ public class RequestService {
         call.enqueue(new Callback<ResponseObjectReturnList<Request>>() {
             @Override
             public void onResponse(Call<ResponseObjectReturnList<Request>> call, Response<ResponseObjectReturnList<Request>> response) {
-                if(!response.body().isError()){
+                if (!response.body().isError()) {
 //                    Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
                     callBackData.onSuccess(response.body().getObjList());
-                }
-                else
+                } else
                     Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
             }
 
@@ -85,6 +85,7 @@ public class RequestService {
             }
         });
     }
+
     public void requestDetail(final Context context, Integer request_id, final CallBackData<Request> callBackData) {
         IRequestApiCaller = RetrofitInstance.getRequestService();
         Call<ResponseObject<Request>> call = IRequestApiCaller.requestDetail(request_id);
@@ -105,6 +106,7 @@ public class RequestService {
         });
 
     }
+
     public void cancelTicket(final Context context, Integer request_id, Integer status_id) {
         IRequestApiCaller = RetrofitInstance.getRequestService();
         Call<ResponseObject<Boolean>> call = IRequestApiCaller.cancelTicket(request_id, status_id);
@@ -128,15 +130,14 @@ public class RequestService {
         call.enqueue(new Callback<ResponseObject<Boolean>>() {
             @Override
             public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
-                if(!response.body().isError()){
+                if (!response.body().isError()) {
                     Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
                     if (response.body().getObjReturn() != null && response.body().getObjReturn() == true) {
 //                        findITSupporterByRequestId(context, response.body().getObjReturn());
                         Intent intent = new Intent(context, MainActivity.class);
                         context.startActivity(intent);
                     }
-                }
-                else
+                } else
                     Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
             }
 

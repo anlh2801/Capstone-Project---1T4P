@@ -109,28 +109,4 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
         return listRequest.size();
     }
 
-//    Activity context;
-//    int resource;
-//    List<ListRequest> objects;
-//
-//    public PendingRequestAdapter(@NonNull Activity context, int resource, @NonNull List<ListRequest> objects) {
-//        super(context, resource, objects);
-//        this.context= context;
-//        this.resource=resource;
-//        this.objects=objects;
-//    }
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent) {
-//        LayoutInflater inflater= this.context.getLayoutInflater();
-//        View row = inflater.inflate(this.resource,null);
-//
-//        TextView txtRequestName = (TextView) row.findViewById(R.id.txtRequestName);
-//        TextView txtCreateDate = (TextView) row.findViewById(R.id.txtCreateDate);
-//        /** Set data to row*/
-//        final ListRequest serviceItem = this.objects.get(position);
-//        txtRequestName.setText(serviceItem.getRequestName());
-//        txtCreateDate.setText(serviceItem.getCreateDate());
-//        /**Set Event Onclick*/
-//        return row;
-//    }
 }
