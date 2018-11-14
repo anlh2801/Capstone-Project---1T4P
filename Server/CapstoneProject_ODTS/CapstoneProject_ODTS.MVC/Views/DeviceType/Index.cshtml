@@ -253,7 +253,7 @@
         function clearModal() {
             $('#CreateModal').on('hidden.bs.modal', function (e) {
                 $(this)
-                    .find("input,textarea,select")
+                    .find("input,textarea")
                     .val('')
                     .end()
                     .find("input[type=checkbox], input[type=radio]")
@@ -374,11 +374,11 @@
                     $('#CreateModal').modal('hide');
                         if (!data.result.isError) {
                             swal(data.result.SuccessMessage, "", "success");
-                            clearModal();
                             loadDeviceType();
                         }
                         else
-                            swal(data.result.WarningMessage, "", "error");
+                        swal(data.result.WarningMessage, "", "error");
+                    clearModal();
                 }
             });
         }

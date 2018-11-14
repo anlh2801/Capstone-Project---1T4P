@@ -33,23 +33,19 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <b>RoleName:</b><br>
+                            <b>Quyền Của Tài Khoản:</b><br>
                             <p id="accRole"></p>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>Username:</b><br>
+                            <b>Tên Đăng Nhập:</b><br>
                             <p id="accName"></p>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>Password:</b><br>
-                            <p id="accPass"></p>
-                        </div>
-                        <div class="col-md-12" style="margin-top:10px">
-                            <b>CreateDate:</b><br>
+                            <b>Ngày Tạo:</b><br>
                             <p id="accCreateDate"></p>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>UpdateDate:</b><br>
+                            <b>Lần Chỉnh Sửa Cuối:</b><br>
                             <p id="accUpdateDate"></p>
                         </div>
                     </div>
@@ -83,7 +79,7 @@
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <b>Mật Khẩu:</b><br>
-                                <input type="text" id="accPassCreate" class="form-control" required></input>
+                                <input type="password" id="accPassCreate" class="form-control" required></input>
                             </div>
                         </div>
                     </div>
@@ -111,16 +107,16 @@
                         <p>
                         <p id="idE"></p>
                         <div class="col-md-12">
-                            <b>RoleId:</b><br>
+                            <b>Quyền Của Tài Khoản:</b><br>
                             <select id="comboRoleEdit" class="form-control select2" style="width: 100%;" disabled="disabled"></select>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>Username:</b><br>
+                            <b>Tên Đăng Nhập:</b><br>
                             <input type="text" id="accNameEdit" class="form-control">
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>Password:</b><br>
-                            <input type="text" id="accPassEdit" class="form-control">
+                            <b>Mật Khẩu:</b><br>
+                            <input type="password" id="accPassEdit" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -173,13 +169,12 @@
     </div>
 </div>
 
+<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
-    <link rel="stylesheet" href="~/AdminLTE/bower_components/sweetalert2/dist/sweetalert2.all.min.js">
-    <script src="~/AdminLTE/bower_components/sweetalert2/dist/sweetalert2.all.min.js"></script>
     <script>
         $(document).ready(function() {
             loadAccount();
@@ -414,10 +409,10 @@
                 success: function (data) {
                     $('#EditModal').modal('hide');
                     if (!data.result.isError) {
-                        alert(data.result.SuccessMessage);
+                        swal(data.result.SuccessMessage, "", "success");
                     }
                     else
-                        alert(data.result.WarningMessage);
+                        swal(data.result.WarningMessage, "", "error");
                         loadAccount();
                 }
             });
