@@ -7,11 +7,43 @@ public class Agency {
     private Integer agencyId;
     @SerializedName("AgencyName")
     private String agencyName;
+    @SerializedName("Telephone")
+    private String telephone;
     @SerializedName("Address")
     private String Address;
+    @SerializedName("CompanyName")
+    private String companyName;
     @SerializedName("AccountId")
     private Integer accountId;
+    @SerializedName("UserName")
+    private String userName;
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public Agency() {
+
     }
 
     public Integer getAgencyId() {
