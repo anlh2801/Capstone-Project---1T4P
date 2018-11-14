@@ -180,8 +180,8 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
                                     public void onSelected(ArrayList<Integer> selectedIds, ArrayList<String> selectedNames, String dataString) {
                                         //will return list of selected IDS
                                         listTicket = new ArrayList<>();
-                                        Device tic = new Device();
                                         for (int i = 0; i < selectedIds.size(); i++) {
+                                            Device tic = new Device();
                                             tic.setDeviceId(selectedIds.get(i));
                                             listTicket.add(tic);
                                         }
@@ -217,6 +217,7 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
     public void createRequest() {
         _requestService = new RequestService();
         List listTickets = new ArrayList<Ticket>();
+
         for (Device item : listTicket) {
             Ticket ticc = new Ticket();
             ticc.setDeviceId(item.getDeviceId());
@@ -231,7 +232,6 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
         request.setRequestDesciption(txtRequestDesciption.getText().toString());
         request.setRequestName(requestName.toString());
         request.setTicket(listTickets);
-
         _requestService.createRequest(AddRequestLayoutActivity.this, request);
     }
 }

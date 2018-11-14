@@ -46,6 +46,8 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> GetIsOnlineOFITSupporter(int itsupporterId);
 
+        ResponseObject<bool> GetIsBusyOFITSupporter(int itsupporterId);
+
     }
 
     public partial class ITSupporterService
@@ -591,6 +593,26 @@ namespace DataService.Models.Entities.Services
                 if (itSupporter != null && itSupporter.IsOnline != null)
                 {                   
                     return new ResponseObject<bool> { IsError = false, SuccessMessage = "Lấy trạng trạng thái thành công", ObjReturn = itSupporter.IsOnline.Value };
+                }
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật trạng thái thất bại", ObjReturn = false };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Hủy yêu cầu thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
+            }
+        }
+
+        public ResponseObject<bool> GetIsBusyOFITSupporter(int itsupporterId)
+        {
+            try
+            {
+                var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var itSupporter = itSupporterRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == itsupporterId);
+                if (itSupporter != null && itSupporter.IsBusy != null)
+                {
+                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Lấy trạng trạng thái thành công", ObjReturn = itSupporter.IsBusy.Value };
                 }
 
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật trạng thái thất bại", ObjReturn = false };

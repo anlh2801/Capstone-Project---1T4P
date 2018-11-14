@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     ITSupporterService itSupporterService;
     android.support.v7.widget.Toolbar toolbar;
     boolean isOnline;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,21 @@ public class MainActivity extends AppCompatActivity {
         share = getSharedPreferences("ODTS", Context.MODE_PRIVATE);
         final int itSupporterId = share.getInt("itSupporterId", 0);
         itSupporterService = new ITSupporterService();
-        loadFragment(new RecieveRequestFragment());
+        itSupporterService.getIsBusy(MainActivity.this, itSupporterId, new CallBackData<Boolean>() {
+            @Override
+            public void onSuccess(Boolean aBoolean) {
+                if (!aBoolean) {
+                    loadFragment(new RecieveRequestFragment());
+                } else {
+                    loadFragment(new DoRequestFragment());
+                }
+            }
+
+            @Override
+            public void onFail(String message) {
+
+            }
+        });
         isOnline = true;
         btnChat = findViewById(R.id.btnChatMain);
         btnChat.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        Bundle extras=  getIntent().getExtras();
+        Bundle extras = getIntent().getExtras();
         onNewIntent(getIntent());
         toolbar = findViewById(R.id.toolbar);
         itSupporterService.getIsOnline(this, itSupporterId, new CallBackData<Boolean>() {
@@ -82,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         swStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
-                if(!b) {
+                if (!b) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setCancelable(false);
                     builder
@@ -103,10 +118,9 @@ public class MainActivity extends AppCompatActivity {
                             })
                             .show();
 
-                }
-                else
+                } else
                     toolbar.setTitle("Trực tuyến");
-                    itSupporterService.updateStatusIT(MainActivity.this, itSupporterId, b);
+                itSupporterService.updateStatusIT(MainActivity.this, itSupporterId, b);
 
             }
         });
@@ -140,7 +154,8 @@ public class MainActivity extends AppCompatActivity {
             if (dir != null && dir.isDirectory()) {
                 deleteDir(dir);
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     public static boolean deleteDir(File dir) {
@@ -155,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return dir.delete();
     }
+
     private boolean loadFragment(Fragment fragment) {
         //switching fragment
         if (fragment != null) {
@@ -168,7 +184,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
-
 
 
 //    @Override

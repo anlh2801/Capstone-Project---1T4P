@@ -69,9 +69,9 @@ public class TimeLineActivity extends AppCompatActivity implements RatingDialogL
 //                mDataList.add(new Ticket("Thực hiện bởii: " +listRequest.getServiceItemId(),1, listRequest.getTicket().get(0).getStartTime()  ));
 //                mDataList.add(new Ticket("Thời gian dự kiến:",  2, listRequest.getTicket().get(0).getTicketEstimationTime() ));
 //                mDataList.add(new Ticket("Thời gian kết thúc",  3, listRequest.getTicket().get(0).getEndTime() ));
-                mDataList.add(new Request( listRequest.getiTSupporterName(),"Người nhận việc", "IT"));
-                mDataList.add(new Request(listRequest.getCreateDate(),"Bắt đầu lúc" , "START"));
-                mDataList.add(new Request(listRequest.getRequestEstimationTime(),"Dự kiến hoàn thành", "EST"));
+//                mDataList.add(new Request( listRequest.getiTSupporterName(),"Người nhận việc", "IT"));
+//                mDataList.add(new Request(listRequest.getCreateDate(),"Bắt đầu lúc" , "START"));
+//                mDataList.add(new Request(listRequest.getRequestEstimationTime(),"Dự kiến hoàn thành", "EST"));
                 mTimeLineAdapter = new TimeLineAdapter(mDataList);
                 mRecyclerView.setAdapter(mTimeLineAdapter);
             }

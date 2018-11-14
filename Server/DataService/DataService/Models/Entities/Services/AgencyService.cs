@@ -21,7 +21,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<List<AgencyAPIViewModel>> GetAllAgency();
 
-        ResponseObject<int> CreateRequest(AgencyCreateRequestAPIViewModel model);
+        ResponseObject<int> CreateRequest(RequestAllTicketWithStatusAgencyAPIViewModel model);
 
         ResponseObject<bool> CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId);
 
@@ -224,7 +224,7 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<int> CreateRequest(AgencyCreateRequestAPIViewModel model)
+        public ResponseObject<int> CreateRequest(RequestAllTicketWithStatusAgencyAPIViewModel model)
         {
             try
             {
@@ -241,11 +241,11 @@ namespace DataService.Models.Entities.Services
                 createRequest.RequestDesciption = model.RequestDesciption;
                 createRequest.ServiceItemId = model.ServiceItemId;
                 createRequest.CreateDate = DateTime.UtcNow.AddHours(7);
-                createRequest.Phone = model.PhoneNumber;
+                createRequest.Phone = model.AgencyTelephone;
                 requestRepo.Add(createRequest);
                 requestRepo.Save();
 
-                CreateTicket(model.Ticket, createRequest.RequestId);
+                CreateTicket(model.Tickets, createRequest.RequestId);
 
                 return new ResponseObject<int> { IsError = false, SuccessMessage = "Tạo yêu cầu thành công!", ObjReturn = createRequest.RequestId };
             }

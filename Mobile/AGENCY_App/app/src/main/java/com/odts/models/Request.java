@@ -5,34 +5,49 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Request {
-    @SerializedName("PhoneNumber")
-    private String phoneNumber;
     @SerializedName("RequestId")
     private Integer requestId;
-    @SerializedName("agencyId")
+    @SerializedName("AgencyId")
     private Integer agencyId;
-    @SerializedName("requestCategoryId")
+
+    @SerializedName("AgencyName")
+    private String agencyName;
+
+    @SerializedName("RequestCategoryId")
     private Integer requestCategoryId;
-    @SerializedName("serviceItemId")
+
+    @SerializedName("ServiceItemId")
     private Integer serviceItemId;
+
     @SerializedName("RequestName")
     private String requestName;
+
     @SerializedName("RequestDesciption")
     private String RequestDesciption;
+
+    @SerializedName("PhoneNumber")
+    private String phoneNumber;
+
     @SerializedName("CreateDate")
     private String createDate;
+
     @SerializedName("UpdateDate")
     private String updateDate;
-    @SerializedName("NumberOfTicket")
-    private Integer nod;
-    @SerializedName("Tickets")
-    private List<Ticket> ticket;
+
     @SerializedName("RequestStatus")
     private String status;
-    @SerializedName("ITSupporterName")
-    private String iTSupporterName;
+
     @SerializedName("RequestEstimationTime")
     private String requestEstimationTime;
+
+    @SerializedName("NumberOfTicket")
+    private Integer nod;
+
+    @SerializedName("ITSupporterName")
+    private String iTSupporterName;
+
+    @SerializedName("Tickets")
+    private List<Ticket> ticket;
 
     public String getRequestEstimationTime() {
         return requestEstimationTime;
@@ -42,13 +57,6 @@ public class Request {
         this.requestEstimationTime = requestEstimationTime;
     }
 
-    public String getiTSupporterName() {
-        return iTSupporterName;
-    }
-
-    public void setiTSupporterName(String iTSupporterName) {
-        this.iTSupporterName = iTSupporterName;
-    }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -61,11 +69,11 @@ public class Request {
     public Request() {
     }
 
-    public Request(String iTSupporterName, String createDate, String status) {
-        this.iTSupporterName = iTSupporterName;
-        this.createDate = createDate;
-        this.status = status;
-    }
+//    public Request(String iTSupporterName, String createDate, String status) {
+//        this.iTSupporterName = iTSupporterName;
+//        this.createDate = createDate;
+//        this.status = status;
+//    }
 
     //    public Request(String requestName, String createDate, String updateDate) {
 //        this.requestName = requestName;
@@ -161,4 +169,19 @@ public class Request {
         this.ticket = ticket;
     }
 
+    public String getAgencyName() {
+        return agencyName;
+    }
+
+    public void setAgencyName(String agencyName) {
+        this.agencyName = agencyName;
+    }
+
+    public String getiTSupporterName() {
+        return iTSupporterName;
+    }
+
+    public void setiTSupporterName(String iTSupporterName) {
+        this.iTSupporterName = iTSupporterName;
+    }
 }

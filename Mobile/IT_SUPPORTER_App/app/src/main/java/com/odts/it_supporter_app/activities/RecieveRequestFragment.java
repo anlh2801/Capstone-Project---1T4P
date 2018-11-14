@@ -51,50 +51,70 @@ public class RecieveRequestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_recieve_request, container, false);
-        btnReject = v.findViewById(R.id.btnReject);
-        btnAccept = v.findViewById(R.id.btnAccept);
-        txtAgencyAddressRecieveRequest = (TextView) v.findViewById(R.id.txtAgencyAddressRecieveRequest);
-        txtAgencyNameRecieveRequest = (TextView) v.findViewById(R.id.txtAgencyNameRecieveRequest);
-        txtRequestNameRecieveRequest = (TextView) v.findViewById(R.id.txtRequestNameRecieveRequest);
-        txtTicketInfoRecieveRequest = (TextView) v.findViewById(R.id.txtTicketInfoRecieveRequest);
+//        btnReject = v.findViewById(R.id.btnReject);
+//        btnAccept = v.findViewById(R.id.btnAccept);
+//        txtAgencyAddressRecieveRequest = (TextView) v.findViewById(R.id.txtAgencyAddressRecieveRequest);
+//        txtAgencyNameRecieveRequest = (TextView) v.findViewById(R.id.txtAgencyNameRecieveRequest);
+//        txtRequestNameRecieveRequest = (TextView) v.findViewById(R.id.txtRequestNameRecieveRequest);
+//        txtTicketInfoRecieveRequest = (TextView) v.findViewById(R.id.txtTicketInfoRecieveRequest);
+
 
         share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
+        share2 = getActivity().getApplicationContext().getSharedPreferences("firebaseData", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = share.edit();
         itSupporterId = share.getInt("itSupporterId", 0);
         FirebaseMessaging.getInstance().subscribeToTopic(itSupporterId.toString());
-        btnAccept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder
-                        .setMessage("Bạn chắc chắn nhận sửa không?")
-                        .setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                getAllServiceITSupportForAgency(true);
-                            }
-                        })
-                        .setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        })
-                        .show();
-            }
-        });
+//        btnAccept.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                builder
+//                        .setMessage("Bạn chắc chắn nhận sửa không?")
+//                        .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                getAllServiceITSupportForAgency(true);
+//                            }
+//                        })
+//                        .setNegativeButton("Không", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                dialog.cancel();
+//                            }
+//                        })
+//                        .show();
+//            }
+//        });
 
-        btnReject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getAllServiceITSupportForAgency(false);
-            }
-        });
-        share2 = getActivity().getSharedPreferences("firebaseData", Context.MODE_PRIVATE);
-        txtAgencyNameRecieveRequest.setText(share2.getString("a", "").toString());
-        txtAgencyAddressRecieveRequest.setText(share2.getString("b", "").toString());
-        txtTicketInfoRecieveRequest.setText(share2.getString("c", "").toString());
-        txtRequestNameRecieveRequest.setText(share2.getString("d", "").toString());
+//        btnReject.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getAllServiceITSupportForAgency(false);
+//            }
+//        });
+        String a = share2.getString("a", null);
+        if (a != null) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder
+                .setMessage("Bạn có nhận việc không?")
+                .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        getAllServiceITSupportForAgency(true);
+                    }
+                })
+                .setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        getAllServiceITSupportForAgency(false);
+                    }
+                })
+                .show();
+        }
+//        txtAgencyNameRecieveRequest.setText(share2.getString("a", "").toString());
+//        txtAgencyAddressRecieveRequest.setText(share2.getString("b", "").toString());
+//        txtTicketInfoRecieveRequest.setText(share2.getString("c", "").toString());
+//        txtRequestNameRecieveRequest.setText(share2.getString("d", "").toString());
         this.requestId = Integer.parseInt(share2.getString("e", "0"));
         return v;
     }
