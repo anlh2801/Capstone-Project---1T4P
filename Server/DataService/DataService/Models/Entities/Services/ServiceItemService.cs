@@ -22,6 +22,8 @@ namespace DataService.Models.Entities.Services
         ResponseObject<bool> UpdateServiceItem(ServiceItemUpdateAPIViewModel model);
 
         ResponseObject<bool> RemoveServiceItem(int serviceItem_Id);
+
+        ResponseObject<bool> CreateServiceItem(ServiceItemAPIViewModel model);
     }
     public partial class ServiceItemService
     {
@@ -91,10 +93,12 @@ namespace DataService.Models.Entities.Services
                 {
                     var ServiceItemAPIViewModel = new ServiceItemAPIViewModel
                     {
+                        ServiceName = serviceItem.ServiceITSupport.ServiceName,
                         ServiceItemName = serviceItem.ServiceItemName,
+                        ServiceItemId = serviceItem.ServiceItemId,
                         Description = serviceItem.Description,
                         CreateDate = serviceItem.CreateDate.ToString("dd/MM/yyyy"),
-                        UpdateDate = serviceItem.UpdateDate.Value.ToString("dd/MM/yyyy")
+                        UpdateDate = serviceItem.UpdateDate != null ? serviceItem.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                     };
                     return new ResponseObject<ServiceItemAPIViewModel> { IsError = false, ObjReturn = ServiceItemAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
                 }
@@ -147,7 +151,27 @@ namespace DataService.Models.Entities.Services
             {
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa thiết bị thất bại", ErrorMessage = ex.ToString(), ObjReturn = false };
             }
+        }
 
+        public ResponseObject<bool> CreateServiceItem(ServiceItemAPIViewModel model)
+        {
+            try
+            {
+                var serviceItemRepo = DependencyUtils.Resolve<IServiceItemRepository>();
+                var serviceItem = new ServiceItem();
+
+                serviceItem.ServiceITSupportId = model.ServiceId;
+                serviceItem.ServiceItemName = model.ServiceItemName;
+                serviceItem.Description = model.Description;
+                serviceItem.CreateDate = DateTime.UtcNow.AddHours(7);
+                serviceItemRepo.Add(serviceItem);
+                serviceItemRepo.Save();
+                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Tạo chi nhánh thành công!", ObjReturn = true };
+            }
+            catch (Exception e)
+            {
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa chi nhánh thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
+            }
         }
     }
 }
