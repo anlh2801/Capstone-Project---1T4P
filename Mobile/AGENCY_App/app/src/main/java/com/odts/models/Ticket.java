@@ -3,7 +3,18 @@ package com.odts.models;
 import com.google.gson.annotations.SerializedName;
 
 public class Ticket {
-    @SerializedName("deviceId")
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
+    }
+
+    @SerializedName("DeviceName")
+
+    private String deviceName;
+    @SerializedName("DeviceId")
     private Integer deviceId;
     @SerializedName("desciption")
     private String desciption;
