@@ -56,6 +56,7 @@ public class StatusTimelineActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 requestService.cancelTicket(StatusTimelineActivity.this, requestID, Enums.RequestStatusEnum.Done.getIntValue());
+                finish();
             }
         });
         final String itName = intent.getStringExtra("itName");
