@@ -132,18 +132,19 @@
         app:srcCompat="@drawable/ic_local_phone_fa_32dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnDoneTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:background="@color/colorPrimary"
+        android:text="Xác nhận hoàn thành"
         android:textColor="#FAFAFA"
         android:textStyle="bold"
-        android:layout_marginBottom="8dp"
-        android:text="Xác nhận hoàn thành"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"/>
 
 </android.support.constraint.ConstraintLayout>

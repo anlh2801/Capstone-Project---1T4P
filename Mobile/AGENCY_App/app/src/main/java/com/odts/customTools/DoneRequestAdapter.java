@@ -18,12 +18,14 @@ import com.odts.activities.R;
 import com.odts.activities.RequestActivity;
 import com.odts.activities.RequestDetailActivity;
 import com.odts.activities.TimeLineActivity;
+import com.odts.models.Device;
 import com.odts.models.Rating;
 import com.odts.models.Request;
 import com.odts.services.RequestService;
 import com.stepstone.apprating.AppRatingDialog;
 import com.stepstone.apprating.listener.RatingDialogListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DoneRequestAdapter extends RecyclerView.Adapter<DoneRequestAdapter.MyViewHolder>{
@@ -50,6 +52,14 @@ public class DoneRequestAdapter extends RecyclerView.Adapter<DoneRequestAdapter.
                     if(position != RecyclerView.NO_POSITION) {
                         Intent intent = new Intent(context, DoneDetailActivity.class);
                         intent.putExtra("requestID", listRequest.get(position).getRequestId());
+                        intent.putExtra("requestName", listRequest.get(position).getRequestName());
+                        intent.putExtra("itName", listRequest.get(position).getRequestName());
+                        ArrayList<String> listDeviceName = new ArrayList<>();
+                        Device device = new Device();
+                        for (int i = 0; i < listRequest.get(position).getTicket().size(); i++) {
+                            listDeviceName.add(listRequest.get(position).getTicket().get(i).getDeviceName());
+                        }
+                        intent.putStringArrayListExtra("listDevice", listDeviceName);
                         context.startActivity(intent);
                     }
                 }
