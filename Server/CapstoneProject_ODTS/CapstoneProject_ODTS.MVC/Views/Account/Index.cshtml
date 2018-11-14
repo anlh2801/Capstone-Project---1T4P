@@ -326,14 +326,14 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                    $('#CreateModal').modal('hide');
-                        if (!data.result.isError) {
+                    if (!data.result.isError) {        
+                            clearModal();
+                            $('#CreateModal').modal('hide');
+                            loadAccount();
                             swal(data.result.SuccessMessage, "", "success");
                         }
                         else
                             swal(data.result.WarningMessage, "", "error");
-
-                    loadAccount();
                 }
             });
         }

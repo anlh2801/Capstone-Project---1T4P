@@ -394,9 +394,9 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                        if (!data.result.isError) {
-                            $('#CreateModal').modal('hide');
+                        if (!data.result.isError) {        
                             clearModal();
+                            $('#CreateModal').modal('hide');
                             loadCompany();
                             swal(data.result.SuccessMessage, "", "success");
                         }
