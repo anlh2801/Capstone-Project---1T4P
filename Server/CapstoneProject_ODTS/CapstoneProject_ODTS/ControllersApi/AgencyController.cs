@@ -21,7 +21,7 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         HttpResponseMessage ViewAllDevice(int agency_id);
 
-        HttpResponseMessage CreateRequest(AgencyCreateRequestAPIViewModel model);
+        HttpResponseMessage CreateRequest(RequestAllTicketWithStatusAgencyAPIViewModel model);
 
         HttpResponseMessage GetDeviceDetails(int deviceId);
 
@@ -105,7 +105,7 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         [HttpPost]
         [Route("agency/create_request")]
-        public HttpResponseMessage CreateRequest(AgencyCreateRequestAPIViewModel model)
+        public HttpResponseMessage CreateRequest(RequestAllTicketWithStatusAgencyAPIViewModel model)
         {
             var result = _agencyDomain.CreateRequest(model);
 
