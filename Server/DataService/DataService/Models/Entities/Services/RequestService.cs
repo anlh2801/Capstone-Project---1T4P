@@ -269,14 +269,14 @@ namespace DataService.Models.Entities.Services
                 }
                 foreach (var item in requests)
                 {
-                    List<TicketForRequestAllTicketStatusAPIViewModel> ticketList = new List<TicketForRequestAllTicketStatusAPIViewModel>();
+                    List<AgencyCreateTicketAPIViewModel> ticketList = new List<AgencyCreateTicketAPIViewModel>();
                     var tickets = ticketRepo.GetActive(p => p.RequestId == item.RequestId).ToList();
                     foreach (var ticketItem in tickets)
                     {
-                        var ticket = new TicketForRequestAllTicketStatusAPIViewModel();
+                        var ticket = new AgencyCreateTicketAPIViewModel();
 
                         ticket.TicketId = ticketItem.TicketId;
-                        ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
+                        //ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
                         ticket.DeviceId = ticketItem.DeviceId;
                         ticket.DeviceName = ticketItem.Device.DeviceName;
                         ticket.StartTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
@@ -421,14 +421,14 @@ namespace DataService.Models.Entities.Services
                 var request = requestRepo.GetActive().FirstOrDefault(x => x.RequestId == requestId);
                 if (request != null)
                 {
-                    List<TicketForRequestAllTicketStatusAPIViewModel> ticketList = new List<TicketForRequestAllTicketStatusAPIViewModel>();
+                    List<AgencyCreateTicketAPIViewModel> ticketList = new List<AgencyCreateTicketAPIViewModel>();
                     var tickets = ticketRepo.GetActive(p => p.RequestId == requestId).ToList();
                     foreach (var ticketItem in tickets)
                     {
-                        var ticket = new TicketForRequestAllTicketStatusAPIViewModel();
+                        var ticket = new AgencyCreateTicketAPIViewModel();
 
                         ticket.TicketId = ticketItem.TicketId;
-                        ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
+                        //ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
                         ticket.DeviceId = ticketItem.DeviceId;
                         ticket.DeviceName = ticketItem.Device.DeviceName;
                         ticket.StartTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
@@ -629,14 +629,14 @@ namespace DataService.Models.Entities.Services
                     return new ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> { IsError = true, WarningMessage = "Thất bại", ObjReturn = null };
                 }
 
-                List<TicketForRequestAllTicketStatusAPIViewModel> ticketList = new List<TicketForRequestAllTicketStatusAPIViewModel>();
+                List<AgencyCreateTicketAPIViewModel> ticketList = new List<AgencyCreateTicketAPIViewModel>();
                 var tickets = ticketRepo.GetActive(p => p.RequestId == requestId).ToList();
                 foreach (var ticketItem in tickets)
                 {
-                    var ticket = new TicketForRequestAllTicketStatusAPIViewModel();
+                    var ticket = new AgencyCreateTicketAPIViewModel();
 
                     ticket.TicketId = ticketItem.TicketId;
-                    ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
+                    //ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
                     ticket.DeviceId = ticketItem.DeviceId;
                     ticket.DeviceName = ticketItem.Device.DeviceName;
                     ticket.StartTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;

@@ -22,7 +22,7 @@ namespace DataService.Domain
 
         ResponseObject<List<AgencyAPIViewModel>> GetAllAgency();
 
-        ResponseObject<int> CreateRequest(AgencyCreateRequestAPIViewModel model);
+        ResponseObject<int> CreateRequest(RequestAllTicketWithStatusAgencyAPIViewModel model);
 
         ResponseObject<AgencyDeviceAPIViewModel> GetDeviceDetails(int deviceId);
 
@@ -80,7 +80,7 @@ namespace DataService.Domain
 
 
 
-        public ResponseObject<int> CreateRequest(AgencyCreateRequestAPIViewModel model)
+        public ResponseObject<int> CreateRequest(RequestAllTicketWithStatusAgencyAPIViewModel model)
         {
             var agencyService = this.Service<IAgencyService>();
 
