@@ -203,7 +203,7 @@
 
     <Button
         android:id="@+id/btnSaveRequest"
-        android:layout_width="200dp"
+        android:layout_width="191dp"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:text="Tạo Yêu Cầu"
@@ -215,9 +215,9 @@
 
     <Button
         android:id="@+id/btnCancle"
-        android:layout_width="200dp"
+        android:layout_width="191dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/hintTextColor"
         android:text="Hủy Yêu Cầu"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
