@@ -11,7 +11,8 @@ namespace DataService.APIViewModels
     {
         public GuidelineAPIViewModel() : base() { }
         public GuidelineAPIViewModel(DataService.Models.Entities.Guideline entity) : base(entity) { }
-
+        
+        public int NumericalOrder { get; set; }
         public int GuidelineId { get; set; }
         public int ServiceItemId { get; set; }
         public string GuidelineName { get; set; }

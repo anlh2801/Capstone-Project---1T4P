@@ -22,11 +22,6 @@ namespace CapstoneProject_ODTS.MVC.Controllers
 
             return View();
         }
-        //public ActionResult ServiceItem(int id)
-        //{
-        //    ViewData["ID"] = id.ToString();
-        //    return View();
-        //}
         public ActionResult GetAllServiceItem(int serviceITSupportId)
         {
             var serviceItem = _serviceItemDomain.GetAllServiceItemByServiceITSupportId(serviceITSupportId);
@@ -49,6 +44,14 @@ namespace CapstoneProject_ODTS.MVC.Controllers
         {
             var deviceDetail = _serviceItemDomain.RemoveServiceItem(serviceItem_Id);
             return Json(new { result = deviceDetail }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CreateServiceItem(ServiceItemAPIViewModel model)
+        {
+            var result = _serviceItemDomain.CreateServiceItem(model);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+
         }
     }
 }

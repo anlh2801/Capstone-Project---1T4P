@@ -1,30 +1,24 @@
 ﻿
 @{
-                /**/
-
-                var dataServiceITSupporter = ViewData["ID"];
+    var dataServiceItem = ViewData["ID"];
 }
 
 
-<input type="hidden" id="serviceItemHidden" />
-<form onsubmit="createServiceItem(); return false">
+<input type="hidden" id="guidelineHidden" />
+<form onsubmit="createGuideline(); return false">
     <div class="container">
         <!-- Modal -->
         <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title"><b>Tạo loại dịch vụ mới</b></h3>
+                        <h3 class="modal-title"><b>Tạo hướng dẫn mới</b></h3>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12" style="margin-top: 10px">
-                                <b>Tên Loại Dịch Vụ:</b><br>
-                                <input type="text" id="siNameC" class="form-control" required></input>
-                            </div>
-                            <div class="col-md-12" style="margin-top: 10px">
-                                <b>Mô Tả:</b><br>
-                                <input type="text" id="siDescriptionC" class="form-control" required></input>
+                                <b>Nội dung hướng dẫn:</b><br>
+                                <input type="text" id="siGuidelineNameC" class="form-control" required></input>
                             </div>
                         </div>
                     </div>
@@ -38,45 +32,8 @@
         </div>
     </div>
 </form>
-<div class="container">
-    <!-- Modal -->
-    <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title"><b>Thông tin chi tiết</b></h3>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <b>Tên Loại Dịch Vụ:</b><br>
-                            <p id="siName"></p>
-                        </div>
-                        <div class="col-md-12" style="margin-top: 10px">
-                            <b>Mô Tả:</b><br>
-                            <p id="siDescription"></p>
-                        </div>
-                        <div class="col-md-6" style="margin-top: 10px">
-                            <b>Ngày Tạo Loại Dịch Vụ:</b><br>
-                            <p id="siCreateDate"></p>
-                        </div>
-                        <div class="col-md-6" style="margin-top: 10px">
-                            <b>Lần Chỉnh Sửa Cuối:</b><br>
-                            <p id="siLastEdit"></p>
-                        </div>
 
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<form onsubmit="UpdateServiceItem(); return false">
+<form onsubmit="UpdateGuideline(); return false">
     <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -87,14 +44,10 @@
                     <div class="row">
                         <input type="hidden" id="tienDepTroai" />
                         <p>
-                        <p input type="hidden" id="ServiceItemId"></p>
+                        <p input type="hidden" id="GuidelineId"></p>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>Tên Loại Dịch Vụ:</b><br>
-                            <input type="text" id="siNameE" class="form-control"></input>
-                        </div>
-                        <div class="col-md-12" style="margin-top:10px">
-                            <b>Mô Tả:</b><br>
-                            <input type="text" id="siDescriptionE" class="form-control"></input>
+                            <b>Nội dung hướng dẫn:</b><br>
+                            <input type="text" id="siGuidelineNameE" class="form-control"></input>
                         </div>
                     </div>
                 </div>
@@ -117,7 +70,7 @@
     }
 </style>
 <div class="row col-md-12">
-    <h3 class="city" id="serNameShow"></h3>
+    <h3 class="city" id="guidelineNameShow"></h3>
 </div>
 
 <div class="row col-md-12">
@@ -125,17 +78,16 @@
         <thead>
             <tr>
                 <th><label>STT</label></th>
-                <th><label>Tên Loại Dịch Vụ</label></th>
-                <th><label>Mô Tả</label></th>
+                <th><label>Nội Dung Hướng Dẫn</label></th>
                 <th><label>Ngày Tạo</label></th>
-                <th><label>Hướng Dẫn Sửa Chửa</label></th>
+                <th><label>Lần Cuối Cập Nhật</label></th>
                 <th><label>Chức Năng</label></th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
     <div class="NewThing">
-        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Loại Dịch Vụ</button>
+        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Hướng Dẫn</button>
         <button type="button" class="btn btn-primary fa fa-mail-reply-all" data-toggle="modal" data-target="" onclick="window.history.go(-1); return false;"><font face="verdana"> Quay Lại Trang Loại Dịch Vụ</button>
     </div>
 </div>
@@ -153,16 +105,16 @@
     <script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
     <script>
         $(document).ready(function () {
-            loadServiceItem();
-            getSerName();
+            loadGuideline();
+            getSerItemName();
         });
 
-        function loadServiceItem() {
+        function loadGuideline() {
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("GetAllServiceItem", "ServiceItem")',
+                url: '@Url.Action("GetAllGuideline", "Guideline")',
                 data: {
-                    serviceITSupportId : @dataServiceITSupporter
+                    ServiceItemId : @dataServiceItem
                 },
                 success: function(result) {
                     initDatatable(result.result.ObjReturn);
@@ -198,29 +150,22 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1, 2, 3, 4,5],
+                        "aTargets": [0, 1, 2, 3, 4],
                         "bSortable": false,
                         "sClass": "text-center"
                     },
                 ],
                 "columns": [
                     { "data": "NumericalOrder" },
-                    { "data": "ServiceItemName" },
-                    { "data": "Description" },
+                    { "data": "GuidelineName" },
                     { "data": "CreateDate" },
+                    { "data": "UpdateDate" },
                     {
-                        "data": "RequestName",
+                        "aTargets": [4],
                         "mRender": function (data, type, full) {
-                            return '<a href="@Url.Action("ServiceGuideline", "Guideline")?id=' + full.ServiceItemId + '">Xem Hướng Dẫn</a>';
-                        }
-                    },
-                    {
-                        "aTargets": [5],
-                        "mRender": function (data, type, full) {
-                            var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.ServiceItemId + ')"></button>';
-                            var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.ServiceItemId + ')"></button>';
-                            var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeServiceItem(' + full.ServiceItemId + ')"></button>';
-                            return view + " " + edit + " " + del;
+                            var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.GuidelineId + ')"></button>';
+                            var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeGuideline(' + full.GuidelineId + ')"></button>';
+                            return edit + " " + del;
                         }
                     },
                 ],
@@ -241,48 +186,25 @@
                     .end();
             })
         }
-        function getSerName() {
+        function getSerItemName() {
 
             $.ajax({
-                url: '@Url.RouteUrl(new { action = "ViewDetail", controller = "ServiceITSupport" })',
+                url: '@Url.RouteUrl(new { action = "ViewDetail", controller = "ServiceItem" })',
 
                 data: {
-                    serviceitsupport_id: @dataServiceITSupporter
+                    ServiceItemId: @dataServiceItem
                 },
                 type: 'GET',
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     var html = '';
-                    html = 'Tất Cả Dịch Vụ Của Loại Dịch Vụ ' + data.result.ObjReturn.ServiceName;
-                    $('#serNameShow').append(html);
+                    html = 'Tất Cả Hướng Dẫn Sửa Chữa Của Dịch Vụ ' + data.result.ObjReturn.ServiceItemName;
+                    $('#guidelineNameShow').append(html);
                 }
                 });
         }
 
-        function getData(idd) {
-
-            $.ajax({
-                url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "ServiceItem"})',
-
-                data: {
-                    ServiceItemId: idd
-                },
-                type: 'GET',
-                dataType: 'json',
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    if (!data.result.IsError) {
-                        $("#siName").text(data.result.ObjReturn.ServiceItemName);
-                        $("#siDescription").text(data.result.ObjReturn.Description);
-                        $("#siCreateDate").text(data.result.ObjReturn.CreateDate);
-                        $("#siLastEdit").text(data.result.ObjReturn.UpdateDate);
-                    }
-
-                }
-            });
-        $('#ViewModal').modal('show');
-            }
         $('#DateC').datepicker({
             format: 'dd/mm/yyyy',
             autoclose: true,
@@ -293,41 +215,34 @@
             autoclose: true,
             forceParse: false,
         })
-        $('#dvGEndDateE').datepicker({
-            format: 'dd/mm/yyyy',
-            autoclose: true,
-            forceParse: false,
-        })
 
         function getDataEdit(id) {
             $.ajax({
-                url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "ServiceItem" })',
+                url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "Guideline" })',
 
                 data: {
-                    ServiceItemId: id
+                    GuidelineId: id
                 },
                 type: 'GET',
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#tienDepTroai").val(data.result.ObjReturn.ServiceItemId);
-                    $("#siNameE").val(data.result.ObjReturn.ServiceItemName);
-                    $("#siDescriptionE").val(data.result.ObjReturn.Description);
+                    $("#tienDepTroai").val(data.result.ObjReturn.GuidelineId);
+                    $("#siGuidelineNameE").val(data.result.ObjReturn.GuidelineName);
                 }
 
             });
             $('#EditModal').modal('show');
         }
 
-        function createServiceItem() {
+        function createGuideline() {
             var empObj = {
-                ServiceId: @dataServiceITSupporter,
-                ServiceItemName: $('#siNameC').val(),
-                Description: $('#siDescriptionC').val(),
+                ServiceItemId: @dataServiceItem,
+                GuidelineName: $('#siGuidelineNameC').val(),
             }
              $.ajax({
                 type: 'POST',
-                url: '@Url.Action("CreateServiceItem", "ServiceItem")',
+                url: '@Url.Action("CreateGuideline", "Guideline")',
                 data: JSON.stringify(empObj),
 
                 dataType: 'json',
@@ -337,23 +252,22 @@
                     if (!data.result.IsError) {
                         swal(data.result.SuccessMessage, "", "success");
                         clearModal();
-                        loadServiceItem();
+                        loadGuideline();
                     }
                     else
                          swal(data.result.WarningMessage, "", "error");
-                    loadServiceItem();
+                    loadGuideline();
                 }
             });
         }
-        function UpdateServiceItem() {
+        function UpdateGuideline() {
             var empObj = {
-                ServiceItemId: $('#tienDepTroai').val(),
-                ServiceItemName: $('#siNameE').val(),
-                Description: $('#siDescriptionE').val(),
+                GuidelineId: $('#tienDepTroai').val(),
+                GuidelineName: $('#siGuidelineNameE').val(),
             }
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("UpdateServiceItem", "ServiceItem")',
+                url: '@Url.Action("UpdateGuideline", "Guideline")',
                 data: JSON.stringify(empObj),
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
@@ -364,12 +278,12 @@
                         }
                         else
                         swal(data.result.WarningMessage, "", "error");
-                        loadServiceItem();
+                        loadGuideline();
                 }
             });
         }
          //show delete modal
-        function removeServiceItem(id) {
+        function removeGuideline(id) {
             //$('#modalConfirmDelete').modal('show');
             swal({
                 title: 'Bạn có Chắc Chắn Muốn Xóa?',
@@ -381,19 +295,19 @@
                 cancelButtonText: 'Quay Lại',
                 confirmButtonText: 'Chấp Nhận Xóa!'
             }).then(function () {
-                deleteDevice();
+                deleteGuideline();
             });
-            $('#serviceItemHidden').val(id);
+            $('#guidelineHidden').val(id);
         }
 
         //delete agency
-        function deleteDevice() {
-            var serviceItem_id = $('#serviceItemHidden').val();
+        function deleteGuideline() {
+            var guidelineId = $('#guidelineHidden').val();
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("RemoveServiceItem", "ServiceItem")',
+                url: '@Url.Action("RemoveGuideline", "Guideline")',
                 data: {
-                    serviceItem_Id: serviceItem_id
+                    GuidelineId: guidelineId
                 },
 
                 dataType: 'json',
@@ -404,7 +318,7 @@
                         'Dữ Liệu Của Bạn Đã Được Xóa.',
                         'success'
                     )
-                    loadServiceItem();
+                    loadGuideline();
                 }
             });
         }
