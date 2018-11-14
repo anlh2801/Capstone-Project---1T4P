@@ -43,6 +43,8 @@ namespace DataService.Domain
         ResponseObject<bool> UpdateEndTime(int request_id, DateTime end_time);
 
         ResponseObject<bool> GetIsOnlineOFITSupporter(int itsupporterId);
+
+        ResponseObject<bool> GetIsBusyOFITSupporter(int itsupporterId);
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain
@@ -191,6 +193,15 @@ namespace DataService.Domain
             return result;
         }
 
-        
+        public ResponseObject<bool> GetIsBusyOFITSupporter(int itsupporterId)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.GetIsBusyOFITSupporter(itsupporterId);
+
+            return result;
+        }
+
+
     }
 }

@@ -32,4 +32,7 @@ public interface IITSupporterApiCaller {
 
     @GET("ITsupporter/get_Is_Online")
     Call<ResponseObject<Boolean>> getIsOnline(@Query("itsupporter_id") int itsupporter_id);
+
+    @GET("ITsupporter/get_Is_Busy")
+    Call<ResponseObject<Boolean>> getIsBusy(@Query("itsupporter_id") int itsupporter_id);
 }
