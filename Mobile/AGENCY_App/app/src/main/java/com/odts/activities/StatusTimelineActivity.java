@@ -1,5 +1,7 @@
 package com.odts.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +25,7 @@ import com.odts.models.Request;
 import com.odts.models.TimeLine;
 import com.odts.services.RequestService;
 import com.odts.utils.CallBackData;
+import com.odts.utils.Enums;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,17 +40,27 @@ public class StatusTimelineActivity extends AppCompatActivity {
     Firebase reference1;
     private FloatingActionButton flbCall;
     private FloatingActionButton flbChat;
+    private Button btnDone;
     private TextView itNamee, requestNamee,listDeviceNamee;
+    private RequestService requestService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status_timeline);
-        Intent intent = getIntent();
+        btnDone = findViewById(R.id.btnDoneTime);
+        requestService = new RequestService();
+        final Intent intent = getIntent();
         final int requestID = intent.getIntExtra("requestID", 0);
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestService.cancelTicket(StatusTimelineActivity.this, requestID, Enums.RequestStatusEnum.Done.getIntValue());
+            }
+        });
         final String itName = intent.getStringExtra("itName");
         final String requestName = intent.getStringExtra("requestName");
-        ArrayList<String> listDeviceName = intent.getStringArrayListExtra("listDevice");
+        final ArrayList<String> listDeviceName = intent.getStringArrayListExtra("listDevice");
         StringBuilder sb = new StringBuilder();
         boolean foundOne = false;
         for (int i = 0; i < listDeviceName.size(); ++i) {
@@ -84,6 +97,9 @@ public class StatusTimelineActivity extends AppCompatActivity {
                 String message = map.get("status").toString();
                 String time = map.get("time").toString();
                 setDataListItems(message, time);
+                if(message.equalsIgnoreCase("Hoàn thành")) {
+                    btnDone.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override

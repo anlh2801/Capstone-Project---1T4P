@@ -6,26 +6,101 @@ import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.odts.customTools.StatusTimeLineAdapter;
 import com.odts.models.Rating;
 import com.odts.models.Request;
+import com.odts.models.TimeLine;
 import com.odts.services.RequestService;
 import com.odts.utils.CallBackData;
 import com.stepstone.apprating.AppRatingDialog;
 import com.stepstone.apprating.listener.RatingDialogListener;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class DoneDetailActivity extends AppCompatActivity implements RatingDialogListener{
+    private RecyclerView mRecyclerView;
+    private StatusTimeLineAdapter mTimeLineAdapter;
+    private List<TimeLine> mDataList = new ArrayList<>();
     private Button btnRatingDone;
     private RequestService requestService;
     int requestID = 0;
+    Firebase reference1;
+    private TextView itNamee, requestNamee,listDeviceNamee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_done_detail);
+        Intent myIntent = getIntent();
+        requestID = myIntent.getIntExtra("requestID", 0);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewDone);
+        itNamee = findViewById(R.id.itNameDone);
+        String itName = myIntent.getStringExtra("itName");
+        itNamee.setText(itName);
+        String requestName = myIntent.getStringExtra("requestName");
+        requestNamee = findViewById(R.id.requestNameDone);
+        requestNamee.setText(requestName);
+
+        final ArrayList<String> listDeviceName = myIntent.getStringArrayListExtra("listDevice");
+        StringBuilder sb = new StringBuilder();
+        boolean foundOne = false;
+        for (int i = 0; i < listDeviceName.size(); ++i) {
+            if (foundOne) {
+                sb.append(", ");
+            }
+            foundOne = true;
+            sb.append(listDeviceName.get(i));
+        }
+        listDeviceNamee = findViewById(R.id.listDeviceNameeDone);
+        listDeviceNamee.setText(sb.toString());
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setHasFixedSize(true);
+        Firebase.setAndroidContext(this);
+        reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" + requestID);
+        reference1.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Map map = dataSnapshot.getValue(Map.class);
+                String message = map.get("status").toString();
+                String time = map.get("time").toString();
+                setDataListItems(message, time);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+
         btnRatingDone = (Button) findViewById(R.id.btnRatingDone);
         btnRatingDone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,8 +128,19 @@ public class DoneDetailActivity extends AppCompatActivity implements RatingDialo
                         .show();
             }
         });
-        Intent myIntent = getIntent();
-        requestID = myIntent.getIntExtra("requestID", 0);
+    }
+
+    private void setDataListItems(String message, String time) {
+        mDataList.add(new TimeLine(message, time));
+        mTimeLineAdapter = new StatusTimeLineAdapter(mDataList);
+        mRecyclerView.setAdapter(mTimeLineAdapter);
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                // Call smooth scroll
+                mRecyclerView.smoothScrollToPosition(mTimeLineAdapter.getItemCount());
+            }
+        });
     }
 
     @Override

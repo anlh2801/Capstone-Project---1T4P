@@ -13,12 +13,24 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
-        <ImageView android:src="@drawable/ic_launcher_background"
+        <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="72dp"
-            android:layout_marginBottom="24dp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_height="107dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/icon_help" />
 
+        <!-- Username Label -->
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="#1B5E20"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="24dp"
+            android:text="ODTS - IT Supporter" />
         <!-- Username Label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -56,6 +68,9 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
+            android:textStyle="bold"
+            android:textColor="#DEDEDE"
+            android:background="@color/colorPrimary"
             android:text="Login"/>
 
         <TextView android:id="@+id/link_signup"

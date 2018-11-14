@@ -48,7 +48,6 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
                         for (int i = 0; i < listRequest.get(position).getTicket().size(); i++) {
                             listDeviceName.add(listRequest.get(position).getTicket().get(i).getDeviceName());
                         }
-
                         intent.putStringArrayListExtra("listDevice", listDeviceName);
                         context.startActivity(intent);
                     }

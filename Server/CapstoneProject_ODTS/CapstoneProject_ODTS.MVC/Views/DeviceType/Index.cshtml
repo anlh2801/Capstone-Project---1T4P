@@ -371,14 +371,14 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                    $('#CreateModal').modal('hide');
                         if (!data.result.isError) {
+                            clearModal();   
+                            $('#CreateModal').modal('hide');
                             swal(data.result.SuccessMessage, "", "success");
-                            clearModal();
                             loadDeviceType();
                         }
                         else
-                            swal(data.result.WarningMessage, "", "error");
+                        swal(data.result.WarningMessage, "", "error");
                 }
             });
         }

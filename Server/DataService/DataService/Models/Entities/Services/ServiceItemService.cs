@@ -45,7 +45,7 @@ namespace DataService.Models.Entities.Services
                     ServiceId = item.ServiceITSupportId,
                     ServiceItemId = item.ServiceItemId,
                     ServiceItemName = item.ServiceItemName,
-                    Description = item.Description,
+                    Description = item.Description != null ? item.Description : string.Empty,
                     CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                     UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                 });
