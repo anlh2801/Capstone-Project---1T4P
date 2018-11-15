@@ -252,6 +252,7 @@
     </Compile>
     <Compile Include="Domain\DeviceDomain.cs" />
     <Compile Include="Domain\ITSuppoterDomain.cs" />
+    <Compile Include="Domain\ProfileDomain.cs" />
     <Compile Include="Domain\RoleDomain.cs" />
     <Compile Include="Domain\ServiceItemDomain.cs" />
     <Compile Include="Domain\ServiceITSupportDomain.cs" />
