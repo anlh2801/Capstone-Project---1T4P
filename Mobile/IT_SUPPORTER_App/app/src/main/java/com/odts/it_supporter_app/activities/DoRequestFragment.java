@@ -34,10 +34,7 @@ import java.util.Date;
 public class DoRequestFragment extends Fragment {
     private RequestService _requestService;
 
-    TextView txtRequestName;
-    Button btnDone;
-    Button btnCall;
-    Button btnStart;
+    Button btnDone, btnCall, btnStart;
     FloatingActionButton flbGuidline;
     Integer itSupporterId = 0;
     Integer requestId = 0;
@@ -80,7 +77,6 @@ public class DoRequestFragment extends Fragment {
                     public void onClick(View view) {
                         Intent callIntent = new Intent(Intent.ACTION_CALL);
                         callIntent.setData(Uri.parse("tel: "+ request.getPhoneNumber()));
-//                startActivity(callIntent);
                         if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                             startActivity(callIntent);
                         } else {
@@ -89,7 +85,6 @@ public class DoRequestFragment extends Fragment {
                     }
                 });
             }
-
             @Override
             public void onFail(String message) {
             }

@@ -37,6 +37,12 @@ public class Request {
     @SerializedName("UpdateDate")
     private String updateDate;
 
+    @SerializedName("StartTime")
+    private String startTime;
+
+    @SerializedName("EndTime")
+    private String endTime;
+
     @SerializedName("RequestStatus")
     private String status;
 
@@ -48,6 +54,9 @@ public class Request {
 
     @SerializedName("ITSupporterName")
     private String iTSupporterName;
+
+    @SerializedName("ITSupporterPhone")
+    private String iTSupporterPhone;
 
     @SerializedName("Tickets")
     private List<Ticket> ticket;
@@ -194,5 +203,29 @@ public class Request {
 
     public void setServiceItemName(String serviceItemName) {
         this.serviceItemName = serviceItemName;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getiTSupporterPhone() {
+        return iTSupporterPhone;
+    }
+
+    public void setiTSupporterPhone(String iTSupporterPhone) {
+        this.iTSupporterPhone = iTSupporterPhone;
     }
 }

@@ -38,7 +38,7 @@ public class DoneDetailActivity extends AppCompatActivity implements RatingDialo
     private RequestService requestService;
     int requestID = 0;
     Firebase reference1;
-    private TextView itNamee, requestNamee, listDeviceNamee;
+    private TextView itNamee, requestNamee, listDeviceNamee, endDateee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +49,17 @@ public class DoneDetailActivity extends AppCompatActivity implements RatingDialo
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewDone);
         itNamee = findViewById(R.id.itNameDone);
         requestNamee = findViewById(R.id.requestNameDone);
-        listDeviceNamee = findViewById(R.id.listDeviceNameeDone);
+        listDeviceNamee = findViewById(R.id.textView12);
+        endDateee = findViewById(R.id.endDateDone);
 
         Intent myIntent = getIntent();
         requestID = myIntent.getIntExtra("requestID", 0);
         String itName = myIntent.getStringExtra("itName");
+        String createDate = myIntent.getStringExtra("createDate");
         itNamee.setText(itName);
         String requestName = myIntent.getStringExtra("requestName");
         requestNamee.setText(requestName);
+        endDateee.setText("Tạo vào: " + createDate);
 
         final ArrayList<String> listDeviceName = myIntent.getStringArrayListExtra("listDevice");
         StringBuilder sb = new StringBuilder();
@@ -69,7 +72,7 @@ public class DoneDetailActivity extends AppCompatActivity implements RatingDialo
             sb.append(listDeviceName.get(i));
         }
 
-        listDeviceNamee.setText(sb.toString());
+        listDeviceNamee.setText("Thiết bị cần xử lý" + sb.toString());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
         Firebase.setAndroidContext(this);

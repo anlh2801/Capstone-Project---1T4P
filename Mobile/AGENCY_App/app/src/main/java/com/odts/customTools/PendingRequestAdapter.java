@@ -65,18 +65,6 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
                             .show();
                 }
             });
-//            rqNameDT = (TextView) view.findViewById(R.id.requestNameDetail);
-//            view.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    int position = getAdapterPosition();
-//                    if(position != RecyclerView.NO_POSITION) {
-//                        Intent intent = new Intent(context, RequestDetailActivity.class);
-//                        intent.putExtra("requestID", listRequest.get(position).getRequestId());
-//                        context.startActivity(intent);
-//                    }
-//                }
-//            });
         }
     }
 
@@ -100,8 +88,6 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
         holder.crDate.setText("Tạo vào: " + album.getCreateDate());
         holder.nod.setText("Thiết bị cần xử lý: " + album.getNod());
         holder.requestId = album.getRequestId();
-//        holder.rqNameDT.setText(album.getCreateDate());
-
     }
 
     @Override

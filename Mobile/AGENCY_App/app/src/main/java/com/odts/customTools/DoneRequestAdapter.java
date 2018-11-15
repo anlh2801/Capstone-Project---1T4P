@@ -42,6 +42,7 @@ public class DoneRequestAdapter extends RecyclerView.Adapter<DoneRequestAdapter.
                         intent.putExtra("requestID", listRequest.get(position).getRequestId());
                         intent.putExtra("requestName", listRequest.get(position).getRequestName());
                         intent.putExtra("itName", listRequest.get(position).getiTSupporterName());
+                        intent.putExtra("createDate", listRequest.get(position).getCreateDate());
                         ArrayList<String> listDeviceName = new ArrayList<>();
                         Device device = new Device();
                         for (int i = 0; i < listRequest.get(position).getTicket().size(); i++) {
@@ -68,7 +69,7 @@ public class DoneRequestAdapter extends RecyclerView.Adapter<DoneRequestAdapter.
     public void onBindViewHolder(final DoneRequestAdapter.MyViewHolder holder, int position) {
         Request album = listRequest.get(position);
         holder.rqName.setText(album.getRequestName());
-        holder.estimes.setText("Hoàn thành lúc: " + album.getUpdateDate());
+        holder.estimes.setText("Xác nhận hoàn thành: " + album.getUpdateDate());
         requestID = album.getRequestId();
     }
 

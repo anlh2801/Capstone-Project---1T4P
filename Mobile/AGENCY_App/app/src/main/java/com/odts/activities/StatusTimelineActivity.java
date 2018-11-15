@@ -1,7 +1,11 @@
 package com.odts.activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,7 +37,7 @@ public class StatusTimelineActivity extends AppCompatActivity {
     private FloatingActionButton flbCall;
     private FloatingActionButton flbChat;
     private Button btnDone;
-    private TextView itNamee, requestNamee, listDeviceNamee;
+    private TextView itNamee, requestNamee, listDeviceNamee, createDateee;
     private RequestService requestService;
 
     @Override
@@ -43,16 +47,19 @@ public class StatusTimelineActivity extends AppCompatActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         btnDone = findViewById(R.id.btnDoneTime);
-        listDeviceNamee = findViewById(R.id.listDeviceNamee);
+        listDeviceNamee = findViewById(R.id.textView12);
         itNamee = findViewById(R.id.itName);
         requestNamee = findViewById(R.id.requestName);
         flbChat = findViewById(R.id.flbChat);
+        flbCall = findViewById(R.id.flbCall);
+        createDateee = findViewById(R.id.createDateTimeLine);
 
         requestService = new RequestService();
         final Intent intent = getIntent();
         final int requestID = intent.getIntExtra("requestID", 0);
         final String itName = intent.getStringExtra("itName");
         final String requestName = intent.getStringExtra("requestName");
+        final String createDate = intent.getStringExtra("createDate");
         final ArrayList<String> listDeviceName = intent.getStringArrayListExtra("listDevice");
         StringBuilder sb = new StringBuilder();
         boolean foundOne = false;
@@ -63,7 +70,8 @@ public class StatusTimelineActivity extends AppCompatActivity {
             foundOne = true;
             sb.append(listDeviceName.get(i));
         }
-        listDeviceNamee.setText(sb.toString());
+        listDeviceNamee.setText("Thiết bị cần xử lý: " + sb.toString());
+        createDateee.setText("Tạo vào: " + createDate);
         itNamee.setText(itName.toString());
         requestNamee.setText(requestName.toString());
         btnDone.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +87,19 @@ public class StatusTimelineActivity extends AppCompatActivity {
                 Intent intent = new Intent(StatusTimelineActivity.this, ChatActivity.class);
                 intent.putExtra("itNameChat", itName);
                 startActivity(intent);
+            }
+        });
+        final String itPhoneNumber = intent.getStringExtra("phoneNumber");;
+        flbCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel: "+ itPhoneNumber));
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                    startActivity(callIntent);
+                } else {
+                    requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, 1);
+                }
             }
         });
 
