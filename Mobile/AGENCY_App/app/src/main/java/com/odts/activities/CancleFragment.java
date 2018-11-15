@@ -43,16 +43,17 @@ public class CancleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_cancle, container, false);
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         agencyId = share.getInt("agencyId", 0);
+        recyclerView = (RecyclerView) v.findViewById(R.id.listCancel);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         requestService = new RequestService();
         requestService.getRequestByStatus(getActivity(), agencyId, Enums.RequestStatusEnum.Cancel.getIntValue(), new CallBackData<ArrayList<Request>>() {
             @Override
             public void onSuccess(ArrayList<Request> listRequests) {
-                recyclerView = (RecyclerView) getActivity().findViewById(R.id.listCancel);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 pendingRequestAdapter = new CancleRequestAdapter(getActivity(), listRequests);
                 recyclerView.setAdapter(pendingRequestAdapter);
             }
@@ -62,7 +63,7 @@ public class CancleFragment extends Fragment {
 
             }
         });
-        return inflater.inflate(R.layout.fragment_cancle, container, false);
+        return v;
     }
 
  }

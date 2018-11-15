@@ -39,16 +39,17 @@ public class ProcessingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_processing, container, false);
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
+        recyclerView = (RecyclerView) v.findViewById(R.id.listpro);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         agencyId = share.getInt("agencyId", 0);
 
         requestService = new RequestService();
         requestService.getRequestByStatus(getActivity(), agencyId, Enums.RequestStatusEnum.Processing.getIntValue(), new CallBackData<ArrayList<Request>>() {
             @Override
             public void onSuccess(ArrayList<Request> listRequests) {
-                recyclerView = (RecyclerView) getActivity().findViewById(R.id.listpro);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 pendingRequestAdapter = new ProcessRequestAdapter(getActivity(), listRequests);
                 recyclerView.setAdapter(pendingRequestAdapter);
             }
@@ -59,7 +60,7 @@ public class ProcessingFragment extends Fragment {
             }
         });
 
-        return inflater.inflate(R.layout.fragment_processing, container, false);
+        return v;
     }
 
 }
