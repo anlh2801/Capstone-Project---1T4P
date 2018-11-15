@@ -671,6 +671,9 @@ namespace DataService.Models.Entities.Services
                     NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
                     NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
                     NumberOfTicket = ticketList.Count,
+                    ServiceItemId = request.ServiceItemId,
+                    ServiceItemName = request.ServiceItem.ServiceItemName,
+                    AgencyId = request.AgencyId,                    
                     Tickets = ticketList
                 };
 

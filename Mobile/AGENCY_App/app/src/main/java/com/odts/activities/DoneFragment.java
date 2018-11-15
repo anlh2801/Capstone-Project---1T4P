@@ -8,11 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.odts.customTools.DoneRequestAdapter;
-import com.odts.customTools.PendingRequestAdapter;
-import com.odts.models.ListRequest;
 import com.odts.models.Request;
 import com.odts.services.RequestService;
 import com.odts.utils.CallBackData;
@@ -31,12 +27,13 @@ public class DoneFragment extends Fragment {
     private RequestService requestService;
     private RecyclerView recyclerView;
     private DoneRequestAdapter pendingRequestAdapter;
-
     Integer agencyId = 0;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

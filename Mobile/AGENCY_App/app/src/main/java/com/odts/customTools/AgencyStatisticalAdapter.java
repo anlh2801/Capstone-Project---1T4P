@@ -29,15 +29,15 @@ public class AgencyStatisticalAdapter extends ArrayAdapter<AgencyStatistical> {
 
     public AgencyStatisticalAdapter(@NonNull Activity context, int resource, @NonNull List<AgencyStatistical> objects) {
         super(context, resource, objects);
-        this.context= context;
-        this.resource=resource;
-        this.objects=objects;
+        this.context = context;
+        this.resource = resource;
+        this.objects = objects;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater= this.context.getLayoutInflater();
-        View row = inflater.inflate(this.resource,null);
+        LayoutInflater inflater = this.context.getLayoutInflater();
+        View row = inflater.inflate(this.resource, null);
         ImageView imgIconHome = (ImageView) row.findViewById(R.id.imgIconHome);
         TextView txtServiceItemTitle = (TextView) row.findViewById(R.id.txtServiceItemTitle);
         TextView txtAwaintingHome = (TextView) row.findViewById(R.id.txtAwaintingHome);
@@ -52,12 +52,10 @@ public class AgencyStatisticalAdapter extends ArrayAdapter<AgencyStatistical> {
         } else if (position % 3 == 1) {
             cardView.setCardBackgroundColor(Color.parseColor("#26A69A"));
             cardViewFooter.setCardBackgroundColor(Color.parseColor("#009688"));
-        }
-        else if (position % 3 == 2){
+        } else if (position % 3 == 2) {
             cardView.setCardBackgroundColor(Color.parseColor("#00695C"));
             cardViewFooter.setCardBackgroundColor(Color.parseColor("#004D40"));
         }
-
 
 
         /** Set data to row*/
@@ -78,14 +76,14 @@ public class AgencyStatisticalAdapter extends ArrayAdapter<AgencyStatistical> {
             String processingHome = "0";
             String doneHome = "0";
             String cancelHome = "0";
-            for (Status stt: statusList ) {
-                if (stt.getStatusId() ==  RequestStatusEnum.Pending.getIntValue()) {
+            for (Status stt : statusList) {
+                if (stt.getStatusId() == RequestStatusEnum.Pending.getIntValue()) {
                     awaintingHome = stt.getNumberOfStatus();
-                } else if (stt.getStatusId() ==  RequestStatusEnum.Processing.getIntValue()) {
+                } else if (stt.getStatusId() == RequestStatusEnum.Processing.getIntValue()) {
                     processingHome = stt.getNumberOfStatus();
-                } else if (stt.getStatusId() ==  RequestStatusEnum.Done.getIntValue()) {
+                } else if (stt.getStatusId() == RequestStatusEnum.Done.getIntValue()) {
                     doneHome = stt.getNumberOfStatus();
-                } else if (stt.getStatusId() ==  RequestStatusEnum.Cancel.getIntValue()) {
+                } else if (stt.getStatusId() == RequestStatusEnum.Cancel.getIntValue()) {
                     cancelHome = stt.getNumberOfStatus();
                 }
             }
@@ -99,7 +97,6 @@ public class AgencyStatisticalAdapter extends ArrayAdapter<AgencyStatistical> {
             txtDoneHome.setText("0");
             txtCancelHome.setText("0");
         }
-
 
 
         return row;

@@ -75,7 +75,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent("custom-message");
-                    intent.putExtra ("device",item);
+                    intent.putExtra("device", item);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                 }
             });

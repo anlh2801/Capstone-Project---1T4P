@@ -34,7 +34,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model);
 
-        ResponseObject<GuidelineAPIViewModel> GetGuidelineByServiceItemID(int service_item_Id);
+        ResponseObject<List<GuidelineAPIViewModel>> GetGuidelineByServiceItemID(int service_item_Id);
 
         ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId, int year, int month);
 
@@ -65,7 +65,7 @@ namespace DataService.Models.Entities.Services
                 }
                 int count = 1;
                 foreach (var item in itSupporters)
-                {       
+                {
                     var i = 1;
                     var genderStatus = "";
                     foreach (Gender genderItem in Enum.GetValues(typeof(Gender)))
@@ -387,32 +387,37 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<GuidelineAPIViewModel> GetGuidelineByServiceItemID(int service_item_Id)
+        public ResponseObject<List<GuidelineAPIViewModel>> GetGuidelineByServiceItemID(int service_item_Id)
         {
             try
             {
                 var guidelineRepo = DependencyUtils.Resolve<IGuidelineRepository>();
-                var guideline = guidelineRepo.GetActive().SingleOrDefault(a => a.ServiceItemId == service_item_Id);
-                if (guideline != null)
+                var guidelines = guidelineRepo.GetActive(a => a.ServiceItemId == service_item_Id).ToList();
+                List<GuidelineAPIViewModel> rsList = new List<GuidelineAPIViewModel>();
+                if (guidelines.Count <= 0)
+                {
+                    return new ResponseObject<List<GuidelineAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy hướng dẫn nào" };
+                }
+                foreach (var item in guidelines)
                 {
                     var guidelineAPIViewModel = new GuidelineAPIViewModel
                     {
-                        GuidelineId = guideline.GuidelineId,
-                        ServiceItemId = guideline.ServiceItemId ?? 0,
-                        GuidelineName = guideline.GuidelineName,
-                        StartDate = guideline.StartDate != null ? guideline.StartDate.Value.ToString("dd/MM/yyyy") : string.Empty,
-                        EndDate = guideline.EndDate != null ? guideline.EndDate.Value.ToString("dd/MM/yyyy") : string.Empty,
-                        CreateDate = guideline.CreateDate.ToString("dd/MM/yyyy"),
-                        UpdateDate = guideline.UpdateDate != null ? guideline.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
+                        GuidelineId = item.GuidelineId,
+                        ServiceItemId = item.ServiceItemId ?? 0,
+                        GuidelineName = item.GuidelineName,
+                        StartDate = item.StartDate != null ? item.StartDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                        EndDate = item.EndDate != null ? item.EndDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
+                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                     };
-                    return new ResponseObject<GuidelineAPIViewModel> { IsError = false, ObjReturn = guidelineAPIViewModel, SuccessMessage = "Thành công" };
+                    rsList.Add(guidelineAPIViewModel);
                 }
 
-                return new ResponseObject<GuidelineAPIViewModel> { IsError = true, WarningMessage = "Không tìm thấy hướng dẫn nào" };
+                return new ResponseObject<List<GuidelineAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
             }
             catch (Exception e)
             {
-                return new ResponseObject<GuidelineAPIViewModel> { IsError = true, WarningMessage = "Không tìm thấy hướng dẫn nào", ObjReturn = null, ErrorMessage = e.ToString() };
+                return new ResponseObject<List<GuidelineAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy hướng dẫn nào", ObjReturn = null, ErrorMessage = e.ToString() };
             }
         }
 
@@ -422,7 +427,7 @@ namespace DataService.Models.Entities.Services
             {
                 var itsupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
                 var servieceRepo = DependencyUtils.Resolve<IServiceITSupportRepository>();
-                var itsupporter  = itsupporterRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == itsupporterId);
+                var itsupporter = itsupporterRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == itsupporterId);
                 var supportTime = 0;
                 var totalSupportTime = new TimeSpan();
                 var averageTime = 0.0;
@@ -445,8 +450,8 @@ namespace DataService.Models.Entities.Services
                     var requestGroupBy = request.GroupBy(a => a.ServiceItem.ServiceITSupport.ServiceITSupportId);
                     var requestSelect = requestGroupBy.Select(b => new { ServiceId = b.Key, ServiceItems = b.ToList() }).ToList();
                     //var s = w.Sum(a => a.)
-                    
-                    
+
+
                     if (request.Count() > 0)
                     {
                         foreach (var item in requestSelect)
@@ -459,7 +464,7 @@ namespace DataService.Models.Entities.Services
                                     var time = new TimeSpan();
                                     time = (item2.StartTime - item2.EndTime).Value.Duration();
                                     totalServiceSupportTime += time;
-                                }                                
+                                }
                             }
                             rsList.Add(new ITSupporterStatisticServiceTimeAPIViewModel
                             {
@@ -468,14 +473,14 @@ namespace DataService.Models.Entities.Services
                                 SupportTimeByHour = totalServiceSupportTime.TotalHours
                             });
                         }
-                        
+
                     }
                     if (request.Count() > 0)
                     {
                         var requestCount = 0;
                         foreach (var requestItem in request)
                         {
-                            if(requestItem.StartTime != null && requestItem.EndTime != null)
+                            if (requestItem.StartTime != null && requestItem.EndTime != null)
                             {
                                 requestCount++;
                                 var time = new TimeSpan();
@@ -489,7 +494,7 @@ namespace DataService.Models.Entities.Services
                     var requestHistoryRepo = DependencyUtils.Resolve<IRequestHistoryRepository>();
                     var requestHistory = requestHistoryRepo.GetActive().Where(r => r.Pre_It_SupporterId == itsupporterId && r.IsITSupportAccept == false && (r.StartTime != null && r.StartTime.Value.Year == DateTime.Now.Year) && (r.EndTime != null && r.EndTime.Value.Month == DateTime.Now.Month)).ToList();
                     var totalRejectTime = 0;
-                    if(requestHistory.Count > 0)
+                    if (requestHistory.Count > 0)
                     {
                         foreach (var item in requestHistory)
                         {
@@ -501,7 +506,7 @@ namespace DataService.Models.Entities.Services
                     {
                         ITSupporterName = itsupporter.ITSupporterName,
                         SupportTimeInMonth = supportTime,
-                        TotalTimeEveryService =rsList,
+                        TotalTimeEveryService = rsList,
                         AverageTimeSupport = averageTime,
                         TotalRejectTime = totalRejectTime
                     };
@@ -591,7 +596,7 @@ namespace DataService.Models.Entities.Services
                 var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
                 var itSupporter = itSupporterRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == itsupporterId);
                 if (itSupporter != null && itSupporter.IsOnline != null)
-                {                   
+                {
                     return new ResponseObject<bool> { IsError = false, SuccessMessage = "Lấy trạng trạng thái thành công", ObjReturn = itSupporter.IsOnline.Value };
                 }
 

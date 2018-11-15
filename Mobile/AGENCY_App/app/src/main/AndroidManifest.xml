@@ -27,15 +27,6 @@
             android:name=".RequestDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".TimeLineActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".CreateRequestActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".AddRequestActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".AddRequestLayoutActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".ChatActivity" />

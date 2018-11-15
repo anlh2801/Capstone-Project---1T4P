@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initBottomMenu ();
+        initBottomMenu();
         loadFragment(new RequestFragment());
     }
 
@@ -39,23 +39,23 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    private void initBottomMenu () {
+    private void initBottomMenu() {
         bottomNavigationView = findViewById(R.id.navigationView);
         Fragment fragment = null;
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case  R.id.navigation_home:
+                switch (item.getItemId()) {
+                    case R.id.navigation_home:
                         loadFragment(new NewHomeFragment());
                         break;
-                    case  R.id.navigation_request:
+                    case R.id.navigation_request:
                         loadFragment(new RequestFragment());
                         break;
-                    case  R.id.navigation_devices:
+                    case R.id.navigation_devices:
                         loadFragment(new ManageDeviceFragment());
                         break;
-                    case  R.id.navigation_accountDetail:
+                    case R.id.navigation_accountDetail:
                         loadFragment(new ProfileFragment());
                         break;
                 }

@@ -90,7 +90,10 @@
             android:id="@+id/recyclerViewDone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="55dp"
             android:descendantFocusability="beforeDescendants"
             android:divider="#b5b5b5"
             android:orientation="vertical"
@@ -102,12 +105,12 @@
 
     <Button
         android:id="@+id/btnRatingDone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
         android:layout_margin="10dp"
-        android:textColor="#FAFAFA"
         android:background="@color/colorPrimary"
         android:text="Đánh giá"
+        android:textColor="#FAFAFA"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

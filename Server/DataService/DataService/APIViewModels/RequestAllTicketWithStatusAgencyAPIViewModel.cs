@@ -15,6 +15,7 @@ namespace DataService.APIViewModels
         public string AgencyName { get; set; }
         public int RequestCategoryId { get; set; }
         public int ServiceItemId { get; set; }
+        public string ServiceItemName { get; set; }
         public string RequestName { get; set; }
         public string RequestDesciption { get; set; }
         public string AgencyTelephone { get; set; }

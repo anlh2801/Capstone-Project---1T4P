@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class DoneDetailActivity extends AppCompatActivity implements RatingDialogListener{
+public class DoneDetailActivity extends AppCompatActivity implements RatingDialogListener {
     private RecyclerView mRecyclerView;
     private StatusTimeLineAdapter mTimeLineAdapter;
     private List<TimeLine> mDataList = new ArrayList<>();
@@ -38,20 +38,24 @@ public class DoneDetailActivity extends AppCompatActivity implements RatingDialo
     private RequestService requestService;
     int requestID = 0;
     Firebase reference1;
-    private TextView itNamee, requestNamee,listDeviceNamee;
+    private TextView itNamee, requestNamee, listDeviceNamee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_done_detail);
-        Intent myIntent = getIntent();
-        requestID = myIntent.getIntExtra("requestID", 0);
+
+        btnRatingDone = (Button) findViewById(R.id.btnRatingDone);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewDone);
         itNamee = findViewById(R.id.itNameDone);
+        requestNamee = findViewById(R.id.requestNameDone);
+        listDeviceNamee = findViewById(R.id.listDeviceNameeDone);
+
+        Intent myIntent = getIntent();
+        requestID = myIntent.getIntExtra("requestID", 0);
         String itName = myIntent.getStringExtra("itName");
         itNamee.setText(itName);
         String requestName = myIntent.getStringExtra("requestName");
-        requestNamee = findViewById(R.id.requestNameDone);
         requestNamee.setText(requestName);
 
         final ArrayList<String> listDeviceName = myIntent.getStringArrayListExtra("listDevice");
@@ -64,7 +68,7 @@ public class DoneDetailActivity extends AppCompatActivity implements RatingDialo
             foundOne = true;
             sb.append(listDeviceName.get(i));
         }
-        listDeviceNamee = findViewById(R.id.listDeviceNameeDone);
+
         listDeviceNamee.setText(sb.toString());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
@@ -101,7 +105,6 @@ public class DoneDetailActivity extends AppCompatActivity implements RatingDialo
         });
 
 
-        btnRatingDone = (Button) findViewById(R.id.btnRatingDone);
         btnRatingDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,6 +160,6 @@ public class DoneDetailActivity extends AppCompatActivity implements RatingDialo
     public void onPositiveButtonClicked(int i, String s) {
         requestService = new RequestService();
         Rating rating = new Rating(requestID, i, s);
-        requestService.ratingHero(DoneDetailActivity.this,rating);
+        requestService.ratingHero(DoneDetailActivity.this, rating);
     }
 }
