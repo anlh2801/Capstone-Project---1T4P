@@ -38,6 +38,12 @@
                 android:layout_height="wrap_content"
                 android:padding="3dp" />
 
+            <TextView
+                android:id="@+id/txtEndDateDone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
 
         </LinearLayout>
 
