@@ -110,7 +110,7 @@
           </Key>
           <Property Name="GuidelineId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ServiceItemId" Type="int" />
-          <Property Name="GuidelineName" Type="nvarchar" MaxLength="50" />
+          <Property Name="GuidelineName" Type="nvarchar(max)" />
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="date" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
@@ -888,7 +888,7 @@
           </Key>
           <Property Name="GuidelineId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ServiceItemId" Type="Int32" />
-          <Property Name="GuidelineName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GuidelineName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="0" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
