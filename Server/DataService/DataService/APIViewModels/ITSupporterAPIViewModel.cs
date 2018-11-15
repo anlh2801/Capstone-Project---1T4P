@@ -26,5 +26,6 @@ namespace DataService.APIViewModels
         public string UpdateDate { get; set; }
         public int RequestWattingForAccept { get; set; }
         public string Skill { get; set; }
+        public string Password { get; set; }
     }
 }

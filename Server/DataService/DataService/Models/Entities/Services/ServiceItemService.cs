@@ -102,12 +102,12 @@ namespace DataService.Models.Entities.Services
                     };
                     return new ResponseObject<ServiceItemAPIViewModel> { IsError = false, ObjReturn = ServiceItemAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
                 }
-                return new ResponseObject<ServiceItemAPIViewModel> { IsError = true, WarningMessage = "Không tồn tại loại dịch vụ này" };
+                return new ResponseObject<ServiceItemAPIViewModel> { IsError = true, WarningMessage = "Không tồn tại dịch vụ này" };
             }
             catch (Exception e)
             {
 
-                return new ResponseObject<ServiceItemAPIViewModel> { IsError = true, WarningMessage = "Không tồn tại loại dịch vụ này", ObjReturn = null, ErrorMessage = e.ToString() };
+                return new ResponseObject<ServiceItemAPIViewModel> { IsError = true, WarningMessage = "Không tồn tại dịch vụ này", ObjReturn = null, ErrorMessage = e.ToString() };
             }
         }
 
@@ -126,15 +126,15 @@ namespace DataService.Models.Entities.Services
 
                     serviceItemRepo.Edit(updateServiceItem);
                     serviceItemRepo.Save();
-                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Chỉnh sửa loại dịch vụ thành công", ObjReturn = true };
+                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Chỉnh sửa dịch vụ thành công", ObjReturn = true };
                 }
 
-                return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉnh sửa loại dịch vụ thất bại", ObjReturn = false };
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉnh sửa dịch vụ thất bại", ObjReturn = false };
             }
             catch (Exception e)
             {
 
-                return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉnh sửa loại dịch vụ thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉnh sửa dịch vụ thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
             }
         }
 
@@ -145,11 +145,11 @@ namespace DataService.Models.Entities.Services
             try
             {
                 Deactivate(serviceItem);
-                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Xóa thiết bị thành công", ObjReturn = true };
+                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Xóa dịch vụ thành công", ObjReturn = true };
             }
             catch (Exception ex)
             {
-                return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa thiết bị thất bại", ErrorMessage = ex.ToString(), ObjReturn = false };
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa dịch vụ thất bại", ErrorMessage = ex.ToString(), ObjReturn = false };
             }
         }
 
@@ -164,13 +164,14 @@ namespace DataService.Models.Entities.Services
                 serviceItem.ServiceItemName = model.ServiceItemName;
                 serviceItem.Description = model.Description;
                 serviceItem.CreateDate = DateTime.UtcNow.AddHours(7);
+                serviceItem.UpdateDate = DateTime.UtcNow.AddHours(7);
                 serviceItemRepo.Add(serviceItem);
                 serviceItemRepo.Save();
-                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Tạo chi nhánh thành công!", ObjReturn = true };
+                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Tạo dịch vụ thành công!", ObjReturn = true };
             }
             catch (Exception e)
             {
-                return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa chi nhánh thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa dịch vụ thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
             }
         }
     }

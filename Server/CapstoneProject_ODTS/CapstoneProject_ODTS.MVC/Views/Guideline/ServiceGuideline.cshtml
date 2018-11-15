@@ -80,7 +80,7 @@
                 <th><label>STT</label></th>
                 <th><label>Nội Dung Hướng Dẫn</label></th>
                 <th><label>Ngày Tạo</label></th>
-                <th><label>Lần Cuối Cập Nhật</label></th>
+                <th><label>Lần Chỉnh Sửa Cuối</label></th>
                 <th><label>Chức Năng</label></th>
             </tr>
         </thead>
@@ -248,10 +248,10 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                    $('#CreateModal').modal('hide');
                     if (!data.result.IsError) {
-                        swal(data.result.SuccessMessage, "", "success");
                         clearModal();
+                        $('#CreateModal').modal('hide');
+                        swal(data.result.SuccessMessage, "", "success");
                         loadGuideline();
                     }
                     else

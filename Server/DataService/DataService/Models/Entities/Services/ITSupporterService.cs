@@ -156,6 +156,8 @@ namespace DataService.Models.Entities.Services
                         ITSupporterId = itSupporter.ITSupporterId,
                         ITSupporterName = itSupporter.ITSupporterName,
                         AccountId = itSupporter.AccountId,
+                        Username = itSupporter.Account.Username,
+                        Password = itSupporter.Account.Password,
                         Telephone = itSupporter.Telephone,
                         Email = itSupporter.Email,
                         Gender = genderStatus,

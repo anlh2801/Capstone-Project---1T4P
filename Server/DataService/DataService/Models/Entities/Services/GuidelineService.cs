@@ -131,6 +131,7 @@ namespace DataService.Models.Entities.Services
                 guideline.ServiceItemId = model.ServiceItemId;
                 guideline.GuidelineName = model.GuidelineName;
                 guideline.CreateDate = DateTime.UtcNow.AddHours(7);
+                guideline.UpdateDate = DateTime.UtcNow.AddHours(7);
                 guidelineRepo.Add(guideline);
                 guidelineRepo.Save();
                 return new ResponseObject<bool> { IsError = false, SuccessMessage = "Tạo hướng dẫn thành công!", ObjReturn = true };
