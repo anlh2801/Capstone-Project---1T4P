@@ -7418,13 +7418,10 @@
     <Content Include="Views\Statistic\Index.cshtml" />
     <Content Include="Views\ITSupporter\Index.cshtml" />
     <Content Include="Views\ServiceItem\Index.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Profile\Index.cshtml" />
-=======
     <Content Include="Views\Guideline\ServiceGuideline.cshtml">
       <BrowseToURL>~/Guideline/ServiceGuideline</BrowseToURL>
     </Content>
->>>>>>> dfd6be5ccef9ee94bf56acc2c72cafe749347263
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
