@@ -24,11 +24,11 @@ import retrofit2.Response;
 public class RequestService {
     IRequestApiCaller iRequestApiCaller;
 
-    public void getRequestByRequestIdAndITSupporterId (final Context context, int requestId, int itSupportId, final CallBackData<Request> callBackData) {
+    public void getRequestByRequestIdAndITSupporterId (final Context context, int itSupportId, final CallBackData<Request> callBackData) {
         iRequestApiCaller = RetrofitInstance.getRequesService();
 
         /** Call the method with parameter in the interface to get the notice data*/
-        Call<ResponseObject<Request>> call = iRequestApiCaller.getRequestByRequestIdAndITSupporterId(requestId, itSupportId);
+        Call<ResponseObject<Request>> call = iRequestApiCaller.getRequestByRequestIdAndITSupporterId(itSupportId);
 
         /**Log the URL called*/
         Log.wtf("URL Called", call.request().url() + "");

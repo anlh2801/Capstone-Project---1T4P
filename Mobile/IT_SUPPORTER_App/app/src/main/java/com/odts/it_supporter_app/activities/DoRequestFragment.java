@@ -34,7 +34,7 @@ import java.util.Date;
 public class DoRequestFragment extends Fragment {
     private RequestService _requestService;
 
-    Button btnDone, btnCall, btnStart;
+    Button btnDone, btnCall, btnStart, btnTimeLine, btnChat;
     FloatingActionButton flbGuidline;
     Integer itSupporterId = 0;
     Integer requestId = 0;
@@ -43,6 +43,7 @@ public class DoRequestFragment extends Fragment {
     TextView rqName;
     String serviceItemName;
     Integer serviceItemId = 0;
+
     public DoRequestFragment() {
         _requestService = new RequestService();
 
@@ -58,25 +59,29 @@ public class DoRequestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_do_request, container, false);
+        btnCall = v.findViewById(R.id.btnCall);
+        btnChat = v.findViewById(R.id.btnChat);
+//        btnStart = v.findViewById(R.id.btnStart);
+//        btnDone = v.findViewById(R.id.btnDone);
+        btnTimeLine = v.findViewById(R.id.btnTime);
         requestService = new RequestService();
         itSupporterService = new ITSupporterService();
         rqName = (TextView) v.findViewById(R.id.txtRequestName);
-         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
+        SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         itSupporterId = share.getInt("itSupporterId", 0);
-        requestId = share.getInt("requestId", 0);
-        requestService.getRequestByRequestIdAndITSupporterId(getActivity(), requestId, itSupporterId, new CallBackData<Request>() {
+        requestService.getRequestByRequestIdAndITSupporterId(getActivity(), itSupporterId, new CallBackData<Request>() {
             @Override
             public void onSuccess(final Request request) {
+                requestId = request.getRequestId();
                 serviceItemId = request.getServiceItemId();
                 serviceItemName = request.getServiceItemName();
                 rqName.setText(request.getRequestName());
-                btnCall = v.findViewById(R.id.btnCall);
                 btnCall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent callIntent = new Intent(Intent.ACTION_CALL);
-                        callIntent.setData(Uri.parse("tel: "+ request.getPhoneNumber()));
+                        callIntent.setData(Uri.parse("tel: " + request.getPhoneNumber()));
                         if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                             startActivity(callIntent);
                         } else {
@@ -84,33 +89,43 @@ public class DoRequestFragment extends Fragment {
                         }
                     }
                 });
+
+                btnChat.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), ChatActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+                btnTimeLine.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), StatusTimelineActivity.class);
+                        intent.putExtra("requestIDTime", request.getRequestId());
+                        startActivity(intent);
+                    }
+                });
             }
+
             @Override
             public void onFail(String message) {
             }
         });
-        // Inflate the layout for this fragment
-//        SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
-//        SharedPreferences.Editor edit = share.edit();
-//        itSupporterId = share.getInt("itSupporterId", 0);
-//        requestId = share.getInt("requestId", 0);
-//
-//        txtRequestName = v.findViewById(R.id.txtRequestName);
-//        getAllServiceITSupportForAgency(requestId, itSupporterId);
-        btnDone = v.findViewById(R.id.btnDone);
-        btnDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _requestService.updateStatusRequest(getContext(), requestId, Enums.RequestStatusEnum.Done.getIntValue());
-            }
-        });
-        btnStart = v.findViewById(R.id.btnStart);
-        btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                itSupporterService.updateStartTime(getContext(), requestId, DateFormat.getDateTimeInstance().format(new Date()));
-            }
-        });
+//        btnDone = v.findViewById(R.id.btnDone);
+//        btnDone.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                _requestService.updateStatusRequest(getContext(), requestId, Enums.RequestStatusEnum.Done.getIntValue());
+//            }
+//        });
+//        btnStart = v.findViewById(R.id.btnStart);
+//        btnStart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                itSupporterService.updateStartTime(getContext(), requestId, DateFormat.getDateTimeInstance().format(new Date()));
+//            }
+//        });
         flbGuidline = (FloatingActionButton) v.findViewById(R.id.flbGuidline);
         flbGuidline.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,7 +138,6 @@ public class DoRequestFragment extends Fragment {
         });
         return v;
     }
-
 
 
 }

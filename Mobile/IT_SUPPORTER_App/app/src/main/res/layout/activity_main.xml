@@ -50,31 +50,4 @@
 
     </FrameLayout>
 
-    <Button
-        android:id="@+id/btn_logout"
-        android:layout_width="108dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="139dp"
-        android:text="@string/log_out" />
-
-    <Button
-        android:id="@+id/btnChatMain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="11dp"
-        android:text="Chat" />
-
-    <Button
-        android:id="@+id/btnTimeLine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/btnChatMain"
-        android:layout_marginBottom="151dp"
-        android:text="Timeline" />
-
 </RelativeLayout>

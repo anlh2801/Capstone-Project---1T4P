@@ -28,12 +28,7 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
-    Fragment fragment;
     SharedPreferences share;
-    SharedPreferences sp;
-    Button btnLogout;
-    Button btnChat;
-    Button btnTimeline;
     Switch swStatus;
     ITSupporterService itSupporterService;
     android.support.v7.widget.Toolbar toolbar;
@@ -62,22 +57,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         isOnline = true;
-        btnChat = findViewById(R.id.btnChatMain);
-        btnChat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ChatActivity.class);
-                startActivity(intent);
-            }
-        });
-        btnTimeline = findViewById(R.id.btnTimeLine);
-        btnTimeline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, StatusTimelineActivity.class);
-                startActivity(intent);
-            }
-        });
+//        btnChat = findViewById(R.id.btnChatMain);
+//        btnChat.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//        btnTimeline = findViewById(R.id.btnTimeLine);
+//        btnTimeline.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, StatusTimelineActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         Bundle extras = getIntent().getExtras();
         onNewIntent(getIntent());
         toolbar = findViewById(R.id.toolbar);
@@ -124,27 +119,27 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        btnLogout = (Button) findViewById(R.id.btn_logout);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                share = getSharedPreferences("ODTS", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = share.edit();
-                editor.clear();
-                editor.commit();
-                sp = getSharedPreferences("loginHero", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor2 = sp.edit();
-                editor2.clear();
-                editor2.commit();
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-//                deleteCache(MainActivity.this);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE))
-                            .clearApplicationUserData();
-                }
-            }
-        });
+//        btnLogout = (Button) findViewById(R.id.btn_logout);
+//        btnLogout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                share = getSharedPreferences("ODTS", Context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor = share.edit();
+//                editor.clear();
+//                editor.commit();
+//                sp = getSharedPreferences("loginHero", Context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor2 = sp.edit();
+//                editor2.clear();
+//                editor2.commit();
+//                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//                startActivity(intent);
+////                deleteCache(MainActivity.this);
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//                    ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE))
+//                            .clearApplicationUserData();
+//                }
+//            }
+//        });
     }
 
 

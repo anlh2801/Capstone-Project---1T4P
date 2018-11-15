@@ -61,6 +61,22 @@ public class ITSupporterService {
             }
         });
     }
+
+    public void updateBusyIT(final  Context context, int itsupporter_id) {
+        iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
+        Call<ResponseObject<Boolean>> call = iitSupporterApiCaller.updateBusyIt(itsupporter_id);
+        call.enqueue(new Callback<ResponseObject<Boolean>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<Boolean>> call, Throwable t) {
+
+            }
+        });
+    }
     public  void updateStartTime(final Context context, int request_id, String start_time) {
         iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
         Call<ResponseObject<Boolean>> call = iitSupporterApiCaller.updateStartTime(request_id, start_time);
