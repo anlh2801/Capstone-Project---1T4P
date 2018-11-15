@@ -252,15 +252,15 @@ namespace DataService.Models.Entities.Services
         {
             try
             {
-                var ticketTaskRepo = DependencyUtils.Resolve<ITicketTaskRepository>();
-                var updateTicketTaskStatus = ticketTaskRepo.GetActive().SingleOrDefault(a => a.TicketTaskId == model.TicketTaskId);
-                if (updateTicketTaskStatus != null)
+                var requestTaskRepo = DependencyUtils.Resolve<IRequestTaskRepository>();
+                var updateRequestTaskStatus = requestTaskRepo.GetActive().SingleOrDefault(a => a.RequestTaskId == model.RequestTaskId);
+                if (updateRequestTaskStatus != null)
                 {
-                    updateTicketTaskStatus.TaskStatus = model.TaskStatus;
+                    updateRequestTaskStatus.TaskStatus = model.TaskStatus;
 
-                    ticketTaskRepo.Edit(updateTicketTaskStatus);
+                    requestTaskRepo.Edit(updateRequestTaskStatus);
 
-                    ticketTaskRepo.Save();
+                    requestTaskRepo.Save();
                     return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Cập nhật trạng thái thành công" };
                 }
 
@@ -309,10 +309,10 @@ namespace DataService.Models.Entities.Services
             try
             {
 
-                var ticketTaskRepo = DependencyUtils.Resolve<ITicketTaskRepository>();
-                var createTask = new TicketTask();
+                var requestTaskRepo = DependencyUtils.Resolve<IRequestTaskRepository>();
+                var createTask = new RequestTask();
 
-                createTask.TicketId = model.TicketId;
+                createTask.RequestId = model.RequestId;
                 createTask.TaskStatus = model.TaskStatus;
                 createTask.CreateByITSupporter = model.CreateByITSupporter;
                 createTask.StartTime = DateTime.Parse(model.StartTime);
@@ -321,9 +321,9 @@ namespace DataService.Models.Entities.Services
                 createTask.PreTaskCondition = model.PreTaskCondition;
                 createTask.CreateDate = DateTime.UtcNow.AddHours(7);
 
-                ticketTaskRepo.Add(createTask);
+                requestTaskRepo.Add(createTask);
 
-                ticketTaskRepo.Save();
+                requestTaskRepo.Save();
                 return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Tạo mới việc thành công" };
             }
             catch (Exception e)
@@ -338,18 +338,18 @@ namespace DataService.Models.Entities.Services
         {
             try
             {
-                var ticketTaskRepo = DependencyUtils.Resolve<ITicketTaskRepository>();
-                var setTimeTask = ticketTaskRepo.GetActive().SingleOrDefault(a => a.TicketTaskId == model.TicketTaskId);
+                var requestTaskRepo = DependencyUtils.Resolve<IRequestTaskRepository>();
+                var setTimeTask = requestTaskRepo.GetActive().SingleOrDefault(a => a.RequestTaskId == model.RequestTaskId);
 
                 if (setTimeTask != null)
                 {
-                    setTimeTask.TicketTaskId = model.TicketTaskId;
+                    setTimeTask.RequestTaskId = model.RequestTaskId;
                     setTimeTask.StartTime = DateTime.Parse(model.StartTime);
                     setTimeTask.EndTime = DateTime.Parse(model.EndTime);
 
-                    ticketTaskRepo.Edit(setTimeTask);
+                    requestTaskRepo.Edit(setTimeTask);
 
-                    ticketTaskRepo.Save();
+                    requestTaskRepo.Save();
                     return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Gán thời gian thành công" };
                 }
 
@@ -366,17 +366,17 @@ namespace DataService.Models.Entities.Services
         {
             try
             {
-                var ticketTaskRepo = DependencyUtils.Resolve<ITicketTaskRepository>();
-                var setPriorityTask = ticketTaskRepo.GetActive().SingleOrDefault(a => a.TicketTaskId == model.TicketTaskId);
+                var requestTaskRepo = DependencyUtils.Resolve<IRequestTaskRepository>();
+                var setPriorityTask = requestTaskRepo.GetActive().SingleOrDefault(a => a.RequestTaskId == model.RequestTaskId);
 
                 if (setPriorityTask != null)
                 {
-                    setPriorityTask.TicketTaskId = model.TicketTaskId;
+                    setPriorityTask.RequestTaskId = model.RequestTaskId;
                     setPriorityTask.Priority = model.Priority;
 
-                    ticketTaskRepo.Edit(setPriorityTask);
+                    requestTaskRepo.Edit(setPriorityTask);
 
-                    ticketTaskRepo.Save();
+                   requestTaskRepo.Save();
                     return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Cập nhật độ ưu thành công" };
                 }
 

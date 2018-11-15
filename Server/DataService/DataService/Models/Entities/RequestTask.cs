@@ -12,10 +12,10 @@ namespace DataService.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class TicketTask
+    public partial class RequestTask
     {
-        public int TicketTaskId { get; set; }
-        public int TicketId { get; set; }
+        public int RequestTaskId { get; set; }
+        public int RequestId { get; set; }
         public Nullable<int> TaskStatus { get; set; }
         public Nullable<int> CreateByITSupporter { get; set; }
         public Nullable<System.DateTime> StartTime { get; set; }
@@ -26,6 +26,6 @@ namespace DataService.Models.Entities
         public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
-        public virtual Ticket Ticket { get; set; }
+        public virtual Request Request { get; set; }
     }
 }

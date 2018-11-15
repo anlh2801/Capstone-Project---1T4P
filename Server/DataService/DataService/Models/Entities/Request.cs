@@ -17,6 +17,7 @@ namespace DataService.Models.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Request()
         {
+            this.RequestTasks = new HashSet<RequestTask>();
             this.Tickets = new HashSet<Ticket>();
             this.RequestHistories = new HashSet<RequestHistory>();
         }
@@ -43,6 +44,8 @@ namespace DataService.Models.Entities
         public virtual ITSupporter ITSupporter { get; set; }
         public virtual RequestCategory RequestCategory { get; set; }
         public virtual ServiceItem ServiceItem { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RequestTask> RequestTasks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ticket> Tickets { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

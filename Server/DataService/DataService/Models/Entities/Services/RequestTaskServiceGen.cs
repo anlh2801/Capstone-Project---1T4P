@@ -13,16 +13,16 @@ namespace DataService.Models.Entities.Services
     using System.Collections.Generic;
     using DataService.ViewModels;
     
-    public partial interface ITicketTaskService : DataService.BaseConnect.IBaseService<TicketTask, TicketTaskViewModel>
+    public partial interface IRequestTaskService : DataService.BaseConnect.IBaseService<RequestTask, RequestTaskViewModel>
     {
     }
     
-    public partial class TicketTaskService : DataService.BaseConnect.BaseService<TicketTask, TicketTaskViewModel>, ITicketTaskService
+    public partial class RequestTaskService : DataService.BaseConnect.BaseService<RequestTask, RequestTaskViewModel>, IRequestTaskService
     {
-         public TicketTaskService()
+         public RequestTaskService()
          {
          }
-        public TicketTaskService(DataService.BaseConnect.IUnitOfWork unitOfWork, Repositories.ITicketTaskRepository repository) : base(unitOfWork, repository)
+        public RequestTaskService(DataService.BaseConnect.IUnitOfWork unitOfWork, Repositories.IRequestTaskRepository repository) : base(unitOfWork, repository)
         {
         }
     }

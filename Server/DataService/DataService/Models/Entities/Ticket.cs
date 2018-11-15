@@ -14,12 +14,6 @@ namespace DataService.Models.Entities
     
     public partial class Ticket
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Ticket()
-        {
-            this.TicketTasks = new HashSet<TicketTask>();
-        }
-    
         public int TicketId { get; set; }
         public int RequestId { get; set; }
         public int DeviceId { get; set; }
@@ -34,7 +28,5 @@ namespace DataService.Models.Entities
     
         public virtual Device Device { get; set; }
         public virtual Request Request { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TicketTask> TicketTasks { get; set; }
     }
 }

@@ -233,6 +233,9 @@
     <Compile Include="DataAPIGen\RequestHistoryApiGen.cs">
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataAPIGen\RequestTaskApiGen.cs">
+      <DependentUpon>DataAPI.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataAPIGen\RoleApiGen.cs">
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
@@ -246,9 +249,6 @@
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAPIGen\TicketApiGen.cs">
-      <DependentUpon>DataAPI.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAPIGen\TicketTaskApiGen.cs">
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\DeviceDomain.cs" />
@@ -387,6 +387,9 @@
     <Compile Include="Models\Entities\Repositories\RequestRepositoryGen.cs">
       <DependentUpon>Repositories.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Repositories\RequestTaskRepositoryGen.cs">
+      <DependentUpon>Repositories.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\Repositories\RoleRepositoryGen.cs">
       <DependentUpon>Repositories.tt</DependentUpon>
     </Compile>
@@ -400,9 +403,6 @@
       <DependentUpon>Repositories.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Repositories\TicketRepositoryGen.cs">
-      <DependentUpon>Repositories.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\Repositories\TicketTaskRepositoryGen.cs">
       <DependentUpon>Repositories.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Request.cs">
@@ -421,6 +421,12 @@
       <DependentUpon>EntityRefinery.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\RequestRefined.cs">
+      <DependentUpon>EntityRefinery.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\RequestTask.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\RequestTaskRefined.cs">
       <DependentUpon>EntityRefinery.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Role.cs">
@@ -480,6 +486,9 @@
     <Compile Include="Models\Entities\Services\RequestServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Services\RequestTaskServiceGen.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\Services\ServiceItemService.cs" />
     <Compile Include="Models\Entities\Services\ServiceITSupportService.cs" />
     <Compile Include="Models\Entities\Services\RoleService.cs" />
@@ -511,9 +520,6 @@
     <Compile Include="Models\Entities\Services\TicketServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Services\TicketTaskServiceGen.cs">
-      <DependentUpon>Services.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Entities\Skill.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -524,12 +530,6 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\TicketRefined.cs">
-      <DependentUpon>EntityRefinery.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\TicketTask.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\TicketTaskRefined.cs">
       <DependentUpon>EntityRefinery.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Enums.cs" />
@@ -581,6 +581,9 @@
     <Compile Include="ViewModels\RequestHistoryViewModelGen.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\RequestTaskViewModelGen.cs">
+      <DependentUpon>ViewModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\RequestViewModelGen.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
@@ -594,9 +597,6 @@
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\SkillViewModelGen.cs">
-      <DependentUpon>ViewModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModels\TicketTaskViewModelGen.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\TicketViewModelGen.cs">
