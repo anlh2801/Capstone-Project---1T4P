@@ -198,6 +198,9 @@
             });
         }
         function initDatatable(data) {
+            if (data == null) {
+                $('#detail-table').dataTable().fnClearTable();
+            }
             $("#detail-table").dataTable().fnDestroy();
             $("#detail-table").dataTable({
                 stateSave: true,

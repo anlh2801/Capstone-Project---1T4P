@@ -29,6 +29,13 @@ namespace CapstoneProject_ODTS.MVC.Controllers
             
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult ViewProfileITSupporter(int itSupporter_id)
+        {
+            var result = _ITSupporterDomain.ViewProfileITSupporter(itSupporter_id);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult ITSuppoterStatistic(int itsupporterId)
         {
             // var result = _ITSupporterDomain.ITSuppoterStatistic(itsupporterId);
