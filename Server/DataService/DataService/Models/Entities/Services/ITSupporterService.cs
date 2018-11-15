@@ -442,10 +442,8 @@ namespace DataService.Models.Entities.Services
                     var guidelineAPIViewModel = new GuidelineAPIViewModel
                     {
                         GuidelineId = item.GuidelineId,
-                        ServiceItemId = item.ServiceItemId ?? 0,
-                        GuidelineName = item.GuidelineName,
-                        StartDate = item.StartDate != null ? item.StartDate.Value.ToString("dd/MM/yyyy") : string.Empty,
-                        EndDate = item.EndDate != null ? item.EndDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                        ServiceItemId = item.ServiceItemId,
+                        GuidelineName = item.GuidelineName,                        
                         CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                     };
