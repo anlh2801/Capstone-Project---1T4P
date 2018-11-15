@@ -29,6 +29,7 @@ namespace DataService.APIViewModels
         public int NumberTicketInProcessing { get; set; }
         public int NumberOfTicket { get; set; }
         public string ITSupporterName { get; set; }
+        public string ITSupporterPhone { get; set; }
         public List<AgencyCreateTicketAPIViewModel> Tickets { get; set; }
     }
 }

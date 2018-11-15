@@ -311,6 +311,7 @@ namespace DataService.Models.Entities.Services
                         ITSupporterName = item.ITSupporter != null ? item.ITSupporter.ITSupporterName : "Chưa có người xử lý",
                         StartTime = item.StartTime != null ? item.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
                         EndTime = item.EndTime != null ? item.EndTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
+                        ITSupporterPhone = item.ITSupporter != null ? item.ITSupporter.Telephone : "0773909125",
                         Tickets = ticketList
                     };
                     requestList.Add(request);
