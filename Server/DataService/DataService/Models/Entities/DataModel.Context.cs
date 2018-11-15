@@ -37,11 +37,11 @@ namespace DataService.Models.Entities
         public virtual DbSet<Request> Requests { get; set; }
         public virtual DbSet<RequestCategory> RequestCategories { get; set; }
         public virtual DbSet<RequestHistory> RequestHistories { get; set; }
+        public virtual DbSet<RequestTask> RequestTasks { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<ServiceItem> ServiceItems { get; set; }
         public virtual DbSet<ServiceITSupport> ServiceITSupports { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
-        public virtual DbSet<TicketTask> TicketTasks { get; set; }
     }
 }

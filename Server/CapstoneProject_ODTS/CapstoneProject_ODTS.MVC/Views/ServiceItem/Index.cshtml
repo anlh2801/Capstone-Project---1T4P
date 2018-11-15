@@ -135,7 +135,7 @@
         <tbody></tbody>
     </table>
     <div class="NewThing">
-        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Loại Dịch Vụ</button>
+        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Dịch Vụ</button>
         <button type="button" class="btn btn-primary fa fa-mail-reply-all" data-toggle="modal" data-target="" onclick="window.history.go(-1); return false;"><font face="verdana"> Quay Lại Trang Loại Dịch Vụ</button>
     </div>
 </div>
@@ -254,7 +254,7 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     var html = '';
-                    html = 'Tất Cả Dịch Vụ Của Loại Dịch Vụ ' + data.result.ObjReturn.ServiceName;
+                    html = 'Tất Cả Dịch Vụ Sửa Chữa Của Loại Dịch Vụ ' + data.result.ObjReturn.ServiceName;
                     $('#serNameShow').append(html);
                 }
                 });
@@ -333,10 +333,10 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                    $('#CreateModal').modal('hide');
                     if (!data.result.IsError) {
-                        swal(data.result.SuccessMessage, "", "success");
                         clearModal();
+                        $('#CreateModal').modal('hide');
+                        swal(data.result.SuccessMessage, "", "success");   
                         loadServiceItem();
                     }
                     else

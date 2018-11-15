@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace DataService.APIViewModels
 {
-    public class ITSupporterCreateTaskAPIViewModel : DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.TicketTask>
+    public class ITSupporterCreateTaskAPIViewModel : DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.RequestTask>
     {
         public ITSupporterCreateTaskAPIViewModel() : base() { }
-        public ITSupporterCreateTaskAPIViewModel(DataService.Models.Entities.TicketTask entity) : base(entity) { }
+        public ITSupporterCreateTaskAPIViewModel(DataService.Models.Entities.RequestTask entity) : base(entity) { }
 
-        public int TicketId { get; set; }
+        public int RequestId { get; set; }
         public int TaskStatus { get; set; }
         public int CreateByITSupporter { get; set; }
         public string StartTime { get; set; }

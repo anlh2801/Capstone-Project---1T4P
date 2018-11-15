@@ -12,11 +12,11 @@ namespace DataService.ViewModels
     using System;
     using System.Collections.Generic;
     
-    public partial class TicketTaskViewModel : DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.TicketTask>
+    public partial class RequestTaskViewModel : DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.RequestTask>
     {
     	
-    			public virtual int TicketTaskId { get; set; }
-    			public virtual int TicketId { get; set; }
+    			public virtual int RequestTaskId { get; set; }
+    			public virtual int RequestId { get; set; }
     			public virtual Nullable<int> TaskStatus { get; set; }
     			public virtual Nullable<int> CreateByITSupporter { get; set; }
     			public virtual Nullable<System.DateTime> StartTime { get; set; }
@@ -27,8 +27,8 @@ namespace DataService.ViewModels
     			public virtual System.DateTime CreateDate { get; set; }
     			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
     	
-    	public TicketTaskViewModel() : base() { }
-    	public TicketTaskViewModel(DataService.Models.Entities.TicketTask entity) : base(entity) { }
+    	public RequestTaskViewModel() : base() { }
+    	public RequestTaskViewModel(DataService.Models.Entities.RequestTask entity) : base(entity) { }
     
     }
 }

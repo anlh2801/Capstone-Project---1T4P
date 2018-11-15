@@ -12,7 +12,7 @@ namespace DataService.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class TicketTask : DataService.BaseConnect.IEntity, DataService.BaseConnect.IDeleting
+    public partial class RequestTask : DataService.BaseConnect.IEntity, DataService.BaseConnect.IDeleting
     {
     }
 }
