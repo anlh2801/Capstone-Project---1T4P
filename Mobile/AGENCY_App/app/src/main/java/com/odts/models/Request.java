@@ -19,13 +19,16 @@ public class Request {
     @SerializedName("ServiceItemId")
     private Integer serviceItemId;
 
+    @SerializedName("ServiceItemName")
+    private String serviceItemName;
+
     @SerializedName("RequestName")
     private String requestName;
 
     @SerializedName("RequestDesciption")
     private String RequestDesciption;
 
-    @SerializedName("PhoneNumber")
+    @SerializedName("AgencyTelephone")
     private String phoneNumber;
 
     @SerializedName("CreateDate")
@@ -183,5 +186,13 @@ public class Request {
 
     public void setiTSupporterName(String iTSupporterName) {
         this.iTSupporterName = iTSupporterName;
+    }
+
+    public String getServiceItemName() {
+        return serviceItemName;
+    }
+
+    public void setServiceItemName(String serviceItemName) {
+        this.serviceItemName = serviceItemName;
     }
 }

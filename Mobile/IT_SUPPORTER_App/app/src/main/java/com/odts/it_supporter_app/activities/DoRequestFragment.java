@@ -78,7 +78,7 @@ public class DoRequestFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         Intent callIntent = new Intent(Intent.ACTION_CALL);
-                        callIntent.setData(Uri.parse("tel: "+ request.getAgencyTelephone()));
+                        callIntent.setData(Uri.parse("tel: "+ request.getPhoneNumber()));
 //                startActivity(callIntent);
                         if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                             startActivity(callIntent);
