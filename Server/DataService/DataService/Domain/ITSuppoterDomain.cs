@@ -47,6 +47,8 @@ namespace DataService.Domain
         ResponseObject<bool> GetIsOnlineOFITSupporter(int itsupporterId);
 
         ResponseObject<bool> GetIsBusyOFITSupporter(int itsupporterId);
+
+        ResponseObject<int> UpdateIsBusyOFITSupporter(int itsupporterId);
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain
@@ -213,6 +215,14 @@ namespace DataService.Domain
             return result;
         }
 
+        public ResponseObject<int> UpdateIsBusyOFITSupporter(int itsupporterId)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.UpdateIsBusyOFITSupporter(itsupporterId);
+
+            return result;
+        }
 
     }
 }

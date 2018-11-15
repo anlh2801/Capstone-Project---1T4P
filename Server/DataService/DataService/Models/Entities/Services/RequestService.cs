@@ -374,7 +374,7 @@ namespace DataService.Models.Entities.Services
                         requestHistoryRepo.Save();
 
                         request.RequestStatus = status;
-                        request.ITSupporter.IsBusy = false;
+                        //request.ITSupporter.IsBusy = false;
                         request.EndTime = DateTime.UtcNow.AddHours(7);
                         request.UpdateDate = DateTime.UtcNow.AddHours(7);
                         foreach (var item in request.Tickets)

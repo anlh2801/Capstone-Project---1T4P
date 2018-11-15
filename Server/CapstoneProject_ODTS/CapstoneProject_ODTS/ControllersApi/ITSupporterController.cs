@@ -43,6 +43,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage GetIsOnlineOFITSupporter(int itsupporter_id);
 
         HttpResponseMessage GetIsBusyOFITSupporter(int itsupporter_id);
+
+        HttpResponseMessage UpdateIsBusyOFITSupporter(int itsupporter_id);
     }
 
     public class ITSupporterController : ApiController, IITSupporterController
@@ -214,6 +216,14 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage GetIsBusyOFITSupporter(int itsupporter_id)
         {
             var result = _ITSupporterDomain.GetIsBusyOFITSupporter(itsupporter_id);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPut]
+        [Route("ITsupporter/update_Is_Busy_False")]
+        public HttpResponseMessage UpdateIsBusyOFITSupporter(int itsupporter_id)
+        {
+            var result = _ITSupporterDomain.UpdateIsBusyOFITSupporter(itsupporter_id);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
     }
