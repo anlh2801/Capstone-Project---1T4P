@@ -8,24 +8,24 @@
         <EntityTypeShape EntityType="DataModel.TicketDetail" Width="1.5" PointX="7.5" PointY="10.75" />
         <AssociationConnector Association="DataModel.FK_TicketDetail_Ticket" />
         <AssociationConnector Association="DataModel.FK_Task_TicketDetail" />
-        <EntityTypeShape EntityType="DataModel.Account" Width="1.5" PointX="0.75" PointY="2.875" />
-        <EntityTypeShape EntityType="DataModel.Agency" Width="1.5" PointX="3" PointY="4.5" />
-        <EntityTypeShape EntityType="DataModel.Company" Width="1.5" PointX="0.75" PointY="6.5" />
-        <EntityTypeShape EntityType="DataModel.Contract" Width="1.5" PointX="3.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DataModel.ContractServiceITSupport" Width="1.5" PointX="6" PointY="15.75" />
-        <EntityTypeShape EntityType="DataModel.Device" Width="1.5" PointX="5.25" PointY="10" />
-        <EntityTypeShape EntityType="DataModel.DeviceType" Width="1.5" PointX="3" PointY="10.875" />
-        <EntityTypeShape EntityType="DataModel.Guideline" Width="1.5" PointX="5.25" PointY="28" />
-        <EntityTypeShape EntityType="DataModel.ITSupporter" Width="1.5" PointX="3" PointY="29.625" />
-        <EntityTypeShape EntityType="DataModel.Request" Width="1.5" PointX="5.25" PointY="20.5" />
-        <EntityTypeShape EntityType="DataModel.RequestCategory" Width="1.5" PointX="3" PointY="18.5" />
-        <EntityTypeShape EntityType="DataModel.RequestHistory" Width="1.5" PointX="7.5" PointY="21.5" />
-        <EntityTypeShape EntityType="DataModel.Role" Width="1.5" PointX="1.5" PointY="26.25" />
-        <EntityTypeShape EntityType="DataModel.ServiceItem" Width="1.5" PointX="3" PointY="21.625" />
-        <EntityTypeShape EntityType="DataModel.ServiceITSupport" Width="1.5" PointX="0.75" PointY="12.75" />
-        <EntityTypeShape EntityType="DataModel.Skill" Width="1.5" PointX="3" PointY="14.875" />
-        <EntityTypeShape EntityType="DataModel.Ticket" Width="1.5" PointX="8.5" PointY="16" />
-        <EntityTypeShape EntityType="DataModel.TicketTask" Width="1.5" PointX="10.75" PointY="16.25" />
+        <EntityTypeShape EntityType="DataModel.Account" Width="1.5" PointX="1.5" PointY="25.25" />
+        <EntityTypeShape EntityType="DataModel.Agency" Width="1.5" PointX="3" PointY="3.25" />
+        <EntityTypeShape EntityType="DataModel.Company" Width="1.5" PointX="1.5" PointY="8.25" />
+        <EntityTypeShape EntityType="DataModel.Contract" Width="1.5" PointX="3.75" PointY="8.25" />
+        <EntityTypeShape EntityType="DataModel.ContractServiceITSupport" Width="1.5" PointX="6" PointY="12.25" />
+        <EntityTypeShape EntityType="DataModel.Device" Width="1.5" PointX="5.25" PointY="16.625" />
+        <EntityTypeShape EntityType="DataModel.DeviceType" Width="1.5" PointX="3" PointY="17.625" />
+        <EntityTypeShape EntityType="DataModel.Guideline" Width="1.5" PointX="5.25" PointY="27.75" />
+        <EntityTypeShape EntityType="DataModel.ITSupporter" Width="1.5" PointX="0.75" PointY="16.625" />
+        <EntityTypeShape EntityType="DataModel.Request" Width="1.5" PointX="8.25" PointY="19.875" />
+        <EntityTypeShape EntityType="DataModel.RequestCategory" Width="1.5" PointX="6" PointY="22.5" />
+        <EntityTypeShape EntityType="DataModel.RequestHistory" Width="1.5" PointX="13.5" PointY="21" />
+        <EntityTypeShape EntityType="DataModel.RequestTask" Width="1.5" PointX="10.5" PointY="25.125" />
+        <EntityTypeShape EntityType="DataModel.Role" Width="1.5" PointX="1.5" PointY="29.625" />
+        <EntityTypeShape EntityType="DataModel.ServiceItem" Width="1.5" PointX="3" PointY="21.125" />
+        <EntityTypeShape EntityType="DataModel.ServiceITSupport" Width="1.5" PointX="0.75" PointY="12.25" />
+        <EntityTypeShape EntityType="DataModel.Skill" Width="1.5" PointX="3" PointY="12.375" />
+        <EntityTypeShape EntityType="DataModel.Ticket" Width="1.5" PointX="10.5" PointY="19.375" />
         <AssociationConnector Association="DataModel.FK_Account_Role" />
         <AssociationConnector Association="DataModel.FK_Agency_Account" />
         <AssociationConnector Association="DataModel.FK_ITSupporter_Account" />
@@ -44,11 +44,11 @@
         <AssociationConnector Association="DataModel.FK_TicketHistory_ITSupporter" />
         <AssociationConnector Association="DataModel.FK_Request_RequestCategory" />
         <AssociationConnector Association="DataModel.FK_Request_ServiceItem" />
+        <AssociationConnector Association="DataModel.FK_RequestTask_Request" />
         <AssociationConnector Association="DataModel.FK_Ticket_Request" />
         <AssociationConnector Association="DataModel.FK_TicketHistory_Request" />
         <AssociationConnector Association="DataModel.FK_ServiceItem_Service" />
         <AssociationConnector Association="DataModel.FK_Skill_ServiceITSupport" />
-        <AssociationConnector Association="DataModel.FK_TicketTask_Ticket" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
