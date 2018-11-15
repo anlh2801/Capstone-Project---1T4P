@@ -219,7 +219,7 @@ namespace DataService.Models.Entities.Services
                     //    String.Format("about {0} days ago", timeSpan.Days) :
                     //    "hôm qua";
                     result = timeSpan.Days > 1 ?
-                        dateTime.ToString("dd/MM/yyyy") :
+                        dateTime.ToString("dd/MM/yyyy HH:mm") :
                         "hôm qua";
                 }
                 //else if (timeSpan <= TimeSpan.FromDays(365))
@@ -236,7 +236,7 @@ namespace DataService.Models.Entities.Services
                 //}
                 else
                 {
-                    result = dateTime.ToString("dd/MM/yyyy");
+                    result = dateTime.ToString("dd/MM/yyyy HH:mm");
                 }
 
                 return result;
