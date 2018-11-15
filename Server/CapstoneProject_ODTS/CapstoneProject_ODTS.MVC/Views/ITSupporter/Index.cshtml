@@ -118,10 +118,10 @@
 
                 <p>
                     <b>Tên Dịch Vụ:</b><br>
-                    <input type="text" id="comNameEdit"></input>
+                    <input type="text" id="comNameEdit">
                 <p>
                     <b>Thời Gian làm Việc:</b><br>
-                    <input type="text" id="comDescriptionEdit"></input>
+                    <input type="text" id="comDescriptionEdit">
 
             </div>
             <div class="modal-footer">
@@ -144,27 +144,27 @@
                         <input type="hidden" id="id" />
                         <div class="col-md-6">
                             <b>Tên Đăng Nhập:</b><br>
-                            <input type="text" class="form-control" id="comDescriptionCreateE" />
+                            <input type="text" class="form-control" id="userNameE" />
                         </div>
                         <div class="col-md-6">
                             <b>Mật Khẩu:</b><br>
-                            <input type="text" class="form-control" id="comDescriptionCreateE" />
+                            <input type="text" class="form-control" id="passE" />
                         </div>
                         <div class="col-md-6" style="margin-top: 10px">
                             <b>Họ Và Tên:</b><br>
-                            <input type="text" class="form-control" id="comDescriptionCreateE" />
+                            <input type="text" class="form-control" id="nameE" />
                         </div>
                         <div class="col-md-6" style="margin-top: 10px">
                             <b>Số Điện Thoại:</b><br>
-                            <input type="text" class="form-control" id="comDescriptionCreateE" />
+                            <input type="text" class="form-control" id="phoneE" />
                         </div>
                         <div class="col-md-6" style="margin-top: 10px">
                             <b>Email:</b><br>
-                            <input type="text" class="form-control" id="comDescriptionCreateE" />
+                            <input type="text" class="form-control" id="emailE" />
                         </div>
                         <div class="col-md-6" style="margin-top: 10px">
                             <b>Địa Chỉ Thường Trú:</b><br>
-                            <input type="text" class="form-control" id="comDescriptionCreateE" />
+                            <input type="text" class="form-control" id="addressE" />
                         </div>
                         <div class="col-md-12" style="margin-top: 20px">
                             <button type="button" class="btn btn-primary fa fa-plus pull-right" data-toggle="modal" data-target="" onclick="showCreateServiceModal()"><font face="verdana"> Thêm Kinh Nghiệm</button>
@@ -272,6 +272,9 @@
         }
 
         function initDatatable(data) {
+            if (data == null) {
+                $('#detail-table').dataTable().fnClearTable();
+            }
             $("#detail-table").dataTable().fnDestroy();
             $("#detail-table").dataTable({
                 stateSave: true,
@@ -312,9 +315,9 @@
 
                         "aTargets": [5],
                         "mRender": function (data, type, full) {
-                            var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.CompanyId + ')"></button>';
-                            var edit = ' <button type="button" class="btn btn-warning fa fa-gears" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.CompanyId + ')"></button>';
-                            var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeITSup(' + full.CompanyId + ')"></button>';
+                            var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.ITSupporterId + ')"></button>';
+                            var edit = ' <button type="button" class="btn btn-warning fa fa-gears" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.ITSupporterId + ')"></button>';
+                            var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeITSup(' + full.ITSupporterId + ')"></button>';
                             return view + " " + edit + " " + del;
                         }
                     },
@@ -360,7 +363,7 @@
                     {
                         "aTargets": [3],
                         "mRender": function (data, type, full) {
-                            var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.CompanyId + ')"></button>';
+                            var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="(' + full.CompanyId + ')"></button>';
                             var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="(' + full.CompanyId + ')"></button>';
                             return edit + " " + del;
                         }
@@ -413,6 +416,7 @@
         function getDataEdit(id) {
             $.ajax({
                 url: '@Url.RouteUrl(new {action = "ViewProfileITSupporter", controller = "ITSupporter" })',
+
                 data: {
                     itSupporter_id: id
                 },
@@ -420,9 +424,12 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#id").val(data.result.ObjReturn.CompanyId);
-                    $("#comNameEdit").val(data.result.ObjReturn.CompanyName);
-                    $("#comDescriptionEdit").val(data.result.ObjReturn.Description);
+                    $("#userNameE").val(data.result.ObjReturn.Username);
+                    $("#passE").val(data.result.ObjReturn.Password);
+                    $("#nameE").val(data.result.ObjReturn.ITSupporterName);
+                    $("#phoneE").val(data.result.ObjReturn.Telephone);
+                    $("#emailE").val(data.result.ObjReturn.Email);
+                    $("#addressE").val(data.result.ObjReturn.Address);
                 }
             });
             $('#EditModal').modal('show');

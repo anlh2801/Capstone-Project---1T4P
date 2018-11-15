@@ -104,20 +104,21 @@
     <link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
     <script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function () {            
             loadGuideline();
             getSerItemName();
         });
 
         function loadGuideline() {
+            
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetAllGuideline", "Guideline")',
                 data: {
                     ServiceItemId : @dataServiceItem
                 },
-                success: function(result) {
-                    initDatatable(result.result.ObjReturn);
+                success: function (result) {
+                    initDatatable(result.result.ObjReturn);                   
                 },
                 error: function(error) {
                     showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
@@ -125,6 +126,9 @@
             });
         }
         function initDatatable(data) {
+            if (data == null) {
+                $('#detail-table').dataTable().fnClearTable();
+            }
             $("#detail-table").dataTable().fnDestroy();
             $("#detail-table").dataTable({
                 stateSave: true,
