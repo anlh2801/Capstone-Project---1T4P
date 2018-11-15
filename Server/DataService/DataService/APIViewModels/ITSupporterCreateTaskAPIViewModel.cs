@@ -11,6 +11,7 @@ namespace DataService.APIViewModels
         public int RequestId { get; set; }
         public int RequestTaskId { get; set; }
         public int TaskStatus { get; set; }
+        public string TaskDetail { get; set; }
         public int CreateByITSupporter { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }

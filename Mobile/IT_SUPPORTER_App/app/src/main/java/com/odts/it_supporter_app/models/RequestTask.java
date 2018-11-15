@@ -9,19 +9,21 @@ public class RequestTask {
     private Integer requestTaskId;
     @SerializedName("TaskStatus")
     private Integer taskStatus;
+    @SerializedName("TaskDetail")
+    private String taskDetail;
     @SerializedName("CreateByITSupporter")
     private Integer createByITSupporter;
     @SerializedName("StartTime")
-    private Integer startTime;
+    private String startTime;
     @SerializedName("EndTime")
-    private Integer endTime;
+    private String endTime;
     @SerializedName("Priority")
     private Integer priority;
     @SerializedName("PreTaskCondition")
     private Integer preTaskCondition;
 
-    public RequestTask(Integer requestId) {
-        this.requestId = requestId;
+    public RequestTask() {
+
     }
 
     public Integer getRequestId() {
@@ -48,6 +50,14 @@ public class RequestTask {
         this.taskStatus = taskStatus;
     }
 
+    public String getTaskDetail() {
+        return taskDetail;
+    }
+
+    public void setTaskDetail(String taskDetail) {
+        this.taskDetail = taskDetail;
+    }
+
     public Integer getCreateByITSupporter() {
         return createByITSupporter;
     }
@@ -56,19 +66,19 @@ public class RequestTask {
         this.createByITSupporter = createByITSupporter;
     }
 
-    public Integer getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Integer startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Integer getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Integer endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 

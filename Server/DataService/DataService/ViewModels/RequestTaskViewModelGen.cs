@@ -17,6 +17,7 @@ namespace DataService.ViewModels
     	
     			public virtual int RequestTaskId { get; set; }
     			public virtual int RequestId { get; set; }
+    			public virtual string TaskDetails { get; set; }
     			public virtual Nullable<int> TaskStatus { get; set; }
     			public virtual Nullable<int> CreateByITSupporter { get; set; }
     			public virtual Nullable<System.DateTime> StartTime { get; set; }

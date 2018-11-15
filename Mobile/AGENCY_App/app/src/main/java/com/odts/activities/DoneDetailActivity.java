@@ -72,7 +72,7 @@ public class DoneDetailActivity extends AppCompatActivity implements RatingDialo
             sb.append(listDeviceName.get(i));
         }
 
-        listDeviceNamee.setText("Thiết bị cần xử lý" + sb.toString());
+        listDeviceNamee.setText("Thiết bị cần xử lý: " + sb.toString());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
         Firebase.setAndroidContext(this);
