@@ -187,6 +187,7 @@
           </Key>
           <Property Name="RequestTaskId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RequestId" Type="int" Nullable="false" />
+          <Property Name="TaskDetails" Type="nvarchar(max)" />
           <Property Name="TaskStatus" Type="int" />
           <Property Name="CreateByITSupporter" Type="int" />
           <Property Name="StartTime" Type="datetime" />
@@ -978,6 +979,7 @@
           </Key>
           <Property Name="RequestTaskId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RequestId" Type="Int32" Nullable="false" />
+          <Property Name="TaskDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TaskStatus" Type="Int32" />
           <Property Name="CreateByITSupporter" Type="Int32" />
           <Property Name="StartTime" Type="DateTime" Precision="3" />
@@ -1545,6 +1547,7 @@
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
                 <ScalarProperty Name="CreateByITSupporter" ColumnName="CreateByITSupporter" />
                 <ScalarProperty Name="TaskStatus" ColumnName="TaskStatus" />
+                <ScalarProperty Name="TaskDetails" ColumnName="TaskDetails" />
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
                 <ScalarProperty Name="RequestTaskId" ColumnName="RequestTaskId" />
               </MappingFragment>

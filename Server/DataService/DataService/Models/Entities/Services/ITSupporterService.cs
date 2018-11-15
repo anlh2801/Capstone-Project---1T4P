@@ -317,12 +317,13 @@ namespace DataService.Models.Entities.Services
                 var createTask = new RequestTask();
 
                 createTask.RequestId = model.RequestId;
-                createTask.TaskStatus = model.TaskStatus;
+                createTask.TaskStatus = (int)RequestTaskEnum.In_Process;
                 createTask.CreateByITSupporter = model.CreateByITSupporter;
-                createTask.StartTime = DateTime.Parse(model.StartTime);
-                createTask.EndTime = DateTime.Parse(model.EndTime);
-                createTask.Priority = model.Priority;
-                createTask.PreTaskCondition = model.PreTaskCondition;
+                createTask.StartTime = DateTime.UtcNow.AddHours(7);
+                createTask.TaskDetails = model.TaskDetail;
+                //createTask.EndTime = DateTime.Parse(item.EndTime);
+                //createTask.Priority = item.Priority;
+                //createTask.PreTaskCondition = model.PreTaskCondition;
                 createTask.CreateDate = DateTime.UtcNow.AddHours(7);
 
                 requestTaskRepo.Add(createTask);
@@ -350,9 +351,10 @@ namespace DataService.Models.Entities.Services
                     var createTask = new RequestTask();
 
                     createTask.RequestId = item.RequestId;
-                    createTask.TaskStatus = item.TaskStatus;
+                    createTask.TaskStatus = (int) RequestTaskEnum.In_Process;
                     createTask.CreateByITSupporter = item.CreateByITSupporter;
                     createTask.StartTime = DateTime.UtcNow.AddHours(7);
+                    createTask.TaskDetails = item.TaskDetail;
                     //createTask.EndTime = DateTime.Parse(item.EndTime);
                     //createTask.Priority = item.Priority;
                     //createTask.PreTaskCondition = model.PreTaskCondition;

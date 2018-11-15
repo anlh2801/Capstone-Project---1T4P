@@ -16,6 +16,7 @@ namespace DataService.Models.Entities
     {
         public int RequestTaskId { get; set; }
         public int RequestId { get; set; }
+        public string TaskDetails { get; set; }
         public Nullable<int> TaskStatus { get; set; }
         public Nullable<int> CreateByITSupporter { get; set; }
         public Nullable<System.DateTime> StartTime { get; set; }

@@ -48,7 +48,6 @@ namespace DataService.Models
         Cancel = 4
     }
 
-
     public enum RequestTaskEnum
     {       
         [Display(Name = "Đang xử lý")]
