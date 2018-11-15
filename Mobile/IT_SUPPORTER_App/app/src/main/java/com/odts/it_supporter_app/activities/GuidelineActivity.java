@@ -26,9 +26,11 @@ public class GuidelineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guideline);
-        getAllServiceITSupportForAgency(1);
+
         TextView txtServiceItemNameGuidline = findViewById(R.id.txtServiceItemNameGuidline);
-        txtServiceItemNameGuidline.setText("hahaha");
+        serviceItemId = getIntent().getIntExtra("serviceItemId", 0);
+        txtServiceItemNameGuidline.setText(getIntent().getStringExtra("serviceItemName"));
+        getAllServiceITSupportForAgency(serviceItemId);
     }
 
     private void getAllServiceITSupportForAgency(int serviceItemId) {

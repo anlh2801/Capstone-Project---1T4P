@@ -8,9 +8,6 @@ namespace DataService.APIViewModels
 {
     public class ITSupporterCreateTaskAPIViewModel : DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.RequestTask>
     {
-        public ITSupporterCreateTaskAPIViewModel() : base() { }
-        public ITSupporterCreateTaskAPIViewModel(DataService.Models.Entities.RequestTask entity) : base(entity) { }
-
         public int RequestId { get; set; }
         public int TaskStatus { get; set; }
         public int CreateByITSupporter { get; set; }

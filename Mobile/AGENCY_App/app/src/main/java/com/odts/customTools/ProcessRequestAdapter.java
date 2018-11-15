@@ -21,13 +21,14 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
     private List<Request> listRequest;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView rqName, nod, hero;
+        public TextView rqName, nod, hero, createDate;
 
         public MyViewHolder(View view) {
             super(view);
             rqName = (TextView) view.findViewById(R.id.txtRequestNamePro);
             nod = (TextView) view.findViewById(R.id.txtNoDPro);
             hero = (TextView) view.findViewById(R.id.txtHero);
+            createDate = (TextView) view.findViewById(R.id.txtDate);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -38,6 +39,8 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
                         intent.putExtra("requestName", listRequest.get(position).getRequestName());
                         intent.putExtra("requestID", listRequest.get(position).getRequestId());
                         intent.putExtra("itName", listRequest.get(position).getiTSupporterName());
+                        intent.putExtra("createDate", listRequest.get(position).getCreateDate());
+                        intent.putExtra("phoneNumber", listRequest.get(position).getiTSupporterPhone());
                         ArrayList<String> listDeviceName = new ArrayList<>();
                         Device device = new Device();
                         for (int i = 0; i < listRequest.get(position).getTicket().size(); i++) {
@@ -70,6 +73,7 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
         holder.rqName.setText(request.getRequestName());
         holder.nod.setText("Thiết bị cần xử lý: " + request.getNod());
         holder.hero.setText(" xử lý bởi: " + request.getiTSupporterName());
+        holder.createDate.setText("Tạo vào: " + request.getCreateDate());
     }
 
     @Override
