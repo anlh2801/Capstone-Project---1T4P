@@ -26,6 +26,8 @@ namespace DataService.Domain
 
         ResponseObject<bool> UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
 
+        ResponseObject<List<ITSupporterCreateTaskAPIViewModel>> GetAllTaskByRequestId(int requestId);
+
         ResponseObject<bool> CreateTask(ITSupporterCreateTaskAPIViewModel model);
 
         ResponseObject<bool> CreateTaskFromGuidline(List<ITSupporterCreateTaskAPIViewModel> model);
@@ -134,6 +136,15 @@ namespace DataService.Domain
             return result;
         }
 
+        public ResponseObject<List<ITSupporterCreateTaskAPIViewModel>> GetAllTaskByRequestId(int requestId)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.GetAllTaskByRequestId(requestId);
+
+            return result;
+        }
+        
         public ResponseObject<bool> SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model)
         {
             var iTSupporterService = this.Service<IITSupporterService>();
