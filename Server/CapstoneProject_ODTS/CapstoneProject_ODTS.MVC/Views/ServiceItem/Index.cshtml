@@ -1,6 +1,8 @@
 ﻿
 @{
-    var dataServiceITSupporter = ViewData["ID"];
+                /**/
+
+                var dataServiceITSupporter = ViewData["ID"];
 }
 
 
@@ -83,8 +85,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <input type="hidden" id="tienDepTroai" />
                         <p>
-                        <p input type="hidden" id="ServiceItemId" value=""></p>
+                        <p input type="hidden" id="ServiceItemId"></p>
                         <div class="col-md-12" style="margin-top:10px">
                             <b>Tên Loại Dịch Vụ:</b><br>
                             <input type="text" id="siNameE" class="form-control"></input>
@@ -114,7 +117,7 @@
     }
 </style>
 <div class="row col-md-12">
-    <h3 class="city" id="agenNameShow"></h3>
+    <h3 class="city" id="serNameShow"></h3>
 </div>
 
 <div class="row col-md-12">
@@ -125,6 +128,8 @@
                 <th><label>Tên Loại Dịch Vụ</label></th>
                 <th><label>Mô Tả</label></th>
                 <th><label>Ngày Tạo</label></th>
+                <th><label>Hướng Dẫn Sửa Chửa</label></th>
+                <th><label>Chức Năng</label></th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -149,6 +154,7 @@
     <script>
         $(document).ready(function () {
             loadServiceItem();
+            getSerName();
         });
 
         function loadServiceItem() {
@@ -192,7 +198,7 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1, 2, 3, 4],
+                        "aTargets": [0, 1, 2, 3, 4,5],
                         "bSortable": false,
                         "sClass": "text-center"
                     },
@@ -203,7 +209,13 @@
                     { "data": "Description" },
                     { "data": "CreateDate" },
                     {
-                        "aTargets": [4],
+                        "data": "RequestName",
+                        "mRender": function (data, type, full) {
+                            return '<a href="@Url.Action("ServiceGuideline", "Guideline")?id=' + full.ServiceItemId + '">Xem Hướng Dẫn</a>';
+                        }
+                    },
+                    {
+                        "aTargets": [5],
                         "mRender": function (data, type, full) {
                             var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.ServiceItemId + ')"></button>';
                             var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.ServiceItemId + ')"></button>';
@@ -229,6 +241,24 @@
                     .end();
             })
         }
+        function getSerName() {
+
+            $.ajax({
+                url: '@Url.RouteUrl(new { action = "ViewDetail", controller = "ServiceITSupport" })',
+
+                data: {
+                    serviceitsupport_id: @dataServiceITSupporter
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var html = '';
+                    html = 'Tất Cả Dịch Vụ Của Loại Dịch Vụ ' + data.result.ObjReturn.ServiceName;
+                    $('#serNameShow').append(html);
+                }
+                });
+        }
 
         function getData(idd) {
 
@@ -242,10 +272,13 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#siName").text(data.result.ObjReturn.ServiceItemName);
-                    $("#siDescription").text(data.result.ObjReturn.Description);
-                    $("#siCreateDate").text(data.result.ObjReturn.CreateDate);
-                    $("#siLastEdit").text(data.result.ObjReturn.UpdateDate);
+                    if (!data.result.IsError) {
+                        $("#siName").text(data.result.ObjReturn.ServiceItemName);
+                        $("#siDescription").text(data.result.ObjReturn.Description);
+                        $("#siCreateDate").text(data.result.ObjReturn.CreateDate);
+                        $("#siLastEdit").text(data.result.ObjReturn.UpdateDate);
+                    }
+
                 }
             });
         $('#ViewModal').modal('show');
@@ -277,7 +310,7 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    document.getElementById("ServiceItemId").setAttribute('value', id);
+                    $("#tienDepTroai").val(data.result.ObjReturn.ServiceItemId);
                     $("#siNameE").val(data.result.ObjReturn.ServiceItemName);
                     $("#siDescriptionE").val(data.result.ObjReturn.Description);
                 }
@@ -288,10 +321,9 @@
 
         function createServiceItem() {
             var empObj = {
-                ServiceITSupportID: @dataServiceITSupporter,
+                ServiceId: @dataServiceITSupporter,
                 ServiceItemName: $('#siNameC').val(),
                 Description: $('#siDescriptionC').val(),
-                CreateDate: $('#siCreateDateC').val()
             }
              $.ajax({
                 type: 'POST',
@@ -315,7 +347,7 @@
         }
         function UpdateServiceItem() {
             var empObj = {
-                ServiceItemId: $('#ServiceItemId').val(),
+                ServiceItemId: $('#tienDepTroai').val(),
                 ServiceItemName: $('#siNameE').val(),
                 Description: $('#siDescriptionE').val(),
             }

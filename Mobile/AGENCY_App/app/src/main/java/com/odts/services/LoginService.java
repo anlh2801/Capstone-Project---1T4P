@@ -20,13 +20,14 @@ import retrofit2.Response;
 public class LoginService {
     SharedPreferences share, sp;
     ILoginApiCaller iLoginApiCaller;
+
     public void checkLogin(final Context context, String username, String password, Integer roleId) {
         iLoginApiCaller = RetrofitInstance.getLoginService();
         Call<ResponseObject<Agency>> call = iLoginApiCaller.checkLogin(username, password, roleId);
         call.enqueue(new Callback<ResponseObject<Agency>>() {
             @Override
             public void onResponse(Call<ResponseObject<Agency>> call, Response<ResponseObject<Agency>> response) {
-                if(!response.body().isError()){
+                if (!response.body().isError()) {
                     //Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
                     share = context.getSharedPreferences("ODTS", Context.MODE_PRIVATE);
                     SharedPreferences.Editor edit = share.edit();
@@ -37,11 +38,11 @@ public class LoginService {
                     Intent intent = new Intent(context, MainActivity.class);
                     context.startActivity(intent);
                     sp = context.getSharedPreferences("login", Context.MODE_PRIVATE);
-                    sp.edit().putBoolean("logged",true).commit();
-                }
-                else
+                    sp.edit().putBoolean("logged", true).commit();
+                } else
                     Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
             }
+
             @Override
             public void onFailure(Call<ResponseObject<Agency>> call, Throwable t) {
                 Log.e("ERROR: ", t.getMessage());

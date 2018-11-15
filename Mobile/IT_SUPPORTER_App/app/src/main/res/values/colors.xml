@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#81C784</color>
+    <color name="colorPrimaryDark">#66BB6A</color>
+    <color name="colorAccent">#1B5E20</color>
+    <color name="colorBackground">#eeeeee</color>
+    <color name="ripple">#C0CA33</color>
+    <color name="accent">#AFB42B</color>
+    <color name="accent_pressed">#9E9D24</color>
+    <color name="starColor">#45b9ad</color>
+    <color name="noteDescriptionTextColor">#F0F0F0</color>
+    <color name="titleTextColor">#FFFFFF</color>
+    <color name="descriptionTextColor">#818181</color>
+    <color name="commentTextColor">#FFFFFF</color>
+    <color name="hintTextColor">#55000000</color>
 </resources>

@@ -53,22 +53,23 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
     private DeviceAdapter mAdapter;
 
 
-    private  ArrayList<Device> deviceList;
-    private  ArrayList<Device> deviceListToRequest = new ArrayList<>();
+    private ArrayList<Device> deviceList;
+    private ArrayList<Device> deviceListToRequest = new ArrayList<>();
 
-    private  RequestService _requestService;
+    private RequestService _requestService;
     private DeviceService _deviceService;
 
-    public  RequestActivity(){
+    public RequestActivity() {
         _requestService = new RequestService();
         _deviceService = new DeviceService();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request);
 
-        initData ();
+        initData();
         initDeviceListToRequest();
         getAllDeviceByAgencyIdAndServiceItem(agencyId, serviceId);
 
@@ -105,7 +106,8 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("custom-message"));
     }
-    private void initData () {
+
+    private void initData() {
         SharedPreferences share = getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         agencyId = share.getInt("agencyId", 0);
@@ -131,10 +133,9 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             Device device = (Device) intent.getSerializableExtra("device");
-            if (deviceListToRequest.contains(device)){
-                Toast.makeText(RequestActivity.this,"Bạn đã thêm thiết bị này rồi" ,Toast.LENGTH_SHORT).show();
-            }
-            else {
+            if (deviceListToRequest.contains(device)) {
+                Toast.makeText(RequestActivity.this, "Bạn đã thêm thiết bị này rồi", Toast.LENGTH_SHORT).show();
+            } else {
                 deviceListToRequest.add(device);
                 deviceRemoveAdapter.notifyDataSetChanged();
             }
@@ -145,6 +146,7 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
 
         }
     };
+
     // ------------ Dùng RecyclerView - Bắt đầu -----------
     private void showBottomSheetDialog() {
         if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
@@ -186,7 +188,7 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
     }
     // ------------ Dùng RecyclerView - Kết thúc -----------
 
-    private void getAllDeviceByAgencyIdAndServiceItem (int agencyId, int serviceId){
+    private void getAllDeviceByAgencyIdAndServiceItem(int agencyId, int serviceId) {
         LinearLayout layout = (LinearLayout) findViewById(R.id.layout_ServicesHome);
         _deviceService.getAllDeviceByAgencyIdAndServiceItem(RequestActivity.this, agencyId, serviceId, new CallBackData<ArrayList<Device>>() {
             @Override

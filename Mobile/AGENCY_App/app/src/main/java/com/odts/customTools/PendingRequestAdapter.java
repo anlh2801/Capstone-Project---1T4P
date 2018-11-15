@@ -25,7 +25,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
     private List<Request> listRequest;
     RequestService requestService;
 
-    public PendingRequestAdapter(){
+    public PendingRequestAdapter() {
         requestService = new RequestService();
     }
 
@@ -33,6 +33,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
         public TextView rqName, crDate, nod;
         public ImageButton btnCancelRequest;
         public int requestId = 0;
+
         public MyViewHolder(View view) {
             super(view);
             requestService = new RequestService();
@@ -50,6 +51,9 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
                                     requestService.cancelTicket(context, requestId, Enums.RequestStatusEnum.Cancel.getIntValue());
+                                    listRequest.remove(getAdapterPosition());
+                                    notifyItemRemoved(getAdapterPosition());
+//                                    notifyItemRangeRemoved(getAdapterPosition(), listRequest.size());
                                 }
                             })
                             .setNegativeButton("Không", new DialogInterface.OnClickListener() {
@@ -75,10 +79,12 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
 //            });
         }
     }
+
     public PendingRequestAdapter(Context context, List<Request> listRequest) {
         this.context = context;
         this.listRequest = listRequest;
     }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -86,12 +92,13 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
 
         return new MyViewHolder(itemView);
     }
+
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         Request album = listRequest.get(position);
         holder.rqName.setText(album.getRequestName());
         holder.crDate.setText("Tạo vào: " + album.getCreateDate());
-        holder.nod.setText("Thiết bị cần xử lý: " +album.getNod());
+        holder.nod.setText("Thiết bị cần xử lý: " + album.getNod());
         holder.requestId = album.getRequestId();
 //        holder.rqNameDT.setText(album.getCreateDate());
 
@@ -102,28 +109,4 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
         return listRequest.size();
     }
 
-//    Activity context;
-//    int resource;
-//    List<ListRequest> objects;
-//
-//    public PendingRequestAdapter(@NonNull Activity context, int resource, @NonNull List<ListRequest> objects) {
-//        super(context, resource, objects);
-//        this.context= context;
-//        this.resource=resource;
-//        this.objects=objects;
-//    }
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent) {
-//        LayoutInflater inflater= this.context.getLayoutInflater();
-//        View row = inflater.inflate(this.resource,null);
-//
-//        TextView txtRequestName = (TextView) row.findViewById(R.id.txtRequestName);
-//        TextView txtCreateDate = (TextView) row.findViewById(R.id.txtCreateDate);
-//        /** Set data to row*/
-//        final ListRequest serviceItem = this.objects.get(position);
-//        txtRequestName.setText(serviceItem.getRequestName());
-//        txtCreateDate.setText(serviceItem.getCreateDate());
-//        /**Set Event Onclick*/
-//        return row;
-//    }
 }

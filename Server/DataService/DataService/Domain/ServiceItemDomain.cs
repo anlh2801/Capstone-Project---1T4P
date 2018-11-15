@@ -18,6 +18,8 @@ namespace DataService.Domain
         ResponseObject<bool> UpdateServiceItem(ServiceItemUpdateAPIViewModel model);
 
         ResponseObject<bool> RemoveServiceItem(int serviceItem_Id);
+
+        ResponseObject<bool> CreateServiceItem(ServiceItemAPIViewModel model);
     }
 
     public class ServiceItemDomain : BaseDomain, IServiceItemDomain
@@ -63,6 +65,13 @@ namespace DataService.Domain
 
             var serviceItemService = this.Service<IServiceItemService>();
             var rs = serviceItemService.RemoveServiceItem(serviceItem_Id);
+            return rs;
+        }
+
+        public ResponseObject<bool> CreateServiceItem(ServiceItemAPIViewModel model)
+        {
+            var serviceItemService = this.Service<IServiceItemService>();
+            var rs = serviceItemService.CreateServiceItem(model);
             return rs;
         }
     }

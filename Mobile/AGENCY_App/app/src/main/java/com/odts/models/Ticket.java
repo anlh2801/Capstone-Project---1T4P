@@ -17,10 +17,6 @@ public class Ticket {
     private Integer deviceId;
     @SerializedName("Desciption")
     private String desciption;
-//    @SerializedName("ITSupporterName")
-//    private String iTSupporterName;
-//    @SerializedName("TicketEstimationTime")
-//    private String ticketEstimationTime;
     @SerializedName("StartTime")
     private String startTime;
     @SerializedName("EndTime")

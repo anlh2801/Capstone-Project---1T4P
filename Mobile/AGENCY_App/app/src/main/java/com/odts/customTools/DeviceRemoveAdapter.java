@@ -28,15 +28,15 @@ public class DeviceRemoveAdapter extends ArrayAdapter<Device> {
 
     public DeviceRemoveAdapter(@NonNull Activity context, int resource, @NonNull List<Device> objects) {
         super(context, resource, objects);
-        this.context= context;
-        this.resource=resource;
-        this.objects=objects;
+        this.context = context;
+        this.resource = resource;
+        this.objects = objects;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater= this.context.getLayoutInflater();
-        View row = inflater.inflate(this.resource,null);
+        LayoutInflater inflater = this.context.getLayoutInflater();
+        View row = inflater.inflate(this.resource, null);
 
         TextView txtDeviceCodeDelete = (TextView) row.findViewById(R.id.txtDeviceCodeDelete);
         TextView txtDeviceNameDelete = (TextView) row.findViewById(R.id.txtDeviceNameDelete);

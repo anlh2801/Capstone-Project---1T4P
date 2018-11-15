@@ -137,6 +137,7 @@
     <Compile Include="APIViewModels\DeviceAPIViewModel.cs" />
     <Compile Include="APIViewModels\FeedbackAPIViewModel.cs" />
     <Compile Include="APIViewModels\GuidelineAPIViewModel.cs" />
+    <Compile Include="APIViewModels\GuidelineUpdateAPIViewModel.cs" />
     <Compile Include="APIViewModels\ITSupporterAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyCreateRequestAPIViewModel.cs" />
     <Compile Include="APIViewModels\ITSupporterStatisticAPIViewModel.cs" />
@@ -251,6 +252,7 @@
       <DependentUpon>DataAPI.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\DeviceDomain.cs" />
+    <Compile Include="Domain\GuidelineDomain.cs" />
     <Compile Include="Domain\ITSuppoterDomain.cs" />
     <Compile Include="Domain\ProfileDomain.cs" />
     <Compile Include="Domain\RoleDomain.cs" />
@@ -445,6 +447,7 @@
     <Compile Include="Models\Entities\Services\AgencyServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Services\GuidelineService.cs" />
     <Compile Include="Models\Entities\Services\ITSupporterService.cs" />
     <Compile Include="Models\Entities\Services\CompanyServiceGen.cs">
       <DependentUpon>Services.tt</DependentUpon>

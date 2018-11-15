@@ -2,20 +2,16 @@ package com.odts.customTools;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.odts.activities.R;
 import com.odts.activities.StatusTimelineActivity;
-import com.odts.activities.TimeLineActivity;
 import com.odts.models.Device;
 import com.odts.models.Request;
-import com.odts.services.RequestService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +21,13 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
     private List<Request> listRequest;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView rqName, estimes, nod, hero;
+        public TextView rqName, nod, hero;
 
         public MyViewHolder(View view) {
             super(view);
             rqName = (TextView) view.findViewById(R.id.txtRequestNamePro);
             nod = (TextView) view.findViewById(R.id.txtNoDPro);
             hero = (TextView) view.findViewById(R.id.txtHero);
-            //estimes = (TextView) view.findViewById(R.id.estimatesTime);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -75,7 +70,6 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
         holder.rqName.setText(request.getRequestName());
         holder.nod.setText("Thiết bị cần xử lý: " + request.getNod());
         holder.hero.setText(" xử lý bởi: " + request.getiTSupporterName());
-//        holder.estimes.setText("Dự kiến hoàn thành: " + request.getRequestEstimationTime());
     }
 
     @Override

@@ -160,6 +160,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AgencyController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\GuidelineController.cs" />
     <Compile Include="Controllers\ServiceItemController.cs" />
     <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
@@ -7417,7 +7418,13 @@
     <Content Include="Views\Statistic\Index.cshtml" />
     <Content Include="Views\ITSupporter\Index.cshtml" />
     <Content Include="Views\ServiceItem\Index.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Profile\Index.cshtml" />
+=======
+    <Content Include="Views\Guideline\ServiceGuideline.cshtml">
+      <BrowseToURL>~/Guideline/ServiceGuideline</BrowseToURL>
+    </Content>
+>>>>>>> dfd6be5ccef9ee94bf56acc2c72cafe749347263
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

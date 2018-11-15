@@ -35,7 +35,7 @@ public class ProfileFragment extends Fragment {
     private TextView txtAgencyName, txtAdrr, txtPhone, txtCompanyName, txtUsername;
     ImageButton imgLogout;
     Integer agencyId;
-    private  AgencyService _agencyService;
+    private AgencyService _agencyService;
 
     public ProfileFragment() {
         _agencyService = new AgencyService();

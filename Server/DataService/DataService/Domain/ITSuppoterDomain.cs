@@ -32,7 +32,7 @@ namespace DataService.Domain
 
         ResponseObject<bool> SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model);
 
-        ResponseObject<GuidelineAPIViewModel> GetGuidelineByServiceItemID(int service_item_Id);
+        ResponseObject<List<GuidelineAPIViewModel>> GetGuidelineByServiceItemID(int service_item_Id);
 
         ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId, int year, int month);
 
@@ -140,7 +140,7 @@ namespace DataService.Domain
             return result;
         }
 
-        public ResponseObject<GuidelineAPIViewModel> GetGuidelineByServiceItemID(int service_item_Id)
+        public ResponseObject<List<GuidelineAPIViewModel>> GetGuidelineByServiceItemID(int service_item_Id)
         {
             var iTSupporterService = this.Service<IITSupporterService>();
 
