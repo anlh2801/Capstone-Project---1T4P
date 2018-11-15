@@ -44,6 +44,7 @@ public class DoRequestFragment extends Fragment {
     RequestService requestService;
     ITSupporterService itSupporterService;
     TextView rqName;
+    String serviceItemName;
     Integer serviceItemId = 0;
     public DoRequestFragment() {
         _requestService = new RequestService();
@@ -62,7 +63,6 @@ public class DoRequestFragment extends Fragment {
         final View v = inflater.inflate(R.layout.fragment_do_request, container, false);
         requestService = new RequestService();
         itSupporterService = new ITSupporterService();
-
         rqName = (TextView) v.findViewById(R.id.txtRequestName);
          SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
@@ -71,7 +71,8 @@ public class DoRequestFragment extends Fragment {
         requestService.getRequestByRequestIdAndITSupporterId(getActivity(), requestId, itSupporterId, new CallBackData<Request>() {
             @Override
             public void onSuccess(final Request request) {
-                //serviceItemId = request.getSe
+                serviceItemId = request.getServiceItemId();
+                serviceItemName = request.getServiceItemName();
                 rqName.setText(request.getRequestName());
                 btnCall = v.findViewById(R.id.btnCall);
                 btnCall.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +121,8 @@ public class DoRequestFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), GuidelineActivity.class);
+                intent.putExtra("serviceItemName", serviceItemName);
+                intent.putExtra("serviceItemId", serviceItemId);
                 startActivity(intent);
             }
         });
