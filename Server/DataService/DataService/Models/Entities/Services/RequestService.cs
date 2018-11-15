@@ -629,7 +629,7 @@ namespace DataService.Models.Entities.Services
                 }
 
                 List<AgencyCreateTicketAPIViewModel> ticketList = new List<AgencyCreateTicketAPIViewModel>();
-                var tickets = ticketRepo.GetActive(p => p.RequestId == requestId).ToList();
+                var tickets = ticketRepo.GetActive(p => p.RequestId == request.RequestId).ToList();
                 foreach (var ticketItem in tickets)
                 {
                     var ticket = new AgencyCreateTicketAPIViewModel();
