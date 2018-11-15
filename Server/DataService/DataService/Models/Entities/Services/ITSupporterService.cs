@@ -30,6 +30,8 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> CreateTask(ITSupporterCreateTaskAPIViewModel model);
 
+        ResponseObject<bool> CreateTaskFromGuidline(List<ITSupporterCreateTaskAPIViewModel> model);
+
         ResponseObject<bool> SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model);
 
         ResponseObject<bool> SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model);
@@ -322,6 +324,41 @@ namespace DataService.Models.Entities.Services
                 createTask.CreateDate = DateTime.UtcNow.AddHours(7);
 
                 requestTaskRepo.Add(createTask);
+
+                requestTaskRepo.Save();
+                return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Tạo mới việc thành công" };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Tạo mới việc thất bại", ErrorMessage = e.ToString() };
+            }
+
+        }
+
+        public ResponseObject<bool> CreateTaskFromGuidline(List<ITSupporterCreateTaskAPIViewModel> model)
+        {
+            try
+            {
+
+                var requestTaskRepo = DependencyUtils.Resolve<IRequestTaskRepository>();
+
+                foreach (var item in model)
+                {
+                    var createTask = new RequestTask();
+
+                    createTask.RequestId = model.RequestId;
+                    createTask.TaskStatus = model.TaskStatus;
+                    createTask.CreateByITSupporter = model.CreateByITSupporter;
+                    createTask.StartTime = DateTime.Parse(model.StartTime);
+                    createTask.EndTime = DateTime.Parse(model.EndTime);
+                    createTask.Priority = model.Priority;
+                    createTask.PreTaskCondition = model.PreTaskCondition;
+                    createTask.CreateDate = DateTime.UtcNow.AddHours(7);
+
+                    requestTaskRepo.Add(createTask);
+                }
+                
 
                 requestTaskRepo.Save();
                 return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Tạo mới việc thành công" };

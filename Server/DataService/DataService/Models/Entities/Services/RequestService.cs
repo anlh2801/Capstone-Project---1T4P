@@ -33,7 +33,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept);
 
-        ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestByRequestIdAndITSupporterId(int requestId, int itSupporterId);
+        ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestByRequestIdAndITSupporterId(int itSupporterId);
 
         ResponseObject<List<StatusAPIViewModel>> GetRequestStatistic();
     }
@@ -613,15 +613,13 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestByRequestIdAndITSupporterId(int requestId, int itSupporterId)
+        public ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestByRequestIdAndITSupporterId(int itSupporterId)
         {
             try
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
-                var request = requestRepo.GetActive(x => x.RequestId == requestId
-                && x.CurrentITSupporter_Id == itSupporterId
-                && x.RequestStatus != (int)RequestStatusEnum.Done
-                && x.RequestStatus != (int)RequestStatusEnum.Cancel).SingleOrDefault();
+                var request = requestRepo.GetActive(x => x.CurrentITSupporter_Id == itSupporterId
+                && x.RequestStatus == (int)RequestStatusEnum.Processing).SingleOrDefault();
 
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
 

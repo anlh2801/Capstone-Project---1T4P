@@ -130,6 +130,16 @@ namespace CapstoneProject_ODTS.ControllersApi
         }
 
         [HttpPost]
+        [Route("ITsuportter/create_task_from_guidline")]
+        public HttpResponseMessage CreateTaskFromGuidline(List<ITSupporterCreateTaskAPIViewModel> model)
+        {
+            var result = _ITSupporterDomain.CreateTaskFromGuidline(model);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+
+        }
+
+        [HttpPost]
         [Route("ITsuportter/monitor_time_task")]
         public HttpResponseMessage SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model)
         {

@@ -28,6 +28,8 @@ namespace DataService.Domain
 
         ResponseObject<bool> CreateTask(ITSupporterCreateTaskAPIViewModel model);
 
+        ResponseObject<bool> CreateTaskFromGuidline(List<ITSupporterCreateTaskAPIViewModel> model);
+
         ResponseObject<bool> SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model);
 
         ResponseObject<bool> SetPriorityTask(ITSupporterSetPriorityTaskAPIViewModel model);
@@ -117,6 +119,15 @@ namespace DataService.Domain
             var iTSupporterService = this.Service<IITSupporterService>();
 
             var result = iTSupporterService.CreateTask(model);
+
+            return result;
+        }
+
+        public ResponseObject<bool> CreateTaskFromGuidline(List<ITSupporterCreateTaskAPIViewModel> model)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.CreateTaskFromGuidline(model);
 
             return result;
         }
