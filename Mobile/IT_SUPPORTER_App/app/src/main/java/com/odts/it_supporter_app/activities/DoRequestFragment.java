@@ -22,20 +22,13 @@ import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.services.ITSupporterService;
 import com.odts.it_supporter_app.services.RequestService;
 import com.odts.it_supporter_app.utils.CallBackData;
-import com.odts.it_supporter_app.utils.Enums;
-
-import java.text.DateFormat;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Date;
 
 
 public class DoRequestFragment extends Fragment {
     private RequestService _requestService;
 
-    Button btnDone, btnCall, btnStart, btnTimeLine, btnChat;
-    FloatingActionButton flbGuidline;
+    Button btnDone, btnStart, btnTimeLine;
+    com.getbase.floatingactionbutton.FloatingActionButton btnCall , btnChat , flbGuidline;
     Integer itSupporterId = 0;
     Integer requestId = 0;
     RequestService requestService;
@@ -59,10 +52,8 @@ public class DoRequestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_do_request, container, false);
-        btnCall = v.findViewById(R.id.btnCall);
-        btnChat = v.findViewById(R.id.btnChat);
-//        btnStart = v.findViewById(R.id.btnStart);
-//        btnDone = v.findViewById(R.id.btnDone);
+        btnCall = v.findViewById(R.id.action_a);
+        btnChat = v.findViewById(R.id.action_b);
         btnTimeLine = v.findViewById(R.id.btnTime);
         requestService = new RequestService();
         itSupporterService = new ITSupporterService();
@@ -126,7 +117,7 @@ public class DoRequestFragment extends Fragment {
 //                itSupporterService.updateStartTime(getContext(), requestId, DateFormat.getDateTimeInstance().format(new Date()));
 //            }
 //        });
-        flbGuidline = (FloatingActionButton) v.findViewById(R.id.flbGuidline);
+        flbGuidline =  v.findViewById(R.id.action_c);
         flbGuidline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
