@@ -25,31 +25,31 @@
 
             <TextView
                 android:id="@+id/txtRequestNamePro"
-                android:layout_width="196dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtNoDPro"
-                android:layout_width="265dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtRequestNamePro"
                 android:padding="3dp" />
 
             <TextView
                 android:id="@+id/txtHero"
-                android:layout_width="267dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtNoDPro"
                 android:padding="3dp" />
 
             <TextView
                 android:id="@+id/txtDate"
-                android:layout_width="267dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
                 android:layout_below="@+id/txtHero"
+                android:layout_alignParentStart="true"
                 android:padding="3dp" />
 
             <!--<TextView-->

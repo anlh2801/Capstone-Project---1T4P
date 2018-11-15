@@ -72,7 +72,7 @@ public class ProcessRequestAdapter extends RecyclerView.Adapter<ProcessRequestAd
         Request request = listRequest.get(position);
         holder.rqName.setText(request.getRequestName());
         holder.nod.setText("Thiết bị cần xử lý: " + request.getNod());
-        holder.hero.setText(" xử lý bởi: " + request.getiTSupporterName());
+        holder.hero.setText(" Xử lý bởi: " + request.getiTSupporterName());
         holder.createDate.setText("Tạo vào: " + request.getCreateDate());
     }
 

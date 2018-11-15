@@ -19,7 +19,7 @@
             />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:orientation="vertical"
@@ -27,14 +27,14 @@
 
             <TextView
                 android:id="@+id/txtRequestNameDone"
-                android:layout_width="269dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/udDateDone"
-                android:layout_width="269dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="3dp" />
 

@@ -26,14 +26,14 @@
 
             <TextView
                 android:id="@+id/txtRequestNameCan"
-                android:layout_width="269dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/udDateCan"
-                android:layout_width="265dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="3dp" />
 
