@@ -21,6 +21,8 @@ namespace DataService.APIViewModels
         public string AgencyTelephone { get; set; }
         public string CreateDate { get; set; }
         public string UpdateDate { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
         public string RequestStatus { get; set; }
         public string RequestEstimationTime { get; set; }
         public int NumberOfTicketDone { get; set; }
