@@ -118,6 +118,7 @@ public class DoRequestFragment extends Fragment {
                 Intent intent = new Intent(getContext(), GuidelineActivity.class);
                 intent.putExtra("serviceItemName", serviceItemName);
                 intent.putExtra("serviceItemId", serviceItemId);
+                intent.putExtra("requestId", requestId);
                 startActivity(intent);
             }
         });

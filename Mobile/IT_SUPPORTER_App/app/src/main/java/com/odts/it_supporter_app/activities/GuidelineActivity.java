@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class GuidelineActivity extends AppCompatActivity {
 
     Integer serviceItemId;
+    Integer requestId;
     String ServiceItemName;
     GuidelineService _guidelineService;
 
@@ -28,6 +29,7 @@ public class GuidelineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_guideline);
 
         TextView txtServiceItemNameGuidline = findViewById(R.id.txtServiceItemNameGuidline);
+        serviceItemId = getIntent().getIntExtra("requestId", 0);
         serviceItemId = getIntent().getIntExtra("serviceItemId", 0);
         txtServiceItemNameGuidline.setText(getIntent().getStringExtra("serviceItemName"));
         getAllServiceITSupportForAgency(serviceItemId);
