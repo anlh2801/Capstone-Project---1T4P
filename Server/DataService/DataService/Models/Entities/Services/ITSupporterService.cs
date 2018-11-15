@@ -28,6 +28,8 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
 
+        ResponseObject<List<ITSupporterCreateTaskAPIViewModel>> GetAllTaskByRequestId(int requestId);
+
         ResponseObject<bool> CreateTask(ITSupporterCreateTaskAPIViewModel model);
 
         ResponseObject<bool> CreateTaskFromGuidline(List<ITSupporterCreateTaskAPIViewModel> model);
@@ -305,6 +307,39 @@ namespace DataService.Models.Entities.Services
             {
 
                 return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Cập nhật profile thất bại", ErrorMessage = e.ToString() };
+            }
+        }
+
+        public ResponseObject<List<ITSupporterCreateTaskAPIViewModel>> GetAllTaskByRequestId(int requestId)
+        {
+            try
+            {
+                var requestTaskRepo = DependencyUtils.Resolve<IRequestTaskRepository>();
+                var taskList = requestTaskRepo.GetActive(p => p.RequestId == requestId).ToList();
+
+                if(taskList.Count() <= 0)
+                {
+                    return new ResponseObject<List<ITSupporterCreateTaskAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy việc cần làm nào" };
+                }
+
+                var rsList = new List<ITSupporterCreateTaskAPIViewModel>();
+                foreach (var item in taskList)
+                {
+                    var taskViewModel = new ITSupporterCreateTaskAPIViewModel()
+                    {
+                        RequestId = item.RequestId,
+                        CreateByITSupporter = item.CreateByITSupporter ?? 0,
+                        TaskStatus = item.TaskStatus ?? (int)RequestTaskEnum.In_Process,
+                        TaskDetail = item.TaskDetails != null ? item.TaskDetails : string.Empty
+                    };
+                    rsList.Add(taskViewModel);
+                }
+
+                return new ResponseObject<List<ITSupporterCreateTaskAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Lấy việc cần làm thành công" };
+            }
+            catch (Exception e)
+            {
+                return new ResponseObject<List<ITSupporterCreateTaskAPIViewModel>> { IsError = true, ErrorMessage = e.ToString() ,WarningMessage = "Không tìm thấy việc cần làm nào" };
             }
         }
 

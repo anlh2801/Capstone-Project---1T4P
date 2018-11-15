@@ -35,7 +35,7 @@ public class GuidelineActivity extends AppCompatActivity {
 
 
         TextView txtServiceItemNameGuidline = findViewById(R.id.txtServiceItemNameGuidline);
-        serviceItemId = getIntent().getIntExtra("requestId", 0);
+        requestId = getIntent().getIntExtra("requestId", 0);
         serviceItemId = getIntent().getIntExtra("serviceItemId", 0);
         itSupporterId = getIntent().getIntExtra("itSupporterId", 0);
         txtServiceItemNameGuidline.setText(getIntent().getStringExtra("serviceItemName"));

@@ -22,6 +22,8 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         HttpResponseMessage UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
 
+        HttpResponseMessage GetAllTaskByRequestId(int requestId);
+
         HttpResponseMessage CreateTask(ITSupporterCreateTaskAPIViewModel model);
 
         HttpResponseMessage SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model);
@@ -136,6 +138,16 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage CreateTaskFromGuidline(List<ITSupporterCreateTaskAPIViewModel> model)
         {
             var result = _ITSupporterDomain.CreateTaskFromGuidline(model);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+
+        }
+
+        [HttpGet]
+        [Route("ITsuportter/all_task_by_requestId/{requestId}")]
+        public HttpResponseMessage GetAllTaskByRequestId(int requestId)
+        {
+            var result = _ITSupporterDomain.GetAllTaskByRequestId(requestId);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
 
