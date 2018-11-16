@@ -354,6 +354,7 @@ namespace DataService.Models.Entities.Services
                     var taskViewModel = new ITSupporterCreateTaskAPIViewModel()
                     {
                         RequestId = item.RequestId,
+                        RequestTaskId = item.RequestTaskId,
                         CreateByITSupporter = item.CreateByITSupporter ?? 0,
                         TaskStatus = item.TaskStatus ?? (int)RequestTaskEnum.In_Process,
                         TaskDetail = item.TaskDetails != null ? item.TaskDetails : string.Empty
