@@ -32,6 +32,7 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
+    Integer itSupporterId;
     SharedPreferences share;
     Switch swStatus;
     ITSupporterService itSupporterService;
@@ -42,26 +43,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initBottomMenu();
+
         share = getSharedPreferences("ODTS", Context.MODE_PRIVATE);
-        final int itSupporterId = share.getInt("itSupporterId", 0);
-        itSupporterService = new ITSupporterService();
-        itSupporterService.getIsBusy(MainActivity.this, itSupporterId, new CallBackData<Boolean>() {
-            @Override
-            public void onSuccess(Boolean aBoolean) {
-                if (!aBoolean) {
-                    loadFragment(new RecieveRequestFragment());
-                } else {
-                    loadFragment(new DoRequestFragment());
-                }
-            }
-
-            @Override
-            public void onFail(String message) {
-
-            }
-        });
+        itSupporterId = share.getInt("itSupporterId", 0);
         isOnline = true;
+        initHome();
+        initBottomMenu();
+
 //        btnChat = findViewById(R.id.btnChatMain);
 //        btnChat.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -147,30 +135,49 @@ public class MainActivity extends AppCompatActivity {
 //        });
     }
 
+    private void initHome() {
+        itSupporterService = new ITSupporterService();
+        itSupporterService.getIsBusy(MainActivity.this, itSupporterId, new CallBackData<Boolean>() {
+            @Override
+            public void onSuccess(Boolean aBoolean) {
+                if (!aBoolean) {
+                    loadFragment(new RecieveRequestFragment());
+                } else {
+                    loadFragment(new DoRequestFragment());
+                }
+            }
+
+            @Override
+            public void onFail(String message) {
+
+            }
+        });
+    }
+
     private void initBottomMenu() {
         bottomNavigationView = findViewById(R.id.navigationView);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         Fragment fragment = null;
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                switch (item.getItemId()) {
-//                    case R.id.navigation_home:
-//                        loadFragment(new NewHomeFragment());
-//                        break;
-//                    case R.id.navigation_request:
-//                        loadFragment(new RequestFragment());
-//                        break;
-//                    case R.id.navigation_devices:
-//                        loadFragment(new ManageDeviceFragment());
-//                        break;
-//                    case R.id.navigation_accountDetail:
-//                        loadFragment(new ProfileFragment());
-//                        break;
-//                }
-//                return true;
-//            }
-//        });
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_home:
+                        initHome();
+                        break;
+                    case R.id.navigation_scanQR:
+                        loadFragment(new ScanDeviceFragment());
+                        break;
+                    case R.id.navigation_devices:
+                        //loadFragment(new ManageDeviceFragment());
+                        break;
+                    case R.id.navigation_accountDetail:
+                        //loadFragment(new ProfileFragment());
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
 

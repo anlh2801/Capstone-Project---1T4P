@@ -18,7 +18,7 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         HttpResponseMessage EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
 
-        HttpResponseMessage UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model);
+        HttpResponseMessage UpdateTaskStatus(int requestTaskId, bool isDone);
 
         HttpResponseMessage UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
 
@@ -47,6 +47,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage GetIsBusyOFITSupporter(int itsupporter_id);
 
         HttpResponseMessage UpdateIsBusyOFITSupporter(int itsupporter_id);
+
+        HttpResponseMessage DeleteTaskStatus(int requestTaskId);
     }
 
     public class ITSupporterController : ApiController, IITSupporterController
@@ -107,9 +109,18 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         [HttpPut]
         [Route("ITsuportter/update_task_status")]
-        public HttpResponseMessage UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model)
+        public HttpResponseMessage UpdateTaskStatus(int requestTaskId, bool isDone)
         {
-            var result = _ITSupporterDomain.UpdateTaskStatus(model);           
+            var result = _ITSupporterDomain.UpdateTaskStatus(requestTaskId, isDone);           
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPut]
+        [Route("ITsuportter/delete_task")]
+        public HttpResponseMessage DeleteTaskStatus(int requestTaskId)
+        {
+            var result = _ITSupporterDomain.DeleteTaskStatus(requestTaskId);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
