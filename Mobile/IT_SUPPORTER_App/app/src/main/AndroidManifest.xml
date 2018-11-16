@@ -33,7 +33,8 @@
         <activity android:name=".activities.ChatActivity" />
         <activity android:name=".activities.StatusTimelineActivity" />
         <activity android:name=".activities.WaitingActivity" />
-        <activity android:name=".activities.GuidelineActivity"></activity>
+        <activity android:name=".activities.GuidelineActivity" />
+        <activity android:name=".activities.TaskActivity"></activity>
     </application>
 
 </manifest>

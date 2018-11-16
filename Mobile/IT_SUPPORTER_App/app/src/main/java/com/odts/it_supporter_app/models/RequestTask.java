@@ -97,4 +97,9 @@ public class RequestTask {
     public void setPreTaskCondition(Integer preTaskCondition) {
         this.preTaskCondition = preTaskCondition;
     }
+
+    @Override
+    public String toString() {
+        return taskDetail.toString();
+    }
 }
