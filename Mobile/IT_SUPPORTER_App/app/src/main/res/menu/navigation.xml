@@ -7,8 +7,8 @@
 
     <item
         android:id="@+id/navigation_request"
-        android:icon="@drawable/ic_sms_failed_black_24dp"
-        android:title="Sự cố"/>
+        android:icon="@drawable/ic_settings_overscan_black_24dp"
+        android:title="Tra cứu"/>
 
     <item
         android:id="@+id/navigation_devices"
