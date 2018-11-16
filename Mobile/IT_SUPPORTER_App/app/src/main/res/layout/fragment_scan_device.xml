@@ -6,12 +6,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activities.ScanDeviceFragment">
 
-    <fragment
-        android:id="@+id/barcode_scanner"
-        android:name="info.androidhive.barcode.BarcodeReader"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:auto_focus="true"
-        app:use_flash="false" />
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
+
+            <TextView
+                android:id="@+id/txtRequestName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="Tra cứu thông tin thiết bị"
+                android:textColor="#FAFAFA"
+                android:paddingTop="15dp"
+                android:paddingBottom="10dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+        <SurfaceView
+            android:id="@+id/camera_view"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_margin="10dp"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <TextView
+            android:id="@+id/testnhe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="TextView" />
+
+    </LinearLayout>
+
 
 </FrameLayout>

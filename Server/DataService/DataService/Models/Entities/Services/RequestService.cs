@@ -256,7 +256,7 @@ namespace DataService.Models.Entities.Services
                 List<RequestAllTicketWithStatusAgencyAPIViewModel> requestList = new List<RequestAllTicketWithStatusAgencyAPIViewModel>();
 
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
-                var requests = requestRepo.GetActive(x => x.RequestStatus == status && x.AgencyId == acency_id).ToList();
+                var requests = requestRepo.GetActive(x => x.RequestStatus == status && x.AgencyId == acency_id).OrderByDescending(p => p.CreateDate).ToList();
 
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
 
