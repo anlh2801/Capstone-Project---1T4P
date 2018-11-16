@@ -11,73 +11,105 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
+
+            <TextView
+                android:id="@+id/txtRequestName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="Request Name"
+                android:textColor="#616161"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="Cửa hàng"
+                android:textColor="#616161"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/endDateDone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="15dp"
+                android:text="địa chỉ"
+                android:textColor="#616161"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
         <com.getbase.floatingactionbutton.FloatingActionsMenu
             android:id="@+id/multiple_actions"
             android:layout_width="200dp"
             android:layout_height="538dp"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            fab:fab_addButtonColorNormal="@color/white"
-            fab:fab_addButtonColorPressed="@color/white_pressed"
-            fab:fab_addButtonPlusIconColor="@color/half_black"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            fab:fab_addButtonColorNormal="@color/colorAccent"
+            fab:fab_addButtonColorPressed="@color/colorAccentLight"
+            fab:fab_addButtonPlusIconColor="@color/white"
             fab:fab_labelStyle="@style/menu_labels_style"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="275dp">
+            fab:layout_constraintBottom_toBottomOf="parent"
+            fab:layout_constraintEnd_toEndOf="parent">
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/action_a"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/white"
-                fab:fab_colorPressed="@color/white_pressed"
-                fab:fab_title="Call" />
+                fab:fab_colorNormal="@color/accent"
+                fab:fab_colorPressed="@color/ripple"
+                fab:fab_icon="@drawable/ic_local_phone_black_24dp"
+                fab:fab_title="Điện thoại"
+                />
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/action_b"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/white"
-                fab:fab_colorPressed="@color/white_pressed"
+                fab:fab_colorNormal="@color/accent"
+                fab:fab_colorPressed="@color/ripple"
+                fab:fab_icon="@drawable/ic_chat_black_24dp"
                 fab:fab_title="Chat" />
+
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/action_c"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/white"
-                fab:fab_colorPressed="@color/white_pressed"
-                fab:fab_title="Guideline" />
+                fab:fab_colorNormal="@color/accent"
+                fab:fab_colorPressed="@color/ripple"
+                fab:fab_icon="@drawable/ic_lightbulb_outline_dedede_32dp"
+                fab:fab_title="Hướng dẫn" />
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
-        <TextView
-            android:id="@+id/txtRequestName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="108dp"
-            android:text="@string/hello_blank_fragment"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/flbGuidline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="36dp"
-            android:clickable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.917"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_lightbulb_outline_dedede_32dp" />
+        <!--<TextView-->
+            <!--android:id="@+id/txtRequestName"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginTop="108dp"-->
+            <!--android:text="@string/hello_blank_fragment"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent" />-->
 
         <Button
             android:id="@+id/btnTime"
