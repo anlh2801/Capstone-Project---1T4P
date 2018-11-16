@@ -265,7 +265,7 @@ namespace DataService.Models.Entities.Services
                 if (updateRequestTaskStatus != null)
                 {
                     updateRequestTaskStatus.TaskStatus = isDone ? (int)RequestTaskEnum.Done : (int)RequestTaskEnum.In_Process;
-
+                    updateRequestTaskStatus.UpdateDate = DateTime.UtcNow.AddHours(7);
                     requestTaskRepo.Edit(updateRequestTaskStatus);
 
                     requestTaskRepo.Save();
