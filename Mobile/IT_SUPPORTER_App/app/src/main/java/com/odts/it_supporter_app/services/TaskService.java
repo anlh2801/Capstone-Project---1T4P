@@ -67,4 +67,26 @@ public class TaskService {
             }
         });
     }
+
+    public void updateTaskStatus(final Context context, Integer requestTaskId , Boolean isDone , final CallBackData<Boolean> callBackData) {
+        ITaskApiCaller service = RetrofitInstance.getRetrofitInstance().create(ITaskApiCaller.class);
+        Call<ResponseObject<Boolean>> call = service.updateTaskStatus(requestTaskId , isDone);
+        call.enqueue(new Callback<ResponseObject<Boolean>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
+                if (!response.body().isError()) {
+                    Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
+                    if (response.body().getObjReturn() != false) {
+                        callBackData.onSuccess(response.body().getObjReturn());
+                    }
+                } else
+                    Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<Boolean>> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
 }
