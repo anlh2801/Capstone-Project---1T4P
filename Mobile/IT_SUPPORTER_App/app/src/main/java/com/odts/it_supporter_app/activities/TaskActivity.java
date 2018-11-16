@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.odts.it_supporter_app.models.RequestTask;
 import com.odts.it_supporter_app.services.TaskService;
@@ -24,6 +26,7 @@ public class TaskActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final int i = 0;
         setContentView(R.layout.activity_task);
         final ArrayList<RequestTask> options = new ArrayList<>();
         linearLayouttt = (LinearLayout) findViewById(R.id.taskRequest);
@@ -34,15 +37,30 @@ public class TaskActivity extends AppCompatActivity {
             @SuppressLint("ResourceType")
             @Override
             public void onSuccess(ArrayList<RequestTask> requestTasks) {
-                for (RequestTask item : requestTasks) {
+                for (final RequestTask item : requestTasks) {
 //                    options.add(item);
                     tick = new CheckBox(TaskActivity.this);
                     tick.setId(item.getRequestTaskId());
                     tick.setText(item.toString());
                     linearLayouttt.addView(tick);
+                    tick.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                            if(b) {
+                                taskService.updateTaskStatus(TaskActivity.this, item.getRequestTaskId(), true, new CallBackData<Boolean>() {
+                                    @Override
+                                    public void onSuccess(Boolean aBoolean) {
+                                    }
 
+                                    @Override
+                                    public void onFail(String message) {
+
+                                    }
+                                });
+                            }
+                        }
+                    });
                 }
-
             }
 
             @Override
