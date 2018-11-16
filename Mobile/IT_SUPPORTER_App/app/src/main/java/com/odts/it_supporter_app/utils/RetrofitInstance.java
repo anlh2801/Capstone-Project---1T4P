@@ -3,6 +3,7 @@ package com.odts.it_supporter_app.utils;
 import com.odts.it_supporter_app.apiCaller.IITSupporterApiCaller;
 import com.odts.it_supporter_app.apiCaller.ILoginApiCaller;
 import com.odts.it_supporter_app.apiCaller.IRequestApiCaller;
+import com.odts.it_supporter_app.apiCaller.ITaskApiCaller;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -34,5 +35,8 @@ private static final String BASE_URL = "http://35.197.154.50/";
     }
     public static IRequestApiCaller getRequesService() {
         return  getRetrofitInstance().create(IRequestApiCaller.class);
+    }
+    public static ITaskApiCaller getTaskService() {
+        return  getRetrofitInstance().create(ITaskApiCaller.class);
     }
 }

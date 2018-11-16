@@ -1,5 +1,6 @@
 package com.odts.it_supporter_app.activities;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,15 +46,17 @@ public class GuidelineActivity extends AppCompatActivity {
         flbAddTaskFromGuidline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<RequestTask> requestTasks = new ArrayList<>();
-                for (Guideline item: guidelineRS) {
-                    RequestTask requestTask = new RequestTask();
-                    requestTask.setRequestId(requestId);
-                    requestTask.setTaskDetail(item.getGuidelineName());
-                    requestTask.setCreateByITSupporter(itSupporterId);
-                    requestTasks.add(requestTask);
-                }
-                _guidelineService.createTaskFromGuidline(GuidelineActivity.this, requestTasks);
+//                ArrayList<RequestTask> requestTasks = new ArrayList<>();
+//                for (Guideline item: guidelineRS) {
+//                    RequestTask requestTask = new RequestTask();
+//                    requestTask.setRequestId(requestId);
+//                    requestTask.setTaskDetail(item.getGuidelineName());
+//                    requestTask.setCreateByITSupporter(itSupporterId);
+//                    requestTasks.add(requestTask);
+//                }
+//                _guidelineService.createTaskFromGuidline(GuidelineActivity.this, requestTasks);
+                Intent myIntent = new Intent(GuidelineActivity.this, TaskActivity.class);
+                startActivity(myIntent);
             }
         });
     }

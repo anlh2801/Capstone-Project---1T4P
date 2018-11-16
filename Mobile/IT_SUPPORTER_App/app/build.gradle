@@ -36,5 +36,6 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:17.3.4'
     compile 'com.firebase:firebase-client-android:2.5.2+'
     compile 'com.getbase:floatingactionbutton:1.10.1'
+    compile 'com.xeoh.android:checkboxgroup:1.0.1'
 }
 apply plugin: 'com.google.gms.google-services'
