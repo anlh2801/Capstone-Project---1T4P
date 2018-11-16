@@ -24,7 +24,9 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
 
-        ResponseObject<bool> UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model);
+        ResponseObject<bool> UpdateTaskStatus(int requestTaskId, bool isDone);
+
+        ResponseObject<bool> DeleteTaskStatus(int requestTaskId);
 
         ResponseObject<bool> UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
 
@@ -254,18 +256,42 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<bool> UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model)
+        public ResponseObject<bool> UpdateTaskStatus(int requestTaskId, bool isDone)
         {
             try
             {
                 var requestTaskRepo = DependencyUtils.Resolve<IRequestTaskRepository>();
-                var updateRequestTaskStatus = requestTaskRepo.GetActive().SingleOrDefault(a => a.RequestTaskId == model.RequestTaskId);
+                var updateRequestTaskStatus = requestTaskRepo.GetActive().SingleOrDefault(a => a.RequestTaskId == requestTaskId);
                 if (updateRequestTaskStatus != null)
                 {
-                    updateRequestTaskStatus.TaskStatus = model.TaskStatus;
+                    updateRequestTaskStatus.TaskStatus = isDone ? (int)RequestTaskEnum.Done : (int)RequestTaskEnum.In_Process;
 
                     requestTaskRepo.Edit(updateRequestTaskStatus);
 
+                    requestTaskRepo.Save();
+                    return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Cập nhật trạng thái thành công" };
+                }
+
+                return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Cập nhật trạng thái thất bại" };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Cập nhật trạng thái thất bại", ErrorMessage = e.ToString() };
+            }
+
+        }
+
+        public ResponseObject<bool> DeleteTaskStatus(int requestTaskId)
+        {
+            try
+            {
+                var requestTaskRepo = DependencyUtils.Resolve<IRequestTaskRepository>();
+                var requesrtask = requestTaskRepo.GetActive().SingleOrDefault(a => a.RequestTaskId == requestTaskId);
+                if (requesrtask != null)
+                {
+                    
+                    requestTaskRepo.Deactivate(requesrtask);
                     requestTaskRepo.Save();
                     return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Cập nhật trạng thái thành công" };
                 }

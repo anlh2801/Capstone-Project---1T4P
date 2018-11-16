@@ -22,7 +22,9 @@ namespace DataService.Domain
 
         ResponseObject<bool> EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
 
-        ResponseObject<bool> UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model);
+        ResponseObject<bool> UpdateTaskStatus(int requestTaskId, bool isDone);
+
+        ResponseObject<bool> DeleteTaskStatus(int requestTaskId);
 
         ResponseObject<bool> UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
 
@@ -100,15 +102,24 @@ namespace DataService.Domain
             return result;
         }
 
-        public ResponseObject<bool> UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model)
+        public ResponseObject<bool> UpdateTaskStatus(int requestTaskId, bool isDone)
         {
             var iTSupporterService = this.Service<IITSupporterService>();
 
-            var result = iTSupporterService.UpdateTaskStatus(model);
+            var result = iTSupporterService.UpdateTaskStatus(requestTaskId, isDone);
 
             return result;
         }
 
+        public ResponseObject<bool> DeleteTaskStatus(int requestTaskId)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.DeleteTaskStatus(requestTaskId);
+
+            return result;
+        }
+       
         public ResponseObject<bool> UpdateProfile(ITSupporterUpdateProfileAPIViewModel model)
         {
             var iTSupporterService = this.Service<IITSupporterService>();
