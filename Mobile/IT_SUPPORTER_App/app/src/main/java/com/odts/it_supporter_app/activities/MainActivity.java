@@ -7,10 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -20,6 +23,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.odts.it_supporter_app.R;
+import com.odts.it_supporter_app.customTools.BottomNavigationViewHelper;
 import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.services.ITSupporterService;
 import com.odts.it_supporter_app.utils.CallBackData;
@@ -33,11 +37,12 @@ public class MainActivity extends AppCompatActivity {
     ITSupporterService itSupporterService;
     android.support.v7.widget.Toolbar toolbar;
     boolean isOnline;
-
+    BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initBottomMenu();
         share = getSharedPreferences("ODTS", Context.MODE_PRIVATE);
         final int itSupporterId = share.getInt("itSupporterId", 0);
         itSupporterService = new ITSupporterService();
@@ -138,6 +143,32 @@ public class MainActivity extends AppCompatActivity {
 //                    ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE))
 //                            .clearApplicationUserData();
 //                }
+//            }
+//        });
+    }
+
+    private void initBottomMenu() {
+        bottomNavigationView = findViewById(R.id.navigationView);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+        Fragment fragment = null;
+//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.navigation_home:
+//                        loadFragment(new NewHomeFragment());
+//                        break;
+//                    case R.id.navigation_request:
+//                        loadFragment(new RequestFragment());
+//                        break;
+//                    case R.id.navigation_devices:
+//                        loadFragment(new ManageDeviceFragment());
+//                        break;
+//                    case R.id.navigation_accountDetail:
+//                        loadFragment(new ProfileFragment());
+//                        break;
+//                }
+//                return true;
 //            }
 //        });
     }
