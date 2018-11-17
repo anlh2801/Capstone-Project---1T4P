@@ -672,7 +672,8 @@ namespace DataService.Models.Entities.Services
                     NumberOfTicket = ticketList.Count,
                     ServiceItemId = request.ServiceItemId,
                     ServiceItemName = request.ServiceItem.ServiceItemName,
-                    AgencyId = request.AgencyId,                    
+                    AgencyId = request.AgencyId,
+                    AgencyAddress = request.Agency.Address,
                     Tickets = ticketList
                 };
 
