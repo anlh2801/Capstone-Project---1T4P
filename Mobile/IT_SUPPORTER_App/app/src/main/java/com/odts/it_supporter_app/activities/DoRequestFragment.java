@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.odts.it_supporter_app.R;
 import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.services.ITSupporterService;
@@ -52,6 +53,7 @@ public class DoRequestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_do_request, container, false);
+        final FloatingActionsMenu menu = v.findViewById(R.id.multiple_actions);
         btnCall = v.findViewById(R.id.action_a);
         btnChat = v.findViewById(R.id.action_b);
         btnTimeLine = v.findViewById(R.id.btnTime);
@@ -71,6 +73,7 @@ public class DoRequestFragment extends Fragment {
                 btnCall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        menu.collapse();
                         Intent callIntent = new Intent(Intent.ACTION_CALL);
                         callIntent.setData(Uri.parse("tel: " + request.getPhoneNumber()));
                         if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
@@ -84,6 +87,7 @@ public class DoRequestFragment extends Fragment {
                 btnChat.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        menu.collapse();
                         Intent intent = new Intent(getActivity(), ChatActivity.class);
                         startActivity(intent);
                     }
@@ -121,6 +125,7 @@ public class DoRequestFragment extends Fragment {
         flbGuidline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                menu.collapse();
                 Intent intent = new Intent(getContext(), GuidelineActivity.class);
                 intent.putExtra("serviceItemName", serviceItemName);
                 intent.putExtra("serviceItemId", serviceItemId);
