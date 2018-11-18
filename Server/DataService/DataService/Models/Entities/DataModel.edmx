@@ -109,10 +109,8 @@
             <PropertyRef Name="GuidelineId" />
           </Key>
           <Property Name="GuidelineId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceItemId" Type="int" />
+          <Property Name="ServiceItemId" Type="int" Nullable="false" />
           <Property Name="GuidelineName" Type="nvarchar(max)" />
-          <Property Name="StartDate" Type="datetime" />
-          <Property Name="EndDate" Type="date" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" />
@@ -189,6 +187,7 @@
           </Key>
           <Property Name="RequestTaskId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RequestId" Type="int" Nullable="false" />
+          <Property Name="TaskDetails" Type="nvarchar(max)" />
           <Property Name="TaskStatus" Type="int" />
           <Property Name="CreateByITSupporter" Type="int" />
           <Property Name="StartTime" Type="datetime" />
@@ -370,7 +369,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Guideline_ServiceItem">
-          <End Role="ServiceItem" Type="Self.ServiceItem" Multiplicity="0..1" />
+          <End Role="ServiceItem" Type="Self.ServiceItem" Multiplicity="1" />
           <End Role="Guideline" Type="Self.Guideline" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ServiceItem">
@@ -887,10 +886,8 @@
             <PropertyRef Name="GuidelineId" />
           </Key>
           <Property Name="GuidelineId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceItemId" Type="Int32" />
+          <Property Name="ServiceItemId" Type="Int32" Nullable="false" />
           <Property Name="GuidelineName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Precision="0" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
@@ -982,6 +979,7 @@
           </Key>
           <Property Name="RequestTaskId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RequestId" Type="Int32" Nullable="false" />
+          <Property Name="TaskDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TaskStatus" Type="Int32" />
           <Property Name="CreateByITSupporter" Type="Int32" />
           <Property Name="StartTime" Type="DateTime" Precision="3" />
@@ -1212,7 +1210,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Guideline_ServiceItem">
-          <End Type="DataModel.ServiceItem" Role="ServiceItem" Multiplicity="0..1" />
+          <End Type="DataModel.ServiceItem" Role="ServiceItem" Multiplicity="1" />
           <End Type="DataModel.Guideline" Role="Guideline" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ServiceItem">
@@ -1461,8 +1459,6 @@
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="GuidelineName" ColumnName="GuidelineName" />
                 <ScalarProperty Name="ServiceItemId" ColumnName="ServiceItemId" />
                 <ScalarProperty Name="GuidelineId" ColumnName="GuidelineId" />
@@ -1551,6 +1547,7 @@
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
                 <ScalarProperty Name="CreateByITSupporter" ColumnName="CreateByITSupporter" />
                 <ScalarProperty Name="TaskStatus" ColumnName="TaskStatus" />
+                <ScalarProperty Name="TaskDetails" ColumnName="TaskDetails" />
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
                 <ScalarProperty Name="RequestTaskId" ColumnName="RequestTaskId" />
               </MappingFragment>

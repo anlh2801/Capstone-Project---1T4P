@@ -38,16 +38,17 @@ public class DoneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_done, container, false);
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         agencyId = share.getInt("agencyId", 0);
+        recyclerView = (RecyclerView) v.findViewById(R.id.listDone);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         requestService = new RequestService();
         requestService.getRequestByStatus(getActivity(), agencyId, Enums.RequestStatusEnum.Done.getIntValue(), new CallBackData<ArrayList<Request>>() {
             @Override
             public void onSuccess(ArrayList<Request> listRequests) {
-                recyclerView = (RecyclerView) getActivity().findViewById(R.id.listDone);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 pendingRequestAdapter = new DoneRequestAdapter(getActivity(), listRequests);
                 recyclerView.setAdapter(pendingRequestAdapter);
             }
@@ -57,7 +58,7 @@ public class DoneFragment extends Fragment {
 
             }
         });
-        return inflater.inflate(R.layout.fragment_done, container, false);
+        return v;
     }
 }
 

@@ -15,10 +15,8 @@ namespace DataService.Models.Entities
     public partial class Guideline
     {
         public int GuidelineId { get; set; }
-        public Nullable<int> ServiceItemId { get; set; }
+        public int ServiceItemId { get; set; }
         public string GuidelineName { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
         public bool IsDelete { get; set; }
         public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }

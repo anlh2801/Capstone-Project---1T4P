@@ -9,7 +9,9 @@ namespace DataService.APIViewModels
     public class ITSupporterCreateTaskAPIViewModel : DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.RequestTask>
     {
         public int RequestId { get; set; }
+        public int RequestTaskId { get; set; }
         public int TaskStatus { get; set; }
+        public string TaskDetail { get; set; }
         public int CreateByITSupporter { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }

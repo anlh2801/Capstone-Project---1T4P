@@ -22,6 +22,8 @@ public interface IITSupporterApiCaller {
     @POST("ITsupporter/update_status_it")
     Call<ResponseObject<Boolean>> updateStatusIt(@Query("itsupporter_id") int itsupporter_id,
                                                  @Query("isOnline") boolean isOnline);
+    @PUT("ITsupporter/update_Is_Busy_False")
+    Call<ResponseObject<Boolean>> updateBusyIt(@Query("itsupporter_id") int itsupporter_id);
 
     @POST("/ITsupporter/update_starttime")
     Call<ResponseObject<Boolean>> updateStartTime(@Query("request_id") int request_id,

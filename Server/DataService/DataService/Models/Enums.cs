@@ -48,17 +48,12 @@ namespace DataService.Models
         Cancel = 4
     }
 
-    //For Ticket Task
-    public enum TicketTaskEnum
-    {
-        [Display(Name = "Mới")]
-        New = 1,
+    public enum RequestTaskEnum
+    {       
         [Display(Name = "Đang xử lý")]
-        In_Process = 2,
+        In_Process = 1,
         [Display(Name = "Hoàn thành")]
-        Done = 3,
-        [Display(Name = "Hủy bỏ")]
-        Cancel = 4
+        Done = 2,
     }
 
     public enum Gender

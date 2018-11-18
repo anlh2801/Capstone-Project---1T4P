@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.odts.customTools.BottomNavigationViewHelper;
+
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initBottomMenu() {
         bottomNavigationView = findViewById(R.id.navigationView);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         Fragment fragment = null;
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

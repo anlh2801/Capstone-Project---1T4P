@@ -41,7 +41,7 @@ namespace DataService.Models.Entities.Services
                 rsList.Add(new GuidelineAPIViewModel
                 {
                     NumericalOrder = count,
-                    ServiceItemId = item.ServiceItemId ?? 0,
+                    ServiceItemId = item.ServiceItemId,
                     GuidelineName = item.GuidelineName,
                     GuidelineId = item.GuidelineId,
                     CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),

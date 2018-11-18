@@ -27,12 +27,13 @@ public class DoneRequestAdapter extends RecyclerView.Adapter<DoneRequestAdapter.
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView rqName, estimes;
+        public TextView rqName, endDate, createDate;
 
         public MyViewHolder(View view) {
             super(view);
             rqName = (TextView) view.findViewById(R.id.txtRequestNameDone);
-            estimes = (TextView) view.findViewById(R.id.udDateDone);
+            endDate = (TextView) view.findViewById(R.id.udDateDone);
+            createDate = (TextView) view.findViewById(R.id.txtEndDateDone);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -69,7 +70,8 @@ public class DoneRequestAdapter extends RecyclerView.Adapter<DoneRequestAdapter.
     public void onBindViewHolder(final DoneRequestAdapter.MyViewHolder holder, int position) {
         Request album = listRequest.get(position);
         holder.rqName.setText(album.getRequestName());
-        holder.estimes.setText("Xác nhận hoàn thành: " + album.getUpdateDate());
+        holder.endDate.setText("Xác nhận hoàn thành: " + album.getUpdateDate());
+        holder.createDate.setText("Tạo vào: " + album.getCreateDate());
         requestID = album.getRequestId();
     }
 

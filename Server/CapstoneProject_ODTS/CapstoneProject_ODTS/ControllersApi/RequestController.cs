@@ -22,7 +22,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage UpdateStatusRequest(int request_id, int status);
         HttpResponseMessage ViewRequestDetail(int requestId);
         HttpResponseMessage AcceptRequest(int itSupporterId, int requestId, bool isAccept);
-        HttpResponseMessage GetRequestByRequestIdAndITSupporterId(int requestId, int itSupporterId);
+        HttpResponseMessage GetRequestByRequestIdAndITSupporterId(int itSupporterId);
     }
 
     public class RequestController : ApiController, IRequestDomain
@@ -128,10 +128,10 @@ namespace CapstoneProject_ODTS.ControllersApi
         }
 
         [HttpGet]
-        [Route("request/request_by_id_and_ITSupporterId/{requestId}/{itSupporterId}")]
-        public HttpResponseMessage GetRequestByRequestIdAndITSupporterId(int requestId, int itSupporterId)
+        [Route("request/request_by_id_and_ITSupporterId/{itSupporterId}")]
+        public HttpResponseMessage GetRequestByRequestIdAndITSupporterId(int itSupporterId)
         {
-            var result = _requestDomain.GetRequestByRequestIdAndITSupporterId(requestId, itSupporterId);
+            var result = _requestDomain.GetRequestByRequestIdAndITSupporterId(itSupporterId);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }

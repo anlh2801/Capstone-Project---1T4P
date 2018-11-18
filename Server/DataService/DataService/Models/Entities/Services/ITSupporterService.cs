@@ -24,11 +24,17 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
 
-        ResponseObject<bool> UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model);
+        ResponseObject<bool> UpdateTaskStatus(int requestTaskId, bool isDone);
+
+        ResponseObject<bool> DeleteTaskStatus(int requestTaskId);
 
         ResponseObject<bool> UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
 
+        ResponseObject<List<ITSupporterCreateTaskAPIViewModel>> GetAllTaskByRequestId(int requestId);
+
         ResponseObject<bool> CreateTask(ITSupporterCreateTaskAPIViewModel model);
+
+        ResponseObject<bool> CreateTaskFromGuidline(List<ITSupporterCreateTaskAPIViewModel> model);
 
         ResponseObject<bool> SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model);
 
@@ -59,6 +65,10 @@ namespace DataService.Models.Entities.Services
         ResponseObject<bool> RemoveITSuporter(int itsupporterId);
 
         ResponseObject<bool> UpdateITSup(ITSupporterAPIViewModel model);
+
+        ResponseObject<int> UpdateIsBusyOFITSupporter(int itsupporterId);
+
+        ResponseObject<ITSupporterStatisticForMobileAPIViewModel> ITSuppoterStatisticAll(int itsupporterId);
     }
 
     public partial class ITSupporterService
@@ -259,18 +269,42 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<bool> UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model)
+        public ResponseObject<bool> UpdateTaskStatus(int requestTaskId, bool isDone)
         {
             try
             {
                 var requestTaskRepo = DependencyUtils.Resolve<IRequestTaskRepository>();
-                var updateRequestTaskStatus = requestTaskRepo.GetActive().SingleOrDefault(a => a.RequestTaskId == model.RequestTaskId);
+                var updateRequestTaskStatus = requestTaskRepo.GetActive().SingleOrDefault(a => a.RequestTaskId == requestTaskId);
                 if (updateRequestTaskStatus != null)
                 {
-                    updateRequestTaskStatus.TaskStatus = model.TaskStatus;
-
+                    updateRequestTaskStatus.TaskStatus = isDone ? (int)RequestTaskEnum.Done : (int)RequestTaskEnum.In_Process;
+                    updateRequestTaskStatus.UpdateDate = DateTime.UtcNow.AddHours(7);
                     requestTaskRepo.Edit(updateRequestTaskStatus);
 
+                    requestTaskRepo.Save();
+                    return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Cập nhật trạng thái thành công" };
+                }
+
+                return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Cập nhật trạng thái thất bại" };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Cập nhật trạng thái thất bại", ErrorMessage = e.ToString() };
+            }
+
+        }
+
+        public ResponseObject<bool> DeleteTaskStatus(int requestTaskId)
+        {
+            try
+            {
+                var requestTaskRepo = DependencyUtils.Resolve<IRequestTaskRepository>();
+                var requesrtask = requestTaskRepo.GetActive().SingleOrDefault(a => a.RequestTaskId == requestTaskId);
+                if (requesrtask != null)
+                {
+
+                    requestTaskRepo.Deactivate(requesrtask);
                     requestTaskRepo.Save();
                     return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Cập nhật trạng thái thành công" };
                 }
@@ -315,6 +349,40 @@ namespace DataService.Models.Entities.Services
             }
         }
 
+        public ResponseObject<List<ITSupporterCreateTaskAPIViewModel>> GetAllTaskByRequestId(int requestId)
+        {
+            try
+            {
+                var requestTaskRepo = DependencyUtils.Resolve<IRequestTaskRepository>();
+                var taskList = requestTaskRepo.GetActive(p => p.RequestId == requestId).ToList();
+
+                if (taskList.Count() <= 0)
+                {
+                    return new ResponseObject<List<ITSupporterCreateTaskAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy việc cần làm nào" };
+                }
+
+                var rsList = new List<ITSupporterCreateTaskAPIViewModel>();
+                foreach (var item in taskList)
+                {
+                    var taskViewModel = new ITSupporterCreateTaskAPIViewModel()
+                    {
+                        RequestId = item.RequestId,
+                        RequestTaskId = item.RequestTaskId,
+                        CreateByITSupporter = item.CreateByITSupporter ?? 0,
+                        TaskStatus = item.TaskStatus ?? (int)RequestTaskEnum.In_Process,
+                        TaskDetail = item.TaskDetails != null ? item.TaskDetails : string.Empty
+                    };
+                    rsList.Add(taskViewModel);
+                }
+
+                return new ResponseObject<List<ITSupporterCreateTaskAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Lấy việc cần làm thành công" };
+            }
+            catch (Exception e)
+            {
+                return new ResponseObject<List<ITSupporterCreateTaskAPIViewModel>> { IsError = true, ErrorMessage = e.ToString(), WarningMessage = "Không tìm thấy việc cần làm nào" };
+            }
+        }
+
         public ResponseObject<bool> CreateTask(ITSupporterCreateTaskAPIViewModel model)
         {
             try
@@ -324,15 +392,52 @@ namespace DataService.Models.Entities.Services
                 var createTask = new RequestTask();
 
                 createTask.RequestId = model.RequestId;
-                createTask.TaskStatus = model.TaskStatus;
+                createTask.TaskStatus = (int)RequestTaskEnum.In_Process;
                 createTask.CreateByITSupporter = model.CreateByITSupporter;
-                createTask.StartTime = DateTime.Parse(model.StartTime);
-                createTask.EndTime = DateTime.Parse(model.EndTime);
-                createTask.Priority = model.Priority;
-                createTask.PreTaskCondition = model.PreTaskCondition;
+                createTask.StartTime = DateTime.UtcNow.AddHours(7);
+                createTask.TaskDetails = model.TaskDetail;
+                //createTask.EndTime = DateTime.Parse(item.EndTime);
+                //createTask.Priority = item.Priority;
+                //createTask.PreTaskCondition = model.PreTaskCondition;
                 createTask.CreateDate = DateTime.UtcNow.AddHours(7);
 
                 requestTaskRepo.Add(createTask);
+
+                requestTaskRepo.Save();
+                return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Tạo mới việc thành công" };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Tạo mới việc thất bại", ErrorMessage = e.ToString() };
+            }
+
+        }
+
+        public ResponseObject<bool> CreateTaskFromGuidline(List<ITSupporterCreateTaskAPIViewModel> model)
+        {
+            try
+            {
+
+                var requestTaskRepo = DependencyUtils.Resolve<IRequestTaskRepository>();
+
+                foreach (var item in model)
+                {
+                    var createTask = new RequestTask();
+
+                    createTask.RequestId = item.RequestId;
+                    createTask.TaskStatus = (int)RequestTaskEnum.In_Process;
+                    createTask.CreateByITSupporter = item.CreateByITSupporter;
+                    createTask.StartTime = DateTime.UtcNow.AddHours(7);
+                    createTask.TaskDetails = item.TaskDetail;
+                    //createTask.EndTime = DateTime.Parse(item.EndTime);
+                    //createTask.Priority = item.Priority;
+                    //createTask.PreTaskCondition = model.PreTaskCondition;
+                    createTask.CreateDate = DateTime.UtcNow.AddHours(7);
+
+                    requestTaskRepo.Add(createTask);
+                }
+
 
                 requestTaskRepo.Save();
                 return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Tạo mới việc thành công" };
@@ -416,10 +521,8 @@ namespace DataService.Models.Entities.Services
                     var guidelineAPIViewModel = new GuidelineAPIViewModel
                     {
                         GuidelineId = item.GuidelineId,
-                        ServiceItemId = item.ServiceItemId ?? 0,
+                        ServiceItemId = item.ServiceItemId,
                         GuidelineName = item.GuidelineName,
-                        StartDate = item.StartDate != null ? item.StartDate.Value.ToString("dd/MM/yyyy") : string.Empty,
-                        EndDate = item.EndDate != null ? item.EndDate.Value.ToString("dd/MM/yyyy") : string.Empty,
                         CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                     };
@@ -531,6 +634,82 @@ namespace DataService.Models.Entities.Services
             catch (Exception e)
             {
                 return new ResponseObject<ITSupporterStatisticAPIViewModel> { IsError = true, WarningMessage = "Không có thống kê nào!", ObjReturn = null, ErrorMessage = e.ToString() };
+            }
+        }
+
+
+        public ResponseObject<ITSupporterStatisticForMobileAPIViewModel> ITSuppoterStatisticAll(int itsupporterId)
+        {
+            try
+            {
+                var itsupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var servieceRepo = DependencyUtils.Resolve<IServiceITSupportRepository>();
+                var itsupporter = itsupporterRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == itsupporterId);
+
+                if (itsupporter != null)
+                {
+                    var result = new ITSupporterStatisticForMobileAPIViewModel();
+
+                    result.ITSupporterId = itsupporter.ITSupporterId;
+                    result.ITSupporterName = itsupporter.ITSupporterName;
+
+                    var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                    var requests = requestRepo.GetActive().Where(r => r.CurrentITSupporter_Id == itsupporterId)
+                        .GroupBy(o => new { MonthGroupByStartTime = o.StartTime.Value.Month, YearGroupByStartTime = o.StartTime.Value.Year })
+                        .Select(g => new { MonthSelect = g.Key.MonthGroupByStartTime, YearSelect = g.Key.YearGroupByStartTime, RequestList = g })
+                        .OrderByDescending(a => a.YearSelect)
+                        .ThenByDescending(a => a.MonthSelect)
+                        .ToList();
+                    var totalTimeSupport = new TimeSpan();
+                    var totalTimeSupportInThisMonth = new TimeSpan();
+                    var requestListGroup = new List<RequestGroupMonth>();
+                    foreach (var item in requests)
+                    {
+                        var requestList = new List<RequestAllTicketWithStatusAgencyAPIViewModel>();
+                        foreach (var itemRequest in item.RequestList)
+                        {
+                            
+                            totalTimeSupport += itemRequest.EndTime != null ? (itemRequest.EndTime.Value - itemRequest.StartTime.Value).Duration() : new TimeSpan(0, 0, 0);
+                            var requestViewModel = new RequestAllTicketWithStatusAgencyAPIViewModel();
+                            requestViewModel.RequestName = itemRequest.RequestName;
+                            requestViewModel.AgencyName = itemRequest.Agency.AgencyName;
+                            requestViewModel.CreateDate = itemRequest.CreateDate.ToString("dd/MM/yyyy HH:mm");
+
+                            requestList.Add(requestViewModel);
+                        }
+
+                        if (item.MonthSelect == DateTime.Now.Month && item.YearSelect == DateTime.Now.Year)
+                        {
+                            foreach (var itemRequest in item.RequestList)
+                            {
+                                totalTimeSupportInThisMonth += itemRequest.EndTime != null ? (itemRequest.EndTime.Value - itemRequest.StartTime.Value).Duration() : new TimeSpan(0, 0, 0);
+                            }
+                        }
+                        var requestGroupMonthViewModel = new RequestGroupMonth();
+                        requestGroupMonthViewModel.MonthYearGroup = $"{item.MonthSelect}/{item.YearSelect}";
+                        requestGroupMonthViewModel.RequestOfITSupporter = requestList;
+                        requestListGroup.Add(requestGroupMonthViewModel);
+                    }
+                    var totalTimeSupportString = totalTimeSupport.ToString(@"dd\.hh\:mm");                    
+                    var totalTimeSupportStringGetDays = totalTimeSupportString.Split('.');
+                    var totalTimeSupportStringGetTimes = totalTimeSupportStringGetDays[1].ToString().Split(':');
+
+                    var totalTimeSupportInThisMonthString = totalTimeSupportInThisMonth.ToString(@"dd\.hh\:mm");
+                    var totalTimeSupportInThisMonthGetDays = totalTimeSupportInThisMonthString.Split('.');                   
+                    var totalTimeSupportInThisMonthGetTimes = totalTimeSupportInThisMonthGetDays[1].ToString().Split(':');
+
+                    result.TotalTimeSupport = $"{int.Parse(totalTimeSupportStringGetDays[0])*24 + int.Parse(totalTimeSupportStringGetTimes[0])} giờ {totalTimeSupportStringGetTimes[1]} phút";
+                    result.TotalTimeSupportInThisMonth = $"{int.Parse(totalTimeSupportInThisMonthGetDays[0])*24 + int.Parse(totalTimeSupportInThisMonthGetTimes[0])} giờ {totalTimeSupportInThisMonthGetTimes[1]} phút" ;
+                    result.RequestOfITSupporter = requestListGroup;
+
+                    return new ResponseObject<ITSupporterStatisticForMobileAPIViewModel> { IsError = false, ObjReturn = result, SuccessMessage = "Thành công" };
+                }
+
+                return new ResponseObject<ITSupporterStatisticForMobileAPIViewModel> { IsError = true, WarningMessage = "Không có thống kê nào!" };
+            }
+            catch (Exception e)
+            {
+                return new ResponseObject<ITSupporterStatisticForMobileAPIViewModel> { IsError = true, WarningMessage = "Không có thống kê nào!", ErrorMessage = e.ToString() };
             }
         }
 
@@ -837,6 +1016,27 @@ namespace DataService.Models.Entities.Services
             }
 
             return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉnh sửa nhân viên thất bại", ObjReturn = false };
+        }
+        public ResponseObject<int> UpdateIsBusyOFITSupporter(int itsupporterId)
+        {
+            try
+            {
+                var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var itSupporter = itSupporterRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == itsupporterId);
+                if (itSupporter != null && itSupporter.IsBusy == true)
+                {
+                    itSupporter.IsBusy = false;
+                    itSupporterRepo.Edit(itSupporter);
+                    itSupporterRepo.Save();
+                    return new ResponseObject<int> { IsError = false, SuccessMessage = "Lấy trạng trạng thái thành công", ObjReturn = itSupporter.ITSupporterId };
+                }
+
+                return new ResponseObject<int> { IsError = true, WarningMessage = "Cập nhật trạng thái thất bại" };
+            }
+            catch (Exception e)
+            {
+                return new ResponseObject<int> { IsError = true, WarningMessage = "Cập nhật trạng thái thất bại" };
+            }
         }
     }
 }

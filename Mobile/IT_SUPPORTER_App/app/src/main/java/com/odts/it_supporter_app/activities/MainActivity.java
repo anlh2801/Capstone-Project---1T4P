@@ -7,10 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -20,6 +23,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.odts.it_supporter_app.R;
+import com.odts.it_supporter_app.customTools.BottomNavigationViewHelper;
 import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.services.ITSupporterService;
 import com.odts.it_supporter_app.utils.CallBackData;
@@ -28,56 +32,40 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
-    Fragment fragment;
+    Integer itSupporterId;
     SharedPreferences share;
-    SharedPreferences sp;
-    Button btnLogout;
-    Button btnChat;
-    Button btnTimeline;
     Switch swStatus;
     ITSupporterService itSupporterService;
     android.support.v7.widget.Toolbar toolbar;
     boolean isOnline;
-
+    BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         share = getSharedPreferences("ODTS", Context.MODE_PRIVATE);
-        final int itSupporterId = share.getInt("itSupporterId", 0);
-        itSupporterService = new ITSupporterService();
-        itSupporterService.getIsBusy(MainActivity.this, itSupporterId, new CallBackData<Boolean>() {
-            @Override
-            public void onSuccess(Boolean aBoolean) {
-                if (!aBoolean) {
-                    loadFragment(new RecieveRequestFragment());
-                } else {
-                    loadFragment(new DoRequestFragment());
-                }
-            }
-
-            @Override
-            public void onFail(String message) {
-
-            }
-        });
+        itSupporterId = share.getInt("itSupporterId", 0);
         isOnline = true;
-        btnChat = findViewById(R.id.btnChatMain);
-        btnChat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ChatActivity.class);
-                startActivity(intent);
-            }
-        });
-        btnTimeline = findViewById(R.id.btnTimeLine);
-        btnTimeline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, StatusTimelineActivity.class);
-                startActivity(intent);
-            }
-        });
+        initHome();
+        initBottomMenu();
+
+//        btnChat = findViewById(R.id.btnChatMain);
+//        btnChat.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//        btnTimeline = findViewById(R.id.btnTimeLine);
+//        btnTimeline.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, StatusTimelineActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         Bundle extras = getIntent().getExtras();
         onNewIntent(getIntent());
         toolbar = findViewById(R.id.toolbar);
@@ -124,25 +112,70 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        btnLogout = (Button) findViewById(R.id.btn_logout);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
+//        btnLogout = (Button) findViewById(R.id.btn_logout);
+//        btnLogout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                share = getSharedPreferences("ODTS", Context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor = share.edit();
+//                editor.clear();
+//                editor.commit();
+//                sp = getSharedPreferences("loginHero", Context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor2 = sp.edit();
+//                editor2.clear();
+//                editor2.commit();
+//                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//                startActivity(intent);
+////                deleteCache(MainActivity.this);
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//                    ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE))
+//                            .clearApplicationUserData();
+//                }
+//            }
+//        });
+    }
+
+    private void initHome() {
+        itSupporterService = new ITSupporterService();
+        itSupporterService.getIsBusy(MainActivity.this, itSupporterId, new CallBackData<Boolean>() {
             @Override
-            public void onClick(View view) {
-//                share = getSharedPreferences("ODTS", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = share.edit();
-                editor.clear();
-                editor.commit();
-                sp = getSharedPreferences("loginHero", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor2 = sp.edit();
-                editor2.clear();
-                editor2.commit();
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-//                deleteCache(MainActivity.this);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE))
-                            .clearApplicationUserData();
+            public void onSuccess(Boolean aBoolean) {
+                if (!aBoolean) {
+                    loadFragment(new RecieveRequestFragment());
+                } else {
+                    loadFragment(new DoRequestFragment());
                 }
+            }
+
+            @Override
+            public void onFail(String message) {
+
+            }
+        });
+    }
+
+    private void initBottomMenu() {
+        bottomNavigationView = findViewById(R.id.navigationView);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+        Fragment fragment = null;
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_home:
+                        initHome();
+                        break;
+                    case R.id.navigation_scanQR:
+                        loadFragment(new ScanDeviceFragment());
+                        break;
+                    case R.id.navigation_devices:
+                        //loadFragment(new ManageDeviceFragment());
+                        break;
+                    case R.id.navigation_accountDetail:
+                        loadFragment(new ProfleFragment());
+                        break;
+                }
+                return true;
             }
         });
     }

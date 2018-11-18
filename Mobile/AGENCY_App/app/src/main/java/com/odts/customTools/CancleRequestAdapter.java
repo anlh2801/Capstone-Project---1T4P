@@ -26,17 +26,17 @@ public class CancleRequestAdapter extends RecyclerView.Adapter<CancleRequestAdap
             super(view);
             rqName = (TextView) view.findViewById(R.id.txtRequestNameCan);
             estimes = (TextView) view.findViewById(R.id.udDateCan);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        Intent intent = new Intent(context, RequestDetailActivity.class);
-                        intent.putExtra("requestID", listRequest.get(position).getRequestId());
-                        context.startActivity(intent);
-                    }
-                }
-            });
+//            view.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    int position = getAdapterPosition();
+//                    if (position != RecyclerView.NO_POSITION) {
+//                        Intent intent = new Intent(context, RequestDetailActivity.class);
+//                        intent.putExtra("requestID", listRequest.get(position).getRequestId());
+//                        context.startActivity(intent);
+//                    }
+//                }
+//            });
         }
     }
 

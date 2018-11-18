@@ -42,13 +42,13 @@ public class PendingFragment extends Fragment {
         final View v = inflater.inflate(R.layout.fragment_pending, container, false);
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
+        recyclerView = (RecyclerView) v.findViewById(R.id.listPending);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         agencyId = share.getInt("agencyId", 0);
         _requestService = new RequestService();
         _requestService.getRequestByStatus(getActivity(), agencyId, Enums.RequestStatusEnum.Pending.getIntValue(), new CallBackData<ArrayList<Request>>() {
             @Override
             public void onSuccess(ArrayList<Request> listRequests) {
-                recyclerView = (RecyclerView) getActivity().findViewById(R.id.listPending);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 pendingRequestAdapter = new PendingRequestAdapter(getActivity(), listRequests);
                 recyclerView.setAdapter(pendingRequestAdapter);
                 btnCreate = (com.melnykov.fab.FloatingActionButton) v.findViewById(R.id.fab);

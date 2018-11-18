@@ -18,9 +18,11 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         HttpResponseMessage EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
 
-        HttpResponseMessage UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model);
+        HttpResponseMessage UpdateTaskStatus(int requestTaskId, bool isDone);
 
         HttpResponseMessage UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
+
+        HttpResponseMessage GetAllTaskByRequestId(int requestId);
 
         HttpResponseMessage CreateTask(ITSupporterCreateTaskAPIViewModel model);
 
@@ -43,6 +45,12 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage GetIsOnlineOFITSupporter(int itsupporter_id);
 
         HttpResponseMessage GetIsBusyOFITSupporter(int itsupporter_id);
+
+        HttpResponseMessage UpdateIsBusyOFITSupporter(int itsupporter_id);
+
+        HttpResponseMessage DeleteTaskStatus(int requestTaskId);
+
+        HttpResponseMessage ITSuppoterStatisticAll(int itsupporterId);
     }
 
     public class ITSupporterController : ApiController, IITSupporterController
@@ -103,9 +111,18 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         [HttpPut]
         [Route("ITsuportter/update_task_status")]
-        public HttpResponseMessage UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model)
+        public HttpResponseMessage UpdateTaskStatus(int requestTaskId, bool isDone)
         {
-            var result = _ITSupporterDomain.UpdateTaskStatus(model);           
+            var result = _ITSupporterDomain.UpdateTaskStatus(requestTaskId, isDone);           
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPut]
+        [Route("ITsuportter/delete_task")]
+        public HttpResponseMessage DeleteTaskStatus(int requestTaskId)
+        {
+            var result = _ITSupporterDomain.DeleteTaskStatus(requestTaskId);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
@@ -125,6 +142,26 @@ namespace CapstoneProject_ODTS.ControllersApi
         {
             var result = _ITSupporterDomain.CreateTask(model);
            
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+
+        }
+
+        [HttpPost]
+        [Route("ITsuportter/create_task_from_guidline")]
+        public HttpResponseMessage CreateTaskFromGuidline(List<ITSupporterCreateTaskAPIViewModel> model)
+        {
+            var result = _ITSupporterDomain.CreateTaskFromGuidline(model);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+
+        }
+
+        [HttpGet]
+        [Route("ITsuportter/all_task_by_requestId/{requestId}")]
+        public HttpResponseMessage GetAllTaskByRequestId(int requestId)
+        {
+            var result = _ITSupporterDomain.GetAllTaskByRequestId(requestId);
+
             return Request.CreateResponse(HttpStatusCode.OK, result);
 
         }
@@ -167,6 +204,15 @@ namespace CapstoneProject_ODTS.ControllersApi
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        [HttpGet]
+        [Route("ITsupporter/view_itsupporter_statistic_all")]
+        public HttpResponseMessage ITSuppoterStatisticAll(int itsupporterId)
+        {
+            var result = _ITSupporterDomain.ITSuppoterStatisticAll(itsupporterId);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
         [HttpPost]
         [Route("ITsupporter/update_status_it")]
         public HttpResponseMessage UpdateStatusIT(int itsupporter_id, bool isOnline)
@@ -204,6 +250,14 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage GetIsBusyOFITSupporter(int itsupporter_id)
         {
             var result = _ITSupporterDomain.GetIsBusyOFITSupporter(itsupporter_id);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPut]
+        [Route("ITsupporter/update_Is_Busy_False")]
+        public HttpResponseMessage UpdateIsBusyOFITSupporter(int itsupporter_id)
+        {
+            var result = _ITSupporterDomain.UpdateIsBusyOFITSupporter(itsupporter_id);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
     }

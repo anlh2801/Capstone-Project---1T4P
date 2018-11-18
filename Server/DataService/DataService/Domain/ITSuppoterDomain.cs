@@ -22,11 +22,17 @@ namespace DataService.Domain
 
         ResponseObject<bool> EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
 
-        ResponseObject<bool> UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model);
+        ResponseObject<bool> UpdateTaskStatus(int requestTaskId, bool isDone);
+
+        ResponseObject<bool> DeleteTaskStatus(int requestTaskId);
 
         ResponseObject<bool> UpdateProfile(ITSupporterUpdateProfileAPIViewModel model);
 
+        ResponseObject<List<ITSupporterCreateTaskAPIViewModel>> GetAllTaskByRequestId(int requestId);
+
         ResponseObject<bool> CreateTask(ITSupporterCreateTaskAPIViewModel model);
+
+        ResponseObject<bool> CreateTaskFromGuidline(List<ITSupporterCreateTaskAPIViewModel> model);
 
         ResponseObject<bool> SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model);
 
@@ -53,6 +59,9 @@ namespace DataService.Domain
         ResponseObject<bool> RemoveSkill(int itsupporterId, int serviceITSupportId);
 
         ResponseObject<bool> UpdateITSup(ITSupporterAPIViewModel model);
+        ResponseObject<int> UpdateIsBusyOFITSupporter(int itsupporterId);
+
+        ResponseObject<ITSupporterStatisticForMobileAPIViewModel> ITSuppoterStatisticAll(int itsupporterId);
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain
@@ -102,15 +111,24 @@ namespace DataService.Domain
             return result;
         }
 
-        public ResponseObject<bool> UpdateTaskStatus(ITSupporterUpdateTaskStatusAPIViewModel model)
+        public ResponseObject<bool> UpdateTaskStatus(int requestTaskId, bool isDone)
         {
             var iTSupporterService = this.Service<IITSupporterService>();
 
-            var result = iTSupporterService.UpdateTaskStatus(model);
+            var result = iTSupporterService.UpdateTaskStatus(requestTaskId, isDone);
 
             return result;
         }
 
+        public ResponseObject<bool> DeleteTaskStatus(int requestTaskId)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.DeleteTaskStatus(requestTaskId);
+
+            return result;
+        }
+       
         public ResponseObject<bool> UpdateProfile(ITSupporterUpdateProfileAPIViewModel model)
         {
             var iTSupporterService = this.Service<IITSupporterService>();
@@ -129,6 +147,24 @@ namespace DataService.Domain
             return result;
         }
 
+        public ResponseObject<bool> CreateTaskFromGuidline(List<ITSupporterCreateTaskAPIViewModel> model)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.CreateTaskFromGuidline(model);
+
+            return result;
+        }
+
+        public ResponseObject<List<ITSupporterCreateTaskAPIViewModel>> GetAllTaskByRequestId(int requestId)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.GetAllTaskByRequestId(requestId);
+
+            return result;
+        }
+        
         public ResponseObject<bool> SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model)
         {
             var iTSupporterService = this.Service<IITSupporterService>();
@@ -162,6 +198,15 @@ namespace DataService.Domain
             var iTSupporterService = this.Service<IITSupporterService>();
 
             var result = iTSupporterService.ITSuppoterStatistic(itsupporterId, year, month);
+
+            return result;
+        }
+
+        public ResponseObject<ITSupporterStatisticForMobileAPIViewModel> ITSuppoterStatisticAll(int itsupporterId)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.ITSuppoterStatisticAll(itsupporterId);
 
             return result;
         }
@@ -209,7 +254,6 @@ namespace DataService.Domain
 
             return result;
         }
-
         public ResponseObject<List<ITSupporterAPIViewModel>> ViewSkillITSupporter(int itSupporter_id)
         {
             var itSupporterService = this.Service<IITSupporterService>();
@@ -235,6 +279,16 @@ namespace DataService.Domain
 
             return result;
         }
+
+        public ResponseObject<int> UpdateIsBusyOFITSupporter(int itsupporterId)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.UpdateIsBusyOFITSupporter(itsupporterId);
+
+            return result;
+        }
+
 
         public ResponseObject<bool> RemoveSkill(int itsupporterId, int serviceITSupportId)
         {

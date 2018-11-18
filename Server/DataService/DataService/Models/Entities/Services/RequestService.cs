@@ -33,7 +33,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept);
 
-        ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestByRequestIdAndITSupporterId(int requestId, int itSupporterId);
+        ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestByRequestIdAndITSupporterId(int itSupporterId);
 
         ResponseObject<List<StatusAPIViewModel>> GetRequestStatistic();
     }
@@ -219,7 +219,7 @@ namespace DataService.Models.Entities.Services
                     //    String.Format("about {0} days ago", timeSpan.Days) :
                     //    "hôm qua";
                     result = timeSpan.Days > 1 ?
-                        dateTime.ToString("dd/MM/yyyy") :
+                        dateTime.ToString("dd/MM/yyyy HH:mm") :
                         "hôm qua";
                 }
                 //else if (timeSpan <= TimeSpan.FromDays(365))
@@ -236,7 +236,7 @@ namespace DataService.Models.Entities.Services
                 //}
                 else
                 {
-                    result = dateTime.ToString("dd/MM/yyyy");
+                    result = dateTime.ToString("dd/MM/yyyy HH:mm");
                 }
 
                 return result;
@@ -256,7 +256,7 @@ namespace DataService.Models.Entities.Services
                 List<RequestAllTicketWithStatusAgencyAPIViewModel> requestList = new List<RequestAllTicketWithStatusAgencyAPIViewModel>();
 
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
-                var requests = requestRepo.GetActive(x => x.RequestStatus == status && x.AgencyId == acency_id).ToList();
+                var requests = requestRepo.GetActive(x => x.RequestStatus == status && x.AgencyId == acency_id).OrderByDescending(p => p.CreateDate).ToList();
 
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
 
@@ -374,7 +374,7 @@ namespace DataService.Models.Entities.Services
                         requestHistoryRepo.Save();
 
                         request.RequestStatus = status;
-                        request.ITSupporter.IsBusy = false;
+                        //request.ITSupporter.IsBusy = false;
                         request.EndTime = DateTime.UtcNow.AddHours(7);
                         request.UpdateDate = DateTime.UtcNow.AddHours(7);
                         foreach (var item in request.Tickets)
@@ -613,15 +613,13 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestByRequestIdAndITSupporterId(int requestId, int itSupporterId)
+        public ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestByRequestIdAndITSupporterId(int itSupporterId)
         {
             try
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
-                var request = requestRepo.GetActive(x => x.RequestId == requestId
-                && x.CurrentITSupporter_Id == itSupporterId
-                && x.RequestStatus != (int)RequestStatusEnum.Done
-                && x.RequestStatus != (int)RequestStatusEnum.Cancel).SingleOrDefault();
+                var request = requestRepo.GetActive(x => x.CurrentITSupporter_Id == itSupporterId
+                && x.RequestStatus == (int)RequestStatusEnum.Processing).SingleOrDefault();
 
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
 
@@ -631,7 +629,7 @@ namespace DataService.Models.Entities.Services
                 }
 
                 List<AgencyCreateTicketAPIViewModel> ticketList = new List<AgencyCreateTicketAPIViewModel>();
-                var tickets = ticketRepo.GetActive(p => p.RequestId == requestId).ToList();
+                var tickets = ticketRepo.GetActive(p => p.RequestId == request.RequestId).ToList();
                 foreach (var ticketItem in tickets)
                 {
                     var ticket = new AgencyCreateTicketAPIViewModel();
@@ -674,7 +672,8 @@ namespace DataService.Models.Entities.Services
                     NumberOfTicket = ticketList.Count,
                     ServiceItemId = request.ServiceItemId,
                     ServiceItemName = request.ServiceItem.ServiceItemName,
-                    AgencyId = request.AgencyId,                    
+                    AgencyId = request.AgencyId,
+                    AgencyAddress = request.Agency.Address,
                     Tickets = ticketList
                 };
 
