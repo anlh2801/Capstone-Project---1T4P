@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.firebase.client.Firebase;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.odts.it_supporter_app.R;
 import com.odts.it_supporter_app.models.Request;
@@ -24,19 +25,25 @@ import com.odts.it_supporter_app.services.ITSupporterService;
 import com.odts.it_supporter_app.services.RequestService;
 import com.odts.it_supporter_app.utils.CallBackData;
 
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class DoRequestFragment extends Fragment {
     private RequestService _requestService;
 
-    Button btnDone, btnStart, btnTimeLine;
     com.getbase.floatingactionbutton.FloatingActionButton btnCall , btnChat , flbGuidline;
     Integer itSupporterId = 0;
     Integer requestId = 0;
     RequestService requestService;
     ITSupporterService itSupporterService;
-    TextView rqName;
+    TextView rqName, agencyName, agencyAddress, createDate;
     String serviceItemName;
     Integer serviceItemId = 0;
+    Button btnAccept, bt2, bt3, bt4, bt5;
+    Firebase reference1;
 
     public DoRequestFragment() {
         _requestService = new RequestService();
@@ -56,10 +63,12 @@ public class DoRequestFragment extends Fragment {
         final FloatingActionsMenu menu = v.findViewById(R.id.multiple_actions);
         btnCall = v.findViewById(R.id.action_a);
         btnChat = v.findViewById(R.id.action_b);
-        btnTimeLine = v.findViewById(R.id.btnTime);
         requestService = new RequestService();
         itSupporterService = new ITSupporterService();
         rqName = (TextView) v.findViewById(R.id.txtRequestName);
+        agencyName = v.findViewById(R.id.txtAgency);
+        agencyAddress = v.findViewById(R.id.txtAddress);
+        createDate = v.findViewById(R.id.txtCreateDate);
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         itSupporterId = share.getInt("itSupporterId", 0);
@@ -70,6 +79,9 @@ public class DoRequestFragment extends Fragment {
                 serviceItemId = request.getServiceItemId();
                 serviceItemName = request.getServiceItemName();
                 rqName.setText(request.getRequestName());
+                agencyName.setText("Cửa hàng: " + request.getAgencyName());
+                agencyAddress.setText("Địa chỉ: " + request.getAgencyAddress());
+                createDate.setText("Tạo vào: " + request.getCreateDate());
                 btnCall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -92,13 +104,55 @@ public class DoRequestFragment extends Fragment {
                         startActivity(intent);
                     }
                 });
-
-                btnTimeLine.setOnClickListener(new View.OnClickListener() {
+                Firebase.setAndroidContext(getActivity());
+                reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" + requestId);
+                final Map<String, String> map = new HashMap<String, String>();
+                btnAccept = v.findViewById(R.id.button31);
+                btnAccept.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), StatusTimelineActivity.class);
-                        intent.putExtra("requestIDTime", request.getRequestId());
-                        startActivity(intent);
+                        map.put("status", "Đã nhận");
+                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
+                        reference1.push().setValue(map);
+                    }
+                });
+                bt2 = v.findViewById(R.id.button32);
+                bt2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        map.put("status", "Đang di chuyển");
+                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
+                        reference1.push().setValue(map);
+                    }
+                });
+                bt3 = v.findViewById(R.id.button33);
+                bt3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        map.put("status", "Đang sửa chữa");
+                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
+                        reference1.push().setValue(map);
+                    }
+                });
+                bt4 = v.findViewById(R.id.button34);
+                bt4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        map.put("status", "Đợi linh kiện");
+                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
+                        reference1.push().setValue(map);
+                    }
+                });
+
+                bt5 = v.findViewById(R.id.button35);
+                bt5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        map.put("status", "Hoàn thành");
+                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
+                        reference1.push().setValue(map);
+                        itSupporterService.updateBusyIT(getContext(), itSupporterId);
+
                     }
                 });
             }
@@ -107,20 +161,6 @@ public class DoRequestFragment extends Fragment {
             public void onFail(String message) {
             }
         });
-//        btnDone = v.findViewById(R.id.btnDone);
-//        btnDone.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                _requestService.updateStatusRequest(getContext(), requestId, Enums.RequestStatusEnum.Done.getIntValue());
-//            }
-//        });
-//        btnStart = v.findViewById(R.id.btnStart);
-//        btnStart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                itSupporterService.updateStartTime(getContext(), requestId, DateFormat.getDateTimeInstance().format(new Date()));
-//            }
-//        });
         flbGuidline =  v.findViewById(R.id.action_c);
         flbGuidline.setOnClickListener(new View.OnClickListener() {
             @Override

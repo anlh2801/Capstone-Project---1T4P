@@ -58,6 +58,16 @@ public class Request {
     @SerializedName("Tickets")
     private List<Ticket> ticket;
 
+    @SerializedName("AgencyAddress")
+    private String agencyAddress;
+
+    public String getAgencyAddress() {
+        return agencyAddress;
+    }
+
+    public void setAgencyAddress(String agencyAddress) {
+        this.agencyAddress = agencyAddress;
+    }
 
     public Integer getRequestId() {
         return requestId;
