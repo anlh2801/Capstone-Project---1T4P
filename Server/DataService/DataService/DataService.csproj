@@ -141,6 +141,7 @@
     <Compile Include="APIViewModels\ITSupporterAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyCreateRequestAPIViewModel.cs" />
     <Compile Include="APIViewModels\ITSupporterStatisticAPIViewModel.cs" />
+    <Compile Include="APIViewModels\ITSupporterStatisticForMobileAPIViewModel.cs" />
     <Compile Include="APIViewModels\ITSupporterStatisticServiceTimeAPIViewModel.cs" />
     <Compile Include="APIViewModels\ITSupporterCreateTaskAPIViewModel.cs" />
     <Compile Include="APIViewModels\AgencyCreateTicketAPIViewModel.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="APIViewModels\RequestAllTicketWithStatusAgencyAPIViewModel.cs" />
     <Compile Include="APIViewModels\RequestCancelAPIViewModel.cs" />
     <Compile Include="APIViewModels\RequestDetailAPIViewModel.cs" />
+    <Compile Include="APIViewModels\RequestGroupMonth.cs" />
     <Compile Include="APIViewModels\RoleAPIViewModel.cs" />
     <Compile Include="APIViewModels\ServiceItemAPIViewModel.cs" />
     <Compile Include="APIViewModels\ServiceItemUpdateAPIViewModel.cs" />

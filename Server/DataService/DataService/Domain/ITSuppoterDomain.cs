@@ -53,6 +53,8 @@ namespace DataService.Domain
         ResponseObject<bool> GetIsBusyOFITSupporter(int itsupporterId);
 
         ResponseObject<int> UpdateIsBusyOFITSupporter(int itsupporterId);
+
+        ResponseObject<ITSupporterStatisticForMobileAPIViewModel> ITSuppoterStatisticAll(int itsupporterId);
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain
@@ -189,6 +191,15 @@ namespace DataService.Domain
             var iTSupporterService = this.Service<IITSupporterService>();
 
             var result = iTSupporterService.ITSuppoterStatistic(itsupporterId, year, month);
+
+            return result;
+        }
+
+        public ResponseObject<ITSupporterStatisticForMobileAPIViewModel> ITSuppoterStatisticAll(int itsupporterId)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.ITSuppoterStatisticAll(itsupporterId);
 
             return result;
         }

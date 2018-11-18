@@ -49,6 +49,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage UpdateIsBusyOFITSupporter(int itsupporter_id);
 
         HttpResponseMessage DeleteTaskStatus(int requestTaskId);
+
+        HttpResponseMessage ITSuppoterStatisticAll(int itsupporterId);
     }
 
     public class ITSupporterController : ApiController, IITSupporterController
@@ -198,6 +200,15 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage ITSuppoterStatistic(int itsupporterId, int year, int month)
         {
             var result = _ITSupporterDomain.ITSuppoterStatistic(itsupporterId, year, month);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        [Route("ITsupporter/view_itsupporter_statistic_all")]
+        public HttpResponseMessage ITSuppoterStatisticAll(int itsupporterId)
+        {
+            var result = _ITSupporterDomain.ITSuppoterStatisticAll(itsupporterId);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
