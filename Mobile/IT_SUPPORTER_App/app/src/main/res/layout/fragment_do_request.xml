@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,10 +12,11 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="139dp"
             android:background="@color/background"
             android:orientation="vertical"
             android:paddingLeft="20dp"
@@ -33,21 +35,31 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/txtAgency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="Cửa hàng"
+                android:text=""
                 android:textColor="#616161"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/endDateDone"
+                android:id="@+id/txtAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
                 android:layout_marginBottom="15dp"
-                android:text="địa chỉ"
+                android:layout_marginRight="10dp"
+                android:text=""
+                android:textColor="#616161"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtCreateDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginRight="10dp"
+                android:text=""
                 android:textColor="#616161"
                 android:textStyle="bold" />
 
@@ -57,11 +69,11 @@
             android:id="@+id/multiple_actions"
             android:layout_width="200dp"
             android:layout_height="538dp"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
             fab:fab_addButtonColorNormal="@color/colorAccent"
             fab:fab_addButtonColorPressed="@color/colorAccentLight"
             fab:fab_addButtonPlusIconColor="@color/white"
@@ -76,8 +88,7 @@
                 fab:fab_colorNormal="@color/accent"
                 fab:fab_colorPressed="@color/ripple"
                 fab:fab_icon="@drawable/ic_local_phone_black_24dp"
-                fab:fab_title="Điện thoại"
-                />
+                fab:fab_title="Điện thoại" />
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/action_b"
@@ -98,32 +109,60 @@
                 fab:fab_title="Hướng dẫn" />
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
-        <!--<TextView-->
-            <!--android:id="@+id/txtRequestName"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:layout_marginEnd="8dp"-->
-            <!--android:layout_marginStart="8dp"-->
-            <!--android:layout_marginTop="108dp"-->
-            <!--android:text="@string/hello_blank_fragment"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent" />-->
+        <RelativeLayout
+            android:layout_width="167dp"
+            android:layout_height="309dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="192dp"
+            fab:layout_constraintStart_toStartOf="parent"
+            fab:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/btnTime"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="76dp"
-            android:layout_marginEnd="140dp"
-            android:layout_marginStart="8dp"
-            android:text="TimeLine"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.985"
-            app:layout_constraintStart_toStartOf="parent" />
+            <info.hoang8f.android.segmented.SegmentedGroup
+                android:id="@+id/segmented3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                segmentedgroup:sc_border_width="1dp"
+                segmentedgroup:sc_corner_radius="5dp"
+                segmentedgroup:sc_tint_color="#009688">
 
+                <RadioButton
+                    android:id="@+id/button31"
+                    style="@style/RadioButton"
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:text="Đã nhận" />
+
+                <RadioButton
+                    android:id="@+id/button32"
+                    style="@style/RadioButton"
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:text="Đang di chuyển" />
+
+                <RadioButton
+                    android:id="@+id/button33"
+                    style="@style/RadioButton"
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:text="Đang sửa chữa" />
+
+                <RadioButton
+                    android:id="@+id/button34"
+                    style="@style/RadioButton"
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:text="Đợi linh kiện" />
+
+                <RadioButton
+                    android:id="@+id/button35"
+                    style="@style/RadioButton"
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:text="Hoàn thành" />
+            </info.hoang8f.android.segmented.SegmentedGroup>
+        </RelativeLayout>
 
     </android.support.constraint.ConstraintLayout>
 
