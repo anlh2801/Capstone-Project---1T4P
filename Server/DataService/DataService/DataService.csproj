@@ -157,6 +157,7 @@
     <Compile Include="APIViewModels\ServiceItemAPIViewModel.cs" />
     <Compile Include="APIViewModels\ServiceItemUpdateAPIViewModel.cs" />
     <Compile Include="APIViewModels\ServiceITSupportAPIViewModel.cs" />
+    <Compile Include="APIViewModels\SkillAPIViewModel.cs" />
     <Compile Include="APIViewModels\StatusAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketAPIViewModel.cs" />
     <Compile Include="APIViewModels\TicketForRequestAllTicketStatusAPIViewModel.cs" />

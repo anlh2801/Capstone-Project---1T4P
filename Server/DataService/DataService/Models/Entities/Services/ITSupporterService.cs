@@ -48,6 +48,17 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> GetIsBusyOFITSupporter(int itsupporterId);
 
+        ResponseObject<List<ITSupporterAPIViewModel>> ViewSkillITSupporter(int itSupporter_id);
+
+        ResponseObject<bool> CreateITSuport(ITSupporterAPIViewModel model);
+
+        ResponseObject<bool> AddSkill(SkillAPIViewModel model);
+
+        ResponseObject<bool> RemoveSkill(int itsupporterId, int serviceITSupportId);
+
+        ResponseObject<bool> RemoveITSuporter(int itsupporterId);
+
+        ResponseObject<bool> UpdateITSup(ITSupporterAPIViewModel model);
     }
 
     public partial class ITSupporterService
@@ -376,7 +387,7 @@ namespace DataService.Models.Entities.Services
 
                     requestTaskRepo.Edit(setPriorityTask);
 
-                   requestTaskRepo.Save();
+                    requestTaskRepo.Save();
                     return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Cập nhật độ ưu thành công" };
                 }
 
@@ -545,6 +556,7 @@ namespace DataService.Models.Entities.Services
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Hủy yêu cầu thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
             }
         }
+
         public ResponseObject<bool> UpdateStartTime(int request_id, DateTime start_time)
         {
             try
@@ -629,6 +641,202 @@ namespace DataService.Models.Entities.Services
 
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Hủy yêu cầu thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
             }
+        }
+
+        public ResponseObject<List<ITSupporterAPIViewModel>> ViewSkillITSupporter(int itSupporter_id)
+        {
+            var SkillITSupporterRepo = DependencyUtils.Resolve<ISkillRepository>();
+            var skillITSupporter = SkillITSupporterRepo.GetActive(i => i.ITSupporterId == itSupporter_id).ToList();
+            List<ITSupporterAPIViewModel> rsList = new List<ITSupporterAPIViewModel>();
+            if (skillITSupporter != null)
+            {
+                foreach (var item in skillITSupporter)
+                {
+                    var skillAPIViewModel = new ITSupporterAPIViewModel
+                    {
+                        ServiceITSupportName = item.ServiceITSupport.ServiceName,
+                        MonthExperience = item.MonthExperience + " tháng"
+                    };
+                    rsList.Add(skillAPIViewModel);
+                }
+                return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Lấy chi tiết thành công" };
+            }
+            return new ResponseObject<List<ITSupporterAPIViewModel>> { IsError = true, WarningMessage = "Không tồn tại nhân viên này" };
+        }
+
+        public ResponseObject<bool> CreateITSuport(ITSupporterAPIViewModel model)
+        {
+            try
+            {
+                var accountRepo = DependencyUtils.Resolve<IAccountRepository>();
+                var account = new Account();
+                account.RoleId = model.RoleId;
+                account.Username = model.Username.ToString();
+                account.Password = model.Password.ToString();
+                account.IsDelete = false;
+                account.CreateDate = DateTime.UtcNow.AddHours(7);
+                account.UpdateDate = DateTime.UtcNow.AddHours(7);
+
+                accountRepo.Add(account);
+                accountRepo.Save();
+
+                var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var createitSupporter = new ITSupporter();
+
+                createitSupporter.AccountId = accountRepo.GetActive().SingleOrDefault(a => a.Username == model.Username).AccountId;
+                createitSupporter.ITSupporterName = model.ITSupporterName.ToString();
+                createitSupporter.Telephone = model.Telephone.ToString();
+                createitSupporter.Email = model.Email.ToString();
+                createitSupporter.Address = model.Address.ToString();
+                createitSupporter.IsBusy = false;
+                createitSupporter.IsOnline = true;
+                createitSupporter.Gender = 1;
+                createitSupporter.IsDelete = false;
+                createitSupporter.CreateDate = DateTime.UtcNow.AddHours(7);
+                createitSupporter.UpdateDate = DateTime.UtcNow.AddHours(7);
+
+                itSupporterRepo.Add(createitSupporter);
+                itSupporterRepo.Save();
+
+                var skillRepo = DependencyUtils.Resolve<ISkillRepository>();
+                var createSkill = new Skill();
+
+                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Thêm nhân viên thành công", ObjReturn = true };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Thêm nhân viên thất bại", ErrorMessage = ex.ToString(), ObjReturn = false };
+            }
+
+        }
+
+        public ResponseObject<bool> AddSkill(SkillAPIViewModel model)
+        {
+            try
+            {
+                var SkillRepo = DependencyUtils.Resolve<ISkillRepository>();
+                var curSkill = SkillRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == model.ITSupporterId && a.ServiceITSupportId == model.ServiceITSupportId);
+
+                if (curSkill != null)
+                {
+                    curSkill.MonthExperience = model.MonthExperience;
+                    curSkill.UpdateDate = DateTime.UtcNow.AddHours(7);
+
+                    SkillRepo.Edit(curSkill);
+                    SkillRepo.Save();
+                }
+                else
+                {
+                    var Skill = new Skill();
+
+                    Skill.ITSupporterId = model.ITSupporterId;
+                    Skill.ServiceITSupportId = model.ServiceITSupportId;
+                    Skill.MonthExperience = model.MonthExperience;
+                    Skill.IsDelete = false;
+                    Skill.CreateDate = DateTime.UtcNow.AddHours(7);
+                    Skill.UpdateDate = DateTime.UtcNow.AddHours(7);
+                    SkillRepo.Add(Skill);
+                    SkillRepo.Save();
+                }
+                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Tạo kinh nghiệm thành công!", ObjReturn = true };
+            }
+            catch (Exception e)
+            {
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Tạo kinh nghiệm thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
+            }
+        }
+        public ResponseObject<bool> RemoveSkill(int itsupporterId,int serviceITSupportId)
+        {
+            {
+                try
+                {
+                    var SkillRepo = DependencyUtils.Resolve<ISkillRepository>();
+                    var curSkill = SkillRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == itsupporterId && a.ServiceITSupportId == serviceITSupportId);
+                    if (curSkill == null)
+                    {
+                        return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa kinh nghiệm thất bại!", ObjReturn = false };
+                    }
+                    Deactivate(curSkill);
+                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Xóa kinh nghiệm thành công!", ObjReturn = true };
+                }
+                catch (Exception e)
+                {
+                    return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa kinh nghiệm thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
+                }
+            }
+        }
+
+        public ResponseObject<bool> RemoveITSuporter(int itsupporterId)
+        {
+            {
+                try
+                {
+                    var SkillRepo = DependencyUtils.Resolve<ISkillRepository>();
+                    var ITSupRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                    var AccountRepo = DependencyUtils.Resolve<IAccountRepository>();
+                    var Skills = SkillRepo.GetActive(p => p.ITSupporterId == itsupporterId).ToList();
+                    var ITSup = ITSupRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == itsupporterId);
+                    var ITAccount = AccountRepo.GetActive().SingleOrDefault(a => a.AccountId == ITSup.AccountId);
+
+                    foreach (var item in Skills)
+                    {
+                        if (item == null)
+                        {
+                            return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa kinh nghiệm nhân viên thất bại!", ObjReturn = false };
+                        }
+                        item.IsDelete = true;
+                    }
+                    if (ITAccount == null)
+                    {
+                        return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa tài khoản nhân viên thất bại!", ObjReturn = false };
+                    }
+                    ITAccount.IsDelete = true;
+                    if (ITSup == null)
+                    {
+                        return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa nhân viên thất bại!", ObjReturn = false };
+                    }
+                    Deactivate(ITSup);
+
+                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Xóa nhân viên thành công!", ObjReturn = true };
+                }
+                catch (Exception e)
+                {
+                    return new ResponseObject<bool> { IsError = true, WarningMessage = "Xóa nhân viên thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
+                }
+            }
+        }
+
+        public ResponseObject<bool> UpdateITSup(ITSupporterAPIViewModel model)
+        {
+            var ITSupRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+            var AccountRepo = DependencyUtils.Resolve<IAccountRepository>();
+            var ITSupUpdate = ITSupRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == model.ITSupporterId);
+            var ITAccountUpdate = AccountRepo.GetActive().SingleOrDefault(a => a.Username == model.OldUsername);
+
+            if (ITAccountUpdate != null)
+            {
+                ITAccountUpdate.RoleId = model.RoleId;
+                ITAccountUpdate.Username = model.Username;
+                ITAccountUpdate.Password = model.Password;
+                ITAccountUpdate.UpdateDate = DateTime.UtcNow.AddHours(7);
+
+                AccountRepo.Edit(ITAccountUpdate);
+                AccountRepo.Save();
+            }
+            if (ITSupUpdate != null)
+            {
+                ITSupUpdate.ITSupporterName = model.ITSupporterName;
+                ITSupUpdate.Telephone = model.Telephone;
+                ITSupUpdate.Email = model.Email;
+                ITSupUpdate.Address = model.Address;
+                ITSupUpdate.UpdateDate = DateTime.UtcNow.AddHours(7);
+
+                ITSupRepo.Edit(ITSupUpdate);
+                ITSupRepo.Save();
+                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Chỉnh sửa nhân viên thành công", ObjReturn = true };
+            }
+
+            return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉnh sửa nhân viên thất bại", ObjReturn = false };
         }
     }
 }

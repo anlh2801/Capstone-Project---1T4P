@@ -13,6 +13,7 @@ namespace DataService.APIViewModels
         public string ITSupporterName { get; set; }
         public int AccountId { get; set; }
         public string Username { get; set; }
+        public string OldUsername { get; set; }
         public string Telephone { get; set; }
         public string Email { get; set; }
         public string Gender { get; set; }
@@ -25,7 +26,11 @@ namespace DataService.APIViewModels
         public string CreateDate { get; set; }
         public string UpdateDate { get; set; }
         public int RequestWattingForAccept { get; set; }
-        public string Skill { get; set; }
+        public string ServiceITSupportName { get; set; }
         public string Password { get; set; }
+        public string MonthExperience { get; set; }
+        public int ServiceITSupportId { get; set; }
+        public int RoleId { get; set; }
+
     }
 }

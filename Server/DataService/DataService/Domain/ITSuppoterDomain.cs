@@ -45,6 +45,14 @@ namespace DataService.Domain
         ResponseObject<bool> GetIsOnlineOFITSupporter(int itsupporterId);
 
         ResponseObject<bool> GetIsBusyOFITSupporter(int itsupporterId);
+
+        ResponseObject<List<ITSupporterAPIViewModel>> ViewSkillITSupporter(int itSupporter_id);
+
+        ResponseObject<bool> CreateITSuport(ITSupporterAPIViewModel model);
+
+        ResponseObject<bool> RemoveSkill(int itsupporterId, int serviceITSupportId);
+
+        ResponseObject<bool> UpdateITSup(ITSupporterAPIViewModel model);
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain
@@ -75,7 +83,7 @@ namespace DataService.Domain
 
             return itSupporter;
         }
-
+   
         public ResponseObject<List<TicketAPIViewModel>> ViewAllOwnerTicket(int ITsupporter_id)
         {
             var ITSupporterService = this.Service<IITSupporterService>();
@@ -202,6 +210,56 @@ namespace DataService.Domain
             return result;
         }
 
+        public ResponseObject<List<ITSupporterAPIViewModel>> ViewSkillITSupporter(int itSupporter_id)
+        {
+            var itSupporterService = this.Service<IITSupporterService>();
 
+            var itSupporter = itSupporterService.ViewSkillITSupporter(itSupporter_id);
+
+            return itSupporter;
+        }
+
+        public ResponseObject<bool> CreateITSuport(ITSupporterAPIViewModel model)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.CreateITSuport(model);
+
+            return result;
+        }
+        public ResponseObject<bool> AddSkill(SkillAPIViewModel model)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.AddSkill(model);
+
+            return result;
+        }
+
+        public ResponseObject<bool> RemoveSkill(int itsupporterId, int serviceITSupportId)
+        {
+            var itSupporterService = this.Service<IITSupporterService>();
+
+            var itSupporter = itSupporterService.RemoveSkill(itsupporterId, serviceITSupportId);
+
+            return itSupporter;
+        }
+        public ResponseObject<bool> RemoveITSuporter(int itsupporterId)
+        {
+            var itSupporterService = this.Service<IITSupporterService>();
+
+            var itSupporter = itSupporterService.RemoveITSuporter(itsupporterId);
+
+            return itSupporter;
+        }
+
+        public ResponseObject<bool> UpdateITSup(ITSupporterAPIViewModel model)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.UpdateITSup(model);
+
+            return result;
+        }
     }
 }
