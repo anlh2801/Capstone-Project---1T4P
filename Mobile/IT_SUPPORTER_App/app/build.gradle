@@ -16,6 +16,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    allprojects {
+        repositories {
+            maven { url 'https://jitpack.io' }
+        }
+    }
 }
 
 dependencies {
@@ -41,5 +46,7 @@ dependencies {
     implementation 'info.androidhive:barcode-reader:1.1.2'
     implementation 'com.google.android.gms:play-services-vision:11.0.2'
     compile 'info.hoang8f:android-segmented:1.0.6'
+    implementation 'com.github.ome450901:SimpleRatingBar:1.4.2'
+    compile 'com.github.andyxialm:SmoothCheckBox:4d4825562b'
 }
 apply plugin: 'com.google.gms.google-services'

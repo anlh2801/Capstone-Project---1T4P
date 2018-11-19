@@ -9,6 +9,20 @@ public class ITSupporter {
     private String itSupporterName;
     @SerializedName("AccountId")
     private Integer accountId;
+    @SerializedName("Telephone")
+    private String telephone;
+    @SerializedName("Email")
+    private String email;
+    @SerializedName("RatingAVG")
+    private float ratingAVG;
+
+    public float getRatingAVG() {
+        return ratingAVG;
+    }
+
+    public void setRatingAVG(float ratingAVG) {
+        this.ratingAVG = ratingAVG;
+    }
 
     public Integer getItSupporterId() {
         return itSupporterId;
@@ -32,5 +46,21 @@ public class ITSupporter {
 
     public void setAccountId(Integer accountId) {
         this.accountId = accountId;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
