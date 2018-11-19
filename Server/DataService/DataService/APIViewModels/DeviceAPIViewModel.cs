@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataService.APIViewModels
 {
-    public class DeviceAPIViewModel : DataService.ViewModels.BaseEntityViewModel<DataService.Models.Entities.Device>
+    public class DeviceAPIViewModel
     {
-        public DeviceAPIViewModel() : base() { }
-        public DeviceAPIViewModel(DataService.Models.Entities.Device entity) : base(entity) { }
-
         public int NumericalOrder { get; set; }
         public int DeviceId { get; set; }
         public int AgencyId { get; set; }
