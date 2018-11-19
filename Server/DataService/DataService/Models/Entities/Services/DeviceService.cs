@@ -142,12 +142,12 @@ namespace DataService.Models.Entities.Services
                     };
                     return new ResponseObject<DeviceAPIViewModel> { IsError = false, ObjReturn = deviceAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
                 }
-                return new ResponseObject<DeviceAPIViewModel> { IsError = true, WarningMessage = "Không tồn tại hợp đồng này" };
+                return new ResponseObject<DeviceAPIViewModel> { IsError = true, WarningMessage = "Không tồn tại thiết bị này" };
             }
             catch (Exception e)
             {
 
-                return new ResponseObject<DeviceAPIViewModel> { IsError = true, WarningMessage = "Không tồn tại hợp đồng này", ObjReturn = null, ErrorMessage = e.ToString() };
+                return new ResponseObject<DeviceAPIViewModel> { IsError = true, WarningMessage = "Không tồn tại thiết bị này", ObjReturn = null, ErrorMessage = e.ToString() };
             }
 
         }
@@ -184,12 +184,12 @@ namespace DataService.Models.Entities.Services
                     };
                     return new ResponseObject<DeviceAPIViewModel> { IsError = false, ObjReturn = deviceAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
                 }
-                return new ResponseObject<DeviceAPIViewModel> { IsError = true, WarningMessage = "Không tồn tại hợp đồng này" };
+                return new ResponseObject<DeviceAPIViewModel> { IsError = true, WarningMessage = "Không tồn tại thiết bị này" };
             }
             catch (Exception e)
             {
 
-                return new ResponseObject<DeviceAPIViewModel> { IsError = true, WarningMessage = "Không tồn tại hợp đồng này", ObjReturn = null, ErrorMessage = e.ToString() };
+                return new ResponseObject<DeviceAPIViewModel> { IsError = true, WarningMessage = "Không tồn tại thiết bị này", ObjReturn = null, ErrorMessage = e.ToString() };
             }
 
         }

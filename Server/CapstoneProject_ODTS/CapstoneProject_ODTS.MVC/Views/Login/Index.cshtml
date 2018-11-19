@@ -3,6 +3,10 @@
     Layout = null;
 }
 
+@{
+    var errorMessage = ViewData["Error"];
+}
+
 <!DOCTYPE html>
 
 <html>
@@ -36,7 +40,7 @@
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 
-<body class="hold-transition login-page" >
+<body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
             <a>-<b>ODTS</b>-</a>
@@ -44,7 +48,6 @@
         <!-- /.login-logo -->
         <div class="login-box-body" style="border:1px solid;">
             <!-- /.p class="login-box-msg">Sign in to start your session</p-->
-
             <div class="form-group has-feedback">
                 <input type="text" id="username" class="form-control" placeholder="Nhập tên đăng nhập">
                 <span class="fa fa-user form-control-feedback"></span>
@@ -75,7 +78,7 @@
 </html>
 
 <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
-    <script>
+<script>
 
         function CheckLogin() {
             $.ajax({
@@ -84,13 +87,14 @@
                 data: {
                     'username': $('#username').val(),
                     'password': $('#password').val(),
-                    'roleid': 1,
+                    'roleId': 1,
                 },
-                success: function(result) {
-                    if (result.isSucess) {
-
+                success: function (result) {
+                    if (!result.isSucess.IsError) {
                         window.location.href = result.urlReturn.toString();
-                    };
+                    } else {
+                        alert(result.isSucess.WarningMessage)
+                    }
                 },
                 error: function(error) {
                     showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
@@ -99,6 +103,6 @@
         }
 
 
-    </script>
+</script>
 
 }
