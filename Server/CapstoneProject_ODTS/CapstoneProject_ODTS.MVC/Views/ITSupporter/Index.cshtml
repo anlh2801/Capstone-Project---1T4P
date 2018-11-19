@@ -32,20 +32,32 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <b>Tên Công Ty:</b><br>
-                            <p id="comName"></p>
+                            <b>Họ Và Tên:</b><br>
+                            <p id="ITSupNameV"></p>
                         </div>
                         <div class="col-md-12">
-                            <b>Mô Tả:</b><br>
-                            <p id="comDescription"></p>
+                            <b>Số Điện Thoại:</b><br>
+                            <p id="ITPhoneV"></p>
                         </div>
                         <div class="col-md-12">
-                            <b>Ngày Tạo:</b><br>
-                            <p id="comCreateDate"></p>
+                            <b>Tên Đăng Nhập:</b><br>
+                            <p id="ITUsernameV"></p>
                         </div>
                         <div class="col-md-12">
-                            <b>Lần Chỉnh Sửa Cuối:</b><br>
-                            <p id="comUpdateDate"></p>
+                            <b>Mật Khẩu:</b><br>
+                            <p id="ITPassV"></p>
+                        </div>
+                        <div class="col-md-12">
+                            <b>Email:</b><br>
+                            <p id="ITEmailV"></p>
+                        </div>
+                        <div class="col-md-12">
+                            <b>Địa Chỉ Thường Trú:</b><br>
+                            <p id="ITAddressV"></p>
+                        </div>
+                        <div class="col-md-12">
+                            <b>Kinh Nghiệm Làm Việc:</b><br>
+                            <p id="ITExpV"></p><b>. Thời gian:</b><p id="ITExpTimeV"></p>
                         </div>
                     </div>
                 </div>
@@ -69,30 +81,33 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <input type="hidden" id="id" />
                             <div class="col-md-6">
-                                <b>Tên Đăng Nhập:</b><br>
-                                <input type="text" class="form-control" id="comDescriptionCreate" />
+                                <b>Quyền Của Tài Khoản:</b><br>
+                                <select class="form-control select2" style="width: 100%;" id="comboRole"></select>
                             </div>
                             <div class="col-md-6">
+                                <b>Tên Đăng Nhập:</b><br>
+                                <input type="text" class="form-control" id="userNameC" />
+                            </div>
+                            <div class="col-md-6" style="margin-top: 10px">
                                 <b>Mật Khẩu:</b><br>
-                                <input type="text" class="form-control" id="comDescriptionCreate" />
+                                <input type="password" class="form-control" id="passC" />
                             </div>
                             <div class="col-md-6" style="margin-top: 10px">
                                 <b>Họ Và Tên:</b><br>
-                                <input type="text" class="form-control" id="comDescriptionCreate" />
+                                <input type="text" class="form-control" id="nameC" />
                             </div>
                             <div class="col-md-6" style="margin-top: 10px">
                                 <b>Số Điện Thoại:</b><br>
-                                <input type="text" class="form-control" id="comDescriptionCreate" />
+                                <input type="text" class="form-control" id="phoneC" />
                             </div>
                             <div class="col-md-6" style="margin-top: 10px">
                                 <b>Email:</b><br>
-                                <input type="text" class="form-control" id="comDescriptionCreate" />
+                                <input type="text" class="form-control" id="emailC" />
                             </div>
                             <div class="col-md-6" style="margin-top: 10px">
                                 <b>Địa Chỉ Thường Trú:</b><br>
-                                <input type="text" class="form-control" id="comDescriptionCreate" />
+                                <input type="text" class="form-control" id="addressC" />
                             </div>
                         </div>
                     </div>
@@ -105,32 +120,6 @@
         </div>
     </div>
 </form>
-<div class="modal fade" id="CreateServiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <p>
-                    <b>Tên Dịch Vụ:</b><br>
-                    <input type="text" id="comNameEdit">
-                <p>
-                    <b>Thời Gian làm Việc:</b><br>
-                    <input type="text" id="comDescriptionEdit">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="UpdateCompany()">Chỉnh Sửa</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <form onsubmit="UpdateITSup(); return false">
     <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -142,13 +131,18 @@
                 <div class="modal-body">
                     <div class="row">
                         <input type="hidden" id="id" />
+                        <input type="hidden" id="userNameEUp" />
+                        <div class="col-md-6">
+                            <b>Quyền Của Tài Khoản:</b><br>
+                            <select id="comboRoleEdit" class="form-control select2" style="width: 100%;" disabled="disabled"></select>
+                        </div>
                         <div class="col-md-6">
                             <b>Tên Đăng Nhập:</b><br>
                             <input type="text" class="form-control" id="userNameE" />
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="margin-top: 10px">
                             <b>Mật Khẩu:</b><br>
-                            <input type="text" class="form-control" id="passE" />
+                            <input type="password" class="form-control" id="passE" />
                         </div>
                         <div class="col-md-6" style="margin-top: 10px">
                             <b>Họ Và Tên:</b><br>
@@ -167,13 +161,13 @@
                             <input type="text" class="form-control" id="addressE" />
                         </div>
                         <div class="col-md-12" style="margin-top: 20px">
-                            <button type="button" class="btn btn-primary fa fa-plus pull-right" data-toggle="modal" data-target="" onclick="showCreateServiceModal()"><font face="verdana"> Thêm Kinh Nghiệm</button>
+                            <button type="button" class="btn btn-primary fa fa-gear pull-right" data-toggle="modal" data-target="" onclick="showCreateServiceModal()"><font face="verdana"> Tùy Chỉnh Kinh Nghiệm</button>
                             <table id="service-table" class="table table-bordered table-hover" cellspacing="0" style="table-layout: auto">
                                 <thead>
                                     <tr>
                                         <th><label>Tên Dịch Vụ</label></th>
                                         <th><label>Thời Gian Làm Việc</label></th>
-                                        <th><label>Chức Năng</label></th>
+                                        <th><label>Xóa</label></th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -185,10 +179,65 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                     <button type="submit" class="btn btn-primary">Chỉnh Sửa</button>
                 </div>
+                <div class="modal fade" id="CreateServiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title"><b>Kinh nghiệm Làm Việc</b></h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <input type="hidden" id="idAdd" />
+                                    <input type="hidden" id="idSerRemove" />
+                                    <div class="col-md-12">
+                                        <b>Tên Dịch Vụ:</b><br>
+                                        <select class="form-control select2" style="width: 100%;" id="ser"></select>
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 10px">
+                                        <b>Thời Gian làm Việc:</b><br>
+                                        <input type="text" class="form-control" id="monthExp">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="hideCreateServiceModal()">Đóng</button>
+                                <button type="button" class="btn btn-primary" onclick="AddSkill(); hideCreateServiceModal();">Lưu</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="modal fade" id="UpdateServiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title"><b>Chỉnh sửa kinh nghiệm Làm Việc</b></h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <input type="hidden" id="idAdd" />
+                                    <input type="hidden" id="idSerRemove" />
+                                    <div class="col-md-12">
+                                        <b>Tên Dịch Vụ:</b><br>
+                                        <select class="form-control select2" style="width: 100%;" id="ser"></select>
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 10px">
+                                        <b>Thời Gian làm Việc:</b><br>
+                                        <input type="text" class="form-control" id="monthExp">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="hideUpdateServiceModal()">Đóng</button>
+                                <button type="button" class="btn btn-primary" onclick="UpdateSkill(); hideUpdateServiceModall();">Lưu Chỉnh Sửa</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
             </div>
         </div>
     </div>
 </form>
+
 <style>
     .city {
         background-color: azure;
@@ -196,6 +245,7 @@
         padding: 1%;
         border-left: solid cadetblue;
         width: 100%;
+        font-family: Arial;
     }
 
     p.one {
@@ -219,7 +269,7 @@
                 <th><label>Tài Khoản</label></th>
                 <th><label>Số Điện Thoại</label></th>
                 <th><label>Trạng Thái</label></th>
-                <th><label>Chức Năng</label></th>
+                <th><label>Tùy Chọn</label></th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -237,11 +287,19 @@
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <script>
         $(document).ready(function() {
-            loadCompany();
-            loadService();
+            loadITSup();
+            showRole();
+            $('#CreateServiceModal').on('show.bs.modal', function () {
+                $(this).find('.modal-dialog').css({
+                    width: '90%',
+                    height: 'auto',
+                    'max-height': '100%'
+                });
+            });
+            showService();
         });
 
-        function loadCompany() {
+        function loadITSup() {
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetAllITSupporter", "ITSupporter")',
@@ -256,13 +314,15 @@
             });
         }
 
-        function loadService() {
+        function loadSkill(iddd) {
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("GetAllITSupporter", "ITSupporter")',
+                url: '@Url.Action("ViewSkillITSupporter", "ITSupporter")',
                 data: {
+                    itSupporter_id: iddd
                 },
                 success: function (result) {
+
                     initServiceDatatable(result.result.ObjReturn);
                 },
                 error: function(error) {
@@ -315,7 +375,7 @@
 
                         "aTargets": [5],
                         "mRender": function (data, type, full) {
-                            var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.ITSupporterId + ')"></button>';
+                            var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.ITSupporterId + ');getDataExp(' + full.ITSupporterId + ')"></button>';
                             var edit = ' <button type="button" class="btn btn-warning fa fa-gears" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.ITSupporterId + ')"></button>';
                             var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeITSup(' + full.ITSupporterId + ')"></button>';
                             return view + " " + edit + " " + del;
@@ -327,6 +387,9 @@
         }
 
         function initServiceDatatable(data) {
+            if (data == null) {
+                $('#service-table').dataTable().fnClearTable();
+            }
             $("#service-table").dataTable().fnDestroy();
             $("#service-table").dataTable({
                 stateSave: true,
@@ -352,27 +415,33 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1, 2],
+                        "aTargets": [0, 1,2],
                         "bSortable": false,
                         "sClass": "text-center"
                     },
                 ],
                 "columns": [
-                    { "data": "NumericalOrder" },
-                    { "data": "ITSupporterName" },
+                    { "data": "ServiceITSupportName" },
+                    { "data": "MonthExperience" },
                     {
-                        "aTargets": [3],
-                        "mRender": function (data, type, full) {
-                            var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="(' + full.CompanyId + ')"></button>';
-                            var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="(' + full.CompanyId + ')"></button>';
-                            return edit + " " + del;
+                        "aTargets": [2],
+                        "mRender": function (data, type, full2) {
+                            //var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEditSkill(' + full2.ServiceITSupportId + ')"></button>';
+                            var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeSkill(' + full2.ServiceITSupportId + ')"></button>';
+                            //return edit + " " + del;
+                            return del;
                         }
                     },
                 ],
                 "bAutoWidth": false,
             });
         }
-
+        function hideCreateServiceModal() {
+            $("#CreateServiceModal").modal("hide");
+        }
+        function hideUpdateServiceModal() {
+            $("#UpdateServiceModal").modal("hide");
+        }
         function showCreateModal() {
             $('#CreateModal').modal('show');
         }
@@ -392,24 +461,99 @@
         }
 
         function getData(idd) {
-
             $.ajax({
-                url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "Company" })',
+                url: '@Url.RouteUrl(new {action = "ViewProfileITSupporter", controller = "ITSupporter" })',
 
                 data: {
-                    company_id: idd
+                    itSupporter_id: idd
                 },
                 type: 'GET',
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#comName").text(data.result.ObjReturn.CompanyName);
-                    $("#comDescription").text(data.result.ObjReturn.Description);
-                    $("#comCreateDate").text(data.result.ObjReturn.CreateDate);
-                    $("#comUpdateDate").text(data.result.ObjReturn.UpdateDate);
+                    $("#ITSupNameV").text(data.result.ObjReturn.ITSupporterName);
+                    $("#ITPhoneV").text(data.result.ObjReturn.Telephone);
+                    $("#ITUsernameV").text(data.result.ObjReturn.Username);
+                    $("#ITPassV").text(data.result.ObjReturn.Password);
+                    $("#ITEmailV").text(data.result.ObjReturn.Email);
+                    $("#ITAddressV").text(data.result.ObjReturn.Address);
+
                 }
                 });
             $('#ViewModal').modal('show');
+        }
+        function getDataExp(idd) {
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "ViewSkillITSupporter", controller = "ITSupporter" })',
+
+                data: {
+                    itSupporter_id: idd
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $("#ITExpV").text(data.result.ObjReturn.ServiceITSupportName);
+                    $("#ITExpTimeV").text(data.result.ObjReturn.MonthExperience);
+
+                }
+                });
+        }
+        function showService() {
+            $('#ser')
+                    .find('option')
+                    .remove()
+                    .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.RouteUrl(new {action = "GetAllServiceITSupport", controller = "ServiceITSupport" })',
+                data: {
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var len = data.result.ObjReturn.length;
+                    var html = '';
+                    for (var i = 0; i < len; i++) {
+                        html += '<option value="' +
+                            data.result.ObjReturn[i].ServiceITSupportId +
+                            '">' +
+                            data.result.ObjReturn[i].ServiceName +
+                            '</option>';
+                    }
+                    $('#ser').append(html);
+                }
+            });
+        }
+        function showRole() {
+            $('#comboRole, #comboRoleEdit')
+                .find('option')
+                .remove()
+                .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllRole", "Role")',
+                data: {
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var obj = data.result.ObjReturn;
+                    var html = '';
+                    for (var i = 0; i < obj.length; i++) {
+                        html += '<option value="' +
+                            obj[i].RoleId +
+                            '">' +
+                            obj[i].RoleName
+                            '</option>';
+                    }
+                    $('#comboRole').append(html);
+                    $('#comboRoleEdit').append(html);
+
+                }
+            });
         }
 
 
@@ -424,47 +568,32 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
+                    $("#userNameEUp").val(data.result.ObjReturn.Username);
+                    $("#idAdd").val(data.result.ObjReturn.ITSupporterId);
+                    var idEdit = data.result.ObjReturn.ITSupporterId;
                     $("#userNameE").val(data.result.ObjReturn.Username);
                     $("#passE").val(data.result.ObjReturn.Password);
                     $("#nameE").val(data.result.ObjReturn.ITSupporterName);
                     $("#phoneE").val(data.result.ObjReturn.Telephone);
                     $("#emailE").val(data.result.ObjReturn.Email);
                     $("#addressE").val(data.result.ObjReturn.Address);
+                    loadSkill(idEdit);
                 }
             });
             $('#EditModal').modal('show');
+
         }
-        function UpdateITSup() {
+
+        function AddSkill(id) {
+            var idEdit = $('#idAdd').val()
             var empObj = {
-                CompanyId: $('#id').val(),
-                CompanyName: $('#comNameEdit').val(),
-                Description: $('#comDescriptionEdit').val(),
+                ITSupporterId: $('#idAdd').val(),
+                ServiceITSupportId: $('#ser').val(),
+                MonthExperience: $('#monthExp').val(),
             }
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("UpdateCompany", "Company")',
-                data: JSON.stringify(empObj),
-                dataType: 'json',
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    $('#EditModal').modal('hide');
-                    if (!data.result.isError) {
-                        alert(data.result.SuccessMessage);
-                    }
-                    else
-                        alert(data.result.WarningMessage);
-                    loadCompany();
-                }
-            });
-        }
-        function CreateITSup() {
-            var empObj = {
-                CompanyName: $('#comNameCreate').val(),
-                Description: $('#comDescriptionCreate').val(),
-            }
-             $.ajax({
-                type: 'POST',
-                url: '@Url.Action("CreateCompany", "Company")',
+                url: '@Url.Action("AddSkill", "ITSupporter")',
                 data: JSON.stringify(empObj),
 
                 dataType: 'json',
@@ -476,29 +605,143 @@
                         }
                         else
                             swal(data.result.WarningMessage, "", "error");
+                    loadSkill(idEdit);
+                }
+            });
+        }
+        function removeSkill(id) {
+            swal({
+                title: 'Bạn có Chắc Chắn Muốn Xóa?',
+                text: "Dữ Liệu Đã Xóa Không Thể Hoàn Lại!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Quay Lại',
+                confirmButtonText: 'Chấp Nhận Xóa!'
+            }).then(function () {
+                deleteSkillOfITSup();
+                swal(
+                    'Đã Xóa!',
+                    'Dữ Liệu Của Bạn Đã Được Xóa.',
+                    'success'
+                )
+            });
+            $('#idSerRemove').val(id);
+        }
 
-                    loadCompany();
+        function deleteSkillOfITSup() {
+            var idEdit = $('#idAdd').val();
+            var itsup_idd = $('#idAdd').val();
+            var skill_id = $('#idSerRemove').val();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("RemoveSkill", "ITSupporter")',
+                data: {
+                    itsupporterId: itsup_idd,
+                    serviceITSupportId: skill_id
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    loadSkill(idEdit);
+                }
+            });
+        }
+        function UpdateITSup() {
+            var empObj = {
+                ITSupporterId: $('#idAdd').val(),
+                RoleId: $('#comboRoleEdit').val(),
+                Username: $('#userNameE').val(),
+                Password: $('#passE').val(),
+                ITSupporterName: $('#nameE').val(),
+                Telephone: $('#phoneE').val(),
+                Email: $('#emailE').val(),
+                Address: $('#addressE').val(),
+                OldUsername: $('#userNameEUp').val(),
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateITSup", "ITSupporter")',
+                data: JSON.stringify(empObj),
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (!data.result.isError) {
+                        $('#EditModal').modal('hide');
+                        loadITSup();
+                        swal(data.result.SuccessMessage, "", "success");
+                    }
+                    else
+                        swal(data.result.WarningMessage, "", "error");
+                }
+            });
+        }
+
+        function CreateITSup() {
+            var empObj = {
+                RoleId: $('#comboRole').val(),
+                Username: $('#userNameC').val(),
+                Password: $('#passC').val(),
+                ITSupporterName: $('#nameC').val(),
+                Telephone: $('#phoneC').val(),
+                Email: $('#emailC').val(),
+                Address: $('#addressC').val(),
+            }
+             $.ajax({
+                type: 'POST',
+                url: '@Url.Action("CreateITSuport", "ITSupporter")',
+                data: JSON.stringify(empObj),
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    $('#CreateModal').modal('hide');
+                        if (!data.result.isError) {
+                            swal(data.result.SuccessMessage, "", "success");
+                        }
+                        else
+                            swal(data.result.WarningMessage, "", "error");
+                    loadITSup();
                 }
             });
         }
         function removeITSup(id) {
-            $('#modalConfirmDelete').modal('show');
-            $('#companyHidden').val(id);
+            swal({
+                title: 'Bạn có Chắc Chắn Muốn Xóa?',
+                text: "Dữ Liệu Đã Xóa Không Thể Hoàn Lại!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Quay Lại',
+                confirmButtonText: 'Chấp Nhận Xóa!'
+            }).then(function () {
+                deleteITSup();
+            });
+            $('#idAdd').val(id);
         }
+
         function deleteITSup() {
-            var company_id = $('#companyHidden').val();
+            var itsup_idd = $('#idAdd').val();
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("RemoveCompany", "Company")',
+                url: '@Url.Action("RemoveITSuporter", "ITSupporter")',
                 data: {
-                    company_id: company_id
+                    itsupporterId: itsup_idd,
                 },
 
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $('#modalConfirmDelete').modal('hide')
-                    loadCompany();
+                    swal(
+                        'Đã Xóa!',
+                        'Dữ Liệu Của Bạn Đã Được Xóa.',
+                        'success'
+                    )
+                    loadITSup();
                 }
             });
         }

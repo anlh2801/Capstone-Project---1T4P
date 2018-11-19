@@ -2,6 +2,34 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <section class="content">
+    <style>
+        .city {
+            background-color: azure;
+            color: black;
+            padding: 1%;
+            border-left: solid cadetblue;
+            width: 100%;
+            margin-left: 1.5%;
+            font-family: Arial;
+        }
+    </style>
+    <div class="row col-md-12">
+        <h3 class="city">Thống Kê Dữ Liệu Của Nhân Viên</h3>
+    </div>
+    <div class="col-md-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Biểu Đồ Thông Kê Thời Gian Hỗ Trợ Của Các Dịch Vụ</h3>
+
+
+            </div>
+            <div class="box-body">
+                <div class="chart">
+                    <canvas id="bar-chart" width="800" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="col-md-12">
         <div class="col-md-6">
             <div class="box box-success">
@@ -119,14 +147,54 @@
     <!-- AdminLTE for demo purposes -->
     <script src="~/AdminLTE/dist/js/demo.js"></script>
     <!-- page script -->
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="~/AdminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/AdminLTE/bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="~/AdminLTE/bower_components/Ionicons/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/AdminLTE/dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="~/AdminLTE/dist/css/skins/_all-skins.min.css">
 
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Google Font -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <script src="~/AdminLTE/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="~/AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/AdminLTE/bower_components/fastclick/lib/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/AdminLTE/dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/AdminLTE/dist/js/demo.js"></script>
+    <!-- FLOT CHARTS -->
+    <script src="~/AdminLTE/bower_components/Flot/jquery.flot.js"></script>
+    <!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+    <script src="~/AdminLTE/bower_components/Flot/jquery.flot.resize.js"></script>
+    <!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+    <!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
+    <script src="~/AdminLTE/bower_components/Flot/jquery.flot.categories.js"></script>
+    <!-- Page script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script>
         $(document).ready(function () {
             loadData();
         });
-       
+
         //
-        
+
 
         function loadData() {
              $.ajax({
@@ -136,13 +204,76 @@
                      "itsupporterId": 1
                     },
                     success: function (result) {
-                        loadChart(result.result.TotalTimeEveryService);
+                        //loadChart(result.result.TotalTimeEveryService);
+                        loadBarChart(result.result.TotalTimeEveryService);
                     },
                     error: function(error) {
                        showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
                     }
             });
         }
+
+        /*
+     * BAR CHART
+     * ---------
+     */
+        function loadBarChart(data) {
+            var i;
+            var arr = [];
+            for (i = 0; i < data.length; ++i) {
+                arr.push(data[i].ServiceName);
+            }
+
+            var j;
+            var arr2 = [];
+            for (j = 0; j < data.length; ++j) {
+                arr2.push(data[j].SupportTimeByHour);
+            }
+            var options = {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true,
+                            min: 0
+                        }
+                    }]
+                },
+                title: {
+                    display: true,
+                    text: name
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                legend: { display: false },
+                title: {
+                    display: true,
+
+                }
+            };
+            new Chart(document.getElementById("bar-chart"), {
+                type: 'bar',
+                data: {
+                    labels: arr,
+                    datasets: [
+                        {
+                            label: "Population (millions)",
+                            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                            data: arr2
+                        }
+                    ]
+                },
+                options: options
+            });
+        }
+    /* END BAR CHART */
 
         function loadChart(data) {
 
@@ -158,7 +289,7 @@
             for (i = 0; i < data.length; ++i) {
                 arr.push(data[i].ServiceName);
             }
-          
+
             var j;
             var arr2 = [];
             for (j = 0; j < data.length; ++j) {
