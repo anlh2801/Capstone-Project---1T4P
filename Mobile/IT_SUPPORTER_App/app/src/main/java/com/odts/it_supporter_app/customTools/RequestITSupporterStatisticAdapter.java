@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.odts.it_supporter_app.R;
 import com.odts.it_supporter_app.activities.MainActivity;
 import com.odts.it_supporter_app.models.ITSupporterStatistic;
+import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.models.RequestGroupMonth;
 
 import java.util.List;
@@ -38,15 +40,23 @@ public class RequestITSupporterStatisticAdapter extends ArrayAdapter<RequestGrou
         View row = inflater.inflate(this.resource, null);
 
         TextView txtThangNam = (TextView) row.findViewById(R.id.txtThangNam);
-        ListView lvDetailsThangNam = (ListView) row.findViewById(R.id.lvDetailsThangNam);
+        LinearLayout lvDetailsThangNam = (LinearLayout) row.findViewById(R.id.detailsRequestGroup);
 
         /** Set data to row*/
         final RequestGroupMonth requestGroupMonth = this.objects.get(position);
         txtThangNam.setText(requestGroupMonth.getMonthYearGroup());
-        RequestGroupAdapter requestGroupAdapter = new RequestGroupAdapter((MainActivity)(parent.getContext()), R.layout.done_item, requestGroupMonth.getRequestOfITSupporter());
-        lvDetailsThangNam.setAdapter(requestGroupAdapter);
+        for (Request item: requestGroupMonth.getRequestOfITSupporter()) {
+            View view = inflater.inflate(R.layout.done_item, null);
+            TextView txtRequestName = (TextView) view.findViewById(R.id.txtRequestInfo);
+            TextView txtEndDate = (TextView) view.findViewById(R.id.txtEndDate);
+            TextView txtCreateDate = (TextView) view.findViewById(R.id.txtCreateDate);
 
+            txtRequestName.setText(item.getAgencyName() + " - " + item.getRequestName());
+            txtCreateDate.setText("Tạo vào: " + item.getCreateDate());
+            txtEndDate.setText("Xác nhận hoàn thành vào: " + item.getEndTime());
 
+            lvDetailsThangNam.addView(view);
+        }
 
         return row;
     }

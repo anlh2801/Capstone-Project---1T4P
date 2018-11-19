@@ -27,17 +27,11 @@
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/txtRequestName"
+                android:id="@+id/txtRequestInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txtAgencyName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="3dp" />
 
             <TextView
                 android:id="@+id/txtCreateDate"

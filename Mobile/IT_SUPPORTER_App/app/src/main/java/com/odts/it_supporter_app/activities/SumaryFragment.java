@@ -31,9 +31,9 @@ public class SumaryFragment extends Fragment {
     ITSupporterService _itSupporterService;
     Integer itSupporterId = 0;
 
-    public SumaryFragment() {
-        _itSupporterService = new ITSupporterService();
-    }
+//    public SumaryFragment() {
+//        _itSupporterService = new ITSupporterService();
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class SumaryFragment extends Fragment {
         SharedPreferences.Editor edit = share.edit();
         itSupporterId = share.getInt("itSupporterId", 0);
         viewITsupporterStatistic(itSupporterId);
+
     }
 
     @Override
@@ -58,11 +59,15 @@ public class SumaryFragment extends Fragment {
     }
 
     private void viewITsupporterStatistic(int itsupporter_id) {
+        _itSupporterService = new ITSupporterService();
         _itSupporterService.viewITsupporterStatistic(getActivity(), itsupporter_id, new CallBackData<ITSupporterStatistic>() {
             @Override
             public void onSuccess(ITSupporterStatistic itSupporterStatistic) {
-
-                RequestITSupporterStatisticAdapter requestITSupporterStatisticAdapter = new RequestITSupporterStatisticAdapter(getActivity(), R.layout.guilde_line_item, itSupporterStatistic.getRequestOfITSupporter());
+                txtTotalTimes.setText(itSupporterStatistic.getTotalTimesSupport().toString());
+                txtTotalTime.setText(itSupporterStatistic.getTotalTimeSupport());
+                txtTotalTimesThisMonth.setText(itSupporterStatistic.getTotalTimesSupportInThisMonth().toString());
+                txtTotalTimeThisMonth.setText(itSupporterStatistic.getTotalTimeSupportInThisMonth());
+                RequestITSupporterStatisticAdapter requestITSupporterStatisticAdapter = new RequestITSupporterStatisticAdapter(getActivity(), R.layout.list_request_group_item, itSupporterStatistic.getRequestOfITSupporter());
                 lvRequestGroup.setAdapter(requestITSupporterStatisticAdapter);
             }
 
