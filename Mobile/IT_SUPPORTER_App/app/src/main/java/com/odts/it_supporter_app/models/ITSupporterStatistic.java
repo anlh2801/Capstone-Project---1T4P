@@ -9,13 +9,13 @@ public class ITSupporterStatistic {
     private Integer itSupporterId;
     @SerializedName("ITSupporterName")
     private String itSupporterName;
+    @SerializedName("TotalTimesSupport")
+    private Integer totalTimesSupport;
     @SerializedName("TotalTimeSupport")
     private String totalTimeSupport;
-    @SerializedName("TotalTimesSupport")
-    private String totalTimesSupport;
     @SerializedName("TotalTimesSupportInThisMonth")
-    private String totalTimesSupportInThisMonth;
-    @SerializedName("TotalTimesSupportInThisMonth")
+    private Integer totalTimesSupportInThisMonth;
+    @SerializedName("TotalTimeSupportInThisMonth")
     private String totalTimeSupportInThisMonth;
     @SerializedName("RequestOfITSupporter")
     private List<RequestGroupMonth> requestOfITSupporter;
@@ -39,12 +39,28 @@ public class ITSupporterStatistic {
         this.itSupporterName = itSupporterName;
     }
 
+    public Integer getTotalTimesSupport() {
+        return totalTimesSupport;
+    }
+
+    public void setTotalTimesSupport(Integer totalTimesSupport) {
+        this.totalTimesSupport = totalTimesSupport;
+    }
+
     public String getTotalTimeSupport() {
         return totalTimeSupport;
     }
 
     public void setTotalTimeSupport(String totalTimeSupport) {
         this.totalTimeSupport = totalTimeSupport;
+    }
+
+    public Integer getTotalTimesSupportInThisMonth() {
+        return totalTimesSupportInThisMonth;
+    }
+
+    public void setTotalTimesSupportInThisMonth(Integer totalTimesSupportInThisMonth) {
+        this.totalTimesSupportInThisMonth = totalTimesSupportInThisMonth;
     }
 
     public String getTotalTimeSupportInThisMonth() {
@@ -61,21 +77,5 @@ public class ITSupporterStatistic {
 
     public void setRequestOfITSupporter(List<RequestGroupMonth> requestOfITSupporter) {
         this.requestOfITSupporter = requestOfITSupporter;
-    }
-
-    public String getTotalTimesSupport() {
-        return totalTimesSupport;
-    }
-
-    public void setTotalTimesSupport(String totalTimesSupport) {
-        this.totalTimesSupport = totalTimesSupport;
-    }
-
-    public String getTotalTimesSupportInThisMonth() {
-        return totalTimesSupportInThisMonth;
-    }
-
-    public void setTotalTimesSupportInThisMonth(String totalTimesSupportInThisMonth) {
-        this.totalTimesSupportInThisMonth = totalTimesSupportInThisMonth;
     }
 }
