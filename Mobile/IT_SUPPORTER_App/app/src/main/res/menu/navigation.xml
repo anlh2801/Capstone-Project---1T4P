@@ -11,9 +11,9 @@
         android:title="Tra cứu"/>
 
     <item
-        android:id="@+id/navigation_devices"
-        android:icon="@drawable/ic_devices_black_24dp"
-        android:title="Thiết bị"/>
+        android:id="@+id/navigation_sumary"
+        android:icon="@drawable/ic_subtitles_black_24dp"
+        android:title="Lịch sử"/>
 
     <item
         android:id="@+id/navigation_accountDetail"

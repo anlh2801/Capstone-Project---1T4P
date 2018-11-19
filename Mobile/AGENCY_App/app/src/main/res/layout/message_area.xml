@@ -12,6 +12,7 @@
         android:layout_weight="1"
         android:textColorHint="#CFD8DC"
         android:textColor="#CFD8DC"
+        android:paddingLeft="20dp"
         android:hint="Nhập nội dung..."
         android:id="@+id/messageArea"
         android:maxHeight="80dp"

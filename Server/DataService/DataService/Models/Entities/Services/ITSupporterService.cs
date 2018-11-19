@@ -662,18 +662,21 @@ namespace DataService.Models.Entities.Services
                         .ToList();
                     var totalTimeSupport = new TimeSpan();
                     var totalTimeSupportInThisMonth = new TimeSpan();
+                    int totalTimesSupport = 0;
+                    int totalTimesSupportInThisMonth = 0;
                     var requestListGroup = new List<RequestGroupMonth>();
                     foreach (var item in requests)
                     {
                         var requestList = new List<RequestAllTicketWithStatusAgencyAPIViewModel>();
                         foreach (var itemRequest in item.RequestList)
                         {
-                            
+                            totalTimesSupport++;
                             totalTimeSupport += itemRequest.EndTime != null ? (itemRequest.EndTime.Value - itemRequest.StartTime.Value).Duration() : new TimeSpan(0, 0, 0);
                             var requestViewModel = new RequestAllTicketWithStatusAgencyAPIViewModel();
                             requestViewModel.RequestName = itemRequest.RequestName;
                             requestViewModel.AgencyName = itemRequest.Agency.AgencyName;
                             requestViewModel.CreateDate = itemRequest.CreateDate.ToString("dd/MM/yyyy HH:mm");
+                            requestViewModel.EndTime = itemRequest.EndTime != null ? itemRequest.EndTime.Value.ToString("dd/MM/yyyy HH:mm") : "Chờ xác nhận";
 
                             requestList.Add(requestViewModel);
                         }
@@ -682,11 +685,12 @@ namespace DataService.Models.Entities.Services
                         {
                             foreach (var itemRequest in item.RequestList)
                             {
+                                totalTimesSupportInThisMonth++;
                                 totalTimeSupportInThisMonth += itemRequest.EndTime != null ? (itemRequest.EndTime.Value - itemRequest.StartTime.Value).Duration() : new TimeSpan(0, 0, 0);
                             }
                         }
                         var requestGroupMonthViewModel = new RequestGroupMonth();
-                        requestGroupMonthViewModel.MonthYearGroup = $"{item.MonthSelect}/{item.YearSelect}";
+                        requestGroupMonthViewModel.MonthYearGroup = $"Tháng {item.MonthSelect}/{item.YearSelect}";
                         requestGroupMonthViewModel.RequestOfITSupporter = requestList;
                         requestListGroup.Add(requestGroupMonthViewModel);
                     }
@@ -698,6 +702,8 @@ namespace DataService.Models.Entities.Services
                     var totalTimeSupportInThisMonthGetDays = totalTimeSupportInThisMonthString.Split('.');                   
                     var totalTimeSupportInThisMonthGetTimes = totalTimeSupportInThisMonthGetDays[1].ToString().Split(':');
 
+                    result.TotalTimesSupport = totalTimesSupport;
+                    result.TotalTimesSupportInThisMonth = totalTimesSupportInThisMonth;
                     result.TotalTimeSupport = $"{int.Parse(totalTimeSupportStringGetDays[0])*24 + int.Parse(totalTimeSupportStringGetTimes[0])} giờ {totalTimeSupportStringGetTimes[1]} phút";
                     result.TotalTimeSupportInThisMonth = $"{int.Parse(totalTimeSupportInThisMonthGetDays[0])*24 + int.Parse(totalTimeSupportInThisMonthGetTimes[0])} giờ {totalTimeSupportInThisMonthGetTimes[1]} phút" ;
                     result.RequestOfITSupporter = requestListGroup;

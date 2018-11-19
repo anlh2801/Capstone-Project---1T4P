@@ -168,8 +168,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navigation_scanQR:
                         loadFragment(new ScanDeviceFragment());
                         break;
-                    case R.id.navigation_devices:
-                        //loadFragment(new ManageDeviceFragment());
+                    case R.id.navigation_sumary:
+                        loadFragment(new SumaryFragment());
                         break;
                     case R.id.navigation_accountDetail:
                         loadFragment(new ProfleFragment());
