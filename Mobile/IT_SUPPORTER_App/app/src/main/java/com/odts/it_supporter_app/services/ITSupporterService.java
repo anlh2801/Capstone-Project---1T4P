@@ -138,4 +138,20 @@ public class ITSupporterService {
             }
         }));
     }
+
+    public  void viewProfile(final Context context, int itsupporter_id, final CallBackData<ITSupporter> callBackData) {
+        iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
+        Call<ResponseObject<ITSupporter>> call = iitSupporterApiCaller.viewProfile(itsupporter_id);
+        call.enqueue((new Callback<ResponseObject<ITSupporter>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<ITSupporter>> call, Response<ResponseObject<ITSupporter>> response) {
+                callBackData.onSuccess(response.body().getObjReturn());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<ITSupporter>> call, Throwable t) {
+
+            }
+        }));
+    }
 }

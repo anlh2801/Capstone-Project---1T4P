@@ -37,4 +37,7 @@ public interface IITSupporterApiCaller {
 
     @GET("ITsupporter/get_Is_Busy")
     Call<ResponseObject<Boolean>> getIsBusy(@Query("itsupporter_id") int itsupporter_id);
+
+    @GET("ITsupporter/view_profile_ITsupporter")
+    Call<ResponseObject<ITSupporter>> viewProfile(@Query("itsupporter_id") int itsupporter_id);
 }
