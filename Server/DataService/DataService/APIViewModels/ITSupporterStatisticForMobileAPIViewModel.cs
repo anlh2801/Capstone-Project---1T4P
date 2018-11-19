@@ -10,7 +10,9 @@ namespace DataService.APIViewModels
     {
         public int ITSupporterId { get; set; }
         public string ITSupporterName { get; set; }
+        public int TotalTimesSupport { get; set; }
         public string TotalTimeSupport { get; set; }
+        public int TotalTimesSupportInThisMonth { get; set; }
         public string TotalTimeSupportInThisMonth { get; set; }
         public List<RequestGroupMonth> RequestOfITSupporter { get; set; }
     }

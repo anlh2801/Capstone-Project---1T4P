@@ -161,8 +161,9 @@
     <Compile Include="Controllers\AgencyController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\GuidelineController.cs" />
+    <Compile Include="Controllers\RequestStatisticController.cs" />
     <Compile Include="Controllers\ServiceItemController.cs" />
-    <Compile Include="Controllers\StatisticController.cs" />
+    <Compile Include="Controllers\ITSuporterStatisticController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\ContractController.cs" />
     <Compile Include="Controllers\DeviceController.cs" />
@@ -7414,17 +7415,17 @@
     <Content Include="Views\DeviceType\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Request\Index.cshtml" />
-    <Content Include="Views\Request\RequestStatus.cshtml" />
     <Content Include="Views\Device\AgencyDevice.cshtml" />
     <Content Include="Views\Company\Index.cshtml" />
     <Content Include="Views\ServiceITSupport\Index.cshtml" />
-    <Content Include="Views\Statistic\Index.cshtml" />
+    <Content Include="Views\ITSuporterStatistic\Index.cshtml" />
     <Content Include="Views\ITSupporter\Index.cshtml" />
     <Content Include="Views\ServiceItem\Index.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Guideline\ServiceGuideline.cshtml">
       <BrowseToURL>~/Guideline/ServiceGuideline</BrowseToURL>
     </Content>
+    <Content Include="Views\RequestStatistic\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

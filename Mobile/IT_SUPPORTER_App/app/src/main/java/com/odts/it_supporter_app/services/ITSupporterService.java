@@ -11,6 +11,7 @@ import com.odts.it_supporter_app.activities.MainActivity;
 import com.odts.it_supporter_app.apiCaller.IITSupporterApiCaller;
 import com.odts.it_supporter_app.apiCaller.ILoginApiCaller;
 import com.odts.it_supporter_app.models.ITSupporter;
+import com.odts.it_supporter_app.models.ITSupporterStatistic;
 import com.odts.it_supporter_app.utils.CallBackData;
 import com.odts.it_supporter_app.utils.ResponseObject;
 import com.odts.it_supporter_app.utils.ResponseObjectReturnList;
@@ -135,6 +136,36 @@ public class ITSupporterService {
             @Override
             public void onFailure(Call<ResponseObject<Boolean>> call, Throwable t) {
 
+            }
+        }));
+    }
+
+    public  void viewProfile(final Context context, int itsupporter_id, final CallBackData<ITSupporter> callBackData) {
+        iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
+        Call<ResponseObject<ITSupporter>> call = iitSupporterApiCaller.viewProfile(itsupporter_id);
+        call.enqueue((new Callback<ResponseObject<ITSupporter>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<ITSupporter>> call, Response<ResponseObject<ITSupporter>> response) {
+                callBackData.onSuccess(response.body().getObjReturn());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<ITSupporter>> call, Throwable t) {
+
+            }
+        }));
+    }
+
+    public  void viewITsupporterStatistic(final Context context, int itsupporter_id, final CallBackData<ITSupporterStatistic> callBackData) {
+        iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
+        Call<ResponseObject<ITSupporterStatistic>> call = iitSupporterApiCaller.viewITsupporterStatistic(itsupporter_id);
+        call.enqueue((new Callback<ResponseObject<ITSupporterStatistic>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<ITSupporterStatistic>> call, Response<ResponseObject<ITSupporterStatistic>> response) {
+                callBackData.onSuccess(response.body().getObjReturn());
+            }
+            @Override
+            public void onFailure(Call<ResponseObject<ITSupporterStatistic>> call, Throwable t) {
             }
         }));
     }

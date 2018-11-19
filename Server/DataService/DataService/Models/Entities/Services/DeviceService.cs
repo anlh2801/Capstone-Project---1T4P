@@ -16,6 +16,7 @@ namespace DataService.Models.Entities.Services
         ResponseObject<List<AgencyDeviceAPIViewModel>> ViewAllDeviceByAgencyId(int agency_id);
         ResponseObject<List<DeviceAPIViewModel>> GetAllDevice();
         ResponseObject<DeviceAPIViewModel> ViewDetail(int device_id);
+        ResponseObject<DeviceAPIViewModel> GetDeviceDetailByDeviceCode(string deviceCode);
         ResponseObject<bool> CreateDevice(DeviceAPIViewModel model);
         ResponseObject<List<AgencyDeviceAPIViewModel>> ViewAllDeviceByAgencyIdAndServiceId(int agencyId, int serviceId);
         ResponseObject<bool> RemoveDevice(int device_id);
@@ -150,6 +151,49 @@ namespace DataService.Models.Entities.Services
             }
 
         }
+
+        public ResponseObject<DeviceAPIViewModel> GetDeviceDetailByDeviceCode(string deviceCode)
+        {
+            try
+            {
+                var deviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
+                var device = deviceRepo.GetActive().SingleOrDefault(a => a.DeviceCode == deviceCode);
+                if (device != null)
+                {
+                    var deviceAPIViewModel = new DeviceAPIViewModel
+                    {
+                        DeviceId = device.DeviceId,
+                        DeviceName = device.DeviceName,
+                        AgencyId = device.AgencyId,
+                        CompanyId = device.Agency.CompanyId.Value,
+                        CompanyName = device.Agency.Company.CompanyName,
+                        DeviceTypeId = device.DeviceTypeId,
+                        DeviceTypeName = device.DeviceType.DeviceTypeName,
+                        DeviceCode = device.DeviceCode,
+                        GuarantyStartDate = device.GuarantyStartDate.Value.ToString("dd/MM/yyyy"),
+                        GuarantyEndDate = device.GuarantyEndDate.Value.ToString("dd/MM/yyyy"),
+                        Ip = device.Ip,
+                        Port = device.Port,
+                        DeviceAccount = device.DeviceAccount,
+                        DevicePassword = device.DevicePassword,
+                        SettingDate = device.SettingDate.Value.ToString("dd/MM/yyyy"),
+                        Other = device.Other,
+                        IsDelete = device.IsDelete,
+                        CreateDate = device.CreateDate.ToString("dd/MM/yyyy"),
+                        UpdateDate = device.UpdateDate.Value.ToString("dd/MM/yyyy"),
+                    };
+                    return new ResponseObject<DeviceAPIViewModel> { IsError = false, ObjReturn = deviceAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
+                }
+                return new ResponseObject<DeviceAPIViewModel> { IsError = true, WarningMessage = "Không tồn tại hợp đồng này" };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<DeviceAPIViewModel> { IsError = true, WarningMessage = "Không tồn tại hợp đồng này", ObjReturn = null, ErrorMessage = e.ToString() };
+            }
+
+        }
+
         public ResponseObject<bool> CreateDevice(DeviceAPIViewModel model)
         {
             try

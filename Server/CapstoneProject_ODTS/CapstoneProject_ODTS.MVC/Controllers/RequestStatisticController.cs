@@ -1,5 +1,4 @@
-﻿using DataService.APIViewModels;
-using DataService.Domain;
+﻿using DataService.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +7,11 @@ using System.Web.Mvc;
 
 namespace CapstoneProject_ODTS.MVC.Controllers
 {
-    [MVC.Filters.AutorizeAdmin]
-    public class StatisticController : Controller
+    public class RequestStatisticController : Controller
     {
-        private ITSupporterDomain _itsupporterDomain;
+        private RequestDomain _requestDomain;
 
-        public StatisticController()
+        public RequestStatisticController()
         {
             //_companyDomain = new CompanyDomain();
         }
@@ -23,6 +21,6 @@ namespace CapstoneProject_ODTS.MVC.Controllers
 
             return View();
         }
-        
+
     }
 }
