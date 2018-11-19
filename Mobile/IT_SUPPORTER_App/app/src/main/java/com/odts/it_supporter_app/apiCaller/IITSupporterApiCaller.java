@@ -2,7 +2,9 @@ package com.odts.it_supporter_app.apiCaller;
 
 import com.odts.it_supporter_app.models.ITSupporter;
 import com.odts.it_supporter_app.models.ITSupporterStatistic;
+import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.utils.ResponseObject;
+import com.odts.it_supporter_app.utils.ResponseObjectReturnList;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -44,4 +46,7 @@ public interface IITSupporterApiCaller {
 
     @GET("ITsupporter/view_itsupporter_statistic_all")
     Call<ResponseObject<ITSupporterStatistic>> viewITsupporterStatistic(@Query("itsupporterId") int itsupporterId);
+
+    @GET("ITsupporter/view_all_feedback")
+    Call<ResponseObjectReturnList<Request>> viewAllFeedback(@Query("itsupporter_id") int itsupporter_id);
 }
