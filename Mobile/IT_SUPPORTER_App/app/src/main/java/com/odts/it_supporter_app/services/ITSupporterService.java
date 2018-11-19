@@ -11,6 +11,8 @@ import com.odts.it_supporter_app.activities.MainActivity;
 import com.odts.it_supporter_app.apiCaller.IITSupporterApiCaller;
 import com.odts.it_supporter_app.apiCaller.ILoginApiCaller;
 import com.odts.it_supporter_app.models.ITSupporter;
+import com.odts.it_supporter_app.models.ITSupporterStatistic;
+import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.utils.CallBackData;
 import com.odts.it_supporter_app.utils.ResponseObject;
 import com.odts.it_supporter_app.utils.ResponseObjectReturnList;
@@ -165,6 +167,20 @@ public class ITSupporterService {
             }
             @Override
             public void onFailure(Call<ResponseObject<ITSupporterStatistic>> call, Throwable t) {
+            }
+        }));
+    }
+
+    public  void viewAllFeedback(final Context context, int itsupporter_id, final CallBackData<Request> callBackData) {
+        iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
+        Call<ResponseObject<Request>> call = iitSupporterApiCaller.viewAllFeedback(itsupporter_id);
+        call.enqueue((new Callback<ResponseObject<Request>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<Request>> call, Response<ResponseObject<Request>> response) {
+                callBackData.onSuccess(response.body().getObjReturn());
+            }
+            @Override
+            public void onFailure(Call<ResponseObject<Request>> call, Throwable t) {
             }
         }));
     }
