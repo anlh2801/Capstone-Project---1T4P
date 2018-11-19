@@ -57,7 +57,7 @@
                         </div>
                         <div class="col-md-12">
                             <b>Kinh Nghiệm Làm Việc:</b><br>
-                            <p id="ITExpV"></p><b>. Thời gian:</b><p id="ITExpTimeV"></p>
+                            <p id="ITExpV"></p>
                         </div>
                     </div>
                 </div>
@@ -493,11 +493,14 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#ITExpV").text(data.result.ObjReturn.ServiceITSupportName);
-                    $("#ITExpTimeV").text(data.result.ObjReturn.MonthExperience);
-
+                    var result = "";
+                    var len = data.result.ObjReturn.length;
+                    for (var i = 0; i < len; i++) {
+                        result += data.result.ObjReturn[i].ServiceITSupportName+", " + data.result.ObjReturn[i].MonthExperience + " | ";
+                    }            
+                    $("#ITExpV").text(result);
                 }
-                });
+            });
         }
         function showService() {
             $('#ser')
