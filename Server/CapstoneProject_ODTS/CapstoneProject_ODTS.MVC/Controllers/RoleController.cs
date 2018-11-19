@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace CapstoneProject_ODTS.MVC.Controllers
 {
+    [MVC.Filters.AutorizeAdmin]
     public class RoleController: Controller
     {
         private RoleDomain _roleDomain;

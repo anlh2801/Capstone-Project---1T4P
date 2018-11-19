@@ -9,12 +9,13 @@ using System.Web.Mvc;
 
 namespace CapstoneProject_ODTS.Controllers
 {
+    [MVC.Filters.AutorizeAdmin]
     public class RequestController : Controller
     {
         private RequestDomain _requestDomain;
 
         private AgencyDomain _agencyDomain;
-
+       
         public RequestController()
         {
             _requestDomain = new RequestDomain();
