@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace CapstoneProject_ODTS.Controllers
 {
+    [MVC.Filters.AutorizeAdmin]
     public class DeviceTypeController : Controller
     {
         private DeviceTypeDomain _devicetypeDomain;

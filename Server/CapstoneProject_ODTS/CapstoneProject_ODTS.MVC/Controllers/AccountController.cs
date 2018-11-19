@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace CapstoneProject_ODTS.Controllers
 {
+    [MVC.Filters.AutorizeAdmin]
     public class AccountController : Controller
     {
         private AccountDomain _accountDomain;

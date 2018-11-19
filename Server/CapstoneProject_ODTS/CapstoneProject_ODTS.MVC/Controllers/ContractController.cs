@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace CapstoneProject_ODTS.Controllers
 {
+    [MVC.Filters.AutorizeAdmin]
     public class ContractController : Controller
     {
         private ContractDomain _contractDomain;

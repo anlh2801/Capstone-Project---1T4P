@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace CapstoneProject_ODTS.Controllers
 {
+
     public class LoginController : Controller
     {
         private AccountDomain _accountDomain;
@@ -17,16 +18,37 @@ namespace CapstoneProject_ODTS.Controllers
         }
         public ActionResult Index()
         {
+            Session["AdminIsLogedIn"] = null;
             ViewBag.Title = "Home Page";
 
             return View();
         }
-        //public ActionResult CheckLogin(string username,string password,int roleId)
-        //{
-        //    var isSucess = _accountDomain.CheckLogin(username, password, roleId);
+
+        public ActionResult Login()
+        {
+            if (Session["AdminIsLogedIn"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+                return View();
+        }
+
+        [HttpPost]
+        public ActionResult CheckLogin(string username, string password, int roleId)
+        {
+            var isSucess = _accountDomain.CheckLogin(username, password, roleId);
+            Session["AdminIsLogedIn"] = null;
+            if (!isSucess.IsError)
+            {
+                Session["AdminIsLogedIn"] = true;
+                return Json(new { isSucess = isSucess, urlReturn = "/Request/Index" }, JsonRequestBehavior.AllowGet);                
+            }
+            else 
+            {
+                return Json(new { isSucess = isSucess }, JsonRequestBehavior.AllowGet);
+            }
             
-        //    return Json(new { isSucess = isSucess, urlReturn = "/Home/Index" }, JsonRequestBehavior.AllowGet);
-            
-        //}
+        }
     }
 }

@@ -20,6 +20,8 @@ namespace DataService.Models.Entities.Services
         ResponseObject<bool> CreateAccount(AccountAPIViewModel model);
         ResponseObject<bool> RemoveAccount(int account_id);
         ResponseObject<bool> UpdateProfile(AccountAPIViewModel model);
+
+        ResponseObject<AccountAPIViewModel> CheckLogin(string username, string password, int roleId);
     }
 
     public partial class AccountService
@@ -216,6 +218,30 @@ namespace DataService.Models.Entities.Services
             {
 
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉnh sửa tài khoản thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
+            }
+        }
+
+        public ResponseObject<AccountAPIViewModel> CheckLogin(string username, string password, int roleId)
+        {
+            try
+            {
+                var accountRepo = DependencyUtils.Resolve<IAccountRepository>();
+                var account = accountRepo.GetActive(a => a.Username == username && a.Password == password && a.RoleId == roleId).SingleOrDefault();
+                if (account != null)
+                {
+                    var accountmodel = new AccountAPIViewModel();
+                    accountmodel.Username = account.Username;
+                    accountmodel.Password = account.Password;
+                    accountmodel.RoleId = account.RoleId;
+                    return new ResponseObject<AccountAPIViewModel> { IsError = false, ObjReturn = accountmodel, SuccessMessage = "Đăng nhập thành công" };
+                }
+
+                return new ResponseObject<AccountAPIViewModel> { IsError = true, ObjReturn = null, WarningMessage = "Sai Tên Tài Khoản Hoặc Mật Khẩu." };
+
+            }
+            catch (Exception e)
+            {
+                return new ResponseObject<AccountAPIViewModel> { IsError = true, ObjReturn = null, WarningMessage = "Sai Tên Tài Khoản Hoặc Mật Khẩu.", ErrorMessage = e.ToString() };
             }
         }
     }
