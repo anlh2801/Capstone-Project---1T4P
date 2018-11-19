@@ -8,11 +8,11 @@ using System.Web.Mvc;
 
 namespace CapstoneProject_ODTS.MVC.Controllers
 {
-    public class StatisticController : Controller
+    public class ITSuporterStatisticController : Controller
     {
         private ITSupporterDomain _itsupporterDomain;
 
-        public StatisticController()
+        public ITSuporterStatisticController()
         {
             //_companyDomain = new CompanyDomain();
         }
@@ -22,6 +22,6 @@ namespace CapstoneProject_ODTS.MVC.Controllers
 
             return View();
         }
-        
+
     }
 }

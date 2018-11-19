@@ -19,6 +19,7 @@ namespace DataService.Domain
         ResponseObject<List<AgencyDeviceAPIViewModel>> ViewAllDeviceByAgencyIdAndServiceId(int agencyId, int serviceId);
         ResponseObject<bool> RemoveDevice(int device_id);
         ResponseObject<bool> UpdateDevice(AgencyDeviceAPIViewModel model);
+        ResponseObject<DeviceAPIViewModel> GetDeviceDetailByDeviceCode(string deviceCode);
     }
 
     public class DeviceDomain : BaseDomain, IDeviceDomain
@@ -55,6 +56,15 @@ namespace DataService.Domain
             var deviceService = this.Service<IDeviceService>();
 
             var contract = deviceService.ViewDetail(device_id);
+
+            return contract;
+        }
+
+        public ResponseObject<DeviceAPIViewModel> GetDeviceDetailByDeviceCode(string deviceCode)
+        {
+            var deviceService = this.Service<IDeviceService>();
+
+            var contract = deviceService.GetDeviceDetailByDeviceCode(deviceCode);
 
             return contract;
         }

@@ -171,16 +171,18 @@ public class ITSupporterService {
         }));
     }
 
-    public  void viewAllFeedback(final Context context, int itsupporter_id, final CallBackData<Request> callBackData) {
+    public  void viewAllFeedback(final Context context, int itsupporter_id, final CallBackData<List<Request>> callBackData) {
         iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
-        Call<ResponseObject<Request>> call = iitSupporterApiCaller.viewAllFeedback(itsupporter_id);
-        call.enqueue((new Callback<ResponseObject<Request>>() {
+        Call<ResponseObjectReturnList<Request>> call = iitSupporterApiCaller.viewAllFeedback(itsupporter_id);
+        call.enqueue((new Callback<ResponseObjectReturnList<Request>>() {
             @Override
-            public void onResponse(Call<ResponseObject<Request>> call, Response<ResponseObject<Request>> response) {
-                callBackData.onSuccess(response.body().getObjReturn());
+            public void onResponse(Call<ResponseObjectReturnList<Request>> call, Response<ResponseObjectReturnList<Request>> response) {
+                callBackData.onSuccess(response.body().getObjList());
+                Toast.makeText(context, "succcc", Toast.LENGTH_SHORT).show();
             }
             @Override
-            public void onFailure(Call<ResponseObject<Request>> call, Throwable t) {
+            public void onFailure(Call<ResponseObjectReturnList<Request>> call, Throwable t) {
+                Toast.makeText(context, "fail", Toast.LENGTH_SHORT).show();
             }
         }));
     }

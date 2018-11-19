@@ -16,104 +16,48 @@
     <div class="row col-md-12">
         <h3 class="city">Thống Kê Dữ Liệu Của Nhân Viên</h3>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-6" style="margin-top: 10px">
         <div class="box box-success">
             <div class="box-header with-border">
-                <h3 class="box-title">Biểu Đồ Thông Kê Thời Gian Hỗ Trợ Của Các Dịch Vụ</h3>
-
+                <h4 class="box-title">Tổng Thời Gian Hỗ Trợ Các Loại Dịch Vụ Của Tất Cả Nhân Viên</h4>
 
             </div>
             <div class="box-body">
                 <div class="chart">
-                    <canvas id="bar-chart" width="800" height="250"></canvas>
+                    <canvas id="bar-chart" width="100%" height=40%></canvas>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-12">
-        <div class="col-md-6">
-            <div class="box box-success">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Biểu Đồ Thông Kê Thời Gian Hỗ Trợ Của Các Dịch Vụ</h3>
+    <div class="col-md-6" style="margin-top: 10px">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Tổng Số Lần Hủy Và Hỗ Trợ Của Tất Cả Nhân Viên</h3>
 
-
-                </div>
-                <div class="box-body">
-                    <div class="chart">
-                        <canvas id="barChart" style="height: 221px; width: 489px;" width="489" height="221"></canvas>
-                    </div>
-                </div>
             </div>
-        </div>
-        <div class="row col-md-6">
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Bordered Table</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <table class="table table-bordered">
-                        <tr>
-                            <th style="width: 10px">#</th>
-                            <th>Task</th>
-                            <th>Progress</th>
-                            <th style="width: 40px">Label</th>
-                        </tr>
-                        <tr>
-                            <td>1.</td>
-                            <td id="ser1">Update software</td>
-                            <td>
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                </div>
-                            </td>
-                            <td><span class="badge bg-red">55%</span></td>
-                        </tr>
-                        <tr>
-                            <td>2.</td>
-                            <td>Clean database</td>
-                            <td>
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
-                                </div>
-                            </td>
-                            <td><span class="badge bg-yellow">70%</span></td>
-                        </tr>
-                        <tr>
-                            <td>3.</td>
-                            <td>Cron job running</td>
-                            <td>
-                                <div class="progress progress-xs progress-striped active">
-                                    <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
-                                </div>
-                            </td>
-                            <td><span class="badge bg-light-blue">30%</span></td>
-                        </tr>
-                        <tr>
-                            <td>4.</td>
-                            <td>Fix and squish bugs</td>
-                            <td>
-                                <div class="progress progress-xs progress-striped active">
-                                    <div class="progress-bar progress-bar-success" style="width: 90%"></div>
-                                </div>
-                            </td>
-                            <td><span class="badge bg-green">90%</span></td>
-                        </tr>
-                    </table>
-                </div>
-                <!-- /.box-body -->
-                <div class="box-footer clearfix">
-                    <ul class="pagination pagination-sm no-margin pull-right">
-                        <li><a href="#">&laquo;</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">&raquo;</a></li>
-                    </ul>
+            <div class="box-body">
+                <div class="chart">
+                    <canvas id="doughnut-chart" width="100%" height="40%"></canvas>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row col-md-12" style="margin-left: 0.2%; margin-top: 10px">
+        <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
+            <thead>
+                <tr>
+                    <th><label>STT</label></th>
+                    <th><label>Tên Nhân Viên</label></th>
+                    <th><label>Tên Tài Khoản</label></th>
+                    <th><label>Trạng Thái</label></th>
+                    <th><label>Xem Chi Tiết</label></th>
+
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
 </section>
 
 
@@ -191,10 +135,73 @@
     <script>
         $(document).ready(function () {
             loadData();
+            loadITSup();  
         });
 
-        //
-
+        function loadITSup() {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetAllITSupporter", "ITSupporter")',
+                data: {
+                },
+                success: function (result) {
+                    initDatatable(result.result.ObjReturn);
+                },
+                error: function(error) {
+                    showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                }
+            });
+        }
+         function initDatatable(data) {
+            if (data == null) {
+                $('#detail-table').dataTable().fnClearTable();
+            }
+            $("#detail-table").dataTable().fnDestroy();
+            $("#detail-table").dataTable({
+                stateSave: true,
+                "bFilter": true,
+                "bSort": false,
+                "data": data,
+                "bRetrieve": true,
+                "bScrollCollapse": true,
+                "bProcessing": true,
+                "oLanguage": {
+                    "sSearch": "Tìm kiếm:",
+                    "sSearchPlaceholder": "",
+                    "sZeroRecords": "Không có dữ liệu phù hợp",
+                    "sInfo": "Hiển thị từ _START_ đến _END_ trên tổng số _TOTAL_ dòng",
+                    "sEmptyTable": "Không có dữ liệu",
+                    "sInfoFiltered": " - lọc ra từ _MAX_ dòng",
+                    "sLengthMenu": "Hiển thị _MENU_ dòng",
+                    "sProcessing": "Đang xử lý...",
+                    "oPaginate": {
+                        "sNext": "<i class='fa fa-chevron-right'></i>",
+                        "sPrevious": "<i class='fa fa-chevron-left'></i>"
+                    }
+                },
+                "aoColumnDefs": [
+                    {
+                        "aTargets": [0, 1, 2,3,4],
+                        "bSortable": false,
+                        "sClass": "text-center"
+                    },
+                ],
+                "columns": [
+                    { "data": "NumericalOrder" },
+                    { "data": "ITSupporterName" },
+                    { "data": "Username" },
+                    { "data": "IsOnline" },
+                    {
+                        "aTargets": [4],
+                        "mRender": function (data, type, full) {
+                            var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.CompanyId + ')"></button>';
+                            return view;
+                        }
+                    },
+                ],
+                "bAutoWidth": false,
+            });
+        }
 
         function loadData() {
              $.ajax({
@@ -204,7 +211,7 @@
                      "itsupporterId": 1
                     },
                     success: function (result) {
-                        //loadChart(result.result.TotalTimeEveryService);
+                        loadDoughnutChart(result.result.TotalTimeEveryService);
                         loadBarChart(result.result.TotalTimeEveryService);
                     },
                     error: function(error) {
@@ -274,16 +281,7 @@
             });
         }
     /* END BAR CHART */
-
-        function loadChart(data) {
-
-            //-------------
-            //- BAR CHART -
-            //-------------
-            // Get context with jQuery - using jQuery's .get() method.
-            var barChartCanvas = $('#barChart').get(0).getContext('2d')
-            // This will get the first returned node in the jQuery collection.
-            var barChart = new Chart(barChartCanvas)
+        function loadDoughnutChart(data) {
             var i;
             var arr = [];
             for (i = 0; i < data.length; ++i) {
@@ -295,65 +293,31 @@
             for (j = 0; j < data.length; ++j) {
                 arr2.push(data[j].SupportTimeByHour);
             }
-
-            var barChartData = {
-                labels: arr,
-                datasets: [
-                    {
-                        label: 'Electronics',
-                        fillColor: 'rgba(210, 214, 222, 1)',
-                        strokeColor: 'rgba(210, 214, 222, 1)',
-                        pointColor: 'rgba(210, 214, 222, 1)',
-                        pointStrokeColor: '#c1c7d1',
-                        pointHighlightFill: '#fff',
-                        pointHighlightStroke: 'rgba(220,220,220,1)',
-                        data: arr2
+            new Chart(document.getElementById("doughnut-chart"), {
+                type: 'doughnut',
+                data: {
+                    labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+                    datasets: [
+                        {
+                            label: "Population (millions)",
+                            backgroundColor: ["#0099ff", "#ff4d4d"],
+                            data: [100,20]
+                        }
+                    ]
+                },
+                options: {
+                    legend: {
+                        display: false
                     },
-                    {
-                        label: 'Digital Goods',
-                        fillColor: 'rgba(60,141,188,0.9)',
-                        strokeColor: 'rgba(60,141,188,0.8)',
-                        pointColor: '#3b8bba',
-                        pointStrokeColor: 'rgba(60,141,188,1)',
-                        pointHighlightFill: '#fff',
-                        pointHighlightStroke: 'rgba(60,141,188,1)',
-                        data: [28, 48, 40, 19, 86, 27, 90]
+                    tooltips: {
+                        enabled: true
+                    },
+                    title: {
+                        display: false,
+                        text: 'Predicted world population (millions) in 2050'
                     }
-                ]
-            }
-            barChartData.datasets[1].fillColor = '#00a65a'
-            barChartData.datasets[1].strokeColor = '#00a65a'
-            barChartData.datasets[1].pointColor = '#00a65a'
-            var barChartOptions = {
-                //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-                scaleBeginAtZero: true,
-                //Boolean - Whether grid lines are shown across the chart
-                scaleShowGridLines: true,
-                //String - Colour of the grid lines
-                scaleGridLineColor: 'rgba(0,0,0,.05)',
-                //Number - Width of the grid lines
-                scaleGridLineWidth: 1,
-                //Boolean - Whether to show horizontal lines (except X axis)
-                scaleShowHorizontalLines: true,
-                //Boolean - Whether to show vertical lines (except Y axis)
-                scaleShowVerticalLines: true,
-                //Boolean - If there is a stroke on each bar
-                barShowStroke: true,
-                //Number - Pixel width of the bar stroke
-                barStrokeWidth: 2,
-                //Number - Spacing between each of the X value sets
-                barValueSpacing: 5,
-                //Number - Spacing between data sets within X values
-                barDatasetSpacing: 1,
-                //String - A legend template
-                legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].fillColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
-                //Boolean - whether to make the chart responsive
-                responsive: true,
-                maintainAspectRatio: true
-            }
-
-            barChartOptions.datasetFill = false
-            barChart.Bar(barChartData, barChartOptions)
+                }
+            });
         }
     </script>
 
