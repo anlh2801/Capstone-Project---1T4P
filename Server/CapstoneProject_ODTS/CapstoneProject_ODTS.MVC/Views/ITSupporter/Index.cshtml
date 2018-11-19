@@ -167,6 +167,7 @@
                                     <tr>
                                         <th><label>Tên Dịch Vụ</label></th>
                                         <th><label>Thời Gian Làm Việc</label></th>
+                                        <th><label>Xóa</label></th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -205,6 +206,33 @@
                         </div>
                     </div>
                 </div>
+                @*<div class="modal fade" id="UpdateServiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title"><b>Chỉnh sửa kinh nghiệm Làm Việc</b></h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <input type="hidden" id="idAdd" />
+                                    <input type="hidden" id="idSerRemove" />
+                                    <div class="col-md-12">
+                                        <b>Tên Dịch Vụ:</b><br>
+                                        <select class="form-control select2" style="width: 100%;" id="ser"></select>
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 10px">
+                                        <b>Thời Gian làm Việc:</b><br>
+                                        <input type="text" class="form-control" id="monthExp">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="hideUpdateServiceModal()">Đóng</button>
+                                <button type="button" class="btn btn-primary" onclick="UpdateSkill(); hideUpdateServiceModall();">Lưu Chỉnh Sửa</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
             </div>
         </div>
     </div>
@@ -387,7 +415,7 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1],
+                        "aTargets": [0, 1,2],
                         "bSortable": false,
                         "sClass": "text-center"
                     },
@@ -395,21 +423,24 @@
                 "columns": [
                     { "data": "ServiceITSupportName" },
                     { "data": "MonthExperience" },
-                    //{
-                    //    "aTargets": [2],
-                    //    "mRender": function (data, type, full2) {
-                    //        //var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.DeviceId + ')"></button>';
-                    //        var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeSkill(' + full2.ITSupporterId + ')"></button>';
-                    //        //return edit + " " + del;
-                    //        return del;
-                    //    }
-                    //},
+                    {
+                        "aTargets": [2],
+                        "mRender": function (data, type, full2) {
+                            //var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEditSkill(' + full2.ServiceITSupportId + ')"></button>';
+                            var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeSkill(' + full2.ServiceITSupportId + ')"></button>';
+                            //return edit + " " + del;
+                            return del;
+                        }
+                    },
                 ],
                 "bAutoWidth": false,
             });
         }
         function hideCreateServiceModal() {
             $("#CreateServiceModal").modal("hide");
+        }
+        function hideUpdateServiceModal() {
+            $("#UpdateServiceModal").modal("hide");
         }
         function showCreateModal() {
             $('#CreateModal').modal('show');
@@ -440,12 +471,12 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#ITSupNameV").text(data.result.ObjReturn.CompanyName);
-                    $("#ITPhoneV").text(data.result.ObjReturn.Description);
-                    $("#ITUsernameV").text(data.result.ObjReturn.CreateDate);
-                    $("#ITPassV").text(data.result.ObjReturn.UpdateDate);
-                    $("#ITEmailV").text(data.result.ObjReturn.UpdateDate);
-                    $("#ITAddressV").text(data.result.ObjReturn.UpdateDate);
+                    $("#ITSupNameV").text(data.result.ObjReturn.ITSupporterName);
+                    $("#ITPhoneV").text(data.result.ObjReturn.Telephone);
+                    $("#ITUsernameV").text(data.result.ObjReturn.Username);
+                    $("#ITPassV").text(data.result.ObjReturn.Password);
+                    $("#ITEmailV").text(data.result.ObjReturn.Email);
+                    $("#ITAddressV").text(data.result.ObjReturn.Address);
 
                 }
                 });
@@ -462,8 +493,8 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#ITExpV").text(data.result.ObjReturn.CompanyName);
-                    $("#ITExpTimeV").text(data.result.ObjReturn.Description);
+                    $("#ITExpV").text(data.result.ObjReturn.ServiceITSupportName);
+                    $("#ITExpTimeV").text(data.result.ObjReturn.MonthExperience);
 
                 }
                 });
@@ -578,7 +609,7 @@
                 }
             });
         }
-        @*function removeSkill(id) {
+        function removeSkill(id) {
             swal({
                 title: 'Bạn có Chắc Chắn Muốn Xóa?',
                 text: "Dữ Liệu Đã Xóa Không Thể Hoàn Lại!",
@@ -596,13 +627,13 @@
                     'success'
                 )
             });
-            $('#idAdd').val(id);
+            $('#idSerRemove').val(id);
         }
 
         function deleteSkillOfITSup() {
             var idEdit = $('#idAdd').val();
             var itsup_idd = $('#idAdd').val();
-            var skill_id = $('#idSerRemove').val;
+            var skill_id = $('#idSerRemove').val();
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("RemoveSkill", "ITSupporter")',
@@ -617,7 +648,7 @@
                     loadSkill(idEdit);
                 }
             });
-        }*@
+        }
         function UpdateITSup() {
             var empObj = {
                 ITSupporterId: $('#idAdd').val(),

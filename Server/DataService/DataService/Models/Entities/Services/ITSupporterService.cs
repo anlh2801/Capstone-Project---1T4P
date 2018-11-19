@@ -833,6 +833,7 @@ namespace DataService.Models.Entities.Services
                 {
                     var skillAPIViewModel = new ITSupporterAPIViewModel
                     {
+                        ServiceITSupportId = item.ServiceITSupportId.Value,
                         ServiceITSupportName = item.ServiceITSupport.ServiceName,
                         MonthExperience = item.MonthExperience + " tháng"
                     };
