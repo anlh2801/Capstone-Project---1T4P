@@ -1,6 +1,7 @@
 package com.odts.it_supporter_app.apiCaller;
 
 import com.odts.it_supporter_app.models.ITSupporter;
+import com.odts.it_supporter_app.models.ITSupporterStatistic;
 import com.odts.it_supporter_app.utils.ResponseObject;
 
 import java.time.LocalDateTime;
@@ -37,4 +38,7 @@ public interface IITSupporterApiCaller {
 
     @GET("ITsupporter/get_Is_Busy")
     Call<ResponseObject<Boolean>> getIsBusy(@Query("itsupporter_id") int itsupporter_id);
+
+    @GET("ITsupporter/view_itsupporter_statistic_all")
+    Call<ResponseObject<ITSupporterStatistic>> viewITsupporterStatistic(@Query("itsupporterId") int itsupporterId);
 }
