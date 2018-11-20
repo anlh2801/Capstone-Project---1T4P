@@ -2,6 +2,7 @@ package com.odts.apiCaller;
 
 import com.odts.models.Rating;
 import com.odts.models.Request;
+import com.odts.models.RequestGroupMonth;
 import com.odts.utils.ResponseObject;
 import com.odts.utils.ResponseObjectReturnList;
 
@@ -32,4 +33,8 @@ public interface IRequestApiCaller {
 
     @POST("/request/rate_ITSupporter")
     Call<ResponseObject<Boolean>> ratingHero(@Body Rating rating);
+
+    @GET("ticket/all_ticket_with_status_agency2")
+    Call<ResponseObjectReturnList<RequestGroupMonth>> getRequestByStatusWithMonth(@Query("agency_id") Integer agency_id,
+                                                                                  @Query("status") Integer status_id);
 }

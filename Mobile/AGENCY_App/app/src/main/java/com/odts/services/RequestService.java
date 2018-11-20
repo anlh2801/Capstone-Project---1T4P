@@ -11,6 +11,7 @@ import com.odts.activities.PendingFragment;
 import com.odts.apiCaller.IRequestApiCaller;
 import com.odts.models.Rating;
 import com.odts.models.Request;
+import com.odts.models.RequestGroupMonth;
 import com.odts.utils.CallBackData;
 import com.odts.utils.ResponseObject;
 import com.odts.utils.ResponseObjectReturnList;
@@ -81,6 +82,26 @@ public class RequestService {
 
             @Override
             public void onFailure(Call<ResponseObjectReturnList<Request>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getRequestByStatusWithMonth(final Context context, Integer agency_id, Integer status, final CallBackData<ArrayList<RequestGroupMonth>> callBackData) {
+        IRequestApiCaller = RetrofitInstance.getRequestService();
+        Call<ResponseObjectReturnList<RequestGroupMonth>> call = IRequestApiCaller.getRequestByStatusWithMonth(agency_id, status);
+        call.enqueue(new Callback<ResponseObjectReturnList<RequestGroupMonth>>() {
+            @Override
+            public void onResponse(Call<ResponseObjectReturnList<RequestGroupMonth>> call, Response<ResponseObjectReturnList<RequestGroupMonth>> response) {
+                if (!response.body().isError()) {
+//                    Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
+                    callBackData.onSuccess(response.body().getObjList());
+                } else
+                    Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObjectReturnList<RequestGroupMonth>> call, Throwable t) {
 
             }
         });
