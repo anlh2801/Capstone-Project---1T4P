@@ -214,10 +214,17 @@ namespace DataService.Models.Entities.Services
                     {
                         if( item.RequestStatus == (int)RequestStatusEnum.Done)
                         {
-                            rsList.Add(new RequestAllTicketWithStatusAgencyAPIViewModel
+                            if(item.Rating != null)
                             {
-                                FeedBack = item.Feedback,
-                            });
+                                rsList.Add(new RequestAllTicketWithStatusAgencyAPIViewModel
+                                {
+                                    FeedBack = item.Feedback,
+                                    Rating = item.Rating.Value,
+                                    AgencyName = item.Agency.AgencyName,
+                                    RequestName = item.RequestName,
+
+                                });
+                            }
                         } 
                     }
                     
