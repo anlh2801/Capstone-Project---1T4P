@@ -33,7 +33,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/udDateDone"
+                android:id="@+id/createDateDone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="3dp" />
@@ -42,6 +42,14 @@
                 android:id="@+id/txtEndDateDone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/txtHeroName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
                 android:text="TextView" />
 
 

@@ -1,67 +1,56 @@
 package com.odts.customTools;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.odts.activities.DoneDetailActivity;
 import com.odts.activities.R;
 import com.odts.activities.RequestDetailActivity;
+import com.odts.models.Device;
 import com.odts.models.Request;
+import com.odts.models.RequestGroupMonth;
 import com.odts.services.RequestService;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CancleRequestAdapter extends RecyclerView.Adapter<CancleRequestAdapter.MyViewHolder> {
-    private Context context;
-    private List<Request> listRequest;
+public class CancleRequestAdapter extends ArrayAdapter<RequestGroupMonth> {
+    Activity context;
+    int resource;
+    List<RequestGroupMonth> objects;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView rqName, estimes;
-
-        public MyViewHolder(View view) {
-            super(view);
-            rqName = (TextView) view.findViewById(R.id.txtRequestNameCan);
-            estimes = (TextView) view.findViewById(R.id.udDateCan);
-//            view.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    int position = getAdapterPosition();
-//                    if (position != RecyclerView.NO_POSITION) {
-//                        Intent intent = new Intent(context, RequestDetailActivity.class);
-//                        intent.putExtra("requestID", listRequest.get(position).getRequestId());
-//                        context.startActivity(intent);
-//                    }
-//                }
-//            });
-        }
-    }
-
-    public CancleRequestAdapter(Context context, List<Request> listRequest) {
+    public CancleRequestAdapter(@NonNull Activity context, int resource, @NonNull List<RequestGroupMonth> objects) {
+        super(context, resource, objects);
         this.context = context;
-        this.listRequest = listRequest;
+        this.resource = resource;
+        this.objects = objects;
     }
-
     @Override
-    public CancleRequestAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cancel_item, parent, false);
+    public View getView(int position, View convertView, ViewGroup parent) {
+        LayoutInflater inflater = this.context.getLayoutInflater();
+        View row = inflater.inflate(this.resource, null);
+        TextView txtThangNam = (TextView) row.findViewById(R.id.txtThangNam);
+        LinearLayout lvDetailsThangNam = (LinearLayout) row.findViewById(R.id.detailsRequestGroup);
+        final RequestGroupMonth requestGroupMonth = this.objects.get(position);
+        txtThangNam.setText(requestGroupMonth.getMonthYearGroup());
 
-        return new CancleRequestAdapter.MyViewHolder(itemView);
-    }
-
-    @Override
-    public void onBindViewHolder(final CancleRequestAdapter.MyViewHolder holder, int position) {
-        Request album = listRequest.get(position);
-        holder.rqName.setText(album.getRequestName());
-        holder.estimes.setText("Hủy vào lúc: " + album.getUpdateDate());
-    }
-
-    @Override
-    public int getItemCount() {
-        return listRequest.size();
+        for (final Request item : requestGroupMonth.getRequestOfITSupporter()) {
+            View view = inflater.inflate(R.layout.cancel_item, null);
+            TextView txtRequestName = (TextView) view.findViewById(R.id.txtRequestNameCan);
+            TextView txtEndDate = (TextView) view.findViewById(R.id.udDateCan);
+            txtRequestName.setText(item.getAgencyName() + " - " + item.getRequestName());
+            txtEndDate.setText("Hủy vào lúc: " + item.getNod());
+            lvDetailsThangNam.addView(view);
+        }
+        return row;
     }
 }

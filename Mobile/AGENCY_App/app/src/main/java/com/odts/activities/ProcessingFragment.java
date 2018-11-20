@@ -26,7 +26,7 @@ public class ProcessingFragment extends Fragment {
 
     private RequestService requestService;
     private ListView listView;
-    private ProcessRequestAdapter pendingRequestAdapter;
+    private ProcessRequestAdapter processRequestAdapter;
     Integer agencyId = 0;
 
     public ProcessingFragment() {
@@ -52,8 +52,8 @@ public class ProcessingFragment extends Fragment {
         requestService.getRequestByStatusWithMonth(getActivity(), agencyId, Enums.RequestStatusEnum.Processing.getIntValue(), new CallBackData<ArrayList<RequestGroupMonth>>() {
             @Override
             public void onSuccess(ArrayList<RequestGroupMonth> listRequests) {
-                pendingRequestAdapter = new ProcessRequestAdapter(getActivity(), R.layout.list_processing_request_group_item, listRequests);
-                listView.setAdapter(pendingRequestAdapter);
+                processRequestAdapter = new ProcessRequestAdapter(getActivity(), R.layout.list_processing_request_group_item, listRequests);
+                listView.setAdapter(processRequestAdapter);
 //                recyclerView.getItemAtPosition(po)
             }
 

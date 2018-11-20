@@ -8,8 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
 import com.odts.customTools.CancleRequestAdapter;
 import com.odts.models.Request;
+import com.odts.models.RequestGroupMonth;
 import com.odts.services.RequestService;
 import com.odts.utils.CallBackData;
 import com.odts.utils.Enums;
@@ -26,8 +29,8 @@ import java.util.ArrayList;
 public class CancleFragment extends Fragment {
 
     private RequestService requestService;
-    private RecyclerView recyclerView;
-    private CancleRequestAdapter pendingRequestAdapter;
+    private ListView listView;
+    private CancleRequestAdapter cancleRequestAdapter;
     Integer agencyId = 0;
 
     public CancleFragment() {
@@ -47,15 +50,13 @@ public class CancleFragment extends Fragment {
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         agencyId = share.getInt("agencyId", 0);
-        recyclerView = (RecyclerView) v.findViewById(R.id.listCancel);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        listView = (ListView) v.findViewById(R.id.listCancel) ;
         requestService = new RequestService();
-        requestService.getRequestByStatus(getActivity(), agencyId, Enums.RequestStatusEnum.Cancel.getIntValue(), new CallBackData<ArrayList<Request>>() {
+        requestService.getRequestByStatusWithMonth(getActivity(), agencyId, Enums.RequestStatusEnum.Cancel.getIntValue(), new CallBackData<ArrayList<RequestGroupMonth>>() {
             @Override
-            public void onSuccess(ArrayList<Request> listRequests) {
-                pendingRequestAdapter = new CancleRequestAdapter(getActivity(), listRequests);
-                recyclerView.setAdapter(pendingRequestAdapter);
+            public void onSuccess(ArrayList<RequestGroupMonth> listRequests) {
+                cancleRequestAdapter = new CancleRequestAdapter(getActivity(), R.layout.list_cancel_request_group_item, listRequests);
+                listView.setAdapter(cancleRequestAdapter);
             }
 
             @Override
