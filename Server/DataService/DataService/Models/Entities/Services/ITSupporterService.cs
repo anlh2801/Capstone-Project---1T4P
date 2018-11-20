@@ -69,6 +69,8 @@ namespace DataService.Models.Entities.Services
         ResponseObject<int> UpdateIsBusyOFITSupporter(int itsupporterId);
 
         ResponseObject<ITSupporterStatisticForMobileAPIViewModel> ITSuppoterStatisticAll(int itsupporterId);
+
+        ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> ViewRequestITSupporter(int itSupporter_id);
     }
 
     public partial class ITSupporterService
@@ -197,6 +199,37 @@ namespace DataService.Models.Entities.Services
             {
 
                 return new ResponseObject<ITSupporterAPIViewModel> { IsError = true, WarningMessage = "Không tìm thấy người hỗ trợ", ObjReturn = null, ErrorMessage = e.ToString() };
+            }
+        }
+        public ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> ViewRequestITSupporter(int itSupporter_id)
+        {
+            try
+            {
+                var ITSupporterRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var itSupporter = ITSupporterRepo.GetActive(i => i.CurrentITSupporter_Id == itSupporter_id).ToList();
+                if (itSupporter != null)
+                {
+                    List<RequestAllTicketWithStatusAgencyAPIViewModel> rsList = new List<RequestAllTicketWithStatusAgencyAPIViewModel>();
+                    foreach ( Request item in itSupporter)
+                    {
+                        if( item.RequestStatus == (int)RequestStatusEnum.Done)
+                        {
+                            rsList.Add(new RequestAllTicketWithStatusAgencyAPIViewModel
+                            {
+                                FeedBack = item.Feedback,
+                            });
+                        } 
+                    }
+                    
+                    return new ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
+                }
+
+                return new ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy feedback" };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy feedback", ObjReturn = null, ErrorMessage = e.ToString() };
             }
         }
 

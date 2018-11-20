@@ -52,6 +52,8 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         HttpResponseMessage ITSuppoterStatisticAll(int itsupporterId);
 
+        HttpResponseMessage ViewRequestITSupporter(int itsupporter_id);
+
         HttpResponseMessage ViewProfileITSupporter(string devcieCode);
     }
 
@@ -267,11 +269,16 @@ namespace CapstoneProject_ODTS.ControllersApi
         }
 
         [HttpGet]
+        [Route("ITsupporter/view_all_feedback")]
+        public HttpResponseMessage ViewRequestITSupporter(int itsupporter_id)
+        {
+            var result = _ITSupporterDomain.ViewRequestITSupporter(itsupporter_id);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
         [Route("ITsupporter/check_device_info_by_code")]
         public HttpResponseMessage ViewProfileITSupporter(string devcieCode)
         {
             var result = _deviceDomain.GetDeviceDetailByDeviceCode(devcieCode);
-
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
     }

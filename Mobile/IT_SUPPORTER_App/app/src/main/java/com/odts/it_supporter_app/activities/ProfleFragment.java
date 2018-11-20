@@ -9,12 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.odts.it_supporter_app.R;
 import com.odts.it_supporter_app.models.ITSupporter;
+import com.odts.it_supporter_app.models.ITSupporterStatistic;
+import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.services.ITSupporterService;
 import com.odts.it_supporter_app.utils.CallBackData;
 import com.willy.ratingbar.ScaleRatingBar;
+
+import java.util.ArrayList;
 
 
 public class ProfleFragment extends Fragment {
@@ -59,9 +64,18 @@ public class ProfleFragment extends Fragment {
 
             }
         });
-        sharedPreferences = getActivity().getSharedPreferences("ODTS", Context.MODE_PRIVATE);
 
+        itSupporterService.viewAllFeedback(getContext(), itID, new CallBackData<ArrayList<Request>>() {
+            @Override
+            public void onSuccess(ArrayList<Request> requests) {
+                
+            }
 
+            @Override
+            public void onFail(String message) {
+
+            }
+        });
         return v;
     }
 

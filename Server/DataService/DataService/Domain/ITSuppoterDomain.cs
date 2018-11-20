@@ -62,6 +62,7 @@ namespace DataService.Domain
         ResponseObject<int> UpdateIsBusyOFITSupporter(int itsupporterId);
 
         ResponseObject<ITSupporterStatisticForMobileAPIViewModel> ITSuppoterStatisticAll(int itsupporterId);
+        ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> ViewRequestITSupporter(int itSupporter_id);
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain
@@ -314,6 +315,15 @@ namespace DataService.Domain
             var result = iTSupporterService.UpdateITSup(model);
 
             return result;
+        }
+
+        public ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> ViewRequestITSupporter(int itSupporter_id)
+        {
+            var itSupporterService = this.Service<IITSupporterService>();
+
+            var itSupporter = itSupporterService.ViewRequestITSupporter(itSupporter_id);
+
+            return itSupporter;
         }
     }
 }
