@@ -1,46 +1,59 @@
 package com.odts.customTools;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.odts.activities.R;
-import com.odts.activities.RequestDetailActivity;
 import com.odts.models.Request;
+import com.odts.models.RequestGroupMonth;
+import com.odts.activities.R;
 import com.odts.services.RequestService;
 import com.odts.utils.Enums;
 
 import java.util.List;
 
-public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAdapter.MyViewHolder> {
-    private Context context;
-    private List<Request> listRequest;
+
+public class PendingRequestAdapter extends ArrayAdapter<RequestGroupMonth> {
+    Activity context;
+    int resource;
+    List<RequestGroupMonth> objects;
+    ImageButton btnCancelRequest;
     RequestService requestService;
-
-    public PendingRequestAdapter() {
-        requestService = new RequestService();
+    private List<Request> listRequest;
+    int requestID = 0;
+    public PendingRequestAdapter(@NonNull Activity context, int resource, @NonNull List<RequestGroupMonth> objects) {
+        super(context, resource, objects);
+        this.context = context;
+        this.resource = resource;
+        this.objects = objects;
     }
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        LayoutInflater inflater = this.context.getLayoutInflater();
+        View row = inflater.inflate(this.resource, null);
+        TextView txtThangNam = (TextView) row.findViewById(R.id.txtThangNam);
+        LinearLayout lvDetailsThangNam = (LinearLayout) row.findViewById(R.id.detailsRequestGroup);
+        final RequestGroupMonth requestGroupMonth = this.objects.get(position);
+        txtThangNam.setText(requestGroupMonth.getMonthYearGroup());
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView rqName, crDate, nod;
-        public ImageButton btnCancelRequest;
-        public int requestId = 0;
-
-        public MyViewHolder(View view) {
-            super(view);
-            requestService = new RequestService();
-            rqName = (TextView) view.findViewById(R.id.txtRequestNamee);
-            crDate = (TextView) view.findViewById(R.id.txtCreateDatee);
-            nod = (TextView) view.findViewById(R.id.txtNoD);
+        for (final Request item: requestGroupMonth.getRequestOfITSupporter()) {
+            View view = inflater.inflate(R.layout.pending_item, null);
+            TextView txtRequestName = (TextView) view.findViewById(R.id.txtRequestNamee);
+            TextView txtEndDate = (TextView) view.findViewById(R.id.txtNoD);
+            TextView txtCreateDate = (TextView) view.findViewById(R.id.txtCreateDatee);
+            txtRequestName.setText(item.getAgencyName() + " - " + item.getRequestName());
+            txtCreateDate.setText("Tạo vào: " + item.getCreateDate());
+            txtEndDate.setText("Thiết bị cần xử lý: " + item.getNod());
             btnCancelRequest = (ImageButton) view.findViewById(R.id.btnCancelRequest);
+            requestService = new RequestService();
             btnCancelRequest.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View view) {
@@ -50,9 +63,9 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
                             .setPositiveButton("Có", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
-                                    requestService.cancelTicket(context, requestId, Enums.RequestStatusEnum.Cancel.getIntValue());
-                                    listRequest.remove(getAdapterPosition());
-                                    notifyItemRemoved(getAdapterPosition());
+                                    requestService.cancelTicket(context, item.getRequestId(), Enums.RequestStatusEnum.Cancel.getIntValue());
+//                                listRequest.remove(getAdapterPosition());
+//                                notifyItemRemoved(getAdapterPosition());
 //                                    notifyItemRangeRemoved(getAdapterPosition(), listRequest.size());
                                 }
                             })
@@ -65,34 +78,10 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
                             .show();
                 }
             });
+            lvDetailsThangNam.addView(view);
         }
+
+
+        return row;
     }
-
-    public PendingRequestAdapter(Context context, List<Request> listRequest) {
-        this.context = context;
-        this.listRequest = listRequest;
-    }
-
-    @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.activity_list_item, parent, false);
-
-        return new MyViewHolder(itemView);
-    }
-
-    @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
-        Request album = listRequest.get(position);
-        holder.rqName.setText(album.getRequestName());
-        holder.crDate.setText("Tạo vào: " + album.getCreateDate());
-        holder.nod.setText("Thiết bị cần xử lý: " + album.getNod());
-        holder.requestId = album.getRequestId();
-    }
-
-    @Override
-    public int getItemCount() {
-        return listRequest.size();
-    }
-
 }
