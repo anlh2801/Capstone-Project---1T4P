@@ -12,12 +12,14 @@ import com.odts.it_supporter_app.apiCaller.IITSupporterApiCaller;
 import com.odts.it_supporter_app.apiCaller.ILoginApiCaller;
 import com.odts.it_supporter_app.models.ITSupporter;
 import com.odts.it_supporter_app.models.ITSupporterStatistic;
+import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.utils.CallBackData;
 import com.odts.it_supporter_app.utils.ResponseObject;
 import com.odts.it_supporter_app.utils.ResponseObjectReturnList;
 import com.odts.it_supporter_app.utils.RetrofitInstance;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 
 import retrofit2.Call;
@@ -33,13 +35,13 @@ public class ITSupporterService {
         call.enqueue(new Callback<ResponseObject<Boolean>>() {
             @Override
             public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
-                if(!response.body().isError()){
+                if (!response.body().isError()) {
                     callBackData.onSuccess(response.body().isError());
-                }
-                else {
+                } else {
                 }
 
             }
+
             @Override
             public void onFailure(Call<ResponseObject<Boolean>> call, Throwable t) {
                 Log.e("ERROR: ", t.getMessage());
@@ -47,7 +49,8 @@ public class ITSupporterService {
         });
 
     }
-    public void updateStatusIT(final  Context context, int itsupporter_id, boolean isOnline) {
+
+    public void updateStatusIT(final Context context, int itsupporter_id, boolean isOnline) {
         iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
         Call<ResponseObject<Boolean>> call = iitSupporterApiCaller.updateStatusIt(itsupporter_id, isOnline);
         call.enqueue(new Callback<ResponseObject<Boolean>>() {
@@ -63,7 +66,7 @@ public class ITSupporterService {
         });
     }
 
-    public void updateBusyIT(final  Context context, int itsupporter_id) {
+    public void updateBusyIT(final Context context, int itsupporter_id) {
         iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
         Call<ResponseObject<Boolean>> call = iitSupporterApiCaller.updateBusyIt(itsupporter_id);
         call.enqueue(new Callback<ResponseObject<Boolean>>() {
@@ -78,7 +81,8 @@ public class ITSupporterService {
             }
         });
     }
-    public  void updateStartTime(final Context context, int request_id, String start_time) {
+
+    public void updateStartTime(final Context context, int request_id, String start_time) {
         iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
         Call<ResponseObject<Boolean>> call = iitSupporterApiCaller.updateStartTime(request_id, start_time);
         call.enqueue((new Callback<ResponseObject<Boolean>>() {
@@ -93,7 +97,8 @@ public class ITSupporterService {
             }
         }));
     }
-    public  void updateEndTime(final Context context, int request_id, String end_time) {
+
+    public void updateEndTime(final Context context, int request_id, String end_time) {
         iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
         Call<ResponseObject<Boolean>> call = iitSupporterApiCaller.updateEndTime(request_id, end_time);
         call.enqueue((new Callback<ResponseObject<Boolean>>() {
@@ -108,7 +113,8 @@ public class ITSupporterService {
             }
         }));
     }
-    public  void getIsOnline(final Context context, int itsupporter_id, final CallBackData<Boolean> callBackData) {
+
+    public void getIsOnline(final Context context, int itsupporter_id, final CallBackData<Boolean> callBackData) {
         iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
         Call<ResponseObject<Boolean>> call = iitSupporterApiCaller.getIsOnline(itsupporter_id);
         call.enqueue((new Callback<ResponseObject<Boolean>>() {
@@ -124,7 +130,7 @@ public class ITSupporterService {
         }));
     }
 
-    public  void getIsBusy(final Context context, int itsupporter_id, final CallBackData<Boolean> callBackData) {
+    public void getIsBusy(final Context context, int itsupporter_id, final CallBackData<Boolean> callBackData) {
         iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
         Call<ResponseObject<Boolean>> call = iitSupporterApiCaller.getIsBusy(itsupporter_id);
         call.enqueue((new Callback<ResponseObject<Boolean>>() {
@@ -140,7 +146,7 @@ public class ITSupporterService {
         }));
     }
 
-    public  void viewProfile(final Context context, int itsupporter_id, final CallBackData<ITSupporter> callBackData) {
+    public void viewProfile(final Context context, int itsupporter_id, final CallBackData<ITSupporter> callBackData) {
         iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
         Call<ResponseObject<ITSupporter>> call = iitSupporterApiCaller.viewProfile(itsupporter_id);
         call.enqueue((new Callback<ResponseObject<ITSupporter>>() {
@@ -156,7 +162,7 @@ public class ITSupporterService {
         }));
     }
 
-    public  void viewITsupporterStatistic(final Context context, int itsupporter_id, final CallBackData<ITSupporterStatistic> callBackData) {
+    public void viewITsupporterStatistic(final Context context, int itsupporter_id, final CallBackData<ITSupporterStatistic> callBackData) {
         iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
         Call<ResponseObject<ITSupporterStatistic>> call = iitSupporterApiCaller.viewITsupporterStatistic(itsupporter_id);
         call.enqueue((new Callback<ResponseObject<ITSupporterStatistic>>() {
@@ -164,8 +170,25 @@ public class ITSupporterService {
             public void onResponse(Call<ResponseObject<ITSupporterStatistic>> call, Response<ResponseObject<ITSupporterStatistic>> response) {
                 callBackData.onSuccess(response.body().getObjReturn());
             }
+
             @Override
             public void onFailure(Call<ResponseObject<ITSupporterStatistic>> call, Throwable t) {
+            }
+        }));
+    }
+
+    public void viewAllFeedback(final Context context, int itsupporter_id, final CallBackData<ArrayList<Request>> callBackData) {
+        iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
+        Call<ResponseObjectReturnList<Request>> call = iitSupporterApiCaller.viewAllFeedback(itsupporter_id);
+        call.enqueue((new Callback<ResponseObjectReturnList<Request>>() {
+            @Override
+            public void onResponse(Call<ResponseObjectReturnList<Request>> call, Response<ResponseObjectReturnList<Request>> response) {
+                callBackData.onSuccess(response.body().getObjList());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObjectReturnList<Request>> call, Throwable t) {
+
             }
         }));
     }

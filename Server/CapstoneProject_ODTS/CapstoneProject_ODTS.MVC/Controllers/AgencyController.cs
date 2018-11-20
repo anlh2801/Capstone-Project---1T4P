@@ -11,6 +11,7 @@ namespace CapstoneProject_ODTS.Controllers
     //public class AgencyController
     //{
     //}
+    [MVC.Filters.AutorizeAdmin]
     public class AgencyController : Controller
     {
         private AgencyDomain _agencyDomain;

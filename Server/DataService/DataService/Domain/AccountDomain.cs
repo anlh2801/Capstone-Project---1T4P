@@ -19,6 +19,8 @@ namespace DataService.Domain
         ResponseObject<bool> CreateAccount(AccountAPIViewModel model);
         ResponseObject<bool> RemoveAccount(int account_id);
         ResponseObject<bool> UpdateProfile(AccountAPIViewModel model);
+
+        ResponseObject<AccountAPIViewModel> CheckLogin(string username, string password, int roleId);
     };
 
     public class AccountDomain : BaseDomain, IAccountDomain
@@ -77,6 +79,15 @@ namespace DataService.Domain
             var accountService = this.Service<IAccountService>();
 
             var result = accountService.UpdateProfile(model);
+
+            return result;
+        }
+
+        public ResponseObject<AccountAPIViewModel> CheckLogin(string username, string password, int roleId)
+        {
+            var accountService = this.Service<IAccountService>();
+
+            var result = accountService.CheckLogin(username, password, roleId);
 
             return result;
         }

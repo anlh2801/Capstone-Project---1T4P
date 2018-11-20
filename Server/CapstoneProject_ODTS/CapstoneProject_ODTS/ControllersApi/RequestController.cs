@@ -58,10 +58,19 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         [HttpGet]
         [Route("ticket/all_ticket_with_status_agency")]
-        public HttpResponseMessage GetAllTicketByAgencyIDAndStatus(Int32 agency_id, Int32 status)
+        public HttpResponseMessage GetAllTicketByAgencyIDAndStatus(int agency_id, int status)
         {
             var result = _requestDomain.GetAllRequestByAgencyIDAndStatus(agency_id, status);
             
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        [Route("ticket/all_ticket_with_status_agency2")]
+        public HttpResponseMessage GetAllTicketByAgencyIDAndStatus2(int agency_id, int status)
+        {
+            var result = _requestDomain.GetAllRequestByAgencyIDAndStatus2(agency_id, status);
+
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

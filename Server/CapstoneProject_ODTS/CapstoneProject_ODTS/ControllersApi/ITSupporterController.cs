@@ -51,6 +51,10 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage DeleteTaskStatus(int requestTaskId);
 
         HttpResponseMessage ITSuppoterStatisticAll(int itsupporterId);
+
+        HttpResponseMessage ViewRequestITSupporter(int itsupporter_id);
+
+        HttpResponseMessage ViewProfileITSupporter(string devcieCode);
     }
 
     public class ITSupporterController : ApiController, IITSupporterController
@@ -59,10 +63,13 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         private AccountDomain _accountDomain;
 
+        private DeviceDomain _deviceDomain;
+
         public ITSupporterController()
         {
             _ITSupporterDomain = new ITSupporterDomain();
             _accountDomain = new AccountDomain();
+            _deviceDomain = new DeviceDomain();
         }
 
         [HttpPost]
@@ -258,6 +265,20 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage UpdateIsBusyOFITSupporter(int itsupporter_id)
         {
             var result = _ITSupporterDomain.UpdateIsBusyOFITSupporter(itsupporter_id);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        [Route("ITsupporter/view_all_feedback")]
+        public HttpResponseMessage ViewRequestITSupporter(int itsupporter_id)
+        {
+            var result = _ITSupporterDomain.ViewRequestITSupporter(itsupporter_id);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+        [Route("ITsupporter/check_device_info_by_code")]
+        public HttpResponseMessage ViewProfileITSupporter(string devcieCode)
+        {
+            var result = _deviceDomain.GetDeviceDetailByDeviceCode(devcieCode);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
     }

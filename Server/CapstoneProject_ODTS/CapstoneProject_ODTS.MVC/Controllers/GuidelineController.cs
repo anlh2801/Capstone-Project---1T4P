@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace CapstoneProject_ODTS.MVC.Controllers
 {
+    [MVC.Filters.AutorizeAdmin]
     public class GuidelineController : Controller
     {
         private GuidelineDomain _guidelineDomain;

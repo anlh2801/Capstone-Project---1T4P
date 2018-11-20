@@ -61,6 +61,28 @@ public class Request {
     @SerializedName("AgencyAddress")
     private String agencyAddress;
 
+    @SerializedName("FeedBack")
+    private  String feedBack;
+
+    @SerializedName("Rating")
+    private  Integer Rating;
+
+    public Integer getRating() {
+        return Rating;
+    }
+
+    public void setRating(Integer rating) {
+        Rating = rating;
+    }
+
+    public String getFeedBack() {
+        return feedBack;
+    }
+
+    public void setFeedBack(String feedBack) {
+        this.feedBack = feedBack;
+    }
+
     public String getAgencyAddress() {
         return agencyAddress;
     }

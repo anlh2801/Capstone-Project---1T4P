@@ -31,6 +31,8 @@ namespace DataService.Domain
         ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestByRequestIdAndITSupporterId(int itSupporterId);
 
         ResponseObject<List<StatusAPIViewModel>> GetRequestStatistic();
+
+        ResponseObject<List<RequestGroupMonth>> GetAllRequestByAgencyIDAndStatus2(int acency_id, int status);
     }
 
     public  class RequestDomain : BaseDomain, IRequestDomain
@@ -67,6 +69,16 @@ namespace DataService.Domain
             var requestService = this.Service<IRequestService>();
             
             var result = requestService.GetAllRequestByAgencyIDAndStatus(acency_id, status);
+
+            return result;
+
+        }
+
+        public ResponseObject<List<RequestGroupMonth>> GetAllRequestByAgencyIDAndStatus2(int acency_id, int status)
+        {
+            var requestService = this.Service<IRequestService>();
+
+            var result = requestService.GetAllRequestByAgencyIDAndStatus2(acency_id, status);
 
             return result;
 
