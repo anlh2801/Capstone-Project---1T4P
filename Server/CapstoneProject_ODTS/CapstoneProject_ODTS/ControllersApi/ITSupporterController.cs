@@ -34,7 +34,7 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         HttpResponseMessage LoginITSupporter(string username, string password, int roleId);
 
-        HttpResponseMessage ITSuppoterStatistic(int itsupporterId, int year, int month);
+        HttpResponseMessage ITSuppoterStatistic(int year, int month);
 
         HttpResponseMessage UpdateStatusIT(int itsupporter_id, bool isOnline);
 
@@ -204,10 +204,12 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         [HttpGet]
         [Route("ITsupporter/view_itsupporter_statistic")]
-        public HttpResponseMessage ITSuppoterStatistic(int itsupporterId, int year, int month)
+        public HttpResponseMessage ITSuppoterStatistic(int year, int month)
         {
-            var result = _ITSupporterDomain.ITSuppoterStatistic(itsupporterId, year, month);
-
+            var result = _ITSupporterDomain.ITSuppoterStatistic(year, month);
+            //var result = _ITSupporterDomain.ServiceITSuppoterStatistic(year, month);
+            //var r = new RequestDomain();
+            //var result = r.GetRequestStatistic(month, year);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

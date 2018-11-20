@@ -10,7 +10,7 @@ namespace DataService.APIViewModels
     public class ITSupporterStatisticServiceTimeAPIViewModel
     {
         public string ServiceName { get; set; }
-        public double SupportTimeByDay { get; set; }
-        public double SupportTimeByHour { get; set; }
+        public int SupportTimeByTimes { get; set; }
+        public string SupportTimeByHour { get; set; }
     }
 }

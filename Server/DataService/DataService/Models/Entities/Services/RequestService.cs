@@ -38,6 +38,8 @@ namespace DataService.Models.Entities.Services
         ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestByRequestIdAndITSupporterId(int itSupporterId);
 
         ResponseObject<List<StatusAPIViewModel>> GetRequestStatistic();
+
+        ResponseObject<List<StatusAPIViewModel>> GetRequestStatisticForMonth(int month, int year);
     }
 
     public partial class RequestService
@@ -783,6 +785,43 @@ namespace DataService.Models.Entities.Services
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var requests = requestRepo.GetActive().ToList();
+
+                var groupRequestByStatus = requests.GroupBy(p => p.RequestStatus).Select(p => new { Status = p.Key, Requests = p.ToList() }).ToList();
+
+                List<StatusAPIViewModel> statusList = new List<StatusAPIViewModel>();
+                foreach (var status in groupRequestByStatus)
+                {
+                    var statusItem = new StatusAPIViewModel();
+                    statusItem.StatusId = status.Status;
+                    //statusItem.StatusName = Enum.GetName(typeof(RequestStatusEnum), status.Status);
+                    var i = 1;
+                    foreach (RequestStatusEnum item in Enum.GetValues(typeof(RequestStatusEnum)))
+                    {
+                        if (status.Status == i)
+                        {
+                            statusItem.StatusName = item.DisplayName();
+                        }
+                        i++;
+                    }
+                    statusItem.NumberOfStatus = status.Requests.Count();
+                    statusList.Add(statusItem);
+                }
+
+
+                return new ResponseObject<List<StatusAPIViewModel>> { IsError = false, SuccessMessage = "Thống kê thành công!", ObjReturn = statusList };
+            }
+            catch (Exception e)
+            {
+                return new ResponseObject<List<StatusAPIViewModel>> { IsError = true, WarningMessage = "Không có thống kê nào!", ObjReturn = null, ErrorMessage = e.ToString() };
+            }
+        }
+
+        public ResponseObject<List<StatusAPIViewModel>> GetRequestStatisticForMonth(int month, int year)
+        {
+            try
+            {
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var requests = requestRepo.GetActive(p => p.CreateDate.Month == month && p.CreateDate.Year == year).ToList();
 
                 var groupRequestByStatus = requests.GroupBy(p => p.RequestStatus).Select(p => new { Status = p.Key, Requests = p.ToList() }).ToList();
 
