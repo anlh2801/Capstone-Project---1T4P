@@ -46,17 +46,19 @@ public class GuidelineActivity extends AppCompatActivity {
         flbAddTaskFromGuidline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                ArrayList<RequestTask> requestTasks = new ArrayList<>();
-//                for (Guideline item: guidelineRS) {
-//                    RequestTask requestTask = new RequestTask();
-//                    requestTask.setRequestId(requestId);
-//                    requestTask.setTaskDetail(item.getGuidelineName());
-//                    requestTask.setCreateByITSupporter(itSupporterId);
-//                    requestTasks.add(requestTask);
-//                }
-//                _guidelineService.createTaskFromGuidline(GuidelineActivity.this, requestTasks);
-                Intent myIntent = new Intent(GuidelineActivity.this, TaskActivity.class);
-                startActivity(myIntent);
+                ArrayList<RequestTask> requestTasks = new ArrayList<>();
+                for (Guideline item: guidelineRS) {
+                    RequestTask requestTask = new RequestTask();
+                    requestTask.setRequestId(requestId);
+                    requestTask.setTaskDetail(item.getGuidelineName());
+                    requestTask.setCreateByITSupporter(itSupporterId);
+                    requestTasks.add(requestTask);
+                }
+                _guidelineService.createTaskFromGuidline(GuidelineActivity.this, requestTasks);
+                finish();
+
+//                Intent myIntent = new Intent(GuidelineActivity.this, TaskActivity.class);
+//                startActivity(myIntent);
             }
         });
     }

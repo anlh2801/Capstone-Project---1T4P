@@ -1,6 +1,7 @@
 package com.odts.it_supporter_app.activities;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,10 +23,15 @@ public class TaskActivity extends AppCompatActivity {
     TaskService taskService;
     CheckBox tick, tick2;
     LinearLayout linearLayouttt;
+    Integer itSupporterId = 0;
+    Integer requestId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences share = getApplicationContext().getSharedPreferences("ODTS", 0);
+        SharedPreferences.Editor edit = share.edit();
+        itSupporterId = share.getInt("itSupporterId", 0);
         final int i = 0;
         setContentView(R.layout.activity_task);
         final ArrayList<RequestTask> options = new ArrayList<>();
