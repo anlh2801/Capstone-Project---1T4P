@@ -9,7 +9,7 @@
             padding: 1%;
             border-left: solid cadetblue;
             width: 100%;
-            margin-left: 1.5%;
+            margin-left: 1%;
             font-family: Arial;
         }
     </style>
@@ -24,7 +24,7 @@
             </div>
             <div class="box-body">
                 <div class="chart">
-                    <canvas id="bar-chart" width="100%" height=40%></canvas>
+                    <canvas id="bar-chart" width="100%" height="60%"></canvas>
                 </div>
             </div>
         </div>
@@ -37,21 +37,31 @@
             </div>
             <div class="box-body">
                 <div class="chart">
-                    <canvas id="doughnut-chart" width="100%" height="40%"></canvas>
+                    <canvas id="doughnut-chart" width="100%" height="60%"></canvas>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row col-md-12" style="margin-left: 0.2%; margin-top: 10px">
+    <div class="col-md-12" style="margin-top:10px">
+        <div style="margin-bottom:10px">
+            <h4>Thống Kê Dữ Liệu Theo Tháng Của Nhân Viên:</h4>
+        </div>
+        <div style="width:500px; height:60px;">
+            <input type="button" id="pickMonth" class="form-control" style="float: left;width:200px;display: inline-block;height:35px;border:solid 1px blue;text-align:left;" required>
+            <div style="overflow: hidden">
+                <button type="button" class="btn btn-primary fa fa-eye" style="display: inline-block;height:36px;margin-left:10px;" onclick="clearModal()"><font face="verdana"> Xem Thống Kê</button>
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-12" style="margin-left: 0.2%">
         <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
             <thead>
                 <tr>
                     <th><label>STT</label></th>
                     <th><label>Tên Nhân Viên</label></th>
-                    <th><label>Tên Tài Khoản</label></th>
-                    <th><label>Trạng Thái</label></th>
-                    <th><label>Xem Chi Tiết</label></th>
-
+                    <th><label>Số Lần Hỗ Trợ</label></th>
+                    <th><label>Số lần Hủy</label></th>
+                    <th><label>Thời Gian Hỗ Trợ</label></th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -59,6 +69,7 @@
     </div>
 
 </section>
+
 
 
 <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -132,10 +143,13 @@
     <script src="~/AdminLTE/bower_components/Flot/jquery.flot.categories.js"></script>
     <!-- Page script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
     <script>
         $(document).ready(function () {
             loadData();
-            loadITSup();  
+            loadITSup();
         });
 
         function loadITSup() {
@@ -187,22 +201,39 @@
                     },
                 ],
                 "columns": [
-                    { "data": "NumericalOrder" },
+                    { "data": "ITSupporterName" },
+                    { "data": "ITSupporterName" },
                     { "data": "ITSupporterName" },
                     { "data": "Username" },
                     { "data": "IsOnline" },
-                    {
-                        "aTargets": [4],
-                        "mRender": function (data, type, full) {
-                            var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.CompanyId + ')"></button>';
-                            return view;
-                        }
-                    },
+
                 ],
                 "bAutoWidth": false,
             });
         }
+        function getData(idd) {
 
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "ITSuppoterStatisticAll", controller = "ITSupporter" })',
+
+                data: {
+                    company_id: idd
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $("#comName").text(data.result.ObjReturn.CompanyName);
+                    $("#comDescription").text(data.result.ObjReturn.Description);
+                    $("#comCreateDate").text(data.result.ObjReturn.CreateDate);
+                    $("#comUpdateDate").text(data.result.ObjReturn.UpdateDate);
+                    $("#viewPercentForITSupporterRate").text(data.result.ObjReturn.PercentForITSupporterRate);
+                    $("#viewPercentForITSupporterExp").text(data.result.ObjReturn.PercentForITSupporterExp);
+                    $("#viewPercentForITSupporterFami").text(data.result.ObjReturn.PercentForITSupporterFamiliarWithAgency);
+                }
+                });
+            $('#ViewModal').modal('show');
+        }
         function loadData() {
              $.ajax({
                     type: 'GET',
@@ -219,6 +250,12 @@
                     }
             });
         }
+        $('#pickMonth').datepicker({
+            format: 'mm/yyyy',
+            autoclose: true,
+            forceParse: false,
+
+        })
 
         /*
      * BAR CHART
@@ -296,7 +333,7 @@
             new Chart(document.getElementById("doughnut-chart"), {
                 type: 'doughnut',
                 data: {
-                    labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+                    labels: ["Africa", "Asia"],
                     datasets: [
                         {
                             label: "Population (millions)",
@@ -307,7 +344,7 @@
                 },
                 options: {
                     legend: {
-                        display: false
+                        display: true
                     },
                     tooltips: {
                         enabled: true
