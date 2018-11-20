@@ -1,6 +1,7 @@
 package com.odts.it_supporter_app.activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,11 +25,14 @@ import com.firebase.client.Firebase;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.odts.it_supporter_app.R;
 import com.odts.it_supporter_app.models.Request;
+import com.odts.it_supporter_app.models.RequestTask;
 import com.odts.it_supporter_app.services.ITSupporterService;
 import com.odts.it_supporter_app.services.RequestService;
+import com.odts.it_supporter_app.services.TaskService;
 import com.odts.it_supporter_app.utils.CallBackData;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,10 +51,12 @@ public class DoRequestFragment extends Fragment {
     Integer serviceItemId = 0;
     Button btnAccept, bt2, bt3, bt4, bt5;
     Firebase reference1;
+    LinearLayout linearLayoutTask;
+    TaskService taskService;
+    CheckBox tick, tick2;
 
     public DoRequestFragment() {
         _requestService = new RequestService();
-
     }
 
     @Override
@@ -63,6 +72,71 @@ public class DoRequestFragment extends Fragment {
         final FloatingActionsMenu menu = v.findViewById(R.id.multiple_actions);
         btnCall = v.findViewById(R.id.action_a);
         btnChat = v.findViewById(R.id.action_b);
+        linearLayoutTask = (LinearLayout) v.findViewById(R.id.listTaskDo);
+        linearLayoutTask.setOrientation(LinearLayout.VERTICAL);
+        linearLayoutTask.setWeightSum(1f);
+        taskService = new TaskService();
+        taskService.getTaskByRequestID(getContext(), 216, new CallBackData<ArrayList<RequestTask>>() {
+            @SuppressLint("ResourceType")
+            @Override
+            public void onSuccess(ArrayList<RequestTask> requestTasks) {
+                for (final RequestTask item : requestTasks) {
+                    tick = new CheckBox(getContext());
+                    tick.setId(item.getRequestTaskId());
+                    tick.setText(item.toString());
+                    linearLayoutTask.addView(tick);
+                    tick.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                            if(b) {
+                                taskService.updateTaskStatus(getContext(), item.getRequestTaskId(), true, new CallBackData<Boolean>() {
+                                    @Override
+                                    public void onSuccess(Boolean aBoolean) {
+                                    }
+
+                                    @Override
+                                    public void onFail(String message) {
+
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFail(String message) {
+
+            }
+        });
+
+        Button addTask = v.findViewById(R.id.btnAddTaskDo);
+        final EditText editTextTask =v.findViewById(R.id.etTaskDo);
+        addTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RequestTask requestTask = new RequestTask();
+                requestTask.setRequestId(216);
+                requestTask.setCreateByITSupporter(5);
+                requestTask.setTaskDetail(editTextTask.getText().toString());
+                taskService.createTask(getContext(), requestTask, new CallBackData<Boolean>() {
+                    @Override
+                    public void onSuccess(Boolean aBoolean) {
+                        if(aBoolean) {
+                            tick2 = new CheckBox(getContext());
+                            linearLayoutTask.addView(tick2);
+                            tick2.setText(editTextTask.getText().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFail(String message) {
+
+                    }
+                });
+            }
+        });
         requestService = new RequestService();
         itSupporterService = new ITSupporterService();
         rqName = (TextView) v.findViewById(R.id.txtRequestName);
