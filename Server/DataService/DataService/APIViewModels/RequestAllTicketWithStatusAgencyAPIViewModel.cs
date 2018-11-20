@@ -32,6 +32,7 @@ namespace DataService.APIViewModels
         public string ITSupporterName { get; set; }
         public string ITSupporterPhone { get; set; }
         public string FeedBack { get; set; }
+        public int Rating { get; set; }
         public List<AgencyCreateTicketAPIViewModel> Tickets { get; set; }
     }
 }

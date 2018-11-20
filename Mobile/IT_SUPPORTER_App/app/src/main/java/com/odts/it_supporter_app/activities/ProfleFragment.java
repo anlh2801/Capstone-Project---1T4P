@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.odts.it_supporter_app.R;
+import com.odts.it_supporter_app.customTools.RatingAdapter;
 import com.odts.it_supporter_app.models.ITSupporter;
 import com.odts.it_supporter_app.models.ITSupporterStatistic;
 import com.odts.it_supporter_app.models.Request;
@@ -24,9 +27,11 @@ import java.util.ArrayList;
 
 public class ProfleFragment extends Fragment {
     SharedPreferences sharedPreferences;
-    TextView itNameTxt, itPhoneTxt, itEmailTxt;
+    TextView itNameTxt, itPhoneTxt, txtRating;
     ScaleRatingBar ratingBar;
     ITSupporterService itSupporterService;
+    RatingAdapter ratingAdapter;
+    RecyclerView recyclerView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,22 +46,16 @@ public class ProfleFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("ODTS", Context.MODE_PRIVATE);
         final int itID = sharedPreferences.getInt("itSupporterId", 0);
         itNameTxt = v.findViewById(R.id.txtitNamePro);
-        itPhoneTxt = v.findViewById(R.id.txtPhonePro);
-        itEmailTxt = v.findViewById(R.id.txtEmailPro);
-        ratingBar = v.findViewById(R.id.simpleRatingBar);
-        ratingBar.setClearRatingEnabled(false);
+        txtRating = v.findViewById(R.id.txtRating);        recyclerView = (RecyclerView) v.findViewById(R.id.listRating);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         itSupporterService = new ITSupporterService();
         itSupporterService.viewProfile(getContext(), itID, new CallBackData<ITSupporter>() {
             @Override
             public void onSuccess(ITSupporter itSupporter) {
                 String itName = itSupporter.getItSupporterName();
-                String itPhone = itSupporter.getTelephone();
-                String itEmail = itSupporter.getEmail();
                 Float itRating = itSupporter.getRatingAVG();
-                ratingBar.setRating(itRating);
                 itNameTxt.setText(itName.toString());
-                itPhoneTxt.setText(itPhone.toString());
-                itEmailTxt.setText(itEmail.toString());
+                txtRating.setText(itRating.toString());
             }
 
             @Override
@@ -67,8 +66,9 @@ public class ProfleFragment extends Fragment {
 
         itSupporterService.viewAllFeedback(getContext(), itID, new CallBackData<ArrayList<Request>>() {
             @Override
-            public void onSuccess(ArrayList<Request> requests) {
-                
+            public void onSuccess(ArrayList<Request> listRating) {
+                ratingAdapter = new RatingAdapter(getActivity(), listRating);
+                recyclerView.setAdapter(ratingAdapter);
             }
 
             @Override

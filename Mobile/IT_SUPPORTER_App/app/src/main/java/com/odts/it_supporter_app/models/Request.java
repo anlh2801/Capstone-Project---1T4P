@@ -64,6 +64,17 @@ public class Request {
     @SerializedName("FeedBack")
     private  String feedBack;
 
+    @SerializedName("Rating")
+    private  Integer Rating;
+
+    public Integer getRating() {
+        return Rating;
+    }
+
+    public void setRating(Integer rating) {
+        Rating = rating;
+    }
+
     public String getFeedBack() {
         return feedBack;
     }
