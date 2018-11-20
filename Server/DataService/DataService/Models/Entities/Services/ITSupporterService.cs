@@ -42,7 +42,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<List<GuidelineAPIViewModel>> GetGuidelineByServiceItemID(int service_item_Id);
 
-        ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId, int year, int month);
+        ResponseObject<List<ITSupporterStatisticAPIViewModel>> ITSuppoterStatistic(int year, int month);
 
         ResponseObject<bool> UpdateStatusIT(int itsupporter_id, bool isOnline);
 
@@ -71,6 +71,8 @@ namespace DataService.Models.Entities.Services
         ResponseObject<ITSupporterStatisticForMobileAPIViewModel> ITSuppoterStatisticAll(int itsupporterId);
 
         ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> ViewRequestITSupporter(int itSupporter_id);
+
+        ResponseObject<List<ITSupporterStatisticServiceTimeAPIViewModel>> ServiceITSuppoterStatistic(int year, int month);
     }
 
     public partial class ITSupporterService
@@ -210,11 +212,11 @@ namespace DataService.Models.Entities.Services
                 if (itSupporter != null)
                 {
                     List<RequestAllTicketWithStatusAgencyAPIViewModel> rsList = new List<RequestAllTicketWithStatusAgencyAPIViewModel>();
-                    foreach ( Request item in itSupporter)
+                    foreach (Request item in itSupporter)
                     {
-                        if( item.RequestStatus == (int)RequestStatusEnum.Done)
+                        if (item.RequestStatus == (int)RequestStatusEnum.Done)
                         {
-                            if(item.Rating != null)
+                            if (item.Rating != null)
                             {
                                 rsList.Add(new RequestAllTicketWithStatusAgencyAPIViewModel
                                 {
@@ -225,9 +227,9 @@ namespace DataService.Models.Entities.Services
 
                                 });
                             }
-                        } 
+                        }
                     }
-                    
+
                     return new ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
                 }
 
@@ -577,103 +579,175 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId, int year, int month)
+        public ResponseObject<List<ITSupporterStatisticAPIViewModel>> ITSuppoterStatistic(int year, int month)
         {
             try
             {
                 var itsupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
                 var servieceRepo = DependencyUtils.Resolve<IServiceITSupportRepository>();
-                var itsupporter = itsupporterRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == itsupporterId);
-                var supportTime = 0;
-                var totalSupportTime = new TimeSpan();
-                var averageTime = 0.0;
-                if (itsupporter != null)
+                var itsupporters = itsupporterRepo.GetActive().ToList();
+
+                if (itsupporters.Count() <= 0)
                 {
-                    List<ITSupporterStatisticServiceTimeAPIViewModel> rsList = new List<ITSupporterStatisticServiceTimeAPIViewModel>();
-                    var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
-                    var requestInMonth = requestRepo.GetActive().Where(r => r.CurrentITSupporter_Id == itsupporterId && (r.StartTime != null && r.StartTime.Value.Year == year) && (r.EndTime != null && r.EndTime.Value.Month == month)).ToList();
-
-                    if (requestInMonth.Count() > 0)
+                    return new ResponseObject<List<ITSupporterStatisticAPIViewModel>> { IsError = true, WarningMessage = "Không có thống kê nào!" };
+                }
+                var rs = new List<ITSupporterStatisticAPIViewModel>();
+                foreach (var itsupporter in itsupporters)
+                {
+                    var supportTime = 0;
+                    var totalSupportTime = new TimeSpan();
+                    var averageTime = 0.0;
+                    if (itsupporter != null)
                     {
-                        foreach (var requestItem in requestInMonth)
+                        List<ITSupporterStatisticServiceTimeAPIViewModel> rsList = new List<ITSupporterStatisticServiceTimeAPIViewModel>();
+                        var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                        var requestInMonth = requestRepo.GetActive().Where(r => r.CurrentITSupporter_Id == itsupporter.ITSupporterId && (r.StartTime != null && r.StartTime.Value.Year == year) && (r.EndTime != null && r.EndTime.Value.Month == month)).ToList();
+
+                        if (requestInMonth.Count() > 0)
                         {
-                            supportTime++;
-                        }
-                    }
-
-                    var request = requestRepo.GetActive().Where(r => r.CurrentITSupporter_Id == itsupporterId && (r.StartTime != null && r.StartTime.Value.Year == year) && (r.StartTime != null && r.StartTime.Value.Month == month)).ToList();
-                    //var serviceGroup = requestRepo.GetActive().Where(r => r.CurrentITSupporter_Id == itsupporterId && (r.StartTime != null && r.StartTime.Value.Year == DateTime.Now.Year) && (r.EndTime != null && r.EndTime.Value.Month == DateTime.Now.Month)).ToList();
-                    var requestGroupBy = request.GroupBy(a => a.ServiceItem.ServiceITSupport.ServiceITSupportId);
-                    var requestSelect = requestGroupBy.Select(b => new { ServiceId = b.Key, ServiceItems = b.ToList() }).ToList();
-                    //var s = w.Sum(a => a.)
-
-
-                    if (request.Count() > 0)
-                    {
-                        foreach (var item in requestSelect)
-                        {
-                            var totalServiceSupportTime = new TimeSpan();
-                            foreach (var item2 in item.ServiceItems)
+                            foreach (var requestItem in requestInMonth)
                             {
-                                if (item2.StartTime != null && item2.EndTime != null)
+                                supportTime++;
+                            }
+                        }
+
+                        var request = requestRepo.GetActive().Where(r => r.CurrentITSupporter_Id == itsupporter.ITSupporterId && (r.StartTime != null && r.StartTime.Value.Year == year) && (r.StartTime != null && r.StartTime.Value.Month == month)).ToList();
+                        //var serviceGroup = requestRepo.GetActive().Where(r => r.CurrentITSupporter_Id == itsupporterId && (r.StartTime != null && r.StartTime.Value.Year == DateTime.Now.Year) && (r.EndTime != null && r.EndTime.Value.Month == DateTime.Now.Month)).ToList();
+                        var requestGroupBy = request.GroupBy(a => a.ServiceItem.ServiceITSupport.ServiceITSupportId);
+                        var requestSelect = requestGroupBy.Select(b => new { ServiceId = b.Key, ServiceItems = b.ToList() }).ToList();
+                        //var s = w.Sum(a => a.)
+
+
+                        if (request.Count() > 0)
+                        {
+                            foreach (var item in requestSelect)
+                            {
+                                var totalServiceSupportTime = new TimeSpan();
+                                foreach (var item2 in item.ServiceItems)
                                 {
+                                    if (item2.StartTime != null && item2.EndTime != null)
+                                    {
+                                        var time = new TimeSpan();
+                                        time = (item2.StartTime - item2.EndTime).Value.Duration();
+                                        totalServiceSupportTime += time;
+                                    }
+                                }
+
+                                var totalTimeSupportString = totalServiceSupportTime.ToString(@"dd\.hh\:mm");
+                                var totalTimeSupportStringGetDays = totalTimeSupportString.Split('.');
+                                var totalTimeSupportStringGetTimes = totalTimeSupportStringGetDays[1].ToString().Split(':');
+
+                                rsList.Add(new ITSupporterStatisticServiceTimeAPIViewModel
+                                {
+                                    ServiceName = servieceRepo.GetActive().SingleOrDefault(q => q.ServiceITSupportId == item.ServiceId).ServiceName,
+
+                                    SupportTimeByHour = $"{int.Parse(totalTimeSupportStringGetDays[0]) * 24 + int.Parse(totalTimeSupportStringGetTimes[0])} giờ {totalTimeSupportStringGetTimes[1]} phút"
+                                });
+                            }
+
+                        }
+                        if (request.Count() > 0)
+                        {
+                            var requestCount = 0;
+                            foreach (var requestItem in request)
+                            {
+                                if (requestItem.StartTime != null && requestItem.EndTime != null)
+                                {
+                                    requestCount++;
                                     var time = new TimeSpan();
-                                    time = (item2.StartTime - item2.EndTime).Value.Duration();
-                                    totalServiceSupportTime += time;
+                                    time = (requestItem.StartTime - requestItem.EndTime).Value.Duration();
+                                    totalSupportTime += time;
                                 }
                             }
-                            rsList.Add(new ITSupporterStatisticServiceTimeAPIViewModel
-                            {
-                                ServiceName = servieceRepo.GetActive().SingleOrDefault(q => q.ServiceITSupportId == item.ServiceId).ServiceName,
-                                SupportTimeByDay = totalServiceSupportTime.TotalDays,
-                                SupportTimeByHour = totalServiceSupportTime.TotalHours
-                            });
+                            averageTime = totalSupportTime.TotalHours / requestCount;
                         }
 
-                    }
-                    if (request.Count() > 0)
-                    {
-                        var requestCount = 0;
-                        foreach (var requestItem in request)
+                        var requestHistoryRepo = DependencyUtils.Resolve<IRequestHistoryRepository>();
+                        var requestHistory = requestHistoryRepo.GetActive().Where(r => r.Pre_It_SupporterId == itsupporter.ITSupporterId && r.IsITSupportAccept == false && (r.StartTime != null && r.StartTime.Value.Year == DateTime.Now.Year) && (r.EndTime != null && r.EndTime.Value.Month == DateTime.Now.Month)).ToList();
+                        var totalRejectTime = 0;
+                        if (requestHistory.Count > 0)
                         {
-                            if (requestItem.StartTime != null && requestItem.EndTime != null)
+                            foreach (var item in requestHistory)
                             {
-                                requestCount++;
-                                var time = new TimeSpan();
-                                time = (requestItem.StartTime - requestItem.EndTime).Value.Duration();
-                                totalSupportTime += time;
+                                totalRejectTime++;
                             }
                         }
-                        averageTime = totalSupportTime.TotalHours / requestCount;
-                    }
 
-                    var requestHistoryRepo = DependencyUtils.Resolve<IRequestHistoryRepository>();
-                    var requestHistory = requestHistoryRepo.GetActive().Where(r => r.Pre_It_SupporterId == itsupporterId && r.IsITSupportAccept == false && (r.StartTime != null && r.StartTime.Value.Year == DateTime.Now.Year) && (r.EndTime != null && r.EndTime.Value.Month == DateTime.Now.Month)).ToList();
-                    var totalRejectTime = 0;
-                    if (requestHistory.Count > 0)
-                    {
-                        foreach (var item in requestHistory)
+                        var ITSupporterAssumptionAPIViewModel = new ITSupporterStatisticAPIViewModel
                         {
-                            totalRejectTime++;
-                        }
+                            ITSupporterId = itsupporter.ITSupporterId,
+                            ITSupporterName = itsupporter.ITSupporterName,
+                            SupportTimeInMonth = supportTime,
+                            TotalTimeEveryService = rsList,
+                            AverageTimeSupport = averageTime,
+                            TotalTimeSupport = totalSupportTime.TotalHours,
+                            TotalRejectTime = totalRejectTime
+                        };
+                        rs.Add(ITSupporterAssumptionAPIViewModel);
                     }
 
-                    var ITSupporterAssumptionAPIViewModel = new ITSupporterStatisticAPIViewModel
-                    {
-                        ITSupporterName = itsupporter.ITSupporterName,
-                        SupportTimeInMonth = supportTime,
-                        TotalTimeEveryService = rsList,
-                        AverageTimeSupport = averageTime,
-                        TotalRejectTime = totalRejectTime
-                    };
-                    return new ResponseObject<ITSupporterStatisticAPIViewModel> { IsError = false, ObjReturn = ITSupporterAssumptionAPIViewModel, SuccessMessage = "Thành công" };
                 }
+                return new ResponseObject<List<ITSupporterStatisticAPIViewModel>> { IsError = false, ObjReturn = rs, SuccessMessage = "Thành công" };
 
-                return new ResponseObject<ITSupporterStatisticAPIViewModel> { IsError = true, WarningMessage = "Không có thống kê nào!" };
             }
             catch (Exception e)
             {
-                return new ResponseObject<ITSupporterStatisticAPIViewModel> { IsError = true, WarningMessage = "Không có thống kê nào!", ObjReturn = null, ErrorMessage = e.ToString() };
+                return new ResponseObject<List<ITSupporterStatisticAPIViewModel>> { IsError = true, WarningMessage = "Không có thống kê nào!", ErrorMessage = e.ToString() };
+            }
+        }
+
+
+        public ResponseObject<List<ITSupporterStatisticServiceTimeAPIViewModel>> ServiceITSuppoterStatistic(int year, int month)
+        {
+            try
+            {
+                List<ITSupporterStatisticServiceTimeAPIViewModel> rsList = new List<ITSupporterStatisticServiceTimeAPIViewModel>();
+                var servieceRepo = DependencyUtils.Resolve<IServiceITSupportRepository>();
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+
+                var request = requestRepo.GetActive().Where(r => (r.StartTime != null && r.StartTime.Value.Year == year) && (r.StartTime != null && r.StartTime.Value.Month == month)).ToList();
+
+                if (request.Count() <= 0)
+                {
+                    return new ResponseObject<List<ITSupporterStatisticServiceTimeAPIViewModel>> { IsError = true, WarningMessage = "Không có thống kê nào!"};
+                }
+
+                var requestGroupBy = request.GroupBy(a => a.ServiceItem.ServiceITSupport.ServiceITSupportId);
+                var requestSelect = requestGroupBy.Select(b => new { ServiceId = b.Key, ServiceItems = b.ToList() }).ToList();
+
+
+                if (request.Count() > 0)
+                {
+                    foreach (var item in requestSelect)
+                    {
+                        var totalServiceSupportTime = new TimeSpan();
+                        foreach (var item2 in item.ServiceItems)
+                        {
+                            if (item2.StartTime != null && item2.EndTime != null)
+                            {
+                                var time = new TimeSpan();
+                                time = (item2.StartTime - item2.EndTime).Value.Duration();
+                                totalServiceSupportTime += time;
+                            }
+                        }
+
+                        var totalTimeSupportString = totalServiceSupportTime.ToString(@"dd\.hh\:mm");
+                        var totalTimeSupportStringGetDays = totalTimeSupportString.Split('.');
+                        var totalTimeSupportStringGetTimes = totalTimeSupportStringGetDays[1].ToString().Split(':');
+
+                        rsList.Add(new ITSupporterStatisticServiceTimeAPIViewModel
+                        {
+                            ServiceName = servieceRepo.GetActive().SingleOrDefault(q => q.ServiceITSupportId == item.ServiceId).ServiceName,
+                            SupportTimeByTimes = item.ServiceItems.Count(),
+                            SupportTimeByHour = $"{int.Parse(totalTimeSupportStringGetDays[0]) * 24 + int.Parse(totalTimeSupportStringGetTimes[0])} giờ {totalTimeSupportStringGetTimes[1]} phút"
+                        });
+                    }
+                }
+                return new ResponseObject<List<ITSupporterStatisticServiceTimeAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
+            }
+            catch (Exception e)
+            {
+                return new ResponseObject<List<ITSupporterStatisticServiceTimeAPIViewModel>> { IsError = true, WarningMessage = "Không có thống kê nào!", ErrorMessage = e.ToString() };
             }
         }
 
@@ -734,18 +808,18 @@ namespace DataService.Models.Entities.Services
                         requestGroupMonthViewModel.RequestOfITSupporter = requestList;
                         requestListGroup.Add(requestGroupMonthViewModel);
                     }
-                    var totalTimeSupportString = totalTimeSupport.ToString(@"dd\.hh\:mm");                    
+                    var totalTimeSupportString = totalTimeSupport.ToString(@"dd\.hh\:mm");
                     var totalTimeSupportStringGetDays = totalTimeSupportString.Split('.');
                     var totalTimeSupportStringGetTimes = totalTimeSupportStringGetDays[1].ToString().Split(':');
 
                     var totalTimeSupportInThisMonthString = totalTimeSupportInThisMonth.ToString(@"dd\.hh\:mm");
-                    var totalTimeSupportInThisMonthGetDays = totalTimeSupportInThisMonthString.Split('.');                   
+                    var totalTimeSupportInThisMonthGetDays = totalTimeSupportInThisMonthString.Split('.');
                     var totalTimeSupportInThisMonthGetTimes = totalTimeSupportInThisMonthGetDays[1].ToString().Split(':');
 
                     result.TotalTimesSupport = totalTimesSupport;
                     result.TotalTimesSupportInThisMonth = totalTimesSupportInThisMonth;
-                    result.TotalTimeSupport = $"{int.Parse(totalTimeSupportStringGetDays[0])*24 + int.Parse(totalTimeSupportStringGetTimes[0])} giờ {totalTimeSupportStringGetTimes[1]} phút";
-                    result.TotalTimeSupportInThisMonth = $"{int.Parse(totalTimeSupportInThisMonthGetDays[0])*24 + int.Parse(totalTimeSupportInThisMonthGetTimes[0])} giờ {totalTimeSupportInThisMonthGetTimes[1]} phút" ;
+                    result.TotalTimeSupport = $"{int.Parse(totalTimeSupportStringGetDays[0]) * 24 + int.Parse(totalTimeSupportStringGetTimes[0])} giờ {totalTimeSupportStringGetTimes[1]} phút";
+                    result.TotalTimeSupportInThisMonth = $"{int.Parse(totalTimeSupportInThisMonthGetDays[0]) * 24 + int.Parse(totalTimeSupportInThisMonthGetTimes[0])} giờ {totalTimeSupportInThisMonthGetTimes[1]} phút";
                     result.RequestOfITSupporter = requestListGroup;
 
                     return new ResponseObject<ITSupporterStatisticForMobileAPIViewModel> { IsError = false, ObjReturn = result, SuccessMessage = "Thành công" };
@@ -971,7 +1045,7 @@ namespace DataService.Models.Entities.Services
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Tạo kinh nghiệm thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
             }
         }
-        public ResponseObject<bool> RemoveSkill(int itsupporterId,int serviceITSupportId)
+        public ResponseObject<bool> RemoveSkill(int itsupporterId, int serviceITSupportId)
         {
             {
                 try

@@ -33,12 +33,14 @@
             fab:layout_constraintTop_toTopOf="parent"
             fab:layout_constraintVertical_bias="0.929" />
 
-        <android.support.v7.widget.RecyclerView
+        <ListView
             android:id="@+id/listPending"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp" />
 
     </android.support.constraint.ConstraintLayout>
 

@@ -40,7 +40,7 @@ namespace DataService.Domain
 
         ResponseObject<List<GuidelineAPIViewModel>> GetGuidelineByServiceItemID(int service_item_Id);
 
-        ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId, int year, int month);
+        ResponseObject<List<ITSupporterStatisticAPIViewModel>> ITSuppoterStatistic(int year, int month);
 
         ResponseObject<bool> UpdateStatusIT(int itsupporter_id, bool isOnline);
 
@@ -62,7 +62,10 @@ namespace DataService.Domain
         ResponseObject<int> UpdateIsBusyOFITSupporter(int itsupporterId);
 
         ResponseObject<ITSupporterStatisticForMobileAPIViewModel> ITSuppoterStatisticAll(int itsupporterId);
+
         ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> ViewRequestITSupporter(int itSupporter_id);
+
+        ResponseObject<List<ITSupporterStatisticServiceTimeAPIViewModel>> ServiceITSuppoterStatistic(int year, int month);
     }
 
     public class ITSupporterDomain : BaseDomain, IITSupporterDomain
@@ -194,11 +197,11 @@ namespace DataService.Domain
             return result;
         }
 
-        public ResponseObject<ITSupporterStatisticAPIViewModel> ITSuppoterStatistic(int itsupporterId, int year, int month)
+        public ResponseObject<List<ITSupporterStatisticAPIViewModel>> ITSuppoterStatistic(int year, int month)
         {
             var iTSupporterService = this.Service<IITSupporterService>();
 
-            var result = iTSupporterService.ITSuppoterStatistic(itsupporterId, year, month);
+            var result = iTSupporterService.ITSuppoterStatistic(year, month);
 
             return result;
         }
@@ -324,6 +327,14 @@ namespace DataService.Domain
             var itSupporter = itSupporterService.ViewRequestITSupporter(itSupporter_id);
 
             return itSupporter;
+        }
+        public ResponseObject<List<ITSupporterStatisticServiceTimeAPIViewModel>> ServiceITSuppoterStatistic(int year, int month)
+        {
+            var itSupporterService = this.Service<IITSupporterService>();
+
+            var statistic = itSupporterService.ServiceITSuppoterStatistic(year, month);
+
+            return statistic;
         }
     }
 }

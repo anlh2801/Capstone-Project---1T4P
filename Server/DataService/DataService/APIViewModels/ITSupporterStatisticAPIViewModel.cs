@@ -9,10 +9,12 @@ namespace DataService.APIViewModels
 {
     public class ITSupporterStatisticAPIViewModel
     {
+        public int ITSupporterId { get; set; }
         public string ITSupporterName { get; set; }
         public int SupportTimeInMonth { get; set; }
         public List<ITSupporterStatisticServiceTimeAPIViewModel> TotalTimeEveryService { get; set; }
         public double AverageTimeSupport { get; set; }
+        public double TotalTimeSupport { get; set; }
         public int TotalRejectTime { get; set; }
     }
 }

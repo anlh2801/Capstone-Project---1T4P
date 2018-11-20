@@ -15,6 +15,11 @@ namespace CapstoneProject_ODTS.MVC.Controllers
 
         public ITSuporterStatisticController()
         {
+            _itsupporterDomain = new ITSupporterDomain();
+        }
+
+        public ITSuporterStatisticController()
+        {
             //_companyDomain = new CompanyDomain();
         }
         public ActionResult Index()
@@ -24,5 +29,20 @@ namespace CapstoneProject_ODTS.MVC.Controllers
             return View();
         }
 
+        public ActionResult ITSuporterStatisticAll(int year, int month)
+        {
+            var result = _itsupporterDomain.ITSuppoterStatistic(year, month);
+            if (!result.IsError)
+            {
+                var totalReject = result.ObjReturn.ToList().Sum(p => p.TotalRejectTime);
+                var totalSupport = result.ObjReturn.ToList().Sum(p => p.SupportTimeInMonth);
+
+                return Json(new { result, totalReject = totalReject, totalSupport = totalSupport }, JsonRequestBehavior.AllowGet);
+            }
+
+           return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+
+        
     }
 }
