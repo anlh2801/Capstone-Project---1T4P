@@ -19,8 +19,8 @@ public class DeviceInfoActivity extends AppCompatActivity {
     String deviceCode;
     ITSupporterService _itSupporterService;
 
-    TextView agencyNameDeviceInfo, deviceTypeInfo, guarantyStartDateInfo, GuarantyEndDate, CreateDateDeviceInfo;
-    TextView ipDeviceInfo, portDeviceInfo, accountDeviceInfo, passWordDeviceInfo, SettingDateDeviceInfo;
+    TextView agencyNameDeviceInfo, deviceTypeInfo, guarantyStartDateInfo, guarantyEndDate, createDateDeviceInfo;
+    TextView ipDeviceInfo, portDeviceInfo, accountDeviceInfo, passWordDeviceInfo, settingDateDeviceInfo;
 
     public DeviceInfoActivity(){
         _itSupporterService = new ITSupporterService();
@@ -34,22 +34,31 @@ public class DeviceInfoActivity extends AppCompatActivity {
         agencyNameDeviceInfo = findViewById(R.id.AgencyNameDeviceInfo);
         deviceTypeInfo = findViewById(R.id.DeviceTypeInfo);
         guarantyStartDateInfo = findViewById(R.id.GuarantyStartDateInfo);
-        agencyNameDeviceInfo = findViewById(R.id.AgencyNameDeviceInfo);
-        agencyNameDeviceInfo = findViewById(R.id.AgencyNameDeviceInfo);
-        agencyNameDeviceInfo = findViewById(R.id.AgencyNameDeviceInfo);
-        agencyNameDeviceInfo = findViewById(R.id.AgencyNameDeviceInfo);
-        agencyNameDeviceInfo = findViewById(R.id.AgencyNameDeviceInfo);
-        agencyNameDeviceInfo = findViewById(R.id.AgencyNameDeviceInfo);
-        agencyNameDeviceInfo = findViewById(R.id.AgencyNameDeviceInfo);
+        guarantyEndDate = findViewById(R.id.GuarantyEndDate);
+        createDateDeviceInfo = findViewById(R.id.CreateDateDeviceInfo);
+        ipDeviceInfo = findViewById(R.id.IpDeviceInfo);
+        portDeviceInfo = findViewById(R.id.PortDeviceInfo);
+        accountDeviceInfo = findViewById(R.id.AccountDeviceInfo);
+        passWordDeviceInfo = findViewById(R.id.PassWordDeviceInfo);
+        settingDateDeviceInfo = findViewById(R.id.SettingDateDeviceInfo);
 
         getAllServiceITSupportForAgency(deviceCode);
     }
 
-    private void getAllServiceITSupportForAgency(String deviceCode) {
+    private void getAllServiceITSupportForAgency(final String deviceCode) {
         _itSupporterService.checkDeviceInfo(this, deviceCode, new CallBackData<Device>() {
             @Override
             public void onSuccess(Device device) {
-
+                agencyNameDeviceInfo.setText(device.getAgencyName());
+                deviceTypeInfo.setText(device.getDeviceTypeName());
+                guarantyStartDateInfo.setText(device.getGuarantyStartDate());
+                guarantyEndDate.setText(device.getGuarantyEndDate());
+                createDateDeviceInfo.setText(device.getCreateDate());
+                ipDeviceInfo.setText(device.getIp());
+                portDeviceInfo.setText(device.getPort());
+                accountDeviceInfo.setText(device.getDeviceAccount());
+                passWordDeviceInfo.setText(device.getDevicePassword());
+                settingDateDeviceInfo.setText(device.getSettingDate());
             }
 
             @Override
