@@ -17,7 +17,7 @@ namespace DataService.ViewModels
     	
     			public virtual int ContractServiceITSupportId { get; set; }
     			public virtual int ContractId { get; set; }
-    			public virtual Nullable<int> ServiceITSupportId { get; set; }
+    			public virtual int ServiceITSupportId { get; set; }
     			public virtual Nullable<System.DateTime> StartDate { get; set; }
     			public virtual Nullable<System.DateTime> EndDate { get; set; }
     			public virtual bool IsDelete { get; set; }

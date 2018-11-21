@@ -16,7 +16,7 @@ namespace DataService.ViewModels
     {
     	
     			public virtual int AgencyId { get; set; }
-    			public virtual Nullable<int> CompanyId { get; set; }
+    			public virtual int CompanyId { get; set; }
     			public virtual int AccountId { get; set; }
     			public virtual string AgencyName { get; set; }
     			public virtual string Address { get; set; }

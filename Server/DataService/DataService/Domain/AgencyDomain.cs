@@ -30,7 +30,7 @@ namespace DataService.Domain
 
         ResponseObject<List<AgencyDeviceAPIViewModel>> GetDevicesByDeviceTypeId(int deviceTypeId, int agencyId);
 
-        ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id);
+        //ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id);
 
         ResponseObject<int> FindITSupporterByRequestId(int requestId);
 
@@ -132,14 +132,14 @@ namespace DataService.Domain
             return agency;
         }
 
-        public ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id)
-        {
-            var agencyService = this.Service<IAgencyService>();
+        //public ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id)
+        //{
+        //    var agencyService = this.Service<IAgencyService>();
 
-            var agency = agencyService.AssignTicketForITSupporter(ticket_id, current_id_supporter_id);
+        //    var agency = agencyService.AssignTicketForITSupporter(ticket_id, current_id_supporter_id);
 
-            return agency;
-        }
+        //    return agency;
+        //}
 
         public ResponseObject<int> FindITSupporterByRequestId(int requestId)
         {

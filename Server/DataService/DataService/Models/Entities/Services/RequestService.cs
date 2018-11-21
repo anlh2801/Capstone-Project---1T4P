@@ -150,15 +150,14 @@ namespace DataService.Models.Entities.Services
                 var tickets = ticketRepo.GetActive().ToList();
 
                 var listIssue = new List<String>();
-                var listIT = new List<String>();
+                //var listIT = new List<String>();
                 for (int i = 0; i < tickets.Count; i++)
                 {
                     var serviceId = tickets[i].Request.ServiceItemId;
-                    var IssueName = service.Find((x => x.ServiceItemId == serviceId)).ServiceItemName;
-                    var ITId = tickets[i].CurrentITSupporter_Id;
-                    var ITName = it.Find((x => x.ITSupporterId == ITId)).ITSupporterName;
+                    var IssueName = service.Find((x => x.ServiceItemId == serviceId)).ServiceItemName;                   
+                    
                     listIssue.Add(IssueName);
-                    listIT.Add(ITName);
+                    //listIT.Add(ITName);
                 }
 
 
@@ -180,7 +179,8 @@ namespace DataService.Models.Entities.Services
                     CreateDate = timeAgo,
                     AgencyName = request.Agency.AgencyName,
                     IssueName = listIssue,
-                    ITName = listIT,
+                    ITName = request.ITSupporter.ITSupporterName,
+                    //ITName = listIT,
                     RequestStatus = requestStatus,
 
                 };
@@ -281,9 +281,6 @@ namespace DataService.Models.Entities.Services
                         //ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
                         ticket.DeviceId = ticketItem.DeviceId;
                         ticket.DeviceName = ticketItem.Device.DeviceName;
-                        ticket.StartTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
-                        ticket.EndTime = ticketItem.Endtime != null ? ticketItem.Endtime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
-                        ticket.Current_TicketStatus = ticketItem.Current_TicketStatus != null ? ticketItem.Current_TicketStatus.Value : 0;
                         ticket.Desciption = ticketItem.Desciption;
                         ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
 
@@ -309,8 +306,8 @@ namespace DataService.Models.Entities.Services
                         AgencyName = item.Agency.AgencyName,
                         RequestStatus = requestStatus,
                         RequestEstimationTime = item.CreateDate.AddHours(item.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
-                        NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
-                        NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
+                        //NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
+                        //NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
                         NumberOfTicket = ticketList.Count,
                         ITSupporterName = item.ITSupporter != null ? item.ITSupporter.ITSupporterName : "Chưa có người xử lý",
                         StartTime = item.StartTime != null ? item.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
@@ -363,10 +360,7 @@ namespace DataService.Models.Entities.Services
                             ticket.TicketId = ticketItem.TicketId;
                             //ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
                             ticket.DeviceId = ticketItem.DeviceId;
-                            ticket.DeviceName = ticketItem.Device.DeviceName;
-                            ticket.StartTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
-                            ticket.EndTime = ticketItem.Endtime != null ? ticketItem.Endtime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
-                            ticket.Current_TicketStatus = ticketItem.Current_TicketStatus != null ? ticketItem.Current_TicketStatus.Value : 0;
+                            ticket.DeviceName = ticketItem.Device.DeviceName;                            
                             ticket.Desciption = ticketItem.Desciption;
                             ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
 
@@ -392,8 +386,8 @@ namespace DataService.Models.Entities.Services
                             AgencyName = itemRequest.Agency.AgencyName,
                             RequestStatus = requestStatus,
                             RequestEstimationTime = itemRequest.CreateDate.AddHours(itemRequest.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
-                            NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
-                            NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
+                            //NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
+                            //NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
                             NumberOfTicket = ticketList.Count,
                             ITSupporterName = itemRequest.ITSupporter != null ? itemRequest.ITSupporter.ITSupporterName : "Chưa có người xử lý",
                             StartTime = itemRequest.StartTime != null ? itemRequest.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
@@ -469,17 +463,17 @@ namespace DataService.Models.Entities.Services
                         //request.ITSupporter.IsBusy = false;
                         request.EndTime = DateTime.UtcNow.AddHours(7);
                         request.UpdateDate = DateTime.UtcNow.AddHours(7);
-                        foreach (var item in request.Tickets)
-                        {
-                            item.Current_TicketStatus = (int)TicketStatusEnum.Done;
-                            item.Endtime = DateTime.UtcNow.AddHours(7);
-                        }
+                        //foreach (var item in request.Tickets)
+                        //{
+                        //    item.Current_TicketStatus = (int)TicketStatusEnum.Done;
+                        //    item.Endtime = DateTime.UtcNow.AddHours(7);
+                        //}
                     }
                     else
                     {
                         var requestHistory = new RequestHistory()
                         {
-                            RequestId = request_id,                             
+                            RequestId = request_id,
                             Pre_Status = request.RequestStatus,
                             CreateDate = DateTime.UtcNow.AddHours(7),
                             UpdateDate = DateTime.UtcNow.AddHours(7)
@@ -523,10 +517,7 @@ namespace DataService.Models.Entities.Services
                         ticket.TicketId = ticketItem.TicketId;
                         //ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
                         ticket.DeviceId = ticketItem.DeviceId;
-                        ticket.DeviceName = ticketItem.Device.DeviceName;
-                        ticket.StartTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
-                        ticket.EndTime = ticketItem.Endtime != null ? ticketItem.Endtime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
-                        ticket.Current_TicketStatus = ticketItem.Current_TicketStatus != null ? ticketItem.Current_TicketStatus.Value : 0;
+                        ticket.DeviceName = ticketItem.Device.DeviceName;                        
                         ticket.Desciption = ticketItem.Desciption;
                         ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
 
@@ -553,8 +544,8 @@ namespace DataService.Models.Entities.Services
                         RequestStatus = requestStatus,
                         ITSupporterName = request.ITSupporter != null ? request.ITSupporter.ITSupporterName : string.Empty,
                         RequestEstimationTime = request.CreateDate.AddHours(request.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
-                        NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
-                        NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
+                        //NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
+                        //NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
                         NumberOfTicket = ticketList.Count,
                         Tickets = ticketList
                     };
@@ -596,10 +587,7 @@ namespace DataService.Models.Entities.Services
 
                         var ticketsOfRequest = ticketRepo.GetActive(p => p.RequestId == requestId).ToList();
                         foreach (var ticket in ticketsOfRequest)
-                        {
-                            ticket.Current_TicketStatus = (int)TicketStatusEnum.In_Process;
-                            ticket.CurrentITSupporter_Id = itSupporter.ITSupporterId;
-                            ticket.StartTime = DateTime.UtcNow.AddHours(7);
+                        {                           
                             ticket.UpdateDate = DateTime.UtcNow;
                             ticketRepo.Edit(ticket);
                         }
@@ -729,10 +717,7 @@ namespace DataService.Models.Entities.Services
                     ticket.TicketId = ticketItem.TicketId;
                     //ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
                     ticket.DeviceId = ticketItem.DeviceId;
-                    ticket.DeviceName = ticketItem.Device.DeviceName;
-                    ticket.StartTime = ticketItem.StartTime != null ? ticketItem.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
-                    ticket.EndTime = ticketItem.Endtime != null ? ticketItem.Endtime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
-                    ticket.Current_TicketStatus = ticketItem.Current_TicketStatus != null ? ticketItem.Current_TicketStatus.Value : 0;
+                    ticket.DeviceName = ticketItem.Device.DeviceName;                    
                     ticket.Desciption = ticketItem.Desciption;
                     ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
 
@@ -759,8 +744,8 @@ namespace DataService.Models.Entities.Services
                     AgencyName = request.Agency.AgencyName,
                     RequestStatus = requestStatus,
                     RequestEstimationTime = request.CreateDate.AddHours(request.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
-                    NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
-                    NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
+                    //NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
+                    //NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
                     NumberOfTicket = ticketList.Count,
                     ServiceItemId = request.ServiceItemId,
                     ServiceItemName = request.ServiceItem.ServiceItemName,

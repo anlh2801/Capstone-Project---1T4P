@@ -15,10 +15,6 @@ namespace DataService.APIViewModels
         public int RequestId { get; set; }
         public int DeviceId { get; set; }
         public string Desciption { get; set; }
-        public string Current_TicketStatus { get; set; }
-        public int CurrentITSupporter_Id { get; set; }
-        public string StartTime { get; set; }
-        public string Endtime { get; set; }
         public string CreateDate { get; set; }
         public string UpdateDate { get; set; }
     }

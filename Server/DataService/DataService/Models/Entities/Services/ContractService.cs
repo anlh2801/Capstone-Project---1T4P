@@ -81,7 +81,7 @@ namespace DataService.Models.Entities.Services
 
                     foreach (var item in contractService)
                     {
-                        listId.Add(item.ServiceITSupportId.Value);
+                        listId.Add(item.ServiceITSupportId);
                     }
                     foreach (var item in contractService)
                     {
@@ -186,7 +186,7 @@ namespace DataService.Models.Entities.Services
 
                 foreach (var itemDB in contractService)
                 {
-                    if (!model.ServiceIdList.Contains(itemDB.ServiceITSupportId.Value))
+                    if (!model.ServiceIdList.Contains(itemDB.ServiceITSupportId))
                     {
                         itemDB.UpdateDate = DateTime.UtcNow.AddHours(7);
                         contractServiceRepo.Deactivate(itemDB);
