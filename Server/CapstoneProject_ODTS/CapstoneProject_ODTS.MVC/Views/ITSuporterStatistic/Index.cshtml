@@ -13,6 +13,7 @@
             font-family: Arial;
         }
     </style>
+    <input type="hidden" id="txtSelectedDate" />
     <div class="row col-md-12">
         <h3 class="city">Thống Kê Dữ Liệu Của Nhân Viên</h3>
     </div>
@@ -161,14 +162,17 @@
         });
 
         function loadITSup() {
+            var checkloadITSup = $('#txtSelectedDate').val();
+            var monthloadITSup = checkloadITSup.substring(0, 2);
+            var yeardloadITSup = checkloadITSup.substring(6, 10);
             $.ajax({
                     type: 'GET',
 
                     url: '@Url.Action("ITSuporterStatisticAll", "ITSuporterStatistic")',
 
                 data: {
-                        year: 2018,
-                        month: 11
+                    year: yeardloadITSup,
+                    month: monthloadITSup
                     },
                 success: function (result) {
                     initDatatable(result.result.ObjReturn);
@@ -176,6 +180,48 @@
                 error: function(error) {
                     showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
                 }
+            });
+        }
+        function loadData() {
+            var checkdata = $('#txtSelectedDate').val();
+            var monthdata = checkdata.substring(0, 2);
+            var yeardata = checkdata.substring(6, 10);
+             $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("ServiceITSuppoterStatistic", "ITSuporterStatistic")',
+                 data: {
+                     year: yeardata,
+                     month: monthdata
+                    },
+                    success: function (result) {
+                        //loadDoughnutChart(result.result.TotalTimeEveryService);
+                        loadBarChart(result.result.ObjReturn);
+                    },
+                    error: function(error) {
+                       showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                    }
+            });
+        }
+        function loadDataD() {
+            var checkdataD = $('#txtSelectedDate').val();
+            var monthdataD = checkdataD.substring(0, 2);
+            var yeardataD = checkdataD.substring(6, 10);
+             $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("ITSuporterStatisticAll", "ITSuporterStatistic")',
+                 data: {
+                     year: yeardataD,
+                     month: monthdataD
+                    },
+                    success: function (result) {
+                        
+                        var r = result.totalReject;
+                        var s = result.totalSupport;
+                        loadDoughnutChart(s,r);
+                    },
+                    error: function(error) {
+                       showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                    }
             });
         }
          function initDatatable(data) {
@@ -246,43 +292,9 @@
                 });
             $('#ViewModal').modal('show');
         }
-        function loadData() {
-             $.ajax({
-                    type: 'GET',
-                    url: '@Url.Action("ServiceITSuppoterStatistic", "ITSuporterStatistic")',
-                 data: {
-                         year: 2018,
-                         month: 11
-                    },
-                    success: function (result) {
-                        //loadDoughnutChart(result.result.TotalTimeEveryService);
-                        loadBarChart(result.result.ObjReturn);
-                    },
-                    error: function(error) {
-                       showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
-                    }
-            });
-        }
-        function loadDataD() {
-             $.ajax({
-                    type: 'GET',
-                    url: '@Url.Action("ITSuporterStatisticAll", "ITSuporterStatistic")',
-                 data: {
-                         year: 2018,
-                         month: 11
-                    },
-                    success: function (result) {
-                        
-                        var r = result.totalReject;
-                        var s = result.totalSupport;
-                        loadDoughnutChart(s,r);
-                    },
-                    error: function(error) {
-                       showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
-                    }
-            });
-        }
-
+        
+  
+        $('#txtSelectedDate').datepicker('setDate', 'today');
         $('#pickMonth').datepicker({
             format: 'mm/yyyy',
             autoclose: true,

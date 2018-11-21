@@ -759,7 +759,7 @@ namespace DataService.Models.Entities.Services
                                 {
                                     ServiceName = otherServiceItem.ServiceName,
                                     SupportTimeByTimes = 0,
-                                    SupportTimeByHour = "0 giờ 00 phút"
+                                    SupportTimeByHour = "0"
                                 });
                             }
                         }
@@ -768,7 +768,7 @@ namespace DataService.Models.Entities.Services
                         {
                             ServiceName = servieceRepo.GetActive().SingleOrDefault(q => q.ServiceITSupportId == item.ServiceId).ServiceName,
                             SupportTimeByTimes = item.ServiceItems.Count(),
-                            SupportTimeByHour = $"{int.Parse(totalTimeSupportStringGetDays[0]) * 24 + int.Parse(totalTimeSupportStringGetTimes[0])} giờ {totalTimeSupportStringGetTimes[1]} phút"
+                            SupportTimeByHour = $"{int.Parse(totalTimeSupportStringGetDays[0]) * 24 + int.Parse(totalTimeSupportStringGetTimes[0])}.{totalTimeSupportStringGetTimes[1]}"
                         });
                     }
                 }
