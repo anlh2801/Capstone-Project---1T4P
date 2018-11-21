@@ -208,7 +208,7 @@ namespace DataService.Models.Entities.Services
             try
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
-                var requests = requestRepo.GetActive(i => i.CurrentITSupporter_Id == itSupporter_id)
+                var requests = requestRepo.GetActive(i => i.CurrentITSupporter_Id == itSupporter_id && i.RequestStatus == (int)RequestStatusEnum.Done)
                              .GroupBy(o => new { MonthGroupByStartTime = o.CreateDate.Month, YearGroupByStartTime = o.CreateDate.Year })
                         .Select(g => new { MonthSelect = g.Key.MonthGroupByStartTime, YearSelect = g.Key.YearGroupByStartTime, RequestList = g })
                         .OrderByDescending(a => a.YearSelect)
@@ -219,35 +219,32 @@ namespace DataService.Models.Entities.Services
                     return new ResponseObject<List<RequestGroupMonth>> { IsError = true, WarningMessage = "Thất bại" };
                 }
                 var requestListGroup = new List<RequestGroupMonth>();
-                    List<RequestAllTicketWithStatusAgencyAPIViewModel> rsList = new List<RequestAllTicketWithStatusAgencyAPIViewModel>();
-                    foreach (var item in requests)
+
+                foreach (var item in requests)
+                {
+                    var rsList = new List<RequestAllTicketWithStatusAgencyAPIViewModel>();
+                    foreach (var itemRequest in item.RequestList)
                     {
-                        foreach (var itemRequest in item.RequestList)
+                        if (itemRequest.Rating != null)
                         {
-                            if (itemRequest.RequestStatus == (int)RequestStatusEnum.Done)
+                            rsList.Add(new RequestAllTicketWithStatusAgencyAPIViewModel
                             {
-                                if (itemRequest.Rating != null)
-                                {
-                                    rsList.Add(new RequestAllTicketWithStatusAgencyAPIViewModel
-                                    {
-                                        RequestId = itemRequest.RequestId,
-                                        FeedBack = itemRequest.Feedback,
-                                        Rating = itemRequest.Rating.Value,
-                                        AgencyName = itemRequest.Agency.AgencyName,
-                                        RequestName = itemRequest.RequestName,
-                                        CreateDate = itemRequest.CreateDate != null ? itemRequest.CreateDate.ToString("MM/dd/yyyy") : string.Empty,
-                                    });
-                                }
-                            }
+                                RequestId = itemRequest.RequestId,
+                                FeedBack = itemRequest.Feedback,
+                                Rating = itemRequest.Rating.Value,
+                                AgencyName = itemRequest.Agency.AgencyName,
+                                RequestName = itemRequest.RequestName,
+                                CreateDate = itemRequest.CreateDate != null ? itemRequest.CreateDate.ToString("MM/dd/yyyy") : string.Empty,
+                            });
                         }
+                    }
                     var requestGroupMonthViewModel = new RequestGroupMonth();
                     requestGroupMonthViewModel.MonthYearGroup = $"Tháng {item.MonthSelect}/{item.YearSelect}";
                     requestGroupMonthViewModel.RequestOfITSupporter = rsList;
                     requestListGroup.Add(requestGroupMonthViewModel);
-
                 }
 
-                    return new ResponseObject<List<RequestGroupMonth>> { IsError = false, ObjReturn = requestListGroup, SuccessMessage = "Thành công" };
+                return new ResponseObject<List<RequestGroupMonth>> { IsError = false, ObjReturn = requestListGroup, SuccessMessage = "Thành công" };
             }
             catch (Exception e)
             {
@@ -723,7 +720,7 @@ namespace DataService.Models.Entities.Services
 
                 if (request.Count() <= 0)
                 {
-                    return new ResponseObject<List<ITSupporterStatisticServiceTimeAPIViewModel>> { IsError = true, WarningMessage = "Không có thống kê nào!"};
+                    return new ResponseObject<List<ITSupporterStatisticServiceTimeAPIViewModel>> { IsError = true, WarningMessage = "Không có thống kê nào!" };
                 }
 
                 var requestGroupBy = request.GroupBy(a => a.ServiceItem.ServiceITSupport.ServiceITSupportId);
@@ -753,7 +750,7 @@ namespace DataService.Models.Entities.Services
 
                         foreach (var otherServiceItem in service)
                         {
-                            if(otherServiceItem.ServiceName != servieceRepo.GetActive().SingleOrDefault(q => q.ServiceITSupportId == item.ServiceId).ServiceName)
+                            if (otherServiceItem.ServiceName != servieceRepo.GetActive().SingleOrDefault(q => q.ServiceITSupportId == item.ServiceId).ServiceName)
                             {
                                 rsList.Add(new ITSupporterStatisticServiceTimeAPIViewModel
                                 {

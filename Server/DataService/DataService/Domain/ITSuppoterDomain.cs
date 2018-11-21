@@ -63,6 +63,8 @@ namespace DataService.Domain
 
         ResponseObject<ITSupporterStatisticForMobileAPIViewModel> ITSuppoterStatisticAll(int itsupporterId);
 
+        ResponseObject<List<RequestGroupMonth>> ViewRequestITSupporter(int itSupporter_id);
+
         ResponseObject<List<ITSupporterStatisticServiceTimeAPIViewModel>> ServiceITSuppoterStatistic(int year, int month);
     }
 
@@ -318,7 +320,14 @@ namespace DataService.Domain
             return result;
         }
 
-     
+        public ResponseObject<List<RequestGroupMonth>> ViewRequestITSupporter(int itSupporter_id)
+        {
+            var itSupporterService = this.Service<IITSupporterService>();
+
+            var itSupporter = itSupporterService.ViewRequestITSupporter(itSupporter_id);
+
+            return itSupporter;
+        }
         public ResponseObject<List<ITSupporterStatisticServiceTimeAPIViewModel>> ServiceITSuppoterStatistic(int year, int month)
         {
             var itSupporterService = this.Service<IITSupporterService>();

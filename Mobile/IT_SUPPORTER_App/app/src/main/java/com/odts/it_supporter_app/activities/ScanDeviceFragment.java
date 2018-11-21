@@ -48,7 +48,7 @@ public class ScanDeviceFragment extends Fragment {
     BarcodeDetector barcode;
     CameraSource cameraSource;
     SurfaceHolder holder;
-    TextView tx;
+
 //    public ScanDeviceFragment() {
 //        _itSupporterService = new ITSupporterService();
 //    }
@@ -58,7 +58,7 @@ public class ScanDeviceFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_scan_device, container, false);
         cameraView = (SurfaceView) v.findViewById(R.id.camera_view);
-        tx = v.findViewById(R.id.testnhe);
+
         cameraView.setZOrderMediaOverlay(true);
         holder = cameraView.getHolder();
         barcode = new BarcodeDetector.Builder(v.getContext())
@@ -107,7 +107,6 @@ public class ScanDeviceFragment extends Fragment {
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes =  detections.getDetectedItems();
                 if(barcodes.size() > 0){
-                    //tx.setText( barcodes.valueAt(0).displayValue.toString());
                     Intent intent = new Intent(getContext(), DeviceInfoActivity.class);
                     intent.putExtra("deviceCode", barcodes.valueAt(0).displayValue.toString());
                     startActivity(intent);
