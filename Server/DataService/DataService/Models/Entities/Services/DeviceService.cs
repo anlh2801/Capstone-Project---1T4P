@@ -165,6 +165,7 @@ namespace DataService.Models.Entities.Services
                         DeviceId = device.DeviceId,
                         DeviceName = device.DeviceName,
                         AgencyId = device.AgencyId,
+                        AgencyName = device.Agency.AgencyName
                         CompanyId = device.Agency.CompanyId.Value,
                         CompanyName = device.Agency.Company.CompanyName,
                         DeviceTypeId = device.DeviceTypeId,
