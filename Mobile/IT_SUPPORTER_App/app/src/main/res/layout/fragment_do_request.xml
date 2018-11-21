@@ -129,7 +129,8 @@
                 style="@style/RadioButton"
                 android:layout_width="57dp"
                 android:layout_height="match_parent"
-                android:text="Đã nhận" />
+                android:text="Đã nhận"
+                android:checked="true"/>
 
             <RadioButton
                 android:id="@+id/button32"

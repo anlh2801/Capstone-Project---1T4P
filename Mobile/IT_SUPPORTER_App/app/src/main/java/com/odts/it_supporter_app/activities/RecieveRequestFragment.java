@@ -19,12 +19,18 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.odts.it_supporter_app.R;
 import com.odts.it_supporter_app.services.ITSupporterService;
 import com.odts.it_supporter_app.utils.CallBackData;
 
+import java.lang.ref.Reference;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class RecieveRequestFragment extends Fragment {
@@ -93,29 +99,36 @@ public class RecieveRequestFragment extends Fragment {
 //            }
 //        });
         String a = share2.getString("a", null);
+        this.requestId = Integer.parseInt(share2.getString("e", "0"));
         if (a != null) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder
-                .setMessage("Bạn có nhận việc không?")
-                .setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        getAllServiceITSupportForAgency(true);
-                    }
-                })
-                .setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        getAllServiceITSupportForAgency(false);
-                    }
-                })
-                .show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder
+                    .setMessage("Bạn có nhận việc không?")
+                    .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            getAllServiceITSupportForAgency(true);
+                            Firebase.setAndroidContext(getActivity());
+                            Firebase reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" + requestId);
+                            final Map<String, String> map = new HashMap<String, String>();
+                            map.put("status", "Đã nhận");
+                            map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
+                            reference1.push().setValue(map);
+                        }
+                    })
+                    .setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            getAllServiceITSupportForAgency(false);
+                        }
+                    })
+                    .show();
         }
 //        txtAgencyNameRecieveRequest.setText(share2.getString("a", "").toString());
 //        txtAgencyAddressRecieveRequest.setText(share2.getString("b", "").toString());
 //        txtTicketInfoRecieveRequest.setText(share2.getString("c", "").toString());
 //        txtRequestNameRecieveRequest.setText(share2.getString("d", "").toString());
-        this.requestId = Integer.parseInt(share2.getString("e", "0"));
+
         return v;
     }
 
@@ -137,10 +150,9 @@ public class RecieveRequestFragment extends Fragment {
         });
         SharedPreferences.Editor editor2 = share2.edit();
         editor2.clear().commit();
-        if(isAccept) {
+        if (isAccept) {
             moveToDoRequestFragment();
-        }
-        else {
+        } else {
             Intent restartIntent = getActivity().getPackageManager().getLaunchIntentForPackage(getActivity().getPackageName());
             restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(restartIntent);
