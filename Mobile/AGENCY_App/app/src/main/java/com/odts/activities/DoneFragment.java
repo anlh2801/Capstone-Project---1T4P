@@ -8,8 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
 import com.odts.customTools.DoneRequestAdapter;
 import com.odts.models.Request;
+import com.odts.models.RequestGroupMonth;
 import com.odts.services.RequestService;
 import com.odts.utils.CallBackData;
 import com.odts.utils.Enums;
@@ -25,8 +28,8 @@ import java.util.ArrayList;
 public class DoneFragment extends Fragment {
 
     private RequestService requestService;
-    private RecyclerView recyclerView;
-    private DoneRequestAdapter pendingRequestAdapter;
+    private ListView listView;
+    private DoneRequestAdapter doneRequestAdapter;
     Integer agencyId = 0;
 
     @Override
@@ -42,15 +45,13 @@ public class DoneFragment extends Fragment {
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         agencyId = share.getInt("agencyId", 0);
-        recyclerView = (RecyclerView) v.findViewById(R.id.listDone);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        listView = (ListView) v.findViewById(R.id.listDone);
         requestService = new RequestService();
-        requestService.getRequestByStatus(getActivity(), agencyId, Enums.RequestStatusEnum.Done.getIntValue(), new CallBackData<ArrayList<Request>>() {
+        requestService.getRequestByStatusWithMonth(getActivity(), agencyId, Enums.RequestStatusEnum.Done.getIntValue(), new CallBackData<ArrayList<RequestGroupMonth>>() {
             @Override
-            public void onSuccess(ArrayList<Request> listRequests) {
-                pendingRequestAdapter = new DoneRequestAdapter(getActivity(), listRequests);
-                recyclerView.setAdapter(pendingRequestAdapter);
+            public void onSuccess(ArrayList<RequestGroupMonth> listRequests) {
+                doneRequestAdapter = new DoneRequestAdapter(getActivity(),R.layout.list_done_request_group_item, listRequests);
+                listView.setAdapter(doneRequestAdapter);
             }
 
             @Override

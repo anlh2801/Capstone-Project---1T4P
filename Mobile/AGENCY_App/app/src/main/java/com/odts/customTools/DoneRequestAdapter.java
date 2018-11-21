@@ -1,82 +1,85 @@
 package com.odts.customTools;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.odts.activities.DoneDetailActivity;
 import com.odts.activities.R;
+import com.odts.activities.StatusTimelineActivity;
 import com.odts.models.Device;
 import com.odts.models.Request;
+import com.odts.models.RequestGroupMonth;
+import com.odts.services.RequestService;
+import com.odts.utils.Enums;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DoneRequestAdapter extends RecyclerView.Adapter<DoneRequestAdapter.MyViewHolder> {
-    private Context context;
-    private List<Request> listRequest;
-    Integer requestID;
+public class DoneRequestAdapter extends ArrayAdapter<RequestGroupMonth> {
+    Activity context;
+    int resource;
+    List<RequestGroupMonth> objects;
 
-    public DoneRequestAdapter(Context context, List<Request> listRequest) {
+    public DoneRequestAdapter(@NonNull Activity context, int resource, @NonNull List<RequestGroupMonth> objects) {
+        super(context, resource, objects);
         this.context = context;
-        this.listRequest = listRequest;
+        this.resource = resource;
+        this.objects = objects;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView rqName, endDate, createDate;
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        LayoutInflater inflater = this.context.getLayoutInflater();
+        View row = inflater.inflate(this.resource, null);
+        TextView txtThangNam = (TextView) row.findViewById(R.id.txtThangNam);
+        LinearLayout lvDetailsThangNam = (LinearLayout) row.findViewById(R.id.detailsRequestGroup);
+        final RequestGroupMonth requestGroupMonth = this.objects.get(position);
+        txtThangNam.setText(requestGroupMonth.getMonthYearGroup());
 
-        public MyViewHolder(View view) {
-            super(view);
-            rqName = (TextView) view.findViewById(R.id.txtRequestNameDone);
-            endDate = (TextView) view.findViewById(R.id.udDateDone);
-            createDate = (TextView) view.findViewById(R.id.txtEndDateDone);
+        for (final Request item : requestGroupMonth.getRequestOfITSupporter()) {
+            View view = inflater.inflate(R.layout.done_item, null);
+            TextView txtRequestName = (TextView) view.findViewById(R.id.txtRequestNameDone);
+            TextView txtEndDate = (TextView) view.findViewById(R.id.txtEndDateDone);
+            TextView txtCreateDate = (TextView) view.findViewById(R.id.createDateDone);
+            TextView txtHero = (TextView) view.findViewById(R.id.txtHeroName);
+            txtRequestName.setText(item.getAgencyName() + " - " + item.getRequestName());
+            txtCreateDate.setText("Tạo vào: " + item.getCreateDate());
+            txtEndDate.setText("Xác nhận hoàn thành: " + item.getNod());
+            txtHero.setText("Xử lý bởi: " + item.getiTSupporterName());
+            lvDetailsThangNam.addView(view);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        Intent intent = new Intent(context, DoneDetailActivity.class);
-                        intent.putExtra("requestID", listRequest.get(position).getRequestId());
-                        intent.putExtra("requestName", listRequest.get(position).getRequestName());
-                        intent.putExtra("itName", listRequest.get(position).getiTSupporterName());
-                        intent.putExtra("createDate", listRequest.get(position).getCreateDate());
-                        ArrayList<String> listDeviceName = new ArrayList<>();
-                        Device device = new Device();
-                        for (int i = 0; i < listRequest.get(position).getTicket().size(); i++) {
-                            listDeviceName.add(listRequest.get(position).getTicket().get(i).getDeviceName());
-                        }
-                        intent.putStringArrayListExtra("listDevice", listDeviceName);
-                        context.startActivity(intent);
+                    Intent intent = new Intent(context, DoneDetailActivity.class);
+                    intent.putExtra("requestName", item.getRequestName());
+                    intent.putExtra("requestID", item.getRequestId());
+                    intent.putExtra("itName", item.getiTSupporterName());
+                    intent.putExtra("createDate", item.getCreateDate());
+                    intent.putExtra("phoneNumber", item.getiTSupporterPhone());
+                    ArrayList<String> listDeviceName = new ArrayList<>();
+                    Device device = new Device();
+                    for (int i = 0; i < item.getTicket().size(); i++) {
+                        listDeviceName.add(item.getTicket().get(i).getDeviceName());
                     }
+                    intent.putStringArrayListExtra("listDevice", listDeviceName);
+                    context.startActivity(intent);
                 }
             });
         }
 
-    }
 
-
-    @Override
-    public DoneRequestAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.done_item, parent, false);
-        return new DoneRequestAdapter.MyViewHolder(itemView);
-    }
-
-    @Override
-    public void onBindViewHolder(final DoneRequestAdapter.MyViewHolder holder, int position) {
-        Request album = listRequest.get(position);
-        holder.rqName.setText(album.getRequestName());
-        holder.endDate.setText("Xác nhận hoàn thành: " + album.getUpdateDate());
-        holder.createDate.setText("Tạo vào: " + album.getCreateDate());
-        requestID = album.getRequestId();
-    }
-
-    @Override
-    public int getItemCount() {
-        return listRequest.size();
+        return row;
     }
 }

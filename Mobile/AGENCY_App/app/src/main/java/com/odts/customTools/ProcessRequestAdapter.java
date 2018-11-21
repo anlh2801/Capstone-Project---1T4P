@@ -62,7 +62,7 @@ public class ProcessRequestAdapter extends ArrayAdapter<RequestGroupMonth> {
             requestID = item.getRequestId();
             requestService = new RequestService();
             lvDetailsThangNam.addView(view);
-            row.setOnClickListener(new View.OnClickListener() {
+            view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, StatusTimelineActivity.class);
