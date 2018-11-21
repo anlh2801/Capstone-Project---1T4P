@@ -292,8 +292,6 @@
                 });
             $('#ViewModal').modal('show');
         }
-        
-  
         $('#txtSelectedDate').datepicker('setDate', 'today');
         $('#pickMonth').datepicker({
             format: 'mm/yyyy',
@@ -308,65 +306,74 @@
      * ---------
      */
         function loadBarChart(data) {
-            var i;
-            var arr = [];
-            for (i = 0; i < data.length; ++i) {
-                arr.push(data[i].ServiceName);
+            if (data == null) {
+                swal({
+                    title: 'tháng không có dữ liệu để thống kê',
+                    text: "vui lòng thêm dữ liệu thống kê!",
+                    type: 'warning',
+                    confirmbuttontext: 'ok'
+                })
             }
-
-            var j;
-            var arr2 = [];
-            for (j = 0; j < data.length; ++j) {
-                arr2.push(data[j].SupportTimeByHour);
-            }
-            var options = {
-                responsive: true,
-                scales: {
-                    yAxes: [{
-                        display: true,
-                        ticks: {
-                            beginAtZero: true,
-                            min: 0
-                        }
-                    }]
-                },
-                title: {
-                    display: true,
-                    text: name
-                },
-                tooltips: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                hover: {
-                    mode: 'nearest',
-                    intersect: true
-                },
-                legend: { display: false },
-                title: {
-                    display: true,
-
+            else if (data!=null) {
+                var i;
+                var arr = [];
+                for (i = 0; i < data.length; ++i) {
+                    arr.push(data[i].ServiceName);
                 }
-            };
-            new Chart(document.getElementById("bar-chart"), {
-                type: 'bar',
-                data: {
-                    labels: arr,
-                    datasets: [
-                        {
-                            label: "Population (millions)",
-                            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                            data: arr2
-                        }
-                    ]
-                },
-                options: options
-            });
+
+                var j;
+                var arr2 = [];
+                for (j = 0; j < data.length; ++j) {
+                    arr2.push(data[j].SupportTimeByHour);
+                }
+                var options = {
+                    responsive: true,
+                    scales: {
+                        yAxes: [{
+                            display: true,
+                            ticks: {
+                                beginAtZero: true,
+                                min: 0
+                            }
+                        }]
+                    },
+                    title: {
+                        display: true,
+                        text: name
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                    legend: { display: false },
+                    title: {
+                        display: true,
+
+                    }
+                };
+                new Chart(document.getElementById("bar-chart"), {
+                    type: 'bar',
+                    data: {
+                        labels: arr,
+                        datasets: [
+                            {
+                                label: "Population (millions)",
+                                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                data: arr2
+                            }
+                        ]
+                    },
+                    options: options
+                });
+            }
         }
     /* END BAR CHART */
 
         function loadDoughnutChart(s, r) {
-            
             new Chart(document.getElementById("doughnut-chart"), {
                 type: 'doughnut',
                 data: {
