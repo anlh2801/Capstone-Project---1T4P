@@ -143,6 +143,11 @@ public class MainActivity extends AppCompatActivity {
                 if (!aBoolean) {
                     loadFragment(new RecieveRequestFragment());
                 } else {
+                    Intent myIntent = getIntent();
+                    if(myIntent.getStringExtra("scan") != null) {
+                        loadFragment(new ScanDeviceFragment());
+                    }
+                    else
                     loadFragment(new DoRequestFragment());
                 }
             }

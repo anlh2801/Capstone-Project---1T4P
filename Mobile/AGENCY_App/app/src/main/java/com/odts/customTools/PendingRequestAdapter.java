@@ -18,6 +18,7 @@ import com.odts.activities.R;
 import com.odts.services.RequestService;
 import com.odts.utils.Enums;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,7 +28,7 @@ public class PendingRequestAdapter extends ArrayAdapter<RequestGroupMonth> {
     List<RequestGroupMonth> objects;
     ImageButton btnCancelRequest;
     RequestService requestService;
-    private List<Request> listRequest;
+//    private List<Request> listRequest;
     int requestID = 0;
     public PendingRequestAdapter(@NonNull Activity context, int resource, @NonNull List<RequestGroupMonth> objects) {
         super(context, resource, objects);
@@ -36,15 +37,16 @@ public class PendingRequestAdapter extends ArrayAdapter<RequestGroupMonth> {
         this.objects = objects;
     }
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = this.context.getLayoutInflater();
         View row = inflater.inflate(this.resource, null);
         TextView txtThangNam = (TextView) row.findViewById(R.id.txtThangNam);
         LinearLayout lvDetailsThangNam = (LinearLayout) row.findViewById(R.id.detailsRequestGroup);
         final RequestGroupMonth requestGroupMonth = this.objects.get(position);
         txtThangNam.setText(requestGroupMonth.getMonthYearGroup());
-
+        final List<Request> listRequest = new ArrayList<>();
         for (final Request item: requestGroupMonth.getRequestOfITSupporter()) {
+            listRequest.add(item);
             View view = inflater.inflate(R.layout.pending_item, null);
             TextView txtRequestName = (TextView) view.findViewById(R.id.txtRequestNamee);
             TextView txtEndDate = (TextView) view.findViewById(R.id.txtNoD);
@@ -64,6 +66,8 @@ public class PendingRequestAdapter extends ArrayAdapter<RequestGroupMonth> {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
                                     requestService.cancelTicket(context, item.getRequestId(), Enums.RequestStatusEnum.Cancel.getIntValue());
+                                    objects.get(position).getRequestOfITSupporter().remove(item);
+                                    notifyDataSetChanged();
 //                                listRequest.remove(getAdapterPosition());
 //                                notifyItemRemoved(getAdapterPosition());
 //                                    notifyItemRangeRemoved(getAdapterPosition(), listRequest.size());
