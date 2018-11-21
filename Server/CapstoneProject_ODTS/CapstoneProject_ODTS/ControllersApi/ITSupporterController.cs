@@ -206,8 +206,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         [Route("ITsupporter/view_itsupporter_statistic")]
         public HttpResponseMessage ITSuppoterStatistic(int year, int month)
         {
-            //var result = _ITSupporterDomain.ITSuppoterStatistic(year, month);
-            var result = _ITSupporterDomain.ServiceITSuppoterStatistic(year, month);
+            var result = _ITSupporterDomain.ITSuppoterStatistic(year, month);
+            //var result = _ITSupporterDomain.ServiceITSuppoterStatistic(year, month);
             //var r = new RequestDomain();
             //var result = r.GetRequestStatistic(month, year);
             return Request.CreateResponse(HttpStatusCode.OK, result);
