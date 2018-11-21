@@ -9,8 +9,12 @@ public class Device implements Serializable {
     private Integer deviceId;
     @SerializedName("AgencyId")
     private Integer agencyId;
+    @SerializedName("AgencyName")
+    private String agencyName;
     @SerializedName("DeviceTypeId")
     private Integer deviceTypeId;
+    @SerializedName("DeviceTypeName")
+    private Integer deviceTypeName;
     @SerializedName("DeviceName")
     private String deviceName;
     @SerializedName("DeviceCode")

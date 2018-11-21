@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.odts.it_supporter_app.activities.MainActivity;
 import com.odts.it_supporter_app.apiCaller.IITSupporterApiCaller;
 import com.odts.it_supporter_app.apiCaller.ILoginApiCaller;
+import com.odts.it_supporter_app.models.Device;
 import com.odts.it_supporter_app.models.ITSupporter;
 import com.odts.it_supporter_app.models.ITSupporterStatistic;
 import com.odts.it_supporter_app.models.Request;
@@ -192,4 +193,20 @@ public class ITSupporterService {
             }
         }));
     }
+
+    public void checkDeviceInfo(final Context context, String deviceCode, final CallBackData<Device> callBackData) {
+        iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
+        Call<ResponseObject<Device>> call = iitSupporterApiCaller.checkDeviceInfo(deviceCode);
+        call.enqueue((new Callback<ResponseObject<Device>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<Device>> call, Response<ResponseObject<Device>> response) {
+                callBackData.onSuccess(response.body().getObjReturn());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<Device>> call, Throwable t) {
+            }
+        }));
+    }
+
 }
