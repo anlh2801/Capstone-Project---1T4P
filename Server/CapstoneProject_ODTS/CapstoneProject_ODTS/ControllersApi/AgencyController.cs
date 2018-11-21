@@ -190,28 +190,26 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage FindITSupporterByRequestId(int requestId)
         {
             var result = _agencyDomain.FindITSupporterByRequestId(requestId);
-            try
+
+            if (!result.IsError && result.ObjReturn > 0)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, result.WarningMessage);
-            }
-            finally
-            {
-                if (!result.IsError && result.ObjReturn > 0)
+                FirebaseService firebaseService = new FirebaseService();
+                firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
+
+                int counter = 60;
+
+                while (counter > 0)
                 {
-                    FirebaseService firebaseService = new FirebaseService();
-                    firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
-
-                    int counter = 60;
-
-                    while (counter > 0)
-                    {
-                        counter--;
-                        Thread.Sleep(1000);
-                    }
-                    _requestDomain.AcceptRequestFromITSupporter(result.ObjReturn, requestId, false);
-
+                    counter--;
+                    Thread.Sleep(1000);
                 }
-            } 
+                _requestDomain.AcceptRequestFromITSupporter(result.ObjReturn, requestId, false);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result.SuccessMessage);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result.WarningMessage);
+
         }
     }
 }
