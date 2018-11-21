@@ -17,12 +17,19 @@
             android:layout_margin="5dp"
             android:padding="5dp">
 
+            <TextView
+                android:id="@+id/txtRequestNameRate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:textStyle="bold"/>
             <com.willy.ratingbar.ScaleRatingBar
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/simpleRatingBarRate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="35dp"
+                android:layout_below="@+id/txtRequestNameRate"
                 app:srb_numStars="5"
                 app:srb_minimumStars="1"
                 app:srb_rating="2"
@@ -36,17 +43,10 @@
             </com.willy.ratingbar.ScaleRatingBar>
 
             <TextView
-                android:id="@+id/txtRequestNameRate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/simpleRatingBarRate"
-                android:padding="3dp" />
-
-            <TextView
                 android:id="@+id/txtFeedbackRate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtRequestNameRate"
+                android:layout_below="@id/simpleRatingBarRate"
                 android:padding="3dp" />
 
             <TextView
