@@ -70,7 +70,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<ITSupporterStatisticForMobileAPIViewModel> ITSuppoterStatisticAll(int itsupporterId);
 
-        ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> ViewRequestITSupporter(int itSupporter_id);
+        ResponseObject<List<RequestGroupMonth>> ViewRequestITSupporter(int itSupporter_id);
 
         ResponseObject<List<ITSupporterStatisticServiceTimeAPIViewModel>> ServiceITSuppoterStatistic(int year, int month);
     }
@@ -203,42 +203,56 @@ namespace DataService.Models.Entities.Services
                 return new ResponseObject<ITSupporterAPIViewModel> { IsError = true, WarningMessage = "Không tìm thấy người hỗ trợ", ObjReturn = null, ErrorMessage = e.ToString() };
             }
         }
-        public ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> ViewRequestITSupporter(int itSupporter_id)
+        public ResponseObject<List<RequestGroupMonth>> ViewRequestITSupporter(int itSupporter_id)
         {
             try
             {
-                var ITSupporterRepo = DependencyUtils.Resolve<IRequestRepository>();
-                var itSupporter = ITSupporterRepo.GetActive(i => i.CurrentITSupporter_Id == itSupporter_id).ToList();
-                if (itSupporter != null)
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var requests = requestRepo.GetActive(i => i.CurrentITSupporter_Id == itSupporter_id)
+                             .GroupBy(o => new { MonthGroupByStartTime = o.CreateDate.Month, YearGroupByStartTime = o.CreateDate.Year })
+                        .Select(g => new { MonthSelect = g.Key.MonthGroupByStartTime, YearSelect = g.Key.YearGroupByStartTime, RequestList = g })
+                        .OrderByDescending(a => a.YearSelect)
+                        .ThenByDescending(a => a.MonthSelect)
+                    .ToList();
+                if (requests.Count <= 0)
                 {
+                    return new ResponseObject<List<RequestGroupMonth>> { IsError = true, WarningMessage = "Thất bại" };
+                }
+                var requestListGroup = new List<RequestGroupMonth>();
                     List<RequestAllTicketWithStatusAgencyAPIViewModel> rsList = new List<RequestAllTicketWithStatusAgencyAPIViewModel>();
-                    foreach (Request item in itSupporter)
+                    foreach (var item in requests)
                     {
-                        if (item.RequestStatus == (int)RequestStatusEnum.Done)
+                        foreach (var itemRequest in item.RequestList)
                         {
-                            if (item.Rating != null)
+                            if (itemRequest.RequestStatus == (int)RequestStatusEnum.Done)
                             {
-                                rsList.Add(new RequestAllTicketWithStatusAgencyAPIViewModel
+                                if (itemRequest.Rating != null)
                                 {
-                                    FeedBack = item.Feedback,
-                                    Rating = item.Rating.Value,
-                                    AgencyName = item.Agency.AgencyName,
-                                    RequestName = item.RequestName,
-
-                                });
+                                    rsList.Add(new RequestAllTicketWithStatusAgencyAPIViewModel
+                                    {
+                                        RequestId = itemRequest.RequestId,
+                                        FeedBack = itemRequest.Feedback,
+                                        Rating = itemRequest.Rating.Value,
+                                        AgencyName = itemRequest.Agency.AgencyName,
+                                        RequestName = itemRequest.RequestName,
+                                        CreateDate = itemRequest.CreateDate != null ? itemRequest.CreateDate.ToString("MM/dd/yyyy") : string.Empty,
+                                    });
+                                }
                             }
                         }
-                    }
+                    var requestGroupMonthViewModel = new RequestGroupMonth();
+                    requestGroupMonthViewModel.MonthYearGroup = $"Tháng {item.MonthSelect}/{item.YearSelect}";
+                    requestGroupMonthViewModel.RequestOfITSupporter = rsList;
+                    requestListGroup.Add(requestGroupMonthViewModel);
 
-                    return new ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
                 }
 
-                return new ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy feedback" };
+                    return new ResponseObject<List<RequestGroupMonth>> { IsError = false, ObjReturn = requestListGroup, SuccessMessage = "Thành công" };
             }
             catch (Exception e)
             {
 
-                return new ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy feedback", ObjReturn = null, ErrorMessage = e.ToString() };
+                return new ResponseObject<List<RequestGroupMonth>> { IsError = true, WarningMessage = "Không tìm thấy feedback", ObjReturn = null, ErrorMessage = e.ToString() };
             }
         }
 
