@@ -674,7 +674,7 @@ namespace DataService.Models.Entities.Services
                         }
 
                         var requestHistoryRepo = DependencyUtils.Resolve<IRequestHistoryRepository>();
-                        var requestHistory = requestHistoryRepo.GetActive().Where(r => r.Pre_It_SupporterId == itsupporter.ITSupporterId && r.IsITSupportAccept == false && (r.StartTime != null && r.StartTime.Value.Year == DateTime.Now.Year) && (r.EndTime != null && r.EndTime.Value.Month == DateTime.Now.Month)).ToList();
+                        var requestHistory = requestHistoryRepo.GetActive().Where(r => r.Pre_It_SupporterId == itsupporter.ITSupporterId && r.IsITSupportAccept == false && (r.StartTime != null && r.StartTime.Value.Year == year && r.StartTime.Value.Month == month) && (r.EndTime != null && r.EndTime.Value.Year == year && r.EndTime.Value.Month == month)).ToList();
                         var totalRejectTime = 0;
                         if (requestHistory.Count > 0)
                         {
