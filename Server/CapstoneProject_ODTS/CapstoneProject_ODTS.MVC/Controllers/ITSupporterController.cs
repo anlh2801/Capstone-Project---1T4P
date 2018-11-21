@@ -73,7 +73,5 @@ namespace CapstoneProject_ODTS.MVC.Controllers
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
-
- 
     }
 }

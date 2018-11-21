@@ -17,11 +17,7 @@ namespace CapstoneProject_ODTS.MVC.Controllers
         {
             _itsupporterDomain = new ITSupporterDomain();
         }
-
-        public ITSuporterStatisticController()
-        {
-            //_companyDomain = new CompanyDomain();
-        }
+        
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";

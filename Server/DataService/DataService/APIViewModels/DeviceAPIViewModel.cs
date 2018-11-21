@@ -10,6 +10,7 @@ namespace DataService.APIViewModels
     {
         public int NumericalOrder { get; set; }
         public int DeviceId { get; set; }
+        public string AgencyName { get; set; }
         public int AgencyId { get; set; }
         public int DeviceTypeId { get; set; }
         public string DeviceTypeName { get; set; }
