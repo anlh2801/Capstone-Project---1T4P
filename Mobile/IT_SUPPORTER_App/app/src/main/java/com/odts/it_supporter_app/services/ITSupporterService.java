@@ -14,6 +14,7 @@ import com.odts.it_supporter_app.models.Device;
 import com.odts.it_supporter_app.models.ITSupporter;
 import com.odts.it_supporter_app.models.ITSupporterStatistic;
 import com.odts.it_supporter_app.models.Request;
+import com.odts.it_supporter_app.models.RequestGroupMonth;
 import com.odts.it_supporter_app.utils.CallBackData;
 import com.odts.it_supporter_app.utils.ResponseObject;
 import com.odts.it_supporter_app.utils.ResponseObjectReturnList;
@@ -178,17 +179,17 @@ public class ITSupporterService {
         }));
     }
 
-    public void viewAllFeedback(final Context context, int itsupporter_id, final CallBackData<ArrayList<Request>> callBackData) {
+    public void viewAllFeedback(final Context context, int itsupporter_id, final CallBackData<ArrayList<RequestGroupMonth>> callBackData) {
         iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
-        Call<ResponseObjectReturnList<Request>> call = iitSupporterApiCaller.viewAllFeedback(itsupporter_id);
-        call.enqueue((new Callback<ResponseObjectReturnList<Request>>() {
+        Call<ResponseObjectReturnList<RequestGroupMonth>> call = iitSupporterApiCaller.viewAllFeedback(itsupporter_id);
+        call.enqueue((new Callback<ResponseObjectReturnList<RequestGroupMonth>>() {
             @Override
-            public void onResponse(Call<ResponseObjectReturnList<Request>> call, Response<ResponseObjectReturnList<Request>> response) {
+            public void onResponse(Call<ResponseObjectReturnList<RequestGroupMonth>> call, Response<ResponseObjectReturnList<RequestGroupMonth>> response) {
                 callBackData.onSuccess(response.body().getObjList());
             }
 
             @Override
-            public void onFailure(Call<ResponseObjectReturnList<Request>> call, Throwable t) {
+            public void onFailure(Call<ResponseObjectReturnList<RequestGroupMonth>> call, Throwable t) {
 
             }
         }));

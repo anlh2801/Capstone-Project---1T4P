@@ -38,7 +38,16 @@ namespace CapstoneProject_ODTS.MVC.Controllers
 
            return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult ServiceITSuppoterStatistic(int year, int month)
+        {
+            var result = _itsupporterDomain.ServiceITSuppoterStatistic(year, month);
+            if (!result.IsError)
+            {
+                return Json(new { result }, JsonRequestBehavior.AllowGet);
+            }
 
-        
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

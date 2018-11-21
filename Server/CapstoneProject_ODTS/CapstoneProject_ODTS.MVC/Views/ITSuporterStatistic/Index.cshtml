@@ -47,7 +47,8 @@
             <h4>Thống Kê Dữ Liệu Của Nhân Viên Theo Tháng:</h4>
         </div>
         <div style="width:500px; height:60px;">
-            <input type="button" id="pickMonth" class="form-control" style="float: left;width:200px;display: inline-block;height:35px;border:solid 1px blue;text-align:left;" required>
+            <input type="button" style="float: left;width:200px;display: inline-block;height:35px;border:solid 1px blue;text-align:left;" id="pickMonth" class="form-control" required>
+
             <div style="overflow: hidden">
                 <button type="button" class="btn btn-primary fa fa-eye" style="display: inline-block;height:36px;margin-left:10px;" onclick="beginStatisticITS()"><font face="verdana"> Xem Thống Kê</button>
             </div>
@@ -78,6 +79,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
+    <script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="~/AdminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -150,15 +156,20 @@
     <script>
         $(document).ready(function () {
             loadData();
+            loadDataD();
             loadITSup();
         });
 
         function loadITSup() {
             $.ajax({
-                type: 'POST',
-                url: '@Url.Action("GetAllITSupporter", "ITSupporter")',
+                    type: 'GET',
+
+                    url: '@Url.Action("ITSuporterStatisticAll", "ITSuporterStatistic")',
+
                 data: {
-                },
+                        year: 2018,
+                        month: 11
+                    },
                 success: function (result) {
                     initDatatable(result.result.ObjReturn);
                 },
@@ -204,9 +215,9 @@
                 "columns": [
                     { "data": "ITSupporterName" },
                     { "data": "ITSupporterName" },
-                    { "data": "ITSupporterName" },
-                    { "data": "Username" },
-                    { "data": "IsOnline" },
+                    { "data": "SupportTimeInMonth" },
+                    { "data": "TotalRejectTime" },
+                    { "data": "TotalTimeSupport" },
 
                 ],
                 "bAutoWidth": false,
@@ -238,28 +249,48 @@
         function loadData() {
              $.ajax({
                     type: 'GET',
-                    url: '@Url.Action("ITSuppoterStatistic", "ITSupporter")',
+                    url: '@Url.Action("ServiceITSuppoterStatistic", "ITSuporterStatistic")',
                  data: {
-                     "itsupporterId": 1
+                         year: 2018,
+                         month: 11
                     },
                     success: function (result) {
-                        loadDoughnutChart(result.result.TotalTimeEveryService);
-                        loadBarChart(result.result.TotalTimeEveryService);
+                        //loadDoughnutChart(result.result.TotalTimeEveryService);
+                        loadBarChart(result.result.ObjReturn);
                     },
                     error: function(error) {
                        showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
                     }
             });
         }
+        function loadDataD() {
+             $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("ITSuporterStatisticAll", "ITSuporterStatistic")',
+                 data: {
+                         year: 2018,
+                         month: 11
+                    },
+                    success: function (result) {
+                        
+                        var r = result.totalReject;
+                        var s = result.totalSupport;
+                        loadDoughnutChart(s,r);
+                    },
+                    error: function(error) {
+                       showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                    }
+            });
+        }
+
         $('#pickMonth').datepicker({
             format: 'mm/yyyy',
-            viewMode: "months",
-            minViewMode: "months",
             autoclose: true,
             forceParse: false,
+            viewMode: "months",
+            minViewMode: "months",
             language: 'vi'
         })
-
         /*
      * BAR CHART
      * ---------
@@ -321,28 +352,18 @@
             });
         }
     /* END BAR CHART */
-        
-        function loadDoughnutChart(data) {
-            var i;
-            var arr = [];
-            for (i = 0; i < data.length; ++i) {
-                arr.push(data[i].ServiceName);
-            }
 
-            var j;
-            var arr2 = [];
-            for (j = 0; j < data.length; ++j) {
-                arr2.push(data[j].SupportTimeByHour);
-            }
+        function loadDoughnutChart(s, r) {
+            
             new Chart(document.getElementById("doughnut-chart"), {
                 type: 'doughnut',
                 data: {
-                    labels: ["Africa", "Asia"],
+                    labels: ["Số Lần Hỗ Trợ", "Sỗ Lần Hủy"],
                     datasets: [
                         {
                             label: "Population (millions)",
                             backgroundColor: ["#0099ff", "#ff4d4d"],
-                            data: [100,20]
+                            data: [s,r]
                         }
                     ]
                 },
@@ -361,27 +382,30 @@
             });
         }
         function beginStatisticITS() {
-
-            if ($('#pickmonth').val() == null) {
+            var check = $('#pickMonth').val();
+            var month = check.substring(0, 2);
+            var year = check.substring(3, 7);
+            if ($('#pickMonth').val()=="") {
                 swal({
                     title: 'bạn chưa chọn tháng để thống kê',
                     text: "vui lòng chọn tháng cần thống kê!",
                     type: 'warning',
                     confirmbuttontext: 'ok'
                 })
-                showstatisticits();
+            } else if ($('#pickMonth').val() != null){
+                showstatisticits(month, year);
             }
         }
 
-        function showstatisticits(idd) {
-                var contract_id = $('#contractHidden').val();
+        function showstatisticits(month, year) {
                 $.ajax({
                     type: 'GET',
 
-                    url: '@Url.Action("RemoveContract", "Contract")',
+                    url: '@Url.Action("ITSuporterStatisticAll", "ITSuporterStatistic")',
 
                 data: {
-                        contract_id: contract_id
+                        year: year,
+                        month: month
                     },
                 datatype: 'json',
                 contenttype: "application/json; charset=utf-8",
