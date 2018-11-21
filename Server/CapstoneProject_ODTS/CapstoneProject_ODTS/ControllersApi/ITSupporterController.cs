@@ -54,7 +54,7 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         HttpResponseMessage ViewRequestITSupporter(int itsupporter_id);
 
-        HttpResponseMessage ViewProfileITSupporter(string devcieCode);
+        HttpResponseMessage GetDeviceDetailByDeviceCode(string devcieCode);
     }
 
     public class ITSupporterController : ApiController, IITSupporterController
@@ -206,8 +206,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         [Route("ITsupporter/view_itsupporter_statistic")]
         public HttpResponseMessage ITSuppoterStatistic(int year, int month)
         {
-            var result = _ITSupporterDomain.ITSuppoterStatistic(year, month);
-            //var result = _ITSupporterDomain.ServiceITSuppoterStatistic(year, month);
+            //var result = _ITSupporterDomain.ITSuppoterStatistic(year, month);
+            var result = _ITSupporterDomain.ServiceITSuppoterStatistic(year, month);
             //var r = new RequestDomain();
             //var result = r.GetRequestStatistic(month, year);
             return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -278,7 +278,7 @@ namespace CapstoneProject_ODTS.ControllersApi
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
         [Route("ITsupporter/check_device_info_by_code")]
-        public HttpResponseMessage ViewProfileITSupporter(string devcieCode)
+        public HttpResponseMessage GetDeviceDetailByDeviceCode(string devcieCode)
         {
             var result = _deviceDomain.GetDeviceDetailByDeviceCode(devcieCode);
             return Request.CreateResponse(HttpStatusCode.OK, result);

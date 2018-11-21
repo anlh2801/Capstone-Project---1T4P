@@ -749,6 +749,21 @@ namespace DataService.Models.Entities.Services
                         var totalTimeSupportStringGetDays = totalTimeSupportString.Split('.');
                         var totalTimeSupportStringGetTimes = totalTimeSupportStringGetDays[1].ToString().Split(':');
 
+                        var service = servieceRepo.GetActive().Where(s => s.ServiceITSupportId != item.ServiceId).ToList();
+
+                        foreach (var otherServiceItem in service)
+                        {
+                            if(otherServiceItem.ServiceName != servieceRepo.GetActive().SingleOrDefault(q => q.ServiceITSupportId == item.ServiceId).ServiceName)
+                            {
+                                rsList.Add(new ITSupporterStatisticServiceTimeAPIViewModel
+                                {
+                                    ServiceName = otherServiceItem.ServiceName,
+                                    SupportTimeByTimes = 0,
+                                    SupportTimeByHour = "0 giờ 00 phút"
+                                });
+                            }
+                        }
+
                         rsList.Add(new ITSupporterStatisticServiceTimeAPIViewModel
                         {
                             ServiceName = servieceRepo.GetActive().SingleOrDefault(q => q.ServiceITSupportId == item.ServiceId).ServiceName,

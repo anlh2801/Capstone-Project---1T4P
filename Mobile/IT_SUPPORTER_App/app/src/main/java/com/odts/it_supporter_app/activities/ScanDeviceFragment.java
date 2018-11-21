@@ -107,7 +107,10 @@ public class ScanDeviceFragment extends Fragment {
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes =  detections.getDetectedItems();
                 if(barcodes.size() > 0){
-                    tx.setText( barcodes.valueAt(0).displayValue.toString());
+                    //tx.setText( barcodes.valueAt(0).displayValue.toString());
+                    Intent intent = new Intent(getContext(), DeviceInfoActivity.class);
+                    intent.putExtra("deviceCode", barcodes.valueAt(0).displayValue.toString());
+                    startActivity(intent);
                 }
             }
         });

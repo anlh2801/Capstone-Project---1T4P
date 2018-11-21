@@ -44,12 +44,12 @@
     </div>
     <div class="col-md-12" style="margin-top:10px">
         <div style="margin-bottom:10px">
-            <h4>Thống Kê Dữ Liệu Theo Tháng Của Nhân Viên:</h4>
+            <h4>Thống Kê Dữ Liệu Của Nhân Viên Theo Tháng:</h4>
         </div>
         <div style="width:500px; height:60px;">
             <input type="button" id="pickMonth" class="form-control" style="float: left;width:200px;display: inline-block;height:35px;border:solid 1px blue;text-align:left;" required>
             <div style="overflow: hidden">
-                <button type="button" class="btn btn-primary fa fa-eye" style="display: inline-block;height:36px;margin-left:10px;" onclick="clearModal()"><font face="verdana"> Xem Thống Kê</button>
+                <button type="button" class="btn btn-primary fa fa-eye" style="display: inline-block;height:36px;margin-left:10px;" onclick="beginStatisticITS()"><font face="verdana"> Xem Thống Kê</button>
             </div>
         </div>
     </div>
@@ -253,6 +253,8 @@
         }
         $('#pickMonth').datepicker({
             format: 'mm/yyyy',
+            viewMode: "months",
+            minViewMode: "months",
             autoclose: true,
             forceParse: false,
             language: 'vi'
@@ -319,6 +321,7 @@
             });
         }
     /* END BAR CHART */
+        
         function loadDoughnutChart(data) {
             var i;
             var arr = [];
@@ -356,6 +359,42 @@
                     }
                 }
             });
+        }
+        function beginStatisticITS() {
+
+            if ($('#pickmonth').val() == null) {
+                swal({
+                    title: 'bạn chưa chọn tháng để thống kê',
+                    text: "vui lòng chọn tháng cần thống kê!",
+                    type: 'warning',
+                    confirmbuttontext: 'ok'
+                })
+                showstatisticits();
+            }
+        }
+
+        function showstatisticits(idd) {
+                var contract_id = $('#contractHidden').val();
+                $.ajax({
+                    type: 'GET',
+
+                    url: '@Url.Action("RemoveContract", "Contract")',
+
+                data: {
+                        contract_id: contract_id
+                    },
+                datatype: 'json',
+                contenttype: "application/json; charset=utf-8",
+                success: function (data) {
+                    $("#concompany").text(data.result.objreturn.companyname);
+                    $("#conname").text(data.result.objreturn.contractname);
+                    $("#servicename").text(data.result.objreturn.servicename);
+                    $("#constartdate").text(data.result.objreturn.startdate);
+                    $("#conenddate").text(data.result.objreturn.enddate);
+                    $("#conupdatedate").text(data.result.objreturn.updatedate);
+                }
+            });
+            $('#viewmodal').modal('show');
         }
     </script>
 

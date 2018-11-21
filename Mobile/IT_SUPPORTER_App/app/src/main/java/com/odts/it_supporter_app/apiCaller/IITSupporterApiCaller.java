@@ -53,5 +53,5 @@ public interface IITSupporterApiCaller {
     Call<ResponseObjectReturnList<RequestGroupMonth>> viewAllFeedback(@Query("itsupporter_id") int itsupporter_id);
 
     @GET("ITsupporter/check_device_info_by_code")
-    Call<ResponseObject<Device>> ViewProfileITSupporter(@Query("devcieCode") String devcieCode);
+    Call<ResponseObject<Device>> checkDeviceInfo(@Query("devcieCode") String devcieCode);
 }
