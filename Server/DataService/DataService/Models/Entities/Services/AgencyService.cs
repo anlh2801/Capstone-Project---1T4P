@@ -37,7 +37,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<List<AgencyDeviceAPIViewModel>> GetDevicesByDeviceTypeId(int deviceTypeId, int agencyId);
 
-        ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id);
+        //ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id);
 
         ResponseObject<List<AgencyAPIViewModel>> ViewAllAgencyByCompanyId(int agency_id);
 
@@ -97,7 +97,7 @@ namespace DataService.Models.Entities.Services
                     var agencyAPIViewModel = new AgencyAPIViewModel
                     {
                         AgencyId = agency.AgencyId,
-                        CompanyId = agency.CompanyId ?? 0,
+                        CompanyId = agency.CompanyId,
                         CompanyName = agency.Company.CompanyName,
                         AccountId = agency.AccountId,
                         UserName = agency.Account.Username,
@@ -267,8 +267,7 @@ namespace DataService.Models.Entities.Services
                 {
                     var createTicket = new Ticket();
                     createTicket.RequestId = RequestId;
-                    createTicket.DeviceId = item.DeviceId;
-                    createTicket.Current_TicketStatus = (int)TicketStatusEnum.Await;
+                    createTicket.DeviceId = item.DeviceId;                    
                     createTicket.Desciption = item.Desciption;
                     createTicket.CreateDate = DateTime.UtcNow.AddHours(7);
 
@@ -394,26 +393,22 @@ namespace DataService.Models.Entities.Services
                 }
                 foreach (var item in tickets)
                 {
-                    var i = 1;
-                    var ticketStatus = "";
-                    foreach (TicketStatusEnum ticketItem in Enum.GetValues(typeof(TicketStatusEnum)))
-                    {
-                        if (item.Current_TicketStatus == i)
-                        {
-                            ticketStatus = ticketItem.DisplayName();
-                        }
-                        i++;
-                    }
+                    //var i = 1;
+                    //var ticketStatus = "";
+                    //foreach (TicketStatusEnum ticketItem in Enum.GetValues(typeof(TicketStatusEnum)))
+                    //{
+                    //    if (item.Current_TicketStatus == i)
+                    //    {
+                    //        ticketStatus = ticketItem.DisplayName();
+                    //    }
+                    //    i++;
+                    //}
                     rsList.Add(new TicketAPIViewModel
                     {
                         TicketId = item.TicketId,
                         RequestId = item.RequestId,
                         DeviceId = item.DeviceId,
                         Desciption = item.Desciption,
-                        Current_TicketStatus = ticketStatus,
-                        CurrentITSupporter_Id = item.CurrentITSupporter_Id ?? 0,
-                        StartTime = item.StartTime != null ? item.StartTime.Value.ToString("dd/MM/yyyy") : string.Empty,
-                        Endtime = item.Endtime != null ? item.Endtime.Value.ToString("dd/MM/yyyy") : string.Empty,
                         CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                     });
@@ -466,30 +461,30 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id)
-        {
-            try
-            {
-                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
-                var assignITSupporter = ticketRepo.GetActive().SingleOrDefault(a => a.TicketId == ticket_id);
+        //public ResponseObject<bool> AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id)
+        //{
+        //    try
+        //    {
+        //        var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+        //        var assignITSupporter = ticketRepo.GetActive().SingleOrDefault(a => a.TicketId == ticket_id);
 
-                if (assignITSupporter != null)
-                {
-                    assignITSupporter.CurrentITSupporter_Id = current_id_supporter_id;
+        //        if (assignITSupporter != null)
+        //        {
+        //            assignITSupporter.CurrentITSupporter_Id = current_id_supporter_id;
 
-                    ticketRepo.Edit(assignITSupporter);
-                    ticketRepo.Save();
-                    return new ResponseObject<bool> { IsError = false, WarningMessage = "Chỉ định người hỗ trợ thành công!", ObjReturn = true };
-                }
+        //            ticketRepo.Edit(assignITSupporter);
+        //            ticketRepo.Save();
+        //            return new ResponseObject<bool> { IsError = false, WarningMessage = "Chỉ định người hỗ trợ thành công!", ObjReturn = true };
+        //        }
 
-                return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉ định người hỗ trợ thất bại!", ObjReturn = false };
-            }
-            catch (Exception e)
-            {
+        //        return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉ định người hỗ trợ thất bại!", ObjReturn = false };
+        //    }
+        //    catch (Exception e)
+        //    {
 
-                return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉ định người hỗ trợ thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
-            }
-        }
+        //        return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉ định người hỗ trợ thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
+        //    }
+        //}
 
         public ResponseObject<List<AgencyStatisticalAPIViewModel>> GetAgencyStatistic(int agencyId)
         {

@@ -12,9 +12,6 @@ namespace DataService.APIViewModels
         public int DeviceId { get; set; }
         public string Desciption { get; set; }
         public string DeviceName { get; set; }        
-        public string StartTime { get; set; }
-        public string EndTime { get; set; }
-        public int Current_TicketStatus { get; set; }
         public string CreateDate { get; set; }
 
     }

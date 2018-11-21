@@ -14,13 +14,13 @@ namespace DataService.Domain
     {       
         ResponseObject<List<ITSupporterAPIViewModel>> GetAllITSupporter();
 
-        ResponseObject<bool> UpdateTicketStatus(ITSupporterUpdateAPIViewModel model);
+        //ResponseObject<bool> UpdateTicketStatus(ITSupporterUpdateAPIViewModel model);
 
         ResponseObject<ITSupporterAPIViewModel> ViewProfileITSupporter(int itSupporter_id);
 
-        ResponseObject<List<TicketAPIViewModel>> ViewAllOwnerTicket(int ITsupporter_id);
+        //ResponseObject<List<TicketAPIViewModel>> ViewAllOwnerTicket(int ITsupporter_id);
 
-        ResponseObject<bool> EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
+        //ResponseObject<bool> EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
 
         ResponseObject<bool> UpdateTaskStatus(int requestTaskId, bool isDone);
 
@@ -79,14 +79,14 @@ namespace DataService.Domain
             return itSupporters;
         }
 
-        public ResponseObject<bool> UpdateTicketStatus(ITSupporterUpdateAPIViewModel model)
-        {
-            var iTSupporterService = this.Service<IITSupporterService>();
+        //public ResponseObject<bool> UpdateTicketStatus(ITSupporterUpdateAPIViewModel model)
+        //{
+        //    var iTSupporterService = this.Service<IITSupporterService>();
 
-            var result = iTSupporterService.UpdateTicketStatus(model);
+        //    var result = iTSupporterService.UpdateTicketStatus(model);
 
-            return result;
-        }
+        //    return result;
+        //}
 
         public ResponseObject<ITSupporterAPIViewModel> ViewProfileITSupporter(int itSupporter_id)
         {
@@ -97,23 +97,23 @@ namespace DataService.Domain
             return itSupporter;
         }
    
-        public ResponseObject<List<TicketAPIViewModel>> ViewAllOwnerTicket(int ITsupporter_id)
-        {
-            var ITSupporterService = this.Service<IITSupporterService>();
+        //public ResponseObject<List<TicketAPIViewModel>> ViewAllOwnerTicket(int ITsupporter_id)
+        //{
+        //    var ITSupporterService = this.Service<IITSupporterService>();
 
-            var ITSupporter = ITSupporterService.ViewAllOwnerTicket(ITsupporter_id);
+        //    var ITSupporter = ITSupporterService.ViewAllOwnerTicket(ITsupporter_id);
 
-            return ITSupporter;
-        }
+        //    return ITSupporter;
+        //}
 
-        public ResponseObject<bool> EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model)
-        {
-            var iTSupporterService = this.Service<IITSupporterService>();
+        //public ResponseObject<bool> EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model)
+        //{
+        //    var iTSupporterService = this.Service<IITSupporterService>();
 
-            var result = iTSupporterService.EstimateTimeTicket(model);
+        //    var result = iTSupporterService.EstimateTimeTicket(model);
 
-            return result;
-        }
+        //    return result;
+        //}
 
         public ResponseObject<bool> UpdateTaskStatus(int requestTaskId, bool isDone)
         {

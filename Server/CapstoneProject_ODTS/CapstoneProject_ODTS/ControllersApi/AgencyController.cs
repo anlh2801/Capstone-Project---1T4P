@@ -29,7 +29,7 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         HttpResponseMessage GetDevicesByDeviceTypeId(int deviceTypeId, int agencyId);
 
-        HttpResponseMessage AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id);
+        //HttpResponseMessage AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id);
 
         HttpResponseMessage GetServiceITSupportByAgencyId(int agencyId);
 
@@ -140,14 +140,14 @@ namespace CapstoneProject_ODTS.ControllersApi
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-        [HttpPut]
-        [Route("agency/assign_ticket_for_ITsupporter")]
-        public HttpResponseMessage AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id)
-        {
-            var result = _agencyDomain.AssignTicketForITSupporter(ticket_id, current_id_supporter_id);
+        //[HttpPut]
+        //[Route("agency/assign_ticket_for_ITsupporter")]
+        //public HttpResponseMessage AssignTicketForITSupporter(int ticket_id, int current_id_supporter_id)
+        //{
+        //    var result = _agencyDomain.AssignTicketForITSupporter(ticket_id, current_id_supporter_id);
 
-            return Request.CreateResponse(HttpStatusCode.OK, result);
-        }
+        //    return Request.CreateResponse(HttpStatusCode.OK, result);
+        //}
 
         [HttpGet]
         [Route("agency/serviceITSupport/{agencyId}")]

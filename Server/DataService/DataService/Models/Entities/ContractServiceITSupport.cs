@@ -16,7 +16,7 @@ namespace DataService.Models.Entities
     {
         public int ContractServiceITSupportId { get; set; }
         public int ContractId { get; set; }
-        public Nullable<int> ServiceITSupportId { get; set; }
+        public int ServiceITSupportId { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public bool IsDelete { get; set; }

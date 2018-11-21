@@ -16,13 +16,13 @@ namespace DataService.Models.Entities.Services
     {
         ResponseObject<List<ITSupporterAPIViewModel>> GetAllITSupporter();
 
-        ResponseObject<bool> UpdateTicketStatus(ITSupporterUpdateAPIViewModel model);
+        //ResponseObject<bool> UpdateTicketStatus(ITSupporterUpdateAPIViewModel model);
 
         ResponseObject<ITSupporterAPIViewModel> ViewProfileITSupporter(int itSupporter_id);
 
-        ResponseObject<List<TicketAPIViewModel>> ViewAllOwnerTicket(int ITsupporter_id);
+        //ResponseObject<List<TicketAPIViewModel>> ViewAllOwnerTicket(int ITsupporter_id);
 
-        ResponseObject<bool> EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
+       // ResponseObject<bool> EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
 
         ResponseObject<bool> UpdateTaskStatus(int requestTaskId, bool isDone);
 
@@ -133,30 +133,30 @@ namespace DataService.Models.Entities.Services
 
         }
 
-        public ResponseObject<bool> UpdateTicketStatus(ITSupporterUpdateAPIViewModel model)
-        {
-            try
-            {
-                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
-                var updateTicketStatus = ticketRepo.GetActive().SingleOrDefault(a => a.CurrentITSupporter_Id == model.ITSupporterId && a.TicketId == model.Ticket_Id);
-                if (updateTicketStatus != null)
-                {
-                    updateTicketStatus.Current_TicketStatus = model.Current_TicketStatus;
+        //public ResponseObject<bool> UpdateTicketStatus(ITSupporterUpdateAPIViewModel model)
+        //{
+        //    try
+        //    {
+        //        var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+        //        var updateTicketStatus = ticketRepo.GetActive().SingleOrDefault(a => a.CurrentITSupporter_Id == model.ITSupporterId && a.TicketId == model.Ticket_Id);
+        //        if (updateTicketStatus != null)
+        //        {
+        //            updateTicketStatus.Current_TicketStatus = model.Current_TicketStatus;
 
-                    ticketRepo.Edit(updateTicketStatus);
+        //            ticketRepo.Edit(updateTicketStatus);
 
-                    ticketRepo.Save();
-                    return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Cập nhật trạng thái thành công" };
-                }
+        //            ticketRepo.Save();
+        //            return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Cập nhật trạng thái thành công" };
+        //        }
 
-                return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Cập nhật trạng thái thất bại" };
-            }
-            catch (Exception e)
-            {
+        //        return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Cập nhật trạng thái thất bại" };
+        //    }
+        //    catch (Exception e)
+        //    {
 
-                return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Cập nhật trạng thái thất bại", ErrorMessage = e.ToString() };
-            }
-        }
+        //        return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Cập nhật trạng thái thất bại", ErrorMessage = e.ToString() };
+        //    }
+        //}
 
         public ResponseObject<ITSupporterAPIViewModel> ViewProfileITSupporter(int itSupporter_id)
         {
@@ -253,74 +253,74 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<List<TicketAPIViewModel>> ViewAllOwnerTicket(int ITsupporter_id)
-        {
-            try
-            {
-                List<TicketAPIViewModel> rsList = new List<TicketAPIViewModel>();
-                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
-                var ticket = ticketRepo.GetActive(p => p.CurrentITSupporter_Id == ITsupporter_id).ToList();
-                if (ticket.Count <= 0)
-                {
-                    return new ResponseObject<List<TicketAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy" };
-                }
-                foreach (var item in ticket)
-                {
-                    var i = 1;
-                    var ticketStatus = "";
-                    foreach (TicketStatusEnum ticketItem in Enum.GetValues(typeof(TicketStatusEnum)))
-                    {
-                        if (item.Current_TicketStatus == i)
-                        {
-                            ticketStatus = ticketItem.DisplayName();
-                        }
-                        i++;
-                    }
-                    rsList.Add(new TicketAPIViewModel
-                    {
-                        TicketId = item.TicketId,
-                        RequestId = item.RequestId,
-                        DeviceId = item.DeviceId,
-                        Desciption = item.Desciption,
-                        Current_TicketStatus = ticketStatus,
-                        CurrentITSupporter_Id = item.CurrentITSupporter_Id ?? 0,
-                        StartTime = item.StartTime != null ? item.StartTime.Value.ToString("MM/dd/yyyy") : string.Empty,
-                        Endtime = item.Endtime != null ? item.Endtime.Value.ToString("MM/dd/yyyy") : string.Empty,
-                        CreateDate = item.CreateDate.ToString("MM/dd/yyyy"),
-                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
-                    });
-                }
+        //public ResponseObject<List<TicketAPIViewModel>> ViewAllOwnerTicket(int ITsupporter_id)
+        //{
+        //    try
+        //    {
+        //        List<TicketAPIViewModel> rsList = new List<TicketAPIViewModel>();
+        //        var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+        //        var ticket = ticketRepo.GetActive(p => p.CurrentITSupporter_Id == ITsupporter_id).ToList();
+        //        if (ticket.Count <= 0)
+        //        {
+        //            return new ResponseObject<List<TicketAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy" };
+        //        }
+        //        foreach (var item in ticket)
+        //        {
+        //            var i = 1;
+        //            var ticketStatus = "";
+        //            foreach (TicketStatusEnum ticketItem in Enum.GetValues(typeof(TicketStatusEnum)))
+        //            {
+        //                if (item.Current_TicketStatus == i)
+        //                {
+        //                    ticketStatus = ticketItem.DisplayName();
+        //                }
+        //                i++;
+        //            }
+        //            rsList.Add(new TicketAPIViewModel
+        //            {
+        //                TicketId = item.TicketId,
+        //                RequestId = item.RequestId,
+        //                DeviceId = item.DeviceId,
+        //                Desciption = item.Desciption,
+        //                Current_TicketStatus = ticketStatus,
+        //                CurrentITSupporter_Id = item.CurrentITSupporter_Id ?? 0,
+        //                StartTime = item.StartTime != null ? item.StartTime.Value.ToString("MM/dd/yyyy") : string.Empty,
+        //                Endtime = item.Endtime != null ? item.Endtime.Value.ToString("MM/dd/yyyy") : string.Empty,
+        //                CreateDate = item.CreateDate.ToString("MM/dd/yyyy"),
+        //                UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+        //            });
+        //        }
 
-                return new ResponseObject<List<TicketAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
-            }
-            catch (Exception e)
-            {
+        //        return new ResponseObject<List<TicketAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
+        //    }
+        //    catch (Exception e)
+        //    {
 
-                return new ResponseObject<List<TicketAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy", ObjReturn = null, ErrorMessage = e.ToString() };
-            }
-        }
+        //        return new ResponseObject<List<TicketAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy", ObjReturn = null, ErrorMessage = e.ToString() };
+        //    }
+        //}
 
-        public ResponseObject<bool> EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model)
-        {
-            try
-            {
-                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
-                var updateEstimateTimeTicket = ticketRepo.GetActive().SingleOrDefault(a => a.CurrentITSupporter_Id == model.CurrentITSupporter_Id && a.TicketId == model.TicketId);
-                if (updateEstimateTimeTicket != null)
-                {
-                    ticketRepo.Edit(updateEstimateTimeTicket);
+        //public ResponseObject<bool> EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model)
+        //{
+        //    try
+        //    {
+        //        var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+        //        var updateEstimateTimeTicket = ticketRepo.GetActive().SingleOrDefault(a => a.CurrentITSupporter_Id == model.CurrentITSupporter_Id && a.TicketId == model.TicketId);
+        //        if (updateEstimateTimeTicket != null)
+        //        {
+        //            ticketRepo.Edit(updateEstimateTimeTicket);
 
-                    ticketRepo.Save();
-                    return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Cập nhật giờ dự kiến thành công" };
-                }
+        //            ticketRepo.Save();
+        //            return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Cập nhật giờ dự kiến thành công" };
+        //        }
 
-                return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Cập nhật giờ dự kiến thất bại" };
-            }
-            catch (Exception e)
-            {
-                return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Cập nhật giờ dự kiến thất bại", ErrorMessage = e.ToString() };
-            }
-        }
+        //        return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Cập nhật giờ dự kiến thất bại" };
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Cập nhật giờ dự kiến thất bại", ErrorMessage = e.ToString() };
+        //    }
+        //}
 
         public ResponseObject<bool> UpdateTaskStatus(int requestTaskId, bool isDone)
         {

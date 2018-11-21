@@ -14,9 +14,9 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         HttpResponseMessage ViewProfileITSupporter(int itSupporter_id);
 
-        HttpResponseMessage ViewAllOwnerTicket(int ITsupporter_id);
+        //HttpResponseMessage ViewAllOwnerTicket(int ITsupporter_id);
 
-        HttpResponseMessage EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
+        //HttpResponseMessage EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
 
         HttpResponseMessage UpdateTaskStatus(int requestTaskId, bool isDone);
 
@@ -80,14 +80,14 @@ namespace CapstoneProject_ODTS.ControllersApi
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-        [HttpPut]
-        [Route("ITsuportter/update_ticket_status")]
-        public HttpResponseMessage UpdateProfile(ITSupporterUpdateAPIViewModel model)
-        {           
-            var result = _ITSupporterDomain.UpdateTicketStatus(model);
+        //[HttpPut]
+        //[Route("ITsuportter/update_ticket_status")]
+        //public HttpResponseMessage UpdateProfile(ITSupporterUpdateAPIViewModel model)
+        //{           
+        //    var result = _ITSupporterDomain.UpdateTicketStatus(model);
             
-            return Request.CreateResponse(HttpStatusCode.OK, "Cập nhật Thành Công!");
-        }
+        //    return Request.CreateResponse(HttpStatusCode.OK, "Cập nhật Thành Công!");
+        //}
 
         [HttpGet]
         [Route("ITsupporter/view_profile_ITsupporter")]
@@ -98,23 +98,23 @@ namespace CapstoneProject_ODTS.ControllersApi
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-        [HttpGet]
-        [Route("ITsupporter/view_all_owner_ticket")]
-        public HttpResponseMessage ViewAllOwnerTicket(int ITsupporter_id)
-        {
-            var result = _ITSupporterDomain.ViewAllOwnerTicket(ITsupporter_id);            
+        //[HttpGet]
+        //[Route("ITsupporter/view_all_owner_ticket")]
+        //public HttpResponseMessage ViewAllOwnerTicket(int ITsupporter_id)
+        //{
+        //    var result = _ITSupporterDomain.ViewAllOwnerTicket(ITsupporter_id);            
 
-            return Request.CreateResponse(HttpStatusCode.OK, result);
-        }
+        //    return Request.CreateResponse(HttpStatusCode.OK, result);
+        //}
 
-        [HttpPut]
-        [Route("ITsuportter/update_estimate_time_ticket")]
-        public HttpResponseMessage EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model)
-        {
-            var result = _ITSupporterDomain.EstimateTimeTicket(model);            
+        //[HttpPut]
+        //[Route("ITsuportter/update_estimate_time_ticket")]
+        //public HttpResponseMessage EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model)
+        //{
+        //    var result = _ITSupporterDomain.EstimateTimeTicket(model);            
 
-            return Request.CreateResponse(HttpStatusCode.OK, result);
-        }
+        //    return Request.CreateResponse(HttpStatusCode.OK, result);
+        //}
 
         [HttpPut]
         [Route("ITsuportter/update_task_status")]
