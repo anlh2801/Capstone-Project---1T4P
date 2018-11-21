@@ -14,7 +14,7 @@ public class Device implements Serializable {
     @SerializedName("DeviceTypeId")
     private Integer deviceTypeId;
     @SerializedName("DeviceTypeName")
-    private Integer deviceTypeName;
+    private String deviceTypeName;
     @SerializedName("DeviceName")
     private String deviceName;
     @SerializedName("DeviceCode")
@@ -158,5 +158,21 @@ public class Device implements Serializable {
 
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public String getAgencyName() {
+        return agencyName;
+    }
+
+    public void setAgencyName(String agencyName) {
+        this.agencyName = agencyName;
+    }
+
+    public String getDeviceTypeName() {
+        return deviceTypeName;
+    }
+
+    public void setDeviceTypeName(String deviceTypeName) {
+        this.deviceTypeName = deviceTypeName;
     }
 }
