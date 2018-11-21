@@ -154,8 +154,8 @@ namespace DataService.Models.Entities.Services
                 for (int i = 0; i < tickets.Count; i++)
                 {
                     var serviceId = tickets[i].Request.ServiceItemId;
-                    var IssueName = service.Find((x => x.ServiceItemId == serviceId)).ServiceItemName;                   
-                    
+                    var IssueName = service.Find((x => x.ServiceItemId == serviceId)).ServiceItemName;
+
                     listIssue.Add(IssueName);
                     //listIT.Add(ITName);
                 }
@@ -330,7 +330,7 @@ namespace DataService.Models.Entities.Services
         public ResponseObject<List<RequestGroupMonth>> GetAllRequestByAgencyIDAndStatus2(int acency_id, int status)
         {
             try
-            {                
+            {
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var requests = requestRepo.GetActive(x => x.RequestStatus == status && x.AgencyId == acency_id)
@@ -360,7 +360,7 @@ namespace DataService.Models.Entities.Services
                             ticket.TicketId = ticketItem.TicketId;
                             //ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
                             ticket.DeviceId = ticketItem.DeviceId;
-                            ticket.DeviceName = ticketItem.Device.DeviceName;                            
+                            ticket.DeviceName = ticketItem.Device.DeviceName;
                             ticket.Desciption = ticketItem.Desciption;
                             ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
 
@@ -396,7 +396,7 @@ namespace DataService.Models.Entities.Services
                             Tickets = ticketList
                         };
                         requestList.Add(request);
-                        }
+                    }
                     var requestGroupMonthViewModel = new RequestGroupMonth();
                     requestGroupMonthViewModel.MonthYearGroup = $"Tháng {item.MonthSelect}/{item.YearSelect}";
                     requestGroupMonthViewModel.RequestOfITSupporter = requestList;
@@ -407,7 +407,7 @@ namespace DataService.Models.Entities.Services
             }
             catch (Exception e)
             {
-                return new ResponseObject<List<RequestGroupMonth>> { IsError = true, WarningMessage = "Thất bại" , ErrorMessage = e.ToString()};
+                return new ResponseObject<List<RequestGroupMonth>> { IsError = true, WarningMessage = "Thất bại", ErrorMessage = e.ToString() };
             }
 
         }
@@ -517,7 +517,7 @@ namespace DataService.Models.Entities.Services
                         ticket.TicketId = ticketItem.TicketId;
                         //ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
                         ticket.DeviceId = ticketItem.DeviceId;
-                        ticket.DeviceName = ticketItem.Device.DeviceName;                        
+                        ticket.DeviceName = ticketItem.Device.DeviceName;
                         ticket.Desciption = ticketItem.Desciption;
                         ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
 
@@ -587,7 +587,7 @@ namespace DataService.Models.Entities.Services
 
                         var ticketsOfRequest = ticketRepo.GetActive(p => p.RequestId == requestId).ToList();
                         foreach (var ticket in ticketsOfRequest)
-                        {                           
+                        {
                             ticket.UpdateDate = DateTime.UtcNow;
                             ticketRepo.Edit(ticket);
                         }
@@ -608,7 +608,7 @@ namespace DataService.Models.Entities.Services
                     {
                         idSupporterListWithWeights = JsonConvert.DeserializeObject<Queue<RenderITSupporterListWithWeight>>(itSupporterFound);
 
-                        if (idSupporterListWithWeights.Count > 0)
+                        if (idSupporterListWithWeights.Count > 1)
                         {
                             var rejected = idSupporterListWithWeights.Dequeue();
                             rejected.TimesReject++;
@@ -679,7 +679,52 @@ namespace DataService.Models.Entities.Services
                                 }
                             }
                         }
+                        else
+                        {
+                            var rejected = idSupporterListWithWeights.Dequeue();
+                            rejected.TimesReject++;
+                            var requestHistory = new RequestHistory()
+                            {
+                                IsITSupportAccept = false,
+                                IsDelete = false,
+                                Pre_It_SupporterId = rejected.ITSupporterId,
+                                RequestId = requestId,
+                                CreateDate = DateTime.UtcNow.AddHours(7)
+                            };
+                            requestHistoryRepo.Add(requestHistory);
+                            requestHistoryRepo.Save();
 
+                            var idSupporterListWithWeightNext = idSupporterListWithWeights.FirstOrDefault();
+                            if (rejected.TimesReject < 3)
+                            {
+                                idSupporterListWithWeights.Enqueue(rejected);
+                            }
+                            else
+                            {
+                                var itSupporter = itSupporterRepo.GetActive(p => p.ITSupporterId == rejected.ITSupporterId).SingleOrDefault();
+                                itSupporter.IsOnline = false;
+                                itSupporterRepo.Edit(itSupporter);
+                                itSupporterRepo.Save();
+
+                                FirebaseService firebaseService2 = new FirebaseService();
+                                firebaseService2.SendNotificationFromFirebaseCloudForITSupporterOffline(rejected.ITSupporterId);
+                            }
+                            //memoryCacher.Add("ITSupporterListWithWeights", idSupporterListWithWeights, DateTimeOffset.UtcNow.AddHours(1));
+                            redisTools.Save("ITSupporterListWithWeights", idSupporterListWithWeights);
+                            FirebaseService firebaseService = new FirebaseService();
+                            idSupporterListWithWeightNext = idSupporterListWithWeights.FirstOrDefault();
+                            firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(idSupporterListWithWeightNext.ITSupporterId, requestId);
+
+                            int counter = 60;
+
+                            while (counter > 0)
+                            {
+                                Console.WriteLine($"Gửi lại sau khi từ chối trong {counter} giây");
+                                counter--;
+                                Thread.Sleep(1000);
+                            }
+                            AcceptRequestFromITSupporter(idSupporterListWithWeightNext.ITSupporterId, requestId, false);
+                        }
                     }
                 }
 
@@ -717,7 +762,7 @@ namespace DataService.Models.Entities.Services
                     ticket.TicketId = ticketItem.TicketId;
                     //ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
                     ticket.DeviceId = ticketItem.DeviceId;
-                    ticket.DeviceName = ticketItem.Device.DeviceName;                    
+                    ticket.DeviceName = ticketItem.Device.DeviceName;
                     ticket.Desciption = ticketItem.Desciption;
                     ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
 
