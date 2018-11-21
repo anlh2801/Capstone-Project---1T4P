@@ -55,10 +55,8 @@ public class GuidelineActivity extends AppCompatActivity {
                     requestTasks.add(requestTask);
                 }
                 _guidelineService.createTaskFromGuidline(GuidelineActivity.this, requestTasks);
-                finish();
-
-//                Intent myIntent = new Intent(GuidelineActivity.this, TaskActivity.class);
-//                startActivity(myIntent);
+                Intent myIntent = new Intent(GuidelineActivity.this, MainActivity.class);
+                startActivity(myIntent);
             }
         });
     }
