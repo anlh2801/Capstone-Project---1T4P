@@ -471,8 +471,18 @@ namespace DataService.Models.Entities.Services
         {
             try
             {
-
+                var requestId = model.FirstOrDefault().RequestId;
                 var requestTaskRepo = DependencyUtils.Resolve<IRequestTaskRepository>();
+                var a = requestTaskRepo.GetActive(p => p.RequestId == requestId).ToList();
+                if (a.Count() > 0)
+                {
+                    var check = a.Any(p => p.TaskDetails.Equals(model.FirstOrDefault().TaskDetail));
+                    if (check)
+                    {
+                        return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Bạn đã tạo việc thông qua hướng dẫn rồi!" };
+                    }
+                }
+                
 
                 foreach (var item in model)
                 {
@@ -497,7 +507,6 @@ namespace DataService.Models.Entities.Services
             }
             catch (Exception e)
             {
-
                 return new ResponseObject<bool> { IsError = true, ObjReturn = false, WarningMessage = "Tạo mới việc thất bại", ErrorMessage = e.ToString() };
             }
 

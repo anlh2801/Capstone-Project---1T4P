@@ -1,5 +1,6 @@
 package com.odts.it_supporter_app.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -51,8 +52,16 @@ public class DeviceInfoActivity extends AppCompatActivity {
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+//                finish();
+
+//                MainActivity main = new MainActivity();
+//                main.toast();
+                Intent intent = new Intent(DeviceInfoActivity.this, MainActivity.class);
+                intent.putExtra("scan", "123");
+                startActivity(intent);
+
             }
+
         });
         getAllServiceITSupportForAgency(deviceCode);
     }

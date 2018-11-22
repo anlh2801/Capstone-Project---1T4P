@@ -81,6 +81,9 @@ public class ScanDeviceFragment extends Fragment {
                     if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
                         cameraSource.start(cameraView.getHolder());
                     }
+                    else {
+                        requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);
+                    }
                 }
                 catch (IOException e){
                     e.printStackTrace();
@@ -94,28 +97,31 @@ public class ScanDeviceFragment extends Fragment {
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-
+//                cameraSource.stop();
             }
         });
         barcode.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-
+//                cameraSource.stop();
             }
 
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
+
                 final SparseArray<Barcode> barcodes =  detections.getDetectedItems();
                 if(barcodes.size() > 0){
                     Intent intent = new Intent(getContext(), DeviceInfoActivity.class);
                     intent.putExtra("deviceCode", barcodes.valueAt(0).displayValue.toString());
                     startActivity(intent);
+                    cameraSource.stop();
                 }
             }
         });
 
         return v;
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
