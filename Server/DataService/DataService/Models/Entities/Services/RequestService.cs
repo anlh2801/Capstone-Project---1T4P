@@ -381,11 +381,11 @@ namespace DataService.Models.Entities.Services
             {
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
-                var requests = requestRepo.GetActive(x => x.RequestStatus == status && x.AgencyId == acency_id)
+                var requests = requestRepo.GetActive(x => x.RequestStatus == status && x.AgencyId == acency_id).OrderByDescending(p => p.CreateDate)
                     .GroupBy(o => new { MonthGroupByStartTime = o.CreateDate.Month, YearGroupByStartTime = o.CreateDate.Year })
                         .Select(g => new { MonthSelect = g.Key.MonthGroupByStartTime, YearSelect = g.Key.YearGroupByStartTime, RequestList = g })
-                        .OrderByDescending(a => a.YearSelect)
-                        .ThenByDescending(a => a.MonthSelect)
+                        //.OrderByDescending(a => a.YearSelect)
+                        //.ThenByDescending(a => a.MonthSelect)
                         .ToList();
 
                 if (requests.Count <= 0)
