@@ -13,13 +13,19 @@ namespace CapstoneProject_ODTS.MVC.Controllers
 
         public RequestStatisticController()
         {
-            //_companyDomain = new CompanyDomain();
+            _requestDomain = new RequestDomain();
         }
-        public ActionResult Index()
+        public ActionResult RequestSumary()
         {
             ViewBag.Title = "Home Page";
 
             return View();
+        }
+        public ActionResult GetAllRequestForMonth(int month, int year)
+        {
+            var result = _requestDomain.GetAllRequestForMonth(month, year);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 
     }

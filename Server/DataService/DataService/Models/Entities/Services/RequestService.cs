@@ -40,6 +40,8 @@ namespace DataService.Models.Entities.Services
         ResponseObject<List<StatusAPIViewModel>> GetRequestStatistic();
 
         ResponseObject<List<StatusAPIViewModel>> GetRequestStatisticForMonth(int month, int year);
+
+        ResponseObject<List<RequestAPIViewModel>> GetAllRequestForMonth(int month, int year);
     }
 
     public partial class RequestService
@@ -91,6 +93,52 @@ namespace DataService.Models.Entities.Services
             }
         }
 
+        public ResponseObject<List<RequestAPIViewModel>> GetAllRequestForMonth(int month, int year)
+        {
+            try
+            {
+                List<RequestAPIViewModel> rsList = new List<RequestAPIViewModel>();
+                var RequestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var requests = RequestRepo.GetActive(p => p.CreateDate.Month == month && p.CreateDate.Year == year).ToList();
+                if (requests.Count <= 0)
+                {
+                    return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại" };
+                }
+                int no = 1;
+                foreach (var item in requests)
+                {
+                    var timeAgo = TimeAgo(item.CreateDate);
+                    var i = 1;
+                    var requestStatus = "";
+                    foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
+                    {
+                        if (item.RequestStatus == i)
+                        {
+                            requestStatus = requestItem.DisplayName();
+                        }
+                        i++;
+                    }
+                    var a = new RequestAPIViewModel()
+                    {
+                        NumberOfRecord = no,
+                        RequestName = item.RequestName,
+                        CreateDate = timeAgo,
+                        AgencyName = item.Agency.AgencyName,
+                        StatusName = requestStatus,
+                        ITSupporterName = item.ITSupporter != null ? item.ITSupporter.ITSupporterName : string.Empty,
+                        RequestId = item.RequestId
+                    };
+                    rsList.Add(a);
+                    no++;
+                }
+                return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, SuccessMessage = "Hiển thị yêu cầu thành công", ObjReturn = rsList };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại", ObjReturn = null, ErrorMessage = e.ToString() };
+            }
+        }
 
         public ResponseObject<List<RequestAPIViewModel>> GetRequestWithStatus(int status)
         {

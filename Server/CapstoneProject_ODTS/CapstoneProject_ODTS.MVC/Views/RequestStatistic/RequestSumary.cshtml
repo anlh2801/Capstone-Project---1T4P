@@ -1,0 +1,459 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content">
+    <style>
+        .city {
+            background-color: azure;
+            color: black;
+            padding: 1%;
+            border-left: solid cadetblue;
+            width: 100%;
+            margin-left: 1%;
+            font-family: Arial;
+        }
+    </style>
+    <input type="hidden" id="txtSelectedDate" />
+    <div class="row col-md-12">
+        <h3 class="city">Thống Kê Dữ Liệu Sự Cố</h3>
+    </div>
+
+    <div class="col-md-6" style="margin-top: 10px">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Thống Kê Tổng Số Lần Hỗ Trợ Của Tất Cả Sự Cố</h3>
+
+            </div>
+            <div class="box-body">
+                <div class="chart">
+                    <canvas id="pie-chart" width="100%" height="60%"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6" style="margin-top: 10px">
+        <div class="box box-success" style="height: 350px">
+            <div class="box-header with-border">
+                <h3 class="box-title">Thống Kê Trạng Thái Của Tất Cả Sự Cố</h3>
+
+            </div>
+            <div class="box-body">
+                <div class="chart">
+                    <div class="row col-md-6" style="margin-left:1%; margin-top: 8%">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-yellow"><i class="fa fa-cogs" aria-hidden="true"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Chờ xử lý</span>
+                                <span class="info-box-number" id="wailting">0</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="row col-md-6" style="margin-left:2%; margin-top: 8%">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-primary"><i class="fa fa-wrench" aria-hidden="true"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Đang xử lý</span>
+                                <span class="info-box-number" id="processing">0</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+
+                    <div class="row col-md-6" style="margin-left:1%; margin-top: 2%">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-green"><i class="fa fa-check" aria-hidden="true"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Hoàn thành</span>
+                                <span class="info-box-number" id="done">0</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="row col-md-6" style="margin-left:2%; margin-top: 2%">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-red"><i class="fa fa-times" aria-hidden="true"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Hủy bỏ</span>
+                                <span class="info-box-number" id="cancel">0</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" style="margin-top:10px">
+        <div style="margin-bottom:10px">
+            <h4>Thống Kê Dữ Liệu Sự Cố Theo Tháng:</h4>
+        </div>
+        <div style="width:500px; height:60px;">
+            <input type="button" id="pickMonth" class="form-control" style="float: left;width:200px;display: inline-block;height:35px;border:solid 1px blue;text-align:left;" required>
+            <div style="overflow: hidden">
+                <button type="button" class="btn btn-primary fa fa-eye" style="display: inline-block;height:36px;margin-left:10px;" onclick="beginStatisticITS()"><font face="verdana"> Xem Thống Kê</button>
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-12" style="margin-left: 0.2%; margin-top: 10px">
+        <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
+            <thead>
+                <tr>
+                    <th><label>STT</label></th>
+                    <th><label>Tên</label></th>
+                    <th><label>Thời gian</label></th>
+                    <th><label>Tạo bởi</label></th>
+                    <th><label>Trạng thái</label></th>
+                    <th><label>Xử lý bởi</label></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+</section>
+
+
+
+<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts {
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.vi.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            loadDataC();
+            loadReSTT();
+            loadRequestStatistic();
+        });
+
+        function loadReSTT() {
+            var checkload = $('#txtSelectedDate').val();
+            var monthload = checkload.substring(0, 2);
+            var yeardload = checkload.substring(6, 10);
+            $.ajax({
+                    type: 'GET',
+
+                    url: '@Url.Action("GetAllRequestForMonth", "RequestStatistic")',
+
+                data: {
+                    month: monthload,
+                    year: yeardload
+
+                    },
+                success: function (data) {
+                    initDatatable(data.result.ObjReturn);
+                },
+                error: function(error) {
+                    showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                }
+            });
+        }
+
+        function loadDataC() {
+            var checkloadC = $('#txtSelectedDate').val();
+            var monthloadC = checkloadC.substring(0, 2);
+            var yeardloadC = checkloadC.substring(6, 10);
+             $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("ServiceITSuppoterStatistic", "ITSuporterStatistic")',
+                 data: {
+                     year: yeardloadC,
+                     month: monthloadC
+                    },
+                 success: function (data) {
+                     loadPieChart(data.result.ObjReturn);
+                    },
+                    error: function(error) {
+                       showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                    }
+            });
+        }
+        function loadRequestStatistic() {
+            var checkloadC2 = $('#txtSelectedDate').val();
+            var monthloadC2 = checkloadC2.substring(0, 2);
+            var yeardloadC2 = checkloadC2.substring(6, 10);
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetRequestStatisticForMonth", "Request")',
+                data: {
+                    year: yeardloadC2,
+                    month: monthloadC2
+                },
+                success: function(result) {
+                    var statusList = result.result.ObjReturn;
+                    var i;
+                    for (i = 0; i < statusList.length; ++i) {
+                        if (statusList[i].StatusId === 1) {
+                                $('#wailting').text(statusList[i].NumberOfStatus);
+                        }
+                        else if (statusList[i].StatusId === 2) {
+                            $('#processing').text(statusList[i].NumberOfStatus);
+                        }
+                        else if (statusList[i].StatusId === 3) {
+                            $('#done').text(statusList[i].NumberOfStatus);
+                        }
+                        else if (statusList[i].StatusId === 4) {
+                            $('#cancel').text(statusList[i].NumberOfStatus);
+                        }
+                    }
+                },
+                error: function(error) {
+                    showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                }
+            });
+        }
+        //choose to show
+        function beginStatisticITS() {
+
+            var check = $('#pickMonth').val();
+            var month = check.substring(0, 2);
+            var year = check.substring(3, 7);
+            if ($('#pickMonth').val() == "") {
+                swal({
+                    title: 'bạn chưa chọn tháng để thống kê',
+                    text: "vui lòng chọn tháng cần thống kê!",
+                    type: 'warning',
+                    cancelButtonText: 'ok'
+                })
+            } else if ($('#pickMonth').val() != null) {
+                $('#showSTTName').empty();
+                var sttName2 = "Thống Kê Dữ Liệu Của Nhân Viên Theo Tháng " + month + " Năm " + year;
+                $('#showSTTName').append(sttName2);
+                loadReSTTE(month, year);
+                loadDataCE(month, year);
+                loadRequestStatisticE(month, year);
+            }
+        }
+        function loadReSTTE(monthload, yeardload) {
+            $.ajax({
+                    type: 'GET',
+
+                    url: '@Url.Action("GetAllRequestForMonth", "RequestStatistic")',
+
+                data: {
+                    month: monthload,
+                    year: yeardload
+
+                    },
+                success: function (result) {
+                    initDatatable(result.result.ObjReturn);
+                },
+                error: function(error) {
+                    showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                }
+            });
+        }
+
+        function loadDataCE(monthloadC, yeardloadC) {
+             $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("ServiceITSuppoterStatistic", "ITSuporterStatistic")',
+                 data: {
+                     year: yeardloadC,
+                     month: monthloadC
+                    },
+                    success: function (result) {
+                        loadPieChart(result.result.ObjReturn);
+                    },
+                    error: function(error) {
+                       showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                    }
+            });
+        }
+        function loadRequestStatisticE(monthloadC2, yeardloadC2) {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetRequestStatisticForMonth", "Request")',
+                data: {
+                    year: yeardloadC2,
+                    month: monthloadC2
+                },
+                success: function (result) {
+                    var statusList = result.result.ObjReturn;
+                    if (statusList == []) {
+                            $('#wailting').text("0");
+                            $('#processing').text("0");
+                            $('#done').text("0");
+                            $('#cancel').text("0");
+                    }
+                },
+                error: function(error) {
+                    showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                }
+            });
+        }
+        //
+        $('#txtSelectedDate').datepicker('setDate', 'today');
+        $('#pickMonth').datepicker({
+            format: 'mm/yyyy',
+            viewMode: "months",
+            minViewMode: "months",
+            autoclose: true,
+            forceParse: false,
+            language: 'vi'
+        })
+
+         function initDatatable(data) {
+            if (data == null) {
+                $('#detail-table').dataTable().fnClearTable();
+            }
+            $("#detail-table").dataTable().fnDestroy();
+            $("#detail-table").dataTable({
+                stateSave: true,
+                "bFilter": true,
+                "bSort": false,
+                "data": data,
+                "bRetrieve": true,
+                "bScrollCollapse": true,
+                "bProcessing": true,
+                "oLanguage": {
+                    "sSearch": "Tìm kiếm:",
+                    "sSearchPlaceholder": "",
+                    "sZeroRecords": "Không có dữ liệu phù hợp",
+                    "sInfo": "Hiển thị từ _START_ đến _END_ trên tổng số _TOTAL_ dòng",
+                    "sEmptyTable": "Không có dữ liệu",
+                    "sInfoFiltered": " - lọc ra từ _MAX_ dòng",
+                    "sLengthMenu": "Hiển thị _MENU_ dòng",
+                    "sProcessing": "Đang xử lý...",
+                    "oPaginate": {
+                        "sNext": "<i class='fa fa-chevron-right'></i>",
+                        "sPrevious": "<i class='fa fa-chevron-left'></i>"
+                    }
+                },
+                "aoColumnDefs": [
+                    {
+                        "aTargets": [0, 1, 2, 3,4 ,5],
+                        "bSortable": false,
+                        "sClass": "text-center"
+                    },
+                ],
+                "columns": [
+                    { "data": "NumberOfRecord" },
+                    {
+                        "data": "RequestName",
+                        "mRender": function (data, type, full) {
+                            return '<a href="RequestDetail/' + full.RequestId + '">' + data + '</a>';
+                        }
+                    },
+                    { "data": "CreateDate" },
+                    { "data": "AgencyName" },
+                    //{ "data": "StatusName" },
+                    {
+                        "mRender": function (data, type, full) {
+                            if (full.StatusName === "Chờ Xử lý")
+                                return '<span class = "label label-warning">' + full.StatusName + '</span>';
+                            else if (full.StatusName === "Đang xử lý")
+                                return '<span class = "label label-primary">' + full.StatusName + '</span>';
+                            else if (full.StatusName === "Hoàn thành")
+                                return '<span class = "label label-success">' + full.StatusName + '</span>';
+                            else if (full.StatusName === "Hủy bỏ")
+                                return '<span class = "label label-danger">' + full.StatusName + '</span>';
+                            else
+                                return '<span class = "label label-default">' + full.StatusName + '</span>';
+                        }
+                    },
+                    {
+                        "mRender": function (data, type, full) {
+                            if (full.ITSupporterName !== "")
+                                return full.ITSupporterName;
+                            else
+                                return "Chưa có người hỗ trợ";
+
+                        }
+                    },
+                ],
+                "bAutoWidth": false,
+            });
+        }
+
+
+        /*
+     * BAR CHART
+     * ---------
+     */
+        function loadPieChart(data) {
+            var options = {
+                title: {
+                    display: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: false,
+                },
+            };
+            if (data == null) {
+                swal({
+                    title: 'tháng không có dữ liệu để thống kê',
+                    text: "vui lòng chọn tháng khác để xem thống kê.",
+                    type: 'warning',
+                    cancelButtonText: 'ok'
+                })
+                new Chart(document.getElementById("pie-chart"), {
+                    type: 'pie',
+                    data: {
+                        labels: [""],
+                        datasets: [{
+                            label: "Population (millions)",
+                            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                            data: [""]
+                        }]
+                    },
+                    options: options
+                });
+            }
+            else if (data != null) {
+                var i;
+                var arr = [];
+                for (i = 0; i < data.length; ++i) {
+                    arr.push(data[i].ServiceName);
+                }
+
+                var j;
+                var arr2 = [];
+                for (j = 0; j < data.length; ++j) {
+                    arr2.push(data[j].SupportTimeByTimes);
+                }
+
+                new Chart(document.getElementById("pie-chart"), {
+                    type: 'pie',
+                    data: {
+                        labels: arr,
+                        datasets: [{
+                            label: "Population (millions)",
+                            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                            data: arr2
+                        }]
+                    },
+                    options: options
+                });
+            }
+        }
+    /* END BAR CHART */
+
+    </script>
+
+}
+
+
+
