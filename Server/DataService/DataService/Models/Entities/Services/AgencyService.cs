@@ -245,8 +245,11 @@ namespace DataService.Models.Entities.Services
                 requestRepo.Add(createRequest);
                 requestRepo.Save();
 
-                CreateTicket(model.Tickets, createRequest.RequestId);
-
+                if (model.Tickets.Count > 0)
+                {
+                    CreateTicket(model.Tickets, createRequest.RequestId);
+                }
+                
                 return new ResponseObject<int> { IsError = false, SuccessMessage = "Tạo yêu cầu thành công!", ObjReturn = createRequest.RequestId };
             }
             catch (Exception e)
