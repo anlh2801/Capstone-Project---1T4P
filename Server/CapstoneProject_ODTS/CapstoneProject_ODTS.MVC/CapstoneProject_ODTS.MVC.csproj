@@ -7426,7 +7426,7 @@
     <Content Include="Views\Guideline\ServiceGuideline.cshtml">
       <BrowseToURL>~/Guideline/ServiceGuideline</BrowseToURL>
     </Content>
-    <Content Include="Views\RequestStatistic\RequestSumary.cshtml" />
+    <Content Include="Views\RequestStatistic\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
