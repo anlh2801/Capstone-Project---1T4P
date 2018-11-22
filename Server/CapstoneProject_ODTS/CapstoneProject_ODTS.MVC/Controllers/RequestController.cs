@@ -33,7 +33,18 @@ namespace CapstoneProject_ODTS.Controllers
             
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult GetAllRequestForMonth(int month, int year)
+        {
+            var result = _requestDomain.GetAllRequestForMonth(month, year);
 
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetRequestStatisticForMonth(int year, int month)
+        {
+            var result = _requestDomain.GetRequestStatisticForMonth(month, year);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult GetRequestStatistic()
         {
             var result = _requestDomain.GetRequestStatistic();

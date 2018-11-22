@@ -144,5 +144,16 @@ namespace CapstoneProject_ODTS.ControllersApi
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
+
+        [HttpGet]
+        [Route("request/view_request_statistic")]
+        public HttpResponseMessage ITSuppoterStatistic(int year, int month)
+        {
+            var result = _requestDomain.GetRequestStatisticForMonth(month, year);
+            //var result = _ITSupporterDomain.ServiceITSuppoterStatistic(year, month);
+            //var r = new RequestDomain();
+            //var result = r.GetRequestStatistic(month, year);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
     }
 }

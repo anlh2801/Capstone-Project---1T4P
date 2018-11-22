@@ -26,11 +26,13 @@ import com.willy.ratingbar.ScaleRatingBar;
 
 import java.util.ArrayList;
 
+import me.zhanghai.android.materialratingbar.MaterialRatingBar;
+
 
 public class ProfleFragment extends Fragment {
     SharedPreferences sharedPreferences;
     TextView itNameTxt, itPhoneTxt, txtRating;
-    ScaleRatingBar ratingBar;
+    MaterialRatingBar ratingBar;
     ITSupporterService itSupporterService;
     RatingAdapter ratingAdapter;
     ListView listView;

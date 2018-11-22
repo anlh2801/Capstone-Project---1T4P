@@ -32,9 +32,9 @@ namespace DataService.Domain
 
         ResponseObject<List<StatusAPIViewModel>> GetRequestStatistic();
 
-        ResponseObject<List<StatusAPIViewModel>> GetRequestStatistic(int month, int year);
-
         ResponseObject<List<RequestGroupMonth>> GetAllRequestByAgencyIDAndStatus2(int acency_id, int status);
+
+        ResponseObject<List<RequestAPIViewModel>> GetAllRequestForMonth(int month, int year);
     }
 
     public  class RequestDomain : BaseDomain, IRequestDomain
@@ -141,7 +141,7 @@ namespace DataService.Domain
             return result;
         }
 
-        public ResponseObject<List<StatusAPIViewModel>> GetRequestStatistic(int month, int year)
+        public ResponseObject<List<StatusAPIViewModel>> GetRequestStatisticForMonth(int month, int year)
         {
             var requestService = this.Service<IRequestService>();
 
@@ -149,6 +149,16 @@ namespace DataService.Domain
 
             return result;
         }
+
+        public ResponseObject<List<RequestAPIViewModel>> GetAllRequestForMonth(int month, int year)
+        {
+            var requestService = this.Service<IRequestService>();
+
+            var result = requestService.GetAllRequestForMonth(month, year);
+
+            return result;
+        }
+
 
     }
 }

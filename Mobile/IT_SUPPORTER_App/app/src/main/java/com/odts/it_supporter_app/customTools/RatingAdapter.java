@@ -24,6 +24,8 @@ import com.willy.ratingbar.ScaleRatingBar;
 
 import java.util.List;
 
+import me.zhanghai.android.materialratingbar.MaterialRatingBar;
+
 public class RatingAdapter extends ArrayAdapter<RequestGroupMonth> {
 
 
@@ -51,10 +53,11 @@ public class RatingAdapter extends ArrayAdapter<RequestGroupMonth> {
             TextView requestName = (TextView) view.findViewById(R.id.txtRequestNameRate);
             TextView agencyName = (TextView) view.findViewById(R.id.txtAgencyNameRate);
             TextView feedback = (TextView) view.findViewById(R.id.txtFeedbackRate);
-            ScaleRatingBar ratingBar = (ScaleRatingBar) view.findViewById(R.id.simpleRatingBarRate);
+            MaterialRatingBar ratingBar = (MaterialRatingBar) view.findViewById(R.id.simpleRatingBarRate);
             requestName.setText(item.getRequestName());
             agencyName.setText("bởi      " + item.getAgencyName() + "-     lúc    " +item.getCreateDate());
             ratingBar.setRating(item.getRating());
+            ratingBar.setClickable(false);
             feedback.setText(item.getFeedBack());
             lvDetailsThangNam.addView(view);
         }
