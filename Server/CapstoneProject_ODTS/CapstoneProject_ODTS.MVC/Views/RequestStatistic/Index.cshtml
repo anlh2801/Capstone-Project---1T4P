@@ -1,6 +1,8 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
 <section class="content">
     <style>
         .city {
@@ -21,7 +23,7 @@
     <div class="col-md-6" style="margin-top: 10px">
         <div class="box box-success">
             <div class="box-header with-border">
-                <h3 class="box-title">Thống Kê Tổng Số Lần Hỗ Trợ Của Tất Cả Sự Cố</h3>
+                <h3 class="box-title">Thống Kê Tổng Số Lần Hỗ Trợ Hoàn Thành Của Tất Cả Loài Dịch Vụ</h3>
 
             </div>
             <div class="box-body">
@@ -33,7 +35,7 @@
     </div>
 
     <div class="col-md-6" style="margin-top: 10px">
-        <div class="box box-success" style="height: 350px">
+        <div class="box box-success" style="height: 100%">
             <div class="box-header with-border">
                 <h3 class="box-title">Thống Kê Trạng Thái Của Tất Cả Sự Cố</h3>
 
@@ -42,7 +44,7 @@
                 <div class="chart">
                     <div class="row col-md-6" style="margin-left:1%; margin-top: 8%">
                         <div class="info-box">
-                            <span class="info-box-icon bg-yellow"><i class="fa fa-cogs" aria-hidden="true"></i></span>
+                            <span class="info-box-icon bg-yellow"><i class="fa fa-cogs"></i></span>
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Chờ xử lý</span>
@@ -55,7 +57,7 @@
                     <!-- /.col -->
                     <div class="row col-md-6" style="margin-left:2%; margin-top: 8%">
                         <div class="info-box">
-                            <span class="info-box-icon bg-primary"><i class="fa fa-wrench" aria-hidden="true"></i></span>
+                            <span class="info-box-icon bg-primary"><i class="fa fa-wrench"></i></span>
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Đang xử lý</span>
@@ -68,7 +70,7 @@
 
                     <div class="row col-md-6" style="margin-left:1%; margin-top: 2%">
                         <div class="info-box">
-                            <span class="info-box-icon bg-green"><i class="fa fa-check" aria-hidden="true"></i></span>
+                            <span class="info-box-icon bg-green"><i class="fa fa-check"></i></span>
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Hoàn thành</span>
@@ -79,9 +81,9 @@
                         <!-- /.info-box -->
                     </div>
                     <!-- /.col -->
-                    <div class="row col-md-6" style="margin-left:2%; margin-top: 2%">
+                    <div class="row col-md-6" style="margin-left:2%; margin-top: 2%; margin-bottom: 10%">
                         <div class="info-box">
-                            <span class="info-box-icon bg-red"><i class="fa fa-times" aria-hidden="true"></i></span>
+                            <span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Hủy bỏ</span>
@@ -98,7 +100,7 @@
     </div>
     <div class="col-md-12" style="margin-top:10px">
         <div style="margin-bottom:10px">
-            <h4>Thống Kê Dữ Liệu Sự Cố Theo Tháng:</h4>
+            <h4 id="showSTTName"></h4>
         </div>
         <div style="width:500px; height:60px;">
             <input type="button" id="pickMonth" class="form-control" style="float: left;width:200px;display: inline-block;height:35px;border:solid 1px blue;text-align:left;" required>
@@ -151,6 +153,8 @@
             var checkload = $('#txtSelectedDate').val();
             var monthload = checkload.substring(0, 2);
             var yeardload = checkload.substring(6, 10);
+            var sttName = "Thống Kê Dữ Liệu Của Sự Cố Trong Tháng " + monthload + " Năm " + yeardload;
+            $('#showSTTName').append(sttName);
             $.ajax({
                     type: 'GET',
 
@@ -202,19 +206,27 @@
                 },
                 success: function(result) {
                     var statusList = result.result.ObjReturn;
-                    var i;
-                    for (i = 0; i < statusList.length; ++i) {
-                        if (statusList[i].StatusId === 1) {
+                    if (statusList !=null && statusList.length <= 0) {
+                        $('#wailting').text("0");
+                        $('#processing').text("0");
+                        $('#done').text("0");
+                        $('#cancel').text("0");
+                    }
+                    else if (statusList != null) {
+                        var i;
+                        for (i = 0; i < statusList.length; ++i) {
+                            if (statusList[i].StatusId === 1) {
                                 $('#wailting').text(statusList[i].NumberOfStatus);
-                        }
-                        else if (statusList[i].StatusId === 2) {
-                            $('#processing').text(statusList[i].NumberOfStatus);
-                        }
-                        else if (statusList[i].StatusId === 3) {
-                            $('#done').text(statusList[i].NumberOfStatus);
-                        }
-                        else if (statusList[i].StatusId === 4) {
-                            $('#cancel').text(statusList[i].NumberOfStatus);
+                            }
+                            else if (statusList[i].StatusId === 2) {
+                                $('#processing').text(statusList[i].NumberOfStatus);
+                            }
+                            else if (statusList[i].StatusId === 3) {
+                                $('#done').text(statusList[i].NumberOfStatus);
+                            }
+                            else if (statusList[i].StatusId === 4) {
+                                $('#cancel').text(statusList[i].NumberOfStatus);
+                            }
                         }
                     }
                 },
@@ -238,7 +250,7 @@
                 })
             } else if ($('#pickMonth').val() != null) {
                 $('#showSTTName').empty();
-                var sttName2 = "Thống Kê Dữ Liệu Của Nhân Viên Theo Tháng " + month + " Năm " + year;
+                var sttName2 = "Thống Kê Dữ Liệu Của Sự Cố Trong Tháng " + month + " Năm " + year;
                 $('#showSTTName').append(sttName2);
                 loadReSTTE(month, year);
                 loadDataCE(month, year);
@@ -291,11 +303,28 @@
                 },
                 success: function (result) {
                     var statusList = result.result.ObjReturn;
-                    if (statusList == []) {
-                            $('#wailting').text("0");
-                            $('#processing').text("0");
-                            $('#done').text("0");
-                            $('#cancel').text("0");
+                    if (statusList !=null && statusList.length <= 0) {
+                        $('#wailting').text("0");
+                        $('#processing').text("0");
+                        $('#done').text("0");
+                        $('#cancel').text("0");
+                    }
+                    else if (statusList != null) {
+                        var i;
+                        for (i = 0; i < statusList.length; ++i) {
+                            if (statusList[i].StatusId === 1) {
+                                $('#wailting').text(statusList[i].NumberOfStatus);
+                            }
+                            else if (statusList[i].StatusId === 2) {
+                                $('#processing').text(statusList[i].NumberOfStatus);
+                            }
+                            else if (statusList[i].StatusId === 3) {
+                                $('#done').text(statusList[i].NumberOfStatus);
+                            }
+                            else if (statusList[i].StatusId === 4) {
+                                $('#cancel').text(statusList[i].NumberOfStatus);
+                            }
+                        }
                     }
                 },
                 error: function(error) {
@@ -394,18 +423,23 @@
      */
         function loadPieChart(data) {
             var options = {
+                responsive: true,
+                tooltips: {
+                        mode: 'index',
+                        intersect: true,
+                },
                 title: {
                     display: false,
                 },
                 hover: {
                     mode: 'nearest',
-                    intersect: false,
+                    intersect: true,
                 },
+                legend: { display: true },
             };
             if (data == null) {
                 swal({
-                    title: 'tháng không có dữ liệu để thống kê',
-                    text: "vui lòng chọn tháng khác để xem thống kê.",
+                    text: "tháng chưa có đủ dữ liệu để tạo biểu đồ.",
                     type: 'warning',
                     cancelButtonText: 'ok'
                 })
@@ -414,9 +448,9 @@
                     data: {
                         labels: [""],
                         datasets: [{
-                            label: "Population (millions)",
+                            label: "Lần Hỗ Trợ",
                             backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                            data: [""]
+                            data: []
                         }]
                     },
                     options: options
@@ -440,7 +474,7 @@
                     data: {
                         labels: arr,
                         datasets: [{
-                            label: "Population (millions)",
+                            label: "",
                             backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
                             data: arr2
                         }]
@@ -454,6 +488,3 @@
     </script>
 
 }
-
-
-

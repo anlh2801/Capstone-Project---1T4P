@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace CapstoneProject_ODTS.MVC.Controllers
 {
+    [MVC.Filters.AutorizeAdmin]
     public class RequestStatisticController : Controller
     {
         private RequestDomain _requestDomain;
@@ -15,7 +16,7 @@ namespace CapstoneProject_ODTS.MVC.Controllers
         {
             _requestDomain = new RequestDomain();
         }
-        public ActionResult RequestSumary()
+        public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
 
