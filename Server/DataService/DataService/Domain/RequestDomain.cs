@@ -26,7 +26,7 @@ namespace DataService.Domain
 
         ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> ViewRequestDetail(int requestId);
 
-        ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept);
+        ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept, string check = null);
 
         ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestByRequestIdAndITSupporterId(int itSupporterId);
 
@@ -114,12 +114,18 @@ namespace DataService.Domain
             return result;
         }
 
-        public ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept)
+        public ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept, string check = null)
         {
             var requestService = this.Service<IRequestService>();
-
-            var result = requestService.AcceptRequestFromITSupporter(itSupporterId, requestId, isAccept);
-
+            var result = new ResponseObject<bool>();
+            if (string.IsNullOrEmpty(check))
+            {
+                result = requestService.AcceptRequestFromITSupporter(itSupporterId, requestId, isAccept);
+            }
+            else
+            {
+                result = requestService.AcceptRequestFromITSupporter(itSupporterId, requestId, isAccept, check);
+            }
             return result;
         }
 
