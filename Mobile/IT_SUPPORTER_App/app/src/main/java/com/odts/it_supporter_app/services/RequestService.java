@@ -40,10 +40,6 @@ public class RequestService {
                     if (!response.body().isError()) {
                         callBackData.onSuccess(response.body().getObjReturn());
                     }
-                    else {
-                        Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
-                    }
-
                 } else {
                     Log.e("MainActivity", "error" );
                 }
@@ -51,7 +47,7 @@ public class RequestService {
 
             @Override
             public void onFailure(Call<ResponseObject<Request>> call, Throwable t) {
-                Toast.makeText(context, "Có lỗi", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -65,8 +61,6 @@ public class RequestService {
                 if(!response.body().isError()){
                     Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
                 }
-                else
-                    Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onFailure(Call<ResponseObject<Boolean>> call, Throwable t) {

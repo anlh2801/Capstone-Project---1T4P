@@ -33,7 +33,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> ViewRequestDetail(int requestId);
 
-        ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept);
+        ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept, string check = null);
 
         ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestByRequestIdAndITSupporterId(int itSupporterId);
 
@@ -608,8 +608,25 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept)
+        public ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept, string check = null)
         {
+
+            if (!string.IsNullOrEmpty(check))
+            {
+                FirebaseService firebaseService = new FirebaseService();
+                firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(itSupporterId, requestId);
+
+                int counter = 60;
+
+                while (counter > 0)
+                {
+                    counter--;
+                    Thread.Sleep(1000);
+                }
+                this.AcceptRequestFromITSupporter(itSupporterId, requestId, false);
+            }
+            
+
             //MemoryCacher memoryCacher = new MemoryCacher();
             RedisTools redisTools = new RedisTools();
             try

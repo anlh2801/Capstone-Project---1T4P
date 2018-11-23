@@ -50,14 +50,6 @@ public class PendingFragment extends Fragment {
             public void onSuccess(ArrayList<RequestGroupMonth> listRequestsWithMonth) {
                 pendingRequestAdapter = new PendingRequestAdapter(getActivity(), R.layout.list_pending_request_group_item, listRequestsWithMonth);
                 listView.setAdapter(pendingRequestAdapter);
-                btnCreate = (com.melnykov.fab.FloatingActionButton) v.findViewById(R.id.fab);
-                btnCreate.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getContext(), AddRequestLayoutActivity.class);
-                        startActivity(intent);
-                    }
-                });
 //                btnCreate.attachToRecyclerView(recyclerView);
             }
 
@@ -66,7 +58,14 @@ public class PendingFragment extends Fragment {
 
             }
         });
-
+        btnCreate = (com.melnykov.fab.FloatingActionButton) v.findViewById(R.id.fab);
+        btnCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), AddRequestLayoutActivity.class);
+                startActivity(intent);
+            }
+        });
         return v;
     }
 

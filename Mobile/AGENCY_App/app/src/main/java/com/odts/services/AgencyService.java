@@ -35,8 +35,6 @@ public class AgencyService {
                 if (response.code() == 200 && response.body() != null) {
                     if (!response.body().isError()) {
                         callBackData.onSuccess(response.body().getObjReturn());
-                    } else {
-                        Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
@@ -46,7 +44,7 @@ public class AgencyService {
 
             @Override
             public void onFailure(Call<ResponseObject<Agency>> call, Throwable t) {
-                Toast.makeText(context, "Có lỗi", Toast.LENGTH_SHORT).show();
+
             }
         });
     }

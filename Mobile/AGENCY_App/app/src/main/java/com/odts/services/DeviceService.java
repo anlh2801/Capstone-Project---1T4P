@@ -32,8 +32,6 @@ public class DeviceService {
                 if (response.code() == 200 && response.body() != null) {
                     if (!response.body().isError()) {
                         callBackData.onSuccess(response.body().getObjList());
-                    } else {
-                        Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
@@ -43,7 +41,6 @@ public class DeviceService {
 
             @Override
             public void onFailure(Call<ResponseObjectReturnList<Device>> call, Throwable t) {
-                Toast.makeText(context, "Có lỗi", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -40,8 +40,7 @@ public class RequestService {
                         Intent intent = new Intent(context, MainActivity.class);
                         context.startActivity(intent);
                     }
-                } else
-                    Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -76,8 +75,7 @@ public class RequestService {
                 if (!response.body().isError()) {
 //                    Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
                     callBackData.onSuccess(response.body().getObjList());
-                } else
-                    Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -96,8 +94,7 @@ public class RequestService {
                 if (!response.body().isError()) {
 //                    Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
                     callBackData.onSuccess(response.body().getObjList());
-                } else
-                    Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -158,8 +155,7 @@ public class RequestService {
                         Intent intent = new Intent(context, MainActivity.class);
                         context.startActivity(intent);
                     }
-                } else
-                    Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
