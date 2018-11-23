@@ -35,6 +35,8 @@ namespace DataService.Domain
         ResponseObject<List<RequestGroupMonth>> GetAllRequestByAgencyIDAndStatus2(int acency_id, int status);
 
         ResponseObject<List<RequestAPIViewModel>> GetAllRequestForMonth(int month, int year);
+
+        ResponseObject<bool> ApproveCancelRequest(int request_id, int status);
     }
 
     public  class RequestDomain : BaseDomain, IRequestDomain
@@ -165,6 +167,14 @@ namespace DataService.Domain
             return result;
         }
 
+        public ResponseObject<bool> ApproveCancelRequest(int request_id, int status)
+        {
+            var requestService = this.Service<IRequestService>();
 
+            var result = requestService.ApproveCancelRequest(request_id, status);
+
+            return result;
+        }
+        
     }
 }
