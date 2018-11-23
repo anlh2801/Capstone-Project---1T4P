@@ -26,7 +26,7 @@ namespace DataService.Domain
 
         ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> ViewRequestDetail(int requestId);
 
-        ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept);
+        ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept, string check = null);
 
         ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestByRequestIdAndITSupporterId(int itSupporterId);
 
@@ -35,6 +35,8 @@ namespace DataService.Domain
         ResponseObject<List<RequestGroupMonth>> GetAllRequestByAgencyIDAndStatus2(int acency_id, int status);
 
         ResponseObject<List<RequestAPIViewModel>> GetAllRequestForMonth(int month, int year);
+
+        ResponseObject<bool> ApproveCancelRequest(int request_id, int status);
     }
 
     public  class RequestDomain : BaseDomain, IRequestDomain
@@ -114,12 +116,18 @@ namespace DataService.Domain
             return result;
         }
 
-        public ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept)
+        public ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept, string check = null)
         {
             var requestService = this.Service<IRequestService>();
-
-            var result = requestService.AcceptRequestFromITSupporter(itSupporterId, requestId, isAccept);
-
+            var result = new ResponseObject<bool>();
+            if (string.IsNullOrEmpty(check))
+            {
+                result = requestService.AcceptRequestFromITSupporter(itSupporterId, requestId, isAccept);
+            }
+            else
+            {
+                result = requestService.AcceptRequestFromITSupporter(itSupporterId, requestId, isAccept, check);
+            }
             return result;
         }
 
@@ -159,6 +167,14 @@ namespace DataService.Domain
             return result;
         }
 
+        public ResponseObject<bool> ApproveCancelRequest(int request_id, int status)
+        {
+            var requestService = this.Service<IRequestService>();
 
+            var result = requestService.ApproveCancelRequest(request_id, status);
+
+            return result;
+        }
+        
     }
 }

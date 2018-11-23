@@ -14,6 +14,7 @@ namespace DataService.APIViewModels
         public int TicketId { get; set; }
         public int RequestId { get; set; }
         public int DeviceId { get; set; }
+        public string ServiceItemName { get; set; }
         public string Desciption { get; set; }
         public string CreateDate { get; set; }
         public string UpdateDate { get; set; }

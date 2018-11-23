@@ -198,17 +198,7 @@ namespace CapstoneProject_ODTS.ControllersApi
             {
                 if (!result.IsError && result.ObjReturn > 0)
                 {
-                    FirebaseService firebaseService = new FirebaseService();
-                    firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
-
-                    int counter = 60;
-
-                    while (counter > 0)
-                    {
-                        counter--;
-                        Thread.Sleep(1000);
-                    }
-                    _requestDomain.AcceptRequestFromITSupporter(result.ObjReturn, requestId, false);
+                    _requestDomain.AcceptRequestFromITSupporter(result.ObjReturn, requestId, true, "check");
                 }
             }
         }

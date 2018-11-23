@@ -55,7 +55,7 @@ public class RatingAdapter extends ArrayAdapter<RequestGroupMonth> {
             TextView feedback = (TextView) view.findViewById(R.id.txtFeedbackRate);
             MaterialRatingBar ratingBar = (MaterialRatingBar) view.findViewById(R.id.simpleRatingBarRate);
             requestName.setText(item.getRequestName());
-            agencyName.setText("bởi      " + item.getAgencyName() + "-     lúc    " +item.getCreateDate());
+            agencyName.setText("bởi: " + item.getAgencyName() + "    -lúc:" +item.getCreateDate());
             ratingBar.setRating(item.getRating());
             ratingBar.setClickable(false);
             feedback.setText(item.getFeedBack());

@@ -33,7 +33,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> ViewRequestDetail(int requestId);
 
-        ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept);
+        ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept, string check = null);
 
         ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestByRequestIdAndITSupporterId(int itSupporterId);
 
@@ -42,6 +42,8 @@ namespace DataService.Models.Entities.Services
         ResponseObject<List<StatusAPIViewModel>> GetRequestStatisticForMonth(int month, int year);
 
         ResponseObject<List<RequestAPIViewModel>> GetAllRequestForMonth(int month, int year);
+
+        ResponseObject<bool> ApproveCancelRequest(int request_id, int status);
     }
 
     public partial class RequestService
@@ -508,7 +510,7 @@ namespace DataService.Models.Entities.Services
                         requestHistoryRepo.Save();
 
                         request.RequestStatus = status;
-                        //request.ITSupporter.IsBusy = false;
+                        request.ITSupporter.IsBusy = false;
                         request.EndTime = DateTime.UtcNow.AddHours(7);
                         request.UpdateDate = DateTime.UtcNow.AddHours(7);
                         //foreach (var item in request.Tickets)
@@ -608,8 +610,25 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept)
+        public ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept, string check = null)
         {
+
+            if (!string.IsNullOrEmpty(check))
+            {
+                FirebaseService firebaseService = new FirebaseService();
+                firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(itSupporterId, requestId);
+
+                int counter = 60;
+
+                while (counter > 0)
+                {
+                    counter--;
+                    Thread.Sleep(1000);
+                }
+                this.AcceptRequestFromITSupporter(itSupporterId, requestId, false);
+            }
+            
+
             //MemoryCacher memoryCacher = new MemoryCacher();
             RedisTools redisTools = new RedisTools();
             try
@@ -931,5 +950,46 @@ namespace DataService.Models.Entities.Services
             }
         }
 
+        public ResponseObject<bool> ApproveCancelRequest(int request_id, int status)
+        {
+            try
+            {
+                var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var requestHistoryRepo = DependencyUtils.Resolve<IRequestHistoryRepository>();
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var request = requestRepo.GetActive().SingleOrDefault(a => a.RequestId == request_id);
+                if (request != null)
+                {
+                    if (status == (int)RequestStatusEnum.Cancel)
+                    {
+                        var requestHistory = new RequestHistory()
+                        {
+                            RequestId = request_id,
+                            Pre_Status = request.RequestStatus,
+                            CreateDate = DateTime.UtcNow.AddHours(7),
+                            UpdateDate = DateTime.UtcNow.AddHours(7)
+                        };
+                        requestHistoryRepo.Add(requestHistory);
+                        requestHistoryRepo.Save();
+
+                        request.RequestStatus = status;
+                        request.ITSupporter.IsBusy = false;
+                        request.EndTime = DateTime.UtcNow.AddHours(7);
+                        request.UpdateDate = DateTime.UtcNow.AddHours(7);                        
+                    }
+                    
+                    requestRepo.Edit(request);
+                    requestRepo.Save();
+                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Cập nhật trạng thái thành công", ObjReturn = true };
+                }
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật trạng thái thất bại", ObjReturn = false };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Hủy yêu cầu thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
+            }
+        }
     }
 }

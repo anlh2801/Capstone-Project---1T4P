@@ -120,7 +120,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="16dp"
-                        android:text="30 giờ 59 phút"
+                        android:text="0 giờ 00 phút"
                         android:textColor="#FFFFFF"
                         android:textSize="15dp"
 
@@ -237,7 +237,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="16dp"
-                        android:text="30 giờ 59 phút"
+                        android:text="0 giờ 00 phút"
                         android:textColor="#FFFFFF"
                         android:textSize="15dp"
 

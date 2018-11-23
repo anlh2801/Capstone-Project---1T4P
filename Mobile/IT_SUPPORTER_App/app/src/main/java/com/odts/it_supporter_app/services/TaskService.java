@@ -29,10 +29,6 @@ public class TaskService {
                     if (!response.body().isError()) {
                         callBackData.onSuccess(response.body().getObjList());
                     }
-                    else {
-                        Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
-                    }
-
                 } else {
                     Log.e("MainActivity", "error" );
                 }
@@ -54,11 +50,9 @@ public class TaskService {
                 if (!response.body().isError()) {
                     Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
                     if (response.body().getObjReturn() != false) {
-                        Toast.makeText(context, "success", Toast.LENGTH_SHORT);
                         callBackData.onSuccess(response.body().getObjReturn());
                     }
-                } else
-                    Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -79,8 +73,7 @@ public class TaskService {
                     if (response.body().getObjReturn() != false) {
                         callBackData.onSuccess(response.body().getObjReturn());
                     }
-                } else
-                    Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

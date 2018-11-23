@@ -75,7 +75,15 @@ public class MainActivity extends AppCompatActivity {
         itSupporterService.getIsOnline(this, itSupporterId, new CallBackData<Boolean>() {
             @Override
             public void onSuccess(Boolean aBoolean) {
-                swStatus.setChecked(aBoolean);
+                if(aBoolean) {
+                    swStatus.setChecked(aBoolean);
+                    toolbar.setTitle("Trực tuyến");
+                }
+                else {
+                    swStatus.setChecked(false);
+                    toolbar.setTitle("Ngoại tuyến");
+                }
+
             }
 
             @Override
