@@ -185,7 +185,9 @@ public class ITSupporterService {
         call.enqueue((new Callback<ResponseObjectReturnList<RequestGroupMonth>>() {
             @Override
             public void onResponse(Call<ResponseObjectReturnList<RequestGroupMonth>> call, Response<ResponseObjectReturnList<RequestGroupMonth>> response) {
-                callBackData.onSuccess(response.body().getObjList());
+                if (!response.body().isError()) {
+                    callBackData.onSuccess(response.body().getObjList());
+                }
             }
 
             @Override

@@ -35,8 +35,6 @@ public class LoginService {
                     sp = context.getSharedPreferences("loginHero", Context.MODE_PRIVATE);
                     sp.edit().putBoolean("logged",true).commit();
                 }
-                else
-                    Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onFailure(Call<ResponseObject<ITSupporter>> call, Throwable t) {

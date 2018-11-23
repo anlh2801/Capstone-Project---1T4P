@@ -37,11 +37,7 @@ public class ServiceItemService {
                 if (response.code() == 200 && response.body() != null) {
                     if (!response.body().isError()) {
                         callBackData.onSuccess(response.body().getObjList());
-
-                    } else {
-                        Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
                     }
-
                 } else {
                     Log.e("MainActivity", "error");
                 }
@@ -49,7 +45,7 @@ public class ServiceItemService {
 
             @Override
             public void onFailure(Call<ResponseObjectReturnList<ServiceItem>> call, Throwable t) {
-                Toast.makeText(context, "Có lỗi", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -69,11 +65,7 @@ public class ServiceItemService {
                 if (response.code() == 200 && response.body() != null) {
                     if (!response.body().isError()) {
                         callBackData.onSuccess(response.body().getObjList());
-
-                    } else {
-                        Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
                     }
-
                 } else {
                     Log.e("MainActivity", "error");
                 }
@@ -81,7 +73,7 @@ public class ServiceItemService {
 
             @Override
             public void onFailure(Call<ResponseObjectReturnList<AgencyStatistical>> call, Throwable t) {
-                Toast.makeText(context, "Có lỗi", Toast.LENGTH_SHORT).show();
+
             }
         });
     }

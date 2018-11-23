@@ -65,7 +65,7 @@ public class ScanDeviceFragment extends Fragment {
                 .setBarcodeFormats(Barcode.QR_CODE)
                 .build();
         if(!barcode.isOperational()){
-            Toast.makeText(v.getContext().getApplicationContext(), "Sorry, Couldn't setup the detector", Toast.LENGTH_LONG).show();
+//            Toast.makeText(v.getContext().getApplicationContext(), "Sorry, Couldn't setup the detector", Toast.LENGTH_LONG).show();
             getActivity().finish();
         }
         cameraSource = new CameraSource.Builder(getActivity(), barcode)

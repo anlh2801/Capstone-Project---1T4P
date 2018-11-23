@@ -42,6 +42,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import info.hoang8f.android.segmented.SegmentedGroup;
+
 
 public class DoRequestFragment extends Fragment {
 
@@ -56,6 +58,7 @@ public class DoRequestFragment extends Fragment {
     Button btnAccept, bt2, bt3, bt4, bt5;
     Firebase reference1;
     LinearLayout linearLayoutTask;
+    SegmentedGroup segmentedGroup;
 
     RequestService _requestService;
     TaskService _taskService;

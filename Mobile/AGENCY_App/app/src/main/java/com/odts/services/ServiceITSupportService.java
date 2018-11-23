@@ -32,10 +32,7 @@ public class ServiceITSupportService {
                 if (response.code() == 200 && response.body() != null) {
                     if (!response.body().isError()) {
                         callBackData.onSuccess(response.body().getObjList());
-                    } else {
-                        Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
                     }
-
                 } else {
                     Log.e("MainActivity", "error");
                 }
@@ -43,7 +40,7 @@ public class ServiceITSupportService {
 
             @Override
             public void onFailure(Call<ResponseObjectReturnList<ServiceITSupport>> call, Throwable t) {
-                Toast.makeText(context, "Có lỗi", Toast.LENGTH_SHORT).show();
+
             }
         });
     }

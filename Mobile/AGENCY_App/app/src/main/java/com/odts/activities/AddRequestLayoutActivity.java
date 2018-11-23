@@ -217,12 +217,13 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
     public void createRequest() {
         _requestService = new RequestService();
         List listTickets = new ArrayList<Ticket>();
-
-        for (Device item : listTicket) {
-            Ticket ticc = new Ticket();
-            ticc.setDeviceId(item.getDeviceId());
-            ticc.setDesciption("Thuộc agencyId: " + agencyId + " thiết bị: " + item.getDeviceName() + "Vấn đề: " + requestName.toString());
-            listTickets.add(ticc);
+        if(listTicket != null && listTicket.size() != 0) {
+            for (Device item : listTicket) {
+                Ticket ticc = new Ticket();
+                ticc.setDeviceId(item.getDeviceId());
+                ticc.setDesciption("Thuộc agencyId: " + agencyId + " thiết bị: " + item.getDeviceName() + "Vấn đề: " + requestName.toString());
+                listTickets.add(ticc);
+            }
         }
         Request request = new Request();
         request.setPhoneNumber(txtPhone.getText().toString());

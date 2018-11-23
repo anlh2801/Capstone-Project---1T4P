@@ -39,8 +39,7 @@ public class LoginService {
                     context.startActivity(intent);
                     sp = context.getSharedPreferences("login", Context.MODE_PRIVATE);
                     sp.edit().putBoolean("logged", true).commit();
-                } else
-                    Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

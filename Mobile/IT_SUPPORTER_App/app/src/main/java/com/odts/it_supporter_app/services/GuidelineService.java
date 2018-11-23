@@ -33,10 +33,6 @@ public class GuidelineService {
                     if (!response.body().isError()) {
                         callBackData.onSuccess(response.body().getObjList());
                     }
-                    else {
-                        Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
-                    }
-
                 } else {
                     Log.e("MainActivity", "error" );
                 }
@@ -60,8 +56,7 @@ public class GuidelineService {
                     if (response.body().getObjReturn() != null && response.body().getObjReturn() > 0) {
                         Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_LONG);
                     }
-                } else
-                    Toast.makeText(context, response.body().getWarningMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
