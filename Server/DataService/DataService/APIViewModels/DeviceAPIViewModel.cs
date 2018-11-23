@@ -29,5 +29,6 @@ namespace DataService.APIViewModels
         public string UpdateDate { get; set; }
         public string CompanyName { get; set; }
         public int CompanyId { get; set; }
+        public List<TicketAPIViewModel> TicketList { get; set; }
     }
 }

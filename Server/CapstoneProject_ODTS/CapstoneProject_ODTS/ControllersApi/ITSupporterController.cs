@@ -277,6 +277,8 @@ namespace CapstoneProject_ODTS.ControllersApi
             var result = _ITSupporterDomain.ViewRequestITSupporter(itsupporter_id);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
+
+        [HttpGet]
         [Route("ITsupporter/check_device_info_by_code")]
         public HttpResponseMessage GetDeviceDetailByDeviceCode(string devcieCode)
         {
