@@ -52,6 +52,14 @@ namespace CapstoneProject_ODTS.Controllers
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetRequestBytRequestId(int requestId)
+        {
+            var result = _requestDomain.GetRequestBytRequestId(requestId);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+
+
         public ActionResult RequestDetail(int id)
         {
             ViewBag.Title = "Home Page";
@@ -82,6 +90,12 @@ namespace CapstoneProject_ODTS.Controllers
         {
             var result = _requestDomain.GetRequestWithStatus(status);
             
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ApproveCancelRequest(int request_id, int status)
+        {
+            var result = _requestDomain.ApproveCancelRequest(request_id, status);
+
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 

@@ -88,5 +88,11 @@ namespace CapstoneProject_ODTS.Controllers
             return Json(new { result }, JsonRequestBehavior.AllowGet);
 
         }
+        public ActionResult CreateRequestMVC(RequestAllTicketWithStatusAgencyAPIViewModel model)
+        {
+            var result = _agencyDomain.CreateRequestMVC(model);
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+
+        }
     }
 }

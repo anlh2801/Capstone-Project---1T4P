@@ -48,16 +48,16 @@ namespace DataService.Models.Entities.Services
                         DeviceTypeId = item.DeviceTypeId,
                         DeviceName = item.DeviceName,
                         DeviceCode = item.DeviceCode,
-                        GuarantyStartDate = item.GuarantyStartDate != null ? item.GuarantyStartDate.Value.ToString("MM/dd/yyyy") : string.Empty,
-                        GuarantyEndDate = item.GuarantyEndDate != null ? item.GuarantyEndDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        GuarantyStartDate = item.GuarantyStartDate != null ? item.GuarantyStartDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                        GuarantyEndDate = item.GuarantyEndDate != null ? item.GuarantyEndDate.Value.ToString("dd/MM/yyyy") : string.Empty,
                         Ip = item.Ip,
                         Port = item.Port,
                         DeviceAccount = item.DeviceAccount,
                         DevicePassword = item.DevicePassword,
-                        SettingDate = item.SettingDate != null ? item.SettingDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        SettingDate = item.SettingDate != null ? item.SettingDate.Value.ToString("dd/MM/yyyy") : string.Empty,
                         Other = item.Other,
                         CreateDate = item.CreateDate.ToString("MM/dd/yyyy"),
-                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                     });
                 }
 
@@ -175,7 +175,7 @@ namespace DataService.Models.Entities.Services
                                 RequestId = ticketItem.RequestId,
                                 ServiceItemName = ticketItem.Request.ServiceItem.ServiceItemName,
                                 Desciption = ticketItem.Desciption,
-                                CreateDate = ticketItem.CreateDate.ToString("MM/dd/yyyy")
+                                CreateDate = ticketItem.CreateDate.ToString("dd/MM/yyyy")
                             };
                             ticketList.Add(ticketViewModel);
                         }
@@ -270,16 +270,16 @@ namespace DataService.Models.Entities.Services
                         DeviceTypeId = item.DeviceTypeId,
                         DeviceName = item.DeviceName,
                         DeviceCode = item.DeviceCode,
-                        GuarantyStartDate = item.GuarantyStartDate != null ? item.GuarantyStartDate.Value.ToString("MM/dd/yyyy") : string.Empty,
-                        GuarantyEndDate = item.GuarantyEndDate != null ? item.GuarantyEndDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        GuarantyStartDate = item.GuarantyStartDate != null ? item.GuarantyStartDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                        GuarantyEndDate = item.GuarantyEndDate != null ? item.GuarantyEndDate.Value.ToString("dd/MM/yyyy") : string.Empty,
                         Ip = item.Ip,
                         Port = item.Port,
                         DeviceAccount = item.DeviceAccount,
                         DevicePassword = item.DevicePassword,
-                        SettingDate = item.SettingDate != null ? item.SettingDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        SettingDate = item.SettingDate != null ? item.SettingDate.Value.ToString("dd/MM/yyyy") : string.Empty,
                         Other = item.Other,
                         CreateDate = item.CreateDate.ToString("MM/dd/yyyy"),
-                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                     });
                 }
 

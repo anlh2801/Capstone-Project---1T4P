@@ -21,6 +21,8 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<RequestAPIViewModel> GetTicketByRequestId(int requestId);
 
+        ResponseObject<RequestAPIViewModel> GetRequestBytRequestId(int requestId);
+
         ResponseObject<List<RequestAPIViewModel>> GetRequestWithStatus(int status);
 
         ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> GetAllRequestByAgencyIDAndStatus(int acency_id, int status);
@@ -94,6 +96,28 @@ namespace DataService.Models.Entities.Services
                 return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại", ObjReturn = null, ErrorMessage = e.ToString() };
             }
         }
+        public ResponseObject<RequestAPIViewModel> GetRequestBytRequestId(int requestId) {
+            try
+            {
+                RequestAPIViewModel rsList = new RequestAPIViewModel();
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+
+                var request = requestRepo.GetActive().FirstOrDefault(x => x.RequestId == requestId);
+
+                var requestAPIViewModel = new RequestAPIViewModel()
+                {
+                    RequestStatusId = request.RequestStatus,
+                };
+
+                return new ResponseObject<RequestAPIViewModel> { IsError = false, SuccessMessage = "Lấy thành công", ObjReturn = requestAPIViewModel };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<RequestAPIViewModel> { IsError = false, WarningMessage = "Lấy thành công", ObjReturn = null, ErrorMessage = e.ToString() };
+            }
+        }
+        
 
         public ResponseObject<List<RequestAPIViewModel>> GetAllRequestForMonth(int month, int year)
         {
