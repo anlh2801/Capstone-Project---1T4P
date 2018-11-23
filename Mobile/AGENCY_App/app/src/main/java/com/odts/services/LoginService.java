@@ -34,6 +34,7 @@ public class LoginService {
                     edit.putInt("agencyId", response.body().getObjReturn().getAgencyId());
                     edit.putString("agencyName", response.body().getObjReturn().getAgencyName());
                     edit.putString("agencyAddr", response.body().getObjReturn().getAddress());
+                    edit.putString(("agencyTelephone"), response.body().getObjReturn().getTelephone());
                     edit.commit();
                     Intent intent = new Intent(context, MainActivity.class);
                     context.startActivity(intent);

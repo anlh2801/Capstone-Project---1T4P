@@ -14,6 +14,8 @@ public class TimeLineViewHolder extends RecyclerView.ViewHolder{
     @BindView(R.id.text_timeline_date)
     TextView mDate;
     @BindView(R.id.text_timeline_title)
+    TextView mStatus;
+    @BindView(R.id.text_timeline_message)
     TextView mMessage;
     @BindView(R.id.time_marker)
     TimelineView mTimelineView;

@@ -58,7 +58,8 @@ public class StatusTimeLineAdapter extends RecyclerView.Adapter<TimeLineViewHold
         } else
             holder.mDate.setVisibility(View.GONE);
 
-        holder.mMessage.setText(timeLineModel.getStatus());
+        holder.mStatus.setText(timeLineModel.getStatus());
+        holder.mMessage.setText(timeLineModel.getMessage());
     }
 
     @Override

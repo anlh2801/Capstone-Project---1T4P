@@ -42,6 +42,7 @@ namespace DataService.Models.Entities.Services
                     agencymodel.UserName = agency.Account.Username;
                     agencymodel.AgencyName = agency.AgencyName;
                     agencymodel.Address = agency.Address;
+                    agencymodel.Telephone = agency.Telephone;
                     return new ResponseObject<AgencyAPIViewModel> { IsError = false, ObjReturn = agencymodel, SuccessMessage = "Đăng nhập thành công" };
                 }
                                                    

@@ -74,8 +74,8 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
+        txtPhone = (EditText) findViewById(R.id.editText);
+        txtPhone.setText(share.getString("agencyTelephone", ""));
     }
 
     private void getAllServiceITSupportForAgency(final int agencyId) {
@@ -152,7 +152,6 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
     private void getAllDeviceByAgencyIdAndServiceItem(int agencyId, int serviceId) {
         _deviceService = new DeviceService();
         editDevice = (EditText) findViewById(R.id.editTextDevice);
-        txtPhone = (EditText) findViewById(R.id.editText);
         txtRequestDesciption = (EditText) findViewById(R.id.editText2);
         final ArrayList<MultiSelectModel> listDevices = new ArrayList<>();
         _deviceService.getAllDeviceByAgencyIdAndServiceItem(AddRequestLayoutActivity.this, agencyId, serviceId, new CallBackData<ArrayList<Device>>() {

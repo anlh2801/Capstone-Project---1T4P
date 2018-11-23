@@ -47,7 +47,7 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class DoRequestFragment extends Fragment {
 
-    com.getbase.floatingactionbutton.FloatingActionButton btnCall , btnChat , flbGuidline;
+    com.getbase.floatingactionbutton.FloatingActionButton btnCall, btnChat, flbGuidline;
     Integer itSupporterId = 0;
     Integer requestId = 0;
 
@@ -59,11 +59,13 @@ public class DoRequestFragment extends Fragment {
     Firebase reference1;
     LinearLayout linearLayoutTask;
     SegmentedGroup segmentedGroup;
+    EditText userInputDialogEditText;
 
     RequestService _requestService;
     TaskService _taskService;
     CheckBox tick, tick2;
     private String m_Text = "";
+
     public DoRequestFragment() {
         _requestService = new RequestService();
         _taskService = new TaskService();
@@ -139,27 +141,102 @@ public class DoRequestFragment extends Fragment {
                 bt2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        map.put("status", "Đang di chuyển");
-                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
-                        reference1.push().setValue(map);
+                        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getContext());
+                        View mView = layoutInflaterAndroid.inflate(R.layout.user_input_dialog_box, null);
+                        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(getContext());
+                        alertDialogBuilderUserInput.setView(mView);
+
+                        userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
+                        alertDialogBuilderUserInput
+                                .setCancelable(false)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialogBox, int id) {
+                                        // ToDo get user input here
+                                        map.put("status", "Đang di chuyển");
+                                        map.put("message", userInputDialogEditText.getText().toString());
+                                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
+                                        reference1.push().setValue(map);
+                                    }
+                                })
+
+                                .setNegativeButton("Cancel",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialogBox, int id) {
+                                                dialogBox.cancel();
+                                            }
+                                        });
+
+                        AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+                        alertDialogAndroid.show();
+
                     }
                 });
                 bt3 = v.findViewById(R.id.button33);
                 bt3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        map.put("status", "Đang sửa chữa");
-                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
-                        reference1.push().setValue(map);
+                        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getContext());
+                        View mView = layoutInflaterAndroid.inflate(R.layout.user_input_dialog_box, null);
+                        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(getContext());
+                        alertDialogBuilderUserInput.setView(mView);
+
+                        userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
+                        alertDialogBuilderUserInput
+                                .setCancelable(false)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialogBox, int id) {
+                                        // ToDo get user input here
+                                        map.put("status", "Đang sửa chữa");
+                                        map.put("message", userInputDialogEditText.getText().toString());
+                                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
+                                        reference1.push().setValue(map);
+                                    }
+                                })
+
+                                .setNegativeButton("Cancel",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialogBox, int id) {
+                                                dialogBox.cancel();
+                                            }
+                                        });
+
+                        AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+                        alertDialogAndroid.show();
                     }
                 });
+
+
                 bt4 = v.findViewById(R.id.button34);
                 bt4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        map.put("status", "Đợi linh kiện");
-                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
-                        reference1.push().setValue(map);
+                        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getContext());
+                        View mView = layoutInflaterAndroid.inflate(R.layout.user_input_dialog_box, null);
+                        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(getContext());
+                        alertDialogBuilderUserInput.setView(mView);
+
+                        userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
+                        alertDialogBuilderUserInput
+                                .setCancelable(false)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialogBox, int id) {
+                                        // ToDo get user input here
+                                        map.put("status", "Đợi linh kiện");
+                                        map.put("message", userInputDialogEditText.getText().toString());
+                                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
+                                        reference1.push().setValue(map);
+                                    }
+                                })
+
+                                .setNegativeButton("Cancel",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialogBox, int id) {
+                                                dialogBox.cancel();
+                                            }
+                                        });
+
+                        AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+                        alertDialogAndroid.show();
                     }
                 });
 
@@ -167,13 +244,52 @@ public class DoRequestFragment extends Fragment {
                 bt5.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        map.put("status", "Hoàn thành");
-                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
-                        reference1.push().setValue(map);
-                        itSupporterService.updateBusyIT(getContext(), itSupporterId);
-                        Intent intent = new Intent(getContext(), MainActivity.class);
-                        intent.putExtra("done", "done");
-                        startActivity(intent);
+//                        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getContext());
+//                        View mView = layoutInflaterAndroid.inflate(R.layout.user_input_dialog_box, null);
+//                        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(getContext());
+//                        alertDialogBuilderUserInput.setView(mView);
+//
+//                        userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
+//                        alertDialogBuilderUserInput
+//                                .setCancelable(false)
+//                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                    public void onClick(DialogInterface dialogBox, int id) {
+//                                        // ToDo get user input here
+                                        map.put("status", "Hoàn thành");
+//                                        map.put("message", userInputDialogEditText.getText().toString());
+                                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
+//                                        reference1.push().setValue(map);
+//                                    }
+//                                })
+//
+//                                .setNegativeButton("Cancel",
+//                                        new DialogInterface.OnClickListener() {
+//                                            public void onClick(DialogInterface dialogBox, int id) {
+//                                                dialogBox.cancel();
+//                                            }
+//                                        });
+//
+//                        AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+//                        alertDialogAndroid.show();
+                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
+                        builder
+                                .setMessage("Bạn có chắc chắn hoàn thành công việc không?")
+                                .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        itSupporterService.updateBusyIT(getContext(), itSupporterId);
+                                        Intent intent = new Intent(getContext(), MainActivity.class);
+                                        intent.putExtra("done", "done");
+                                        startActivity(intent);
+                                    }
+                                })
+                                .setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .show();
 
                     }
                 });
@@ -192,7 +308,7 @@ public class DoRequestFragment extends Fragment {
                             tick.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                 @Override
                                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                                    if(b) {
+                                    if (b) {
                                         _taskService.updateTaskStatus(getContext(), item.getRequestTaskId(), true, new CallBackData<Boolean>() {
                                             @Override
                                             public void onSuccess(Boolean aBoolean) {
@@ -220,7 +336,7 @@ public class DoRequestFragment extends Fragment {
             public void onFail(String message) {
             }
         });
-        flbGuidline =  v.findViewById(R.id.action_c);
+        flbGuidline = v.findViewById(R.id.action_c);
         flbGuidline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -233,7 +349,6 @@ public class DoRequestFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
 
 
         ImageButton addMoreTask = v.findViewById(R.id.addMoreTask);
@@ -265,7 +380,7 @@ public class DoRequestFragment extends Fragment {
                         _taskService.createTask(getContext(), requestTask, new CallBackData<Boolean>() {
                             @Override
                             public void onSuccess(Boolean aBoolean) {
-                                if(aBoolean) {
+                                if (aBoolean) {
                                     tick2 = new CheckBox(getContext());
                                     linearLayoutTask.addView(tick2);
                                     tick2.setText(m_Text);

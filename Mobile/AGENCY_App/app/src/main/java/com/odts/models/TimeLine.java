@@ -3,6 +3,7 @@ package com.odts.models;
 public class TimeLine {
     private String status;
     private String time;
+    private String message;
 
     public String getStatus() {
         return status;
@@ -20,9 +21,18 @@ public class TimeLine {
         this.time = time;
     }
 
-    public TimeLine(String status, String time) {
+    public TimeLine(String status, String time, String message) {
         this.status = status;
         this.time = time;
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public TimeLine() {

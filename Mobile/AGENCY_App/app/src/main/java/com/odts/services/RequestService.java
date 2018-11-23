@@ -36,7 +36,7 @@ public class RequestService {
                 if (!response.body().isError()) {
                     Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
                     if (response.body().getObjReturn() != null && response.body().getObjReturn() > 0) {
-                        findITSupporterByRequestId(context, response.body().getObjReturn());
+//                        findITSupporterByRequestId(context, response.body().getObjReturn());
                         Intent intent = new Intent(context, MainActivity.class);
                         context.startActivity(intent);
                     }

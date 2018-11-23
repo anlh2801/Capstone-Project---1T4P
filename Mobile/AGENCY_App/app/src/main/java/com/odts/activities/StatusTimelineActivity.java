@@ -111,9 +111,10 @@ public class StatusTimelineActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Map map = dataSnapshot.getValue(Map.class);
-                String message = map.get("status").toString();
+                String status = map.get("status").toString();
                 String time = map.get("time").toString();
-                setDataListItems(message, time);
+                String message = map.get("message").toString();
+                setDataListItems(status, time, message);
                 if (message.equalsIgnoreCase("Hoàn thành")) {
                     btnDone.setVisibility(View.VISIBLE);
                 }
@@ -141,8 +142,8 @@ public class StatusTimelineActivity extends AppCompatActivity {
         });
     }
 
-    private void setDataListItems(String message, String time) {
-        mDataList.add(new TimeLine(message, time));
+    private void setDataListItems(String status, String time, String message) {
+        mDataList.add(new TimeLine(status, time, message));
         mTimeLineAdapter = new StatusTimeLineAdapter(mDataList);
         mRecyclerView.setAdapter(mTimeLineAdapter);
         mRecyclerView.post(new Runnable() {

@@ -48,6 +48,14 @@
                 android:textColor="@android:color/black"
                 tools:text="Order Successfully Completed"/>
 
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:id="@+id/text_timeline_message"
+                android:textColor="@android:color/black"
+                tools:text="Order Successfully Completed"/>
+
         </LinearLayout>
 
     </android.support.v7.widget.CardView>

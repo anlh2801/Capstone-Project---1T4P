@@ -81,9 +81,10 @@ public class DoneDetailActivity extends AppCompatActivity implements RatingDialo
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Map map = dataSnapshot.getValue(Map.class);
-                String message = map.get("status").toString();
+                String message = map.get("message").toString();
+                String status = map.get("status").toString();
                 String time = map.get("time").toString();
-                setDataListItems(message, time);
+                setDataListItems(status, time, message);
             }
 
             @Override
@@ -136,8 +137,8 @@ public class DoneDetailActivity extends AppCompatActivity implements RatingDialo
         });
     }
 
-    private void setDataListItems(String message, String time) {
-        mDataList.add(new TimeLine(message, time));
+    private void setDataListItems(String status, String time, String message) {
+        mDataList.add(new TimeLine(status, time, message));
         mTimeLineAdapter = new StatusTimeLineAdapter(mDataList);
         mRecyclerView.setAdapter(mTimeLineAdapter);
         mRecyclerView.post(new Runnable() {

@@ -38,6 +38,7 @@ public class StatusTimelineActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 map.put("status", "Đã nhận");
+//                map.put("message, ")
                 map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
                 reference1.push().setValue(map);
             }
