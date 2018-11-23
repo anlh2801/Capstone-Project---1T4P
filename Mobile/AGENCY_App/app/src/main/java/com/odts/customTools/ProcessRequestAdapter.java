@@ -91,7 +91,7 @@ public class ProcessRequestAdapter extends ArrayAdapter<RequestGroupMonth> {
                             .setPositiveButton("Có", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
-                                    requestService.cancelTicket(context, item.getRequestId(), Enums.RequestStatusEnum.Cancel.getIntValue());
+                                    requestService.cancelTicket(context, item.getRequestId(), Enums.RequestStatusEnum.WaitingCancel.getIntValue());
                                     objects.get(position).getRequestOfITSupporter().remove(item);
                                     notifyDataSetChanged();
                                 }
