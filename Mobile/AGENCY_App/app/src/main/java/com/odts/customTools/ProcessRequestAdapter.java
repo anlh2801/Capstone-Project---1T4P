@@ -33,6 +33,7 @@ public class ProcessRequestAdapter extends ArrayAdapter<RequestGroupMonth> {
     List<RequestGroupMonth> objects;
     RequestService requestService;
     int requestID = 0;
+    ImageButton btnCancelRequest;
 
     public ProcessRequestAdapter(@NonNull Activity context, int resource, @NonNull List<RequestGroupMonth> objects) {
         super(context, resource, objects);
@@ -78,6 +79,30 @@ public class ProcessRequestAdapter extends ArrayAdapter<RequestGroupMonth> {
                     }
                     intent.putStringArrayListExtra("listDevice", listDeviceName);
                     context.startActivity(intent);
+                }
+            });
+            btnCancelRequest = (ImageButton) view.findViewById(R.id.btnCancelRequest);
+            btnCancelRequest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder
+                            .setMessage("Bạn chắc chắn muốn hủy không?")
+                            .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    requestService.cancelTicket(context, item.getRequestId(), Enums.RequestStatusEnum.Cancel.getIntValue());
+                                    objects.get(position).getRequestOfITSupporter().remove(item);
+                                    notifyDataSetChanged();
+                                }
+                            })
+                            .setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            })
+                            .show();
                 }
             });
         }
