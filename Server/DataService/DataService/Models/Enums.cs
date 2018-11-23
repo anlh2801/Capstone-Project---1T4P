@@ -11,14 +11,18 @@ namespace DataService.Models
     //For agency view
     public enum RequestStatusEnum
     {
-        [Display(Name = "Chờ Xử lý")]
-        Pending = 1,
+        [Display(Name = "Tạo mới")]
+        New = 1,
+        [Display(Name = "Chờ xử lý")]
+        Pending = 2,
         [Display(Name = "Đang xử lý")]
-        Processing = 2,
+        Processing = 3,
         [Display(Name = "Hoàn thành")]
-        Done = 3,
+        Done = 4,
+        [Display(Name = "Chờ hủy")]
+        WaitingCancel = 5,
         [Display(Name = "Hủy bỏ")]
-        Cancel = 4
+        Cancel = 6
     }
 
     //For ITSupporter View
