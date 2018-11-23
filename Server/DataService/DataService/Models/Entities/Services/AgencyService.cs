@@ -42,6 +42,8 @@ namespace DataService.Models.Entities.Services
         ResponseObject<List<AgencyAPIViewModel>> ViewAllAgencyByCompanyId(int agency_id);
 
         ResponseObject<List<AgencyStatisticalAPIViewModel>> GetAgencyStatistic(int agencyId);
+
+        ResponseObject<int> CreateRequestMVC(RequestAllTicketWithStatusAgencyAPIViewModel model);
     }
 
     public partial class AgencyService
@@ -259,6 +261,41 @@ namespace DataService.Models.Entities.Services
             }
 
         }
+        public ResponseObject<int> CreateRequestMVC(RequestAllTicketWithStatusAgencyAPIViewModel model)
+        {
+            try
+            {
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+
+                var createRequest = new Request();
+
+                createRequest.AgencyId = model.AgencyId;
+                createRequest.RequestCategoryId = model.RequestCategoryId;
+                createRequest.RequestStatus = (int)RequestStatusEnum.Pending;
+                createRequest.RequestName = model.RequestName;
+                createRequest.RequestDesciption = model.RequestDesciption;
+                createRequest.ServiceItemId = model.ServiceItemId;
+                createRequest.CreateDate = DateTime.UtcNow.AddHours(7);
+                createRequest.Phone = model.AgencyTelephone;
+                requestRepo.Add(createRequest);
+                requestRepo.Save();
+
+                if (model.Tickets.Count > 0)
+                {
+                    CreateTicket(model.Tickets, createRequest.RequestId);
+                }
+
+                return new ResponseObject<int> { IsError = false, SuccessMessage = "Tạo yêu cầu thành công!", ObjReturn = createRequest.RequestId };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<int> { IsError = true, WarningMessage = "Tạo yêu cầu thất bại!", ObjReturn = 0, ErrorMessage = e.ToString() };
+            }
+
+        }
+
 
         public ResponseObject<bool> CreateTicket(List<AgencyCreateTicketAPIViewModel> listTicket, int RequestId)
         {

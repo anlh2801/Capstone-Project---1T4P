@@ -1,4 +1,5 @@
 ﻿<input type="hidden" id="agencyRequest" />
+<input type="hidden" id="requestStatus" />
 <div class="container">
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -52,25 +53,30 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
+
                             <div class="col-md-12">
-                                <label for="qq">Tên Công Ty Sở Hữu:</label>
-                                <select class="form-control select2" style="width: 100%;" id="qq" disabled="disabled"></select>
+                                <label >Tên Chi Nhánh:</label>
+                                <select class="form-control select2" style="width: 100%;" id="AgencyNameC"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <label for="ww">Chọn Tài Khoản:</label>
-                                <select class="form-control select2" style="width: 100%;" id="ww"></select>
+                                <label >Loại Dịch Vụ:</label>
+                                <select class="form-control select2" style="width: 100%;" id="SerNameC"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <label for="ee">Tên Chi Nhánh:</label>
-                                <input id="ee" type="text" class="form-control" required>
+                                <label >Tên Dịch Vụ:</label>
+                                <input id="SerItemNameC" type="text" class="form-control" required>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <label for="rr">Địa Chỉ:</label>
-                                <input id="rr" type="text" class="form-control" required>
+                                <label >Thiết Bị:</label>
+                                <input id="DeviceNameC" type="text" class="form-control" required>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <label for="tt">Số Điện Thoại:</label>
-                                <input id="tt" type="text" class="form-control" required>
+                                <label >Mô Tả:</label>
+                                <input id="DescripC" type="text" class="form-control" required>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <label >Số Điện Thoại:</label>
+                                <input id="PhoneC" type="text" class="form-control" required>
                             </div>
                         </div>
                     </div>
@@ -347,27 +353,31 @@
                     {
                         "aTargets": [5],
                         "mRender": function (data, type, full) {
-                            if (full.ITSupporterName !== "")
-                                return full.ITSupporterName;
-                            else if (isWaitingHeroAccept === true && full.RequestId === currentRequestId)
+                            if (full.StatusName === "Chờ hủy") {
+                                var del = ' <button type="button" class="btn btn-danger fa fa-close" data-toggle="modal" data-target="" onclick="removeResquest(' + full.RequestId + ')"></button>';
+                                return del;
+                            }
+                            else if (isWaitingHeroAccept === true && full.RequestId === currentRequestId) {
                                 return '<span class = "label label-warning">Đợi nhân viên phản hồi</span>';
-                            else
+                            }
+                            else if (full.StatusName === "Hủy bỏ") {
+                                return "đã hủy sự cố";
+                            }
+                            else if(full.ITSupporterName !== "") {
+                                return full.ITSupporterName;
+                            }
+                            else {
                                 var asignHero = '<button type="button" class="btn btn-info btn fa fa-user-plus" data-toggle="modal" data-target="" onclick="asignHero(' + full.RequestId + ')"></button>';
                                 var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.RequestId + ')"></button>';
                                 var del = ' <button type="button" class="btn btn-danger fa fa-close" data-toggle="modal" data-target="" onclick="removeResquest(' + full.RequestId + ')"></button>';
-                                return asignHero + " " + edit + " " + del;
+                                return asignHero;
+                            }
                         }
                     },
                     {
                         "aTargets": [6],
                         "mRender": function (data, type, full) {
-                            if (full.ITSupporterName !== "")
-                                return full.ITSupporterName;
-                            else if (isWaitingHeroAccept === true && full.RequestId === currentRequestId)
-                                return '<span class = "label label-warning">Đợi nhân viên phản hồi</span>';
-                            else
-                                var asignHero = '<button type="button" class="btn btn-info btn fa fa-user-plus" data-toggle="modal" data-target="" onclick="asignHero(' + full.RequestId + ')"></button>';
-                                return asignHero;
+                            return "cắm cờ";
                         }
                     },
                 ],
@@ -460,15 +470,17 @@
 
          function createRequest() {
             var empObj = {
-                CompanyId: $('#qq').val(),
-                AccountId: $('#ww').val(),
-                AgencyName: $('#ee').val(),
-                Address: $('#rr').val(),
-                Telephone: $('#tt').val(),
+                AgencyId: $('#AgencyNameC').val(),
+                RequestCategoryId: $('#SerNameC').val(),
+                ServiceItemId: $('#SerItemNameC').val(),
+                RequestDesciption: $('#DeviceNameC').val(),
+                Telephone: $('#DescripC').val(),
+                Phone: $('#PhoneC').val(),
+              
             }
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("CreateAgency", "Agency")',
+                url: '@Url.Action("CreateRequestMVC", "Agency")',
                 data: JSON.stringify(empObj),
 
                 dataType: 'json',
@@ -476,8 +488,8 @@
                 success: function (data) {
                     if (!data.result.isError) {
                         clearModal();
-                        $('#createAgencyModal').modal('hide');
-                        loadCompanyAgency();
+                        $('#createModal').modal('hide');
+                        loadRequest();
                         swal(data.result.SuccessMessage, "", "success");
                     }
                     else
@@ -510,6 +522,19 @@
             });
         }
         function removeResquest(id) {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetRequestBytRequestId", "Request")',
+                data: {
+                    requestId: id
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#requestStatus').val(data.result.ObjReturn.RequestStatusId);
+                }
+            });
             //$('#modalConfirmDelete').modal('show');
             swal({
                 title: 'Bạn có Chắc Chắn Muốn Hủy?',
@@ -524,16 +549,19 @@
                 deleteRequest();
             });
             $('#agencyRequest').val(id);
+            
         }
 
         //delete agency
         function deleteRequest() {
-            var agency_idd = $('#agencyRequest').val();
+            var request_idd = $('#agencyRequest').val();
+            var requestStt_idd = 4;
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("RemoveAgency", "Agency")',
+                url: '@Url.Action("ApproveCancelRequest", "Request")',
                 data: {
-                    agency_id: agency_idd
+                    request_id: request_idd,
+                    status: requestStt_idd
                 },
 
                 dataType: 'json',
@@ -544,7 +572,7 @@
                         'Sự Cố Của Bạn Đã Được Hủy.',
                         'success'
                     )
-                    loadCompanyAgency();
+                    loadRequest();
                 }
             });
         }

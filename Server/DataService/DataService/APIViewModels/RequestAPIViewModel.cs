@@ -20,6 +20,7 @@ namespace DataService.APIViewModels
         public List<String> IssueName { get; set; }
         public String ITName { get; set; }
         public string RequestStatus { get; set; }
+        public int RequestStatusId { get; set; }
         public string StatusName { get; set; }
         public int NumberOfRecord { get; set; }
 
