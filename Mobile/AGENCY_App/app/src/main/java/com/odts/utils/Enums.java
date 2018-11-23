@@ -6,7 +6,9 @@ public class Enums {
         Pending("Chờ Xử lý", 1),
         Processing("Đang xử lý", 2),
         Done("Hoàn thành", 3),
-        Cancel("Hủy bỏ", 4);
+        Cancel("Hủy bỏ", 4),
+        New("Tạo mới", 5),
+        WaitingCancel ("Chờ hủy", 6);
 
         private String stringValue;
         private int intValue;

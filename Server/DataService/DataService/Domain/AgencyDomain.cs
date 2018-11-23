@@ -35,6 +35,8 @@ namespace DataService.Domain
         ResponseObject<int> FindITSupporterByRequestId(int requestId);
 
         ResponseObject<List<AgencyStatisticalAPIViewModel>> GetAgencyStatistic(int agencyId);
+
+        ResponseObject<int> CreateRequestMVC(RequestAllTicketWithStatusAgencyAPIViewModel model);
     }
 
     public class AgencyDomain : BaseDomain, IAgencyDomain
@@ -155,6 +157,14 @@ namespace DataService.Domain
 
             var itSupporter = agencyService.GetAgencyStatistic(agencyId);
            
+            return itSupporter;
+        }
+        public ResponseObject<int> CreateRequestMVC(RequestAllTicketWithStatusAgencyAPIViewModel model)
+        {
+            var agencyService = this.Service<IAgencyService>();
+
+            var itSupporter = agencyService.CreateRequestMVC(model);
+
             return itSupporter;
         }
     }
