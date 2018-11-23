@@ -21,6 +21,7 @@ namespace DataService.Models.Entities.Services
         ResponseObject<List<AgencyDeviceAPIViewModel>> ViewAllDeviceByAgencyIdAndServiceId(int agencyId, int serviceId);
         ResponseObject<bool> RemoveDevice(int device_id);
         ResponseObject<bool> UpdateDevice(AgencyDeviceAPIViewModel model);
+        ResponseObject<bool> UpdateDeviceForAgency(DeviceAPIViewModel model);
     }
 
     public partial class DeviceService
@@ -337,7 +338,42 @@ namespace DataService.Models.Entities.Services
             {
 
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉnh sửa thiết bị thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
-            }
+            }            
         }
+
+        public ResponseObject<bool> UpdateDeviceForAgency(DeviceAPIViewModel model)
+        {
+            try
+            {
+                var deviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
+                var updateDevice = deviceRepo.GetActive().SingleOrDefault(a => a.DeviceId == model.DeviceId);
+
+                if (updateDevice != null)
+                {
+                    updateDevice.DeviceTypeId = model.DeviceTypeId;
+                    updateDevice.DeviceName = model.DeviceName;
+                    updateDevice.DeviceCode = model.DeviceCode;
+                    updateDevice.GuarantyStartDate = model.GuarantyStartDate.ToDateTime();
+                    updateDevice.GuarantyEndDate = model.GuarantyEndDate.ToDateTime();
+                    updateDevice.Ip = model.Ip;
+                    updateDevice.Port = model.Port;
+                    updateDevice.DeviceAccount = model.DeviceAccount;
+                    updateDevice.DevicePassword = model.DevicePassword;
+                    updateDevice.Other = model.Other;
+                    updateDevice.UpdateDate = DateTime.UtcNow.AddHours(7);
+
+                    deviceRepo.Edit(updateDevice);
+                    deviceRepo.Save();
+                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Chỉnh sửa thiết bị thành công", ObjReturn = true };
+                }
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉnh sửa thiết bị thất bại", ObjReturn = false };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉnh sửa thiết bị thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
+            }
+        }        
     }
 }

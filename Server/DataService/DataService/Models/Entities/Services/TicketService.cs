@@ -37,7 +37,7 @@ namespace DataService.Models.Entities.Services
                         requestRepo.Edit(request);
                         requestRepo.Save();
 
-                        itupporter.RatingAVG = itupporter.RatingAVG != null ? (itupporter.RatingAVG + rate.Rating) / 2 : rate.Rating;
+                        itupporter.RatingAVG = itupporter.RatingAVG != null && itupporter.RatingAVG != 0 ? (itupporter.RatingAVG + rate.Rating) / 2 : rate.Rating;
                         itupporter.UpdateDate = DateTime.UtcNow.AddHours(7);
                         itSupporterlRepo.Edit(itupporter);
                         itSupporterlRepo.Save();

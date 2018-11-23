@@ -3,15 +3,19 @@ package com.odts.it_supporter_app.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.odts.it_supporter_app.R;
 import com.odts.it_supporter_app.customTools.GuidelineAdapter;
 import com.odts.it_supporter_app.models.Device;
+import com.odts.it_supporter_app.models.DeviceHistory_Ticket;
 import com.odts.it_supporter_app.models.Guideline;
+import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.services.ITSupporterService;
 import com.odts.it_supporter_app.utils.CallBackData;
 
@@ -25,6 +29,7 @@ public class DeviceInfoActivity extends AppCompatActivity {
     TextView deviceNameInfo, deviceCodeInfo;
     TextView agencyNameDeviceInfo, deviceTypeInfo, guarantyStartDateInfo, guarantyEndDate, createDateDeviceInfo;
     TextView ipDeviceInfo, portDeviceInfo, accountDeviceInfo, passWordDeviceInfo, settingDateDeviceInfo;
+    LinearLayout historyDevice;
     Button btnClose;
 
     public DeviceInfoActivity(){
@@ -48,6 +53,7 @@ public class DeviceInfoActivity extends AppCompatActivity {
         accountDeviceInfo = findViewById(R.id.AccountDeviceInfo);
         passWordDeviceInfo = findViewById(R.id.PassWordDeviceInfo);
         settingDateDeviceInfo = findViewById(R.id.SettingDateDeviceInfo);
+        historyDevice = findViewById(R.id.HistoryDevice);
         btnClose = findViewById(R.id.btnClose);
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +88,17 @@ public class DeviceInfoActivity extends AppCompatActivity {
                 accountDeviceInfo.setText("Tài khoản thiết bị: " + device.getDeviceAccount());
                 passWordDeviceInfo.setText("Mật khẩu thiết bị: " + device.getDevicePassword());
                 settingDateDeviceInfo.setText("Ngày cấu hình: " + device.getSettingDate());
+                LayoutInflater inflater = getLayoutInflater();
+                for (DeviceHistory_Ticket item: device.getTicketList()) {
+                    View view = inflater.inflate(R.layout.device_history_item, null);
+                    TextView txtHienTuong = (TextView) view.findViewById(R.id.txtHienTuong);
+                    TextView txtNgayTao = (TextView) view.findViewById(R.id.txtNgayTao);
+
+                    txtHienTuong.setText("Hiện tượng: " + item.getServiceItemName());
+                    txtNgayTao.setText("Đã bị sự cố ngày: " + item.getCreateDate());
+
+                    historyDevice.addView(view);
+                }
             }
 
             @Override

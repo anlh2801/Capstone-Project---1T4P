@@ -113,6 +113,26 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         }
 
+        [HttpPost]
+        [Route("agency/create_device")]
+        public HttpResponseMessage CreateDevice(DeviceAPIViewModel model)
+        {
+            var result = _deviceDomain.CreateDevice(model);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+
+        }
+
+        [HttpPut]
+        [Route("agency/update_device")]
+        public HttpResponseMessage UpdateDevice(DeviceAPIViewModel model)
+        {
+            var result = _deviceDomain.UpdateDeviceForAgency(model);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+
+        }
+
         [HttpGet]
         [Route("agency/get_device_details")]
         public HttpResponseMessage GetDeviceDetails(int deviceId)

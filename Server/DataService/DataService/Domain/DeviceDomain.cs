@@ -95,6 +95,15 @@ namespace DataService.Domain
 
             return result;
         }
+
+        public ResponseObject<bool> UpdateDeviceForAgency(DeviceAPIViewModel model)
+        {
+            var deviceService = this.Service<IDeviceService>();
+
+            var result = deviceService.UpdateDeviceForAgency(model);
+
+            return result;
+        }
     }
     
 }
