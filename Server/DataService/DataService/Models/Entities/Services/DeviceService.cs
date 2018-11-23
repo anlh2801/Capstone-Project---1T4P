@@ -156,10 +156,29 @@ namespace DataService.Models.Entities.Services
         {
             try
             {
+                var ticketList = new List<TicketAPIViewModel>();
                 var deviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
+                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
                 var device = deviceRepo.GetActive().SingleOrDefault(a => a.DeviceCode == deviceCode);
+                var ticket = ticketRepo.GetActive().Where(t => t.DeviceId == device.DeviceId);
                 if (device != null)
                 {
+                    if(ticket != null)
+                    {
+                        foreach (var ticketItem in ticket)
+                        {
+                            var ticketViewModel = new TicketAPIViewModel
+                            {
+                                TicketId = ticketItem.TicketId,
+                                DeviceId = ticketItem.DeviceId,
+                                RequestId = ticketItem.RequestId,
+                                ServiceItemName = ticketItem.Request.ServiceItem.ServiceItemName,
+                                Desciption = ticketItem.Desciption,
+                                CreateDate = ticketItem.CreateDate.ToString("MM/dd/yyyy")
+                            };
+                            ticketList.Add(ticketViewModel);
+                        }
+                    }
                     var deviceAPIViewModel = new DeviceAPIViewModel
                     {
                         DeviceId = device.DeviceId,
@@ -179,6 +198,7 @@ namespace DataService.Models.Entities.Services
                         DevicePassword = device.DevicePassword,
                         SettingDate = device.SettingDate.Value.ToString("dd/MM/yyyy"),
                         Other = device.Other,
+                        TicketList = ticketList,
                         IsDelete = device.IsDelete,
                         CreateDate = device.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = device.UpdateDate.Value.ToString("dd/MM/yyyy"),
