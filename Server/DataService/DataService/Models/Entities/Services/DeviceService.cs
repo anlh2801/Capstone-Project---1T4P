@@ -222,7 +222,6 @@ namespace DataService.Models.Entities.Services
             {
                 var deviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
                 var createDevice = new Device();
-                createDevice.DeviceId = model.DeviceId;
                 createDevice.DeviceTypeId = model.DeviceTypeId;
                 createDevice.AgencyId = model.AgencyId;
                 createDevice.DeviceName = model.DeviceName;
@@ -237,7 +236,6 @@ namespace DataService.Models.Entities.Services
                 createDevice.Other = model.Other;
                 createDevice.IsDelete = false;
                 createDevice.CreateDate = DateTime.UtcNow.AddHours(7);
-                createDevice.UpdateDate = DateTime.UtcNow.AddHours(7);
 
                 deviceRepo.Add(createDevice);
 
