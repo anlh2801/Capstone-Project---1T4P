@@ -1,13 +1,16 @@
 package com.odts.services;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.odts.activities.MainActivity;
 import com.odts.apiCaller.IAgencyApiCaller;
 import com.odts.apiCaller.IDeviceApiCaller;
 import com.odts.models.Agency;
 import com.odts.models.Device;
+import com.odts.models.Request;
 import com.odts.utils.CallBackData;
 import com.odts.utils.ResponseObject;
 import com.odts.utils.ResponseObjectReturnList;
@@ -45,6 +48,27 @@ public class AgencyService {
             @Override
             public void onFailure(Call<ResponseObject<Agency>> call, Throwable t) {
 
+            }
+        });
+    }
+    public void createDevice(final Context context, Device device) {
+        IAgencyApiCaller service= RetrofitInstance.getRetrofitInstance().create(IAgencyApiCaller.class);
+        Call<ResponseObject<Boolean>> call = service.createDevice(device);
+        call.enqueue(new Callback<ResponseObject<Boolean>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
+                if (!response.body().isError()) {
+                    Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
+                    if (response.body().getObjReturn() != null) {
+//                        Intent intent = new Intent(context, MainActivity.class);
+//                        context.startActivity(intent);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<Boolean>> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
             }
         });
     }
