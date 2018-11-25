@@ -23,6 +23,6 @@ namespace DataService.APIViewModels
         public int RequestStatusId { get; set; }
         public string StatusName { get; set; }
         public int NumberOfRecord { get; set; }
-
+        public string Priority { get; set; }
     }
 }

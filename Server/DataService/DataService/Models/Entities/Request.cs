@@ -28,6 +28,7 @@ namespace DataService.Models.Entities
         public string RequestDesciption { get; set; }
         public int RequestCategoryId { get; set; }
         public int RequestStatus { get; set; }
+        public Nullable<int> Priority { get; set; }
         public string RequestName { get; set; }
         public Nullable<double> Estimation { get; set; }
         public string Phone { get; set; }

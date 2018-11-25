@@ -143,6 +143,7 @@
           <Property Name="RequestDesciption" Type="nvarchar(max)" />
           <Property Name="RequestCategoryId" Type="int" Nullable="false" />
           <Property Name="RequestStatus" Type="int" Nullable="false" />
+          <Property Name="Priority" Type="int" />
           <Property Name="RequestName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Estimation" Type="float" />
           <Property Name="Phone" Type="nvarchar" MaxLength="50" />
@@ -920,6 +921,7 @@
           <Property Name="RequestDesciption" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="RequestCategoryId" Type="Int32" Nullable="false" />
           <Property Name="RequestStatus" Type="Int32" Nullable="false" />
+          <Property Name="Priority" Type="Int32" />
           <Property Name="RequestName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Estimation" Type="Double" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1488,6 +1490,7 @@
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Estimation" ColumnName="Estimation" />
                 <ScalarProperty Name="RequestName" ColumnName="RequestName" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
                 <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
                 <ScalarProperty Name="RequestCategoryId" ColumnName="RequestCategoryId" />
                 <ScalarProperty Name="RequestDesciption" ColumnName="RequestDesciption" />

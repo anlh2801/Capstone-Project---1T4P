@@ -21,6 +21,7 @@ namespace DataService.ViewModels
     			public virtual string RequestDesciption { get; set; }
     			public virtual int RequestCategoryId { get; set; }
     			public virtual int RequestStatus { get; set; }
+    			public virtual Nullable<int> Priority { get; set; }
     			public virtual string RequestName { get; set; }
     			public virtual Nullable<double> Estimation { get; set; }
     			public virtual string Phone { get; set; }

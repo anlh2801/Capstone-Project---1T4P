@@ -64,7 +64,7 @@ namespace DataService.Models.Entities.Services
                 int no = 1;
                 foreach (var item in requests)
                 {
-                    var timeAgo = TimeAgo(item.CreateDate);
+                    //var timeAgo = TimeAgo(item.CreateDate);
                     var i = 1;
                     var requestStatus = "";
                     foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
@@ -75,13 +75,24 @@ namespace DataService.Models.Entities.Services
                         }
                         i++;
                     }
+                    var j = 1;
+                    var requestPriorityStatus = "";
+                    foreach (RequestPriorityEnum requestPriorityItem in Enum.GetValues(typeof(RequestPriorityEnum)))
+                    {
+                        if (item.Priority == i)
+                        {
+                            requestPriorityStatus = requestPriorityItem.DisplayName();
+                        }
+                        j++;
+                    }
                     var a = new RequestAPIViewModel()
                     {
                         NumberOfRecord = no,
                         RequestName = item.RequestName,
-                        CreateDate = timeAgo,
+                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         AgencyName = item.Agency.AgencyName,
                         StatusName = requestStatus,
+                        Priority = requestPriorityStatus,
                         ITSupporterName = item.ITSupporter != null ? item.ITSupporter.ITSupporterName : string.Empty,
                         RequestId = item.RequestId
                     };
@@ -133,7 +144,7 @@ namespace DataService.Models.Entities.Services
                 int no = 1;
                 foreach (var item in requests)
                 {
-                    var timeAgo = TimeAgo(item.CreateDate);
+                    //var timeAgo = TimeAgo(item.CreateDate);
                     var i = 1;
                     var requestStatus = "";
                     foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
@@ -144,13 +155,23 @@ namespace DataService.Models.Entities.Services
                         }
                         i++;
                     }
+                    var requestPriorityStatus = "";
+                    foreach (RequestPriorityEnum requestPriorityItem in Enum.GetValues(typeof(RequestPriorityEnum)))
+                    {
+                        if (item.Priority == i)
+                        {
+                            requestPriorityStatus = requestPriorityItem.DisplayName();
+                        }
+                        i++;
+                    }
                     var a = new RequestAPIViewModel()
                     {
                         NumberOfRecord = no,
                         RequestName = item.RequestName,
-                        CreateDate = timeAgo,
+                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         AgencyName = item.Agency.AgencyName,
                         StatusName = requestStatus,
+                        Priority = requestPriorityStatus,
                         ITSupporterName = item.ITSupporter != null ? item.ITSupporter.ITSupporterName : string.Empty,
                         RequestId = item.RequestId
                     };
