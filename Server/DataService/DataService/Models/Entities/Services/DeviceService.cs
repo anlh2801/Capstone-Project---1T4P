@@ -223,6 +223,7 @@ namespace DataService.Models.Entities.Services
                 var deviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
                 var createDevice = new Device();
                 createDevice.DeviceTypeId = model.DeviceTypeId;
+                createDevice.DeviceType.DeviceTypeName = model.DeviceTypeName;
                 createDevice.AgencyId = model.AgencyId;
                 createDevice.DeviceName = model.DeviceName;
                 createDevice.DeviceCode = model.DeviceCode;
