@@ -32,7 +32,8 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".DoneDetailActivity" />
-        <activity android:name=".StatusTimelineActivity"></activity>
+        <activity android:name=".StatusTimelineActivity" />
+        <activity android:name=".AddDeviceActivity"></activity>
     </application>
 
 </manifest>

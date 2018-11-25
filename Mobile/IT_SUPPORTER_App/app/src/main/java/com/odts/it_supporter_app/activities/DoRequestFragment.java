@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
@@ -60,6 +61,7 @@ public class DoRequestFragment extends Fragment {
     LinearLayout linearLayoutTask;
     SegmentedGroup segmentedGroup;
     EditText userInputDialogEditText;
+    ImageButton scan;
 
     RequestService _requestService;
     TaskService _taskService;
@@ -90,6 +92,17 @@ public class DoRequestFragment extends Fragment {
         agencyName = v.findViewById(R.id.txtAgency);
         agencyAddress = v.findViewById(R.id.txtAddress);
         createDate = v.findViewById(R.id.txtCreateDate);
+        scan = v.findViewById(R.id.imageButton);
+        scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ScanDeviceFragment scanDeviceFragment = new ScanDeviceFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fmHome, scanDeviceFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         itSupporterId = share.getInt("itSupporterId", 0);
