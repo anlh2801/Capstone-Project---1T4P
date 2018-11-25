@@ -30,7 +30,7 @@ public class AgencyService {
         Call<ResponseObject<Agency>> call = service.getAgencyProfile(agencyId);
 
         /**Log the URL called*/
-        Log.wtf("URL Called", call.request().url() + "");
+//        Log.wtf("URL Called", call.request().url() + "");
 
         call.enqueue(new Callback<ResponseObject<Agency>>() {
             @Override

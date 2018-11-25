@@ -239,7 +239,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editTextPort"
+            android:id="@+id/editTextSetting"
             android:layout_width="208dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
@@ -263,7 +263,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:text="Tạo Yêu Cầu"
+            android:text="Thêm Thiết Bị"
             android:layout_weight="1"
             android:layout_marginRight="2dp"
             android:layout_marginLeft="8dp"

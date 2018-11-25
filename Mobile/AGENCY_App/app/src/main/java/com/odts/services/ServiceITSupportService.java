@@ -24,7 +24,7 @@ public class ServiceITSupportService {
         Call<ResponseObjectReturnList<ServiceITSupport>> call = service.getAllServiceITSupport(agencyId);
 
         /**Log the URL called*/
-        Log.wtf("URL Called", call.request().url() + "");
+//        Log.wtf("URL Called", call.request().url() + "");
 
         call.enqueue(new Callback<ResponseObjectReturnList<ServiceITSupport>>() {
             @Override
