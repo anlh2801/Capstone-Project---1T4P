@@ -54,6 +54,8 @@ namespace CapstoneProject_ODTS.ControllersApi
 
         private DeviceDomain _deviceDomain;
 
+        private DeviceTypeDomain _deviceTypeDomain;
+
         private AccountDomain _accountDomain;
 
         private RequestDomain _requestDomain;
@@ -66,6 +68,7 @@ namespace CapstoneProject_ODTS.ControllersApi
             _deviceDomain = new DeviceDomain();
             _accountDomain = new AccountDomain();
             _requestDomain = new RequestDomain();
+            _deviceTypeDomain = new DeviceTypeDomain();
         }
 
         [HttpPost]
@@ -221,6 +224,15 @@ namespace CapstoneProject_ODTS.ControllersApi
                     _requestDomain.AcceptRequestFromITSupporter(result.ObjReturn, requestId, true, "check");
                 }
             }
+        }
+
+        [HttpGet]
+        [Route("agency/get_deviceType_by_serviceId")]
+        public HttpResponseMessage GetAllDeviceTypeByServiceITSupportId(int serviceId)
+        {
+            var result = _deviceTypeDomain.GetAllDeviceTypeByServiceITSupportId(serviceId);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
     }
 }

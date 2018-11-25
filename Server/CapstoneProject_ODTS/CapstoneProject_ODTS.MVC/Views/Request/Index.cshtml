@@ -213,9 +213,9 @@
                 <th><label>Tên Sự Cố</label></th>
                 <th><label>Thời gian</label></th>
                 <th><label>Tạo bởi</label></th>
+                <th><label>Độ ưu tiên</label></th>
                 <th><label>Trạng thái</label></th>
                 <th><label>Xử lý bởi/Tùy chọn</label></th>
-                <th><label>Cắm Cờ</label></th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -233,10 +233,16 @@
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             loadRequest();
             loadRequestStatistic();
+            startRefresh();
         });
+        function startRefresh() {
+            setTimeout(startRefresh, 1000);
+            loadRequest();
+            loadRequestStatistic();
+        }
         var isWaitingHeroAccept = false;
         var currentRequestId = 0;
             function loadRequestStatistic() {
@@ -337,6 +343,13 @@
                     { "data": "AgencyName" },
                     //{ "data": "StatusName" },
                     {
+                        "aTargets": [4],
+                        "mRender": function (data, type, full) {
+                            return full.Priority;
+                        }
+                    },
+                    {
+                        "aTargets": [5],
                         "mRender": function (data, type, full) {
                             if (full.StatusName === "Chờ Xử lý")
                                 return '<span class = "label label-warning">' + full.StatusName + '</span>';
@@ -350,21 +363,22 @@
                                 return '<span class = "label label-default">' + full.StatusName + '</span>';
                         }
                     },
+                    
                     {
-                        "aTargets": [5],
+                        "aTargets": [6],
                         "mRender": function (data, type, full) {
                             if (full.StatusName === "Chờ hủy") {
                                 var del = ' <button type="button" class="btn btn-danger fa fa-close" data-toggle="modal" data-target="" onclick="removeResquest(' + full.RequestId + ')"></button>';
                                 return del;
-                            }
-                            else if (isWaitingHeroAccept === true && full.RequestId === currentRequestId) {
-                                return '<span class = "label label-warning">Đợi nhân viên phản hồi</span>';
-                            }
+                            }                            
                             else if (full.StatusName === "Hủy bỏ") {
-                                return "đã hủy sự cố";
+                                return "Đã hủy sự cố";
                             }
                             else if(full.ITSupporterName !== "") {
                                 return full.ITSupporterName;
+                            }
+                            else if (isWaitingHeroAccept === true && full.RequestId === currentRequestId) {
+                                return '<span class = "label label-warning">Đợi nhân viên phản hồi</span>';
                             }
                             else {
                                 var asignHero = '<button type="button" class="btn btn-info btn fa fa-user-plus" data-toggle="modal" data-target="" onclick="asignHero(' + full.RequestId + ')"></button>';
@@ -373,13 +387,7 @@
                                 return asignHero;
                             }
                         }
-                    },
-                    {
-                        "aTargets": [6],
-                        "mRender": function (data, type, full) {
-                            return "cắm cờ";
-                        }
-                    },
+                    },                    
                 ],
                 "bAutoWidth": false,
             });
