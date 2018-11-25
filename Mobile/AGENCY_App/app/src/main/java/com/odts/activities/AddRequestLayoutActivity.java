@@ -2,11 +2,13 @@ package com.odts.activities;
 
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.abdeveloper.library.MultiSelectDialog;
@@ -86,19 +89,45 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
 //                getAllServiceItemByServiceId(serviceITSupports.get(0).getServiceITSupportId());
 //                getAllDeviceByAgencyIdAndServiceItem(agencyId, (serviceITSupports.get(0).getServiceITSupportId()));
                 final List<ServiceITSupport> ServiceITSupportList = new ArrayList<ServiceITSupport>();
+                ServiceITSupportList.add(new ServiceITSupport("Chọn các dịch vụ dưới đây"));
                 Spinner spinnerService = (Spinner) findViewById(R.id.spinner1);
                 for (final ServiceITSupport item : serviceITSupports) {
                     ServiceITSupportList.add(item);
                 }
-                final ArrayAdapter<ServiceITSupport> dataAdapter = new ArrayAdapter<ServiceITSupport>(AddRequestLayoutActivity.this, android.R.layout.simple_spinner_item, ServiceITSupportList);
+                final ArrayAdapter<ServiceITSupport> dataAdapter = new ArrayAdapter<ServiceITSupport>(AddRequestLayoutActivity.this, android.R.layout.simple_spinner_item, ServiceITSupportList) {
+                    @Override
+                    public boolean isEnabled(int position) {
+                        if (position == 0) {
+                            // Disable the first item from Spinner
+                            // First item will be use for hint
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+                    @Override
+                    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                        View view = super.getDropDownView(position, convertView, parent);
+                        TextView tv = (TextView) view;
+                        if (position == 0) {
+                            // Set the hint text color gray
+                            tv.setTextColor(Color.GRAY);
+                        } else {
+                            tv.setTextColor(Color.BLACK);
+                        }
+                        return view;
+                    }
+                };
                 dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerService.setAdapter(dataAdapter);
                 spinnerService.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        ServiceITSupport serviceITSupport = (ServiceITSupport) adapterView.getSelectedItem();
-                        getAllServiceItemByServiceId(serviceITSupport.getServiceITSupportId());
-                        getAllDeviceByAgencyIdAndServiceItem(agencyId, (serviceITSupport.getServiceITSupportId()));
+                        if(i > 0){
+                            ServiceITSupport serviceITSupport = (ServiceITSupport) adapterView.getSelectedItem();
+                            getAllServiceItemByServiceId(serviceITSupport.getServiceITSupportId());
+                            getAllDeviceByAgencyIdAndServiceItem(agencyId, (serviceITSupport.getServiceITSupportId()));
+                        }
                     }
 
                     @Override
@@ -122,6 +151,7 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
             public void onSuccess(ArrayList<ServiceItem> serviceItems) {
                 Spinner spinner = (Spinner) findViewById(R.id.spinner2);
                 List<ServiceItem> categories = new ArrayList<ServiceItem>();
+                categories.add(new ServiceItem("Chọn dưới đây"));
                 for (ServiceItem item : serviceItems) {
                     categories.add(item);
                 }

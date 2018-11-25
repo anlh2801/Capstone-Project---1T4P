@@ -23,6 +23,10 @@ public class ServiceITSupport {
         this.serviceITSupportId = serviceITSupportId;
     }
 
+    public ServiceITSupport(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
     public String getServiceName() {
         return serviceName;
     }

@@ -60,8 +60,8 @@ public class AgencyService {
                 if (!response.body().isError()) {
                     Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
                     if (response.body().getObjReturn() != null) {
-//                        Intent intent = new Intent(context, MainActivity.class);
-//                        context.startActivity(intent);
+                        Intent intent = new Intent(context, MainActivity.class);
+                        context.startActivity(intent);
                     }
                 }
             }

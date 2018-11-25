@@ -18,6 +18,13 @@ public class ServiceItem {
     @SerializedName("ServiceId")
     private Integer serviceId;
 
+    public ServiceItem() {
+    }
+
+    public ServiceItem(String serviceItemName) {
+        this.serviceItemName = serviceItemName;
+    }
+
     public Integer getServiceItemId() {
         return serviceItemId;
     }
