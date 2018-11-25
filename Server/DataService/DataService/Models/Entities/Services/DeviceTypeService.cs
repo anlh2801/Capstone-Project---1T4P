@@ -19,6 +19,7 @@ namespace DataService.Models.Entities.Services
         ResponseObject<bool> CreateDeviceType(DeviceTypeAPIViewModel model);
         ResponseObject<bool> UpdateDeviceType(DeviceTypeAPIViewModel model);
         ResponseObject<bool> RemoveDeviceType(int devicetype_id);
+        ResponseObject<List<DeviceTypeAPIViewModel>> GetAllDeviceTypeByServiceITSupportId(int serviceId);
     }
 
     public partial class DeviceTypeService
@@ -30,6 +31,46 @@ namespace DataService.Models.Entities.Services
                 List<DeviceTypeAPIViewModel> rsList = new List<DeviceTypeAPIViewModel>();
                 var devicetypeRepo = DependencyUtils.Resolve<IDeviceTypeRepository>();
                 var devicetypes = devicetypeRepo.GetActive().ToList();
+                if (devicetypes.Count <= 0)
+                {
+                    return new ResponseObject<List<DeviceTypeAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy loại thiết bị nào" };
+                }
+                int count = 1;
+                foreach (var item in devicetypes)
+                {
+                    if (!item.IsDelete)
+                    {
+                        rsList.Add(new DeviceTypeAPIViewModel
+                        {
+                            NumericalOrder = count,
+                            DeviceTypeId = item.DeviceTypeId,
+                            DeviceTypeName = item.DeviceTypeName,
+                            ServiceId = item.ServiceId,
+                            ServiceName = item.ServiceITSupport.ServiceName,
+                            Description = item.Description,
+                            IsDelete = item.IsDelete,
+                            CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
+                            UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy"),
+                        });
+                    }
+                    count++;
+                }
+                return new ResponseObject<List<DeviceTypeAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
+            }
+            catch (Exception e)
+            {
+                return new ResponseObject<List<DeviceTypeAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy loại thiết bị nào", ObjReturn = null, ErrorMessage = e.ToString() };
+            }
+
+        }
+
+        public ResponseObject<List<DeviceTypeAPIViewModel>> GetAllDeviceTypeByServiceITSupportId(int serviceId)
+        {
+            try
+            {
+                List<DeviceTypeAPIViewModel> rsList = new List<DeviceTypeAPIViewModel>();
+                var devicetypeRepo = DependencyUtils.Resolve<IDeviceTypeRepository>();
+                var devicetypes = devicetypeRepo.GetActive(p => p.ServiceId == serviceId).ToList();
                 if (devicetypes.Count <= 0)
                 {
                     return new ResponseObject<List<DeviceTypeAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy loại thiết bị nào" };
