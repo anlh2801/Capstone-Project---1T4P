@@ -205,7 +205,7 @@
 
         <ListView
             android:id="@+id/listTask"
-            android:layout_width="202dp"
+            android:layout_width="300dp"
             android:layout_height="224dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
