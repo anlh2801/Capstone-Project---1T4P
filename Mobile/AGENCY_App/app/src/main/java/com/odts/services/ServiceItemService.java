@@ -29,7 +29,7 @@ public class ServiceItemService {
         Call<ResponseObjectReturnList<ServiceItem>> call = service.getAllServiceItemByServiceId(serviceId);
 
         /**Log the URL called*/
-        Log.wtf("URL Called", call.request().url() + "");
+//        Log.wtf("URL Called", call.request().url() + "");
 
         call.enqueue(new Callback<ResponseObjectReturnList<ServiceItem>>() {
             @Override
@@ -57,7 +57,7 @@ public class ServiceItemService {
         Call<ResponseObjectReturnList<AgencyStatistical>> call = service.getAgencyStatistic(agencyId);
 
         /**Log the URL called*/
-        Log.wtf("URL Called", call.request().url() + "");
+//        Log.wtf("URL Called", call.request().url() + "");
 
         call.enqueue(new Callback<ResponseObjectReturnList<AgencyStatistical>>() {
             @Override

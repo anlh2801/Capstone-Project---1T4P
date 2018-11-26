@@ -55,28 +55,28 @@
                         <div class="row">
 
                             <div class="col-md-12">
-                                <label >Tên Chi Nhánh:</label>
+                                <label>Chi Nhánh:</label>
                                 <select class="form-control select2" style="width: 100%;" id="AgencyNameC"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <label >Loại Dịch Vụ:</label>
+                                <label>Danh mục:</label>
                                 <select class="form-control select2" style="width: 100%;" id="SerNameC"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <label >Tên Dịch Vụ:</label>
-                                <input id="SerItemNameC" type="text" class="form-control" required>
+                                <label>Hiện tượng:</label>
+                                <select class="form-control select2" style="width: 100%;" id="SerItemNameC"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <label >Thiết Bị:</label>
+                                <label>Thiết Bị:</label>
                                 <input id="DeviceNameC" type="text" class="form-control" required>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <label >Mô Tả:</label>
-                                <input id="DescripC" type="text" class="form-control" required>
+                                <label>Số Điện Thoại:</label>
+                                <input id="PhoneC" type="text" class="form-control" required>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <label >Số Điện Thoại:</label>
-                                <input id="PhoneC" type="text" class="form-control" required>
+                                <label>Mô Tả hiện tượng:</label>
+                                <textarea id="DescripC" class="form-control" rows="3" placeholder="Ví dụ: mất sóng wifi tầng trệt, khó truy cập..."></textarea>
                             </div>
                         </div>
                     </div>
@@ -213,9 +213,9 @@
                 <th><label>Tên Sự Cố</label></th>
                 <th><label>Thời gian</label></th>
                 <th><label>Tạo bởi</label></th>
+                <th><label>Độ ưu tiên</label></th>
                 <th><label>Trạng thái</label></th>
                 <th><label>Xử lý bởi/Tùy chọn</label></th>
-                <th><label>Cắm Cờ</label></th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -233,10 +233,16 @@
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             loadRequest();
             loadRequestStatistic();
+            startRefresh();
         });
+        function startRefresh() {
+            setTimeout(startRefresh, 1000);
+            loadRequest();
+            loadRequestStatistic();
+        }
         var isWaitingHeroAccept = false;
         var currentRequestId = 0;
             function loadRequestStatistic() {
@@ -337,8 +343,15 @@
                     { "data": "AgencyName" },
                     //{ "data": "StatusName" },
                     {
+                        "aTargets": [4],
                         "mRender": function (data, type, full) {
-                            if (full.StatusName === "Chờ Xử lý")
+                            return full.Priority;
+                        }
+                    },
+                    {
+                        "aTargets": [5],
+                        "mRender": function (data, type, full) {
+                            if (full.StatusName === "Chờ xử lý")
                                 return '<span class = "label label-warning">' + full.StatusName + '</span>';
                             else if (full.StatusName === "Đang xử lý")
                                 return '<span class = "label label-primary">' + full.StatusName + '</span>';
@@ -350,21 +363,22 @@
                                 return '<span class = "label label-default">' + full.StatusName + '</span>';
                         }
                     },
+                    
                     {
-                        "aTargets": [5],
+                        "aTargets": [6],
                         "mRender": function (data, type, full) {
                             if (full.StatusName === "Chờ hủy") {
                                 var del = ' <button type="button" class="btn btn-danger fa fa-close" data-toggle="modal" data-target="" onclick="removeResquest(' + full.RequestId + ')"></button>';
                                 return del;
-                            }
-                            else if (isWaitingHeroAccept === true && full.RequestId === currentRequestId) {
-                                return '<span class = "label label-warning">Đợi nhân viên phản hồi</span>';
-                            }
+                            }                            
                             else if (full.StatusName === "Hủy bỏ") {
-                                return "đã hủy sự cố";
+                                return '<span class = "label label-danger">Đã hủy theo yêu cầu</span>';
                             }
                             else if(full.ITSupporterName !== "") {
                                 return full.ITSupporterName;
+                            }
+                            else if (isWaitingHeroAccept === true && full.RequestId === currentRequestId) {
+                                return '<span class = "label label-warning">Đợi nhân viên phản hồi</span>';
                             }
                             else {
                                 var asignHero = '<button type="button" class="btn btn-info btn fa fa-user-plus" data-toggle="modal" data-target="" onclick="asignHero(' + full.RequestId + ')"></button>';
@@ -373,13 +387,7 @@
                                 return asignHero;
                             }
                         }
-                    },
-                    {
-                        "aTargets": [6],
-                        "mRender": function (data, type, full) {
-                            return "cắm cờ";
-                        }
-                    },
+                    },                    
                 ],
                 "bAutoWidth": false,
             });

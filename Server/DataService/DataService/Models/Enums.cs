@@ -71,5 +71,15 @@ namespace DataService.Models
         Others = 3
     }
 
+    public enum RequestPriorityEnum
+    {
+        [Display(Name = "Xử lý gấp")]
+        Urgent = 1,
+        [Display(Name = "Cần xử lý")]
+        Normal = 2,
+        [Display(Name = "Không gấp")]
+        Non_Urgent = 3,
+    }
+
 }
 

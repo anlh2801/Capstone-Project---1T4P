@@ -3,6 +3,7 @@ package com.odts.customTools;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.odts.activities.EditDeviceActivity;
 import com.odts.activities.R;
 import com.odts.models.Device;
 
@@ -40,6 +42,8 @@ public class DeviceManageAdapter extends ArrayAdapter<Device> {
         TextView txtDeviceNameManage = (TextView) row.findViewById(R.id.txtDeviceNameManage);
 
         ImageButton btnDetailsDevice = (ImageButton) row.findViewById(R.id.btnDetailsDevice);
+        ImageButton btnEdit = (ImageButton) row.findViewById(R.id.btnEditDevice);
+
         /** Set data to row*/
         final Device device = this.objects.get(position);
         txtDeviceCodeManage.setText("Mã: " + device.getDeviceCode());
@@ -54,7 +58,18 @@ public class DeviceManageAdapter extends ArrayAdapter<Device> {
         } else {
             imgManageDevice.setImageResource(R.drawable.ic_widgets_white_24dp);
         }
-
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), EditDeviceActivity.class);
+                intent.putExtra("deviceId", device.getDeviceId());
+                intent.putExtra("deviceName", device.getDeviceName());
+                intent.putExtra("deviceCode", device.getDeviceCode());
+                intent.putExtra("ip", device.getIp());
+                intent.putExtra("port", device.getPort());
+                getContext().startActivity(intent);
+            }
+        });
         /**Set Event Onclick*/
         btnDetailsDevice.setOnClickListener(new View.OnClickListener() {
             @Override
