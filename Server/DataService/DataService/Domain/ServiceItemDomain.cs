@@ -11,7 +11,7 @@ namespace DataService.Domain
 {
     public interface IServiceItemDomain
     {
-        ResponseObject<List<ServiceItemAPIViewModel>> GetAllServiceItemByServiceITSupportId(int serviceITSupportId);
+        ResponseObject<List<ServiceItemAPIViewModel>> GetAllServiceItemByServiceITSupportId(int serviceITSupportId = 0);
 
         ResponseObject<ServiceItemAPIViewModel> ViewDetail(int ServiceItemId);
 
@@ -32,7 +32,7 @@ namespace DataService.Domain
 
             return serviceITSupports;
         }
-        public ResponseObject<List<ServiceItemAPIViewModel>> GetAllServiceItemByServiceITSupportId(int serviceITSupportId)
+        public ResponseObject<List<ServiceItemAPIViewModel>> GetAllServiceItemByServiceITSupportId(int serviceITSupportId = 0)
         {
             var serviceITSupportService = this.Service<IServiceItemService>();
 

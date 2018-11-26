@@ -15,7 +15,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<List<ServiceItemAPIViewModel>> GetAllServiceItemByServiceId(int serviceId);
 
-        ResponseObject<List<ServiceItemAPIViewModel>> GetAllServiceItemByServiceITSupportId(int serviceITSupportId);
+        ResponseObject<List<ServiceItemAPIViewModel>> GetAllServiceItemByServiceITSupportId(int serviceITSupportId = 0);
 
         ResponseObject<ServiceItemAPIViewModel> ViewDetail(int ServiceItemId);
 
@@ -56,11 +56,16 @@ namespace DataService.Models.Entities.Services
             return new ResponseObject<List<ServiceItemAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Hiển thị danh sách dịch vụ" };
         }
 
-        public ResponseObject<List<ServiceItemAPIViewModel>> GetAllServiceItemByServiceITSupportId(int serviceITSupportId)
+        public ResponseObject<List<ServiceItemAPIViewModel>> GetAllServiceItemByServiceITSupportId(int serviceITSupportId = 0)
         {
             List<ServiceItemAPIViewModel> rsList = new List<ServiceItemAPIViewModel>();
             var serviceItemRepo = DependencyUtils.Resolve<IServiceItemRepository>();
-            var serviceItems = serviceItemRepo.GetActive(p => p.ServiceITSupportId == serviceITSupportId).ToList();
+            var serviceItems = serviceItemRepo.GetActive().ToList();
+
+            if (serviceITSupportId > 0)
+            {
+                serviceItems = serviceItems.Where(p => p.ServiceITSupportId == serviceITSupportId).ToList();
+            }
             if (serviceItems.Count <= 0)
             {
                 return new ResponseObject<List<ServiceItemAPIViewModel>> { IsError = true, WarningMessage = "Không có dịch vụ nào hỗ trợ" };

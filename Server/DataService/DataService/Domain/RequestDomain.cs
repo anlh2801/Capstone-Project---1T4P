@@ -12,7 +12,7 @@ namespace DataService.Domain
 {
     public  interface IRequestDomain
     {
-        ResponseObject<List<RequestAPIViewModel>> GetAllRequest();
+        ResponseObject<List<RequestAPIViewModel>> GetAllRequest(int companyId, int serviceItemId, string start = null, string end = null);
 
         ResponseObject<RequestAPIViewModel> GetTicketByRequestId(int RequestId);
 
@@ -43,11 +43,11 @@ namespace DataService.Domain
 
     public  class RequestDomain : BaseDomain, IRequestDomain
     {
-        public ResponseObject<List<RequestAPIViewModel>> GetAllRequest()
+        public ResponseObject<List<RequestAPIViewModel>> GetAllRequest(int companyId, int serviceItemId, string start = null, string end = null)
         {
             var requestService = this.Service<IRequestService>();
 
-            var result = requestService.GetAllRequest();
+            var result = requestService.GetAllRequest(companyId, serviceItemId, start, end);
             
             return result;
         }

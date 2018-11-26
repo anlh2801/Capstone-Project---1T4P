@@ -17,7 +17,7 @@ namespace DataService.Models.Entities.Services
 {
     public partial interface IRequestService
     {
-        ResponseObject<List<RequestAPIViewModel>> GetAllRequest();
+        ResponseObject<List<RequestAPIViewModel>> GetAllRequest(int companyId, int serviceItemId, string start = null, string end = null);
 
         ResponseObject<RequestAPIViewModel> GetTicketByRequestId(int requestId);
 
@@ -50,16 +50,33 @@ namespace DataService.Models.Entities.Services
 
     public partial class RequestService
     {
-        public ResponseObject<List<RequestAPIViewModel>> GetAllRequest()
+        public ResponseObject<List<RequestAPIViewModel>> GetAllRequest(int companyId, int serviceItemId, string start = null, string end = null)
         {
             try
             {
                 List<RequestAPIViewModel> rsList = new List<RequestAPIViewModel>();
                 var RequestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var requests = RequestRepo.GetActive().ToList();
+                if (!string.IsNullOrEmpty(start) && !string.IsNullOrEmpty(end))
+                {
+                    var startDateTime = start.ToDateTime();
+                    var endDateTime = end.ToDateTime();
+                    requests = requests.Where(p => p.CreateDate >= startDateTime && p.CreateDate <= endDateTime).ToList();
+                }
+
+                if (companyId > 0)
+                {                    
+                    requests = requests.Where(p => p.Agency.CompanyId == companyId).ToList();
+                }
+
+                if (serviceItemId > 0)
+                {
+                    requests = requests.Where(p => p.ServiceItemId == serviceItemId).ToList();
+                }
+
                 if (requests.Count <= 0)
                 {
-                    return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại" };
+                    return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại", ObjReturn = rsList };
                 }
                 int no = 1;
                 foreach (var item in requests)
@@ -99,7 +116,7 @@ namespace DataService.Models.Entities.Services
                     rsList.Add(a);
                     no++;
                 }
-                return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, SuccessMessage = "Hiển thị yêu cầu thành công", ObjReturn = rsList };
+                return new ResponseObject<List<RequestAPIViewModel>> { IsError = false, SuccessMessage = "Hiển thị yêu cầu thành công", ObjReturn = rsList };
             }
             catch (Exception e)
             {

@@ -209,24 +209,25 @@
 <div class="row col-md-12">
     <h3 class="city">Sự cố đã báo</h3>
 </div>
+
 <div class="row col-md-12">
-    <div class="row col-md-3">
-        <b>Thời Gian:</b><br>
-        <input class="form-control" type="button" id="requestCreateDate" style="width:95%; margin-bottom:15px;text-align:left;"></input>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <b>Lọc theo thời gian:</b><br>
+        <input class="form-control" type="button" id="requestCreateDate" style="width:100%; margin-bottom:15px;text-align:left;"></input>
     </div>
-    <div class="row col-md-3">
-        <b>Công Ty:</b><br>
-        <select class="form-control select2" type="button" id="requestCompany" style="width:95%; margin-bottom:15px;"></select>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <b>Lọc theo công ty:</b><br>
+        <select class="form-control select2" type="button" id="requestCompany" style="width:100%; margin-bottom:15px;"></select>
     </div>
-    <div class="row col-md-3">
-        <b>Loại Sự Cố:</b><br>
-        <select class="form-control select2" type="button" id="requestServiceType" style="width:95%; margin-bottom:15px;"></select>
-    </div>
-    <div class="row col-md-3">
-        <b></b><br>
-        <button type="button" class="btn btn-primary fa fa-eye" data-toggle="modal" data-target="" onclick="LocSuCo()"><font face="verdana"> Lọc Sự Cố</button>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <b>Lọc theo loại sự cố:</b><br>
+        <select class="form-control select2" type="button" id="requestServiceItem" style="width:100%; margin-bottom:15px;"></select>
     </div>
 </div>
+@*<div class="row col-md-12">    
+    <button type="button" class="btn btn-primary fa fa-eye pull-right" data-toggle="modal" data-target="" onclick="loadRequest()"><font face="verdana"> Áp dụng bộ lọc</button>
+</div>*@
+
 <div class="row col-md-12">
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
@@ -259,14 +260,14 @@
     <link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
     <script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
 
-<script>
+    <script>
         $(document).ready(function () {
             loadRequest();
             loadRequestStatistic();
             showAgency();
             startRefresh();
             showCompany();
-            showServiceType();
+            showServiceItems();
         });
         $('#comboDevices').select2({
             dropdownParent: $('#createModal')
@@ -318,6 +319,25 @@
                 type: 'POST',
                 url: '@Url.Action("GetAllRequest", "Request")',
                 data: {
+                    companyId: $("#requestCompany").val(),
+                    serviceItemId: $("#requestServiceItem").val()
+                },
+                success: function (result) {
+                    if (!result.result.ObjReturn != null)
+                        initDatatable(result.result.ObjReturn);
+                },
+                error: function(error) {
+                    showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                }
+            });
+        }
+
+    function LocSuCo() {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetAllRequest", "Request")',
+                data: {
+                    
                 },
                 success: function(result) {
                     initDatatable(result.result.ObjReturn);
@@ -343,7 +363,7 @@
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
                     var len = data.result.ObjReturn.length;
-                    var html = '';
+                    var html = '<option value="0">--Lọc theo công ty--</option>';
                     for (var i = 0; i < len; i++) {
                         html += '<option value="' +
                             data.result.ObjReturn[i].CompanyId +
@@ -355,14 +375,14 @@
                 }
             });
         }
-        function showServiceType() {
-            $('#requestServiceType')
+        function showServiceItems() {
+            $('#requestServiceItem')
                     .find('option')
                     .remove()
                     .end();
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("GetAllServiceITSupport", "ServiceITSupport")',
+                url: '@Url.Action("GetAllServiceItemAll", "ServiceItem")',
                 data: {
                 },
 
@@ -370,15 +390,15 @@
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
                     var len = data.result.ObjReturn.length;
-                    var html = '';
+                    var html = '<option value="0">--Lọc theo hiện tượng--</option>';
                     for (var i = 0; i < len; i++) {
                         html += '<option value="' +
-                            data.result.ObjReturn[i].ServiceITSupportId +
+                            data.result.ObjReturn[i].ServiceItemId +
                             '">' +
-                            data.result.ObjReturn[i].ServiceName +
+                            data.result.ObjReturn[i].ServiceItemName +
                             '</option>';
                     }
-                    $('#requestServiceType').append(html);
+                    $('#requestServiceItem').append(html);
                 }
             });
         }
@@ -393,9 +413,10 @@
                 "bRetrieve": true,
                 "bScrollCollapse": true,
                 "bProcessing": true,
-                "oLanguage": {
-                    "sSearch": "Tìm kiếm:",
-                    "sSearchPlaceholder": "",
+                "searching": false,
+                "oLanguage": {                    
+                    //"sSearch": "Tìm kiếm:",
+                    //"sSearchPlaceholder": "",
                     "sZeroRecords": "Không có dữ liệu phù hợp",
                     "sInfo": "Hiển thị từ _START_ đến _END_ trên tổng số _TOTAL_ dòng",
                     "sEmptyTable": "Không có dữ liệu",
@@ -826,6 +847,6 @@
                 }
             });
         }
-</script>
+    </script>
 
 }
