@@ -24,12 +24,14 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.odts.it_supporter_app.R;
+import com.odts.it_supporter_app.customTools.TaskAdapter;
 import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.models.RequestTask;
 import com.odts.it_supporter_app.services.ITSupporterService;
@@ -58,7 +60,7 @@ public class DoRequestFragment extends Fragment {
     Integer serviceItemId = 0;
     Button btnAccept, bt2, bt3, bt4, bt5;
     Firebase reference1;
-    LinearLayout linearLayoutTask;
+    LinearLayout linearLayoutTask, linerTask;
     SegmentedGroup segmentedGroup;
     EditText userInputDialogEditText;
     ImageButton scan;
@@ -67,6 +69,7 @@ public class DoRequestFragment extends Fragment {
     TaskService _taskService;
     CheckBox tick, tick2;
     private String m_Text = "";
+    ListView listView;
 
     public DoRequestFragment() {
         _requestService = new RequestService();
@@ -84,8 +87,10 @@ public class DoRequestFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_do_request, container, false);
         final FloatingActionsMenu menu = v.findViewById(R.id.multiple_actions);
+        menu.bringToFront();
         btnCall = v.findViewById(R.id.action_a);
         btnChat = v.findViewById(R.id.action_b);
+        listView = (ListView) v.findViewById(R.id.listTask);
         //requestService = new RequestService();
         itSupporterService = new ITSupporterService();
         rqName = (TextView) v.findViewById(R.id.txtRequestName);
@@ -268,9 +273,9 @@ public class DoRequestFragment extends Fragment {
 //                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 //                                    public void onClick(DialogInterface dialogBox, int id) {
 //                                        // ToDo get user input here
-                                        map.put("status", "Hoàn thành");
+                        map.put("status", "Hoàn thành");
 //                                        map.put("message", userInputDialogEditText.getText().toString());
-                                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
+                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
 //                                        reference1.push().setValue(map);
 //                                    }
 //                                })
@@ -306,36 +311,11 @@ public class DoRequestFragment extends Fragment {
 
                     }
                 });
-                linearLayoutTask = (LinearLayout) v.findViewById(R.id.listTaskDoFragment);
-                linearLayoutTask.setOrientation(LinearLayout.VERTICAL);
-                linearLayoutTask.setWeightSum(1f);
                 _taskService.getTaskByRequestID(getContext(), requestId, new CallBackData<ArrayList<RequestTask>>() {
-                    @SuppressLint("ResourceType")
                     @Override
                     public void onSuccess(ArrayList<RequestTask> requestTasks) {
-                        for (final RequestTask item : requestTasks) {
-                            tick = new CheckBox(getContext());
-                            tick.setId(item.getRequestTaskId());
-                            tick.setText(item.toString());
-                            linearLayoutTask.addView(tick);
-                            tick.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                @Override
-                                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                                    if (b) {
-                                        _taskService.updateTaskStatus(getContext(), item.getRequestTaskId(), true, new CallBackData<Boolean>() {
-                                            @Override
-                                            public void onSuccess(Boolean aBoolean) {
-                                            }
-
-                                            @Override
-                                            public void onFail(String message) {
-
-                                            }
-                                        });
-                                    }
-                                }
-                            });
-                        }
+                        TaskAdapter taskAdapter = new TaskAdapter(getActivity(), R.layout.list_task, requestTasks);
+                        listView.setAdapter(taskAdapter);
                     }
 
                     @Override
@@ -343,84 +323,126 @@ public class DoRequestFragment extends Fragment {
 
                     }
                 });
+//                linerTask = (LinearLayout) v.findViewById(R.id.linerTask);
+//                linearLayoutTask = (LinearLayout) v.findViewById(R.id.listTaskDoFragment);
+//                linearLayoutTask.setWeightSum(1f);
+//                _taskService.getTaskByRequestID(getContext(), requestId, new CallBackData<ArrayList<RequestTask>>() {
+//                    @SuppressLint("ResourceType")
+//                    @Override
+//                    public void onSuccess(ArrayList<RequestTask> requestTasks) {
+//                        for (final RequestTask item : requestTasks) {
+//                            tick = new CheckBox(getContext());
+//                            tick.setId(item.getRequestTaskId());
+//                            tick.setText(item.toString());
+//                            ImageButton btnGreen = new ImageButton(getActivity());
+//                            btnGreen.setImageResource(R.drawable.ic_delete_forever_red_24dp);
+//                            linearLayoutTask.addView(tick);
+//                            linerTask.addView(btnGreen);
+//                            tick.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                                @Override
+//                                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                                    if (b) {
+//                                        _taskService.updateTaskStatus(getContext(), item.getRequestTaskId(), true, new CallBackData<Boolean>() {
+//                                            @Override
+//                                            public void onSuccess(Boolean aBoolean) {
+//                                            }
+//
+//                                            @Override
+//                                            public void onFail(String message) {
+//
+//                                            }
+//                                        });
+//                                    }
+//                                }
+//                            });
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFail(String message) {
+//
+//                    }
+//                });
             }
 
             @Override
             public void onFail(String message) {
             }
         });
-        flbGuidline = v.findViewById(R.id.action_c);
-        flbGuidline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                menu.collapse();
-                Intent intent = new Intent(getContext(), GuidelineActivity.class);
-                intent.putExtra("serviceItemName", serviceItemName);
-                intent.putExtra("serviceItemId", serviceItemId);
-                intent.putExtra("requestId", requestId);
-                intent.putExtra("itSupporterId", itSupporterId);
-                startActivity(intent);
-            }
-        });
+                flbGuidline = v.findViewById(R.id.action_c);
+                flbGuidline.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        menu.collapse();
+                        Intent intent = new Intent(getContext(), GuidelineActivity.class);
+                        intent.putExtra("serviceItemName", serviceItemName);
+                        intent.putExtra("serviceItemId", serviceItemId);
+                        intent.putExtra("requestId", requestId);
+                        intent.putExtra("itSupporterId", itSupporterId);
+                        startActivity(intent);
+                    }
+                });
 
 
-        ImageButton addMoreTask = v.findViewById(R.id.addMoreTask);
-        addMoreTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Thêm việc cần làm");
+                ImageButton addMoreTask = v.findViewById(R.id.addMoreTask);
+                addMoreTask.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle("Thêm việc cần làm");
 
-                LayoutInflater li = LayoutInflater.from(getActivity());
-                final View promptsView = li.inflate(R.layout.add_more_task_form, null);
+                        LayoutInflater li = LayoutInflater.from(getActivity());
+                        final View promptsView = li.inflate(R.layout.add_more_task_form, null);
 
 //                final EditText input = new EditText(getActivity());
 //
 //                input.setInputType(InputType.TYPE_CLASS_TEXT );
 //                builder.setView(input);
-                builder.setView(promptsView);
+                        builder.setView(promptsView);
 
-                builder.setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        EditText a = (EditText) promptsView.findViewById(R.id.haha);
-                        m_Text = a.getText().toString();
-
-                        RequestTask requestTask = new RequestTask();
-                        requestTask.setRequestId(requestId);
-                        requestTask.setCreateByITSupporter(itSupporterId);
-                        requestTask.setTaskDetail(m_Text);
-                        _taskService.createTask(getContext(), requestTask, new CallBackData<Boolean>() {
+                        builder.setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onSuccess(Boolean aBoolean) {
-                                if (aBoolean) {
-                                    tick2 = new CheckBox(getContext());
-                                    linearLayoutTask.addView(tick2);
-                                    tick2.setText(m_Text);
-                                }
-                            }
+                            public void onClick(DialogInterface dialog, int which) {
+                                EditText a = (EditText) promptsView.findViewById(R.id.haha);
+                                m_Text = a.getText().toString();
 
-                            @Override
-                            public void onFail(String message) {
+                                RequestTask requestTask = new RequestTask();
+                                requestTask.setRequestId(requestId);
+                                requestTask.setCreateByITSupporter(itSupporterId);
+                                requestTask.setTaskDetail(m_Text);
+                                _taskService.createTask(getContext(), requestTask, new CallBackData<Boolean>() {
+                                    @Override
+                                    public void onSuccess(Boolean aBoolean) {
+                                        if (aBoolean) {
+                                            tick2 = new CheckBox(getContext());
+                                            linearLayoutTask.addView(tick2);
+                                            tick2.setText(m_Text);
+                                        }
+                                    }
 
+                                    @Override
+                                    public void onFail(String message) {
+
+                                    }
+                                });
                             }
                         });
-                    }
-                });
-                builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
+                        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        builder.show();
                     }
                 });
 
-                builder.show();
+
+                return v;
             }
-        });
 
 
-        return v;
-    }
+        }
 
 
-}
