@@ -104,4 +104,27 @@ public class TaskService {
             }
         });
     }
+
+    public void getStatusbyTaskID(final Context context, int requestID, final CallBackData<RequestTask> callBackData) {
+        ITaskApiCaller service = RetrofitInstance.getRetrofitInstance().create(ITaskApiCaller.class);
+        Call<ResponseObject<RequestTask>> call = service.getStatusbyTaskID(requestID);
+        call.enqueue(new Callback<ResponseObject<RequestTask>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<RequestTask>> call, Response<ResponseObject<RequestTask>> response) {
+                if (response.code() == 200 && response.body() != null) {
+                    if (!response.body().isError()) {
+                        callBackData.onSuccess(response.body().getObjReturn());
+                    }
+                } else {
+                    Log.e("MainActivity", "error");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<RequestTask>> call, Throwable t) {
+
+            }
+        });
+
+    }
 }

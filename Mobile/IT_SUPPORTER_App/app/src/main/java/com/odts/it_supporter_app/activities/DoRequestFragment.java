@@ -2,6 +2,7 @@ package com.odts.it_supporter_app.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -63,13 +64,14 @@ public class DoRequestFragment extends Fragment {
     LinearLayout linearLayoutTask, linerTask;
     SegmentedGroup segmentedGroup;
     EditText userInputDialogEditText;
-    ImageButton scan, detail;
+    ImageButton scan, btnAgencyDetail;
 
     RequestService _requestService;
     TaskService _taskService;
     CheckBox tick, tick2;
     private String m_Text = "";
     ListView listView;
+    TaskAdapter taskAdapter;
 
     public DoRequestFragment() {
         _requestService = new RequestService();
@@ -79,7 +81,8 @@ public class DoRequestFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Intent intent = getActivity().getIntent();
+        int requestID = intent.getIntExtra("requestId", 0);
     }
 
     @Override
@@ -87,18 +90,16 @@ public class DoRequestFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_do_request, container, false);
         final FloatingActionsMenu menu = v.findViewById(R.id.multiple_actions);
+
         menu.bringToFront();
         btnCall = v.findViewById(R.id.action_a);
         btnChat = v.findViewById(R.id.action_b);
-        detail = v.findViewById(R.id.imageButton2);
-
         listView = (ListView) v.findViewById(R.id.listTask);
-        //requestService = new RequestService();
         itSupporterService = new ITSupporterService();
         rqName = (TextView) v.findViewById(R.id.txtRequestName);
 
         agencyName = v.findViewById(R.id.txtAgency);
-        agencyAddress = v.findViewById(R.id.txtAddress);
+//        agencyAddress = v.findViewById(R.id.txtAddress);
         createDate = v.findViewById(R.id.txtCreateDate);
         scan = v.findViewById(R.id.imageButton);
         scan.setOnClickListener(new View.OnClickListener() {
@@ -117,24 +118,26 @@ public class DoRequestFragment extends Fragment {
         _requestService.getRequestByRequestIdAndITSupporterId(getActivity(), itSupporterId, new CallBackData<Request>() {
             @Override
             public void onSuccess(final Request request) {
-                detail.setOnClickListener(new View.OnClickListener() {
+                btnAgencyDetail = (ImageButton) v.findViewById(R.id.btnAgencyDetail);
+                btnAgencyDetail.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         View v = getLayoutInflater().inflate(R.layout.agency_detail, null);
                         TextView requestNameAlert = (TextView) v.findViewById(R.id.textViewRequestName);
-                        requestNameAlert.setText(request.getRequestName());
+                        requestNameAlert.setText(request.getAgencyAddress());
                         builder.setView(v);
                         AlertDialog dialog = builder.create();
                         dialog.show();
                     }
                 });
+
                 requestId = request.getRequestId();
                 serviceItemId = request.getServiceItemId();
                 serviceItemName = request.getServiceItemName();
-                rqName.setText(request.getRequestName());
-                agencyName.setText("Cửa hàng: " + request.getAgencyName());
-                agencyAddress.setText("Địa chỉ: " + request.getAgencyAddress());
+                rqName.setText("Sự cố: " + request.getRequestName());
+                agencyName.setText(request.getAgencyName());
+//                agencyAddress.setText("Địa chỉ: " + request.getAgencyAddress());
                 createDate.setText("Tạo vào: " + request.getCreateDate());
                 btnCall.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -191,7 +194,6 @@ public class DoRequestFragment extends Fragment {
                                         reference1.push().setValue(map);
                                     }
                                 })
-
                                 .setNegativeButton("Cancel",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialogBox, int id) {
@@ -201,7 +203,6 @@ public class DoRequestFragment extends Fragment {
 
                         AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
                         alertDialogAndroid.show();
-
                     }
                 });
                 bt3 = v.findViewById(R.id.button33);
@@ -277,33 +278,7 @@ public class DoRequestFragment extends Fragment {
                 bt5.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getContext());
-//                        View mView = layoutInflaterAndroid.inflate(R.layout.user_input_dialog_box, null);
-//                        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(getContext());
-//                        alertDialogBuilderUserInput.setView(mView);
-//
-//                        userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
-//                        alertDialogBuilderUserInput
-//                                .setCancelable(false)
-//                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                                    public void onClick(DialogInterface dialogBox, int id) {
-//                                        // ToDo get user input here
-                        map.put("status", "Hoàn thành");
-//                                        map.put("message", userInputDialogEditText.getText().toString());
                         map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
-//                                        reference1.push().setValue(map);
-//                                    }
-//                                })
-//
-//                                .setNegativeButton("Cancel",
-//                                        new DialogInterface.OnClickListener() {
-//                                            public void onClick(DialogInterface dialogBox, int id) {
-//                                                dialogBox.cancel();
-//                                            }
-//                                        });
-//
-//                        AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
-//                        alertDialogAndroid.show();
                         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
                         builder
                                 .setMessage("Bạn có chắc chắn hoàn thành công việc không?")
@@ -329,7 +304,7 @@ public class DoRequestFragment extends Fragment {
                 _taskService.getTaskByRequestID(getContext(), requestId, new CallBackData<ArrayList<RequestTask>>() {
                     @Override
                     public void onSuccess(ArrayList<RequestTask> requestTasks) {
-                        TaskAdapter taskAdapter = new TaskAdapter(getActivity(), R.layout.list_task, requestTasks);
+                        taskAdapter = new TaskAdapter(getActivity(), R.layout.list_task, requestTasks);
                         listView.setAdapter(taskAdapter);
                     }
 
@@ -384,80 +359,77 @@ public class DoRequestFragment extends Fragment {
             public void onFail(String message) {
             }
         });
-                flbGuidline = v.findViewById(R.id.action_c);
-                flbGuidline.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        menu.collapse();
-                        Intent intent = new Intent(getContext(), GuidelineActivity.class);
-                        intent.putExtra("serviceItemName", serviceItemName);
-                        intent.putExtra("serviceItemId", serviceItemId);
-                        intent.putExtra("requestId", requestId);
-                        intent.putExtra("itSupporterId", itSupporterId);
-                        startActivity(intent);
-                    }
-                });
-
-
-                ImageButton addMoreTask = v.findViewById(R.id.addMoreTask);
-                addMoreTask.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setTitle("Thêm việc cần làm");
-
-                        LayoutInflater li = LayoutInflater.from(getActivity());
-                        final View promptsView = li.inflate(R.layout.add_more_task_form, null);
-
-//                final EditText input = new EditText(getActivity());
-//
-//                input.setInputType(InputType.TYPE_CLASS_TEXT );
-//                builder.setView(input);
-                        builder.setView(promptsView);
-
-                        builder.setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                EditText a = (EditText) promptsView.findViewById(R.id.haha);
-                                m_Text = a.getText().toString();
-
-                                RequestTask requestTask = new RequestTask();
-                                requestTask.setRequestId(requestId);
-                                requestTask.setCreateByITSupporter(itSupporterId);
-                                requestTask.setTaskDetail(m_Text);
-                                _taskService.createTask(getContext(), requestTask, new CallBackData<Boolean>() {
-                                    @Override
-                                    public void onSuccess(Boolean aBoolean) {
-                                        if (aBoolean) {
-//                                            tick2 = new CheckBox(getContext());
-//                                            linearLayoutTask.addView(tick2);
-//                                            tick2.setText(m_Text);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFail(String message) {
-
-                                    }
-                                });
-                            }
-                        });
-                        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-
-                        builder.show();
-                    }
-                });
-
-
-                return v;
+        flbGuidline = v.findViewById(R.id.action_c);
+        flbGuidline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                menu.collapse();
+                Intent intent = new Intent(getContext(), GuidelineActivity.class);
+                intent.putExtra("serviceItemName", serviceItemName);
+                intent.putExtra("serviceItemId", serviceItemId);
+                intent.putExtra("requestId", requestId);
+                intent.putExtra("itSupporterId", itSupporterId);
+                startActivity(intent);
             }
+        });
 
 
-        }
+        ImageButton addMoreTask = v.findViewById(R.id.addMoreTask);
+        addMoreTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Thêm việc cần làm");
+
+                LayoutInflater li = LayoutInflater.from(getActivity());
+                final View promptsView = li.inflate(R.layout.add_more_task_form, null);
+                builder.setView(promptsView);
+                builder.setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText a = (EditText) promptsView.findViewById(R.id.haha);
+                        m_Text = a.getText().toString();
+
+                        final RequestTask requestTask = new RequestTask();
+                        requestTask.setRequestId(requestId);
+                        requestTask.setCreateByITSupporter(itSupporterId);
+                        requestTask.setTaskDetail(m_Text);
+                        _taskService.createTask(getContext(), requestTask, new CallBackData<Boolean>() {
+                            @Override
+                            public void onSuccess(Boolean aBoolean) {
+                                if (aBoolean) {
+                                    taskAdapter.add(requestTask);
+                                    taskAdapter.notifyDataSetChanged();
+//                                    listView.refreshDrawableState();
+//                                    listView.invalidateViews();
+////                                            tick2 = new CheckBox(getContext());
+////                                            linearLayoutTask.addView(tick2);
+////                                            tick2.setText(m_Text);
+                                }
+                            }
+
+                            @Override
+                            public void onFail(String message) {
+
+                            }
+                        });
+                    }
+                });
+                builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+            }
+        });
+
+        return v;
+    }
+
+
+}
 
 

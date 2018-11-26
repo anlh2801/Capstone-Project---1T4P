@@ -162,6 +162,8 @@ public class RecieveRequestFragment extends Fragment {
     private void moveToDoRequestFragment() {
         SharedPreferences.Editor edit = share.edit();
         edit.putInt("requestId", requestId);
+        SharedPreferences shareRequestID = getActivity().getSharedPreferences("ODTS", Context.MODE_PRIVATE);
+        shareRequestID.edit().putInt("requestId", requestId);
         edit.commit();
         getActivity().getSupportFragmentManager()
                 .beginTransaction()

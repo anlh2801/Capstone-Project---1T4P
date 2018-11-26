@@ -26,4 +26,7 @@ public interface ITaskApiCaller {
 
     @PUT("ITsuportter/delete_task")
     Call<ResponseObject<Boolean>> deleteTask(@Query("requestTaskId") Integer requestTaskId );
+
+    @GET("ITsuportter/task_by_requestTasktId/{requestTaskId}")
+    Call<ResponseObject<RequestTask>> getStatusbyTaskID(@Path("requestTaskId") int requestTaskId );
 }
