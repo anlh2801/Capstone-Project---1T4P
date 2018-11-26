@@ -138,7 +138,7 @@ namespace CapstoneProject_ODTS.Controllers
             var result = _agencyDomain.CreateRequest(model);
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
-
+            //return null;
         }
         // Danh mục
         public ActionResult GetServiceITSupportByAgencyId(int agencyId)

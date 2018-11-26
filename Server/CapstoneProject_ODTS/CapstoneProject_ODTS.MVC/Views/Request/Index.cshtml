@@ -56,17 +56,17 @@
                             <input id="idCom" type="hidden" />
                             <input id="idAgency" type="hidden" />
                             <div class="col-md-12">
-                                <label>Tên Chi Nhánh:</label>
-                                <select class="form-control select2" type="button" style="width: 100%;" id="comboAgency" onclick="getSers()"></select>
+                                <label>Chi Nhánh:</label>
+                                <select class="form-control select2" type="button" style="width: 100%;" id="comboAgency" onchange="getSers()"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <label>Danh mục:</label>
-                                <select type="button" class="form-control select2" style="width: 100%;" id="comboSerName" onclick="getSerItems()"></select>
+                                <select type="button" class="form-control select2" style="width: 100%;" id="comboSerName" onchange="getSerItems()"></select>
                             </div>
                             <input id="idSer" type="hidden" />
                             <div class="col-md-12" style="margin-top:10px">
                                 <label>Hiện tượng:</label>
-                                <select class="form-control select2" type="button" style="width: 100%;" id="comboSerItem" onclick="getDevice()"></select>
+                                <select class="form-control select2" type="button" style="width: 100%;" id="comboSerItem" onchange="getDevice()"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <label>Thiết Bị:</label>
@@ -244,8 +244,8 @@
         $(document).ready(function () {
             loadRequest();
             loadRequestStatistic();
-            startRefresh();
             showAgency();
+            startRefresh();            
             //var fc = $('#comboDevices option:first-child').val();
             //$('#comboDevices').val(fc).trigger('change');
         });
@@ -434,7 +434,7 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     var obj = data.result.ObjReturn;
-                    var html = '';
+                    var html = '<option value="0">--Chọn chi nhánh--</option>';
                     if (obj != null) {
                         for (var i = 0; i < obj.length; i++) {
                             html += '<option value="' +
@@ -479,7 +479,7 @@
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
                     var obj = data.result.ObjReturn;
-                    var html = '';
+                    var html = '<option value="0">--Chọn danh mục--</option>';
                     if (obj != null) {
                         for (var i = 0; i < obj.length; i++) {
                             html += '<option value="' +
@@ -511,7 +511,7 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     var obj = data.result.ObjReturn;
-                    var html = '';
+                    var html = '<option value="0">--Chọn hiện tượng--</option>';
                     if (obj != null) {
                         for (var i = 0; i < obj.length; i++) {
                             html += '<option value="' +
@@ -629,18 +629,28 @@
             $('#EditModal').modal('show');
         }
 
-         function createRequest() {
+    function createRequest() {
+        var deviceIds = $('#comboDevices').val();
+        var tickets = new Array();
+        for (i = 0; i < deviceIds.length; ++i) {
+            var ticket = {
+                DeviceId: deviceIds[i]
+            }
+            tickets.push(ticket);
+        }
+        
              var empObj = {
-                AgencyId: $('#comboAgency').val(),
-                RequestCategoryId: $('#comboSerName').val(),
-                RequestName: $('#comboSerItem').val(),
-                Tickets: $('#comboDevices').val(), // Đây là danh sách ID của tất cả Devices Được chọn.
-                Telephone: $('#PhoneC').val(),
+                 AgencyId: $('#comboAgency').val(),
+                 RequestCategoryId: 3,
+                 ServiceItemId: $('#comboSerItem').val(),
+                 RequestName: $("#comboAgency option:selected").text() + " - " + $("#comboSerItem option:selected").text(),
+                 Tickets: tickets,
+                AgencyTelephone: $('#PhoneC').val(),
                 RequestDesciption: $('#DescripC').val(),
             }
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("CreateRequestMVC", "Agency")',
+                url: '@Url.Action("CreateRequest", "Request")',
                 data: JSON.stringify(empObj),
 
                 dataType: 'json',
