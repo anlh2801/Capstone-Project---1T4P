@@ -204,9 +204,28 @@
         width: 100%;
     }
 </style>
+
 <!-- Datatable -->
 <div class="row col-md-12">
     <h3 class="city">Sự cố đã báo</h3>
+</div>
+<div class="row col-md-12">
+    <div class="row col-md-3">
+        <b>Thời Gian:</b><br>
+        <input class="form-control" type="button" id="requestCreateDate" style="width:95%; margin-bottom:15px;text-align:left;"></input>
+    </div>
+    <div class="row col-md-3">
+        <b>Công Ty:</b><br>
+        <select class="form-control select2" type="button" id="requestCompany" style="width:95%; margin-bottom:15px;"></select>
+    </div>
+    <div class="row col-md-3">
+        <b>Loại Sự Cố:</b><br>
+        <select class="form-control select2" type="button" id="requestServiceType" style="width:95%; margin-bottom:15px;"></select>
+    </div>
+    <div class="row col-md-3">
+        <b></b><br>
+        <button type="button" class="btn btn-primary fa fa-eye" data-toggle="modal" data-target="" onclick="LocSuCo()"><font face="verdana"> Lọc Sự Cố</button>
+    </div>
 </div>
 <div class="row col-md-12">
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
@@ -230,28 +249,33 @@
 
 <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts {
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
-<script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
-<link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
-<script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
+    <script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
 
 <script>
         $(document).ready(function () {
             loadRequest();
             loadRequestStatistic();
             showAgency();
-            startRefresh();            
-            //var fc = $('#comboDevices option:first-child').val();
-            //$('#comboDevices').val(fc).trigger('change');
+            startRefresh();
+            showCompany();
+            showServiceType();
         });
         $('#comboDevices').select2({
             dropdownParent: $('#createModal')
         });
+        $('#requestCreateDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            forceParse: false,
+        })
         function startRefresh() {
             setTimeout(startRefresh, 1000);
             loadRequest();
@@ -259,7 +283,7 @@
         }
         var isWaitingHeroAccept = false;
         var currentRequestId = 0;
-            function loadRequestStatistic() {
+        function loadRequestStatistic() {
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetRequestStatistic", "Request")',
@@ -300,6 +324,61 @@
                 },
                 error: function(error) {
                     showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                }
+            });
+        }
+
+        function showCompany() {
+            $('#requestCompany')
+                .find('option')
+                    .remove()
+                    .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllCompany", "Company")',
+                data: {
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var len = data.result.ObjReturn.length;
+                    var html = '';
+                    for (var i = 0; i < len; i++) {
+                        html += '<option value="' +
+                            data.result.ObjReturn[i].CompanyId +
+                            '">' +
+                            data.result.ObjReturn[i].CompanyName +
+                            '</option>';
+                    }
+                    $('#requestCompany').append(html);
+                }
+            });
+        }
+        function showServiceType() {
+            $('#requestServiceType')
+                    .find('option')
+                    .remove()
+                    .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllServiceITSupport", "ServiceITSupport")',
+                data: {
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var len = data.result.ObjReturn.length;
+                    var html = '';
+                    for (var i = 0; i < len; i++) {
+                        html += '<option value="' +
+                            data.result.ObjReturn[i].ServiceITSupportId +
+                            '">' +
+                            data.result.ObjReturn[i].ServiceName +
+                            '</option>';
+                    }
+                    $('#requestServiceType').append(html);
                 }
             });
         }
@@ -410,9 +489,10 @@
             $('#createModal').modal('show');
         }
         function clearModal() {
+            $("#comboDevices").empty();
             $('#createModal').on('hidden.bs.modal', function (e) {
                 $(this)
-                    .find("input,textarea")
+                    .find("input,textarea,select")
                     .val('')
                     .end()
                     .find("input[type=checkbox], input[type=radio]")
@@ -638,7 +718,7 @@
             }
             tickets.push(ticket);
         }
-        
+
              var empObj = {
                  AgencyId: $('#comboAgency').val(),
                  RequestCategoryId: 3,
