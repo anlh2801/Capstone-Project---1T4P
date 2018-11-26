@@ -70,6 +70,13 @@ namespace CapstoneProject_ODTS.Controllers
         }
 
 
+        public ActionResult SetPriority(int requestId, int priority)
+        {
+            var result = _requestDomain.SetPriority(requestId, priority);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult RequestDetail(int id)
         {
             ViewBag.Title = "Home Page";

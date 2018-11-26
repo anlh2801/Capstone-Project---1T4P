@@ -262,12 +262,12 @@
 
     <script>
         $(document).ready(function () {
+            showCompany();
+            showServiceItems();
             loadRequest();
             loadRequestStatistic();
             showAgency();
-            startRefresh();
-            showCompany();
-            showServiceItems();
+            startRefresh();            
         });
         $('#comboDevices').select2({
             dropdownParent: $('#createModal')
@@ -309,25 +309,33 @@
                     }
                 },
                 error: function(error) {
-                    showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                    //showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
                 }
             });
         }
 
         function loadRequest() {
+            var companyId;
+            var serviceItemId;
+            if ($("#requestCompany").val() != null) {
+                companyId = $("#requestCompany").val();
+            } else { companyId = 0 }
+            if ($("#requestServiceItem").val() != null) {
+                serviceItemId = $("#requestServiceItem").val();
+            } else { serviceItemId = 0 }
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetAllRequest", "Request")',
                 data: {
-                    companyId: $("#requestCompany").val(),
-                    serviceItemId: $("#requestServiceItem").val()
+                    companyId: companyId,
+                    serviceItemId: serviceItemId
                 },
                 success: function (result) {
                     if (!result.result.ObjReturn != null)
                         initDatatable(result.result.ObjReturn);
                 },
                 error: function(error) {
-                    showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                   // showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
                 }
             });
         }
@@ -343,7 +351,7 @@
                     initDatatable(result.result.ObjReturn);
                 },
                 error: function(error) {
-                    showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                   // showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
                 }
             });
         }
@@ -459,7 +467,30 @@
                     {
                         "aTargets": [4],
                         "mRender": function (data, type, full) {
-                            return full.Priority;
+                            if (full.Priority === "Xử lý gấp") {
+                                var Priority = '<span class = "label label-danger">' + full.Priority + '</span>';
+                                var Normal = ' <button type="button" class="btn btn-warning fa fa-wrench" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 2)"></button>';
+                                var Non_Urgent = '<button type="button" class="btn btn-primary btn fa fa-hourglass" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 3)"></button>';
+                                return Priority + " " + Normal + " " + Non_Urgent;
+                            }
+                            else if (full.Priority === "Cần xử lý") {
+                                var Priority = '<span class = "label label-warning">' + full.Priority + '</span>';
+                                var Urgent = '<button type="button" class="btn btn-danger glyphicon glyphicon-fire" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 1)"></button>';
+                                var Non_Urgent = '<button type="button" class="btn btn-primary btn fa fa-hourglass" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 3)"></button>';
+                                return Priority + " " + Urgent + " " + Non_Urgent;
+                            }
+                            else if (full.Priority === "Không gấp") {
+                                var Priority = '<span class = "label label-primary">' + full.Priority + '</span>';
+                                var Urgent = '<button type="button" class="btn btn-danger glyphicon glyphicon-fire" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 1)"></button>';
+                                var Normal = ' <button type="button" class="btn btn-warning fa fa-wrench" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 2)"></button>';
+                                return Priority + " " + Urgent + " " + Normal;
+                            }
+                            else {    
+                                var Urgent = '<button type="button" class="btn btn-danger glyphicon glyphicon-fire" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 1)"></button>';
+                                var Normal = ' <button type="button" class="btn btn-warning fa fa-wrench" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 2)"></button>';                    
+                                var Non_Urgent = '<button type="button" class="btn btn-primary btn fa fa-hourglass" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 3)"></button>';                        
+                                return Urgent + " " + Normal + " " + Non_Urgent;
+                                }
                         }
                     },
                     {
@@ -659,7 +690,7 @@
                     $('#comboDevices').append(html);
                 }
             });
-        }
+        } 
         function asignHero(requestId) {
             currentRequestId = requestId
             $.ajax({
@@ -678,6 +709,27 @@
                         currentRequestId = requestId
                         loadRequest();
                         loadRequestStatistic();
+                    } else
+                        swal(data.result.WarningMessage, "", "error");
+                }
+            });
+        }
+
+        function setPriority(requestId, priority) {
+            currentRequestId = requestId
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "SetPriority", controller = "Request"})',
+
+                data: {
+                    requestId: requestId,
+                    priority: priority
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    if (!data.result.IsError) {
+                        swal(data.result.SuccessMessage, "", "success");                        
                     } else
                         swal(data.result.WarningMessage, "", "error");
                 }

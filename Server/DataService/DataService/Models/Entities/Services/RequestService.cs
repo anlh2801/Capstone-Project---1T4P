@@ -23,6 +23,8 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<RequestAPIViewModel> GetRequestBytRequestId(int requestId);
 
+        ResponseObject<int> SetPriority(int requestId, int priority);
+
         ResponseObject<List<RequestAPIViewModel>> GetRequestWithStatus(int status);
 
         ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> GetAllRequestByAgencyIDAndStatus(int acency_id, int status);
@@ -1053,5 +1055,29 @@ namespace DataService.Models.Entities.Services
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Hủy yêu cầu thất bại", ObjReturn = false, ErrorMessage = e.ToString() };
             }
         }
+        public ResponseObject<int> SetPriority(int requestId, int priority)
+        {
+            try
+            {               
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var request = requestRepo.GetActive().SingleOrDefault(a => a.RequestId == requestId);
+                if (request != null)
+                {
+                    request.Priority = priority;
+                    request.UpdateDate = DateTime.UtcNow.AddHours(7);
+
+                    requestRepo.Edit(request);
+                    requestRepo.Save();
+                    return new ResponseObject<int> { IsError = false, SuccessMessage = "Cập nhật độ ưu tiên thành công", ObjReturn = request.RequestId };
+                }
+
+                return new ResponseObject<int> { IsError = true, WarningMessage = "Cập nhật độ ưu tiên thất bại" };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<int> { IsError = true, WarningMessage = "Hủy yêu cầu thất bại", ErrorMessage = e.ToString() };
+            }
+        }        
     }
 }
