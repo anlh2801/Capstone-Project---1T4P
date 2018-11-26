@@ -1,5 +1,6 @@
 package com.odts.it_supporter_app.activities;
 
+import android.app.ActionBar;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,23 +10,25 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import com.odts.it_supporter_app.R;
+
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
-import com.odts.it_supporter_app.R;
-import com.odts.it_supporter_app.customTools.BottomNavigationViewHelper;
-import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.services.ITSupporterService;
 import com.odts.it_supporter_app.utils.CallBackData;
 
@@ -39,49 +42,49 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sp;
     ITSupporterService itSupporterService;
     android.support.v7.widget.Toolbar toolbar;
+    DrawerLayout mDrawerLayout;
     boolean isOnline;
-    BottomNavigationView bottomNavigationView;
+    ActionBarDrawerToggle toggle;
+    //    BottomNavigationView bottomNavigationView;
     ImageButton btnLogout;
+    TextView username;
+    NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        swStatus = (Switch) findViewById(R.id.switch2);
+        navigationView = findViewById(R.id.nav_view);
+        View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header);
+//        panel = headerLayout.findViewById(R.id.viewId);
+        username = (TextView) headerLayout.findViewById(R.id.username);
         share = getSharedPreferences("ODTS", Context.MODE_PRIVATE);
         itSupporterId = share.getInt("itSupporterId", 0);
+        username.setText(share.getString("itName", ""));
+
         isOnline = true;
         initHome();
-        initBottomMenu();
-
-//        btnChat = findViewById(R.id.btnChatMain);
-//        btnChat.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, ChatActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        btnTimeline = findViewById(R.id.btnTimeLine);
-//        btnTimeline.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, StatusTimelineActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        initDrawer();
         Bundle extras = getIntent().getExtras();
         onNewIntent(getIntent());
         toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toggle = new ActionBarDrawerToggle(MainActivity.this, mDrawerLayout, 0, 0);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
         itSupporterService.getIsOnline(this, itSupporterId, new CallBackData<Boolean>() {
             @Override
             public void onSuccess(Boolean aBoolean) {
                 if(aBoolean) {
                     swStatus.setChecked(aBoolean);
-                    toolbar.setTitle("Trực tuyến");
+//                    toolbar.setTitle("Trực tuyến");
                 }
                 else {
                     swStatus.setChecked(false);
-                    toolbar.setTitle("Ngoại tuyến");
+//                    toolbar.setTitle("Ngoại tuyến");
                 }
 
             }
@@ -91,8 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        swStatus = (Switch) findViewById(R.id.switch2);
-
         swStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
                                     itSupporterService.updateStatusIT(MainActivity.this, itSupporterId, b);
-                                    toolbar.setTitle("Ngoại tuyến");
+//                                    toolbar.setTitle("Ngoại tuyến");
                                 }
                             })
                             .setNegativeButton("Không", new DialogInterface.OnClickListener() {
@@ -118,34 +119,42 @@ public class MainActivity extends AppCompatActivity {
                             .show();
 
                 } else
-                    toolbar.setTitle("Trực tuyến");
+//                    toolbar.setTitle("Trực tuyến");
                 itSupporterService.updateStatusIT(MainActivity.this, itSupporterId, b);
 
             }
         });
-        btnLogout = (ImageButton) findViewById(R.id.btnLogout);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                share = getSharedPreferences("ODTS", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = share.edit();
-                editor.clear();
-                editor.commit();
-                sp = getSharedPreferences("loginHero", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor2 = sp.edit();
-                editor2.clear();
-                editor2.commit();
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-//                deleteCache(MainActivity.this);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE))
-                            .clearApplicationUserData();
-                }
-            }
-        });
+//        btnLogout = (ImageButton) findViewById(R.id.btnLogout);
+//        btnLogout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                share = getSharedPreferences("ODTS", Context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor = share.edit();
+//                editor.clear();
+//                editor.commit();
+//                sp = getSharedPreferences("loginHero", Context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor2 = sp.edit();
+//                editor2.clear();
+//                editor2.commit();
+//                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//                startActivity(intent);
+////                deleteCache(MainActivity.this);
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//                    ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE))
+//                            .clearApplicationUserData();
+//                }
+//            }
+//        });
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void initHome() {
         itSupporterService = new ITSupporterService();
         itSupporterService.getIsBusy(MainActivity.this, itSupporterId, new CallBackData<Boolean>() {
@@ -153,13 +162,14 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(Boolean aBoolean) {
                 if (!aBoolean) {
                     loadFragment(new RecieveRequestFragment());
+                    toolbar.setTitle("Chờ công việc");
                 } else {
                     Intent myIntent = getIntent();
-                    if(myIntent.getStringExtra("scan") != null) {
+                    if (myIntent.getStringExtra("scan") != null) {
                         loadFragment(new ScanDeviceFragment());
-                    }
-                    else
-                    loadFragment(new DoRequestFragment());
+                    } else
+                        toolbar.setTitle("Đang thực hiện");
+                        loadFragment(new DoRequestFragment());
                 }
             }
 
@@ -170,30 +180,34 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void initBottomMenu() {
-        bottomNavigationView = findViewById(R.id.navigationView);
-        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
-        Fragment fragment = null;
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.navigation_home:
-                        initHome();
-                        break;
-                    case R.id.navigation_scanQR:
-                        loadFragment(new ScanDeviceFragment());
-                        break;
-                    case R.id.navigation_sumary:
-                        loadFragment(new SumaryFragment());
-                        break;
-                    case R.id.navigation_accountDetail:
-                        loadFragment(new ProfleFragment());
-                        break;
-                }
-                return true;
-            }
-        });
+    private void initDrawer() {
+        navigationView.setNavigationItemSelectedListener( new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(true);
+                        switch (menuItem.getItemId()) {
+                            case R.id.navigation_home:
+                                initHome();
+                                toolbar.setTitle("Trang chủ");
+                                break;
+                            case R.id.navigation_scanQR:
+                                loadFragment(new ScanDeviceFragment());
+                                toolbar.setTitle("Tra cứu");
+                                break;
+                            case R.id.navigation_sumary:
+                                toolbar.setTitle("Lịch sử");
+                                loadFragment(new SumaryFragment());
+                                break;
+                            case R.id.navigation_accountDetail:
+                                toolbar.setTitle("Tài khoản");
+                                loadFragment(new ProfleFragment());
+                                break;
+                        }
+                        mDrawerLayout.closeDrawer(GravityCompat.START);
+                        return true;
+                    }
+                });
+
     }
 
 
