@@ -1,4 +1,5 @@
-﻿using DataService.CustomTools;
+﻿using DataService.APIViewModels;
+using DataService.CustomTools;
 using DataService.Domain;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,20 @@ namespace CapstoneProject_ODTS.Controllers
         private RequestDomain _requestDomain;
 
         private AgencyDomain _agencyDomain;
-       
+
+        private ServiceITSupportDomain _serviceITSupportDomain;
+
+        private ServiceItemDomain _serviceItemDomain;
+
+        private DeviceDomain _deviceDomain;
+
         public RequestController()
         {
             _requestDomain = new RequestDomain();
             _agencyDomain = new AgencyDomain();
+            _serviceITSupportDomain = new ServiceITSupportDomain();
+            _serviceItemDomain = new ServiceItemDomain();
+            _deviceDomain = new DeviceDomain();
         }
         public ActionResult Index()
         {
@@ -123,5 +133,33 @@ namespace CapstoneProject_ODTS.Controllers
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult CreateRequest(RequestAllTicketWithStatusAgencyAPIViewModel model)
+        {
+            var result = _agencyDomain.CreateRequest(model);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+
+        }
+        // Danh mục
+        public ActionResult GetServiceITSupportByAgencyId(int agencyId)
+        {
+            var result = _serviceITSupportDomain.GetAllServiceITSupportByAgencyId(agencyId);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+        // Hiện tượng
+        public ActionResult GetAllServiceItemByServiceId(int serviceId)
+        {
+            var result = _serviceItemDomain.GetAllServiceItemByServiceId(serviceId);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+        // Thiết bị
+        public ActionResult GetAllDeviceByAgencyIdAndServiceId(int agencyId, int serviceId)
+        {
+            var result = _deviceDomain.ViewAllDeviceByAgencyIdAndServiceId(agencyId, serviceId);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

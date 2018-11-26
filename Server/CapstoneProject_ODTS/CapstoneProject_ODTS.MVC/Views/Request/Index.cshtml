@@ -55,28 +55,28 @@
                         <div class="row">
 
                             <div class="col-md-12">
-                                <label >Tên Chi Nhánh:</label>
+                                <label>Chi Nhánh:</label>
                                 <select class="form-control select2" style="width: 100%;" id="AgencyNameC"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <label >Loại Dịch Vụ:</label>
+                                <label>Danh mục:</label>
                                 <select class="form-control select2" style="width: 100%;" id="SerNameC"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <label >Tên Dịch Vụ:</label>
-                                <input id="SerItemNameC" type="text" class="form-control" required>
+                                <label>Hiện tượng:</label>
+                                <select class="form-control select2" style="width: 100%;" id="SerItemNameC"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <label >Thiết Bị:</label>
+                                <label>Thiết Bị:</label>
                                 <input id="DeviceNameC" type="text" class="form-control" required>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <label >Mô Tả:</label>
-                                <input id="DescripC" type="text" class="form-control" required>
+                                <label>Số Điện Thoại:</label>
+                                <input id="PhoneC" type="text" class="form-control" required>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <label >Số Điện Thoại:</label>
-                                <input id="PhoneC" type="text" class="form-control" required>
+                                <label>Mô Tả hiện tượng:</label>
+                                <textarea id="DescripC" class="form-control" rows="3" placeholder="Ví dụ: mất sóng wifi tầng trệt, khó truy cập..."></textarea>
                             </div>
                         </div>
                     </div>
@@ -351,7 +351,7 @@
                     {
                         "aTargets": [5],
                         "mRender": function (data, type, full) {
-                            if (full.StatusName === "Chờ Xử lý")
+                            if (full.StatusName === "Chờ xử lý")
                                 return '<span class = "label label-warning">' + full.StatusName + '</span>';
                             else if (full.StatusName === "Đang xử lý")
                                 return '<span class = "label label-primary">' + full.StatusName + '</span>';
@@ -372,7 +372,7 @@
                                 return del;
                             }                            
                             else if (full.StatusName === "Hủy bỏ") {
-                                return "Đã hủy sự cố";
+                                return '<span class = "label label-danger">Đã hủy theo yêu cầu</span>';
                             }
                             else if(full.ITSupporterName !== "") {
                                 return full.ITSupporterName;

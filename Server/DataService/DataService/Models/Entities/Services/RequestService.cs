@@ -79,7 +79,7 @@ namespace DataService.Models.Entities.Services
                     var requestPriorityStatus = "";
                     foreach (RequestPriorityEnum requestPriorityItem in Enum.GetValues(typeof(RequestPriorityEnum)))
                     {
-                        if (item.Priority == i)
+                        if (item.Priority == j)
                         {
                             requestPriorityStatus = requestPriorityItem.DisplayName();
                         }
