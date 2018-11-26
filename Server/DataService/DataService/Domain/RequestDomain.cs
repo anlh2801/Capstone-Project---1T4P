@@ -39,6 +39,8 @@ namespace DataService.Domain
         ResponseObject<bool> ApproveCancelRequest(int request_id, int status);
 
         ResponseObject<RequestAPIViewModel> GetRequestBytRequestId(int requestId);
+
+        ResponseObject<int> SetPriority(int requestId, int priority);
     }
 
     public  class RequestDomain : BaseDomain, IRequestDomain
@@ -186,6 +188,15 @@ namespace DataService.Domain
 
             return result;
         }
-        
+
+        public ResponseObject<int> SetPriority(int requestId, int priority)
+        {
+            var requestService = this.Service<IRequestService>();
+
+            var result = requestService.SetPriority(requestId, priority);
+
+            return result;
+        }
+
     }
 }
