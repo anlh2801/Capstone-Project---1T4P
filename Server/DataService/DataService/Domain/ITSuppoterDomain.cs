@@ -22,6 +22,8 @@ namespace DataService.Domain
 
         //ResponseObject<bool> EstimateTimeTicket(ITSupporterUpdateEstimateTimeAPIViewModel model);
 
+        ResponseObject<ITSupporterCreateTaskAPIViewModel> GetTaskByRequestTaskId(int taskId);
+
         ResponseObject<bool> UpdateTaskStatus(int requestTaskId, bool isDone);
 
         ResponseObject<bool> DeleteTaskStatus(int requestTaskId);
@@ -168,7 +170,18 @@ namespace DataService.Domain
 
             return result;
         }
+
+        public ResponseObject<ITSupporterCreateTaskAPIViewModel> GetTaskByRequestTaskId(int taskId)
+        {
+            var iTSupporterService = this.Service<IITSupporterService>();
+
+            var result = iTSupporterService.GetTaskByRequestTaskId(taskId);
+
+            return result;
+        }
         
+
+
         public ResponseObject<bool> SetMonitorTimeTask(ITSupporterSetMonitorTimeTaskAPIViewModel model)
         {
             var iTSupporterService = this.Service<IITSupporterService>();

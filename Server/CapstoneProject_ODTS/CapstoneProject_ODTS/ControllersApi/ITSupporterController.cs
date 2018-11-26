@@ -55,6 +55,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage ViewRequestITSupporter(int itsupporter_id);
 
         HttpResponseMessage GetDeviceDetailByDeviceCode(string devcieCode);
+
+        HttpResponseMessage GetTaskByRequestTaskId(int taskId);
     }
 
     public class ITSupporterController : ApiController, IITSupporterController
@@ -170,7 +172,16 @@ namespace CapstoneProject_ODTS.ControllersApi
             var result = _ITSupporterDomain.GetAllTaskByRequestId(requestId);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
 
+        [HttpGet]
+        [Route("ITsuportter/task_by_requestTasktId/{taskId}")]
+        public HttpResponseMessage GetTaskByRequestTaskId(int taskId)
+        {
+            var result = _ITSupporterDomain.GetTaskByRequestTaskId(taskId);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+            
         }
 
         [HttpPost]
