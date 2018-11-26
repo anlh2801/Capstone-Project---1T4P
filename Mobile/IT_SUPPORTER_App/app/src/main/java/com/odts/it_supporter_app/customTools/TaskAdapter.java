@@ -42,12 +42,12 @@ public class TaskAdapter extends ArrayAdapter<RequestTask> {
         LayoutInflater inflater = this.context.getLayoutInflater();
         View row = inflater.inflate(this.resource, null);
         TextView txtDeviceNameManage = (TextView) row.findViewById(R.id.txtDeviceNameManage);
-        ImageButton btnDeleteDevice = (ImageButton) row.findViewById(R.id.btnDeleteDevice);
+        final  ImageButton btnDeleteDevice = (ImageButton) row.findViewById(R.id.btnDeleteDevice);
         final SmoothCheckBox smoothCheckBox = (SmoothCheckBox) row.findViewById(R.id.cbTask);
         taskService = new TaskService();
         taskService.getTaskByRequestID(getContext(), 367, new CallBackData<ArrayList<RequestTask>>() {
             @Override
-            public void onSuccess(ArrayList<RequestTask> requestTasks) {
+            public void onSuccess(final ArrayList<RequestTask> requestTasks) {
                 for (final RequestTask item : requestTasks) {
                     smoothCheckBox.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
                         @Override
@@ -64,6 +64,22 @@ public class TaskAdapter extends ArrayAdapter<RequestTask> {
                                     }
                                 });
                             }
+                        }
+                    });
+                    btnDeleteDevice.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            taskService.deleteTask(getContext(), item.getRequestTaskId(), new CallBackData<Boolean>() {
+                                @Override
+                                public void onSuccess(Boolean aBoolean) {
+
+                                }
+
+                                @Override
+                                public void onFail(String message) {
+
+                                }
+                            });
                         }
                     });
                     

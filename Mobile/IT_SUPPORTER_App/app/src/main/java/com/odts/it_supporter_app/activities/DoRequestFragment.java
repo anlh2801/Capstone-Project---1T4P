@@ -429,9 +429,9 @@ public class DoRequestFragment extends Fragment {
                                     @Override
                                     public void onSuccess(Boolean aBoolean) {
                                         if (aBoolean) {
-                                            tick2 = new CheckBox(getContext());
-                                            linearLayoutTask.addView(tick2);
-                                            tick2.setText(m_Text);
+//                                            tick2 = new CheckBox(getContext());
+//                                            linearLayoutTask.addView(tick2);
+//                                            tick2.setText(m_Text);
                                         }
                                     }
 

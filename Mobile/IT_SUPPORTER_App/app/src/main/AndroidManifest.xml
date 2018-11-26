@@ -34,7 +34,6 @@
         <activity android:name=".activities.StatusTimelineActivity" />
         <activity android:name=".activities.WaitingActivity" />
         <activity android:name=".activities.GuidelineActivity" />
-        <activity android:name=".activities.TaskActivity" />
         <activity android:name=".activities.DeviceInfoActivity"></activity>
     </application>
 

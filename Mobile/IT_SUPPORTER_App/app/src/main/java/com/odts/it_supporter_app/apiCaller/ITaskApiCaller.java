@@ -23,4 +23,7 @@ public interface ITaskApiCaller {
     @PUT("ITsuportter/update_task_status")
     Call<ResponseObject<Boolean>> updateTaskStatus(@Query("requestTaskId") Integer requestTaskId ,
                                                     @Query("isDone") Boolean isDone);
+
+    @PUT("ITsuportter/delete_task")
+    Call<ResponseObject<Boolean>> deleteTask(@Query("requestTaskId") Integer requestTaskId );
 }

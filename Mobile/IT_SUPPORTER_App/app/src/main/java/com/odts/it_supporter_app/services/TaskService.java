@@ -19,18 +19,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TaskService {
-    public void getTaskByRequestID (final Context context, int requestID, final CallBackData<ArrayList<RequestTask>> callBackData) {
+    public void getTaskByRequestID(final Context context, int requestID, final CallBackData<ArrayList<RequestTask>> callBackData) {
         ITaskApiCaller service = RetrofitInstance.getRetrofitInstance().create(ITaskApiCaller.class);
         Call<ResponseObjectReturnList<RequestTask>> call = service.getTaskByRequestID(requestID);
         call.enqueue(new Callback<ResponseObjectReturnList<RequestTask>>() {
             @Override
             public void onResponse(Call<ResponseObjectReturnList<RequestTask>> call, Response<ResponseObjectReturnList<RequestTask>> response) {
-                if(response.code() == 200 && response.body() != null){
+                if (response.code() == 200 && response.body() != null) {
                     if (!response.body().isError()) {
                         callBackData.onSuccess(response.body().getObjList());
                     }
                 } else {
-                    Log.e("MainActivity", "error" );
+                    Log.e("MainActivity", "error");
                 }
             }
 
@@ -41,6 +41,7 @@ public class TaskService {
         });
 
     }
+
     public void createTask(final Context context, RequestTask task, final CallBackData<Boolean> callBackData) {
         ITaskApiCaller service = RetrofitInstance.getRetrofitInstance().create(ITaskApiCaller.class);
         Call<ResponseObject<Boolean>> call = service.createTask(task);
@@ -62,9 +63,30 @@ public class TaskService {
         });
     }
 
-    public void updateTaskStatus(final Context context, Integer requestTaskId , Boolean isDone , final CallBackData<Boolean> callBackData) {
+    public void updateTaskStatus(final Context context, Integer requestTaskId, Boolean isDone, final CallBackData<Boolean> callBackData) {
         ITaskApiCaller service = RetrofitInstance.getRetrofitInstance().create(ITaskApiCaller.class);
-        Call<ResponseObject<Boolean>> call = service.updateTaskStatus(requestTaskId , isDone);
+        Call<ResponseObject<Boolean>> call = service.updateTaskStatus(requestTaskId, isDone);
+        call.enqueue(new Callback<ResponseObject<Boolean>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
+                if (!response.body().isError()) {
+                    Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
+                    if (response.body().getObjReturn() != false) {
+                        callBackData.onSuccess(response.body().getObjReturn());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<Boolean>> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
+
+    public void deleteTask(final Context context, Integer requestTaskId, final CallBackData<Boolean> callBackData) {
+        ITaskApiCaller service = RetrofitInstance.getRetrofitInstance().create(ITaskApiCaller.class);
+        Call<ResponseObject<Boolean>> call = service.deleteTask(requestTaskId);
         call.enqueue(new Callback<ResponseObject<Boolean>>() {
             @Override
             public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
