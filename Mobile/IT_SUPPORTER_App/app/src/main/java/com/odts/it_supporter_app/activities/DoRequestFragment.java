@@ -63,7 +63,7 @@ public class DoRequestFragment extends Fragment {
     LinearLayout linearLayoutTask, linerTask;
     SegmentedGroup segmentedGroup;
     EditText userInputDialogEditText;
-    ImageButton scan;
+    ImageButton scan, detail;
 
     RequestService _requestService;
     TaskService _taskService;
@@ -90,10 +90,13 @@ public class DoRequestFragment extends Fragment {
         menu.bringToFront();
         btnCall = v.findViewById(R.id.action_a);
         btnChat = v.findViewById(R.id.action_b);
+        detail = v.findViewById(R.id.imageButton2);
+
         listView = (ListView) v.findViewById(R.id.listTask);
         //requestService = new RequestService();
         itSupporterService = new ITSupporterService();
         rqName = (TextView) v.findViewById(R.id.txtRequestName);
+
         agencyName = v.findViewById(R.id.txtAgency);
         agencyAddress = v.findViewById(R.id.txtAddress);
         createDate = v.findViewById(R.id.txtCreateDate);
@@ -114,6 +117,18 @@ public class DoRequestFragment extends Fragment {
         _requestService.getRequestByRequestIdAndITSupporterId(getActivity(), itSupporterId, new CallBackData<Request>() {
             @Override
             public void onSuccess(final Request request) {
+                detail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        View v = getLayoutInflater().inflate(R.layout.agency_detail, null);
+                        TextView requestNameAlert = (TextView) v.findViewById(R.id.textViewRequestName);
+                        requestNameAlert.setText(request.getRequestName());
+                        builder.setView(v);
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                });
                 requestId = request.getRequestId();
                 serviceItemId = request.getServiceItemId();
                 serviceItemName = request.getServiceItemName();
