@@ -9,6 +9,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 public interface IAgencyApiCaller {
@@ -16,4 +17,6 @@ public interface IAgencyApiCaller {
     Call<ResponseObject<Agency>> getAgencyProfile(@Query("agency_id") Integer agency_id);
     @POST("agency/create_device")
     Call<ResponseObject<Boolean>> createDevice(@Body Device device);
+    @PUT("agency/update_device")
+    Call<ResponseObject<Boolean>> updateDevice(@Body Device device);
 }
