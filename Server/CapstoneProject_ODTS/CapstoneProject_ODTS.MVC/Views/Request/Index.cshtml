@@ -53,26 +53,29 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-
+                            <input id="idCom" type="hidden" />
+                            <input id="idAgency" type="hidden" />
                             <div class="col-md-12">
-                                <label>Chi Nhánh:</label>
-                                <select class="form-control select2" style="width: 100%;" id="AgencyNameC"></select>
+                                <label>Tên Chi Nhánh:</label>
+                                <select class="form-control select2" type="button" style="width: 100%;" id="comboAgency" onclick="getSers()"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <label>Danh mục:</label>
-                                <select class="form-control select2" style="width: 100%;" id="SerNameC"></select>
+                                <select type="button" class="form-control select2" style="width: 100%;" id="comboSerName" onclick="getSerItems()"></select>
                             </div>
+                            <input id="idSer" type="hidden" />
                             <div class="col-md-12" style="margin-top:10px">
                                 <label>Hiện tượng:</label>
-                                <select class="form-control select2" style="width: 100%;" id="SerItemNameC"></select>
+                                <select class="form-control select2" type="button" style="width: 100%;" id="comboSerItem" onclick="getDevice()"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <label>Thiết Bị:</label>
-                                <input id="DeviceNameC" type="text" class="form-control" required>
+
+                                <select multiple class="form-control select2" type="button" style="width: 100%;" id="comboDevices"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <label>Số Điện Thoại:</label>
-                                <input id="PhoneC" type="text" class="form-control" required>
+                                <input id="PhoneC" type="text" disabled="disabled" class="form-control" required>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <label>Mô Tả hiện tượng:</label>
@@ -227,16 +230,27 @@
 
 <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts {
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
-    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+<script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+<link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
+<script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+
+<script>
         $(document).ready(function () {
             loadRequest();
             loadRequestStatistic();
             startRefresh();
+            showAgency();
+            //var fc = $('#comboDevices option:first-child').val();
+            //$('#comboDevices').val(fc).trigger('change');
+        });
+        $('#comboDevices').select2({
+            dropdownParent: $('#createModal')
         });
         function startRefresh() {
             setTimeout(startRefresh, 1000);
@@ -363,14 +377,14 @@
                                 return '<span class = "label label-default">' + full.StatusName + '</span>';
                         }
                     },
-                    
+
                     {
                         "aTargets": [6],
                         "mRender": function (data, type, full) {
                             if (full.StatusName === "Chờ hủy") {
                                 var del = ' <button type="button" class="btn btn-danger fa fa-close" data-toggle="modal" data-target="" onclick="removeResquest(' + full.RequestId + ')"></button>';
                                 return del;
-                            }                            
+                            }
                             else if (full.StatusName === "Hủy bỏ") {
                                 return '<span class = "label label-danger">Đã hủy theo yêu cầu</span>';
                             }
@@ -387,7 +401,7 @@
                                 return asignHero;
                             }
                         }
-                    },                    
+                    },
                 ],
                 "bAutoWidth": false,
             });
@@ -405,6 +419,145 @@
                     .prop("checked", "")
                     .end();
             })
+        }
+        function showAgency() {
+            $('#comboAgency')
+                .find('option')
+                .remove()
+                .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllAgency", "Agency")',
+                data: {
+                },
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var obj = data.result.ObjReturn;
+                    var html = '';
+                    if (obj != null) {
+                        for (var i = 0; i < obj.length; i++) {
+                            html += '<option value="' +
+                                obj[i].AgencyId +
+                                '">' +
+                                obj[i].AgencyName +
+                                '</option>';
+                        }
+                    }
+                    $('#comboAgency').append(html);
+                }
+            });
+        }
+        function getSers() {
+            var idd = $('#comboAgency').val();
+            $('#idAgency').val(idd);
+            var id = $('#idAgency').val();
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "GetAgencyDetail", controller = "Agency"})',
+
+                data: {
+                    agency_id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    $("#PhoneC").val(data.result.ObjReturn.Telephone);
+                }
+            });
+            $('#comboSerName')
+                .find('option')
+                .remove()
+                .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetServiceITSupportByAgencyId", "Request")',
+                data: {
+                    agencyId: id
+                },
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var obj = data.result.ObjReturn;
+                    var html = '';
+                    if (obj != null) {
+                        for (var i = 0; i < obj.length; i++) {
+                            html += '<option value="' +
+                                obj[i].ServiceITSupportId +
+                                '">' +
+                                obj[i].ServiceName +
+                                '</option>';
+                        }
+                    }
+                    $('#comboSerName').append(html);
+                }
+            });
+        }
+        function getSerItems() {
+            var iddS = $('#comboSerName').val();
+            $('#idSer').val(iddS);
+            var idS = $('#idSer').val();
+            $('#comboSerItem')
+                .find('option')
+                .remove()
+                .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllServiceItemByServiceId", "Request")',
+                data: {
+                    serviceId: idS
+                },
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var obj = data.result.ObjReturn;
+                    var html = '';
+                    if (obj != null) {
+                        for (var i = 0; i < obj.length; i++) {
+                            html += '<option value="' +
+                                obj[i].ServiceItemId +
+                                '">' +
+                                obj[i].ServiceItemName +
+                                '</option>';
+                        }
+                    }
+                    $('#comboSerItem').append(html);
+                }
+            });
+        }
+        function getDevice() {
+            var idd = $('#comboAgency').val();
+            $('#idAgency').val(idd);
+            var id = $('#idAgency').val();
+            var iddS = $('#comboSerName').val();
+            $('#idSer').val(iddS);
+            var idS = $('#idSer').val();
+            $('#comboDevices')
+                .find('option')
+                        .remove()
+                        .end();
+                $.ajax({
+                type: 'GET',
+                url: '@Url.RouteUrl(new {action = "GetAllDeviceByAgencyIdAndServiceId", controller = "Request" })',
+                    data: {
+                        agencyId: id,
+                        serviceId: idS
+                    },
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var len = data.result.ObjReturn.length;
+                    var html = '';
+                    for (var i = 0; i < len; i++) {
+                        html += '<option value="' +
+                            data.result.ObjReturn[i].DeviceId +
+                            '">' +
+                            data.result.ObjReturn[i].DeviceName +
+                            '</option>';
+                    }
+                    $('#comboDevices').append(html);
+                }
+            });
         }
         function asignHero(requestId) {
             currentRequestId = requestId
@@ -477,14 +630,13 @@
         }
 
          function createRequest() {
-            var empObj = {
-                AgencyId: $('#AgencyNameC').val(),
-                RequestCategoryId: $('#SerNameC').val(),
-                ServiceItemId: $('#SerItemNameC').val(),
-                RequestDesciption: $('#DeviceNameC').val(),
-                Telephone: $('#DescripC').val(),
-                Phone: $('#PhoneC').val(),
-              
+             var empObj = {
+                AgencyId: $('#comboAgency').val(),
+                RequestCategoryId: $('#comboSerName').val(),
+                RequestName: $('#comboSerItem').val(),
+                Tickets: $('#comboDevices').val(), // Đây là danh sách ID của tất cả Devices Được chọn.
+                Telephone: $('#PhoneC').val(),
+                RequestDesciption: $('#DescripC').val(),
             }
             $.ajax({
                 type: 'POST',
@@ -557,7 +709,7 @@
                 deleteRequest();
             });
             $('#agencyRequest').val(id);
-            
+
         }
 
         //delete agency
@@ -584,6 +736,6 @@
                 }
             });
         }
-    </script>
+</script>
 
 }
