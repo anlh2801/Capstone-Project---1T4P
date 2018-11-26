@@ -42,7 +42,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         [Route("ticket/all_ticket")]
         public HttpResponseMessage GetAllRequest()
         {
-            var result = _requestDomain.GetAllRequest();
+            // 0, 0 là 2 default param cho MVC
+            var result = _requestDomain.GetAllRequest(0, 0);
             
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }

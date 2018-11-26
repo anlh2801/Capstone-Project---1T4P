@@ -23,6 +23,14 @@ namespace CapstoneProject_ODTS.MVC.Controllers
 
             return View();
         }
+
+        public ActionResult GetAllServiceItemAll()
+        {
+            var serviceItem = _serviceItemDomain.GetAllServiceItemByServiceITSupportId();
+
+            return Json(new { result = serviceItem }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult GetAllServiceItem(int serviceITSupportId)
         {
             var serviceItem = _serviceItemDomain.GetAllServiceItemByServiceITSupportId(serviceITSupportId);

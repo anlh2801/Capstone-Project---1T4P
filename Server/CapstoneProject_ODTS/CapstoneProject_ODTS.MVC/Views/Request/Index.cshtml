@@ -56,17 +56,17 @@
                             <input id="idCom" type="hidden" />
                             <input id="idAgency" type="hidden" />
                             <div class="col-md-12">
-                                <label>Tên Chi Nhánh:</label>
-                                <select class="form-control select2" type="button" style="width: 100%;" id="comboAgency" onclick="getSers()"></select>
+                                <label>Chi Nhánh:</label>
+                                <select class="form-control select2" type="button" style="width: 100%;" id="comboAgency" onchange="getSers()"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <label>Danh mục:</label>
-                                <select type="button" class="form-control select2" style="width: 100%;" id="comboSerName" onclick="getSerItems()"></select>
+                                <select type="button" class="form-control select2" style="width: 100%;" id="comboSerName" onchange="getSerItems()"></select>
                             </div>
                             <input id="idSer" type="hidden" />
                             <div class="col-md-12" style="margin-top:10px">
                                 <label>Hiện tượng:</label>
-                                <select class="form-control select2" type="button" style="width: 100%;" id="comboSerItem" onclick="getDevice()"></select>
+                                <select class="form-control select2" type="button" style="width: 100%;" id="comboSerItem" onchange="getDevice()"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <label>Thiết Bị:</label>
@@ -204,10 +204,30 @@
         width: 100%;
     }
 </style>
+
 <!-- Datatable -->
 <div class="row col-md-12">
     <h3 class="city">Sự cố đã báo</h3>
 </div>
+
+<div class="row col-md-12">
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <b>Lọc theo thời gian:</b><br>
+        <input class="form-control" type="button" id="requestCreateDate" style="width:100%; margin-bottom:15px;text-align:left;"></input>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <b>Lọc theo công ty:</b><br>
+        <select class="form-control select2" type="button" id="requestCompany" style="width:100%; margin-bottom:15px;"></select>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <b>Lọc theo loại sự cố:</b><br>
+        <select class="form-control select2" type="button" id="requestServiceItem" style="width:100%; margin-bottom:15px;"></select>
+    </div>
+</div>
+@*<div class="row col-md-12">    
+    <button type="button" class="btn btn-primary fa fa-eye pull-right" data-toggle="modal" data-target="" onclick="loadRequest()"><font face="verdana"> Áp dụng bộ lọc</button>
+</div>*@
+
 <div class="row col-md-12">
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
@@ -230,28 +250,33 @@
 
 <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts {
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
-<script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
-<link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
-<script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
+    <script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
 
-<script>
+    <script>
         $(document).ready(function () {
             loadRequest();
             loadRequestStatistic();
-            startRefresh();
             showAgency();
-            //var fc = $('#comboDevices option:first-child').val();
-            //$('#comboDevices').val(fc).trigger('change');
+            startRefresh();
+            showCompany();
+            showServiceItems();
         });
         $('#comboDevices').select2({
             dropdownParent: $('#createModal')
         });
+        $('#requestCreateDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            forceParse: false,
+        })
         function startRefresh() {
             setTimeout(startRefresh, 1000);
             loadRequest();
@@ -259,7 +284,7 @@
         }
         var isWaitingHeroAccept = false;
         var currentRequestId = 0;
-            function loadRequestStatistic() {
+        function loadRequestStatistic() {
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetRequestStatistic", "Request")',
@@ -294,12 +319,86 @@
                 type: 'POST',
                 url: '@Url.Action("GetAllRequest", "Request")',
                 data: {
+                    companyId: $("#requestCompany").val(),
+                    serviceItemId: $("#requestServiceItem").val()
+                },
+                success: function (result) {
+                    if (!result.result.ObjReturn != null)
+                        initDatatable(result.result.ObjReturn);
+                },
+                error: function(error) {
+                    showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                }
+            });
+        }
+
+    function LocSuCo() {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetAllRequest", "Request")',
+                data: {
+                    
                 },
                 success: function(result) {
                     initDatatable(result.result.ObjReturn);
                 },
                 error: function(error) {
                     showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+                }
+            });
+        }
+
+        function showCompany() {
+            $('#requestCompany')
+                .find('option')
+                    .remove()
+                    .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllCompany", "Company")',
+                data: {
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var len = data.result.ObjReturn.length;
+                    var html = '<option value="0">--Lọc theo công ty--</option>';
+                    for (var i = 0; i < len; i++) {
+                        html += '<option value="' +
+                            data.result.ObjReturn[i].CompanyId +
+                            '">' +
+                            data.result.ObjReturn[i].CompanyName +
+                            '</option>';
+                    }
+                    $('#requestCompany').append(html);
+                }
+            });
+        }
+        function showServiceItems() {
+            $('#requestServiceItem')
+                    .find('option')
+                    .remove()
+                    .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllServiceItemAll", "ServiceItem")',
+                data: {
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var len = data.result.ObjReturn.length;
+                    var html = '<option value="0">--Lọc theo hiện tượng--</option>';
+                    for (var i = 0; i < len; i++) {
+                        html += '<option value="' +
+                            data.result.ObjReturn[i].ServiceItemId +
+                            '">' +
+                            data.result.ObjReturn[i].ServiceItemName +
+                            '</option>';
+                    }
+                    $('#requestServiceItem').append(html);
                 }
             });
         }
@@ -314,9 +413,10 @@
                 "bRetrieve": true,
                 "bScrollCollapse": true,
                 "bProcessing": true,
-                "oLanguage": {
-                    "sSearch": "Tìm kiếm:",
-                    "sSearchPlaceholder": "",
+                "searching": false,
+                "oLanguage": {                    
+                    //"sSearch": "Tìm kiếm:",
+                    //"sSearchPlaceholder": "",
                     "sZeroRecords": "Không có dữ liệu phù hợp",
                     "sInfo": "Hiển thị từ _START_ đến _END_ trên tổng số _TOTAL_ dòng",
                     "sEmptyTable": "Không có dữ liệu",
@@ -410,9 +510,10 @@
             $('#createModal').modal('show');
         }
         function clearModal() {
+            $("#comboDevices").empty();
             $('#createModal').on('hidden.bs.modal', function (e) {
                 $(this)
-                    .find("input,textarea")
+                    .find("input,textarea,select")
                     .val('')
                     .end()
                     .find("input[type=checkbox], input[type=radio]")
@@ -434,7 +535,7 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     var obj = data.result.ObjReturn;
-                    var html = '';
+                    var html = '<option value="0">--Chọn chi nhánh--</option>';
                     if (obj != null) {
                         for (var i = 0; i < obj.length; i++) {
                             html += '<option value="' +
@@ -479,7 +580,7 @@
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
                     var obj = data.result.ObjReturn;
-                    var html = '';
+                    var html = '<option value="0">--Chọn danh mục--</option>';
                     if (obj != null) {
                         for (var i = 0; i < obj.length; i++) {
                             html += '<option value="' +
@@ -511,7 +612,7 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     var obj = data.result.ObjReturn;
-                    var html = '';
+                    var html = '<option value="0">--Chọn hiện tượng--</option>';
                     if (obj != null) {
                         for (var i = 0; i < obj.length; i++) {
                             html += '<option value="' +
@@ -629,18 +730,28 @@
             $('#EditModal').modal('show');
         }
 
-         function createRequest() {
+    function createRequest() {
+        var deviceIds = $('#comboDevices').val();
+        var tickets = new Array();
+        for (i = 0; i < deviceIds.length; ++i) {
+            var ticket = {
+                DeviceId: deviceIds[i]
+            }
+            tickets.push(ticket);
+        }
+
              var empObj = {
-                AgencyId: $('#comboAgency').val(),
-                RequestCategoryId: $('#comboSerName').val(),
-                RequestName: $('#comboSerItem').val(),
-                Tickets: $('#comboDevices').val(), // Đây là danh sách ID của tất cả Devices Được chọn.
-                Telephone: $('#PhoneC').val(),
+                 AgencyId: $('#comboAgency').val(),
+                 RequestCategoryId: 3,
+                 ServiceItemId: $('#comboSerItem').val(),
+                 RequestName: $("#comboAgency option:selected").text() + " - " + $("#comboSerItem option:selected").text(),
+                 Tickets: tickets,
+                AgencyTelephone: $('#PhoneC').val(),
                 RequestDesciption: $('#DescripC').val(),
             }
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("CreateRequestMVC", "Agency")',
+                url: '@Url.Action("CreateRequest", "Request")',
                 data: JSON.stringify(empObj),
 
                 dataType: 'json',
@@ -736,6 +847,6 @@
                 }
             });
         }
-</script>
+    </script>
 
 }
