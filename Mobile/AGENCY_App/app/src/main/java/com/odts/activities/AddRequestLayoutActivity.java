@@ -105,6 +105,7 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
                             return true;
                         }
                     }
+
                     @Override
                     public View getDropDownView(int position, View convertView, ViewGroup parent) {
                         View view = super.getDropDownView(position, convertView, parent);
@@ -123,7 +124,7 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
                 spinnerService.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        if(i > 0){
+                        if (i > 0) {
                             ServiceITSupport serviceITSupport = (ServiceITSupport) adapterView.getSelectedItem();
                             getAllServiceItemByServiceId(serviceITSupport.getServiceITSupportId());
                             getAllDeviceByAgencyIdAndServiceItem(agencyId, (serviceITSupport.getServiceITSupportId()));
@@ -151,7 +152,6 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
             public void onSuccess(ArrayList<ServiceItem> serviceItems) {
                 Spinner spinner = (Spinner) findViewById(R.id.spinner2);
                 List<ServiceItem> categories = new ArrayList<ServiceItem>();
-                categories.add(new ServiceItem("Chọn dưới đây"));
                 for (ServiceItem item : serviceItems) {
                     categories.add(item);
                 }
@@ -246,7 +246,7 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
     public void createRequest() {
         _requestService = new RequestService();
         List listTickets = new ArrayList<Ticket>();
-        if(listTicket != null && listTicket.size() != 0) {
+        if (listTicket != null && listTicket.size() != 0) {
             for (Device item : listTicket) {
                 Ticket ticc = new Ticket();
                 ticc.setDeviceId(item.getDeviceId());
