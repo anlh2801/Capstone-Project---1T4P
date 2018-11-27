@@ -9,6 +9,16 @@ public class Ticket {
     private Integer deviceId;
     @SerializedName("DeviceName")
     private String deviceName;
+    @SerializedName("DeviceCode")
+    private String deviceCode;
+
+    public String getDeviceCode() {
+        return deviceCode;
+    }
+
+    public void setDeviceCode(String deviceCode) {
+        this.deviceCode = deviceCode;
+    }
 
     public Integer getTicketId() {
         return ticketId;

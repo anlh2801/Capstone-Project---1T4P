@@ -33,6 +33,7 @@ public class TaskAdapter extends ArrayAdapter<RequestTask> {
     TaskService taskService;
     ImageButton btnDeleteDevice;
     SmoothCheckBox smoothCheckBox;
+    RequestTask requestTask;
 
     public TaskAdapter(@NonNull Activity context, int resource, @NonNull List<RequestTask> objects) {
         super(context, resource, objects);
@@ -49,10 +50,11 @@ public class TaskAdapter extends ArrayAdapter<RequestTask> {
         smoothCheckBox = (SmoothCheckBox) row.findViewById(R.id.cbTask);
         TextView txtDeviceNameManage = (TextView) row.findViewById(R.id.txtDeviceNameManage);
         taskService = new TaskService();
-        final RequestTask requestTask = this.objects.get(position);
+        requestTask = this.objects.get(position);
         if (requestTask.getTaskStatus() == 2) {
             smoothCheckBox.setChecked(true);
         }
+        else smoothCheckBox.setChecked(false);
         smoothCheckBox.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SmoothCheckBox smoothCheckBox, boolean b) {
@@ -92,6 +94,7 @@ public class TaskAdapter extends ArrayAdapter<RequestTask> {
         });
 
         txtDeviceNameManage.setText(requestTask.getTaskDetail());
+
         return row;
     }
 

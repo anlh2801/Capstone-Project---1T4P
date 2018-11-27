@@ -54,7 +54,7 @@ public class DoRequestFragment extends Fragment {
     Integer requestId = 0;
 
     ITSupporterService itSupporterService;
-    TextView rqName, agencyName, agencyAddress, createDate;
+    TextView rqName, agencyName, agencyAddress, createDate, priority;
     String serviceItemName;
     Integer serviceItemId = 0;
     Button btnAccept, bt2, bt3, bt4, bt5;
@@ -98,6 +98,7 @@ public class DoRequestFragment extends Fragment {
         itSupporterService = new ITSupporterService();
         rqName = (TextView) v.findViewById(R.id.txtRequestName);
         agencyName = v.findViewById(R.id.txtAgency);
+        priority = v.findViewById(R.id.txtPrio);
         scan = v.findViewById(R.id.imageButton);
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,16 +127,17 @@ public class DoRequestFragment extends Fragment {
                             Device device = new Device();
                             device.setDeviceId(item.getDeviceId());
                             device.setDeviceName(item.getDeviceName());
+                            device.setDeviceCode(item.getDeviceCode());
                             listDevices.add(device);
                         }
                         listViewDeviceC = (ListView) v.findViewById(R.id.listDevice);
                         TextView agenyName = v.findViewById(R.id.name);
-                        agenyName.setText(request.getAgencyName().toString());
+                        agenyName.setText("Tên cửa hàng: " + request.getAgencyName().toString());
                         TextView agenyAddress = v.findViewById(R.id.address);
-                        agenyAddress.setText(request.getAgencyAddress().toString());
+                        agenyAddress.setText("Địa chỉ: " + request.getAgencyAddress().toString());
 
                         TextView createDate = v.findViewById(R.id.time);
-                        createDate.setText(request.getCreateDate().toString());
+                        createDate.setText("Ngày taọ: " +request.getCreateDate().toString());
                         deviceAdapter = new DeviceAdapter(getActivity(), R.layout.device_item, listDevices);
                         listViewDeviceC.setAdapter(deviceAdapter);
                         builder.setTitle("Chi tiết thông tin sự cố");
@@ -156,6 +158,7 @@ public class DoRequestFragment extends Fragment {
                 serviceItemName = request.getServiceItemName();
                 rqName.setText("Sự cố: " + request.getRequestName());
                 agencyName.setText(request.getAgencyName());
+                priority.setText("Độ ưu tiên: " + request.getPriority());
 //                agencyAddress.setText("Địa chỉ: " + request.getAgencyAddress());
 //                createDate.setText("Tạo vào: " + request.getCreateDate());
                 btnCall.setOnClickListener(new View.OnClickListener() {
@@ -375,6 +378,7 @@ public class DoRequestFragment extends Fragment {
                         requestTask.setRequestId(requestId);
                         requestTask.setCreateByITSupporter(itSupporterId);
                         requestTask.setTaskDetail(m_Text);
+                        requestTask.setTaskStatus(1);
                         _taskService.createTask(getContext(), requestTask, new CallBackData<Boolean>() {
                             @Override
                             public void onSuccess(Boolean aBoolean) {
@@ -386,6 +390,19 @@ public class DoRequestFragment extends Fragment {
 ////                                            tick2 = new CheckBox(getContext());
 ////                                            linearLayoutTask.addView(tick2);
 ////                                            tick2.setText(m_Text);
+
+                                    _taskService.getTaskByRequestID(getContext(), requestId, new CallBackData<ArrayList<RequestTask>>() {
+                                        @Override
+                                        public void onSuccess(ArrayList<RequestTask> requestTasks) {
+                                            taskAdapter = new TaskAdapter(getActivity(), R.layout.task_item, requestTasks);
+                                            listView.setAdapter(taskAdapter);
+                                        }
+
+                                        @Override
+                                        public void onFail(String message) {
+
+                                        }
+                                    });
                                 }
                             }
 

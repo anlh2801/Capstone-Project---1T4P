@@ -1,6 +1,7 @@
 package com.odts.it_supporter_app.apiCaller;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.odts.it_supporter_app.R;
+import com.odts.it_supporter_app.activities.DeviceInfoActivity;
 import com.odts.it_supporter_app.models.Device;
 import com.odts.it_supporter_app.models.RequestTask;
 import com.odts.it_supporter_app.models.Ticket;
@@ -55,6 +57,9 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
 //                builder.setView(view);
 //                AlertDialog dialog = builder.create();
 //                dialog.show();
+                Intent intent = new Intent(getContext(), DeviceInfoActivity.class);
+                intent.putExtra("deviceCode", device.getDeviceCode());
+                getContext().startActivity(intent);
             }
         });
         deviceName.setText(device.getDeviceName());

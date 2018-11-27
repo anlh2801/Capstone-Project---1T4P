@@ -187,4 +187,5 @@ public class Device implements Serializable {
     public void setTicketList(List<DeviceHistory_Ticket> ticketList) {
         this.ticketList = ticketList;
     }
+
 }
