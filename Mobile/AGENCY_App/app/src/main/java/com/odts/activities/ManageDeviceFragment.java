@@ -80,14 +80,15 @@ public class ManageDeviceFragment extends Fragment {
                 getAllDeviceByAgencyIdAndServiceItem(agencyId, serviceITSupports.get(0).getServiceITSupportId());
                 int i = 1;
                 for (ServiceITSupport item : serviceITSupports) {
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                    params.weight = 1.0f;
                     RadioButton radioButton = new RadioButton(getActivity());
 
                     radioButton.setId(i);
                     i++;
                     radioButton.setText(item.getServiceName());
-//                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-//                            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-//                    params.weight = 1.0f;
+                    radioButton.setLayoutParams(params);
 //                    Button bt = new Button(getActivity());
 //                    bt.setLayoutParams(params);
 //
