@@ -60,7 +60,7 @@ namespace DataService.Models.Entities.Services
         {
             List<ServiceItemAPIViewModel> rsList = new List<ServiceItemAPIViewModel>();
             var serviceItemRepo = DependencyUtils.Resolve<IServiceItemRepository>();
-            var serviceItems = serviceItemRepo.GetActive().ToList();
+            var serviceItems = serviceItemRepo.GetActive().OrderByDescending(p => p.ServiceITSupportId).ToList();
 
             if (serviceITSupportId > 0)
             {

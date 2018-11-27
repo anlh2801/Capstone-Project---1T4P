@@ -910,6 +910,15 @@ namespace DataService.Models.Entities.Services
                     }
                     i++;
                 }
+                var requestPriorityStatus = "";
+                foreach (RequestPriorityEnum requestPriorityItem in Enum.GetValues(typeof(RequestPriorityEnum)))
+                {
+                    if (request.Priority == i)
+                    {
+                        requestPriorityStatus = requestPriorityItem.DisplayName();
+                    }
+                    i++;
+                }
                 var requestViewModel = new RequestAllTicketWithStatusAgencyAPIViewModel()
                 {
                     RequestId = request.RequestId,
@@ -927,6 +936,7 @@ namespace DataService.Models.Entities.Services
                     ServiceItemName = request.ServiceItem.ServiceItemName,
                     AgencyId = request.AgencyId,
                     AgencyAddress = request.Agency.Address,
+                    Priority = requestPriorityStatus,
                     Tickets = ticketList
                 };
 

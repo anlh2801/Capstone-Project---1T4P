@@ -213,7 +213,12 @@
 <div class="row col-md-12">
     <div class="col-md-4 col-sm-6 col-xs-12">
         <b>Lọc theo thời gian:</b><br>
-        <input class="form-control" type="button" id="requestCreateDate" style="width:100%; margin-bottom:15px;text-align:left;"></input>
+        <div class="input-group">
+            <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+            </div>
+            <input type="text" class="form-control pull-right" id="reservation">
+        </div>
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12">
         <b>Lọc theo công ty:</b><br>
@@ -224,9 +229,9 @@
         <select class="form-control select2" type="button" id="requestServiceItem" style="width:100%; margin-bottom:15px;"></select>
     </div>
 </div>
-@*<div class="row col-md-12">    
-    <button type="button" class="btn btn-primary fa fa-eye pull-right" data-toggle="modal" data-target="" onclick="loadRequest()"><font face="verdana"> Áp dụng bộ lọc</button>
-</div>*@
+@*<div class="row col-md-12">
+        <button type="button" class="btn btn-primary fa fa-eye pull-right" data-toggle="modal" data-target="" onclick="loadRequest()"><font face="verdana"> Áp dụng bộ lọc</button>
+    </div>*@
 
 <div class="row col-md-12">
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
@@ -258,7 +263,11 @@
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
     <link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css">
     <script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <script src="~/AdminLTE/bower_components/moment/min/moment.min.js"></script>
+    <script src="~/AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+
 
     <script>
         $(document).ready(function () {
@@ -267,16 +276,33 @@
             loadRequest();
             loadRequestStatistic();
             showAgency();
-            startRefresh();            
+            startRefresh();
         });
         $('#comboDevices').select2({
             dropdownParent: $('#createModal')
         });
-        $('#requestCreateDate').datepicker({
-            format: 'dd/mm/yyyy',
-            autoclose: true,
-            forceParse: false,
-        })
+        $(function () {
+            $('#reservation').daterangepicker({
+                startDate: moment().startOf('month').format('DD/MM/YYYY'),
+                endDate: moment(),
+                format: 'DD/MM/YYYY',
+                separator: ' to ',
+                locale: {
+                    applyLabel: 'Submit',
+                    fromLabel: 'From',
+                    toLabel: 'To',
+                    customRangeLabel: 'Custom Range',
+                    daysOfWeek: ['CN', 'Hai', 'Ba', 'Tư', 'Năm', 'Sáu', 'Bảy'],
+                    monthNames: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                    firstDay: 1,
+                    buttonClasses: ['btn btn-default'],
+                    applyClass: 'btn-small btn-primary',
+                    cancelClass: 'btn-small',
+                }
+            });
+        });
+
+
         function startRefresh() {
             setTimeout(startRefresh, 1000);
             loadRequest();
@@ -345,7 +371,7 @@
                 type: 'POST',
                 url: '@Url.Action("GetAllRequest", "Request")',
                 data: {
-                    
+
                 },
                 success: function(result) {
                     initDatatable(result.result.ObjReturn);
@@ -422,7 +448,7 @@
                 "bScrollCollapse": true,
                 "bProcessing": true,
                 "searching": false,
-                "oLanguage": {                    
+                "oLanguage": {
                     //"sSearch": "Tìm kiếm:",
                     //"sSearchPlaceholder": "",
                     "sZeroRecords": "Không có dữ liệu phù hợp",
@@ -485,10 +511,10 @@
                                 var Normal = ' <button type="button" class="btn btn-warning fa fa-wrench" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 2)"></button>';
                                 return Priority + " " + Urgent + " " + Normal;
                             }
-                            else {    
+                            else {
                                 var Urgent = '<button type="button" class="btn btn-danger glyphicon glyphicon-fire" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 1)"></button>';
-                                var Normal = ' <button type="button" class="btn btn-warning fa fa-wrench" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 2)"></button>';                    
-                                var Non_Urgent = '<button type="button" class="btn btn-primary btn fa fa-hourglass" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 3)"></button>';                        
+                                var Normal = ' <button type="button" class="btn btn-warning fa fa-wrench" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 2)"></button>';
+                                var Non_Urgent = '<button type="button" class="btn btn-primary btn fa fa-hourglass" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 3)"></button>';
                                 return Urgent + " " + Normal + " " + Non_Urgent;
                                 }
                         }
@@ -690,7 +716,7 @@
                     $('#comboDevices').append(html);
                 }
             });
-        } 
+        }
         function asignHero(requestId) {
             currentRequestId = requestId
             $.ajax({
@@ -729,7 +755,7 @@
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
                     if (!data.result.IsError) {
-                        swal(data.result.SuccessMessage, "", "success");                        
+                        swal(data.result.SuccessMessage, "", "success");
                     } else
                         swal(data.result.WarningMessage, "", "error");
                 }
