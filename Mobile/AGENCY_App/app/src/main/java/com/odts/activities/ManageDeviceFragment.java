@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,6 +84,7 @@ public class ManageDeviceFragment extends Fragment {
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
                     params.weight = 1.0f;
+                    params.gravity = Gravity.CENTER_HORIZONTAL;
                     RadioButton radioButton = new RadioButton(getActivity());
 
                     radioButton.setId(i);
