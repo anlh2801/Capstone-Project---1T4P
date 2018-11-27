@@ -95,10 +95,7 @@ public class DoRequestFragment extends Fragment {
         listView = (ListView) v.findViewById(R.id.listTask);
         itSupporterService = new ITSupporterService();
         rqName = (TextView) v.findViewById(R.id.txtRequestName);
-
         agencyName = v.findViewById(R.id.txtAgency);
-//        agencyAddress = v.findViewById(R.id.txtAddress);
-        createDate = v.findViewById(R.id.txtCreateDate);
         scan = v.findViewById(R.id.imageButton);
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,9 +119,6 @@ public class DoRequestFragment extends Fragment {
                     public void onClick(View view) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         View v = getLayoutInflater().inflate(R.layout.agency_detail, null);
-                        TextView requestNameAlert = (TextView) v.findViewById(R.id.textViewRequestName);
-                        Button btnDetail = (Button) v.findViewById(R.id.btnDeviceDetail);
-                        requestNameAlert.setText(request.getAgencyAddress());
                         List<Device> listDevices = new ArrayList<>();
                         for (Ticket item : request.getTicket()) {
                             Device device = new Device();
@@ -133,10 +127,17 @@ public class DoRequestFragment extends Fragment {
                             listDevices.add(device);
                         }
                         listViewDeviceC = (ListView) v.findViewById(R.id.listDevice);
+                        TextView agenyName = v.findViewById(R.id.name);
+                        agenyName.setText(request.getAgencyName().toString());
+                        TextView agenyAddress = v.findViewById(R.id.address);
+                        agenyAddress.setText(request.getAgencyAddress().toString());
+
+                        TextView createDate = v.findViewById(R.id.time);
+                        createDate.setText(request.getCreateDate().toString());
                         deviceAdapter = new DeviceAdapter(getActivity(), R.layout.device_item, listDevices);
                         listViewDeviceC.setAdapter(deviceAdapter);
                         builder.setView(v);
-                        AlertDialog dialog = builder.create();
+                        final AlertDialog dialog = builder.create();
                         dialog.show();
                     }
                 });
@@ -146,7 +147,7 @@ public class DoRequestFragment extends Fragment {
                 rqName.setText("Sự cố: " + request.getRequestName());
                 agencyName.setText(request.getAgencyName());
 //                agencyAddress.setText("Địa chỉ: " + request.getAgencyAddress());
-                createDate.setText("Tạo vào: " + request.getCreateDate());
+//                createDate.setText("Tạo vào: " + request.getCreateDate());
                 btnCall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -321,46 +322,6 @@ public class DoRequestFragment extends Fragment {
 
                     }
                 });
-//                linerTask = (LinearLayout) v.findViewById(R.id.linerTask);
-//                linearLayoutTask = (LinearLayout) v.findViewById(R.id.listTaskDoFragment);
-//                linearLayoutTask.setWeightSum(1f);
-//                _taskService.getTaskByRequestID(getContext(), requestId, new CallBackData<ArrayList<RequestTask>>() {
-//                    @SuppressLint("ResourceType")
-//                    @Override
-//                    public void onSuccess(ArrayList<RequestTask> requestTasks) {
-//                        for (final RequestTask item : requestTasks) {
-//                            tick = new CheckBox(getContext());
-//                            tick.setId(item.getRequestTaskId());
-//                            tick.setText(item.toString());
-//                            ImageButton btnGreen = new ImageButton(getActivity());
-//                            btnGreen.setImageResource(R.drawable.ic_delete_forever_red_24dp);
-//                            linearLayoutTask.addView(tick);
-//                            linerTask.addView(btnGreen);
-//                            tick.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                                @Override
-//                                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                                    if (b) {
-//                                        _taskService.updateTaskStatus(getContext(), item.getRequestTaskId(), true, new CallBackData<Boolean>() {
-//                                            @Override
-//                                            public void onSuccess(Boolean aBoolean) {
-//                                            }
-//
-//                                            @Override
-//                                            public void onFail(String message) {
-//
-//                                            }
-//                                        });
-//                                    }
-//                                }
-//                            });
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFail(String message) {
-//
-//                    }
-//                });
             }
 
             @Override
