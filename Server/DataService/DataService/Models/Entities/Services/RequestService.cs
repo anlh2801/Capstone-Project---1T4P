@@ -910,14 +910,15 @@ namespace DataService.Models.Entities.Services
                     }
                     i++;
                 }
+                var j = 1;
                 var requestPriorityStatus = "";
                 foreach (RequestPriorityEnum requestPriorityItem in Enum.GetValues(typeof(RequestPriorityEnum)))
                 {
-                    if (request.Priority == i)
+                    if (request.Priority == j)
                     {
                         requestPriorityStatus = requestPriorityItem.DisplayName();
                     }
-                    i++;
+                    j++;
                 }
                 var requestViewModel = new RequestAllTicketWithStatusAgencyAPIViewModel()
                 {
