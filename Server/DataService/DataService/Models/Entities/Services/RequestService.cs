@@ -61,8 +61,8 @@ namespace DataService.Models.Entities.Services
                 var requests = RequestRepo.GetActive().ToList();
                 if (!string.IsNullOrEmpty(start) && !string.IsNullOrEmpty(end))
                 {
-                    var startDateTime = start.ToDateTime();
-                    var endDateTime = end.ToDateTime();
+                    var startDateTime = start.Trim().ToDateTime();
+                    var endDateTime = end.Trim().ToDateTime2();
                     requests = requests.Where(p => p.CreateDate >= startDateTime && p.CreateDate <= endDateTime).ToList();
                 }
 
@@ -123,7 +123,7 @@ namespace DataService.Models.Entities.Services
             catch (Exception e)
             {
 
-                return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại", ObjReturn = null, ErrorMessage = e.ToString() };
+                return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại", ObjReturn = new List<RequestAPIViewModel>(), ErrorMessage = e.ToString() };
             }
         }
         public ResponseObject<RequestAPIViewModel> GetRequestBytRequestId(int requestId) {
@@ -202,7 +202,7 @@ namespace DataService.Models.Entities.Services
             catch (Exception e)
             {
 
-                return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại", ObjReturn = null, ErrorMessage = e.ToString() };
+                return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại", ObjReturn = new List<RequestAPIViewModel>(), ErrorMessage = e.ToString() };
             }
         }
 

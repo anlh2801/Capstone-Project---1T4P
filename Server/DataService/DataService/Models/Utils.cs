@@ -308,7 +308,7 @@ namespace DataService.Models
         {
             try
             {
-                return DateTime.ParseExact(datetime, "MM//dd//yyyy", CultureInfo.InvariantCulture);
+                return DateTime.ParseExact(datetime, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             }
             catch
             {

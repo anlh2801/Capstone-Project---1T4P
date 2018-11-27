@@ -282,13 +282,13 @@
             dropdownParent: $('#createModal')
         });
         $(function () {
+        var c = moment().format('DD/MM/YYYY');
             $('#reservation').daterangepicker({
-                startDate: moment().startOf('month').format('DD/MM/YYYY'),
-                endDate: moment(),
                 format: 'DD/MM/YYYY',
-                separator: ' to ',
+                startDate: moment().startOf('month').format('DD/MM/YYYY'),
+                endDate: moment().endOf('month'),
                 locale: {
-                    applyLabel: 'Submit',
+                    applyLabel: 'Chọn',
                     fromLabel: 'From',
                     toLabel: 'To',
                     customRangeLabel: 'Custom Range',
@@ -343,18 +343,24 @@
         function loadRequest() {
             var companyId;
             var serviceItemId;
+            var dateRange = $('#reservation').val().split("-");
+            var startDate = dateRange[0];
+            var endDate = dateRange[1];
             if ($("#requestCompany").val() != null) {
                 companyId = $("#requestCompany").val();
             } else { companyId = 0 }
             if ($("#requestServiceItem").val() != null) {
                 serviceItemId = $("#requestServiceItem").val();
             } else { serviceItemId = 0 }
+            
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetAllRequest", "Request")',
                 data: {
                     companyId: companyId,
-                    serviceItemId: serviceItemId
+                    serviceItemId: serviceItemId,
+                    start: startDate,
+                    end: endDate
                 },
                 success: function (result) {
                     if (!result.result.ObjReturn != null)
