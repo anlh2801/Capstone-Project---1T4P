@@ -15,6 +15,7 @@ public class EditDeviceActivity extends AppCompatActivity {
     int deviceId = 0;
     AgencyService agencyService;
     Button btnSave, btnCancel;
+    int deviceType = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class EditDeviceActivity extends AppCompatActivity {
         editTextPortTT = (EditText) findViewById(R.id.editTextPortTT);
         btnSave = (Button) findViewById(R.id.btnSaveDevice);
         btnCancel = (Button) findViewById(R.id.btnCancle);
+        deviceType = intent.getIntExtra("deviceType", 0);
         deviceId = intent.getIntExtra("deviceId", 0);
         editdeviceCode.setText(intent.getStringExtra("deviceCode"));
         editdeviceName.setText(intent.getStringExtra("deviceName"));
@@ -49,13 +51,13 @@ public class EditDeviceActivity extends AppCompatActivity {
     private void updateDevice() {
         Device device = new Device();
         device.setDeviceId(deviceId);
+        device.setDeviceTypeId(deviceType);
         device.setDeviceCode(editdeviceCode.getText().toString());
         device.setDeviceName(editdeviceName.getText().toString());
         device.setIp(editTextIp.getText().toString());
         device.setPort(editTextPortTT.getText().toString());
         device.setGuarantyStartDate("24/11/2018");
         device.setGuarantyEndDate("24/11/2018");
-        device.setDeviceTypeId(1);
         agencyService = new AgencyService();
         agencyService.updateDevice(EditDeviceActivity.this, device);
     }

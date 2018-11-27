@@ -91,6 +91,7 @@ public class DoRequestFragment extends Fragment {
         final FloatingActionsMenu menu = v.findViewById(R.id.multiple_actions);
 
         menu.bringToFront();
+        segmentedGroup = v.findViewById(R.id.segmented3);
         btnCall = v.findViewById(R.id.action_a);
         btnChat = v.findViewById(R.id.action_b);
         listView = (ListView) v.findViewById(R.id.listTask);
@@ -183,14 +184,15 @@ public class DoRequestFragment extends Fragment {
                 reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" + requestId);
                 final Map<String, String> map = new HashMap<String, String>();
                 btnAccept = v.findViewById(R.id.button31);
-//                btnAccept.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        map.put("status", "Đã nhận");
-//                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
-//                        reference1.push().setValue(map);
-//                    }
-//                });
+                btnAccept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        map.put("status", "Đã nhận");
+                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
+                        reference1.push().setValue(map);
+                        segmentedGroup.removeView(btnAccept);
+                    }
+                });
                 bt2 = v.findViewById(R.id.button32);
                 bt2.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -210,6 +212,7 @@ public class DoRequestFragment extends Fragment {
                                         map.put("message", userInputDialogEditText.getText().toString());
                                         map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
                                         reference1.push().setValue(map);
+                                        segmentedGroup.removeView(bt2);
                                     }
                                 })
                                 .setNegativeButton("Cancel",

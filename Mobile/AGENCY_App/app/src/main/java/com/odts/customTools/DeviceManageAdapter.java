@@ -62,6 +62,7 @@ public class DeviceManageAdapter extends ArrayAdapter<Device> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), EditDeviceActivity.class);
+                intent.putExtra("deviceType", device.getDeviceTypeId());
                 intent.putExtra("deviceId", device.getDeviceId());
                 intent.putExtra("deviceName", device.getDeviceName());
                 intent.putExtra("deviceCode", device.getDeviceCode());
