@@ -14,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -136,9 +137,17 @@ public class DoRequestFragment extends Fragment {
                         createDate.setText(request.getCreateDate().toString());
                         deviceAdapter = new DeviceAdapter(getActivity(), R.layout.device_item, listDevices);
                         listViewDeviceC.setAdapter(deviceAdapter);
+                        builder.setTitle("Chi tiết thông tin sự cố");
+                        builder.setNegativeButton("Đóng", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
                         builder.setView(v);
                         final AlertDialog dialog = builder.create();
                         dialog.show();
+                        dialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
                     }
                 });
                 requestId = request.getRequestId();
