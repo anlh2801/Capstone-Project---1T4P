@@ -1,40 +1,36 @@
 package com.odts.it_supporter_app.activities;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.odts.it_supporter_app.R;
+import com.odts.it_supporter_app.apiCaller.DeviceAdapter;
 import com.odts.it_supporter_app.customTools.TaskAdapter;
+import com.odts.it_supporter_app.models.Device;
 import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.models.RequestTask;
+import com.odts.it_supporter_app.models.Ticket;
 import com.odts.it_supporter_app.services.ITSupporterService;
 import com.odts.it_supporter_app.services.RequestService;
 import com.odts.it_supporter_app.services.TaskService;
@@ -44,6 +40,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
@@ -70,8 +67,9 @@ public class DoRequestFragment extends Fragment {
     TaskService _taskService;
     CheckBox tick, tick2;
     private String m_Text = "";
-    ListView listView;
+    ListView listView, listViewDeviceC;
     TaskAdapter taskAdapter;
+    DeviceAdapter deviceAdapter;
 
     public DoRequestFragment() {
         _requestService = new RequestService();
@@ -125,13 +123,23 @@ public class DoRequestFragment extends Fragment {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         View v = getLayoutInflater().inflate(R.layout.agency_detail, null);
                         TextView requestNameAlert = (TextView) v.findViewById(R.id.textViewRequestName);
+                        Button btnDetail = (Button) v.findViewById(R.id.btnDeviceDetail);
                         requestNameAlert.setText(request.getAgencyAddress());
+                        List<Device> listDevices = new ArrayList<>();
+                        for (Ticket item : request.getTicket()) {
+                            Device device = new Device();
+                            device.setDeviceId(item.getDeviceId());
+                            device.setDeviceName(item.getDeviceName());
+                            listDevices.add(device);
+                        }
+                        listViewDeviceC = (ListView) v.findViewById(R.id.listDevice);
+                        deviceAdapter = new DeviceAdapter(getActivity(), R.layout.device_item, listDevices);
+                        listViewDeviceC.setAdapter(deviceAdapter);
                         builder.setView(v);
                         AlertDialog dialog = builder.create();
                         dialog.show();
                     }
                 });
-
                 requestId = request.getRequestId();
                 serviceItemId = request.getServiceItemId();
                 serviceItemName = request.getServiceItemName();
@@ -304,7 +312,7 @@ public class DoRequestFragment extends Fragment {
                 _taskService.getTaskByRequestID(getContext(), requestId, new CallBackData<ArrayList<RequestTask>>() {
                     @Override
                     public void onSuccess(ArrayList<RequestTask> requestTasks) {
-                        taskAdapter = new TaskAdapter(getActivity(), R.layout.list_task, requestTasks);
+                        taskAdapter = new TaskAdapter(getActivity(), R.layout.task_item, requestTasks);
                         listView.setAdapter(taskAdapter);
                     }
 
