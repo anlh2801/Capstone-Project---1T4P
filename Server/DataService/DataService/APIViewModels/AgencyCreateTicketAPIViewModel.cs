@@ -10,6 +10,7 @@ namespace DataService.APIViewModels
     {
         public int TicketId { get; set; }
         public int DeviceId { get; set; }
+        public string DeviceCode { get; set; }
         public string Desciption { get; set; }
         public string DeviceName { get; set; }        
         public string CreateDate { get; set; }

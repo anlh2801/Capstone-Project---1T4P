@@ -896,7 +896,7 @@ namespace DataService.Models.Entities.Services
                     ticket.DeviceName = ticketItem.Device.DeviceName;
                     ticket.Desciption = ticketItem.Desciption;
                     ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
-
+                    ticket.DeviceCode = ticketItem.Device.DeviceCode;
                     ticketList.Add(ticket);
                 }
                 var timeAgo = TimeAgo(request.CreateDate);
