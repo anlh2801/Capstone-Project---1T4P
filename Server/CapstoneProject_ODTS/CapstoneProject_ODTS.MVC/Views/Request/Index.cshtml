@@ -510,27 +510,31 @@
                         "mRender": function (data, type, full) {
                             if (full.Priority === "Xử lý gấp") {
                                 var Priority = '<span class = "label label-danger">' + full.Priority + '</span>';
-                                var Normal = ' <button type="button" class="btn btn-warning fa fa-wrench" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 2)"></button>';
-                                var Non_Urgent = '<button type="button" class="btn btn-primary btn fa fa-hourglass" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 3)"></button>';
-                                return Priority + " " + Normal + " " + Non_Urgent;
+                                //var Normal = ' <button type="button" class="btn btn-warning fa fa-wrench" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 2)"></button>';
+                                //var Non_Urgent = '<button type="button" class="btn btn-primary btn fa fa-hourglass" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 3)"></button>';
+                                //return Priority + " " + Normal + " " + Non_Urgent;
+                                return Priority;
                             }
                             else if (full.Priority === "Cần xử lý") {
                                 var Priority = '<span class = "label label-warning">' + full.Priority + '</span>';
-                                var Urgent = '<button type="button" class="btn btn-danger glyphicon glyphicon-fire" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 1)"></button>';
-                                var Non_Urgent = '<button type="button" class="btn btn-primary btn fa fa-hourglass" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 3)"></button>';
-                                return Priority + " " + Urgent + " " + Non_Urgent;
+                                //var Urgent = '<button type="button" class="btn btn-danger glyphicon glyphicon-fire" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 1)"></button>';
+                                //var Non_Urgent = '<button type="button" class="btn btn-primary btn fa fa-hourglass" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 3)"></button>';
+                                //return Priority + " " + Urgent + " " + Non_Urgent;
+                                return Priority;
                             }
                             else if (full.Priority === "Không gấp") {
                                 var Priority = '<span class = "label label-primary">' + full.Priority + '</span>';
-                                var Urgent = '<button type="button" class="btn btn-danger glyphicon glyphicon-fire" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 1)"></button>';
-                                var Normal = ' <button type="button" class="btn btn-warning fa fa-wrench" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 2)"></button>';
-                                return Priority + " " + Urgent + " " + Normal;
+                                //var Urgent = '<button type="button" class="btn btn-danger glyphicon glyphicon-fire" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 1)"></button>';
+                                //var Normal = ' <button type="button" class="btn btn-warning fa fa-wrench" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 2)"></button>';
+                                //return Priority + " " + Urgent + " " + Normal;
+                                return Priority;
                             }
                             else {
-                                var Urgent = '<button type="button" class="btn btn-danger glyphicon glyphicon-fire" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 1)"></button>';
-                                var Normal = ' <button type="button" class="btn btn-warning fa fa-wrench" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 2)"></button>';
-                                var Non_Urgent = '<button type="button" class="btn btn-primary btn fa fa-hourglass" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 3)"></button>';
-                                return Urgent + " " + Normal + " " + Non_Urgent;
+                                //var Urgent = '<button type="button" class="btn btn-danger glyphicon glyphicon-fire" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 1)"></button>';
+                                //var Normal = ' <button type="button" class="btn btn-warning fa fa-wrench" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 2)"></button>';
+                                //var Non_Urgent = '<button type="button" class="btn btn-primary btn fa fa-hourglass" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 3)"></button>';
+                                //return Urgent + " " + Normal + " " + Non_Urgent;
+                                return "";
                                 }
                         }
                     },

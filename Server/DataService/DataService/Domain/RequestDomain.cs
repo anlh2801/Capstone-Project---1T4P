@@ -41,6 +41,8 @@ namespace DataService.Domain
         ResponseObject<RequestAPIViewModel> GetRequestBytRequestId(int requestId);
 
         ResponseObject<int> SetPriority(int requestId, int priority);
+
+        ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> GetAgencyRequests(int acency_id);
     }
 
     public  class RequestDomain : BaseDomain, IRequestDomain
@@ -77,6 +79,16 @@ namespace DataService.Domain
             var requestService = this.Service<IRequestService>();
             
             var result = requestService.GetAllRequestByAgencyIDAndStatus(acency_id, status);
+
+            return result;
+
+        }
+
+        public ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> GetAgencyRequests(int acency_id)
+        {
+            var requestService = this.Service<IRequestService>();
+
+            var result = requestService.GetAgencyRequests(acency_id);
 
             return result;
 
