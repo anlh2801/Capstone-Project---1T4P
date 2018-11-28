@@ -70,7 +70,7 @@
                             </div>
                             <div class="col-md-6" style="margin-top:10px">
                                 <label>Độ Ưu Tiên:</label>
-                                <select class="form-control select2" type="button" style="width: 99%;float:right;" id="comboSerItem" onchange="getDevice()">
+                                <select class="form-control select2" type="button" style="width: 99%;float:right;" id="comboPriority" onchange="getDevice()">
                                     <option value="0">--Chọn độ ưu tiên--</option>
                                     <option value="1">Xử lý gấp</option>
                                     <option value="2">Cần xử lý</option>
@@ -837,7 +837,8 @@
                  AgencyId: $('#comboAgency').val(),
                  RequestCategoryId: 3,
                  ServiceItemId: $('#comboSerItem').val(),
-                 RequestName: $("#comboAgency option:selected").text() + " - " + $("#comboSerItem option:selected").text(),
+                 RequestName: $("#comboAgency option:selected").text() + " - " + $("#comboSerItem option:selected").text(),      
+                 PriorityCreate: $('#comboPriority').val(),
                  Tickets: tickets,
                 AgencyTelephone: $('#PhoneC').val(),
                 RequestDesciption: $('#DescripC').val(),
