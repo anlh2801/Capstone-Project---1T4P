@@ -626,7 +626,7 @@
                     {
                         "aTargets": [7],
                         "mRender": function (data, type, full) {
-                            if (full.StatusName !== "Tạo mới") {
+                            if (full.StatusName === "Tạo mới") {
                                 var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.RequestId + ')"></button>';
                                 return edit;
                             } else {
@@ -864,21 +864,23 @@
         }
         function getDataEdit(id) {
             $.ajax({
-                url: '@Url.RouteUrl(new {action = "GetAgencyDetail", controller = "Agency"})',
+                url: '@Url.RouteUrl(new {action = "GetRequestById", controller = "Request" })',
 
                 data: {
-                    agency_id: id
+                    requestId: id
                 },
                 type: 'GET',
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#q").val(data.result.ObjReturn.CompanyId);
-                    $("#w").val(data.result.ObjReturn.AccountId);
-                    $("#idd").val(data.result.ObjReturn.AgencyId);
-                    $("#e").val(data.result.ObjReturn.AgencyName);
-                    $("#r").val(data.result.ObjReturn.Address);
-                    $("#t").val(data.result.ObjReturn.Telephone);
+                    $("#comboAgencyE").val(data.result.ObjReturn.AgencyName);
+                    $("#comboSerNameE").val(data.result.ObjReturn.RequestName);
+                    $("#comboSerItemE").val(data.result.ObjReturn.);
+                    $("#comboStatusE").val(data.result.ObjReturn.requestStatus);
+                    $("#comboPriorityE").val(data.result.ObjReturn.requestPriorityStatus);
+                    $("#comboDevicesE").val(data.result.ObjReturn.Telephone);
+                    $("#PhoneE").val(data.result.ObjReturn.Telephone);
+                    $("#DescripE").val(data.result.ObjReturn.Telephone);
                 }
             });
             $('#EditModal').modal('show');
