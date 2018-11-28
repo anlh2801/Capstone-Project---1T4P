@@ -167,6 +167,7 @@ public class RecieveRequestFragment extends Fragment {
         edit.commit();
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left, R.animator.enter_from_left, R.animator.exit_to_right)
                 .replace(R.id.fmHome, new DoRequestFragment())
                 .commit();
     }

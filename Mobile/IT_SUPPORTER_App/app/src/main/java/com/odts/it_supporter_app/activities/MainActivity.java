@@ -1,8 +1,7 @@
 package com.odts.it_supporter_app.activities;
 
-import android.app.ActionBar;
-import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -78,11 +77,10 @@ public class MainActivity extends AppCompatActivity {
         itSupporterService.getIsOnline(this, itSupporterId, new CallBackData<Boolean>() {
             @Override
             public void onSuccess(Boolean aBoolean) {
-                if(aBoolean) {
+                if (aBoolean) {
                     swStatus.setChecked(aBoolean);
 //                    toolbar.setTitle("Trực tuyến");
-                }
-                else {
+                } else {
                     swStatus.setChecked(false);
 //                    toolbar.setTitle("Ngoại tuyến");
                 }
@@ -120,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } else
 //                    toolbar.setTitle("Trực tuyến");
-                itSupporterService.updateStatusIT(MainActivity.this, itSupporterId, b);
+                    itSupporterService.updateStatusIT(MainActivity.this, itSupporterId, b);
 
             }
         });
@@ -146,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -155,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void initHome() {
         itSupporterService = new ITSupporterService();
         itSupporterService.getIsBusy(MainActivity.this, itSupporterId, new CallBackData<Boolean>() {
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                         loadFragment(new ScanDeviceFragment());
                     } else
                         toolbar.setTitle("Đang thực hiện");
-                        loadFragment(new DoRequestFragment());
+                    loadFragment(new DoRequestFragment());
                 }
             }
 
@@ -181,32 +181,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initDrawer() {
-        navigationView.setNavigationItemSelectedListener( new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        switch (menuItem.getItemId()) {
-                            case R.id.navigation_home:
-                                initHome();
-                                toolbar.setTitle("Trang chủ");
-                                break;
-                            case R.id.navigation_scanQR:
-                                loadFragment(new ScanDeviceFragment());
-                                toolbar.setTitle("Tra cứu");
-                                break;
-                            case R.id.navigation_sumary:
-                                toolbar.setTitle("Lịch sử");
-                                loadFragment(new SumaryFragment());
-                                break;
-                            case R.id.navigation_accountDetail:
-                                toolbar.setTitle("Tài khoản");
-                                loadFragment(new ProfleFragment());
-                                break;
-                        }
-                        mDrawerLayout.closeDrawer(GravityCompat.START);
-                        return true;
-                    }
-                });
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                menuItem.setChecked(true);
+                switch (menuItem.getItemId()) {
+                    case R.id.navigation_home:
+                        initHome();
+                        toolbar.setTitle("Trang chủ");
+                        break;
+                    case R.id.navigation_scanQR:
+                        loadFragment(new ScanDeviceFragment());
+                        toolbar.setTitle("Tra cứu");
+                        break;
+                    case R.id.navigation_sumary:
+                        toolbar.setTitle("Lịch sử");
+                        loadFragment(new SumaryFragment());
+                        break;
+                    case R.id.navigation_accountDetail:
+                        toolbar.setTitle("Tài khoản");
+                        loadFragment(new ProfleFragment());
+                        break;
+                }
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
 
     }
 
@@ -240,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
 //            fragment.onResume();
             getSupportFragmentManager()
                     .beginTransaction()
+                    .setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left, R.animator.enter_from_left, R.animator.exit_to_right)
                     .replace(R.id.fmHome, fragment)
                     .commit();
 //            fragment.onPause();
