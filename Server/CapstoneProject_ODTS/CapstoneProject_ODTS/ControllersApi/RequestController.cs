@@ -166,5 +166,14 @@ namespace CapstoneProject_ODTS.ControllersApi
             //var result = r.GetRequestStatistic(month, year);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
+
+        [HttpGet]
+        [Route("request/view_request_details")]
+        public HttpResponseMessage GetRequestById(int requestId)
+        {
+            var result = _requestDomain.GetRequestById(requestId);
+            
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
     }
 }
