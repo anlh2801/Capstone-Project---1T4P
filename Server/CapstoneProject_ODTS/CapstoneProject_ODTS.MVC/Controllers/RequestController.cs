@@ -43,6 +43,14 @@ namespace CapstoneProject_ODTS.Controllers
             
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetRequestById(int requestId)
+        {
+            var result = _requestDomain.GetRequestById(requestId);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult GetAllRequestForMonth(int month, int year)
         {
             var result = _requestDomain.GetAllRequestForMonth(month, year);

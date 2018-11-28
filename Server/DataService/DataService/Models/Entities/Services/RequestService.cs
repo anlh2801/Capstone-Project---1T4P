@@ -50,6 +50,8 @@ namespace DataService.Models.Entities.Services
         ResponseObject<List<RequestAPIViewModel>> GetAllRequestForMonth(int month, int year);
 
         ResponseObject<bool> ApproveCancelRequest(int request_id, int status);
+
+        ResponseObject<RequestAPIViewModel> GetRequestById(int requestId)
     }
 
     public partial class RequestService
@@ -128,6 +130,57 @@ namespace DataService.Models.Entities.Services
                 return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại", ObjReturn = new List<RequestAPIViewModel>(), ErrorMessage = e.ToString() };
             }
         }
+
+        public ResponseObject<RequestAPIViewModel> GetRequestById(int requestId)
+        {
+            try
+            {                
+                var RequestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var request = RequestRepo.GetActive().SingleOrDefault(p => p.RequestId == requestId);                
+                
+                if (request != null)
+                {
+                    var i = 1;
+                    var requestStatus = "";
+                    foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
+                    {
+                        if (request.RequestStatus == i)
+                        {
+                            requestStatus = requestItem.DisplayName();
+                        }
+                        i++;
+                    }
+                    var j = 1;
+                    var requestPriorityStatus = "";
+                    foreach (RequestPriorityEnum requestPriorityItem in Enum.GetValues(typeof(RequestPriorityEnum)))
+                    {
+                        if (request.Priority == j)
+                        {
+                            requestPriorityStatus = requestPriorityItem.DisplayName();
+                        }
+                        j++;
+                    }
+                    var requestAPIViewModel = new RequestAPIViewModel()
+                    {
+                        RequestName = request.RequestName,
+                        CreateDate = request.CreateDate.ToString("dd/MM/yyyy"),
+                        AgencyName = request.Agency.AgencyName,
+                        StatusName = requestStatus,
+                        Priority = requestPriorityStatus,
+                        ITSupporterName = request.ITSupporter != null ? request.ITSupporter.ITSupporterName : string.Empty,
+                        RequestId = request.RequestId
+                    };
+                    
+                    return new ResponseObject<RequestAPIViewModel> { IsError = false, SuccessMessage = "Hiển thị yêu cầu thành công", ObjReturn = requestAPIViewModel };
+                }
+                return new ResponseObject<RequestAPIViewModel> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại"};
+            }
+            catch (Exception e)
+            {
+                return new ResponseObject<RequestAPIViewModel> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại", ErrorMessage = e.ToString() };
+            }
+        }
+
         public ResponseObject<RequestAPIViewModel> GetRequestBytRequestId(int requestId) {
             try
             {
