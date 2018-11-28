@@ -13,6 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ToxicBakery.viewpager.transforms.FlipHorizontalTransformer;
+import com.ToxicBakery.viewpager.transforms.FlipVerticalTransformer;
+import com.ToxicBakery.viewpager.transforms.RotateDownTransformer;
+import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
+import com.ToxicBakery.viewpager.transforms.TabletTransformer;
+import com.ToxicBakery.viewpager.transforms.ZoomOutSlideTransformer;
 import com.odts.customTools.PendingRequestAdapter;
 
 
@@ -50,6 +56,7 @@ public class RequestFragment extends Fragment {
     private void setupViewPager(ViewPager viewPager) {
         PagerAdapter adapter = new PagerAdapter(getActivity().getSupportFragmentManager());
         viewPager.setAdapter(adapter);
+        viewPager.setPageTransformer(true, new RotateDownTransformer());
     }
 
     public class PagerAdapter extends FragmentStatePagerAdapter {

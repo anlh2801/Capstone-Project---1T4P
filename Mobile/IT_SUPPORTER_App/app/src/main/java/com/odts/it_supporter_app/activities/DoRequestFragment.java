@@ -431,12 +431,6 @@ public class DoRequestFragment extends Fragment {
                                 if (aBoolean) {
                                     taskAdapter.add(requestTask);
                                     taskAdapter.notifyDataSetChanged();
-//                                    listView.refreshDrawableState();
-//                                    listView.invalidateViews();
-////                                            tick2 = new CheckBox(getContext());
-////                                            linearLayoutTask.addView(tick2);
-////                                            tick2.setText(m_Text);
-
                                     _taskService.getTaskByRequestID(getContext(), requestId, new CallBackData<ArrayList<RequestTask>>() {
                                         @Override
                                         public void onSuccess(ArrayList<RequestTask> requestTasks) {
@@ -472,8 +466,6 @@ public class DoRequestFragment extends Fragment {
 
         return v;
     }
-
-
 }
 
 
