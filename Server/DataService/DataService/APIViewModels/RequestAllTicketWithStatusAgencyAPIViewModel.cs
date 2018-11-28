@@ -25,6 +25,7 @@ namespace DataService.APIViewModels
         public string StartTime { get; set; }
         public string EndTime { get; set; }
         public string RequestStatus { get; set; }
+        public int RequestStatusValue { get; set; }
         public string RequestEstimationTime { get; set; }
         public int NumberOfTicketDone { get; set; }
         public int NumberTicketInProcessing { get; set; }
@@ -34,7 +35,7 @@ namespace DataService.APIViewModels
         public string FeedBack { get; set; }
         public int Rating { get; set; }
         public string Priority { get; set; }
-        public int PriorityCreate { get; set; }
+        public int PriorityValue { get; set; }
         public List<AgencyCreateTicketAPIViewModel> Tickets { get; set; }
     }
 }

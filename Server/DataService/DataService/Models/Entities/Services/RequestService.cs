@@ -136,8 +136,7 @@ namespace DataService.Models.Entities.Services
             try
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
-                var request = requestRepo.GetActive(x => x.RequestId == requestId
-                && x.RequestStatus == (int)RequestStatusEnum.Processing).SingleOrDefault();
+                var request = requestRepo.GetActive(x => x.RequestId == requestId).SingleOrDefault();
 
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
 
@@ -201,6 +200,8 @@ namespace DataService.Models.Entities.Services
                     AgencyAddress = request.Agency.Address,
                     Priority = requestPriorityStatus,
                     RequestDesciption = request.RequestDesciption,
+                    RequestStatusValue = request.RequestStatus,
+                    PriorityValue = request.Priority ?? 0,
                     Tickets = ticketList
                 };
 

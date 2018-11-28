@@ -240,7 +240,7 @@ namespace DataService.Models.Entities.Services
                 createRequest.RequestCategoryId = model.RequestCategoryId;
                 createRequest.RequestStatus = (int)RequestStatusEnum.New;
                 createRequest.RequestName = model.RequestName;
-                createRequest.Priority = model.PriorityCreate;
+                createRequest.Priority = model.PriorityValue;
                 createRequest.RequestDesciption = model.RequestDesciption;
                 createRequest.ServiceItemId = model.ServiceItemId;
                 createRequest.CreateDate = DateTime.UtcNow.AddHours(7);
