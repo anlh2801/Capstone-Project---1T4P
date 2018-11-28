@@ -1,6 +1,8 @@
 package com.odts.it_supporter_app.activities;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -105,6 +107,7 @@ public class DoRequestFragment extends Fragment {
             public void onClick(View view) {
                 ScanDeviceFragment scanDeviceFragment = new ScanDeviceFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left, R.animator.enter_from_left, R.animator.exit_to_right);
                 transaction.replace(R.id.fmHome, scanDeviceFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -344,6 +347,8 @@ public class DoRequestFragment extends Fragment {
             }
         });
         flbGuidline = v.findViewById(R.id.action_c);
+//        final View androidRobotView =v.findViewById(R.id.image_small);
+
         flbGuidline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -354,6 +359,8 @@ public class DoRequestFragment extends Fragment {
                 intent.putExtra("requestId", requestId);
                 intent.putExtra("itSupporterId", itSupporterId);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.animator.slide_up, R.animator.slide_down);
+//                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
             }
         });
 

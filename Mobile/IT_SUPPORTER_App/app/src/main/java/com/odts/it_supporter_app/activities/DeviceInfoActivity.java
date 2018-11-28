@@ -65,6 +65,7 @@ public class DeviceInfoActivity extends AppCompatActivity {
                 Intent intent = new Intent(DeviceInfoActivity.this, MainActivity.class);
                 intent.putExtra("scan", "123");
                 startActivity(intent);
+                overridePendingTransition(R.animator.slide_up, R.animator.slide_down);
 
             }
 

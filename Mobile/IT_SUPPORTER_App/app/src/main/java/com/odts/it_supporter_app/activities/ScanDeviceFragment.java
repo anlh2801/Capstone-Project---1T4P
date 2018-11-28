@@ -54,6 +54,12 @@ public class ScanDeviceFragment extends Fragment {
 //    }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_scan_device, container, false);
@@ -114,6 +120,7 @@ public class ScanDeviceFragment extends Fragment {
                     Intent intent = new Intent(getContext(), DeviceInfoActivity.class);
                     intent.putExtra("deviceCode", barcodes.valueAt(0).displayValue.toString());
                     startActivity(intent);
+                    getActivity().overridePendingTransition(R.animator.slide_up, R.animator.slide_down);
                     cameraSource.stop();
                 }
             }
@@ -121,28 +128,4 @@ public class ScanDeviceFragment extends Fragment {
 
         return v;
     }
-
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-    }
-
-//    @SuppressLint("MissingPermission")
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-//                                           @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        if (requestCode == REQUEST_CAMERA && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//            try {
-//                //..
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }else{
-//            finish();
-//        }
-//    }
 }
