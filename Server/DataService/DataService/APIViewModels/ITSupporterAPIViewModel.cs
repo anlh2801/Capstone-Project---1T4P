@@ -31,6 +31,6 @@ namespace DataService.APIViewModels
         public string MonthExperience { get; set; }
         public int ServiceITSupportId { get; set; }
         public int RoleId { get; set; }
-
+        public string RoleName { get; set; }
     }
 }

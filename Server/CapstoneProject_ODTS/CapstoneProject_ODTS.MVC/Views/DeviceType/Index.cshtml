@@ -1,26 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<!-- /.modal -->
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Modal title</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    <b>Message:</b><br>
-                    <input class="message-edit-text" type="text" size="20">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <div class="container">
     <!-- Modal -->
     <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
@@ -81,7 +61,7 @@
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <b>Dịch Vụ Hỗ Trợ:</b><br>
-                                <select id="comboService" class="form-control"></select>
+                                <select class="form-control select2" style="width: 100%;" id="comboService"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <b>Mô Tả Loại Thiết Bị:</b><br>
@@ -90,8 +70,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
                         <button type="submit" class="btn btn-primary">Tạo Mới</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="showService()">Đóng</button>
                     </div>
                 </div>
             </div>
@@ -111,21 +91,21 @@
                     <div class="row">
                         <div class="col-md-12">
                             <b>Tên Loại Thiết Bị:</b><br>
-                            <input type="text" id="dtNameCreateEdit" class="form-control"></input>
+                            <input type="text" id="dtNameCreateEdit" class="form-control">
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
                             <b>Dịch Vụ Hỗ Trợ:</b><br>
-                            <select id="comboServiceEdit" class="form-control"></select>
+                            <select class="form-control select2" style="width: 100%;" id="comboServiceEdit"></select>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
                             <b>Mô Tả Loại Thiết Bị:</b><br>
-                            <input type="text" id="dtDescriptionCreateEdit" class="form-control"></input>
+                            <input type="text" id="dtDescriptionCreateEdit" class="form-control">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                     <button type="button" class="btn btn-primary" onclick="UpdateDeviceType()">Chỉnh Sửa</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
         </div>
@@ -165,24 +145,30 @@
         <tbody></tbody>
     </table>
     <div class="NewThing">
-        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Loại Thiết Bị</button>
+        <button type="button" class="btn btn-primary fa fa-plus" style="float:right;margin-top:15px;" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Loại Thiết Bị</button>
     </div>
 </div>
 
 <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts {
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
-    <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
+    <script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
     <script>
         $(document).ready(function() {
             loadDeviceType();
             showService();
         });
-
+        $('#comboService').select2({
+            dropdownParent: $('#CreateModal'),
+        });
+        $('#comboServiceEdit').select2({
+            dropdownParent: $('#EditModal'),
+        });
         function loadDeviceType() {
             $.ajax({
                 type: 'POST',
@@ -280,7 +266,7 @@
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
                     var obj = data.result.ObjReturn;
-                    var html = '';
+                    var html = '<option value="0">--Chọn Loại Dịch Vụ--</option>';
                     for (var i = 0; i < obj.length; i++) {
                         html += '<option value="' +
                             obj[i].ServiceITSupportId +
@@ -375,7 +361,7 @@
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
                         if (!data.result.isError) {
-                            clearModal();   
+                            clearModal();
                             $('#CreateModal').modal('hide');
                             swal(data.result.SuccessMessage, "", "success");
                             loadDeviceType();
@@ -422,7 +408,7 @@
             });
         }
 
-    </script>
+</script>
 
 }
 

@@ -1,26 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<!-- /.modal -->
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Modal title</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    <b>Message:</b><br>
-                    <input class="message-edit-text" type="text" size="20">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+
 <div class="container">
     <!-- Modal -->
     <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
@@ -81,8 +62,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
                         <button type="submit" class="btn btn-primary">Tạo Mới</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
                     </div>
                 </div>
             </div>
@@ -110,8 +91,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                     <button type="submit" class="btn btn-primary">Chỉnh Sửa</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
         </div>
@@ -154,7 +135,7 @@
         <tbody></tbody>
     </table>
     <div class="NewThing">
-        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Loại Dịch Vụ</button>
+        <button type="button" class="btn btn-primary fa fa-plus" style="float:right;margin-top:15px;" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Loại Dịch Vụ</button>
     </div>
 </div>
 
