@@ -51,7 +51,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> ApproveCancelRequest(int request_id, int status);
 
-        ResponseObject<RequestAPIViewModel> GetRequestById(int requestId);
+        ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestById(int requestId);
     }
 
     public partial class RequestService
@@ -131,56 +131,89 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<RequestAPIViewModel> GetRequestById(int requestId)
+        public ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestById(int requestId)
         {
             try
-            {                
-                var RequestRepo = DependencyUtils.Resolve<IRequestRepository>();
-                var request = RequestRepo.GetActive().SingleOrDefault(p => p.RequestId == requestId);                
-                
-                if (request != null)
+            {
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var request = requestRepo.GetActive(x => x.RequestId == requestId
+                && x.RequestStatus == (int)RequestStatusEnum.Processing).SingleOrDefault();
+
+                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+
+                if (request == null)
                 {
-                    var i = 1;
-                    var requestStatus = "";
-                    foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
-                    {
-                        if (request.RequestStatus == i)
-                        {
-                            requestStatus = requestItem.DisplayName();
-                        }
-                        i++;
-                    }
-                    var j = 1;
-                    var requestPriorityStatus = "";
-                    foreach (RequestPriorityEnum requestPriorityItem in Enum.GetValues(typeof(RequestPriorityEnum)))
-                    {
-                        if (request.Priority == j)
-                        {
-                            requestPriorityStatus = requestPriorityItem.DisplayName();
-                        }
-                        j++;
-                    }
-                    var requestAPIViewModel = new RequestAPIViewModel()
-                    {
-                        RequestName = request.RequestName,
-                        CreateDate = request.CreateDate.ToString("dd/MM/yyyy"),
-                        AgencyName = request.Agency.AgencyName,
-                        StatusName = requestStatus,
-                        Priority = requestPriorityStatus,
-                        ITSupporterName = request.ITSupporter != null ? request.ITSupporter.ITSupporterName : string.Empty,
-                        RequestId = request.RequestId
-                    };
-                    
-                    return new ResponseObject<RequestAPIViewModel> { IsError = false, SuccessMessage = "Hiển thị yêu cầu thành công", ObjReturn = requestAPIViewModel };
+                    return new ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> { IsError = true, WarningMessage = "Thất bại", ObjReturn = null };
                 }
-                return new ResponseObject<RequestAPIViewModel> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại"};
+
+                List<AgencyCreateTicketAPIViewModel> ticketList = new List<AgencyCreateTicketAPIViewModel>();
+                var tickets = ticketRepo.GetActive(p => p.RequestId == request.RequestId).ToList();
+                foreach (var ticketItem in tickets)
+                {
+                    var ticket = new AgencyCreateTicketAPIViewModel();
+
+                    ticket.TicketId = ticketItem.TicketId;
+                    //ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
+                    ticket.DeviceId = ticketItem.DeviceId;
+                    ticket.DeviceName = ticketItem.Device.DeviceName;
+                    ticket.Desciption = ticketItem.Desciption;
+                    ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+                    ticket.DeviceCode = ticketItem.Device.DeviceCode;
+                    ticketList.Add(ticket);
+                }
+                var timeAgo = TimeAgo(request.CreateDate);
+                var i = 1;
+                var requestStatus = "";
+                foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
+                {
+                    if (request.RequestStatus == i)
+                    {
+                        requestStatus = requestItem.DisplayName();
+                    }
+                    i++;
+                }
+                var j = 1;
+                var requestPriorityStatus = "";
+                foreach (RequestPriorityEnum requestPriorityItem in Enum.GetValues(typeof(RequestPriorityEnum)))
+                {
+                    if (request.Priority == j)
+                    {
+                        requestPriorityStatus = requestPriorityItem.DisplayName();
+                    }
+                    j++;
+                }
+                var requestViewModel = new RequestAllTicketWithStatusAgencyAPIViewModel()
+                {
+                    RequestId = request.RequestId,
+                    RequestName = request.RequestName,
+                    CreateDate = timeAgo,
+                    UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
+                    AgencyTelephone = request.Phone != null ? request.Phone : request.Agency.Telephone,
+                    AgencyName = request.Agency.AgencyName,
+                    RequestStatus = requestStatus,
+                    RequestEstimationTime = request.CreateDate.AddHours(request.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
+                    //NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
+                    //NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
+                    NumberOfTicket = ticketList.Count,
+                    ServiceItemId = request.ServiceItemId,
+                    ServiceItemName = request.ServiceItem.ServiceItemName,
+                    AgencyId = request.AgencyId,
+                    AgencyAddress = request.Agency.Address,
+                    Priority = requestPriorityStatus,
+                    Tickets = ticketList
+                };
+
+
+                return new ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> { IsError = false, SuccessMessage = "Thành công", ObjReturn = requestViewModel };
             }
             catch (Exception e)
             {
-                return new ResponseObject<RequestAPIViewModel> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại", ErrorMessage = e.ToString() };
+                return new ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> { IsError = true, WarningMessage = "Thất bại", ObjReturn = null, ErrorMessage = e.ToString() };
             }
+
         }
 
+        
         public ResponseObject<RequestAPIViewModel> GetRequestBytRequestId(int requestId) {
             try
             {
