@@ -44,7 +44,7 @@ namespace DataService.Domain
 
         ResponseObject<List<RequestAllTicketWithStatusAgencyAPIViewModel>> GetAgencyRequests(int acency_id);
 
-        ResponseObject<RequestAPIViewModel> GetRequestById(int requestId);
+        ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestById(int requestId);
     }
 
     public  class RequestDomain : BaseDomain, IRequestDomain
@@ -58,7 +58,7 @@ namespace DataService.Domain
             return result;
         }
 
-        public ResponseObject<RequestAPIViewModel> GetRequestById(int requestId)
+        public ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestById(int requestId)
         {
             var requestService = this.Service<IRequestService>();
 
