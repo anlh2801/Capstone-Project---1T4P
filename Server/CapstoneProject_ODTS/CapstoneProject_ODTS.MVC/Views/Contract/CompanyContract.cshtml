@@ -1,26 +1,7 @@
 ﻿@{
     var dataContract = ViewData["ID"];
 }
-<!-- /.modal -->
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Modal title</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    <b>Message:</b><br>
-                    <input class="message-edit-text" type="text" size="20">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+
 <div class="container">
     <!-- Modal -->
     <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
@@ -46,11 +27,11 @@
                             <p id="ServiceName"></p>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>Ngày Bắt Đầu:</b><br>
+                            <b>Ngày Bắt Đầu Bảo Hành:</b><br>
                             <p id="conStartDate"></p>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>Ngày Hết Hạn:</b><br>
+                            <b>Hạn Bảo Hành:</b><br>
                             <p id="conEndDate"></p>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
@@ -92,18 +73,18 @@
                                 <select multiple class="form-control select2" style="width: 100%;" id="test"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <b>Ngày Bất Đầu:</b><br>
+                                <b>Ngày Bắt Đầu Bảo Hành:</b><br>
                                 <input type="button" style="text-align: left" id="createDate" class="form-control" required>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <b>Ngày Hết Hạn:</b><br>
-                                <input type="text" id="endDate" class="form-control" required>
+                                <b>Hạn Bảo Hành:</b><br>
+                                <input type="button" style="text-align: left" id="endDate" class="form-control" required>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
                         <button type="submit" class="btn btn-primary">Tạo Mới</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
                     </div>
                 </div>
             </div>
@@ -134,18 +115,18 @@
                             <select multiple class="form-control select2" style="width: 100%;" id="testE"></select>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>Ngày Bất Đầu:</b><br>
-                            <input type="text" id="conStartDateE" class="form-control" required>
+                            <b>Ngày Bắt Đầu Bảo Hành:</b><br>
+                            <input type="button" style="text-align: left" id="conStartDateE" class="form-control" required>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>Ngày Hết Hạn:</b><br>
-                            <input type="text" id="conEndDateE" class="form-control" required>
+                            <b>Hạn Bảo Hành:</b><br>
+                            <input type="button" style="text-align: left" id="conEndDateE" class="form-control" required>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                     <button type="submit" class="btn btn-primary">Chỉnh Sửa</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
         </div>
@@ -170,18 +151,18 @@
         <thead>
             <tr>
                 <th><label>STT</label></th>
-                <th><label>Tên</label></th>
+                <th><label>Tên Hợp Đồng</label></th>
                 <th><label>Mô Tả Hợp Đồng</label></th>
-                <th><label>Ngày Bắt Đầu</label></th>
-                <th><label>Hạn Hợp Đồng</label></th>
+                <th><label>Ngày Bắt Đầu Bảo Hành</label></th>
+                <th><label>Hạn Bảo Hành</label></th>
                 <th><label>Chức Năng</label></th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
     <div class="NewThing">
-        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Hợp Đồng</button>
-        <button type="button" class="btn btn-primary fa fa-mail-reply-all" data-toggle="modal" data-target="" onclick="window.location.href='http://localhost:51436/Company/Index'"><font face="verdana"> Quay Lại Trang Công Ty</button>
+        <button type="button" class="btn btn-primary fa fa-plus" style="float:right;margin-top:15px;" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Hợp Đồng</button>
+        <button type="button" class="btn btn-primary fa fa-mail-reply-all" style="float:right;margin-top:15px;margin-right:15px;" data-toggle="modal" data-target="" onclick="window.location.href='http://localhost:51436/Company/Index'"><font face="verdana"> Quay Lại Trang Công Ty</button>
     </div>
 </div>
 

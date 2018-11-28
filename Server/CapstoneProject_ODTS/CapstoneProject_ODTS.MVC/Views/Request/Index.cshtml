@@ -64,9 +64,18 @@
                                 <select type="button" class="form-control select2" style="width: 100%;" id="comboSerName" onchange="getSerItems()"></select>
                             </div>
                             <input id="idSer" type="hidden" />
-                            <div class="col-md-12" style="margin-top:10px">
+                            <div class="col-md-6" style="margin-top:10px">
                                 <label>Hiện tượng:</label>
-                                <select class="form-control select2" type="button" style="width: 100%;" id="comboSerItem" onchange="getDevice()"></select>
+                                <select class="form-control select2" type="button" style="width: 99%;" id="comboSerItem" onchange="getDevice()"></select>
+                            </div>
+                            <div class="col-md-6" style="margin-top:10px">
+                                <label>Độ Ưu Tiên:</label>
+                                <select class="form-control select2" type="button" style="width: 99%;float:right;" id="comboSerItem" onchange="getDevice()">
+                                    <option value="0">--Chọn độ ưu tiên--</option>
+                                    <option value="1">Xử lý gấp</option>
+                                    <option value="2">Cần xử lý</option>
+                                    <option value="3">Không gấp</option>
+                                </select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <label>Thiết Bị:</label>

@@ -1,26 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<!-- /.modal -->
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Modal title</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    <b>Message:</b><br>
-                    <input class="message-edit-text" type="text" size="20">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+
 <div class="container">
     <!-- Modal -->
     <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
@@ -49,16 +30,16 @@
                             <p id="comUpdateDate"></p>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <h4 class="city"><b>Chỉ số chọn người hỗ trợ phù hợp</b><br></h4>
+                            <h4 class="city"><b>Chỉ số chọn người hỗ trợ phù hợp.</b><br></h4>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <i class="fa fa-percent" aria-hidden="true"></i> <b>Số Điểm Bình Chọn Của Nhân Viên: </b><span id="viewPercentForITSupporterRate"></span>                            
+                            <i class="fa fa-percent" aria-hidden="true"></i> <b>Điểm Bình Chọn(%): </b><span id="viewPercentForITSupporterRate"></span>                            
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <i class="fa fa-percent" aria-hidden="true"></i> <b>Kinh Nghiệm Của Nhân Viên: </b><span id="viewPercentForITSupporterExp"></span>                            
+                            <i class="fa fa-percent" aria-hidden="true"></i> <b>Kinh Nghiệm(%): </b><span id="viewPercentForITSupporterExp"></span>                            
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <i class="fa fa-percent" aria-hidden="true"></i> <b>Độ Thân Thuộc Của Nhân Viên: </b><span id="viewPercentForITSupporterFami"></span>                            
+                            <i class="fa fa-percent" aria-hidden="true"></i> <b>Độ Thân Thuộc(%): </b><span id="viewPercentForITSupporterFami"></span>                            
                         </div>
                     </div>
                 </div>                
@@ -94,24 +75,23 @@
                                 <h4 class="city"><b>Vui lòng thêm chỉ số để chọn người hỗ trợ phù hợp</b><br></h4>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <b>Điểm Bình Chọn(%)</b><br>
+                                <b>Điểm Bình Chọn(%):</b><br>
                                 <input class="form-control" type="text" id="comPercentForITSupporterRate" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên" />
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <b>Kinh Nghiệm(%)</b><br>
+                                <b>Kinh Nghiệm(%):</b><br>
                                 <input class="form-control" type="text" id="comPercentForITSupporterExp" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên" />
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <b>Độ Thân Thuộc(%)</b><br>
+                                <b>Độ Thân Thuộc(%):</b><br>
                                 <input class="form-control" type="text" id="comPercentForITSupporterFami" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên" />
                             </div>
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
-                        @*<button type="button" class="btn btn-primary" onclick="createCompany(); clearModal();">Tạo Mới</button>*@
                         <button type="submit" class="btn btn-primary">Tạo Mới</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
                     </div>
                 </div>
             </div>
@@ -140,23 +120,22 @@
                             <h4 class="city"><b>Chỉ số chọn người hỗ trợ phù hợp.</b><br></h4>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>Số Điểm Bình Chọn Của Nhân Viên (%):</b><br>
+                            <b>Điểm Bình Chọn(%):</b><br>
                             <input class="form-control" type="text" id="editPercentForITSupporterRate" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên"/>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>Kinh Nghiệm Của Nhân Viên (%):</b><br>
+                            <b>Kinh Nghiệm(%):</b><br>
                             <input class="form-control" type="text" id="editPercentForITSupporterExp" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên"/>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>Độ Thân Thuộc Của Nhân Viên (%):</b><br>
+                            <b>Độ Thân Thuộc(%):</b><br>
                             <input class="form-control" type="text" id="editPercentForITSupporterFami" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên"/>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    @*<button type="button" class="btn btn-primary" onclick="UpdateCompany()">Chỉnh Sửa</button>*@
                     <button type="submit" class="btn btn-primary">Chỉnh Sửa</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
         </div>
@@ -201,7 +180,7 @@
             <tbody></tbody>
         </table>
         <div class="NewThing">
-            <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Công Ty</button>
+            <button type="button" class="btn btn-primary fa fa-plus" style="float:right; margin-top:15px;" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Công Ty</button>
         </div>
     </div>
 
