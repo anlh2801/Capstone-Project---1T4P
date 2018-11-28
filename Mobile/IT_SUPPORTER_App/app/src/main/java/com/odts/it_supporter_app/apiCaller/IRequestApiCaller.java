@@ -1,7 +1,9 @@
 package com.odts.it_supporter_app.apiCaller;
 
+import com.odts.it_supporter_app.models.Guideline;
 import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.utils.ResponseObject;
+import com.odts.it_supporter_app.utils.ResponseObjectReturnList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -18,4 +20,7 @@ public interface IRequestApiCaller {
     @POST("ticket/update_status_ticket")
     Call<ResponseObject<Boolean>> updateStatusRequest(@Query("request_id") Integer request_id,
                                                       @Query("status") Integer status);
+
+    @GET("request/request_history_by_agency")
+    Call<ResponseObjectReturnList<Request>> getRequestHistoryByAgency(@Query("agency_id") int agency_id);
 }

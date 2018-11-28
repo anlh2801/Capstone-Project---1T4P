@@ -29,6 +29,7 @@ import com.firebase.client.Firebase;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.odts.it_supporter_app.R;
 import com.odts.it_supporter_app.apiCaller.DeviceAdapter;
+import com.odts.it_supporter_app.customTools.AgencyHistoryAdapter;
 import com.odts.it_supporter_app.customTools.TaskAdapter;
 import com.odts.it_supporter_app.models.Device;
 import com.odts.it_supporter_app.models.Request;
@@ -64,15 +65,16 @@ public class DoRequestFragment extends Fragment {
     LinearLayout linearLayoutTask, linerTask;
     SegmentedGroup segmentedGroup;
     EditText userInputDialogEditText;
-    ImageButton scan, btnAgencyDetail;
+    ImageButton scan, btnRequestDetail, btnRequestHistory;
 
     RequestService _requestService;
     TaskService _taskService;
     CheckBox tick, tick2;
     private String m_Text = "";
-    ListView listView, listViewDeviceC;
+    ListView listView, listViewDeviceC, listHistoryDetail;
     TaskAdapter taskAdapter;
     DeviceAdapter deviceAdapter;
+    AgencyHistoryAdapter agencyHistoryAdapter;
 
     public DoRequestFragment() {
         _requestService = new RequestService();
@@ -119,8 +121,40 @@ public class DoRequestFragment extends Fragment {
         _requestService.getRequestByRequestIdAndITSupporterId(getActivity(), itSupporterId, new CallBackData<Request>() {
             @Override
             public void onSuccess(final Request request) {
-                btnAgencyDetail = (ImageButton) v.findViewById(R.id.btnAgencyDetail);
-                btnAgencyDetail.setOnClickListener(new View.OnClickListener() {
+                btnRequestDetail = (ImageButton) v.findViewById(R.id.btnRequestDetail);
+                btnRequestHistory = (ImageButton) v.findViewById(R.id.btnHistory);
+                btnRequestHistory.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        _requestService.getRequestHistoryByAgency(getActivity(), request.getAgencyId(), new CallBackData<ArrayList<Request>>() {
+                            @Override
+                            public void onSuccess(ArrayList<Request> requests) {
+                                AlertDialog.Builder agencyHistory = new AlertDialog.Builder(getActivity());
+                                View v1 = getLayoutInflater().inflate(R.layout.agency_history_detail, null);
+                                listHistoryDetail = v1.findViewById(R.id.listHistory);
+                                agencyHistoryAdapter = new AgencyHistoryAdapter(getActivity(), R.layout.agency_history_detail_item, requests);
+                                listHistoryDetail.setAdapter(agencyHistoryAdapter);
+                                agencyHistory.setTitle("Chi tiết thông tin sự cố");
+                                agencyHistory.setNegativeButton("Đóng", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                                agencyHistory.setView(v1);
+                                final AlertDialog dialogg = agencyHistory.create();
+                                dialogg.show();
+                                dialogg.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                            }
+
+                            @Override
+                            public void onFail(String message) {
+
+                            }
+                        });
+                    }
+                });
+                btnRequestDetail.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -306,13 +340,17 @@ public class DoRequestFragment extends Fragment {
                 bt5.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
+
                         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
                         builder
                                 .setMessage("Bạn có chắc chắn hoàn thành công việc không?")
                                 .setPositiveButton("Có", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int id) {
+                                        map.put("status", "Hoàn thành");
+                                        map.put("message", "");
+                                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
+                                        reference1.push().setValue(map);
                                         itSupporterService.updateBusyIT(getContext(), itSupporterId);
                                         Intent intent = new Intent(getContext(), MainActivity.class);
                                         intent.putExtra("done", "done");

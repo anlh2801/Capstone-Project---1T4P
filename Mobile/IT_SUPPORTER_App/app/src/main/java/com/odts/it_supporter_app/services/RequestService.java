@@ -7,12 +7,15 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.odts.it_supporter_app.activities.MainActivity;
+import com.odts.it_supporter_app.apiCaller.IGuidelineApiCaller;
 import com.odts.it_supporter_app.apiCaller.ILoginApiCaller;
 import com.odts.it_supporter_app.apiCaller.IRequestApiCaller;
+import com.odts.it_supporter_app.models.Guideline;
 import com.odts.it_supporter_app.models.ITSupporter;
 import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.utils.CallBackData;
 import com.odts.it_supporter_app.utils.ResponseObject;
+import com.odts.it_supporter_app.utils.ResponseObjectReturnList;
 import com.odts.it_supporter_app.utils.RetrofitInstance;
 
 import java.util.ArrayList;
@@ -65,6 +68,28 @@ public class RequestService {
             @Override
             public void onFailure(Call<ResponseObject<Boolean>> call, Throwable t) {
                 Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
+
+    public void getRequestHistoryByAgency (final Context context, int serviceItemId, final CallBackData<ArrayList<Request>> callBackData) {
+        iRequestApiCaller  = RetrofitInstance.getRequesService();
+        Call<ResponseObjectReturnList<Request>> call = iRequestApiCaller.getRequestHistoryByAgency(serviceItemId);
+        call.enqueue(new Callback<ResponseObjectReturnList<Request>>() {
+            @Override
+            public void onResponse(Call<ResponseObjectReturnList<Request>> call, Response<ResponseObjectReturnList<Request>> response) {
+                if(response.code() == 200 && response.body() != null){
+                    if (!response.body().isError()) {
+                        callBackData.onSuccess(response.body().getObjList());
+                    }
+                } else {
+                    Log.e("MainActivity", "error" );
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObjectReturnList<Request>> call, Throwable t) {
+                Toast.makeText(context, "Có lỗi", Toast.LENGTH_SHORT).show();
             }
         });
     }

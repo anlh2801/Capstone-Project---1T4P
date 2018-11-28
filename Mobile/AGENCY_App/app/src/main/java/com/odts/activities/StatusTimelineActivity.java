@@ -115,7 +115,7 @@ public class StatusTimelineActivity extends AppCompatActivity {
                 String time = map.get("time").toString();
                 String message = map.get("message").toString();
                 setDataListItems(status, time, message);
-                if (message.equalsIgnoreCase("Hoàn thành")) {
+                if (status.equalsIgnoreCase("Hoàn thành")) {
                     btnDone.setVisibility(View.VISIBLE);
                 }
             }
