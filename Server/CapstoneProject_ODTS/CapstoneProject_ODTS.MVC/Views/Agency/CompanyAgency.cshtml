@@ -116,7 +116,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Tạo Mới</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal(); showAccount();">Đóng</button>
                     </div>
                 </div>
             </div>
@@ -424,7 +424,7 @@
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
                     var len = data.result.ObjReturn.length;
-                    var html = '';
+                    var html = '<option value="0">--Chọn tài khoản--</option>';
                     for (var i = 0; i < len; i++) {
                         html += '<option value="' +
                             data.result.ObjReturn[i].AccountId +

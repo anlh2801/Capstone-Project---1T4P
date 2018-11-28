@@ -23,6 +23,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage ViewRequestDetail(int requestId);
         HttpResponseMessage AcceptRequest(int itSupporterId, int requestId, bool isAccept);
         HttpResponseMessage GetRequestByRequestIdAndITSupporterId(int itSupporterId);
+        HttpResponseMessage GetAgencyRequests(int agency_id);
     }
 
     public class RequestController : ApiController, IRequestDomain
@@ -71,6 +72,15 @@ namespace CapstoneProject_ODTS.ControllersApi
         public HttpResponseMessage GetAllTicketByAgencyIDAndStatus2(int agency_id, int status)
         {
             var result = _requestDomain.GetAllRequestByAgencyIDAndStatus2(agency_id, status);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        [Route("request/request_history_by_agency")]
+        public HttpResponseMessage GetAgencyRequests(int agency_id)
+        {
+            var result = _requestDomain.GetAgencyRequests(agency_id);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }

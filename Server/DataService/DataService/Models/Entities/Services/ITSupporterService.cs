@@ -183,6 +183,8 @@ namespace DataService.Models.Entities.Services
                         ITSupporterId = itSupporter.ITSupporterId,
                         ITSupporterName = itSupporter.ITSupporterName,
                         AccountId = itSupporter.AccountId,
+                        RoleId = itSupporter.Account.RoleId,
+                        RoleName = itSupporter.Account.Role.RoleName,
                         Username = itSupporter.Account.Username,
                         Password = itSupporter.Account.Password,
                         Telephone = itSupporter.Telephone,

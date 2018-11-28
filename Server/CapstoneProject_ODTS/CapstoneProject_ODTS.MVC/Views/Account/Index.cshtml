@@ -3,25 +3,7 @@
 
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Modal title</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    <b>Message:</b><br>
-                    <input class="message-edit-text" type="text" size="20">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+
 <div class="container">
     <!-- Modal -->
     <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
@@ -84,8 +66,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
                         <button type="submit" class="btn btn-primary">Tạo Mới</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="showRole(); clearModal();">Đóng</button>
                     </div>
                 </div>
             </div>
@@ -121,8 +103,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                     <button type="submit" class="btn btn-primary">Chỉnh Sửa</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
         </div>
@@ -165,7 +147,7 @@
         <tbody></tbody>
     </table>
     <div class="test">
-        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Tài Khoản</button>
+        <button type="button" class="btn btn-primary fa fa-plus" style="float:right;margin-top:15px;" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Tài Khoản</button>
     </div>
 </div>
 
@@ -175,12 +157,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script type="text/javascript" src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
+    <script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
     <script>
         $(document).ready(function() {
             loadAccount();
             showRole();
         });
-
+        $('#comboRole').select2({
+            dropdownParent: $('#CreateModal'),
+        });
         function loadAccount() {
             $.ajax({
                 type: 'POST',
@@ -286,7 +273,7 @@
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
                     var obj = data.result.ObjReturn;
-                    var html = '';
+                    var html = '<option value="0">--Chọn quyền tài khoản--</option>';
                     for (var i = 0; i < obj.length; i++) {
                         html += '<option value="' +
                             obj[i].RoleId +
@@ -329,7 +316,7 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
-                    if (!data.result.isError) {        
+                    if (!data.result.isError) {
                             clearModal();
                             $('#CreateModal').modal('hide');
                             loadAccount();

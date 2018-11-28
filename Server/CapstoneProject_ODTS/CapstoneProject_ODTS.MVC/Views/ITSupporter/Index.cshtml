@@ -1,26 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<!-- /.modal -->
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Modal title</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    <b>Message:</b><br>
-                    <input class="message-edit-text" type="text" size="20">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <div class="container">
     <!-- Modal -->
     <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
@@ -81,39 +61,47 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-6">
-                                <b>Quyền Của Tài Khoản:</b><br>
-                                <select class="form-control select2" style="width: 100%;" id="comboRole"></select>
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <b>Quyền Của Tài Khoản:</b><br>
+                                    <select class="form-control select2" style="width: 100%;" disabled="disabled" id="comboRole"></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <b>Tên Đăng Nhập:</b><br>
+                                    <input type="text" class="form-control" id="userNameC" />
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <b>Tên Đăng Nhập:</b><br>
-                                <input type="text" class="form-control" id="userNameC" />
+                            <div class="col-md-12">
+                                <div class="col-md-6" style="margin-top: 10px">
+                                    <b>Mật Khẩu:</b><br>
+                                    <input type="password" class="form-control" id="passC" />
+                                </div>
+                                <div class="col-md-6" style="margin-top: 10px">
+                                    <b>Họ Và Tên:</b><br>
+                                    <input type="text" class="form-control" id="nameC" />
+                                </div>
                             </div>
-                            <div class="col-md-6" style="margin-top: 10px">
-                                <b>Mật Khẩu:</b><br>
-                                <input type="password" class="form-control" id="passC" />
+                            <div class="col-md-12">
+                                <div class="col-md-6" style="margin-top: 10px">
+                                    <b>Số Điện Thoại:</b><br>
+                                    <input type="text" class="form-control" id="phoneC" />
+                                </div>
+                                <div class="col-md-6" style="margin-top: 10px">
+                                    <b>Email:</b><br>
+                                    <input type="text" class="form-control" id="emailC" />
+                                </div>
                             </div>
-                            <div class="col-md-6" style="margin-top: 10px">
-                                <b>Họ Và Tên:</b><br>
-                                <input type="text" class="form-control" id="nameC" />
-                            </div>
-                            <div class="col-md-6" style="margin-top: 10px">
-                                <b>Số Điện Thoại:</b><br>
-                                <input type="text" class="form-control" id="phoneC" />
-                            </div>
-                            <div class="col-md-6" style="margin-top: 10px">
-                                <b>Email:</b><br>
-                                <input type="text" class="form-control" id="emailC" />
-                            </div>
-                            <div class="col-md-6" style="margin-top: 10px">
-                                <b>Địa Chỉ Thường Trú:</b><br>
-                                <input type="text" class="form-control" id="addressC" />
+                            <div class="col-md-12">
+                                <div class="col-md-6" style="margin-top: 10px">
+                                    <b>Địa Chỉ Thường Trú:</b><br>
+                                    <input type="text" class="form-control" id="addressC" />
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
                         <button type="submit" class="btn btn-primary">Tạo Mới</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="showRole(); clearModal();">Đóng</button>
                     </div>
                 </div>
             </div>
@@ -176,8 +164,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                     <button type="submit" class="btn btn-primary">Chỉnh Sửa</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 </div>
                 <div class="modal fade" id="CreateServiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -200,39 +188,12 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" onclick="hideCreateServiceModal()">Đóng</button>
                                 <button type="button" class="btn btn-primary" onclick="AddSkill(); hideCreateServiceModal();">Lưu</button>
+                                <button type="button" class="btn btn-secondary" onclick="hideCreateServiceModal()">Đóng</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                @*<div class="modal fade" id="UpdateServiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title"><b>Chỉnh sửa kinh nghiệm Làm Việc</b></h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <input type="hidden" id="idAdd" />
-                                    <input type="hidden" id="idSerRemove" />
-                                    <div class="col-md-12">
-                                        <b>Tên Dịch Vụ:</b><br>
-                                        <select class="form-control select2" style="width: 100%;" id="ser"></select>
-                                    </div>
-                                    <div class="col-md-12" style="margin-top: 10px">
-                                        <b>Thời Gian làm Việc:</b><br>
-                                        <input type="text" class="form-control" id="monthExp">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" onclick="hideUpdateServiceModal()">Đóng</button>
-                                <button type="button" class="btn btn-primary" onclick="UpdateSkill(); hideUpdateServiceModall();">Lưu Chỉnh Sửa</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>*@
             </div>
         </div>
     </div>
@@ -275,7 +236,7 @@
         <tbody></tbody>
     </table>
     <div class="NewThing">
-        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Nhân Viên</button>
+        <button type="button" class="btn btn-primary fa fa-plus" style="float:right;margin-top:15px;" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Nhân Viên</button>
     </div>
 </div>
 
@@ -285,6 +246,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script type="text/javascript" src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
+    <script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
     <script>
         $(document).ready(function() {
             loadITSup();
@@ -298,7 +262,9 @@
             });
             showService();
         });
-
+        $('#comboRole').select2({
+            dropdownParent: $('#CreateModal'),
+        });
         function loadITSup() {
             $.ajax({
                 type: 'POST',
@@ -497,7 +463,7 @@
                     var len = data.result.ObjReturn.length;
                     for (var i = 0; i < len; i++) {
                         result += data.result.ObjReturn[i].ServiceITSupportName+", " + data.result.ObjReturn[i].MonthExperience + " | ";
-                    }            
+                    }
                     $("#ITExpV").text(result);
                 }
             });
@@ -530,7 +496,7 @@
             });
         }
         function showRole() {
-            $('#comboRole, #comboRoleEdit')
+            $('#comboRole')
                 .find('option')
                 .remove()
                 .end();
@@ -544,23 +510,43 @@
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
                     var obj = data.result.ObjReturn;
-                    var html = '';
-                    for (var i = 0; i < obj.length; i++) {
-                        html += '<option value="' +
-                            obj[i].RoleId +
+                    var html = '<option value="' +
+                            obj[1].RoleId +
                             '">' +
-                            obj[i].RoleName
+                            obj[1].RoleName
                             '</option>';
-                    }
                     $('#comboRole').append(html);
-                    $('#comboRoleEdit').append(html);
+                }
+            });
+        }
+        function showRoleE(id) {
+            $('#comboRoleEdit')
+                .find('option')
+                .remove()
+                .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("ViewProfileITSupporter", "ITSupporter")',
+                data: {
+                    itSupporter_id: id
+                },
 
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var obj = data.result.ObjReturn;
+                    var html = '<option value="' +
+                            obj.RoleId +
+                            '">' +
+                            obj.RoleName
+                            '</option>';
+                    $('#comboRoleEdit').append(html);
                 }
             });
         }
 
-
         function getDataEdit(id) {
+            showRoleE(id); 
             $.ajax({
                 url: '@Url.RouteUrl(new {action = "ViewProfileITSupporter", controller = "ITSupporter" })',
 
