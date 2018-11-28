@@ -110,6 +110,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <input id="idAgencyE" type="hidden" />
                         <div class="col-md-12">
                             <label>Chi Nhánh:</label>
                             <input class="form-control" type="button" disabled="disabled" style="width: 100%;text-align: left;" id="comboAgencyE" onchange="getSers()"></input>
@@ -856,6 +857,7 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
+                    $("#idAgencyE").val(id);
                     $("#comboAgencyE").val(data.result.ObjReturn.AgencyName);
                     $("#comboSerNameE").val(data.result.ObjReturn.RequestName);
                     $("#comboSerItemE").val(data.result.ObjReturn.ServiceItemName);
@@ -915,22 +917,19 @@
             });
         }
         function updateRequest() {
-            var empObj = {
-                AgencyId: $('#idd').val(),
-                AgencyName: $('#e').val(),
-                Address: $('#r').val(),
-                Telephone: $('#t').val(),
-            }
             $.ajax({
+                url: '@Url.Action("UpdateRequest", "Request")',
+                data: {
+                    requestId: $("#idAgencyE").val(),
+                    prioryty: $('#comboPriorityE').val(),
+                    status: $('#comboStatusE').val(),
+                },               
                 type: 'POST',
-                url: '@Url.Action("UpdateAgency", "Agency")',
-                data: JSON.stringify(empObj),
-                dataType: 'json',
-                contentType: "application/json; charset=utf-8",
+               
                 success: function (data) {
                     if (!data.result.isError) {
                         $('#EditModal').modal('hide');
-                        loadCompanyAgency();
+                        //loadCompanyAgency();
                         swal(data.result.SuccessMessage, "", "success");
                     }
                     else

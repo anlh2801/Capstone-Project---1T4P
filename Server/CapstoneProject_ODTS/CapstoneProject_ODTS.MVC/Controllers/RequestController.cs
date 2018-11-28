@@ -1,6 +1,7 @@
 ﻿using DataService.APIViewModels;
 using DataService.CustomTools;
 using DataService.Domain;
+using DataService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,11 +62,16 @@ namespace CapstoneProject_ODTS.Controllers
             }
             finally
             {
-                var result = _agencyDomain.FindITSupporterByRequestId(requestId);
-                if (!result.IsError && result.ObjReturn > 0)
+                if(status == (int) RequestStatusEnum.Pending)
                 {
-                    _requestDomain.AcceptRequestFromITSupporter(result.ObjReturn, requestId, true, "check");
+                    var result = _agencyDomain.FindITSupporterByRequestId(requestId);
+                    if (!result.IsError && result.ObjReturn > 0)
+                    {
+                        FirebaseService firebaseService = new FirebaseService();
+                        firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
+                    }
                 }
+                
             }
            
         }
