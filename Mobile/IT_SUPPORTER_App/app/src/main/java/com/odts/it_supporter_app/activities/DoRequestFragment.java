@@ -194,9 +194,10 @@ public class DoRequestFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         map.put("status", "Đã nhận");
+                        map.put("message", "");
                         map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
                         reference1.push().setValue(map);
-                        segmentedGroup.removeView(btnAccept);
+//                        segmentedGroup.removeView(btnAccept);
                     }
                 });
                 bt2 = v.findViewById(R.id.button32);
@@ -218,7 +219,7 @@ public class DoRequestFragment extends Fragment {
                                         map.put("message", userInputDialogEditText.getText().toString());
                                         map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
                                         reference1.push().setValue(map);
-                                        segmentedGroup.removeView(bt2);
+//                                        segmentedGroup.removeView(bt2);
                                     }
                                 })
                                 .setNegativeButton("Cancel",
