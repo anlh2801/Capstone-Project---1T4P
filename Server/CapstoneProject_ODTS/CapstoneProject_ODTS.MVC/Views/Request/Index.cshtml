@@ -79,7 +79,6 @@
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <label>Thiết Bị:</label>
-
                                 <select multiple class="form-control select2" type="button" style="width: 100%;" id="comboDevices"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
@@ -93,8 +92,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
                         <button type="submit" class="btn btn-primary">Tạo Mới</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
                     </div>
                 </div>
             </div>
@@ -111,33 +110,52 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <p>
-                        <p id="idd"></p>
                         <div class="col-md-12">
-                            <b>Tên Công Ty Sở Hữu:</b>
-                            <select id="q" class="form-control" disabled="disabled"></select>
+                            <label>Chi Nhánh:</label>
+                            <select class="form-control select2" type="button" style="width: 100%;" id="comboAgencyE" onchange="getSers()"></select>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>Tên Tài Khoản Ứng Dụng:</b><br>
-                            <select id="w" class="form-control" disabled="disabled"></select>
+                            <label>Danh mục:</label>
+                            <select type="button" class="form-control select2" style="width: 100%;" id="comboSerNameE" onchange="getSerItems()"></select>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>Tên Chi Nhánh</b><br>
-                            <input id="e" type="text" class="form-control">
+                            <label>Hiện tượng:</label>
+                            <select class="form-control select2" type="button" style="width: 99%;" id="comboSerItemE" onchange="getDevice()"></select>
+                        </div>
+                        <div class="col-md-6" style="margin-top:10px">
+                            <label>Trạng Thái:</label>
+                            <select class="form-control select2" type="button" style="width: 99%;float:right;" id="comboStatusE">
+                                <option value="0">--Chọn trạng thái--</option>
+                                <option value="1">Chờ xử lý</option>
+                                <option value="3">Hoàn thành</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6" style="margin-top:10px">
+                            <label>Độ Ưu Tiên:</label>
+                            <select class="form-control select2" type="button" style="width: 99%;float:right;" id="comboPriorityE">
+                                <option value="0">--Chọn độ ưu tiên--</option>
+                                <option value="1">Xử lý gấp</option>
+                                <option value="2">Cần xử lý</option>
+                                <option value="3">Không gấp</option>
+                            </select>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>Địa Chỉ:</b><br>
-                            <input id="r" type="text" class="form-control">
+                            <label>Thiết Bị:</label>
+                            <select multiple class="form-control select2" type="button" style="width: 100%;" id="comboDevicesE"></select>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>Số Điện Thoại:</b><br>
-                            <input id="t" type="text" class="form-control">
+                            <label>Số Điện Thoại:</label>
+                            <input id="PhoneE" type="text" disabled="disabled" class="form-control" required>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <label>Mô Tả hiện tượng:</label>
+                            <textarea id="DescripE" class="form-control" rows="3" placeholder="Ví dụ: mất sóng wifi tầng trệt, khó truy cập..."></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
                     <button type="submit" class="btn btn-primary">Chỉnh Sửa</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
                 </div>
             </div>
         </div>
@@ -238,10 +256,6 @@
         <select class="form-control select2" type="button" id="requestServiceItem" style="width:100%; margin-bottom:15px;"></select>
     </div>
 </div>
-@*<div class="row col-md-12">
-        <button type="button" class="btn btn-primary fa fa-eye pull-right" data-toggle="modal" data-target="" onclick="loadRequest()"><font face="verdana"> Áp dụng bộ lọc</button>
-    </div>*@
-
 <div class="row col-md-12">
     <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
         <thead>
@@ -253,12 +267,13 @@
                 <th><label>Độ ưu tiên</label></th>
                 <th><label>Trạng thái</label></th>
                 <th><label>Xử lý bởi/Tùy chọn</label></th>
+                <th><label>Chỉnh Sửa</label></th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
     <div class="NewThing">
-        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Sự Cố</button>
+        <button type="button" class="btn btn-primary fa fa-plus" style="float:right;margin-top:15px;" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Sự Cố</button>
     </div>
 </div>
 
@@ -290,6 +305,37 @@
         $('#comboDevices').select2({
             dropdownParent: $('#createModal')
         });
+        $('#comboAgency').select2({
+            dropdownParent: $('#createModal')
+        });
+        $('#comboSerName').select2({
+            dropdownParent: $('#createModal')
+        });
+        $('#comboSerItem').select2({
+            dropdownParent: $('#createModal')
+        });
+        $('#comboPriority').select2({
+            dropdownParent: $('#createModal')
+        });
+        $('#comboDevicesE').select2({
+            dropdownParent: $('#EditModal')
+        });
+        $('#comboAgencyE').select2({
+            dropdownParent: $('#EditModal')
+        });
+        $('#comboSerNameE').select2({
+            dropdownParent: $('#EditModal')
+        });
+        $('#comboSerItemE').select2({
+            dropdownParent: $('#EditModal')
+        });
+        $('#comboPriorityE').select2({
+            dropdownParent: $('#EditModal')
+        });
+        $('#comboStatusE').select2({
+            dropdownParent: $('#EditModal')
+        });
+        
         $(function () {
         var c = moment().format('DD/MM/YYYY');
             $('#reservation').daterangepicker({
@@ -479,7 +525,7 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1, 2, 3, 4, 5, 6],
+                        "aTargets": [0, 1, 2, 3, 4, 5, 6, 7],
                         "bSortable": false,
                         "sClass": "text-center",
                     },
@@ -572,9 +618,20 @@
                             }
                             else {
                                 var asignHero = '<button type="button" class="btn btn-info btn fa fa-user-plus" data-toggle="modal" data-target="" onclick="asignHero(' + full.RequestId + ')"></button>';
-                                var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.RequestId + ')"></button>';
                                 var del = ' <button type="button" class="btn btn-danger fa fa-close" data-toggle="modal" data-target="" onclick="removeResquest(' + full.RequestId + ')"></button>';
                                 return asignHero;
+                            }
+                        }
+                    },
+                    {
+                        "aTargets": [7],
+                        "mRender": function (data, type, full) {
+                            if (full.StatusName !== "Tạo mới") {
+                                var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.RequestId + ')"></button>';
+                                return edit;
+                            } else {
+                                var cannotEdit = ' <button type="button" class="btn btn-secondary fa fa-pencil" data-toggle="modal" data-target=""></button>';
+                                return cannotEdit;
                             }
                         }
                     },
