@@ -112,20 +112,21 @@
                     <div class="row">
                         <div class="col-md-12">
                             <label>Chi Nhánh:</label>
-                            <select class="form-control select2" type="button" style="width: 100%;" id="comboAgencyE" onchange="getSers()"></select>
+                            <input class="form-control" type="button" disabled="disabled" style="width: 100%;text-align: left;" id="comboAgencyE" onchange="getSers()"></input>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
                             <label>Danh mục:</label>
-                            <select type="button" class="form-control select2" style="width: 100%;" id="comboSerNameE" onchange="getSerItems()"></select>
+                            <input class="form-control" type="button" disabled="disabled" style="width: 100%;text-align: left;" id="comboSerNameE" onchange="getSerItems()"></input>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
                             <label>Hiện tượng:</label>
-                            <select class="form-control select2" type="button" style="width: 99%;" id="comboSerItemE" onchange="getDevice()"></select>
+                            <input class="form-control" type="button" disabled="disabled" style="width: 99%;text-align: left;" id="comboSerItemE" onchange="getDevice()"></input>
                         </div>
                         <div class="col-md-6" style="margin-top:10px">
                             <label>Trạng Thái:</label>
                             <select class="form-control select2" type="button" style="width: 99%;float:right;" id="comboStatusE">
                                 <option value="0">--Chọn trạng thái--</option>
+                                <option value="5">Tạo mới</option>
                                 <option value="1">Chờ xử lý</option>
                                 <option value="3">Hoàn thành</option>
                             </select>
@@ -141,15 +142,15 @@
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
                             <label>Thiết Bị:</label>
-                            <select multiple class="form-control select2" type="button" style="width: 100%;" id="comboDevicesE"></select>
+                            <input class="form-control" type="button" disabled="disabled" style="width: 100%;text-align: left;" id="comboDevicesE">
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
                             <label>Số Điện Thoại:</label>
-                            <input id="PhoneE" type="text" disabled="disabled" class="form-control" required>
+                            <input id="PhoneE" class="form-control" disabled="disabled" type="button" style="width: 100%;text-align: left;" required>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
                             <label>Mô Tả hiện tượng:</label>
-                            <textarea id="DescripE" class="form-control" rows="3" placeholder="Ví dụ: mất sóng wifi tầng trệt, khó truy cập..."></textarea>
+                            <textarea id="DescripE" class="form-control" disabled="disabled" rows="3" placeholder="Ví dụ: mất sóng wifi tầng trệt, khó truy cập..."></textarea>
                         </div>
                     </div>
                 </div>
@@ -316,24 +317,6 @@
         });
         $('#comboPriority').select2({
             dropdownParent: $('#createModal')
-        });
-        $('#comboDevicesE').select2({
-            dropdownParent: $('#EditModal')
-        });
-        $('#comboAgencyE').select2({
-            dropdownParent: $('#EditModal')
-        });
-        $('#comboSerNameE').select2({
-            dropdownParent: $('#EditModal')
-        });
-        $('#comboSerItemE').select2({
-            dropdownParent: $('#EditModal')
-        });
-        $('#comboPriorityE').select2({
-            dropdownParent: $('#EditModal')
-        });
-        $('#comboStatusE').select2({
-            dropdownParent: $('#EditModal')
         });
         
         $(function () {
@@ -875,12 +858,18 @@
                 success: function (data) {
                     $("#comboAgencyE").val(data.result.ObjReturn.AgencyName);
                     $("#comboSerNameE").val(data.result.ObjReturn.RequestName);
-                    $("#comboSerItemE").val(data.result.ObjReturn.);
-                    $("#comboStatusE").val(data.result.ObjReturn.requestStatus);
-                    $("#comboPriorityE").val(data.result.ObjReturn.requestPriorityStatus);
-                    $("#comboDevicesE").val(data.result.ObjReturn.Telephone);
-                    $("#PhoneE").val(data.result.ObjReturn.Telephone);
-                    $("#DescripE").val(data.result.ObjReturn.Telephone);
+                    $("#comboSerItemE").val(data.result.ObjReturn.ServiceItemName);
+                    $("#comboStatusE").val(data.result.ObjReturn.RequestStatusValue);
+                    $("#comboPriorityE").val(data.result.ObjReturn.PriorityValue);
+                    var i;
+                    var devices = "";
+                    var tickets = data.result.ObjReturn.Tickets;
+                    for (i = 0; i < tickets.length; ++i) {
+                        devices += tickets[i].DeviceName + ", ";
+                    }
+                    $("#comboDevicesE").val(devices);
+                    $("#PhoneE").val(data.result.ObjReturn.AgencyTelephone);
+                    $("#DescripE").val(data.result.ObjReturn.RequestDesciption);
                 }
             });
             $('#EditModal').modal('show');
