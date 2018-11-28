@@ -51,7 +51,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<bool> ApproveCancelRequest(int request_id, int status);
 
-        ResponseObject<RequestAPIViewModel> GetRequestById(int requestId)
+        ResponseObject<RequestAPIViewModel> GetRequestById(int requestId);
     }
 
     public partial class RequestService
@@ -503,7 +503,7 @@ namespace DataService.Models.Entities.Services
                 List<RequestAllTicketWithStatusAgencyAPIViewModel> requestList = new List<RequestAllTicketWithStatusAgencyAPIViewModel>();
 
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
-                var requests = requestRepo.GetActive(x => x.AgencyId == acency_id).OrderByDescending(p => p.CreateDate).ToList();
+                var requests = requestRepo.GetActive(x => x.AgencyId == acency_id && x.RequestStatus == (int)RequestStatusEnum.Done).OrderByDescending(p => p.CreateDate).ToList();
 
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
 
