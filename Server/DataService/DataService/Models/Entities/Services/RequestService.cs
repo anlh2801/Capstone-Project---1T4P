@@ -52,6 +52,8 @@ namespace DataService.Models.Entities.Services
         ResponseObject<bool> ApproveCancelRequest(int request_id, int status);
 
         ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestById(int requestId);
+
+        ResponseObject<int> UpdateRequest(int requestId, int priority, int status);
     }
 
     public partial class RequestService
@@ -1252,6 +1254,35 @@ namespace DataService.Models.Entities.Services
 
                 return new ResponseObject<int> { IsError = true, WarningMessage = "Hủy yêu cầu thất bại", ErrorMessage = e.ToString() };
             }
-        }        
+        }
+
+
+        public ResponseObject<int> UpdateRequest(int requestId, int priority, int status)
+        {
+            try
+            {
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var request = requestRepo.GetActive().SingleOrDefault(a => a.RequestId == requestId);
+                if (request != null)
+                {
+                    request.Priority = priority;
+                    request.RequestStatus = status;
+                    request.UpdateDate = DateTime.UtcNow.AddHours(7);
+
+                    requestRepo.Edit(request);
+                    requestRepo.Save();
+                    return new ResponseObject<int> { IsError = false, SuccessMessage = "Cập nhật độ ưu tiên thành công", ObjReturn = request.RequestId };
+                }
+
+                return new ResponseObject<int> { IsError = true, WarningMessage = "Cập nhật độ ưu tiên thất bại" };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<int> { IsError = true, WarningMessage = "Hủy yêu cầu thất bại", ErrorMessage = e.ToString() };
+            }            
+        }
+
+        
     }
 }

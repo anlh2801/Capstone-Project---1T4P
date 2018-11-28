@@ -51,6 +51,25 @@ namespace CapstoneProject_ODTS.Controllers
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult UpdateRequest(int requestId, int prioryty, int status)
+        {
+            try
+            {
+                var result = _requestDomain.UpdateRequest(requestId, prioryty, status);
+
+                return Json(new { result }, JsonRequestBehavior.AllowGet);
+            }
+            finally
+            {
+                var result = _agencyDomain.FindITSupporterByRequestId(requestId);
+                if (!result.IsError && result.ObjReturn > 0)
+                {
+                    _requestDomain.AcceptRequestFromITSupporter(result.ObjReturn, requestId, true, "check");
+                }
+            }
+           
+        }
+
         public ActionResult GetAllRequestForMonth(int month, int year)
         {
             var result = _requestDomain.GetAllRequestForMonth(month, year);
