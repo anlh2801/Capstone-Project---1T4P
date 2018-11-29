@@ -61,10 +61,10 @@ public class HeroFragment extends Fragment {
             Fragment frag = null;
             switch (position) {
                 case 0:
-                    frag = new DoRequestFragment();
+                    frag = new AgencyFragment();
                     break;
                 case 1:
-                    frag = new AgencyFragment();
+                    frag = new DoRequestFragment();
                     break;
             }
             return frag;
@@ -80,10 +80,10 @@ public class HeroFragment extends Fragment {
             String title = "";
             switch (position) {
                 case 0:
-                    title = "Request";
+                    title = "Thông tin chung";
                     break;
                 case 1:
-                    title = "Agency";
+                    title = "Xử lý";
                     break;
 
             }

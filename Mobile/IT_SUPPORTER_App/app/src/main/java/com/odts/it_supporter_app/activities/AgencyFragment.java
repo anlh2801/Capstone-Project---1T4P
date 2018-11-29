@@ -1,17 +1,26 @@
 package com.odts.it_supporter_app.activities;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.odts.it_supporter_app.R;
 import com.odts.it_supporter_app.models.Request;
+import com.odts.it_supporter_app.services.ITSupporterService;
 import com.odts.it_supporter_app.services.RequestService;
 import com.odts.it_supporter_app.utils.CallBackData;
 
@@ -29,8 +38,12 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
      * @return A new instance of fragment AgencyFragment.
      */
     // TODO: Rename and change types and number of parameters
-
+    Integer itSupporterId = 0;
+    Integer requestId = 0;
+    String serviceItemName;
+    Integer serviceItemId = 0;
     RequestService requestService;
+    com.getbase.floatingactionbutton.FloatingActionButton btnCall, btnChat;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,16 +58,60 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
         final TextView agencyName = v.findViewById(R.id.txtAgency);
         final TextView rqName = (TextView) v.findViewById(R.id.txtRequestName);
         final TextView priority = v.findViewById(R.id.txtPrio);
+        btnCall = v.findViewById(R.id.action_a);
+        btnChat = v.findViewById(R.id.action_b);
+        final FloatingActionsMenu menu = v.findViewById(R.id.multiple_actions);
+
+        menu.bringToFront();
+
+        ImageButton scan = v.findViewById(R.id.imageButton3);
+        scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ScanDeviceFragment scanDeviceFragment = new ScanDeviceFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left, R.animator.enter_from_left, R.animator.exit_to_right);
+                transaction.replace(R.id.fmHome, scanDeviceFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
-        int itSupporterId = share.getInt("itSupporterId", 0);
+        final int itSupporterId = share.getInt("itSupporterId", 0);
         requestService = new RequestService();
         requestService.getRequestByRequestIdAndITSupporterId(getActivity(), itSupporterId, new CallBackData<Request>() {
             @Override
-            public void onSuccess(Request request) {
+            public void onSuccess(final Request request) {
                 agencyName.setText(request.getAgencyName());
                 rqName.setText(request.getRequestName());
                 priority.setText(request.getPriority());
+                requestId = request.getRequestId();
+                serviceItemId = request.getServiceItemId();
+                serviceItemName = request.getServiceItemName();
+
+                btnCall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        menu.collapse();
+                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                        callIntent.setData(Uri.parse("tel: " + request.getPhoneNumber()));
+                        if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                            startActivity(callIntent);
+                        } else {
+                            requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, 1);
+                        }
+                    }
+                });
+
+                btnChat.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        menu.collapse();
+                        Intent intent = new Intent(getActivity(), ChatActivity.class);
+                        startActivity(intent);
+                    }
+                });
             }
 
             @Override
@@ -62,6 +119,7 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
 
             }
         });
+
         return v;
     }
 
