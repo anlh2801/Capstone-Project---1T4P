@@ -342,7 +342,7 @@ public class DoRequestFragment extends Fragment {
 
                     }
                 });
-                _taskService.getTaskByRequestID(getContext(), 367, new CallBackData<ArrayList<RequestTask>>() {
+                _taskService.getTaskByRequestID(getContext(), requestId, new CallBackData<ArrayList<RequestTask>>() {
                     @Override
                     public void onSuccess(ArrayList<RequestTask> requestTasks) {
                         taskAdapter = new TaskAdapter(getActivity(), R.layout.task_item, requestTasks);
@@ -404,13 +404,12 @@ public class DoRequestFragment extends Fragment {
                                 if (aBoolean) {
                                     taskAdapter.add(requestTask);
                                     taskAdapter.notifyDataSetChanged();
-                                    _taskService.getTaskByRequestID(getContext(), 367, new CallBackData<ArrayList<RequestTask>>() {
+                                    _taskService.getTaskByRequestID(getContext(), requestId, new CallBackData<ArrayList<RequestTask>>() {
                                         @Override
                                         public void onSuccess(ArrayList<RequestTask> requestTasks) {
                                             taskAdapter = new TaskAdapter(getActivity(), R.layout.task_item, requestTasks);
                                             listView.setAdapter(taskAdapter);
                                         }
-
                                         @Override
                                         public void onFail(String message) {
 
