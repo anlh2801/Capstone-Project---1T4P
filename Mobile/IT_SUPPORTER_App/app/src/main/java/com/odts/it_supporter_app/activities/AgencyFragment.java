@@ -103,7 +103,7 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
             public void onSuccess(final Request request) {
                 int numberDeviceString = request.getTicket().size();
                 numberDevice.setText(String.valueOf(numberDeviceString));
-                agencyName.setText("Tên cửa hàng: " + request.getAgencyName());
+                agencyName.setText("Cửa hàng: " + request.getAgencyName());
                 //rqName.setText(request.getRequestName());
                 if (request.getPriority().equalsIgnoreCase("Xử lý gấp")) {
                     priority.setText(request.getPriority());
