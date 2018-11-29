@@ -23,6 +23,7 @@ namespace DataService.Models.Entities
         public int ContractId { get; set; }
         public int CompanyId { get; set; }
         public string ContractName { get; set; }
+        public string ContractPrice { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public bool IsDelete { get; set; }
