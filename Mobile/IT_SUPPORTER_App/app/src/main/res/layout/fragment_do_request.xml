@@ -13,131 +13,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/linearLayout4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/txtAgency"
-                    android:layout_width="232dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:text="Request Name"
-                    android:textColor="#FAFAFA"
-                    android:textSize="30dp"
-                    android:textStyle="bold" />
-
-                <ImageButton
-                    android:id="@+id/btnHistory"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
-
-                    android:layout_gravity="center_vertical|right"
-                    android:background="@null"
-                    android:src="@drawable/ic_more_black_24dp" />
-
-                <ImageButton
-                    android:id="@+id/btnRequestDetail"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
-
-                    android:layout_gravity="center_vertical|right"
-                    android:background="@null"
-                    android:src="@drawable/ic_more_black_24dp" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/txtRequestName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text=""
-                android:textColor="#FAFAFA"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/txtPrio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="15dp"
-                android:text=""
-                android:textColor="#FAFAFA"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
-            android:id="@+id/multiple_actions"
-            android:layout_width="108dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            fab:fab_addButtonColorNormal="@color/colorAccent"
-            fab:fab_addButtonColorPressed="@color/colorAccentLight"
-            fab:fab_addButtonPlusIconColor="@color/white"
-            fab:fab_labelStyle="@style/menu_labels_style"
-            fab:layout_constraintBottom_toBottomOf="parent"
-            fab:layout_constraintEnd_toEndOf="parent">
-
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/action_a"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/accent"
-                fab:fab_colorPressed="@color/ripple"
-                fab:fab_icon="@drawable/ic_local_phone_black_24dp"
-                fab:fab_title="Điện thoại" />
-
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/action_b"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/accent"
-                fab:fab_colorPressed="@color/ripple"
-                fab:fab_icon="@drawable/ic_chat_black_24dp"
-                fab:fab_title="Chat" />
-
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/action_c"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/accent"
-                fab:fab_colorPressed="@color/ripple"
-                fab:fab_icon="@drawable/ic_lightbulb_outline_dedede_32dp"
-                fab:fab_title="Hướng dẫn" />
-        </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
         <info.hoang8f.android.segmented.SegmentedGroup
             android:id="@+id/segmented3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
             segmentedgroup:sc_border_width="1dp"
             segmentedgroup:sc_corner_radius="5dp"
-            segmentedgroup:sc_tint_color="#009688">
+            segmentedgroup:sc_tint_color="#009688"
+            tools:layout_editor_absoluteY="113dp">
 
             <RadioButton
                 android:id="@+id/button31"
@@ -173,8 +62,8 @@
                 style="@style/RadioButton"
                 android:layout_width="61dp"
                 android:layout_height="match_parent"
-                android:paddingTop="10dp"
                 android:paddingBottom="10dp"
+                android:paddingTop="10dp"
                 android:text="Hoàn thành" />
         </info.hoang8f.android.segmented.SegmentedGroup>
 
@@ -227,6 +116,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
             app:layout_constraintVertical_bias="0.088" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:src="@drawable/ic_lightbulb_outline_dedede_32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 
