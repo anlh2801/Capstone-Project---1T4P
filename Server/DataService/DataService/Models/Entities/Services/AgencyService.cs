@@ -239,6 +239,7 @@ namespace DataService.Models.Entities.Services
                 createRequest.AgencyId = model.AgencyId;
                 createRequest.RequestCategoryId = model.RequestCategoryId;
                 createRequest.RequestStatus = (int)RequestStatusEnum.New;
+                createRequest.Priority = (int)RequestPriorityEnum.Non_Urgent;
                 createRequest.RequestName = model.RequestName;
                 createRequest.Priority = model.PriorityValue;
                 createRequest.RequestDesciption = model.RequestDesciption;
@@ -273,7 +274,8 @@ namespace DataService.Models.Entities.Services
 
                 createRequest.AgencyId = model.AgencyId;
                 createRequest.RequestCategoryId = model.RequestCategoryId;
-                createRequest.RequestStatus = (int)RequestStatusEnum.Pending;
+                createRequest.RequestStatus = (int)RequestStatusEnum.New;
+                createRequest.Priority = (int)RequestPriorityEnum.Non_Urgent;
                 createRequest.RequestName = model.RequestName;
                 createRequest.RequestDesciption = model.RequestDesciption;
                 createRequest.ServiceItemId = model.ServiceItemId;

@@ -26,6 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.firebase.client.Firebase;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.odts.it_supporter_app.R;
 import com.odts.it_supporter_app.apiCaller.DeviceAdapter;
@@ -52,7 +53,7 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class DoRequestFragment extends Fragment {
 
-    com.getbase.floatingactionbutton.FloatingActionButton btnCall, btnChat, flbGuidline;
+
     Integer itSupporterId = 0;
     Integer requestId = 0;
 
@@ -92,17 +93,12 @@ public class DoRequestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_do_request, container, false);
-        final FloatingActionsMenu menu = v.findViewById(R.id.multiple_actions);
-
-        menu.bringToFront();
         segmentedGroup = v.findViewById(R.id.segmented3);
-        btnCall = v.findViewById(R.id.action_a);
-        btnChat = v.findViewById(R.id.action_b);
         listView = (ListView) v.findViewById(R.id.listTask);
         itSupporterService = new ITSupporterService();
         rqName = (TextView) v.findViewById(R.id.txtRequestName);
-        agencyName = v.findViewById(R.id.txtAgency);
-        priority = v.findViewById(R.id.txtPrio);
+//        agencyName = v.findViewById(R.id.txtAgency);
+//        priority = v.findViewById(R.id.txtPrio);
         scan = v.findViewById(R.id.imageButton);
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,105 +117,84 @@ public class DoRequestFragment extends Fragment {
         _requestService.getRequestByRequestIdAndITSupporterId(getActivity(), itSupporterId, new CallBackData<Request>() {
             @Override
             public void onSuccess(final Request request) {
-                btnRequestDetail = (ImageButton) v.findViewById(R.id.btnRequestDetail);
-                btnRequestHistory = (ImageButton) v.findViewById(R.id.btnHistory);
-                btnRequestHistory.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        _requestService.getRequestHistoryByAgency(getActivity(), request.getAgencyId(), new CallBackData<ArrayList<Request>>() {
-                            @Override
-                            public void onSuccess(ArrayList<Request> requests) {
-                                AlertDialog.Builder agencyHistory = new AlertDialog.Builder(getActivity());
-                                View v1 = getLayoutInflater().inflate(R.layout.agency_history_detail, null);
-                                listHistoryDetail = v1.findViewById(R.id.listHistory);
-                                agencyHistoryAdapter = new AgencyHistoryAdapter(getActivity(), R.layout.agency_history_detail_item, requests);
-                                listHistoryDetail.setAdapter(agencyHistoryAdapter);
-                                agencyHistory.setTitle("Chi tiết thông tin sự cố");
-                                agencyHistory.setNegativeButton("Đóng", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.cancel();
-                                    }
-                                });
-                                agencyHistory.setView(v1);
-                                final AlertDialog dialogg = agencyHistory.create();
-                                dialogg.show();
-                                dialogg.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-                            }
-
-                            @Override
-                            public void onFail(String message) {
-
-                            }
-                        });
-                    }
-                });
-                btnRequestDetail.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        View v = getLayoutInflater().inflate(R.layout.agency_detail, null);
-                        List<Device> listDevices = new ArrayList<>();
-                        for (Ticket item : request.getTicket()) {
-                            Device device = new Device();
-                            device.setDeviceId(item.getDeviceId());
-                            device.setDeviceName(item.getDeviceName());
-                            device.setDeviceCode(item.getDeviceCode());
-                            listDevices.add(device);
-                        }
-                        listViewDeviceC = (ListView) v.findViewById(R.id.listDevice);
-                        TextView agenyName = v.findViewById(R.id.name);
-                        agenyName.setText("Tên cửa hàng: " + request.getAgencyName().toString());
-                        TextView agenyAddress = v.findViewById(R.id.address);
-                        agenyAddress.setText("Địa chỉ: " + request.getAgencyAddress().toString());
-
-                        TextView createDate = v.findViewById(R.id.time);
-                        createDate.setText("Ngày taọ: " +request.getCreateDate().toString());
-                        deviceAdapter = new DeviceAdapter(getActivity(), R.layout.device_item, listDevices);
-                        listViewDeviceC.setAdapter(deviceAdapter);
-                        builder.setTitle("Chi tiết thông tin sự cố");
-                        builder.setNegativeButton("Đóng", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                        builder.setView(v);
-                        final AlertDialog dialog = builder.create();
-                        dialog.show();
-                        dialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-                    }
-                });
+//                btnRequestDetail = (ImageButton) v.findViewById(R.id.btnRequestDetail);
+//                btnRequestHistory = (ImageButton) v.findViewById(R.id.btnHistory);
+//                btnRequestHistory.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        _requestService.getRequestHistoryByAgency(getActivity(), request.getAgencyId(), new CallBackData<ArrayList<Request>>() {
+//                            @Override
+//                            public void onSuccess(ArrayList<Request> requests) {
+//                                AlertDialog.Builder agencyHistory = new AlertDialog.Builder(getActivity());
+//                                View v1 = getLayoutInflater().inflate(R.layout.agency_history_detail, null);
+//                                listHistoryDetail = v1.findViewById(R.id.listHistory);
+//                                agencyHistoryAdapter = new AgencyHistoryAdapter(getActivity(), R.layout.agency_history_detail_item, requests);
+//                                listHistoryDetail.setAdapter(agencyHistoryAdapter);
+//                                agencyHistory.setTitle("Chi tiết thông tin sự cố");
+//                                agencyHistory.setNegativeButton("Đóng", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        dialog.cancel();
+//                                    }
+//                                });
+//                                agencyHistory.setView(v1);
+//                                final AlertDialog dialogg = agencyHistory.create();
+//                                dialogg.show();
+//                                dialogg.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+//                            }
+//
+//                            @Override
+//                            public void onFail(String message) {
+//
+//                            }
+//                        });
+//                    }
+//                });
+//                btnRequestDetail.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                        View v = getLayoutInflater().inflate(R.layout.agency_detail, null);
+//                        List<Device> listDevices = new ArrayList<>();
+//                        for (Ticket item : request.getTicket()) {
+//                            Device device = new Device();
+//                            device.setDeviceId(item.getDeviceId());
+//                            device.setDeviceName(item.getDeviceName());
+//                            device.setDeviceCode(item.getDeviceCode());
+//                            listDevices.add(device);
+//                        }
+//                        listViewDeviceC = (ListView) v.findViewById(R.id.listDevice);
+//                        TextView agenyName = v.findViewById(R.id.name);
+//                        agenyName.setText("Tên cửa hàng: " + request.getAgencyName().toString());
+//                        TextView agenyAddress = v.findViewById(R.id.address);
+//                        agenyAddress.setText("Địa chỉ: " + request.getAgencyAddress().toString());
+//
+//                        TextView createDate = v.findViewById(R.id.time);
+//                        createDate.setText("Ngày taọ: " +request.getCreateDate().toString());
+//                        deviceAdapter = new DeviceAdapter(getActivity(), R.layout.device_item, listDevices);
+//                        listViewDeviceC.setAdapter(deviceAdapter);
+//                        builder.setTitle("Chi tiết thông tin sự cố");
+//                        builder.setNegativeButton("Đóng", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.cancel();
+//                            }
+//                        });
+//                        builder.setView(v);
+//                        final AlertDialog dialog = builder.create();
+//                        dialog.show();
+//                        dialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+//                    }
+//                });
                 requestId = request.getRequestId();
                 serviceItemId = request.getServiceItemId();
                 serviceItemName = request.getServiceItemName();
-                rqName.setText("Sự cố: " + request.getRequestName());
-                agencyName.setText(request.getAgencyName());
-                priority.setText("Độ ưu tiên: " + request.getPriority());
+//                rqName.setText("Sự cố: " + request.getRequestName());
+//                agencyName.setText(request.getAgencyName());
+//                priority.setText("Độ ưu tiên: " + request.getPriority());
 //                agencyAddress.setText("Địa chỉ: " + request.getAgencyAddress());
 //                createDate.setText("Tạo vào: " + request.getCreateDate());
-                btnCall.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        menu.collapse();
-                        Intent callIntent = new Intent(Intent.ACTION_CALL);
-                        callIntent.setData(Uri.parse("tel: " + request.getPhoneNumber()));
-                        if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-                            startActivity(callIntent);
-                        } else {
-                            requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, 1);
-                        }
-                    }
-                });
 
-                btnChat.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        menu.collapse();
-                        Intent intent = new Intent(getActivity(), ChatActivity.class);
-                        startActivity(intent);
-                    }
-                });
                 Firebase.setAndroidContext(getActivity());
                 reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" + requestId);
                 final Map<String, String> map = new HashMap<String, String>();
@@ -367,7 +342,7 @@ public class DoRequestFragment extends Fragment {
 
                     }
                 });
-                _taskService.getTaskByRequestID(getContext(), requestId, new CallBackData<ArrayList<RequestTask>>() {
+                _taskService.getTaskByRequestID(getContext(), 367, new CallBackData<ArrayList<RequestTask>>() {
                     @Override
                     public void onSuccess(ArrayList<RequestTask> requestTasks) {
                         taskAdapter = new TaskAdapter(getActivity(), R.layout.task_item, requestTasks);
@@ -385,13 +360,11 @@ public class DoRequestFragment extends Fragment {
             public void onFail(String message) {
             }
         });
-        flbGuidline = v.findViewById(R.id.action_c);
-//        final View androidRobotView =v.findViewById(R.id.image_small);
+        android.support.design.widget.FloatingActionButton flbGuidline = v.findViewById(R.id.fabGuideline);
 
         flbGuidline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                menu.collapse();
                 Intent intent = new Intent(getContext(), GuidelineActivity.class);
                 intent.putExtra("serviceItemName", serviceItemName);
                 intent.putExtra("serviceItemId", serviceItemId);
@@ -431,7 +404,7 @@ public class DoRequestFragment extends Fragment {
                                 if (aBoolean) {
                                     taskAdapter.add(requestTask);
                                     taskAdapter.notifyDataSetChanged();
-                                    _taskService.getTaskByRequestID(getContext(), requestId, new CallBackData<ArrayList<RequestTask>>() {
+                                    _taskService.getTaskByRequestID(getContext(), 367, new CallBackData<ArrayList<RequestTask>>() {
                                         @Override
                                         public void onSuccess(ArrayList<RequestTask> requestTasks) {
                                             taskAdapter = new TaskAdapter(getActivity(), R.layout.task_item, requestTasks);

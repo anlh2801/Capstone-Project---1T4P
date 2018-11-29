@@ -11,7 +11,7 @@ namespace DataService.Models
     //For agency view
     public enum RequestStatusEnum
     {
-        [Display(Name = "Chờ xử lý")]
+        [Display(Name = "Chờ nhân viên xử lý")]
         Pending = 1,
         [Display(Name = "Đang xử lý")]
         Processing = 2,
