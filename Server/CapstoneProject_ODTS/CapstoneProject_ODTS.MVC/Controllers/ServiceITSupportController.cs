@@ -52,5 +52,10 @@ namespace CapstoneProject_ODTS.MVC.Controllers
             var serviceitsupportDetail = _serviceITSupportDomain.RemoveServiceITSupport(serviceitsupport_id);
             return Json(new { result = serviceitsupportDetail }, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult GetAllServiceITSupportByAgencyId(int agencyId)
+        {
+            var serviceitsupportDetail = _serviceITSupportDomain.GetAllServiceITSupportByAgencyId(agencyId);
+            return Json(new { result = serviceitsupportDetail }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

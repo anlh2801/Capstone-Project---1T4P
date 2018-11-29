@@ -12,36 +12,46 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <b>Tên Công Ty:</b><br>
                             <p id="conCompany"></p>
                         </div>
-                        <div class="col-md-12" style="margin-top:10px">
-
-                            <b>Mô Tả Hợp Đồng:</b><br>
-                            <p id="conName"></p>
+                        <div class="col-md-6">
+                            <b>Trạng Thái:</b><br>
+                            <p id="conStt"></p>
                         </div>
-                        <div class="col-md-12" style="margin-top:10px">
-
-                            <b>Dịch Vụ Sử Dụng:</b><br>
-                            <p id="ServiceName"></p>
-                        </div>
-                        <div class="col-md-12" style="margin-top:10px">
+                        <div class="col-md-6" style="margin-top:10px">
                             <b>Ngày Bắt Đầu Bảo Hành:</b><br>
                             <p id="conStartDate"></p>
                         </div>
-                        <div class="col-md-12" style="margin-top:10px">
+                        <div class="col-md-6" style="margin-top:10px">
                             <b>Hạn Bảo Hành:</b><br>
                             <p id="conEndDate"></p>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
+                            <b>Dịch Vụ Sử Dụng:</b><br>
+                            <table id="service-table" class="table table-bordered table-hover" cellspacing="0" style="table-layout: auto">
+                                <thead>
+                                    <tr>
+                                        <th><label>STT</label></th>
+                                        <th><label>Tên Dịch Vụ</label></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Mô Tả Hợp Đồng:</b><br>
+                            <p id="conName"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top:10px">
                             <b>Lần Chỉnh Sửa Cuối:</b><br>
                             <p id="conUpdateDate"></p>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="shutDownText()">Đóng</button>
                 </div>
             </div>
         </div>
@@ -250,10 +260,10 @@
                     "aTargets": [5],
                     "mRender": function (data, type, full) {
                         if (full.ContractStatus && full.ContractStatus != "") {
-                            return '<span class = "label label-warning">' + full.ContractStatus + '</span>';
+                            return '<span class = "label label-danger">' + full.ContractStatus + '</span>';
                         }
                         else {
-                            return "";
+                            return '<span class = "label label-success">' + 'Còn Hạn Sử Dụng' + '</span>';
                         };
                     }
                 },
@@ -269,7 +279,48 @@
             ],
             "bAutoWidth": false,
         });
-    }
+        } 
+        function initServiceDatatable(data) {
+            if (data == null) {
+                $('#service-table').dataTable().fnClearTable();
+            }
+            $("#service-table").dataTable().fnDestroy();
+            $("#service-table").dataTable({
+                stateSave: true,
+                "bFilter": false,
+                "bSort": false,
+                "data": data,
+                "bRetrieve": true,
+                "bScrollCollapse": true,
+                "bProcessing": true,
+                "oLanguage": {
+                    "sSearch": "Tìm kiếm:",
+                    "sSearchPlaceholder": "Thành phần con",
+                    "sZeroRecords": "Không có dữ liệu phù hợp",
+                    "sInfo": "",
+                    "sEmptyTable": "Không có dữ liệu",
+                    "sInfoFiltered": " - lọc ra từ _MAX_ dòng",
+                    "sLengthMenu": "",
+                    "sProcessing": "Đang xử lý...",
+                    "oPaginate": {
+                        "sNext": "<i class='fa fa-chevron-right'></i>",
+                        "sPrevious": "<i class='fa fa-chevron-left'></i>"
+                    }
+                },
+                "aoColumnDefs": [
+                    {
+                        "aTargets": [0, 1],
+                        "bSortable": false,
+                        "sClass": "text-center"
+                    },
+                ],
+                "columns": [
+                    { "data": "NumericalOrder" },
+                    { "data": "ContractServiceName" },
+                ],
+                "bAutoWidth": false,
+            });
+        }
     function showCreateModal() {
         $('#CreateModal').modal('show');
     }
@@ -284,7 +335,15 @@
                 .end();
         })
     }
-
+        
+    function shutDownText() {
+        $("#conCompany").text("");
+        $("#conStt").text("");
+        $("#conStartDate").text("");
+        $("#conEndDate").text("");
+        $("#conName").text("");
+        $("#conUpdateDate").text("");
+    }
     function getComName() {
 
             $.ajax({
@@ -359,12 +418,12 @@
                 }
                 $('#test').append(html);
                 $('#testE').append(html);
-        }
-    });
+            }
+        });
     }
     
     function getData(idd) {
-
+        getContractService(idd);
         $.ajax({
 
             url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "Contract"})',
@@ -378,13 +437,34 @@
             success: function (data) {
                 $("#conCompany").text(data.result.ObjReturn.CompanyName);
                 $("#conName").text(data.result.ObjReturn.ContractName);
-                $("#ServiceName").text(data.result.ObjReturn.ServiceName);
                 $("#conStartDate").text(data.result.ObjReturn.StartDate);
                 $("#conEndDate").text(data.result.ObjReturn.EndDate);
                 $("#conUpdateDate").text(data.result.ObjReturn.UpdateDate);
+                var outExp = data.result.ObjReturn.ContractStatus;
+                if (outExp && outExp != "") {
+                    $("#conStt").text(outExp);
+                }
+                else {
+                    $("#conStt").text('Còn Hạn Sử Dụng');
+                };
             }
         });
         $('#ViewModal').modal('show');
+    }
+    function getContractService(idd) {
+        $.ajax({
+            url: '@Url.RouteUrl(new {action = "ViewAllContractServiceByContractId", controller = "Contract"})',
+
+            data: {
+                contract_id: idd
+            },
+            type: 'GET',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                initServiceDatatable(data.result.ObjReturn);
+            }
+        });
     }
     $('#createDate').datepicker({
         format: 'dd/mm/yyyy',

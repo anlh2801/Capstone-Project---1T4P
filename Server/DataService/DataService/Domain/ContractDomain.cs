@@ -16,6 +16,7 @@ namespace DataService.Domain
         ResponseObject<bool> CreateContract(ContractAPIViewModel model);
         ResponseObject<bool> UpdateContract(ContractAPIViewModel model);
         ResponseObject<bool> RemoveContract(int contract_id);
+        ResponseObject<List<ContractAPIViewModel>> ViewAllContractServiceByContractId(int contract_id);
     }
 
     public class ContractDomain : BaseDomain, IContractDomain
@@ -62,6 +63,15 @@ namespace DataService.Domain
             var contractService = this.Service<IContractService>();
             var rs = contractService.RemoveContract(contract_id);
             return rs;
+        }
+
+        public ResponseObject<List<ContractAPIViewModel>> ViewAllContractServiceByContractId(int contract_id)
+        {
+            var contractService = this.Service<IContractService>();
+
+            var contract = contractService.ViewAllContractServiceByContractId(contract_id);
+
+            return contract;
         }
     }
 }
