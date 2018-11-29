@@ -19,6 +19,7 @@ namespace DataService.Models.Entities.Services
         ResponseObject<bool> UpdateContract(ContractAPIViewModel model);
         ResponseObject<bool> RemoveContract(int contract_id);
         ResponseObject<List<ContractAPIViewModel>> ViewAllContractByCompanyId(int company_id);
+        ResponseObject<List<ContractAPIViewModel>> ViewAllContractServiceByContractId(int contract_id);
     }
 
     public partial class ContractService
@@ -98,6 +99,7 @@ namespace DataService.Models.Entities.Services
                         ServiceName = listName,
                         StartDate = contract.StartDate.Value.ToString("dd/MM/yyyy"),
                         EndDate = contract.EndDate.Value.ToString("dd/MM/yyyy"),
+                        ContractStatus = contract.EndDate != null && contract.EndDate.Value.Date < DateTime.Now.Date ? "Hợp đồng hết hạn" : string.Empty,
                         UpdateDate = contract.UpdateDate.Value.ToString("dd/MM/yyyy"),
                     };
                     return new ResponseObject<ContractAPIViewModel> { IsError = false, ObjReturn = contractAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
@@ -269,6 +271,36 @@ namespace DataService.Models.Entities.Services
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
 
                     });
+                    count++;
+                }
+
+                return new ResponseObject<List<ContractAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Tìm thấy hợp đòng" };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<List<ContractAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy hợp đòng nào!", ObjReturn = null, ErrorMessage = e.ToString() };
+            }
+        }
+        public ResponseObject<List<ContractAPIViewModel>> ViewAllContractServiceByContractId(int contract_id)
+        {
+            try
+            {
+                List<ContractAPIViewModel> rsList = new List<ContractAPIViewModel>();
+                var contractServiceRepo = DependencyUtils.Resolve<IContractServiceITSupportRepository>();
+                var servicesOfContract = contractServiceRepo.GetActive(p => p.ContractId == contract_id).ToList();
+                if (servicesOfContract.Count <= 0)
+                {
+                    return new ResponseObject<List<ContractAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy hợp đòng nào!" };
+                }
+                int count = 1;
+                foreach (var item in servicesOfContract)
+                {
+                    rsList.Add(new ContractAPIViewModel
+                    {
+                        NumericalOrder = count,
+                        ContractServiceName = item.ServiceITSupport.ServiceName,
+                     });
                     count++;
                 }
 

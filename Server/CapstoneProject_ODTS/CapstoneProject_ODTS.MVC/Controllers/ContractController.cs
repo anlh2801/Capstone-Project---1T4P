@@ -59,5 +59,10 @@ namespace CapstoneProject_ODTS.Controllers
             var contractDetail = _contractDomain.RemoveContract(contract_id);
             return Json(new { result = contractDetail }, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult ViewAllContractServiceByContractId(int contract_id)
+        {
+            var contractDetail = _contractDomain.ViewAllContractServiceByContractId(contract_id);
+            return Json(new { result = contractDetail }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
