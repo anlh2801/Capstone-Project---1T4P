@@ -21,11 +21,11 @@
                             <p id="conStt"></p>
                         </div>
                         <div class="col-md-6" style="margin-top:10px">
-                            <b>Ngày Bắt Đầu Bảo Hành:</b><br>
+                            <b>Ngày Bắt Đầu:</b><br>
                             <p id="conStartDate"></p>
                         </div>
                         <div class="col-md-6" style="margin-top:10px">
-                            <b>Hạn Bảo Hành:</b><br>
+                            <b>Ngày Kết Thúc:</b><br>
                             <p id="conEndDate"></p>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
@@ -40,9 +40,13 @@
                                 <tbody></tbody>
                             </table>
                         </div>
-                        <div class="col-md-12" style="margin-top:10px">
+                        <div class="col-md-6" style="margin-top:10px">
                             <b>Mô Tả Hợp Đồng:</b><br>
                             <p id="conName"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top:10px">
+                            <b>Thời hạn:</b><br>
+                            <p id="conDateCountDown"></p>
                         </div>
                         <div class="col-md-6" style="margin-top:10px">
                             <b>Giá Hợp Đồng:</b><br>
@@ -87,11 +91,11 @@
                                 <select multiple class="form-control select2" style="width: 100%;" id="test"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <b>Ngày Bắt Đầu Bảo Hành:</b><br>
+                                <b>Ngày Bắt Đầu:</b><br>
                                 <input type="button" style="text-align: left" id="createDate" class="form-control" required>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
-                                <b>Hạn Bảo Hành:</b><br>
+                                <b>Ngày Kết Thúc:</b><br>
                                 <input type="button" style="text-align: left" id="endDate" class="form-control" required>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
@@ -133,11 +137,11 @@
                             <select multiple class="form-control select2" style="width: 100%;" id="testE"></select>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>Ngày Bắt Đầu Bảo Hành:</b><br>
+                            <b>Ngày Bắt Đầu:</b><br>
                             <input type="button" style="text-align: left" id="conStartDateE" class="form-control" required>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
-                            <b>Hạn Bảo Hành:</b><br>
+                            <b>Ngày Kết Thúc:</b><br>
                             <input type="button" style="text-align: left" id="conEndDateE" class="form-control" required>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
@@ -173,10 +177,9 @@
         <thead>
             <tr>
                 <th><label>STT</label></th>
-                <th><label>Tên Hợp Đồng</label></th>
-                <th><label>Mô Tả Hợp Đồng</label></th>
+                <th><label>Tên Công Ty</label></th>
                 <th><label>Ngày Bắt Đầu</label></th>
-                <th><label>Ngày hết hạn</label></th>
+                <th><label>Ngày Kết Thúc</label></th>
                 <th><label>Giá Hợp Đồng</label></th>
                 <th><label>Trạng thái</label></th>
                 <th><label>Tùy Chọn</label></th>
@@ -258,7 +261,7 @@
             },
             "aoColumnDefs": [
                 {
-                    "aTargets": [0, 1, 2, 3, 4, 5, 6, 7],
+                    "aTargets": [0, 1, 2, 3, 4, 5, 6],
                     "bSortable": false,
                     "sClass": "text-center"
                 },
@@ -266,23 +269,22 @@
             "columns": [
                 { "data": "NumericalOrder" },
                 { "data": "CompanyName" },
-                { "data": "ContractName" },
-                { "data": "StartDate" },
+                { "data": "StartDate" }, 
                 { "data": "EndDate" },
                 { "data": "ContractPrice" },
                 {
-                    "aTargets": [6],
+                    "aTargets": [5],
                     "mRender": function (data, type, full) {
                         if (full.ContractStatus && full.ContractStatus != "") {
                             return '<span class = "label label-danger">' + full.ContractStatus + '</span>';
                         }
                         else {
-                            return '<span class = "label label-success">' + 'Còn Hạn Sử Dụng' + '</span>';
+                            return '<span class = "label label-success">' + 'Còn Hạn Hợp Đồng' + '</span>';
                         };
                     }
                 },
                 {
-                    "aTargets": [7],
+                    "aTargets": [6],
                     "mRender": function (data, type, full) {
                         var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.ContractId + ')"></button>';
                         var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.ContractId + ')"></button>';
@@ -452,6 +454,7 @@
             success: function (data) {
                 $("#conCompany").text(data.result.ObjReturn.CompanyName);
                 $("#conName").text(data.result.ObjReturn.ContractName);
+                $("#conDateCountDown").text(data.result.ObjReturn.EndDateCountDown);
                 $("#conStartDate").text(data.result.ObjReturn.StartDate);
                 $("#conEndDate").text(data.result.ObjReturn.EndDate);
                 $("#conUpdateDate").text(data.result.ObjReturn.UpdateDate);
@@ -461,7 +464,7 @@
                     $("#conStt").text(outExp);
                 }
                 else {
-                    $("#conStt").text('Còn Hạn Sử Dụng');
+                    $("#conStt").text('Còn Hạn Hợp Đồng');
                 };
             }
         });
