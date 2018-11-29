@@ -103,7 +103,7 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
             public void onSuccess(final Request request) {
                 int numberDeviceString = request.getTicket().size();
                 numberDevice.setText(String.valueOf(numberDeviceString));
-                agencyName.setText(request.getAgencyName());
+                agencyName.setText("Tên cửa hàng: " + request.getAgencyName());
                 //rqName.setText(request.getRequestName());
                 if (request.getPriority().equalsIgnoreCase("Xử lý gấp")) {
                     priority.setText(request.getPriority());
@@ -115,13 +115,13 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                     priority.setText(request.getPriority());
                     priority.setTextColor(Color.parseColor("#2E7D32"));
                 }
-                createDate.setText(request.getCreateDate());
-                txtPhoneAgency.setText(request.getPhoneNumber());
-                txtAddressAgency.setText(request.getAgencyAddress());
+                createDate.setText("Tạo vào: " + request.getCreateDate());
+                txtPhoneAgency.setText("Điện thoại: " + request.getPhoneNumber());
+                txtAddressAgency.setText("Địa chỉ cửa hàng: " + request.getAgencyAddress());
                 requestId = request.getRequestId();
                 serviceItemId = request.getServiceItemId();
                 serviceItemName = request.getServiceItemName();
-                txtserviceItem.setText(serviceItemName);
+                txtserviceItem.setText("Hiện tượng: " + serviceItemName);
                 btnCall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

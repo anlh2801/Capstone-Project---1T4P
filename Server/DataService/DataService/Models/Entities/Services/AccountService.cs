@@ -70,6 +70,7 @@ namespace DataService.Models.Entities.Services
                     itSupporterAPIViewModel.AccountId = itSupporter.AccountId;
                     itSupporterAPIViewModel.Username = itSupporter.Account.Username;
                     itSupporterAPIViewModel.ITSupporterName = itSupporter.ITSupporterName;
+                    itSupporterAPIViewModel.Email = itSupporter.Email;
                     return new ResponseObject<ITSupporterAPIViewModel> { IsError = false, ObjReturn = itSupporterAPIViewModel, SuccessMessage = "Đăng nhập thành công" };
                 }
 
