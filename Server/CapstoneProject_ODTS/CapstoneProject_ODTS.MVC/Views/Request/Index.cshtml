@@ -347,8 +347,8 @@
             loadRequest();
             loadRequestStatistic();
         }
-        var isWaitingHeroAccept = false;
-        var currentRequestId = 0;
+        //var isWaitingHeroAccept = false;
+        //var currentRequestId = 0;
         function loadRequestStatistic() {
             $.ajax({
                 type: 'POST',
@@ -594,10 +594,13 @@
                             else if (full.StatusName === "Hủy bỏ") {
                                 return '<span class = "label label-danger">Đã hủy theo yêu cầu</span>';
                             }
+                            else if (full.StatusName === "Hoàn thành" && full.ITSupporterName === "") {
+                                return '<span class = "label label-success">Hoàn thành bởi admin</span>';
+                            }
                             else if(full.ITSupporterName !== "") {
                                 return full.ITSupporterName;
                             }
-                            else if (isWaitingHeroAccept === true && full.RequestId === currentRequestId) {
+                            else if (full.StatusName === "Chờ xử lý" && full.ITSupporterName === "") {
                                 return '<span class = "label label-warning">Đợi nhân viên phản hồi</span>';
                             }
                             else {
@@ -791,8 +794,8 @@
                 success: function(data) {
                     if (!data.result.IsError) {
                         swal(data.result.SuccessMessage, "", "success");
-                        isWaitingHeroAccept = true;
-                        currentRequestId = requestId
+                       // isWaitingHeroAccept = true;
+                        //currentRequestId = requestId
                         loadRequest();
                         loadRequestStatistic();
                     } else

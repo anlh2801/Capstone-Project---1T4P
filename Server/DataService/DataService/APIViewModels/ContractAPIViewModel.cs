@@ -18,6 +18,7 @@ namespace DataService.APIViewModels
         public string ContractName { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
+        public string ContractStatus { get; set; }
         public bool IsDelete { get; set; }
         public string CreateDate { get; set; }
         public string UpdateDate { get; set; }
