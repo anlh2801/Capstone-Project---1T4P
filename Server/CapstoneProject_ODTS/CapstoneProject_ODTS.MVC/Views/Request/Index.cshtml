@@ -594,10 +594,13 @@
                             else if (full.StatusName === "Hủy bỏ") {
                                 return '<span class = "label label-danger">Đã hủy theo yêu cầu</span>';
                             }
+                            else if (full.StatusName === "Hoàn thành" && full.ITSupporterName === "") {
+                                return '<span class = "label label-success">Hoàn thành bởi admin</span>';
+                            }
                             else if(full.ITSupporterName !== "") {
                                 return full.ITSupporterName;
                             }
-                            else if (full.StatusName === "Chờ xử lý" && full.ITSupporterName == "") {
+                            else if (full.StatusName === "Chờ xử lý" && full.ITSupporterName === "") {
                                 return '<span class = "label label-warning">Đợi nhân viên phản hồi</span>';
                             }
                             else {

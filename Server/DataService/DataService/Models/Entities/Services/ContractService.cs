@@ -46,8 +46,9 @@ namespace DataService.Models.Entities.Services
                             CompanyId = item.CompanyId,
                             CompanyName = item.Company.CompanyName,
                             ContractName = item.ContractName,
-                            StartDate = item.StartDate.Value.ToString("dd/MM/yyyy"),
-                            EndDate = item.EndDate.Value.ToString("dd/MM/yyyy"),
+                            StartDate = item.StartDate != null ? item.StartDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                            EndDate = item.EndDate!= null ? item.EndDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                            ContractStatus = item.EndDate != null && item.EndDate.Value.Date < DateTime.Now.Date ? "Hợp đồng hết hạn" : string.Empty,
                             IsDelete = item.IsDelete,
                             CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                             UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy")
@@ -260,8 +261,9 @@ namespace DataService.Models.Entities.Services
                         CompanyId = item.CompanyId,
                         CompanyName = item.Company.CompanyName,
                         ContractName = item.ContractName,
-                        StartDate = item.StartDate.Value.ToString("dd/MM/yyyy"),
-                        EndDate = item.EndDate.Value.ToString("dd/MM/yyyy"),
+                        StartDate = item.StartDate != null ? item.StartDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                        EndDate = item.EndDate != null ? item.EndDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                        ContractStatus = item.EndDate != null && item.EndDate.Value.Date < DateTime.Now.Date ? "Đã hết hạn hợp đồng" : string.Empty,
                         IsDelete = item.IsDelete,
                         CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty

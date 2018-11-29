@@ -153,8 +153,9 @@
                 <th><label>STT</label></th>
                 <th><label>Tên Hợp Đồng</label></th>
                 <th><label>Mô Tả Hợp Đồng</label></th>
-                <th><label>Ngày Bắt Đầu Bảo Hành</label></th>
-                <th><label>Hạn Bảo Hành</label></th>
+                <th><label>Ngày Bắt Đầu</label></th>
+                <th><label>Ngày hết hạn</label></th>
+                <th><label>Trạng thái</label></th>
                 <th><label>Chức Năng</label></th>
             </tr>
         </thead>
@@ -234,7 +235,7 @@
             },
             "aoColumnDefs": [
                 {
-                    "aTargets": [0, 1, 2, 3, 4 ,5],
+                    "aTargets": [0, 1, 2, 3, 4, 5],
                     "bSortable": false,
                     "sClass": "text-center"
                 },
@@ -247,6 +248,17 @@
                 { "data": "EndDate" },
                 {
                     "aTargets": [5],
+                    "mRender": function (data, type, full) {
+                        if (full.ContractStatus && full.ContractStatus != "") {
+                            return '<span class = "label label-warning">' + full.ContractStatus + '</span>';
+                        }
+                        else {
+                            return "";
+                        };
+                    }
+                },
+                {
+                    "aTargets": [6],
                     "mRender": function (data, type, full) {
                         var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.ContractId + ')"></button>';
                         var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.ContractId + ')"></button>';
