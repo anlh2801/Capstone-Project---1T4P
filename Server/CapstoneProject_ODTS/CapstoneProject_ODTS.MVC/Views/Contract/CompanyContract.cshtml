@@ -45,6 +45,10 @@
                             <p id="conName"></p>
                         </div>
                         <div class="col-md-6" style="margin-top:10px">
+                            <b>Giá Hợp Đồng:</b><br>
+                            <p id="conPrice"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top:10px">
                             <b>Lần Chỉnh Sửa Cuối:</b><br>
                             <p id="conUpdateDate"></p>
                         </div>
@@ -90,6 +94,10 @@
                                 <b>Hạn Bảo Hành:</b><br>
                                 <input type="button" style="text-align: left" id="endDate" class="form-control" required>
                             </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <b>Giá Hợp Đồng:</b><br>
+                                <input type="text" id="price" class="form-control" required>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -132,6 +140,10 @@
                             <b>Hạn Bảo Hành:</b><br>
                             <input type="button" style="text-align: left" id="conEndDateE" class="form-control" required>
                         </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Giá Hợp Đồng:</b><br>
+                            <input type="text" id="conPriceE" class="form-control" required>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -165,8 +177,9 @@
                 <th><label>Mô Tả Hợp Đồng</label></th>
                 <th><label>Ngày Bắt Đầu</label></th>
                 <th><label>Ngày hết hạn</label></th>
+                <th><label>Giá Hợp Đồng</label></th>
                 <th><label>Trạng thái</label></th>
-                <th><label>Chức Năng</label></th>
+                <th><label>Tùy Chọn</label></th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -245,7 +258,7 @@
             },
             "aoColumnDefs": [
                 {
-                    "aTargets": [0, 1, 2, 3, 4, 5],
+                    "aTargets": [0, 1, 2, 3, 4, 5, 6, 7],
                     "bSortable": false,
                     "sClass": "text-center"
                 },
@@ -256,8 +269,9 @@
                 { "data": "ContractName" },
                 { "data": "StartDate" },
                 { "data": "EndDate" },
+                { "data": "ContractPrice" },
                 {
-                    "aTargets": [5],
+                    "aTargets": [6],
                     "mRender": function (data, type, full) {
                         if (full.ContractStatus && full.ContractStatus != "") {
                             return '<span class = "label label-danger">' + full.ContractStatus + '</span>';
@@ -268,7 +282,7 @@
                     }
                 },
                 {
-                    "aTargets": [6],
+                    "aTargets": [7],
                     "mRender": function (data, type, full) {
                         var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.ContractId + ')"></button>';
                         var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.ContractId + ')"></button>';
@@ -343,6 +357,7 @@
         $("#conEndDate").text("");
         $("#conName").text("");
         $("#conUpdateDate").text("");
+        $("#conPrice").text("");
     }
     function getComName() {
 
@@ -440,6 +455,7 @@
                 $("#conStartDate").text(data.result.ObjReturn.StartDate);
                 $("#conEndDate").text(data.result.ObjReturn.EndDate);
                 $("#conUpdateDate").text(data.result.ObjReturn.UpdateDate);
+                $("#conPrice").text(data.result.ObjReturn.ContractPrice);
                 var outExp = data.result.ObjReturn.ContractStatus;
                 if (outExp && outExp != "") {
                     $("#conStt").text(outExp);
@@ -509,6 +525,7 @@
                 $("#conNameE").val(data.result.ObjReturn.ContractName);
                 $("#conStartDateE").val(data.result.ObjReturn.StartDate);
                 $("#conEndDateE").val(data.result.ObjReturn.EndDate);
+                $("#conPriceE").val(data.result.ObjReturn.ContractPrice);
             }
         });
         $('#EditModal').modal('show');
@@ -520,6 +537,7 @@
             ServiceIdList: $('#testE').val(),
             StartDate: $('#conStartDateE').val(),
             EndDate: $('#conEndDateE').val(),
+            ContractPrice: $('#conPriceE').val(),
         }
         $.ajax({
             type: 'POST',
@@ -547,6 +565,7 @@
             ServiceIdList: $('#test').val(),
             StartDate: $('#createDate').val(),
             EndDate: $('#endDate').val(),
+            ContractPrice: $('#price').val(),
         }
         $.ajax({
             type: 'POST',
@@ -578,11 +597,6 @@
             confirmButtonText: 'Chấp Nhận Xóa!'
         }).then(function () {
             deleteContract();
-            swal(
-                'Đã Xóa!',
-                'Dữ Liệu Của Bạn Đã Được Xóa.',
-                'success'
-            )
         });
         $('#contractHidden').val(id);
     }
@@ -600,7 +614,12 @@
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                $('#modalConfirmDelete').modal('hide')
+                $('#modalConfirmDelete').modal('hide');
+                swal(
+                    'Đã Xóa!',
+                    'Dữ Liệu Của Bạn Đã Được Xóa.',
+                    'success'
+                )
                 loadContract();
             }
         });

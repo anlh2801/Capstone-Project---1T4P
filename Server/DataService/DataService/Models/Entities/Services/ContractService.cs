@@ -101,6 +101,7 @@ namespace DataService.Models.Entities.Services
                         EndDate = contract.EndDate.Value.ToString("dd/MM/yyyy"),
                         ContractStatus = contract.EndDate != null && contract.EndDate.Value.Date < DateTime.Now.Date ? "Hợp đồng hết hạn" : string.Empty,
                         UpdateDate = contract.UpdateDate.Value.ToString("dd/MM/yyyy"),
+                        ContractPrice = contract.ContractPrice
                     };
                     return new ResponseObject<ContractAPIViewModel> { IsError = false, ObjReturn = contractAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
                 }
@@ -128,6 +129,7 @@ namespace DataService.Models.Entities.Services
                 createContract.IsDelete = false;
                 createContract.CreateDate = DateTime.UtcNow.AddHours(7);
                 createContract.UpdateDate = DateTime.UtcNow.AddHours(7);
+                createContract.ContractPrice = model.ContractPrice;
 
                 contractRepo.Add(createContract);
                 contractRepo.Save();
@@ -181,7 +183,8 @@ namespace DataService.Models.Entities.Services
                             StartDate = model.StartDate.ToDateTime(),
                             EndDate = model.EndDate.ToDateTime(),
                             CreateDate = DateTime.UtcNow.AddHours(7),
-                            UpdateDate = DateTime.UtcNow.AddHours(7)
+                            UpdateDate = DateTime.UtcNow.AddHours(7),
+                            
                         };
                         contractServiceRepo.Add(contractServiceNew);
                     }
@@ -203,6 +206,7 @@ namespace DataService.Models.Entities.Services
                     updateContract.StartDate = model.StartDate.ToDateTime();
                     updateContract.EndDate = model.EndDate.ToDateTime();
                     updateContract.UpdateDate = DateTime.UtcNow.AddHours(7);
+                    updateContract.ContractPrice = model.ContractPrice;
 
                     contractRepo.Edit(updateContract);
                     contractRepo.Save();
@@ -268,8 +272,8 @@ namespace DataService.Models.Entities.Services
                         ContractStatus = item.EndDate != null && item.EndDate.Value.Date < DateTime.Now.Date ? "Đã hết hạn hợp đồng" : string.Empty,
                         IsDelete = item.IsDelete,
                         CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
-                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
-
+                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        ContractPrice = item.ContractPrice
                     });
                     count++;
                 }

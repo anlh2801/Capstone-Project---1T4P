@@ -22,6 +22,7 @@ namespace DataService.APIViewModels
         public bool IsDelete { get; set; }
         public string CreateDate { get; set; }
         public string UpdateDate { get; set; }
+        public string ContractPrice { get; set; }
         public string ContractServiceName { get; set; }
         public List<int> ServiceIdList { get; set; }
         public List<string> ServiceName { get; set; }
