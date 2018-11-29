@@ -49,83 +49,265 @@
 
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:background="@null"
-            android:src="@drawable/qr_code"
-            fab:layout_constraintBottom_toBottomOf="parent"
-            fab:layout_constraintStart_toStartOf="parent" />
-
         <LinearLayout
-            android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp">
+            tools:layout_editor_absoluteY="66dp">
 
-            <LinearLayout
+
+
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/txtAgency"
-                    android:layout_width="232dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:text="Request Name"
-                    android:textColor="#FAFAFA"
-                    android:textSize="30dp"
-                    android:textStyle="bold" />
+                    android:orientation="vertical">
 
-                <ImageButton
-                    android:id="@+id/btnHistory"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="5dp"
+                        android:text="Thông tin sự cố"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
 
-                    android:layout_gravity="center_vertical|right"
-                    android:background="@null"
-                    android:src="@drawable/ic_more_black_24dp" />
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:cardCornerRadius="2dp">
 
-                <ImageButton
-                    android:id="@+id/btnRequestDetail"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
-                    android:layout_gravity="center_vertical|right"
-                    android:background="@null"
-                    android:src="@drawable/ic_more_black_24dp" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="10dp"
+                                android:orientation="horizontal">
 
-            </LinearLayout>
+                                <ImageView
+                                    android:id="@+id/imageView7"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    app:srcCompat="@drawable/ic_info_black_24dp" />
 
-            <TextView
-                android:id="@+id/txtRequestName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text=""
-                android:textColor="#FAFAFA"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/txtPrio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="15dp"
-                android:text=""
-                android:textColor="#FAFAFA"
-                android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/PriorityAgencyDetail"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="10dp"
+                                    android:textStyle="bold"
+                                    android:text="Độ ưu tiên: Gấp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/imageView4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    app:srcCompat="@drawable/ic_info_black_24dp" />
+
+                                <TextView
+                                    android:id="@+id/AgencyNameAgencyDetail"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Cửa hàng báo cáo: Passio 47TCV" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/imageView5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    app:srcCompat="@drawable/ic_info_black_24dp" />
+
+                                <TextView
+                                    android:id="@+id/ServiceItemAgencyDetail"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Hiện tượng: Wifi hư" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/imageView6"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    app:srcCompat="@drawable/ic_info_black_24dp" />
+
+                                <TextView
+                                    android:id="@+id/CreateDateAgencyDetail"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Ngày tạo: 00/00/2018" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/imageView13"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    app:srcCompat="@drawable/ic_info_black_24dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Thiết bị xảy ra sự cố:" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/DevicesInRequest"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+                            </LinearLayout>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="5dp"
+                        android:text="Thông tin cửa hàng"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:cardCornerRadius="2dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="10dp"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/imageView8"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    app:srcCompat="@drawable/ic_info_black_24dp" />
+
+                                <TextView
+                                    android:id="@+id/AgencyAdressAgencuDetails"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Địa chỉ: 23 Quang Trung, F.5, GV" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/imageView9"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    app:srcCompat="@drawable/ic_info_black_24dp" />
+
+                                <TextView
+                                    android:id="@+id/AgencyPhoneAgencuDetails"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="Điện thoại: 0000000000" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/textView93"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="5dp"
+                        android:text="Lịch sử sự cố cửa hàng"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/HistoryAgency"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </ScrollView>
+
 
         </LinearLayout>
-
-
     </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

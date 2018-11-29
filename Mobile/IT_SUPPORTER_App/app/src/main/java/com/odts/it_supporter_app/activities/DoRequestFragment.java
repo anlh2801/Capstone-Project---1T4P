@@ -97,8 +97,8 @@ public class DoRequestFragment extends Fragment {
         listView = (ListView) v.findViewById(R.id.listTask);
         itSupporterService = new ITSupporterService();
         rqName = (TextView) v.findViewById(R.id.txtRequestName);
-        agencyName = v.findViewById(R.id.txtAgency);
-        priority = v.findViewById(R.id.txtPrio);
+//        agencyName = v.findViewById(R.id.txtAgency);
+//        priority = v.findViewById(R.id.txtPrio);
         scan = v.findViewById(R.id.imageButton);
         scan.setOnClickListener(new View.OnClickListener() {
             @Override

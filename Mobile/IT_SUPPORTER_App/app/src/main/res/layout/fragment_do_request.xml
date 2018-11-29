@@ -13,13 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <info.hoang8f.android.segmented.SegmentedGroup
             android:id="@+id/segmented3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,11 +63,10 @@
                 style="@style/RadioButton"
                 android:layout_width="61dp"
                 android:layout_height="match_parent"
-                android:paddingBottom="10dp"
                 android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:text="Hoàn thành" />
         </info.hoang8f.android.segmented.SegmentedGroup>
-
 
         <TextView
             android:id="@+id/textView3"
@@ -107,7 +107,7 @@
 
         <ListView
             android:id="@+id/listTask"
-            android:layout_width="268dp"
+            android:layout_width="300dp"
             android:layout_height="200dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -55,27 +56,31 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_agency, container, false);
-        final TextView agencyName = v.findViewById(R.id.txtAgency);
-        final TextView rqName = (TextView) v.findViewById(R.id.txtRequestName);
-        final TextView priority = v.findViewById(R.id.txtPrio);
+        final TextView agencyName = v.findViewById(R.id.AgencyNameAgencyDetail);
+        //final TextView rqName = (TextView) v.findViewById(R.id.txtRequestName);
+        final TextView priority = v.findViewById(R.id.PriorityAgencyDetail);
+        final TextView txtserviceItem = v.findViewById(R.id.ServiceItemAgencyDetail);
+        final TextView createDate = v.findViewById(R.id.CreateDateAgencyDetail);
+        final TextView txtAddressAgency = v.findViewById(R.id.AgencyAdressAgencuDetails);
+        final TextView txtPhoneAgency = v.findViewById(R.id.AgencyPhoneAgencuDetails);
         btnCall = v.findViewById(R.id.action_a);
         btnChat = v.findViewById(R.id.action_b);
         final FloatingActionsMenu menu = v.findViewById(R.id.multiple_actions);
 
         menu.bringToFront();
 
-        ImageButton scan = v.findViewById(R.id.imageButton3);
-        scan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ScanDeviceFragment scanDeviceFragment = new ScanDeviceFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left, R.animator.enter_from_left, R.animator.exit_to_right);
-                transaction.replace(R.id.fmHome, scanDeviceFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
+        //ImageButton scan = v.findViewById(R.id.imageButton3);
+//        scan.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ScanDeviceFragment scanDeviceFragment = new ScanDeviceFragment();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left, R.animator.enter_from_left, R.animator.exit_to_right);
+//                transaction.replace(R.id.fmHome, scanDeviceFragment);
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+//            }
+//        });
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         final int itSupporterId = share.getInt("itSupporterId", 0);
@@ -84,12 +89,24 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
             @Override
             public void onSuccess(final Request request) {
                 agencyName.setText(request.getAgencyName());
-                rqName.setText(request.getRequestName());
-                priority.setText(request.getPriority());
+                //rqName.setText(request.getRequestName());
+                if (request.getPriority().equalsIgnoreCase("Xử lý gấp")){
+                    priority.setText(request.getPriority());
+                    priority.setTextColor(Color.parseColor("#C62828"));
+                } else if (request.getPriority().equalsIgnoreCase("Cần xử lý")){
+                    priority.setText(request.getPriority());
+                    priority.setTextColor(Color.parseColor("#F9A825"));
+                } else {
+                    priority.setText(request.getPriority());
+                    priority.setTextColor(Color.parseColor("#2E7D32"));
+                }
+                createDate.setText(request.getCreateDate());
+                txtPhoneAgency.setText(request.getPhoneNumber());
+                txtAddressAgency.setText(request.getAgencyAddress());
                 requestId = request.getRequestId();
                 serviceItemId = request.getServiceItemId();
                 serviceItemName = request.getServiceItemName();
-
+                txtserviceItem.setText(serviceItemName);
                 btnCall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
