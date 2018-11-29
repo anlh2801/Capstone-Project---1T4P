@@ -128,7 +128,7 @@
                             <select class="form-control select2" type="button" style="width: 99%;float:right;" id="comboStatusE">
                                 <option value="0">--Chọn trạng thái--</option>
                                 <option value="5">Tạo mới</option>
-                                <option value="1">Chờ xử lý</option>
+                                <option value="1">Chờ nhân viên xử lý</option>
                                 <option value="3">Hoàn thành</option>
                             </select>
                         </div>
@@ -173,7 +173,7 @@
             <span class="info-box-icon bg-yellow"><i class="fa fa-cogs" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text" style="width: 200px">Chờ xử lý</span>
+                <span class="info-box-text" style="width: 200px">Chờ nhân viên xử lý</span>
                 <span class="info-box-number" id="wailting">0</span>
             </div>
             <!-- /.info-box-content -->
@@ -571,7 +571,7 @@
                     {
                         "aTargets": [5],
                         "mRender": function (data, type, full) {
-                            if (full.StatusName === "Chờ xử lý")
+                            if (full.StatusName === "Chờ nhân viên xử lý")
                                 return '<span class = "label label-warning">' + full.StatusName + '</span>';
                             else if (full.StatusName === "Đang xử lý")
                                 return '<span class = "label label-primary">' + full.StatusName + '</span>';
@@ -600,13 +600,14 @@
                             else if(full.ITSupporterName !== "") {
                                 return full.ITSupporterName;
                             }
-                            else if (full.StatusName === "Chờ xử lý" && full.ITSupporterName === "") {
-                                return '<span class = "label label-warning">Đợi nhân viên phản hồi</span>';
+                            else if (full.StatusName === "Chờ nhân viên xử lý" && full.ITSupporterName === "") {
+                                var asignHero = '<button type="button" class="btn btn-info btn fa fa-user-plus" data-toggle="modal" data-target="" onclick="asignHero(' + full.RequestId + ')"></button>'
+                                var details = '<span class = "label label-warning">Đợi nhân viên phản hồi</span>';
+                                return details + " " + asignHero;
                             }
-                            else {
-                                var asignHero = '<button type="button" class="btn btn-info btn fa fa-user-plus" data-toggle="modal" data-target="" onclick="asignHero(' + full.RequestId + ')"></button>';
-                                var del = ' <button type="button" class="btn btn-danger fa fa-close" data-toggle="modal" data-target="" onclick="removeResquest(' + full.RequestId + ')"></button>';
-                                return asignHero;
+                            else {                                
+                                //var del = ' <button type="button" class="btn btn-danger fa fa-close" data-toggle="modal" data-target="" onclick="removeResquest(' + full.RequestId + ')"></button>';
+                                return "";
                             }
                         }
                     },

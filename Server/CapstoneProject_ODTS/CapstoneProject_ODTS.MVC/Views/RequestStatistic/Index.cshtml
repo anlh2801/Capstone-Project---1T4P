@@ -47,7 +47,7 @@
                             <span class="info-box-icon bg-yellow"><i class="fa fa-cogs"></i></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">Chờ xử lý</span>
+                                <span class="info-box-text">Chờ nhân viên xử lý</span>
                                 <span class="info-box-number" id="wailting">0</span>
                             </div>
                             <!-- /.info-box-content -->
@@ -390,7 +390,7 @@
                     //{ "data": "StatusName" },
                     {
                         "mRender": function (data, type, full) {
-                            if (full.StatusName === "Chờ Xử lý")
+                            if (full.StatusName === "Chờ nhân viên xử lý")
                                 return '<span class = "label label-warning">' + full.StatusName + '</span>';
                             else if (full.StatusName === "Đang xử lý")
                                 return '<span class = "label label-primary">' + full.StatusName + '</span>';
