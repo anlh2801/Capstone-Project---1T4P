@@ -29,6 +29,7 @@ public class LoginService {
                     SharedPreferences.Editor edit = share.edit();
                     edit.putInt("itSupporterId", response.body().getObjReturn().getItSupporterId());
                     edit.putString("itName", response.body().getObjReturn().getItSupporterName());
+                    edit.putString("itEmail", response.body().getObjReturn().getEmail());
                     edit.commit();
                     Intent intent = new Intent(context, MainActivity.class);
                     context.startActivity(intent);

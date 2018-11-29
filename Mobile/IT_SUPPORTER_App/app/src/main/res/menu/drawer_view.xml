@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
-    <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="Trang chủ"/>
+        <item
+            android:id="@+id/navigation_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Trang chủ" />
 
-    <item
-        android:id="@+id/navigation_scanQR"
-        android:icon="@drawable/ic_settings_overscan_black_24dp"
-        android:title="Tra cứu"/>
+        <item
+            android:id="@+id/navigation_scanQR"
+            android:icon="@drawable/ic_settings_overscan_black_24dp"
+            android:title="Tra cứu" />
 
-    <item
-        android:id="@+id/navigation_sumary"
-        android:icon="@drawable/ic_subtitles_black_24dp"
-        android:title="Lịch sử"/>
+        <item
+            android:id="@+id/navigation_sumary"
+            android:icon="@drawable/ic_subtitles_black_24dp"
+            android:title="Lịch sử" />
 
-    <item
-        android:id="@+id/navigation_accountDetail"
-        android:icon="@drawable/ic_account_circle_black_24dp"
-        android:title="Tài khoản"/>
+        <item
+            android:id="@+id/navigation_accountDetail"
+            android:icon="@drawable/ic_account_circle_black_24dp"
+            android:title="Tài khoản" />
+
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_account_circle_black_24dp"
+            android:title="Đăng xuất" />
     </group>
 </menu>
