@@ -117,7 +117,7 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                 }
                 createDate.setText("Tạo vào: " + request.getCreateDate());
                 txtPhoneAgency.setText("Điện thoại: " + request.getPhoneNumber());
-                txtAddressAgency.setText("Địa chỉ cửa hàng: " + request.getAgencyAddress());
+                txtAddressAgency.setText("Địa chỉ: " + request.getAgencyAddress());
                 requestId = request.getRequestId();
                 serviceItemId = request.getServiceItemId();
                 serviceItemName = request.getServiceItemName();
