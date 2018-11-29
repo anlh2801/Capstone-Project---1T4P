@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                         loadFragment(new ScanDeviceFragment());
                     } else
                         toolbar.setTitle("Đang thực hiện");
-                    loadFragment(new DoRequestFragment());
+                    loadFragment(new HeroFragment());
                 }
             }
 
