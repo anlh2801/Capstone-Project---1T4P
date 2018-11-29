@@ -45,7 +45,7 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
         View row = inflater.inflate(this.resource, null);
         final Device device = this.objects.get(position);
         TextView deviceName = (TextView) row.findViewById(R.id.txtDeviceName);
-        ImageButton imageButton = (ImageButton) row.findViewById(R.id.imageButton2) ;
+        ImageButton imageButton = (ImageButton) row.findViewById(R.id.deviceDetail) ;
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
