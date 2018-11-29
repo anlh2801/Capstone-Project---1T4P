@@ -644,11 +644,14 @@ namespace DataService.Models.Entities.Services
                     return new ResponseObject<List<ITSupporterStatisticAPIViewModel>> { IsError = true, WarningMessage = "Không có thống kê nào!" };
                 }
                 var rs = new List<ITSupporterStatisticAPIViewModel>();
+                int count = 0;
                 foreach (var itsupporter in itsupporters)
                 {
+                    count++;
                     var supportTime = 0;
                     var totalSupportTime = new TimeSpan();
                     var averageTime = 0.0;
+                    
                     if (itsupporter != null)
                     {
                         List<ITSupporterStatisticServiceTimeAPIViewModel> rsList = new List<ITSupporterStatisticServiceTimeAPIViewModel>();
@@ -733,7 +736,8 @@ namespace DataService.Models.Entities.Services
                             TotalTimeEveryService = rsList,
                             AverageTimeSupport = averageTime,
                             TotalTimeSupport = totalSupportTime.TotalHours,
-                            TotalRejectTime = totalRejectTime
+                            TotalRejectTime = totalRejectTime,
+                            No = count
                         };
                         rs.Add(ITSupporterAssumptionAPIViewModel);
                     }

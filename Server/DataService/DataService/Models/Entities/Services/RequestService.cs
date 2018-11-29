@@ -64,7 +64,7 @@ namespace DataService.Models.Entities.Services
             {
                 List<RequestAPIViewModel> rsList = new List<RequestAPIViewModel>();
                 var RequestRepo = DependencyUtils.Resolve<IRequestRepository>();
-                var requests = RequestRepo.GetActive().ToList();
+                var requests = RequestRepo.GetActive().OrderByDescending(p => p.CreateDate).ToList();
                 if (!string.IsNullOrEmpty(start) && !string.IsNullOrEmpty(end))
                 {
                     var startDateTime = start.Trim().ToDateTime();

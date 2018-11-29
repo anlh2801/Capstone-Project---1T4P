@@ -72,9 +72,9 @@
                                 <label>Độ Ưu Tiên:</label>
                                 <select class="form-control select2" type="button" style="width: 99%;float:right;" id="comboPriority">
                                     <option value="0">--Chọn độ ưu tiên--</option>
-                                    <option value="1">Xử lý gấp</option>
-                                    <option value="2">Cần xử lý</option>
-                                    <option value="3">Không gấp</option>
+                                    <option value="1">Cao</option>
+                                    <option value="2">Trung bình</option>
+                                    <option value="3">Thấp</option>
                                 </select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
@@ -136,9 +136,9 @@
                             <label>Độ Ưu Tiên:</label>
                             <select class="form-control select2" type="button" style="width: 99%;float:right;" id="comboPriorityE">
                                 <option value="0">--Chọn độ ưu tiên--</option>
-                                <option value="1">Xử lý gấp</option>
-                                <option value="2">Cần xử lý</option>
-                                <option value="3">Không gấp</option>
+                                <option value="1">Cao</option>
+                                <option value="2">Trung bình</option>
+                                <option value="3">Thấp</option>
                             </select>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
@@ -509,7 +509,7 @@
                 },
                 "aoColumnDefs": [
                     {
-                        "aTargets": [0, 1, 2, 3, 4, 5, 6, 7],
+                        "aTargets": [0, 2, 3, 4, 5, 6, 7],
                         "bSortable": false,
                         "sClass": "text-center",
                     },
@@ -526,33 +526,28 @@
                 ],
                 "columns": [
                     { "data": "NumberOfRecord" },
-                    {
-                        "data": "RequestName",
-                        "mRender": function(data, type, full) {
-                            return '<a href="RequestDetail/' + full.RequestId + '">' + data + '</a>';
-                        }
-                    },
+                    { "data": "RequestName" },
                     { "data": "CreateDate" },
                     { "data": "AgencyName" },
                     //{ "data": "StatusName" },
                     {
                         "aTargets": [4],
                         "mRender": function (data, type, full) {
-                            if (full.Priority === "Xử lý gấp") {
+                            if (full.Priority === "Cao") {
                                 var Priority = '<span class = "label label-danger">' + full.Priority + '</span>';
                                 //var Normal = ' <button type="button" class="btn btn-warning fa fa-wrench" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 2)"></button>';
                                 //var Non_Urgent = '<button type="button" class="btn btn-primary btn fa fa-hourglass" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 3)"></button>';
                                 //return Priority + " " + Normal + " " + Non_Urgent;
                                 return Priority;
                             }
-                            else if (full.Priority === "Cần xử lý") {
+                            else if (full.Priority === "Trung bình") {
                                 var Priority = '<span class = "label label-warning">' + full.Priority + '</span>';
                                 //var Urgent = '<button type="button" class="btn btn-danger glyphicon glyphicon-fire" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 1)"></button>';
                                 //var Non_Urgent = '<button type="button" class="btn btn-primary btn fa fa-hourglass" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 3)"></button>';
                                 //return Priority + " " + Urgent + " " + Non_Urgent;
                                 return Priority;
                             }
-                            else if (full.Priority === "Không gấp") {
+                            else if (full.Priority === "Thấp") {
                                 var Priority = '<span class = "label label-primary">' + full.Priority + '</span>';
                                 //var Urgent = '<button type="button" class="btn btn-danger glyphicon glyphicon-fire" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 1)"></button>';
                                 //var Normal = ' <button type="button" class="btn btn-warning fa fa-wrench" data-toggle="modal" onclick="setPriority(' + full.RequestId + ', 2)"></button>';
@@ -617,9 +612,8 @@
                             if (full.StatusName === "Tạo mới") {
                                 var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.RequestId + ')"></button>';
                                 return edit;
-                            } else {
-                                var cannotEdit = ' <button type="button" class="btn btn-secondary fa fa-pencil" data-toggle="modal" data-target=""></button>';
-                                return cannotEdit;
+                            } else {                                
+                                return "";
                             }
                         }
                     },
