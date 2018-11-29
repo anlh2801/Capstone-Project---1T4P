@@ -1,5 +1,6 @@
 package com.odts.it_supporter_app.activities;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -25,6 +26,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
+
 import com.odts.it_supporter_app.R;
 
 import com.odts.it_supporter_app.services.ITSupporterService;
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     ActionBarDrawerToggle toggle;
     //    BottomNavigationView bottomNavigationView;
     ImageButton btnLogout;
-    TextView username;
+    TextView username, email;
     NavigationView navigationView;
 
     @Override
@@ -58,9 +60,11 @@ public class MainActivity extends AppCompatActivity {
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header);
 //        panel = headerLayout.findViewById(R.id.viewId);
         username = (TextView) headerLayout.findViewById(R.id.username);
+        email = (TextView) headerLayout.findViewById(R.id.email);
         share = getSharedPreferences("ODTS", Context.MODE_PRIVATE);
         itSupporterId = share.getInt("itSupporterId", 0);
         username.setText(share.getString("itName", ""));
+        email.setText(share.getString("itEmail", ""));
 
         isOnline = true;
         initHome();
@@ -201,6 +205,23 @@ public class MainActivity extends AppCompatActivity {
                         toolbar.setTitle("Tài khoản");
                         loadFragment(new ProfleFragment());
                         break;
+                    case R.id.logout:
+                        share = getSharedPreferences("ODTS", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = share.edit();
+                        editor.clear();
+                        editor.commit();
+                        sp = getSharedPreferences("loginHero", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor2 = sp.edit();
+                        editor2.clear();
+                        editor2.commit();
+
+                        deleteCache(MainActivity.this);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE))
+                                    .clearApplicationUserData();
+                        }
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
                 }
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 return true;
