@@ -42,7 +42,7 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
     private ServiceITSupportService _serviceITSupportService;
     private ServiceItemService _serviceItem;
     private DeviceService _deviceService;
-    private RequestService _requestService;
+    private RequestService requestService;;
     Integer agencyId = 0;
     int serviceItemId;
     Button btnSave;
@@ -246,18 +246,21 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
     }
 
     public void createRequest() {
-        _requestService = new RequestService();
+        String requestDes ="";
+        requestService = new RequestService();
         List listTickets = new ArrayList<Ticket>();
         if (listTicket != null && listTicket.size() != 0) {
             for (Device item : listTicket) {
                 Ticket ticc = new Ticket();
                 ticc.setDeviceId(item.getDeviceId());
                 if (item.getDeviceName().equalsIgnoreCase("Chưa xác định")) {
-                    ticc.setDesciption("Unknown Device - Thuộc agencyId: " + agencyId + " thiết bị: " + item.getDeviceName() + "Vấn đề: " + requestName.toString());
+                    requestDes += "Unknown Device - ";
+
                 } else {
                     ticc.setDesciption("Thuộc agencyId: " + agencyId + " thiết bị: " + item.getDeviceName() + "Vấn đề: " + requestName.toString());
+                    listTickets.add(ticc);
                 }
-                listTickets.add(ticc);
+
             }
         }
         Request request = new Request();
@@ -265,9 +268,10 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
         request.setAgencyId(agencyId);
         request.setRequestCategoryId(3);
         request.setServiceItemId(serviceItemId);
-        request.setRequestDesciption(txtRequestDesciption.getText().toString());
-        request.setRequestName(requestName.toString());
         request.setTicket(listTickets);
-        _requestService.createRequest(AddRequestLayoutActivity.this, request);
+        requestDes +=  txtRequestDesciption.getText().toString();
+        request.setRequestDesciption(requestDes);
+        request.setRequestName(requestName.toString());
+        requestService.createRequest(AddRequestLayoutActivity.this, request);
     }
 }
