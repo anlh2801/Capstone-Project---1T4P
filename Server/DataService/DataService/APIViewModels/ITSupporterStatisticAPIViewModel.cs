@@ -9,6 +9,7 @@ namespace DataService.APIViewModels
 {
     public class ITSupporterStatisticAPIViewModel
     {
+        public int No { get; set; }
         public int ITSupporterId { get; set; }
         public string ITSupporterName { get; set; }
         public int SupportTimeInMonth { get; set; }

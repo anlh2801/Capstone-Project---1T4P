@@ -101,7 +101,8 @@ namespace DataService.Models.Entities.Services
                         EndDate = contract.EndDate.Value.ToString("dd/MM/yyyy"),
                         ContractStatus = contract.EndDate != null && contract.EndDate.Value.Date < DateTime.Now.Date ? "Hợp đồng hết hạn" : string.Empty,
                         UpdateDate = contract.UpdateDate.Value.ToString("dd/MM/yyyy"),
-                        ContractPrice = contract.ContractPrice
+                        ContractPrice = contract.ContractPrice,
+                        EndDateCountDown = contract.EndDate != null ? ((contract.EndDate.Value.Date - DateTime.Now.Date).Days > 0 ? (contract.EndDate.Value.Date - DateTime.Now.Date).Days.ToString() : "Hết hạn") : string.Empty
                     };
                     return new ResponseObject<ContractAPIViewModel> { IsError = false, ObjReturn = contractAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
                 }
@@ -260,6 +261,8 @@ namespace DataService.Models.Entities.Services
                 int count = 1;
                 foreach (var item in companyContract)
                 {
+                    var endDateCountDown = item.EndDate!= null ? ((item.EndDate.Value.Date - DateTime.Now.Date).Days > 0 ? (item.EndDate.Value.Date - DateTime.Now.Date).Days.ToString() : "Hết hạn"): string.Empty;
+
                     rsList.Add(new ContractAPIViewModel
                     {
                         NumericalOrder = count,
@@ -270,6 +273,7 @@ namespace DataService.Models.Entities.Services
                         StartDate = item.StartDate != null ? item.StartDate.Value.ToString("dd/MM/yyyy") : string.Empty,
                         EndDate = item.EndDate != null ? item.EndDate.Value.ToString("dd/MM/yyyy") : string.Empty,
                         ContractStatus = item.EndDate != null && item.EndDate.Value.Date < DateTime.Now.Date ? "Đã hết hạn hợp đồng" : string.Empty,
+                        EndDateCountDown = $"Hợp đồng còn lại {endDateCountDown} ngày",
                         IsDelete = item.IsDelete,
                         CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty,

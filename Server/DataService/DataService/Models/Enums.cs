@@ -22,8 +22,9 @@ namespace DataService.Models
         [Display(Name = "Tạo mới")]
         New = 5,
         [Display(Name = "Chờ hủy")]
-        WaitingCancel = 6
-        
+        WaitingCancel = 6,
+        [Display(Name = "Chờ Xác nhận hoàn thành")]
+        WaitingDone = 7
     }
 
     //For ITSupporter View
@@ -73,11 +74,11 @@ namespace DataService.Models
 
     public enum RequestPriorityEnum
     {
-        [Display(Name = "Xử lý gấp")]
+        [Display(Name = "Cao")]
         Urgent = 1,
-        [Display(Name = "Cần xử lý")]
+        [Display(Name = "Trung bình")]
         Normal = 2,
-        [Display(Name = "Không gấp")]
+        [Display(Name = "Thấp")]
         Non_Urgent = 3,
     }
 
