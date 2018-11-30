@@ -13,6 +13,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,17 +27,22 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.odts.it_supporter_app.R;
 import com.odts.it_supporter_app.apiCaller.DeviceAdapter;
 import com.odts.it_supporter_app.customTools.AgencyHistoryAdapter;
+import com.odts.it_supporter_app.customTools.StatusTimeLineAdapter;
 import com.odts.it_supporter_app.customTools.TaskAdapter;
 import com.odts.it_supporter_app.models.Device;
 import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.models.RequestTask;
 import com.odts.it_supporter_app.models.Ticket;
+import com.odts.it_supporter_app.models.TimeLine;
 import com.odts.it_supporter_app.services.ITSupporterService;
 import com.odts.it_supporter_app.services.RequestService;
 import com.odts.it_supporter_app.services.TaskService;
@@ -53,7 +60,9 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class DoRequestFragment extends Fragment {
 
-
+    private RecyclerView mRecyclerView;
+    private StatusTimeLineAdapter mTimeLineAdapter;
+    private List<TimeLine> mDataList = new ArrayList<>();
     Integer itSupporterId = 0;
     Integer requestId = 0;
 
@@ -67,10 +76,7 @@ public class DoRequestFragment extends Fragment {
     EditText userInputDialogEditText;
     RequestService _requestService;
     TaskService _taskService;
-
-    private String m_Text = "";
     ListView listView;
-    TaskAdapter taskAdapter;
 
 
     public DoRequestFragment() {
@@ -90,6 +96,7 @@ public class DoRequestFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_do_request, container, false);
         segmentedGroup = v.findViewById(R.id.segmented3);
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         listView = (ListView) v.findViewById(R.id.listTask);
         itSupporterService = new ITSupporterService();
         rqName = (TextView) v.findViewById(R.id.txtRequestName);
@@ -100,6 +107,43 @@ public class DoRequestFragment extends Fragment {
             @Override
             public void onSuccess(final Request request) {
                 requestId = request.getRequestId();
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                mRecyclerView.setHasFixedSize(true);
+                Firebase.setAndroidContext(getContext());
+                reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" + requestId);
+                reference1.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Map map = dataSnapshot.getValue(Map.class);
+                        String status = map.get("status").toString();
+                        String time = map.get("time").toString();
+                        String message = map.get("message").toString();
+                        setDataListItems(status, time, message);
+//                        if (status.equalsIgnoreCase("Hoàn thành")) {
+//                            btnDone.setVisibility(View.VISIBLE);
+//                        }
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
                 serviceItemId = request.getServiceItemId();
                 serviceItemName = request.getServiceItemName();
                 Firebase.setAndroidContext(getContext());
@@ -124,7 +168,6 @@ public class DoRequestFragment extends Fragment {
                                         map.put("message", userInputDialogEditText.getText().toString());
                                         map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
                                         reference1.push().setValue(map);
-//                                        segmentedGroup.removeView(bt2);
                                     }
                                 })
                                 .setNegativeButton("Cancel",
@@ -245,6 +288,17 @@ public class DoRequestFragment extends Fragment {
             }
         });
         return v;
+    }
+    private void setDataListItems(String status, String time, String message) {
+        mDataList.add(new TimeLine(status, time, message));
+        mTimeLineAdapter = new StatusTimeLineAdapter(mDataList);
+        mRecyclerView.setAdapter(mTimeLineAdapter);
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.smoothScrollToPosition(mTimeLineAdapter.getItemCount());
+            }
+        });
     }
 }
 
