@@ -65,7 +65,7 @@ public class StatusTimelineActivity extends AppCompatActivity {
         bt4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                map.put("status", "Đợi linh kiện");
+                map.put("status", "Đợi thiết bị");
                 map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
                 reference1.push().setValue(map);
             }

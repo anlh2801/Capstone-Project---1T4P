@@ -99,18 +99,18 @@ public class DoRequestFragment extends Fragment {
         rqName = (TextView) v.findViewById(R.id.txtRequestName);
 //        agencyName = v.findViewById(R.id.txtAgency);
 //        priority = v.findViewById(R.id.txtPrio);
-        scan = v.findViewById(R.id.imageButton);
-        scan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ScanDeviceFragment scanDeviceFragment = new ScanDeviceFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left, R.animator.enter_from_left, R.animator.exit_to_right);
-                transaction.replace(R.id.fmHome, scanDeviceFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
+//        scan = v.findViewById(R.id.imageButton);
+//        scan.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ScanDeviceFragment scanDeviceFragment = new ScanDeviceFragment();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left, R.animator.enter_from_left, R.animator.exit_to_right);
+//                transaction.replace(R.id.fmHome, scanDeviceFragment);
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+//            }
+//        });
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         itSupporterId = share.getInt("itSupporterId", 0);
@@ -292,7 +292,7 @@ public class DoRequestFragment extends Fragment {
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialogBox, int id) {
                                         // ToDo get user input here
-                                        map.put("status", "Đợi linh kiện");
+                                        map.put("status", "Đợi thiết bị");
                                         map.put("message", userInputDialogEditText.getText().toString());
                                         map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
                                         reference1.push().setValue(map);
@@ -311,7 +311,7 @@ public class DoRequestFragment extends Fragment {
                     }
                 });
 
-                bt5 = v.findViewById(R.id.button35);
+                bt5 = v.findViewById(R.id.btnDone);
                 bt5.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -360,6 +360,8 @@ public class DoRequestFragment extends Fragment {
             public void onFail(String message) {
             }
         });
+
+
         android.support.design.widget.FloatingActionButton flbGuidline = v.findViewById(R.id.fabGuideline);
 
         flbGuidline.setOnClickListener(new View.OnClickListener() {

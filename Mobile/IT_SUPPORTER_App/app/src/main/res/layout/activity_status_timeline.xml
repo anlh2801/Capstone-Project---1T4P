@@ -45,7 +45,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="182dp"
-        android:text="Đợi linh kiện"
+        android:text="Đợi thiết bị"
         tools:layout_editor_absoluteX="148dp"
         tools:layout_editor_absoluteY="377dp" />
 
