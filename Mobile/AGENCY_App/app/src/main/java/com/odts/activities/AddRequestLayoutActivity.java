@@ -42,7 +42,7 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
     private ServiceITSupportService _serviceITSupportService;
     private ServiceItemService _serviceItem;
     private DeviceService _deviceService;
-    private RequestService _requestService;
+    private RequestService requestService;;
     Integer agencyId = 0;
     int serviceItemId;
     Button btnSave;
@@ -184,6 +184,7 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
         editDevice = (EditText) findViewById(R.id.editTextDevice);
         txtRequestDesciption = (EditText) findViewById(R.id.editText2);
         final ArrayList<MultiSelectModel> listDevices = new ArrayList<>();
+        listDevices.add(new MultiSelectModel(0, "Chưa xác định"));
         _deviceService.getAllDeviceByAgencyIdAndServiceItem(AddRequestLayoutActivity.this, agencyId, serviceId, new CallBackData<ArrayList<Device>>() {
             @Override
             public void onSuccess(ArrayList<Device> devices) {
@@ -198,8 +199,8 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
                         multiSelectDialog = new MultiSelectDialog()
                                 .title("Thiết bị") //setting title for dialog
                                 .titleSize(25)
-                                .positiveText("OK")
-                                .negativeText("Cancel")
+                                .positiveText("Chấp nhận")
+                                .negativeText("Hủy")
                                 .setMinSelectionLimit(0)
                                 .setMaxSelectionLimit(listDevices.size())
                                 .preSelectIDsList(alreadyTickets) //List of ids that you need to be selected
@@ -212,6 +213,7 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
                                         for (int i = 0; i < selectedIds.size(); i++) {
                                             Device tic = new Device();
                                             tic.setDeviceId(selectedIds.get(i));
+                                            tic.setDeviceName(selectedNames.get(i));
                                             listTicket.add(tic);
                                         }
                                         StringBuilder sb = new StringBuilder();
@@ -244,14 +246,21 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
     }
 
     public void createRequest() {
-        _requestService = new RequestService();
+        String requestDes ="";
+        requestService = new RequestService();
         List listTickets = new ArrayList<Ticket>();
         if (listTicket != null && listTicket.size() != 0) {
             for (Device item : listTicket) {
                 Ticket ticc = new Ticket();
                 ticc.setDeviceId(item.getDeviceId());
-                ticc.setDesciption("Thuộc agencyId: " + agencyId + " thiết bị: " + item.getDeviceName() + "Vấn đề: " + requestName.toString());
-                listTickets.add(ticc);
+                if (item.getDeviceName().equalsIgnoreCase("Chưa xác định")) {
+                    requestDes += "Unknown Device - ";
+
+                } else {
+                    ticc.setDesciption("Thuộc agencyId: " + agencyId + " thiết bị: " + item.getDeviceName() + "Vấn đề: " + requestName.toString());
+                    listTickets.add(ticc);
+                }
+
             }
         }
         Request request = new Request();
@@ -259,9 +268,10 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
         request.setAgencyId(agencyId);
         request.setRequestCategoryId(3);
         request.setServiceItemId(serviceItemId);
-        request.setRequestDesciption(txtRequestDesciption.getText().toString());
-        request.setRequestName(requestName.toString());
         request.setTicket(listTickets);
-        _requestService.createRequest(AddRequestLayoutActivity.this, request);
+        requestDes +=  txtRequestDesciption.getText().toString();
+        request.setRequestDesciption(requestDes);
+        request.setRequestName(requestName.toString());
+        requestService.createRequest(AddRequestLayoutActivity.this, request);
     }
 }

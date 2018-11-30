@@ -31,13 +31,6 @@
             segmentedgroup:sc_tint_color="#009688">
 
             <RadioButton
-                android:id="@+id/button31"
-                style="@style/RadioButton"
-                android:layout_width="57dp"
-                android:layout_height="match_parent"
-                android:text="Đã nhận" />
-
-            <RadioButton
                 android:id="@+id/button32"
                 style="@style/RadioButton"
                 android:layout_width="77dp"

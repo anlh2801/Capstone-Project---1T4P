@@ -108,12 +108,13 @@ public class RecieveRequestFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
                             getAllServiceITSupportForAgency(true);
-//                            Firebase.setAndroidContext(getActivity());
-//                            Firebase reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" + requestId);
-//                            final Map<String, String> map = new HashMap<String, String>();
-//                            map.put("status", "Đã nhận");
-//                            map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
-//                            reference1.push().setValue(map);
+                            Firebase.setAndroidContext(getActivity());
+                            Firebase reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" + requestId);
+                            final Map<String, String> map = new HashMap<String, String>();
+                            map.put("status", "Đã nhận");
+                            map.put("message", "");
+                            map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
+                            reference1.push().setValue(map);
                         }
                     })
                     .setNegativeButton("Không", new DialogInterface.OnClickListener() {
