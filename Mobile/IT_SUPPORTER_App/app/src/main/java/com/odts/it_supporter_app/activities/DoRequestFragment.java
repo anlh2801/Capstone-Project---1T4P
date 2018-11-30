@@ -99,10 +99,10 @@ public class DoRequestFragment extends Fragment {
         _requestService.getRequestByRequestIdAndITSupporterId(getActivity(), itSupporterId, new CallBackData<Request>() {
             @Override
             public void onSuccess(final Request request) {
-
                 requestId = request.getRequestId();
                 serviceItemId = request.getServiceItemId();
                 serviceItemName = request.getServiceItemName();
+                Firebase.setAndroidContext(getContext());
                 reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" + requestId);
                 final Map<String, String> map = new HashMap<String, String>();
                 bt2 = v.findViewById(R.id.button32);
@@ -235,18 +235,6 @@ public class DoRequestFragment extends Fragment {
                                     }
                                 })
                                 .show();
-
-                    }
-                });
-                _taskService.getTaskByRequestID(getContext(), requestId, new CallBackData<ArrayList<RequestTask>>() {
-                    @Override
-                    public void onSuccess(ArrayList<RequestTask> requestTasks) {
-                        taskAdapter = new TaskAdapter(getActivity(), R.layout.task_item, requestTasks);
-                        listView.setAdapter(taskAdapter);
-                    }
-
-                    @Override
-                    public void onFail(String message) {
 
                     }
                 });
