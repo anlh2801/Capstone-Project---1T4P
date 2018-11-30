@@ -184,6 +184,7 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
         editDevice = (EditText) findViewById(R.id.editTextDevice);
         txtRequestDesciption = (EditText) findViewById(R.id.editText2);
         final ArrayList<MultiSelectModel> listDevices = new ArrayList<>();
+        listDevices.add(new MultiSelectModel(0, "Chưa xác định"));
         _deviceService.getAllDeviceByAgencyIdAndServiceItem(AddRequestLayoutActivity.this, agencyId, serviceId, new CallBackData<ArrayList<Device>>() {
             @Override
             public void onSuccess(ArrayList<Device> devices) {
@@ -198,8 +199,8 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
                         multiSelectDialog = new MultiSelectDialog()
                                 .title("Thiết bị") //setting title for dialog
                                 .titleSize(25)
-                                .positiveText("OK")
-                                .negativeText("Cancel")
+                                .positiveText("Chấp nhận")
+                                .negativeText("Hủy")
                                 .setMinSelectionLimit(0)
                                 .setMaxSelectionLimit(listDevices.size())
                                 .preSelectIDsList(alreadyTickets) //List of ids that you need to be selected
@@ -212,6 +213,7 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
                                         for (int i = 0; i < selectedIds.size(); i++) {
                                             Device tic = new Device();
                                             tic.setDeviceId(selectedIds.get(i));
+                                            tic.setDeviceName(selectedNames.get(i));
                                             listTicket.add(tic);
                                         }
                                         StringBuilder sb = new StringBuilder();
@@ -250,7 +252,11 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
             for (Device item : listTicket) {
                 Ticket ticc = new Ticket();
                 ticc.setDeviceId(item.getDeviceId());
-                ticc.setDesciption("Thuộc agencyId: " + agencyId + " thiết bị: " + item.getDeviceName() + "Vấn đề: " + requestName.toString());
+                if (item.getDeviceName().equalsIgnoreCase("Chưa xác định")) {
+                    ticc.setDesciption("Unknown Device - Thuộc agencyId: " + agencyId + " thiết bị: " + item.getDeviceName() + "Vấn đề: " + requestName.toString());
+                } else {
+                    ticc.setDesciption("Thuộc agencyId: " + agencyId + " thiết bị: " + item.getDeviceName() + "Vấn đề: " + requestName.toString());
+                }
                 listTickets.add(ticc);
             }
         }
