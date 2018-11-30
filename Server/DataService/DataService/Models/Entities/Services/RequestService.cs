@@ -69,7 +69,7 @@ namespace DataService.Models.Entities.Services
                 {
                     var startDateTime = start.Trim().ToDateTime();
                     var endDateTime = end.Trim().ToDateTime2();
-                    requests = requests.Where(p => p.CreateDate >= startDateTime && p.CreateDate <= endDateTime).ToList();
+                    requests = requests.Where(p => p.CreateDate.Date >= startDateTime.Date && p.CreateDate.Date <= endDateTime.Date).ToList();
                 }
 
                 if (companyId > 0)
@@ -613,11 +613,12 @@ namespace DataService.Models.Entities.Services
             {
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
-                var requests = requestRepo.GetActive(x => x.RequestStatus == status && x.AgencyId == acency_id).OrderByDescending(p => p.CreateDate)
+                
+                var requests = requestRepo.GetActive(x => x.RequestStatus == status && x.AgencyId == acency_id)
                     .GroupBy(o => new { MonthGroupByStartTime = o.CreateDate.Month, YearGroupByStartTime = o.CreateDate.Year })
                         .Select(g => new { MonthSelect = g.Key.MonthGroupByStartTime, YearSelect = g.Key.YearGroupByStartTime, RequestList = g })
-                        //.OrderByDescending(a => a.YearSelect)
-                        //.ThenByDescending(a => a.MonthSelect)
+                        .OrderByDescending(a => a.YearSelect)
+                        .ThenByDescending(a => a.MonthSelect)
                         .ToList();
 
                 if (requests.Count <= 0)
@@ -629,7 +630,8 @@ namespace DataService.Models.Entities.Services
                 foreach (var item in requests)
                 {
                     var requestList = new List<RequestAllTicketWithStatusAgencyAPIViewModel>();
-                    foreach (var itemRequest in item.RequestList)
+                    var requestListOrderByDescending = item.RequestList.OrderByDescending(p => p.CreateDate);
+                    foreach (var itemRequest in requestListOrderByDescending)
                     {
                         List<AgencyCreateTicketAPIViewModel> ticketList = new List<AgencyCreateTicketAPIViewModel>();
                         var tickets = ticketRepo.GetActive(p => p.RequestId == itemRequest.RequestId).ToList();
