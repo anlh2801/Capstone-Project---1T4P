@@ -361,7 +361,7 @@
                     android:background="@color/colorPrimary"
                     android:textColor="#FAFAFA"
                     android:textStyle="bold"
-                    android:text="Tiếp tục tra cứu" />
+                    android:text="Quay lại" />
             </LinearLayout>
         </ScrollView>
 
