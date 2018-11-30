@@ -162,7 +162,7 @@ namespace DataService.Models.Entities.Services
                     ticket.DeviceCode = ticketItem.Device.DeviceCode;
                     ticketList.Add(ticket);
                 }
-                var timeAgo = TimeAgo(request.CreateDate);
+                //var timeAgo = TimeAgo(request.CreateDate);
                 var i = 1;
                 var requestStatus = "";
                 foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
@@ -187,7 +187,7 @@ namespace DataService.Models.Entities.Services
                 {
                     RequestId = request.RequestId,
                     RequestName = request.RequestName,
-                    CreateDate = timeAgo,
+                    CreateDate = request.CreateDate.ToString("dd/MM/yyyy"),
                     UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
                     AgencyTelephone = request.Phone != null ? request.Phone : request.Agency.Telephone,
                     AgencyName = request.Agency.AgencyName,
@@ -311,7 +311,7 @@ namespace DataService.Models.Entities.Services
                 }
                 foreach (var item in requests)
                 {
-                    var timeAgo = TimeAgo(item.CreateDate);
+                    //var timeAgo = TimeAgo(item.CreateDate);
                     var i = 1;
                     var requestStatus = "";
                     foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
@@ -326,7 +326,7 @@ namespace DataService.Models.Entities.Services
                     {
                         RequestId = item.RequestId,
                         RequestName = item.RequestName,
-                        CreateDate = timeAgo,
+                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         RequestStatus = requestStatus,
                     };
                     rsList.Add(a);
@@ -367,7 +367,7 @@ namespace DataService.Models.Entities.Services
                 }
 
 
-                var timeAgo = TimeAgo(request.CreateDate);
+                //var timeAgo = TimeAgo(request.CreateDate);
                 var ii = 1;
                 var requestStatus = "";
                 foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
@@ -382,7 +382,7 @@ namespace DataService.Models.Entities.Services
                 {
                     RequestId = request.RequestId,
                     RequestName = request.RequestName,
-                    CreateDate = timeAgo,
+                    CreateDate = request.CreateDate.ToString("dd/MM/yyyy"),
                     AgencyName = request.Agency.AgencyName,
                     IssueName = listIssue,
                     ITName = request.ITSupporter.ITSupporterName,
@@ -492,7 +492,7 @@ namespace DataService.Models.Entities.Services
 
                         ticketList.Add(ticket);
                     }
-                    var timeAgo = TimeAgo(item.CreateDate);
+                    //var timeAgo = TimeAgo(item.CreateDate);
                     var i = 1;
                     var requestStatus = "";
                     foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
@@ -507,7 +507,7 @@ namespace DataService.Models.Entities.Services
                     {
                         RequestId = item.RequestId,
                         RequestName = item.RequestName,
-                        CreateDate = timeAgo,
+                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
                         AgencyName = item.Agency.AgencyName,
                         RequestStatus = requestStatus,
@@ -646,7 +646,7 @@ namespace DataService.Models.Entities.Services
 
                             ticketList.Add(ticket);
                         }
-                        var timeAgo = TimeAgo(itemRequest.CreateDate);
+                        //var timeAgo = TimeAgo(itemRequest.CreateDate);
                         var i = 1;
                         var requestStatus = "";
                         foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
@@ -661,7 +661,7 @@ namespace DataService.Models.Entities.Services
                         {
                             RequestId = itemRequest.RequestId,
                             RequestName = itemRequest.RequestName,
-                            CreateDate = timeAgo,
+                            CreateDate = itemRequest.CreateDate.ToString("dd/MM/yyyy"),
                             UpdateDate = itemRequest.UpdateDate != null ? itemRequest.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
                             AgencyName = itemRequest.Agency.AgencyName,
                             RequestStatus = requestStatus,
@@ -803,7 +803,7 @@ namespace DataService.Models.Entities.Services
 
                         ticketList.Add(ticket);
                     }
-                    var timeAgo = TimeAgo(request.CreateDate);
+                    //var timeAgo = TimeAgo(request.CreateDate);
                     var i = 1;
                     var requestStatus = "";
                     foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
@@ -818,7 +818,7 @@ namespace DataService.Models.Entities.Services
                     {
                         RequestId = request.RequestId,
                         RequestName = request.RequestName,
-                        CreateDate = timeAgo,
+                        CreateDate = request.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
                         AgencyName = request.Agency.AgencyName,
                         RequestStatus = requestStatus,
@@ -1065,7 +1065,7 @@ namespace DataService.Models.Entities.Services
                     ticket.DeviceCode = ticketItem.Device.DeviceCode;
                     ticketList.Add(ticket);
                 }
-                var timeAgo = TimeAgo(request.CreateDate);
+                //var timeAgo = TimeAgo(request.CreateDate);
                 var i = 1;
                 var requestStatus = "";
                 foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
@@ -1090,7 +1090,7 @@ namespace DataService.Models.Entities.Services
                 {
                     RequestId = request.RequestId,
                     RequestName = request.RequestName,
-                    CreateDate = timeAgo,
+                    CreateDate = request.CreateDate.ToString("dd/MM/yyyy"),
                     UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
                     AgencyTelephone = request.Phone != null ? request.Phone : request.Agency.Telephone,
                     AgencyName = request.Agency.AgencyName,

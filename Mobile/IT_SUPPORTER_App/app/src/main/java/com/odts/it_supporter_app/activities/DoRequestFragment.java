@@ -198,17 +198,17 @@ public class DoRequestFragment extends Fragment {
                 Firebase.setAndroidContext(getActivity());
                 reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" + requestId);
                 final Map<String, String> map = new HashMap<String, String>();
-                btnAccept = v.findViewById(R.id.button31);
-                btnAccept.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        map.put("status", "Đã nhận");
-                        map.put("message", "");
-                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
-                        reference1.push().setValue(map);
-//                        segmentedGroup.removeView(btnAccept);
-                    }
-                });
+//                btnAccept = v.findViewById(R.id.button31);
+//                btnAccept.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        map.put("status", "Đã nhận");
+//                        map.put("message", "");
+//                        map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
+//                        reference1.push().setValue(map);
+////                        segmentedGroup.removeView(btnAccept);
+//                    }
+//                });
                 bt2 = v.findViewById(R.id.button32);
                 bt2.setOnClickListener(new View.OnClickListener() {
                     @Override
