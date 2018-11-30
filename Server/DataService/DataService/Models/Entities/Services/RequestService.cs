@@ -613,76 +613,92 @@ namespace DataService.Models.Entities.Services
             {
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
-                
-                var requests = requestRepo.GetActive(x => x.RequestStatus == status && x.AgencyId == acency_id)
+                var requests = requestRepo.GetActive(x => x.AgencyId == acency_id)
                     .GroupBy(o => new { MonthGroupByStartTime = o.CreateDate.Month, YearGroupByStartTime = o.CreateDate.Year })
                         .Select(g => new { MonthSelect = g.Key.MonthGroupByStartTime, YearSelect = g.Key.YearGroupByStartTime, RequestList = g })
                         .OrderByDescending(a => a.YearSelect)
                         .ThenByDescending(a => a.MonthSelect)
                         .ToList();
-
                 if (requests.Count <= 0)
                 {
-                    return new ResponseObject<List<RequestGroupMonth>> { IsError = true, WarningMessage = "Thất bại" };
+                    return new ResponseObject<List<RequestGroupMonth>> { IsError = true, WarningMessage = "Không có kết quả" };
                 }
 
                 var requestListGroup = new List<RequestGroupMonth>();
                 foreach (var item in requests)
                 {
                     var requestList = new List<RequestAllTicketWithStatusAgencyAPIViewModel>();
-                    var requestListOrderByDescending = item.RequestList.OrderByDescending(p => p.CreateDate);
-                    foreach (var itemRequest in requestListOrderByDescending)
+                    var requestListOrderByDescending = new List<Request>();
+                    if (status == (int)RequestStatusEnum.Pending)
                     {
-                        List<AgencyCreateTicketAPIViewModel> ticketList = new List<AgencyCreateTicketAPIViewModel>();
-                        var tickets = ticketRepo.GetActive(p => p.RequestId == itemRequest.RequestId).ToList();
-                        foreach (var ticketItem in tickets)
-                        {
-                            var ticket = new AgencyCreateTicketAPIViewModel();
-
-                            ticket.TicketId = ticketItem.TicketId;
-                            //ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
-                            ticket.DeviceId = ticketItem.DeviceId;
-                            ticket.DeviceName = ticketItem.Device.DeviceName;
-                            ticket.Desciption = ticketItem.Desciption;
-                            ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
-
-                            ticketList.Add(ticket);
-                        }
-                        //var timeAgo = TimeAgo(itemRequest.CreateDate);
-                        var i = 1;
-                        var requestStatus = "";
-                        foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
-                        {
-                            if (itemRequest.RequestStatus == i)
-                            {
-                                requestStatus = requestItem.DisplayName();
-                            }
-                            i++;
-                        }
-                        var request = new RequestAllTicketWithStatusAgencyAPIViewModel()
-                        {
-                            RequestId = itemRequest.RequestId,
-                            RequestName = itemRequest.RequestName,
-                            CreateDate = itemRequest.CreateDate.ToString("dd/MM/yyyy"),
-                            UpdateDate = itemRequest.UpdateDate != null ? itemRequest.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
-                            AgencyName = itemRequest.Agency.AgencyName,
-                            RequestStatus = requestStatus,
-                            RequestEstimationTime = itemRequest.CreateDate.AddHours(itemRequest.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
-                            //NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
-                            //NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
-                            NumberOfTicket = ticketList.Count,
-                            ITSupporterName = itemRequest.ITSupporter != null ? itemRequest.ITSupporter.ITSupporterName : "Chưa có người xử lý",
-                            StartTime = itemRequest.StartTime != null ? itemRequest.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
-                            EndTime = itemRequest.EndTime != null ? itemRequest.EndTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
-                            ITSupporterPhone = itemRequest.ITSupporter != null ? itemRequest.ITSupporter.Telephone : "0773909125",
-                            Tickets = ticketList
-                        };
-                        requestList.Add(request);
+                        requestListOrderByDescending = item.RequestList.OrderByDescending(p => p.CreateDate).Where(x => x.RequestStatus == status
+                        || x.RequestStatus == (int)RequestStatusEnum.New).ToList();                        
                     }
-                    var requestGroupMonthViewModel = new RequestGroupMonth();
-                    requestGroupMonthViewModel.MonthYearGroup = $"Tháng {item.MonthSelect}/{item.YearSelect}";
-                    requestGroupMonthViewModel.RequestOfITSupporter = requestList;
-                    requestListGroup.Add(requestGroupMonthViewModel);
+                    else if (status == (int)RequestStatusEnum.Processing)
+                    {
+                        requestListOrderByDescending = item.RequestList.OrderByDescending(p => p.CreateDate).Where(x => x.RequestStatus == status
+                        || x.RequestStatus == (int)RequestStatusEnum.WaitingCancel
+                        || x.RequestStatus == (int)RequestStatusEnum.WaitingDone).ToList();
+                    }
+                    else
+                    {
+                        requestListOrderByDescending = item.RequestList.OrderByDescending(p => p.CreateDate).Where(x => x.RequestStatus == status).ToList();
+                    }
+                    if (requestListOrderByDescending.Count() > 0)
+                    {
+                        foreach (var itemRequest in requestListOrderByDescending)
+                        {
+                            List<AgencyCreateTicketAPIViewModel> ticketList = new List<AgencyCreateTicketAPIViewModel>();
+                            var tickets = ticketRepo.GetActive(p => p.RequestId == itemRequest.RequestId).ToList();
+                            foreach (var ticketItem in tickets)
+                            {
+                                var ticket = new AgencyCreateTicketAPIViewModel();
+
+                                ticket.TicketId = ticketItem.TicketId;
+                                //ticket.ITSupporterId = ticketItem.CurrentITSupporter_Id != null ? ticketItem.CurrentITSupporter_Id.Value : 0;
+                                ticket.DeviceId = ticketItem.DeviceId;
+                                ticket.DeviceName = ticketItem.Device.DeviceName;
+                                ticket.Desciption = ticketItem.Desciption;
+                                ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+
+                                ticketList.Add(ticket);
+                            }
+                            //var timeAgo = TimeAgo(itemRequest.CreateDate);
+                            var i = 1;
+                            var requestStatus = "";
+                            foreach (RequestStatusEnum requestItem in Enum.GetValues(typeof(RequestStatusEnum)))
+                            {
+                                if (itemRequest.RequestStatus == i)
+                                {
+                                    requestStatus = requestItem.DisplayName();
+                                }
+                                i++;
+                            }
+                            var request = new RequestAllTicketWithStatusAgencyAPIViewModel()
+                            {
+                                RequestId = itemRequest.RequestId,
+                                RequestName = itemRequest.RequestName,
+                                CreateDate = itemRequest.CreateDate.ToString("dd/MM/yyyy"),
+                                UpdateDate = itemRequest.UpdateDate != null ? itemRequest.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
+                                AgencyName = itemRequest.Agency.AgencyName,
+                                RequestStatus = requestStatus,
+                                RequestEstimationTime = itemRequest.CreateDate.AddHours(itemRequest.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
+                                //NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
+                                //NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
+                                NumberOfTicket = ticketList.Count,
+                                ITSupporterName = itemRequest.ITSupporter != null ? itemRequest.ITSupporter.ITSupporterName : "Chưa có người xử lý",
+                                StartTime = itemRequest.StartTime != null ? itemRequest.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
+                                EndTime = itemRequest.EndTime != null ? itemRequest.EndTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
+                                ITSupporterPhone = itemRequest.ITSupporter != null ? itemRequest.ITSupporter.Telephone : "0773909125",
+                                Tickets = ticketList
+                            };
+                            requestList.Add(request);
+                        }
+                        var requestGroupMonthViewModel = new RequestGroupMonth();
+                        requestGroupMonthViewModel.MonthYearGroup = $"Tháng {item.MonthSelect}/{item.YearSelect}";
+                        requestGroupMonthViewModel.RequestOfITSupporter = requestList;
+                        requestListGroup.Add(requestGroupMonthViewModel); 
+                    }                    
                 }
 
                 return new ResponseObject<List<RequestGroupMonth>> { IsError = false, SuccessMessage = "Thành công", ObjReturn = requestListGroup };
