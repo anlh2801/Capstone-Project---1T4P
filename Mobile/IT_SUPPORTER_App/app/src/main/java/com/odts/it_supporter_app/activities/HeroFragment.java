@@ -83,7 +83,7 @@ public class HeroFragment extends Fragment {
             String title = "";
             switch (position) {
                 case 0:
-                    title = "Thông tin chung";
+                    title = "Thông Tin";
                     break;
                 case 1:
                     title = "Xử lý";

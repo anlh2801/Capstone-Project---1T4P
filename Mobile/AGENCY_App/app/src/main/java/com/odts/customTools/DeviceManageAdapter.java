@@ -5,17 +5,18 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
+
+import com.odts.activities.DeviceInfoActivity;
+import com.odts.activities.R;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.odts.activities.EditDeviceActivity;
-import com.odts.activities.R;
 import com.odts.models.Device;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class DeviceManageAdapter extends ArrayAdapter<Device> {
     Activity context;
     int resource;
     List<Device> objects;
+    LinearLayout historyAgency;
 
     public DeviceManageAdapter(@NonNull Activity context, int resource, @NonNull List<Device> objects) {
         super(context, resource, objects);
@@ -43,6 +45,7 @@ public class DeviceManageAdapter extends ArrayAdapter<Device> {
 
         ImageButton btnDetailsDevice = (ImageButton) row.findViewById(R.id.btnDetailsDevice);
         ImageButton btnEdit = (ImageButton) row.findViewById(R.id.btnEditDevice);
+//        historyAgency = row.findViewById(R.id.HistoryAgency);
 
         /** Set data to row*/
         final Device device = this.objects.get(position);
@@ -58,10 +61,10 @@ public class DeviceManageAdapter extends ArrayAdapter<Device> {
         } else {
             imgManageDevice.setImageResource(R.drawable.ic_widgets_white_24dp);
         }
+        final Intent intent = new Intent(getContext(), EditDeviceActivity.class);
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), EditDeviceActivity.class);
                 intent.putExtra("deviceType", device.getDeviceTypeId());
                 intent.putExtra("deviceId", device.getDeviceId());
                 intent.putExtra("deviceName", device.getDeviceName());
@@ -75,16 +78,19 @@ public class DeviceManageAdapter extends ArrayAdapter<Device> {
         btnDetailsDevice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
-                alertDialog.setTitle(device.getDeviceName());
-                alertDialog.setMessage("IP:\n" + device.getIp());
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                alertDialog.show();
+//                AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+//                alertDialog.setTitle(device.getDeviceName());
+//                alertDialog.setMessage("IP:\n" + device.getIp());
+//                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+//                        new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                            }
+//                        });
+//                alertDialog.show();
+                final Intent myIntent = new Intent(getContext(), DeviceInfoActivity.class);
+                myIntent.putExtra("deviceCode", device.getDeviceCode());
+                getContext().startActivity(myIntent);
             }
         });
 

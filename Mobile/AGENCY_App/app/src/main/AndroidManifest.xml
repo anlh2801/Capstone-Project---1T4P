@@ -34,7 +34,8 @@
         <activity android:name=".DoneDetailActivity" />
         <activity android:name=".StatusTimelineActivity" />
         <activity android:name=".AddDeviceActivity" />
-        <activity android:name=".EditDeviceActivity"></activity>
+        <activity android:name=".EditDeviceActivity" />
+        <activity android:name=".DeviceInfoActivity"></activity>
     </application>
 
 </manifest>
