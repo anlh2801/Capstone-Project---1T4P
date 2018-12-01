@@ -157,6 +157,7 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                             Intent intent = new Intent(getContext(), DeviceInfoActivity.class);
                             intent.putExtra("deviceCode", item.getDeviceCode());
                             getContext().startActivity(intent);
+                            getActivity().overridePendingTransition(R.animator.slide_up, R.animator.slide_down);
                         }
                     });
                     historyDevice.addView(v);

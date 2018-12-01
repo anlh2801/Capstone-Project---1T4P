@@ -3,8 +3,13 @@ package com.odts.models;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Device implements Serializable {
+    @SerializedName("AgencyName")
+    private String agencyName;
+    @SerializedName("DeviceTypeName")
+    private String deviceTypeName;
     @SerializedName("DeviceId")
     private Integer deviceId;
     @SerializedName("AgencyId")
@@ -35,6 +40,25 @@ public class Device implements Serializable {
     private String createDate;
     @SerializedName("UpdateDate")
     private String updateDate;
+    @SerializedName("TicketList")
+    private List<DeviceHistory_Ticket> ticketList;
+
+
+    public String getAgencyName() {
+        return agencyName;
+    }
+
+    public void setAgencyName(String agencyName) {
+        this.agencyName = agencyName;
+    }
+
+    public String getDeviceTypeName() {
+        return deviceTypeName;
+    }
+
+    public void setDeviceTypeName(String deviceTypeName) {
+        this.deviceTypeName = deviceTypeName;
+    }
 
     public Integer getDeviceId() {
         return deviceId;
@@ -154,5 +178,13 @@ public class Device implements Serializable {
 
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public List<DeviceHistory_Ticket> getTicketList() {
+        return ticketList;
+    }
+
+    public void setTicketList(List<DeviceHistory_Ticket> ticketList) {
+        this.ticketList = ticketList;
     }
 }
