@@ -644,7 +644,7 @@ namespace DataService.Models.Entities.Services
                     {
                         requestListOrderByDescending = item.RequestList.OrderByDescending(p => p.CreateDate).Where(x => x.RequestStatus == status).ToList();
                     }
-                    if (requestListOrderByDescending.Count() > 0)
+                     if (requestListOrderByDescending.Count() > 0)
                     {
                         foreach (var itemRequest in requestListOrderByDescending)
                         {
