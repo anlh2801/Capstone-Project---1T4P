@@ -47,6 +47,8 @@ namespace DataService.Domain
         ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestById(int requestId);
 
         ResponseObject<int> UpdateRequest(int requestId, int priority, int status);
+
+        ResponseObject<bool> AddDevicesForRequest(int requestId, List<int> deviceIds);
     }
 
     public  class RequestDomain : BaseDomain, IRequestDomain
@@ -231,6 +233,13 @@ namespace DataService.Domain
 
             return result;
         }
+        public ResponseObject<bool> AddDevicesForRequest(int requestId, List<int> deviceIds)
+        {
+            var requestService = this.Service<IRequestService>();
 
+            var result = requestService.AddDevicesForRequest(requestId, deviceIds);
+
+            return result;
+        }
     }
 }

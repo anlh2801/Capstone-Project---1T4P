@@ -24,6 +24,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage AcceptRequest(int itSupporterId, int requestId, bool isAccept);
         HttpResponseMessage GetRequestByRequestIdAndITSupporterId(int itSupporterId);
         HttpResponseMessage GetAgencyRequests(int agency_id);
+        HttpResponseMessage AddDevicesForRequest(int requestId, List<int> deviceIds);
     }
 
     public class RequestController : ApiController, IRequestDomain
@@ -173,6 +174,14 @@ namespace CapstoneProject_ODTS.ControllersApi
         {
             var result = _requestDomain.GetRequestById(requestId);
             
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPost]
+        [Route("request/add_device_for_request")]
+        public HttpResponseMessage AddDevicesForRequest(int requestId, List<int> deviceIds)
+        {
+            var result = _requestDomain.AddDevicesForRequest(requestId, deviceIds);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
     }

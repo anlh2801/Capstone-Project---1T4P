@@ -54,6 +54,8 @@ namespace DataService.Models.Entities.Services
         ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestById(int requestId);
 
         ResponseObject<int> UpdateRequest(int requestId, int priority, int status);
+
+        ResponseObject<bool> AddDevicesForRequest(int requestId, List<int> deviceIds);
     }
 
     public partial class RequestService
@@ -73,7 +75,7 @@ namespace DataService.Models.Entities.Services
                 }
 
                 if (companyId > 0)
-                {                    
+                {
                     requests = requests.Where(p => p.Agency.CompanyId == companyId).ToList();
                 }
 
@@ -237,8 +239,9 @@ namespace DataService.Models.Entities.Services
 
         }
 
-        
-        public ResponseObject<RequestAPIViewModel> GetRequestBytRequestId(int requestId) {
+
+        public ResponseObject<RequestAPIViewModel> GetRequestBytRequestId(int requestId)
+        {
             try
             {
                 RequestAPIViewModel rsList = new RequestAPIViewModel();
@@ -259,7 +262,7 @@ namespace DataService.Models.Entities.Services
                 return new ResponseObject<RequestAPIViewModel> { IsError = false, WarningMessage = "Lấy thành công", ObjReturn = null, ErrorMessage = e.ToString() };
             }
         }
-        
+
 
         public ResponseObject<List<RequestAPIViewModel>> GetAllRequestForMonth(int month, int year)
         {
@@ -652,7 +655,7 @@ namespace DataService.Models.Entities.Services
                     if (status == (int)RequestStatusEnum.Pending)
                     {
                         requestListOrderByDescending = item.RequestList.OrderByDescending(p => p.CreateDate).Where(x => x.RequestStatus == status
-                        || x.RequestStatus == (int)RequestStatusEnum.New).ToList();                        
+                        || x.RequestStatus == (int)RequestStatusEnum.New).ToList();
                     }
                     else if (status == (int)RequestStatusEnum.Processing)
                     {
@@ -664,7 +667,7 @@ namespace DataService.Models.Entities.Services
                     {
                         requestListOrderByDescending = item.RequestList.OrderByDescending(p => p.CreateDate).Where(x => x.RequestStatus == status).ToList();
                     }
-                     if (requestListOrderByDescending.Count() > 0)
+                    if (requestListOrderByDescending.Count() > 0)
                     {
                         foreach (var itemRequest in requestListOrderByDescending)
                         {
@@ -717,8 +720,8 @@ namespace DataService.Models.Entities.Services
                         var requestGroupMonthViewModel = new RequestGroupMonth();
                         requestGroupMonthViewModel.MonthYearGroup = $"Tháng {item.MonthSelect}/{item.YearSelect}";
                         requestGroupMonthViewModel.RequestOfITSupporter = requestList;
-                        requestListGroup.Add(requestGroupMonthViewModel); 
-                    }                    
+                        requestListGroup.Add(requestGroupMonthViewModel);
+                    }
                 }
 
                 return new ResponseObject<List<RequestGroupMonth>> { IsError = false, SuccessMessage = "Thành công", ObjReturn = requestListGroup };
@@ -895,7 +898,7 @@ namespace DataService.Models.Entities.Services
                 }
                 this.AcceptRequestFromITSupporter(itSupporterId, requestId, false);
             }
-            
+
 
             //MemoryCacher memoryCacher = new MemoryCacher();
             RedisTools redisTools = new RedisTools();
@@ -1254,9 +1257,9 @@ namespace DataService.Models.Entities.Services
                         request.RequestStatus = status;
                         request.ITSupporter.IsBusy = false;
                         request.EndTime = DateTime.UtcNow.AddHours(7);
-                        request.UpdateDate = DateTime.UtcNow.AddHours(7);                        
+                        request.UpdateDate = DateTime.UtcNow.AddHours(7);
                     }
-                    
+
                     requestRepo.Edit(request);
                     requestRepo.Save();
                     return new ResponseObject<bool> { IsError = false, SuccessMessage = "Cập nhật trạng thái thành công", ObjReturn = true };
@@ -1273,7 +1276,7 @@ namespace DataService.Models.Entities.Services
         public ResponseObject<int> SetPriority(int requestId, int priority)
         {
             try
-            {               
+            {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var request = requestRepo.GetActive().SingleOrDefault(a => a.RequestId == requestId);
                 if (request != null)
@@ -1319,9 +1322,40 @@ namespace DataService.Models.Entities.Services
             {
 
                 return new ResponseObject<int> { IsError = true, WarningMessage = "Hủy yêu cầu thất bại", ErrorMessage = e.ToString() };
-            }            
+            }
         }
 
-        
+        public ResponseObject<bool> AddDevicesForRequest(int requestId, List<int> deviceIds)
+        {
+            try
+            {
+                var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var request = requestRepo.GetActive().SingleOrDefault(a => a.RequestId == requestId);
+                if (request != null)
+                {
+                    foreach (var item in deviceIds)
+                    {
+                        var ticket = new Ticket();
+                        ticket.RequestId = requestId;
+                        ticket.DeviceId = item;
+                        var addBy = request.ITSupporter != null ? request.ITSupporter.ITSupporterName : "Admin";
+                        ticket.Desciption = $"Được Thêm bởi {addBy} vào lúc {DateTime.UtcNow.AddHours(7)} cho sự cố {request.RequestName}";
+                        ticket.CreateDate = DateTime.UtcNow.AddHours(7);
+                        ticketRepo.Add(ticket);
+                    }
+
+                    ticketRepo.Save();
+                    return new ResponseObject<bool> { IsError = false, SuccessMessage = "Thêm thiết bị thành công", ObjReturn = true };
+                }
+                return new ResponseObject<bool> { IsError = true, SuccessMessage = "Thêm thiết bị thất bại", ObjReturn = false };
+            }
+            catch (Exception e)
+            {
+                return new ResponseObject<bool> { IsError = true, SuccessMessage = "Thêm thiết bị thất bại", ObjReturn = false , ErrorMessage = e.ToString()};
+            }
+        }
+
+
     }
 }

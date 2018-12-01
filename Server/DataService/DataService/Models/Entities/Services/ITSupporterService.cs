@@ -1214,9 +1214,15 @@ namespace DataService.Models.Entities.Services
             try
             {
                 var itSupporterRepo = DependencyUtils.Resolve<IITSupporterRepository>();
+                var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
+                var request = requestRepo.GetActive().SingleOrDefault(a => a.CurrentITSupporter_Id == itsupporterId && a.RequestStatus == (int) RequestStatusEnum.Processing);
                 var itSupporter = itSupporterRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == itsupporterId);
-                if (itSupporter != null && itSupporter.IsBusy == true)
+                if (request!= null && itSupporter != null && itSupporter.IsBusy == true)
                 {
+                    request.RequestStatus = (int) RequestStatusEnum.WaitingDone;
+                    requestRepo.Edit(request);
+                    requestRepo.Save();
+
                     itSupporter.IsBusy = false;
                     itSupporterRepo.Edit(itSupporter);
                     itSupporterRepo.Save();
