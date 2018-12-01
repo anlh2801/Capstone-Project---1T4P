@@ -66,13 +66,16 @@ public class HeroFragment extends Fragment {
                 case 1:
                     frag = new DoRequestFragment();
                     break;
+                case 2:
+                    frag = new ToolFragment();
+                    break;
             }
             return frag;
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override
@@ -84,6 +87,9 @@ public class HeroFragment extends Fragment {
                     break;
                 case 1:
                     title = "Xử lý";
+                    break;
+                case 2:
+                    title = "Bộ hỗ trợ";
                     break;
 
             }
