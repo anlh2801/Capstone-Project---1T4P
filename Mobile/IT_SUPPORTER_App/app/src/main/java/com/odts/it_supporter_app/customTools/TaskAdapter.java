@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.odts.it_supporter_app.R;
 
+import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.models.RequestTask;
 import com.odts.it_supporter_app.services.TaskService;
 import com.odts.it_supporter_app.utils.CallBackData;
@@ -33,7 +34,6 @@ public class TaskAdapter extends ArrayAdapter<RequestTask> {
     TaskService taskService;
     ImageButton btnDeleteDevice;
     SmoothCheckBox smoothCheckBox;
-    RequestTask requestTask;
 
     public TaskAdapter(@NonNull Activity context, int resource, @NonNull List<RequestTask> objects) {
         super(context, resource, objects);
@@ -50,7 +50,7 @@ public class TaskAdapter extends ArrayAdapter<RequestTask> {
         smoothCheckBox = (SmoothCheckBox) row.findViewById(R.id.cbTask);
         TextView txtDeviceNameManage = (TextView) row.findViewById(R.id.txtDeviceNameManage);
         taskService = new TaskService();
-        requestTask = this.objects.get(position);
+        final RequestTask requestTask = this.objects.get(position);
         if (requestTask.getTaskStatus() == 2) {
             smoothCheckBox.setChecked(true);
         }
