@@ -83,6 +83,7 @@
     <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.vi.min.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="~/AdminLTE/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 
     <script>
         $(document).ready(function () {
@@ -249,6 +250,7 @@
      * BAR CHART
      * ---------
      */
+        var myChart;
         function loadBarChart(data) {
             var options = {
                 responsive: true,
@@ -280,11 +282,7 @@
                 }
             };
             if (data == null) {
-                swal({
-                    text: "tháng chưa có đủ dữ liệu để tạo biểu đồ.",
-                    type: 'warning',
-                    cancelButtonText: 'ok'
-                })
+                myChart.destroy();
                 new Chart(document.getElementById("bar-chart"), {
                     type: 'bar',
                     data: {
@@ -300,7 +298,7 @@
                     options: options
                 });
             }
-            else if (data!=null) {
+            else {
                 var i;
                 var arr = [];
                 for (i = 0; i < data.length; ++i) {
@@ -342,7 +340,7 @@
                     }
                 };
 
-                new Chart(document.getElementById("bar-chart"), {
+                myChart = new Chart(document.getElementById("bar-chart"), {
                     type: 'bar',
                     data: {
                         labels: arr,
