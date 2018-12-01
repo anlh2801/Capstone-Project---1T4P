@@ -38,9 +38,9 @@ namespace CapstoneProject_ODTS.Controllers
 
             return View();
         }
-        public ActionResult GetAllRequest(int companyId, int serviceItemId, string start = null, string end = null)
+        public ActionResult GetAllRequest(int companyId, int serviceItemId, int status, string start = null, string end = null)
         {
-            var result = _requestDomain.GetAllRequest(companyId, serviceItemId, start, end);
+            var result = _requestDomain.GetAllRequest(companyId, serviceItemId, status, start, end);
             
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }

@@ -17,7 +17,7 @@ namespace DataService.Models.Entities.Services
 {
     public partial interface IRequestService
     {
-        ResponseObject<List<RequestAPIViewModel>> GetAllRequest(int companyId, int serviceItemId, string start = null, string end = null);
+        ResponseObject<List<RequestAPIViewModel>> GetAllRequest(int companyId, int serviceItemId, int status, string start = null, string end = null);
 
         ResponseObject<RequestAPIViewModel> GetTicketByRequestId(int requestId);
 
@@ -58,7 +58,7 @@ namespace DataService.Models.Entities.Services
 
     public partial class RequestService
     {
-        public ResponseObject<List<RequestAPIViewModel>> GetAllRequest(int companyId, int serviceItemId, string start = null, string end = null)
+        public ResponseObject<List<RequestAPIViewModel>> GetAllRequest(int companyId, int serviceItemId, int status, string start = null, string end = null)
         {
             try
             {
@@ -82,10 +82,30 @@ namespace DataService.Models.Entities.Services
                     requests = requests.Where(p => p.ServiceItemId == serviceItemId).ToList();
                 }
 
+                if (status == (int)RequestStatusEnum.New)
+                {
+                    requests = requests.Where(p => p.RequestStatus == status).ToList();
+                }
+
+                if (status == (int)RequestStatusEnum.Processing)
+                {
+                    requests = requests.Where(p => p.RequestStatus == status || p.RequestStatus == (int)RequestStatusEnum.Pending).ToList();
+                }
+
+                if (status == (int)RequestStatusEnum.Cancel)
+                {
+                    requests = requests.Where(p => p.RequestStatus == status || p.RequestStatus == (int)RequestStatusEnum.WaitingCancel).ToList();
+                }
+
+                if (status == (int)RequestStatusEnum.Done)
+                {
+                    requests = requests.Where(p => p.RequestStatus == status || p.RequestStatus == (int)RequestStatusEnum.WaitingDone).ToList();
+                }
                 if (requests.Count <= 0)
                 {
                     return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại", ObjReturn = rsList };
                 }
+
                 int no = 1;
                 foreach (var item in requests)
                 {
