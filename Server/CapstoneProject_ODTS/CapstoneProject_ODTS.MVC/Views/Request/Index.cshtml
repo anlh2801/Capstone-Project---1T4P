@@ -370,12 +370,11 @@
         });
 
         $(function () {
-        var c = moment().format('DD/MM/YYYY');
+
             $('#reservation').daterangepicker({
-                format: 'DD/MM/YYYY',
-                startDate: moment().startOf('month').format('DD/MM/YYYY'),
-                endDate: moment().endOf('month'),
+
                 locale: {
+                    format: 'DD/MM/YYYY',
                     applyLabel: 'Chọn',
                     fromLabel: 'From',
                     toLabel: 'To',
