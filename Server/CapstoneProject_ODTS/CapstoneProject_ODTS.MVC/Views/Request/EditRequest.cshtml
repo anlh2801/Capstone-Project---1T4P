@@ -1,0 +1,236 @@
+﻿@{
+    var requestId = ViewData["ID"];
+}
+<style>
+    .city {
+        background-color: azure;
+        color: black;
+        padding: 1%;
+        border-left: solid cadetblue;
+        width: 100%;
+    }
+</style>
+
+<!-- Datatable -->
+<div class="row col-md-12">
+    <h3 class="city">Chỉnh Sửa Thông Tin Báo Cáo</h3>
+</div>
+<div class="row col-md-12">
+    <form onsubmit="updateRequest(); return false">
+        <div class="box box-success">
+            <div class="box-body">
+                <input id="idAgencyE" type="hidden" />
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary pull-right">Chỉnh Sửa</button>
+                </div>
+                <div class="col-md-6">
+                    <label>Chi Nhánh:</label>
+                    <input class="form-control" type="button" disabled="disabled" style="width: 100%;text-align: left;" id="comboAgencyE" onchange="getSers()"></input>
+                </div>
+                <div class="col-md-6">
+                    <label>Số Điện Thoại:</label>
+                    <input id="PhoneE" class="form-control" disabled="disabled" type="button" style="width: 100%;text-align: left;" required>
+                </div>
+                <div class="col-md-6" style="margin-top:10px">
+                    <label>Dịch vụ:</label>
+                    <input class="form-control" type="button" disabled="disabled" style="width: 100%;text-align: left;" id="comboSerNameE" onchange="getSerItems()"></input>
+                </div>
+                <div class="col-md-6" style="margin-top:10px">
+                    <label>Hiện tượng:</label>
+                    <input class="form-control" type="button" disabled="disabled" style="width: 99%;text-align: left;" id="comboSerItemE" onchange="getDevice()"></input>
+                </div>
+                <div class="col-md-6" style="margin-top:10px">
+                    <label>Trạng Thái:</label>
+                    <select class="form-control select2" type="button" style="width: 99%;float:right;" id="comboStatusE">
+                        <option value="0">--Chọn trạng thái--</option>
+                        <option value="5">Tạo mới</option>
+                        <option value="1">Chờ nhân viên xử lý</option>
+                        <option value="3">Hoàn thành</option>
+                    </select>
+                </div>
+                <div class="col-md-6" style="margin-top:10px">
+                    <label>Độ Ưu Tiên:</label>
+                    <select class="form-control select2" type="button" style="width: 99%;float:right;" id="comboPriorityE">
+                        <option value="0">--Chọn độ ưu tiên--</option>
+                        <option value="1">Cao</option>
+                        <option value="2">Trung bình</option>
+                        <option value="3">Thấp</option>
+                    </select>
+                </div>
+                <div class="col-md-12" style="margin-top:10px">
+                    <label>Mô Tả hiện tượng:</label>
+                    <textarea id="DescripE" class="form-control" rows="3" placeholder="Ví dụ: mất sóng wifi tầng trệt, khó truy cập..."></textarea>
+                </div>
+                <div class="col-md-12" style="margin-top:10px">
+                    <label>Thiết Bị Xảy Ra Sự Cố:</label><button type="submit" class="btn btn-primary fa fa-plus pull-right"><font face="verdana"> Thêm thiết bị vào báo cáo</button>
+                    @*<input class="form-control" type="button" style="width: 100%;text-align: left;" id="comboDevicesE">*@
+                    <table id="device-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
+                        <thead>
+                            <tr>
+                                <th><label>Mã thiết bị</label></th>
+                                <th><label>Tên thiết bị</label></th>
+                                <th><label>Xóa</label></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section scripts {
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+    <script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <script src="~/AdminLTE/bower_components/moment/min/moment.min.js"></script>
+    <script src="~/AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            getDataEdit(@requestId);
+        });
+
+        function getDataEdit(id) {
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "GetRequestById", controller = "Request" })',
+
+                data: {
+                    requestId: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $("#idAgencyE").val(id);
+                    $("#comboAgencyE").val(data.result.ObjReturn.AgencyName);
+                    $("#comboSerNameE").val(data.result.ObjReturn.RequestName);
+                    $("#comboSerItemE").val(data.result.ObjReturn.ServiceItemName);
+                    $("#comboStatusE").val(data.result.ObjReturn.RequestStatusValue);
+                    $("#comboPriorityE").val(data.result.ObjReturn.PriorityValue);
+                    var i;
+                    var devices = "";
+                    var tickets = data.result.ObjReturn.Tickets;
+                    //for (i = 0; i < tickets.length; ++i) {
+                    //    devices += tickets[i].DeviceName + ", ";
+                    //}
+                    initDatatable(tickets);
+                    $("#comboDevicesE").val(devices);
+                    $("#PhoneE").val(data.result.ObjReturn.AgencyTelephone);
+                    $("#DescripE").val(data.result.ObjReturn.RequestDesciption);
+                }
+            });
+            $('#EditModal').modal('show');
+        }
+        function updateRequest() {
+            $.ajax({
+                url: '@Url.Action("UpdateRequest", "Request")',
+                data: {
+                    requestId: $("#idAgencyE").val(),
+                    prioryty: $('#comboPriorityE').val(),
+                    status: $('#comboStatusE').val(),
+                    description: $('#DescripE').val()
+                },
+                type: 'POST',
+
+                success: function (data) {
+                    if (!data.result.isError) {
+                        $('#EditModal').modal('hide');
+                        //loadCompanyAgency();
+                        window.location.href = '@Url.Action("Index", "Request")';
+                    }
+                    else
+                        swal(data.result.WarningMessage, "", "error");
+                }
+            });
+        }
+        function initDatatable(data) {
+            $("#device-table").dataTable().fnDestroy();
+            $("#device-table").dataTable({
+                stateSave: true,
+                "bFilter": true,
+                "bSort": false,
+                "data": data,
+                "bRetrieve": true,
+                "bScrollCollapse": true,
+                "bProcessing": true,
+                "searching": false,
+                "oLanguage": {
+                    //"sSearch": "Tìm kiếm:",
+                    //"sSearchPlaceholder": "",
+                    "sZeroRecords": "Không có dữ liệu phù hợp",
+                    //"sInfo": "Hiển thị từ _START_ đến _END_ trên tổng số _TOTAL_ dòng",
+                    "sEmptyTable": "Không có dữ liệu",
+                    "sInfoFiltered": " - lọc ra từ _MAX_ dòng",
+                    "sLengthMenu": "Hiển thị _MENU_ dòng",
+                    "sProcessing": "Đang xử lý...",
+                    "oPaginate": {
+                        "sNext": "<i class='fa fa-chevron-right'></i>",
+                        "sPrevious": "<i class='fa fa-chevron-left'></i>"
+                    }
+                },
+                "aoColumnDefs": [
+                    {
+                        "aTargets": [],
+                        "bSortable": false,
+                        "sClass": "text-center",
+                    },
+
+                ],
+                "columns": [
+                    { "data": "DeviceCode" },
+                    { "data": "DeviceName" },
+                    {
+                        "aTargets": [2],
+                        "mRender": function (data, type, full) {
+                            var del = ' <button type="button" class="btn btn-danger fa fa-close" data-toggle="modal" data-target="" onclick="removeTicket(' + full.TicketId + ')"></button>';
+                            return del;
+                        }
+                    },
+                ],
+                "bAutoWidth": false,
+            });
+        }
+
+        function removeTicket(id) {
+            swal({
+                title: 'Thông Báo!',
+                text: "Bạn có Chắc Chắn Muốn Xóa Thiết Bị Này Khỏi Báo Cáo!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Quay Lại',
+                confirmButtonText: 'Chấp Nhận Hủy!'
+            }).then(function () {
+                 $.ajax({
+                type: 'GET',
+                url: '@Url.Action("DeleteTicket", "Request")',
+                data: {
+                    ticketId: id
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                     success: function (data) {
+                         if (!data.result.isError)
+                            getDataEdit(@requestId);
+                    //$('#requestStatus').val(data.result.ObjReturn.RequestStatusId);
+                }
+            });
+            });
+
+        }
+    </script>
+
+}

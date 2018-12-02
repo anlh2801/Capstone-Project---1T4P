@@ -53,7 +53,7 @@ namespace DataService.Models.Entities.Services
 
         ResponseObject<RequestAllTicketWithStatusAgencyAPIViewModel> GetRequestById(int requestId);
 
-        ResponseObject<int> UpdateRequest(int requestId, int priority, int status);
+        ResponseObject<int> UpdateRequest(int requestId, int priority, int status, string description);
 
         ResponseObject<bool> AddDevicesForRequest(int requestId, List<int> deviceIds);
     }
@@ -226,6 +226,8 @@ namespace DataService.Models.Entities.Services
                     RequestDesciption = request.RequestDesciption,
                     RequestStatusValue = request.RequestStatus,
                     PriorityValue = request.Priority ?? 0,
+                    ServiceId = request.ServiceItem.ServiceITSupportId,
+                    ServiceName = request.ServiceItem.ServiceITSupport.ServiceName,
                     Tickets = ticketList
                 };
 
@@ -1305,7 +1307,7 @@ namespace DataService.Models.Entities.Services
         }
 
 
-        public ResponseObject<int> UpdateRequest(int requestId, int priority, int status)
+        public ResponseObject<int> UpdateRequest(int requestId, int priority, int status, string description)
         {
             try
             {
@@ -1315,6 +1317,7 @@ namespace DataService.Models.Entities.Services
                 {
                     request.Priority = priority;
                     request.RequestStatus = status;
+                    request.RequestDesciption = description;
                     request.UpdateDate = DateTime.UtcNow.AddHours(7);
 
                     requestRepo.Edit(request);

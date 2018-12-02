@@ -24,6 +24,8 @@ namespace CapstoneProject_ODTS.Controllers
 
         private DeviceDomain _deviceDomain;
 
+        private TicketDomain _ticketDomain;
+
         public RequestController()
         {
             _requestDomain = new RequestDomain();
@@ -31,6 +33,7 @@ namespace CapstoneProject_ODTS.Controllers
             _serviceITSupportDomain = new ServiceITSupportDomain();
             _serviceItemDomain = new ServiceItemDomain();
             _deviceDomain = new DeviceDomain();
+            _ticketDomain = new TicketDomain();
         }
         public ActionResult Index()
         {
@@ -38,6 +41,13 @@ namespace CapstoneProject_ODTS.Controllers
 
             return View();
         }
+
+        public ActionResult EditRequest(int requestId)
+        {
+            ViewData["ID"] = requestId.ToString();
+            return View();
+        }
+
         public ActionResult GetAllRequest(int companyId, int serviceItemId, int status, string start = null, string end = null)
         {
             var result = _requestDomain.GetAllRequest(companyId, serviceItemId, status, start, end);
@@ -52,11 +62,11 @@ namespace CapstoneProject_ODTS.Controllers
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult UpdateRequest(int requestId, int prioryty, int status)
+        public ActionResult UpdateRequest(int requestId, int prioryty, int status, string description)
         {
             try
             {
-                var result = _requestDomain.UpdateRequest(requestId, prioryty, status);
+                var result = _requestDomain.UpdateRequest(requestId, prioryty, status, description);
 
                 return Json(new { result }, JsonRequestBehavior.AllowGet);
             }
@@ -205,6 +215,12 @@ namespace CapstoneProject_ODTS.Controllers
         public ActionResult ApproveRequestDone(int requestId)
         {
             var result = _requestDomain.UpdateStatusRequest(requestId, (int)RequestStatusEnum.Done);
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult DeleteTicket(int ticketId)
+        {
+            var result = _ticketDomain.DeleteTicket(ticketId);
+
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
     }

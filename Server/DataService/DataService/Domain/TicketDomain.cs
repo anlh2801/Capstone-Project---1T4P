@@ -13,6 +13,7 @@ namespace DataService.Domain
     public interface ITicketDetailDomain
     {
         ResponseObject<bool> CreateRatingForHero(RatingAPIViewModel rate);
+        ResponseObject<bool> DeleteTicket(int ticketId);
     };
 
     public class TicketDomain : BaseDomain, ITicketDetailDomain
@@ -21,6 +22,13 @@ namespace DataService.Domain
         {
             var ticketService = this.Service<ITicketService>();
             var rs = ticketService.CreateRatingForHero(rate);
+            return rs;
+        }
+
+        public ResponseObject<bool> DeleteTicket(int ticketId)
+        {
+            var ticketService = this.Service<ITicketService>();
+            var rs = ticketService.DeleteTicket(ticketId);
             return rs;
         }
     }
