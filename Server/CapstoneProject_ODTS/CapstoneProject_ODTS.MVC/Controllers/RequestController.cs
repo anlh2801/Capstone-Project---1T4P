@@ -223,5 +223,11 @@ namespace CapstoneProject_ODTS.Controllers
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult AddDevicesForRequest(int requestId, List<int> deviceIds)
+        {
+            var result = _requestDomain.AddDevicesForRequest(requestId, deviceIds);
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -10,7 +10,29 @@
         width: 100%;
     }
 </style>
-
+<div class="modal fade2" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"><b>Thêm thiết bị vào sự cố</b></h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    
+                    <div class="col-md-12" style="margin-top:10px">
+                        <label>Thiết Bị:</label>
+                        <select multiple class="form-control select2" type="button" style="width: 100%;" id="comboDevices"></select>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="addDevicesForRequest()" class="btn btn-primary">Thêm</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Datatable -->
 <div class="row col-md-12">
     <h3 class="city">Chỉnh Sửa Thông Tin Báo Cáo</h3>
@@ -20,7 +42,9 @@
         <div class="box box-success">
             <div class="box-body">
                 <input id="idAgencyE" type="hidden" />
+                <input id="ServiceIdE" type="hidden" />
                 <div class="col-md-12">
+                    <button type="button" onclick="comeBack()" class="btn btn-primary pull-right fa fa-arrow-left"><font face="verdana"> Trở lại</button>
                     <button type="submit" class="btn btn-primary pull-right">Chỉnh Sửa</button>
                 </div>
                 <div class="col-md-6">
@@ -62,7 +86,7 @@
                     <textarea id="DescripE" class="form-control" rows="3" placeholder="Ví dụ: mất sóng wifi tầng trệt, khó truy cập..."></textarea>
                 </div>
                 <div class="col-md-12" style="margin-top:10px">
-                    <label>Thiết Bị Xảy Ra Sự Cố:</label><button type="submit" class="btn btn-primary fa fa-plus pull-right"><font face="verdana"> Thêm thiết bị vào báo cáo</button>
+                    <label>Thiết Bị Xảy Ra Sự Cố:</label><button type="button" onclick="showCreateModal()" class="btn btn-primary fa fa-plus pull-right"><font face="verdana"> Thêm thiết bị vào báo cáo</button>
                     @*<input class="form-control" type="button" style="width: 100%;text-align: left;" id="comboDevicesE">*@
                     <table id="device-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
                         <thead>
@@ -100,7 +124,10 @@
         $(document).ready(function () {
             getDataEdit(@requestId);
         });
-
+        $('#comboDevices').select2({
+            dropdownParent: $('#createModal')
+        });
+        var devicesAdded = [];
         function getDataEdit(id) {
             $.ajax({
                 url: '@Url.RouteUrl(new {action = "GetRequestById", controller = "Request" })',
@@ -112,20 +139,21 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    $("#idAgencyE").val(id);
+                    $("#idAgencyE").val(data.result.ObjReturn.AgencyId);
+                    $("#ServiceIdE").val(data.result.ObjReturn.ServiceId);
                     $("#comboAgencyE").val(data.result.ObjReturn.AgencyName);
                     $("#comboSerNameE").val(data.result.ObjReturn.RequestName);
                     $("#comboSerItemE").val(data.result.ObjReturn.ServiceItemName);
                     $("#comboStatusE").val(data.result.ObjReturn.RequestStatusValue);
                     $("#comboPriorityE").val(data.result.ObjReturn.PriorityValue);
                     var i;
-                    var devices = "";
+                    
                     var tickets = data.result.ObjReturn.Tickets;
-                    //for (i = 0; i < tickets.length; ++i) {
-                    //    devices += tickets[i].DeviceName + ", ";
-                    //}
+                    for (i = 0; i < tickets.length; ++i) {
+                        devicesAdded.push(tickets[i].DeviceId);
+                    }
                     initDatatable(tickets);
-                    $("#comboDevicesE").val(devices);
+                    
                     $("#PhoneE").val(data.result.ObjReturn.AgencyTelephone);
                     $("#DescripE").val(data.result.ObjReturn.RequestDesciption);
                 }
@@ -230,6 +258,65 @@
             });
             });
 
+        }
+        function showCreateModal() {
+            $('#createModal').modal('show');
+            getDevice();
+        }
+
+        function getDevice() {            
+            $('#comboDevices')
+                .find('option')
+                        .remove()
+                        .end();
+                $.ajax({
+                type: 'GET',
+                url: '@Url.RouteUrl(new {action = "GetAllDeviceByAgencyIdAndServiceId", controller = "Request" })',
+                    data: {
+                        agencyId: $("#idAgencyE").val(),
+                        serviceId: $("#ServiceIdE").val()
+                    },
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var len = data.result.ObjReturn.length;
+                    var html = '';
+                    for (var i = 0; i < len; i++) {
+                        if (devicesAdded.indexOf(data.result.ObjReturn[i].DeviceId) <= -1) {
+                            html += '<option value="' +
+                                data.result.ObjReturn[i].DeviceId +
+                                '">' +
+                                data.result.ObjReturn[i].DeviceName +
+                                '</option>';
+                        }
+                        
+                    }
+                    $('#comboDevices').append(html);
+                }
+            });
+        }
+
+        function addDevicesForRequest() {
+            $.ajax({
+                url: '@Url.Action("AddDevicesForRequest", "Request")',
+                data: {
+                    requestId: @requestId,
+                    deviceIds: $('#comboDevices').val(),                    
+                },
+                type: 'POST',
+
+                success: function (data) {
+                    if (!data.result.isError) {
+                        $('#createModal').modal('hide');
+                         getDataEdit(@requestId);                        
+                    }
+                    else
+                        swal(data.result.WarningMessage, "", "error");
+                }
+            });
+        }
+        function comeBack() {
+            window.location.href = '@Url.Action("Index", "Request")';
         }
     </script>
 
