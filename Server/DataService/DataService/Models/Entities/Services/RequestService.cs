@@ -1149,6 +1149,8 @@ namespace DataService.Models.Entities.Services
                     AgencyId = request.AgencyId,
                     AgencyAddress = request.Agency.Address,
                     Priority = requestPriorityStatus,
+                    ServiceId = request.ServiceItem.ServiceITSupportId,
+                    ServiceName = request.ServiceItem.ServiceITSupport.ServiceName,
                     Tickets = ticketList
                 };
 
