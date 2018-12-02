@@ -254,7 +254,7 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
                 Ticket ticc = new Ticket();
                 ticc.setDeviceId(item.getDeviceId());
                 if (item.getDeviceName().equalsIgnoreCase("Chưa xác định")) {
-                    requestDes += "Unknown Device - ";
+                    requestDes += "Unknown# ";
 
                 } else {
                     ticc.setDesciption("Thuộc agencyId: " + agencyId + " thiết bị: " + item.getDeviceName() + "Vấn đề: " + requestName.toString());
