@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Request {
+
     @SerializedName("RequestId")
     private Integer requestId;
     @SerializedName("AgencyId")
@@ -12,6 +13,9 @@ public class Request {
 
     @SerializedName("AgencyName")
     private String agencyName;
+
+    @SerializedName("ServiceId")
+    private Integer serviceId;
 
     @SerializedName("RequestCategoryId")
     private Integer requestCategoryId;
@@ -69,6 +73,14 @@ public class Request {
 
     @SerializedName("Priority")
     private  String priority;
+
+    public Integer getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Integer serviceId) {
+        this.serviceId = serviceId;
+    }
 
     public String getPriority() {
         return priority;
