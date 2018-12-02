@@ -80,11 +80,52 @@ namespace DataService.CustomTools
             return result;
         }
 
+        public String SendNotificationFromFirebaseCloudForApproveRequestDone(int itSupporterId, string requestName, string agencyName, string doneAt)
+        {
+            var result = "-1";
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Headers.Add(HttpRequestHeader.Authorization, "key=" + fcmKey);
+            httpWebRequest.Method = "POST";
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {                
+                var noti = new Notification()
+                {
+                    title = $"Sự cố {requestName} đã xác nhận hoàn thành ",
+                    text = $"Xác nhận lúc: {doneAt} - Thuộc cửa hàng: {agencyName}",
+                    sound = "default"
+                };
+
+                string strNJson = ConverMessageJsonForITSupporterApproveRequestDone(itSupporterId, noti);
+                streamWriter.Write(strNJson);
+                streamWriter.Flush();
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                result = streamReader.ReadToEnd();
+            }
+            return result;
+        }
+
         public string ConverMessageJsonForITSupporterReceiveFirebaseViewModel(ITSupporterReceiveFirebaseViewModel data, Notification noti)
         {
             Dictionary<string, object> androidMessageDic = new Dictionary<string, object>();
             androidMessageDic.Add("to", $"/topics/{data.ITSupporterId}");
             androidMessageDic.Add("data", data);
+            androidMessageDic.Add("notification", noti);
+
+            return JsonConvert.SerializeObject(androidMessageDic);
+
+        }
+
+        public string ConverMessageJsonForITSupporterApproveRequestDone(int itSupporterId, Notification noti)
+        {
+            Dictionary<string, object> androidMessageDic = new Dictionary<string, object>();
+            androidMessageDic.Add("to", $"/topics/{itSupporterId}");
+            //androidMessageDic.Add("data", data);
             androidMessageDic.Add("notification", noti);
 
             return JsonConvert.SerializeObject(androidMessageDic);

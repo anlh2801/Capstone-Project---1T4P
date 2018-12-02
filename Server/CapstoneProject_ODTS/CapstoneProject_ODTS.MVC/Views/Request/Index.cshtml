@@ -626,6 +626,10 @@
                                 var details = '<span class = "label label-warning">Đợi nhân viên phản hồi</span>';
                                 return details + " " + asignHero;
                             }
+                            else if (full.StatusName === "Chờ Xác nhận hoàn thành") {
+                                var approveDone = '<button type="button" class="btn btn-success btn fa fa-check" data-toggle="modal" data-target="" onclick="approveRequestDone(' + full.RequestId + ')"></button>'
+                                return full.ITSupporterName + " " + approveDone;
+                            }
                             else {
                                 //var del = ' <button type="button" class="btn btn-danger fa fa-close" data-toggle="modal" data-target="" onclick="removeResquest(' + full.RequestId + ')"></button>';
                                 return "";
@@ -689,7 +693,8 @@
                     $('#comboAgency').append(html);
                 }
             });
-        }
+        }       
+
         function getSers() {
             var idd = $('#comboAgency').val();
             $('#idAgency').val(idd);
@@ -801,8 +806,7 @@
                 }
             });
         }
-        function asignHero(requestId) {
-            currentRequestId = requestId
+        function asignHero(requestId) {            
             $.ajax({
                 url: '@Url.RouteUrl(new {action = "FindITSupporterByRequestId", controller = "Request"})',
 
@@ -817,6 +821,27 @@
                         swal(data.result.SuccessMessage, "", "success");
                        // isWaitingHeroAccept = true;
                         //currentRequestId = requestId
+                        loadRequest();
+                        loadRequestStatistic();
+                    } else
+                        swal(data.result.WarningMessage, "", "error");
+                }
+            });
+        }
+
+        function approveRequestDone(requestId) {            
+            $.ajax({
+                url: '@Url.RouteUrl(new {action = "ApproveRequestDone", controller = "Request"})',
+
+                data: {
+                    requestId: requestId
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    if (!data.result.IsError) {
+                        swal(data.result.SuccessMessage, "", "success");                       
                         loadRequest();
                         loadRequestStatistic();
                     } else

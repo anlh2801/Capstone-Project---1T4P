@@ -200,6 +200,12 @@ namespace CapstoneProject_ODTS.Controllers
             var result = _deviceDomain.ViewAllDeviceByAgencyIdAndServiceId(agencyId, serviceId);
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }        
+
+        public ActionResult ApproveRequestDone(int requestId)
+        {
+            var result = _requestDomain.UpdateStatusRequest(requestId, (int)RequestStatusEnum.Done);
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
     }
 }

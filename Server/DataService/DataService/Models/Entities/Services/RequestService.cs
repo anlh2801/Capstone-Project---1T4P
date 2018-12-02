@@ -783,7 +783,11 @@ namespace DataService.Models.Entities.Services
                         request.RequestStatus = status;
                         request.ITSupporter.IsBusy = false;
                         request.EndTime = DateTime.UtcNow.AddHours(7);
-                        request.UpdateDate = DateTime.UtcNow.AddHours(7);
+                        var now = DateTime.UtcNow.AddHours(7);
+                        request.UpdateDate = now;
+
+                        FirebaseService firebaseService = new FirebaseService();
+                        firebaseService.SendNotificationFromFirebaseCloudForApproveRequestDone(request.CurrentITSupporter_Id.Value, request.RequestName, request.Agency.AgencyName, now.ToString("dd/MM/yyyyy"));
                         //foreach (var item in request.Tickets)
                         //{
                         //    item.Current_TicketStatus = (int)TicketStatusEnum.Done;
