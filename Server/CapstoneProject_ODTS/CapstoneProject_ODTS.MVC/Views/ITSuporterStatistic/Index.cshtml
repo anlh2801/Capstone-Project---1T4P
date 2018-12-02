@@ -44,12 +44,18 @@
         </div>
     </div>
     <div class="col-md-12" style="margin-top:10px;">
-        <div style="width:500px; height:60px;float:right;">
+        <div style="width:500px; height:60px;float:left;">
             <h4 id="showSTTName" style="margin-bottom:10px;float:right;"></h4>
             <div>
                 <button type="button" class="btn btn-primary fa fa-eye" style="display: inline-block;height:36px;margin-left:10px;float:right;" onclick="beginStatisticITS()"><font face="verdana"> Xem Thống Kê</button>
             </div>
-            <input type="button" style="float: left;width:200px;display: inline-block;height:35px;border:solid 1px blue;text-align:left;float:right;" id="pickMonth" class="form-control" required>
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </div>
+                <input type="button" id="pickMonth" class="form-control">
+            </div>
+            @*<input type="button" style="float: left;width:200px;display: inline-block;height:35px;border:solid 1px blue;text-align:left;float:right;" id="pickMonth" class="form-control" required>*@
         </div>
     </div>
     <div class="row col-md-12" style="margin-left: 0.2%;margin-top:30px;">
@@ -58,7 +64,8 @@
                 <tr>
                     <th><label>STT</label></th>
                     <th><label>Tên Nhân Viên</label></th>
-                    <th><label>Số Lần Hỗ Trợ</label></th>
+                    <th><label>Số giờ/Dịch Vụ</label></th>
+                    <th><label>Tổng Số Lần Hỗ Trợ</label></th>
                     <th><label>Số lần Hủy</label></th>
                     <th><label>Thời Gian Hỗ Trợ</label></th>
                 </tr>
@@ -154,7 +161,7 @@
                      month: monthdataD
                     },
                     success: function (result) {
-                        
+
                         var r = result.totalReject;
                         var s = result.totalSupport;
                         loadDoughnutChart(s,r);
@@ -168,7 +175,7 @@
                     }
             });
         }
-         
+
          function initDatatable(data) {
             if (data == null) {
                 $('#detail-table').dataTable().fnClearTable();
@@ -206,6 +213,20 @@
                 "columns": [
                     { "data": "No" },
                     { "data": "ITSupporterName" },
+                    {
+
+                        "aTargets": [2],
+                             "mRender": function (data, type, full) {
+                                 var getData = full.TotalTimeEveryService;
+                                 var rs = "";
+                                 var i;
+                                 for (i = 0; i < getData.length; i++) {
+                                     rs = rs + getData[i].SupportTimeByHour + " / " + getData[i].ServiceName + "<br/>"
+                                 }
+                                 return rs;
+                        }
+
+                    },
                     { "data": "SupportTimeInMonth" },
                     { "data": "TotalRejectTime" },
                     { "data": "TotalTimeSupport" },
@@ -406,7 +427,7 @@
             }
         }
         function loadITSupEdit(monthloadITSup, yeardloadITSup) {
-            
+
             $.ajax({
                     type: 'GET',
 
@@ -450,7 +471,7 @@
                      month: monthdataD
                     },
                     success: function (result) {
-                        
+
                         var r = result.totalReject;
                         var s = result.totalSupport;
                         loadDoughnutChart(s,r);
