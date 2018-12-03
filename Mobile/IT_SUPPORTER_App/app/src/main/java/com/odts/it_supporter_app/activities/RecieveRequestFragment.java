@@ -122,8 +122,8 @@ public class RecieveRequestFragment extends Fragment {
             agencyName.setText(share2.getString("AgencyName", "").toString());
             agencyAddress.setText(share2.getString("AgencyAddress", "").toString());
             ticketInfo.setText(share2.getString("TicketsInfo", "").toString());
-            builder
-                    .setMessage("Bạn có nhận việc không?");
+//            builder
+//                    .setMessage("Bạn có nhận việc không?");
 //                    .setPositiveButton("Có", new DialogInterface.OnClickListener() {
 //                        @Override
 //                        public void onClick(DialogInterface dialog, int id) {

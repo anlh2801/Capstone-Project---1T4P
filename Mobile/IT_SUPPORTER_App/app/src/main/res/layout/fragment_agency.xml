@@ -224,7 +224,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:layout_marginLeft="10dp"
-                                    android:text="Thiết bị xảy ra sự cố: "
+                                    android:text="Thiết bị: "
                                     android:textStyle="bold" />
 
                                 <TextView

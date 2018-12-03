@@ -165,7 +165,7 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                 });
 
                 int numberDeviceString = request.getTicket().size();
-                numberDevice.setText(String.valueOf(numberDeviceString));
+
                 agencyName.setText(request.getAgencyName());
                 //rqName.setText(request.getRequestName());
 
@@ -183,7 +183,15 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                 createDate.setText(request.getCreateDate());
                 txtPhoneAgency.setText(request.getPhoneNumber());
                 txtAddressAgency.setText(request.getAgencyAddress());
-                descriptionAgencyInfo.setText(request.getRequestDesciption());
+                String requesDes = request.getRequestDesciption();
+                if(request.getRequestDesciption().contains("Unknown#")) {
+                    String finalDes = requesDes.replace("Unknown#", "");
+                    descriptionAgencyInfo.setText(finalDes);
+                    numberDevice.setText(String.valueOf(numberDeviceString) + " thiết bị và 1 chưa xác định");
+                } else {
+                    descriptionAgencyInfo.setText(requesDes);
+                    numberDevice.setText(String.valueOf(numberDeviceString) + " thiết bị");
+                }
                 requestId = request.getRequestId();
                 serviceItemId = request.getServiceItemId();
                 serviceItemName = request.getServiceItemName();
