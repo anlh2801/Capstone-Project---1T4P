@@ -179,6 +179,21 @@ public class ITSupporterService {
         }));
     }
 
+    public void viewITsupporterStatisticToday(final Context context, int itsupporter_id, final CallBackData<ITSupporterStatistic> callBackData) {
+        iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
+        Call<ResponseObject<ITSupporterStatistic>> call = iitSupporterApiCaller.viewITsupporterStatisticToday(itsupporter_id);
+        call.enqueue((new Callback<ResponseObject<ITSupporterStatistic>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<ITSupporterStatistic>> call, Response<ResponseObject<ITSupporterStatistic>> response) {
+                callBackData.onSuccess(response.body().getObjReturn());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<ITSupporterStatistic>> call, Throwable t) {
+            }
+        }));
+    }
+
     public void viewAllFeedback(final Context context, int itsupporter_id, final CallBackData<ArrayList<RequestGroupMonth>> callBackData) {
         iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
         Call<ResponseObjectReturnList<RequestGroupMonth>> call = iitSupporterApiCaller.viewAllFeedback(itsupporter_id);
