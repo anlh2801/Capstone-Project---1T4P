@@ -15,11 +15,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.abdeveloper.library.MultiSelectDialog;
+import com.abdeveloper.library.MultiSelectModel;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.odts.it_supporter_app.R;
 import com.odts.it_supporter_app.apiCaller.DeviceAdapter;
@@ -27,6 +32,7 @@ import com.odts.it_supporter_app.models.Device;
 import com.odts.it_supporter_app.models.DeviceHistory_Ticket;
 import com.odts.it_supporter_app.models.Request;
 import com.odts.it_supporter_app.models.Ticket;
+import com.odts.it_supporter_app.services.DeviceService;
 import com.odts.it_supporter_app.services.ITSupporterService;
 import com.odts.it_supporter_app.services.RequestService;
 import com.odts.it_supporter_app.utils.CallBackData;
@@ -52,8 +58,10 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
     Integer serviceItemId = 0;
     RequestService requestService;
     LinearLayout historyAgency, historyDevice;
-    DeviceAdapter deviceAdapter;
-    com.getbase.floatingactionbutton.FloatingActionButton btnCall, btnChat;
+    FloatingActionButton btnCall, btnChat;
+    DeviceService deviceService;
+    MultiSelectDialog multiSelectDialog;
+    ArrayList<Device> listTicket;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,8 +74,8 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_agency, container, false);
+        final ImageButton addDevice = v.findViewById(R.id.addDevice);
         final TextView agencyName = v.findViewById(R.id.AgencyNameAgencyDetail);
-        //final TextView rqName = (TextView) v.findViewById(R.id.txtRequestName);
         final TextView priority = v.findViewById(R.id.PriorityAgencyDetail);
         final TextView txtserviceItem = v.findViewById(R.id.ServiceItemAgencyDetail);
         final TextView createDate = v.findViewById(R.id.CreateDateAgencyDetail);
@@ -76,36 +84,82 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
         final TextView numberDevice = v.findViewById(R.id.numberDevice);
         final TextView descriptionAgencyInfo = v.findViewById(R.id.DescriptionAgencyInfo);
 //        final ImageButton deviceDetail = v.findViewById(R.id.imageButton4);
+
         btnCall = v.findViewById(R.id.action_a);
         btnChat = v.findViewById(R.id.action_b);
         final FloatingActionsMenu menu = v.findViewById(R.id.multiple_actions);
         historyAgency = v.findViewById(R.id.HistoryAgency);
         historyDevice = v.findViewById(R.id.historyDevice);
         menu.bringToFront();
-
-        //ImageButton scan = v.findViewById(R.id.imageButton3);
-//        scan.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ScanDeviceFragment scanDeviceFragment = new ScanDeviceFragment();
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                transaction.setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left, R.animator.enter_from_left, R.animator.exit_to_right);
-//                transaction.replace(R.id.fmHome, scanDeviceFragment);
-//                transaction.addToBackStack(null);
-//                transaction.commit();
-//            }
-//        });
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         SharedPreferences.Editor edit = share.edit();
         final int itSupporterId = share.getInt("itSupporterId", 0);
         requestService = new RequestService();
+        deviceService = new DeviceService();
+        final ArrayList<MultiSelectModel> listDevices = new ArrayList<>();
         requestService.getRequestByRequestIdAndITSupporterId(getActivity(), itSupporterId, new CallBackData<Request>() {
             @Override
             public void onSuccess(final Request request) {
+                requestId = request.getRequestId();
+                serviceItemId = request.getServiceItemId();
+                serviceItemName = request.getServiceItemName();
+                addDevice.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        deviceService.getAllDeviceByAgencyIdAndServiceItem(getActivity(), request.getAgencyId(), request.getServiceId(), new CallBackData<ArrayList<Device>>() {
+                            @Override
+                            public void onSuccess(ArrayList<Device> devices) {
+                                for (int i = 0; i < devices.size(); i++) {
+                                    listDevices.add(new MultiSelectModel(devices.get(i).getDeviceId(), devices.get(i).getDeviceName()));
+                                }
+                                final ArrayList<Integer> alreadyTickets = new ArrayList<>();
+                                multiSelectDialog = new MultiSelectDialog()
+                                        .title("Thiết bị") //setting title for dialog
+                                        .titleSize(25)
+                                        .positiveText("Chấp nhận")
+                                        .negativeText("Hủy")
+                                        .setMinSelectionLimit(0)
+                                        .setMaxSelectionLimit(listDevices.size())
+                                        .preSelectIDsList(alreadyTickets) //List of ids that you need to be selected
+                                        .multiSelectList(listDevices) // the multi select model list with ids and name
+                                        .onSubmit(new MultiSelectDialog.SubmitCallbackListener() {
+                                            @Override
+                                            public void onSelected(final ArrayList<Integer> selectedIds, final ArrayList<String> selectedNames, String dataString) {
+
+                                                deviceService.addDeviceForRequest(getActivity(), requestId, selectedIds, new CallBackData<Boolean>() {
+                                                    @Override
+                                                    public void onSuccess(Boolean aBoolean) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onFail(String message) {
+
+                                                    }
+                                                });
+                                            }
+
+                                            @Override
+                                            public void onCancel() {
+
+                                            }
+                                        });
+                                multiSelectDialog.show(getActivity().getSupportFragmentManager(), "multiSelectDialog");
+                            }
+
+                            @Override
+                            public void onFail(String message) {
+
+                            }
+                        });
+                    }
+                });
+
                 int numberDeviceString = request.getTicket().size();
                 numberDevice.setText(String.valueOf(numberDeviceString));
                 agencyName.setText(request.getAgencyName());
                 //rqName.setText(request.getRequestName());
+
                 if (request.getPriority().equalsIgnoreCase("Xử lý gấp")) {
                     priority.setText(request.getPriority());
                     priority.setTextColor(Color.parseColor("#C62828"));
@@ -116,6 +170,7 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                     priority.setText(request.getPriority());
                     priority.setTextColor(Color.parseColor("#2E7D32"));
                 }
+
                 createDate.setText(request.getCreateDate());
                 txtPhoneAgency.setText(request.getPhoneNumber());
                 txtAddressAgency.setText(request.getAgencyAddress());
@@ -167,8 +222,6 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                 requestService.getRequestHistoryByAgency(getActivity(), request.getAgencyId(), new CallBackData<ArrayList<Request>>() {
                     @Override
                     public void onSuccess(ArrayList<Request> requests) {
-
-
                         for (Request item : requests) {
                             View v1 = getLayoutInflater().inflate(R.layout.device_history_item, null);
                             TextView txtHienTuong = (TextView) v1.findViewById(R.id.txtHienTuong);
@@ -178,33 +231,11 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                             historyAgency.addView(v1);
                         }
                     }
-
                     @Override
                     public void onFail(String message) {
 
                     }
                 });
-
-//                deviceDetail.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//
-//                        List<Device> listDevices = new ArrayList<>();
-//                        View v = getLayoutInflater().inflate(R.layout.agency_detail, null);
-//                        ListView listViewDeviceC = (ListView) v.findViewById(R.id.listDevice);
-//                        for (Ticket item : request.getTicket()) {
-//
-//                            Device device = new Device();
-//                            device.setDeviceId(item.getDeviceId());
-//                            device.setDeviceName(item.getDeviceName());
-//                            device.setDeviceCode(item.getDeviceCode());
-//                            listDevices.add(device);
-//                        }
-//                        deviceAdapter = new DeviceAdapter(getActivity(), R.layout.device_item, listDevices);
-//                        listViewDeviceC.setAdapter(deviceAdapter);
-//                    }
-//                });
-
             }
 
             @Override
