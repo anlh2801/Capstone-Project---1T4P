@@ -30,7 +30,7 @@ namespace DataService.Models.Entities.Services
                 if (request != null)
                 {
                     var itupporter = itSupporterlRepo.Get(request.CurrentITSupporter_Id);
-                    var requestRating = requestRepo.GetActive(p => p.CurrentITSupporter_Id == itupporter.ITSupporterId && p.Rating != null).ToList();
+                    
                     if (request != null && itupporter != null)
                     {
                         request.Rating = rate.Rating;
@@ -38,9 +38,11 @@ namespace DataService.Models.Entities.Services
                         request.UpdateDate = DateTime.UtcNow.AddHours(7);
                         requestRepo.Edit(request);
                         requestRepo.Save();
-
+                        var requestRating = requestRepo.GetActive(p => p.CurrentITSupporter_Id == itupporter.ITSupporterId && p.Rating != null).ToList();
                         //itupporter.RatingAVG = itupporter.RatingAVG != null && itupporter.RatingAVG != 0 ? (itupporter.RatingAVG + rate.Rating) / 2 : rate.Rating;
-                        itupporter.RatingAVG = requestRating.Sum(r => r.Rating) / requestRating.Count();
+                        var sumRating = (double) requestRating.Sum(r => r.Rating);
+                        int countRating = requestRating.Count();
+                        itupporter.RatingAVG = Math.Round((sumRating / countRating), 1);
                         itupporter.UpdateDate = DateTime.UtcNow.AddHours(7);
                         itSupporterlRepo.Edit(itupporter);
                         itSupporterlRepo.Save();
