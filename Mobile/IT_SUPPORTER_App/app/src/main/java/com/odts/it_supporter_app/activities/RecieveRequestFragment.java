@@ -14,9 +14,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -45,21 +48,12 @@ import java.util.TimerTask;
 
 public class RecieveRequestFragment extends Fragment {
     private ITSupporterService _itSupporterService;
-    Boolean rs;
     Integer itSupporterId = 0;
     Integer requestId = 0;
-    Switch swStatus;
-    Button btnReject;
-    Button btnAccept;
-    TextView txtAgencyAddressRecieveRequest;
-    TextView txtAgencyNameRecieveRequest;
-    TextView txtRequestNameRecieveRequest;
-    TextView txtTicketInfoRecieveRequest;
     TextView txtTotalTimes, txtTotalTime;
     ListView lvRequestGroup;
     SharedPreferences share;
     SharedPreferences share2;
-    SharedPreferences shareRequest;
 
     public RecieveRequestFragment() {
         _itSupporterService = new ITSupporterService();
@@ -76,6 +70,9 @@ public class RecieveRequestFragment extends Fragment {
 //        txtRequestNameRecieveRequest = (TextView) v.findViewById(R.id.txtRequestNameRecieveRequest);
 //        txtTicketInfoRecieveRequest = (TextView) v.findViewById(R.id.txtTicketInfoRecieveRequest);
 
+//        ImageView imageView = (ImageView) v.findViewById(R.id.imageView15);
+//        Animation animFade = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.rotate);
+//        imageView.startAnimation(animFade);
 
         share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         share2 = getActivity().getApplicationContext().getSharedPreferences("firebaseData", Context.MODE_PRIVATE);

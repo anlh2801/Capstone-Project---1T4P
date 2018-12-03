@@ -3,6 +3,7 @@ package com.odts.it_supporter_app.activities;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -77,6 +78,7 @@ public class DoRequestFragment extends Fragment {
     RequestService _requestService;
     TaskService _taskService;
     ListView listView;
+    SharedPreferences share2;
 
 
     public DoRequestFragment() {
@@ -95,6 +97,7 @@ public class DoRequestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_do_request, container, false);
+        share2 = getActivity().getApplicationContext().getSharedPreferences("firebaseData", Context.MODE_PRIVATE);
         segmentedGroup = v.findViewById(R.id.segmented3);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         listView = (ListView) v.findViewById(R.id.listTask);
@@ -266,6 +269,8 @@ public class DoRequestFragment extends Fragment {
                                         map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
                                         reference1.push().setValue(map);
                                         itSupporterService.updateBusyIT(getContext(), itSupporterId);
+                                        SharedPreferences.Editor editor2 = share2.edit();
+                                        editor2.clear().commit();
                                         Intent intent = new Intent(getContext(), MainActivity.class);
                                         intent.putExtra("done", "done");
                                         startActivity(intent);

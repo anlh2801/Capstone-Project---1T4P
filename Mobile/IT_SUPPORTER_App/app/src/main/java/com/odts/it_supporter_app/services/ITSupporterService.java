@@ -38,7 +38,7 @@ public class ITSupporterService {
             @Override
             public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
                 if (!response.body().isError()) {
-                    callBackData.onSuccess(response.body().isError());
+                    callBackData.onSuccess(response.body().getObjReturn());
                 } else {
                 }
 

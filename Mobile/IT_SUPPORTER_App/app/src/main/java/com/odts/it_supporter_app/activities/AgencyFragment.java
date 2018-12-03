@@ -137,7 +137,8 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                                                 deviceService.addDeviceForRequest(getActivity(), requestId, selectedIds, new CallBackData<Boolean>() {
                                                     @Override
                                                     public void onSuccess(Boolean aBoolean) {
-
+                                                        getActivity().finish();
+                                                        startActivity(getActivity().getIntent());
                                                     }
 
                                                     @Override
