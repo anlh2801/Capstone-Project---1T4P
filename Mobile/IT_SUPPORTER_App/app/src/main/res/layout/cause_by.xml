@@ -75,7 +75,7 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/edittextAnother"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"

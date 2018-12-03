@@ -19,10 +19,11 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface IITSupporterApiCaller {
-    @PUT("request/accept_request/{itSupporterId}/{requestId}/{isAccept}")
+    @PUT("request/accept_request/{itSupporterId}/{requestId}/{isAccept}/{des}")
     Call<ResponseObject<Boolean>> acceptRequest(@Path("itSupporterId") int itSupporterId,
                                              @Path("requestId") int requestId,
-                                             @Path("isAccept") boolean isAccept);
+                                             @Path("isAccept") boolean isAccept,
+                                                @Path("des") String des);
 
     @POST("ITsupporter/update_status_it")
     Call<ResponseObject<Boolean>> updateStatusIt(@Query("itsupporter_id") int itsupporter_id,

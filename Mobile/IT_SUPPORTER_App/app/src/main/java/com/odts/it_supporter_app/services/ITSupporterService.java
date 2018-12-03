@@ -31,9 +31,9 @@ import retrofit2.Response;
 public class ITSupporterService {
     IITSupporterApiCaller iitSupporterApiCaller;
 
-    public void acceptRequest(final Context context, int requestId, int itSupporterId, boolean isAccept, final CallBackData<Boolean> callBackData) {
+    public void acceptRequest(final Context context, int requestId, int itSupporterId, boolean isAccept, String des, final CallBackData<Boolean> callBackData) {
         iitSupporterApiCaller = RetrofitInstance.getITSupporterService();
-        Call<ResponseObject<Boolean>> call = iitSupporterApiCaller.acceptRequest(itSupporterId, requestId, isAccept);
+        Call<ResponseObject<Boolean>> call = iitSupporterApiCaller.acceptRequest(itSupporterId, requestId, isAccept, des);
         call.enqueue(new Callback<ResponseObject<Boolean>>() {
             @Override
             public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {

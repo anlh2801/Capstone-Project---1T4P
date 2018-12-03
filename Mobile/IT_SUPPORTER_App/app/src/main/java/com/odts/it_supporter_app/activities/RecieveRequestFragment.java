@@ -149,7 +149,7 @@ public class RecieveRequestFragment extends Fragment {
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getAllServiceITSupportForAgency(true);
+                    getAllServiceITSupportForAgency(true, "Accepted");
                     dlg.dismiss();
                     Firebase.setAndroidContext(getActivity());
                     Firebase reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" + requestId);
@@ -163,31 +163,42 @@ public class RecieveRequestFragment extends Fragment {
             rejectButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getAllServiceITSupportForAgency(false);
+//                    getAllServiceITSupportForAgency(false, "Time out");
                     dlg.dismiss();
                     LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getContext());
                     View mView = layoutInflaterAndroid.inflate(R.layout.cause_by, null);
                     android.support.v7.app.AlertDialog.Builder alertDialogBuilderUserInput = new android.support.v7.app.AlertDialog.Builder(getContext());
                     alertDialogBuilderUserInput.setView(mView);
-                    RadioButton rd1 = mView.findViewById(R.id.radioButton1);
+                    final EditText edittextAnother = mView.findViewById(R.id.edittextAnother);
+                    final RadioButton rd1 = mView.findViewById(R.id.radioButton1);
                     rd1.setText("Đang ốm");
-                    RadioButton rd2 = mView.findViewById(R.id.radioButton2);
+                    final RadioButton rd2 = mView.findViewById(R.id.radioButton2);
                     rd2.setText("Chuyện gia đình");
-                    RadioButton rd3 = mView.findViewById(R.id.radioButton3);
+                    final RadioButton rd3 = mView.findViewById(R.id.radioButton3);
                     rd3.setText("Xe hỏng");
-                    RadioButton rd4 = mView.findViewById(R.id.radioButton4);
+                    final RadioButton rd4 = mView.findViewById(R.id.radioButton4);
                     rd4.setText("Khác");
                     alertDialogBuilderUserInput
                             .setCancelable(false)
                             .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
                                 public void onClick(final DialogInterface dialogBox, int id) {
                                     // ToDo get user input here
-
+//                                    getAllServiceITSupportForAgency(false, "Timeout");
+                                    if (rd1.isChecked()) {
+                                        getAllServiceITSupportForAgency(false, rd1.getText().toString());
+                                    } else if (rd2.isChecked()) {
+                                        getAllServiceITSupportForAgency(false, rd2.getText().toString());
+                                    } else if (rd3.isChecked()) {
+                                        getAllServiceITSupportForAgency(false, rd3.getText().toString());
+                                    } else {
+                                        getAllServiceITSupportForAgency(false, edittextAnother.getText().toString());
+                                    }
                                 }
                             })
                             .setNegativeButton("Đóng",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialogBox, int id) {
+                                            getAllServiceITSupportForAgency(false, "Nothing");
                                             dialogBox.cancel();
                                         }
                                     });
@@ -196,7 +207,7 @@ public class RecieveRequestFragment extends Fragment {
                     alertDialogAndroid.show();
                 }
             });
-            new CountDownTimer(10000, 1000) {
+            new CountDownTimer(20000, 1000) {
 
                 public void onTick(long millisUntilFinished) {
                     acceptButton.setText("Chấp nhận: " + millisUntilFinished / 1000);
@@ -204,7 +215,7 @@ public class RecieveRequestFragment extends Fragment {
 
                 public void onFinish() {
                     acceptButton.setText("Hết thời gian!");
-                    getAllServiceITSupportForAgency(false);
+                    getAllServiceITSupportForAgency(false, "Timeout");
                     dlg.dismiss();
                 }
             }.start();
@@ -234,8 +245,8 @@ public class RecieveRequestFragment extends Fragment {
     }
 
 
-    private void getAllServiceITSupportForAgency(final boolean isAccept) {
-        _itSupporterService.acceptRequest(getActivity(), requestId, itSupporterId, isAccept, new CallBackData<Boolean>() {
+    private void getAllServiceITSupportForAgency(final boolean isAccept, String des) {
+        _itSupporterService.acceptRequest(getActivity(), requestId, itSupporterId, isAccept, des, new CallBackData<Boolean>() {
             @Override
             public void onSuccess(Boolean aBoolean) {
                 SharedPreferences.Editor editor2 = share2.edit();
