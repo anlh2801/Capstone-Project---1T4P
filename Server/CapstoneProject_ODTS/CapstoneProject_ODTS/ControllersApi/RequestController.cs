@@ -21,7 +21,7 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage FeedbackTicket(FeedbackAPIViewModel feedback);
         HttpResponseMessage UpdateStatusRequest(int request_id, int status);
         HttpResponseMessage ViewRequestDetail(int requestId);
-        HttpResponseMessage AcceptRequest(int itSupporterId, int requestId, bool isAccept);
+        HttpResponseMessage AcceptRequest(int itSupporterId, int requestId, bool isAccept, string des = null);
         HttpResponseMessage GetRequestByRequestIdAndITSupporterId(int itSupporterId);
         HttpResponseMessage GetAgencyRequests(int agency_id);
         HttpResponseMessage AddDevicesForRequest(int requestId, List<int> deviceIds);
@@ -140,10 +140,10 @@ namespace CapstoneProject_ODTS.ControllersApi
         }
 
         [HttpPut]
-        [Route("request/accept_request/{itSupporterId}/{requestId}/{isAccept}")]
-        public HttpResponseMessage AcceptRequest(int itSupporterId, int requestId, bool isAccept)
+        [Route("request/accept_request/{itSupporterId}/{requestId}/{isAccept}/{des?}")]
+        public HttpResponseMessage AcceptRequest(int itSupporterId, int requestId, bool isAccept, string des = null)
         {
-            var result = _requestDomain.AcceptRequestFromITSupporter(itSupporterId, requestId, isAccept);
+            var result = _requestDomain.AcceptRequestFromITSupporter(itSupporterId, requestId, isAccept, des);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
