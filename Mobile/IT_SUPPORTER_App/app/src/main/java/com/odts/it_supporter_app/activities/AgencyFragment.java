@@ -160,10 +160,10 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                 agencyName.setText(request.getAgencyName());
                 //rqName.setText(request.getRequestName());
 
-                if (request.getPriority().equalsIgnoreCase("Xử lý gấp")) {
+                if (request.getPriority().equalsIgnoreCase("Cao")) {
                     priority.setText(request.getPriority());
                     priority.setTextColor(Color.parseColor("#C62828"));
-                } else if (request.getPriority().equalsIgnoreCase("Cần xử lý")) {
+                } else if (request.getPriority().equalsIgnoreCase("Trung Bình")) {
                     priority.setText(request.getPriority());
                     priority.setTextColor(Color.parseColor("#F9A825"));
                 } else {
