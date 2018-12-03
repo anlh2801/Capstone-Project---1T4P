@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Switch;
@@ -165,6 +167,39 @@ public class RecieveRequestFragment extends Fragment {
                 public void onClick(View view) {
                     getAllServiceITSupportForAgency(false);
                     dlg.dismiss();
+                    LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getContext());
+                    View mView = layoutInflaterAndroid.inflate(R.layout.cause_by, null);
+                    android.support.v7.app.AlertDialog.Builder alertDialogBuilderUserInput = new android.support.v7.app.AlertDialog.Builder(getContext());
+                    alertDialogBuilderUserInput.setView(mView);
+
+                    final TextView tv1 = (TextView) mView.findViewById(R.id.textView4);
+                    tv1.setPaintFlags(tv1.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+                    TextView tv2 = (TextView) mView.findViewById(R.id.textView4);
+                    tv2.setPaintFlags(tv2.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+                    TextView tv3 = (TextView) mView.findViewById(R.id.textView4);
+                    tv3.setPaintFlags(tv3.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+                    alertDialogBuilderUserInput
+                            .setCancelable(false)
+                            .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
+                                public void onClick(final DialogInterface dialogBox, int id) {
+                                    // ToDo get user input here
+                                    tv1.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            dialogBox.cancel();
+                                        }
+                                    });
+                                }
+                            })
+                            .setNegativeButton("Đóng",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialogBox, int id) {
+                                            dialogBox.cancel();
+                                        }
+                                    });
+
+                    android.support.v7.app.AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+                    alertDialogAndroid.show();
                 }
             });
             new CountDownTimer(10000, 1000) {
