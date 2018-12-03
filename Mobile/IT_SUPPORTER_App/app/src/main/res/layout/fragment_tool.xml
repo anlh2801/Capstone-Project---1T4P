@@ -9,37 +9,38 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
             android:text="Các việc cần làm"
             android:textColor="@color/colorAccent"
             android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/segmented3" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/addMoreTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="8dp"
             android:background="@null"
             android:src="@drawable/ic_add_box_black_32dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.95"
             app:layout_constraintStart_toEndOf="@+id/textView3"
-            app:layout_constraintTop_toBottomOf="@+id/segmented3" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ListView
             android:id="@+id/listTask"
             android:layout_width="330dp"
-            android:layout_height="321dp"
+            android:layout_height="425dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,8 +50,8 @@
             android:id="@+id/fabGuideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="88dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginBottom="24dp"
             android:clickable="true"
             android:src="@drawable/ic_lightbulb_outline_dedede_32dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -60,8 +61,9 @@
             android:id="@+id/ibScan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="76dp"
-            android:layout_marginStart="72dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginBottom="32dp"
+            android:background="@null"
             android:src="@drawable/qr_code"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

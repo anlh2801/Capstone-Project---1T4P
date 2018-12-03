@@ -70,7 +70,7 @@ public class TaskService {
             @Override
             public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
                 if (!response.body().isError()) {
-                    Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
                     if (response.body().getObjReturn() != false) {
                         callBackData.onSuccess(response.body().getObjReturn());
                     }
