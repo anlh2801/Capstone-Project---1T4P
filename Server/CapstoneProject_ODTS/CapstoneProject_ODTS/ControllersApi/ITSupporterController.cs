@@ -57,6 +57,8 @@ namespace CapstoneProject_ODTS.ControllersApi
         HttpResponseMessage GetDeviceDetailByDeviceCode(string devcieCode);
 
         HttpResponseMessage GetTaskByRequestTaskId(int taskId);
+
+        HttpResponseMessage ITSuppoterStatisticToday(int itsupporterId);
     }
 
     public class ITSupporterController : ApiController, IITSupporterController
@@ -233,6 +235,15 @@ namespace CapstoneProject_ODTS.ControllersApi
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        [HttpGet]
+        [Route("ITsupporter/view_itsupporter_statistic_today")]
+        public HttpResponseMessage ITSuppoterStatisticToday(int itsupporterId)
+        {
+            var result = _ITSupporterDomain.ITSuppoterStatisticToday(itsupporterId);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+        
         [HttpPost]
         [Route("ITsupporter/update_status_it")]
         public HttpResponseMessage UpdateStatusIT(int itsupporter_id, bool isOnline)

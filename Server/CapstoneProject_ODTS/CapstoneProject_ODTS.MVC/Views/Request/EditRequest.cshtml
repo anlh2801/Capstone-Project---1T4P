@@ -164,7 +164,7 @@
             $.ajax({
                 url: '@Url.Action("UpdateRequest", "Request")',
                 data: {
-                    requestId: $("#idAgencyE").val(),
+                    requestId: @requestId,
                     prioryty: $('#comboPriorityE').val(),
                     status: $('#comboStatusE').val(),
                     description: $('#DescripE').val()

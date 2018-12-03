@@ -82,6 +82,9 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
         final TextView txtAddressAgency = v.findViewById(R.id.AgencyAdressAgencuDetails);
         final TextView txtPhoneAgency = v.findViewById(R.id.AgencyPhoneAgencuDetails);
         final TextView numberDevice = v.findViewById(R.id.numberDevice);
+        final TextView descriptionAgencyInfo = v.findViewById(R.id.DescriptionAgencyInfo);
+//        final ImageButton deviceDetail = v.findViewById(R.id.imageButton4);
+
         btnCall = v.findViewById(R.id.action_a);
         btnChat = v.findViewById(R.id.action_b);
         final FloatingActionsMenu menu = v.findViewById(R.id.multiple_actions);
@@ -164,21 +167,28 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
 
                 int numberDeviceString = request.getTicket().size();
                 numberDevice.setText(String.valueOf(numberDeviceString));
-                agencyName.setText("Cửa hàng: " + request.getAgencyName());
-                if (request.getPriority().equalsIgnoreCase("Xử lý gấp")) {
+                agencyName.setText(request.getAgencyName());
+                //rqName.setText(request.getRequestName());
+
+                if (request.getPriority().equalsIgnoreCase("Cao")) {
                     priority.setText(request.getPriority());
                     priority.setTextColor(Color.parseColor("#C62828"));
-                } else if (request.getPriority().equalsIgnoreCase("Cần xử lý")) {
+                } else if (request.getPriority().equalsIgnoreCase("Trung Bình")) {
                     priority.setText(request.getPriority());
                     priority.setTextColor(Color.parseColor("#F9A825"));
                 } else {
                     priority.setText(request.getPriority());
                     priority.setTextColor(Color.parseColor("#2E7D32"));
                 }
-                createDate.setText("Tạo vào: " + request.getCreateDate());
-                txtPhoneAgency.setText("Điện thoại: " + request.getPhoneNumber());
-                txtAddressAgency.setText("Địa chỉ: " + request.getAgencyAddress());
-                txtserviceItem.setText("Hiện tượng: " + serviceItemName);
+
+                createDate.setText(request.getCreateDate());
+                txtPhoneAgency.setText(request.getPhoneNumber());
+                txtAddressAgency.setText(request.getAgencyAddress());
+                descriptionAgencyInfo.setText(request.getRequestDesciption());
+                requestId = request.getRequestId();
+                serviceItemId = request.getServiceItemId();
+                serviceItemName = request.getServiceItemName();
+                txtserviceItem.setText(serviceItemName);
                 btnCall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

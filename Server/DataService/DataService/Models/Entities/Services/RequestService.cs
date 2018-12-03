@@ -1153,6 +1153,7 @@ namespace DataService.Models.Entities.Services
                     Priority = requestPriorityStatus,
                     ServiceId = request.ServiceItem.ServiceITSupportId,
                     ServiceName = request.ServiceItem.ServiceITSupport.ServiceName,
+                    RequestDesciption = request.RequestDesciption,
                     Tickets = ticketList
                 };
 

@@ -618,6 +618,10 @@
                             else if (full.StatusName === "Hoàn thành" && full.ITSupporterName === "") {
                                 return '<span class = "label label-success">Hoàn thành bởi admin</span>';
                             }
+                            else if (full.StatusName === "Chờ xác nhận hoàn thành") {
+                                var approveDone = '<button type="button" class="btn btn-success btn fa fa-check" data-toggle="modal" data-target="" onclick="approveRequestDone(' + full.RequestId + ')"></button>'
+                                return full.ITSupporterName + " " + approveDone;
+                            }
                             else if(full.ITSupporterName !== "") {
                                 return full.ITSupporterName;
                             }
@@ -625,11 +629,7 @@
                                 var asignHero = '<button type="button" class="btn btn-info btn fa fa-user-plus" data-toggle="modal" data-target="" onclick="asignHero(' + full.RequestId + ')"></button>'
                                 var details = '<span class = "label label-warning">Đợi nhân viên phản hồi</span>';
                                 return details + " " + asignHero;
-                            }
-                            else if (full.StatusName === "Chờ Xác nhận hoàn thành") {
-                                var approveDone = '<button type="button" class="btn btn-success btn fa fa-check" data-toggle="modal" data-target="" onclick="approveRequestDone(' + full.RequestId + ')"></button>'
-                                return full.ITSupporterName + " " + approveDone;
-                            }
+                            }                            
                             else {
                                 //var del = ' <button type="button" class="btn btn-danger fa fa-close" data-toggle="modal" data-target="" onclick="removeResquest(' + full.RequestId + ')"></button>';
                                 return "";
