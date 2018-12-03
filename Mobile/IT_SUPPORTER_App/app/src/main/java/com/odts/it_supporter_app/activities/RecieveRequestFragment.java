@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,8 @@ import android.widget.Toast;
 import com.firebase.client.Firebase;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.odts.it_supporter_app.R;
+import com.odts.it_supporter_app.customTools.RequestITSupporterStatisticAdapter;
+import com.odts.it_supporter_app.models.ITSupporterStatistic;
 import com.odts.it_supporter_app.services.ITSupporterService;
 import com.odts.it_supporter_app.utils.CallBackData;
 
@@ -30,6 +33,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -45,6 +49,8 @@ public class RecieveRequestFragment extends Fragment {
     TextView txtAgencyNameRecieveRequest;
     TextView txtRequestNameRecieveRequest;
     TextView txtTicketInfoRecieveRequest;
+    TextView txtTotalTimes, txtTotalTime;
+    ListView lvRequestGroup;
     SharedPreferences share;
     SharedPreferences share2;
     SharedPreferences shareRequest;
@@ -129,7 +135,10 @@ public class RecieveRequestFragment extends Fragment {
 //        txtAgencyAddressRecieveRequest.setText(share2.getString("b", "").toString());
 //        txtTicketInfoRecieveRequest.setText(share2.getString("c", "").toString());
 //        txtRequestNameRecieveRequest.setText(share2.getString("d", "").toString());
-
+        txtTotalTimes = v.findViewById(R.id.txtTotalTimesWailtingPage);
+        txtTotalTime = v.findViewById(R.id.txtTotalTimeWailtingPage);
+        lvRequestGroup = v.findViewById(R.id.lvRequestGroupWailtingPage);
+        viewITsupporterStatisticToday(itSupporterId);
         return v;
     }
 
@@ -171,5 +180,23 @@ public class RecieveRequestFragment extends Fragment {
                 .setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left, R.animator.enter_from_left, R.animator.exit_to_right)
                 .replace(R.id.fmHome, new HeroFragment())
                 .commit();
+    }
+
+    private void viewITsupporterStatisticToday(int itsupporter_id) {
+        _itSupporterService = new ITSupporterService();
+        _itSupporterService.viewITsupporterStatisticToday(getActivity(), itsupporter_id, new CallBackData<ITSupporterStatistic>() {
+            @Override
+            public void onSuccess(ITSupporterStatistic itSupporterStatistic) {
+                txtTotalTimes.setText(itSupporterStatistic.getTotalTimesSupport().toString());
+                txtTotalTime.setText(itSupporterStatistic.getTotalTimeSupport());
+                RequestITSupporterStatisticAdapter requestITSupporterStatisticAdapter = new RequestITSupporterStatisticAdapter(getActivity(), R.layout.list_request_group_item, itSupporterStatistic.getRequestOfITSupporter());
+                lvRequestGroup.setAdapter(requestITSupporterStatisticAdapter);
+            }
+
+            @Override
+            public void onFail(String message) {
+
+            }
+        });
     }
 }
