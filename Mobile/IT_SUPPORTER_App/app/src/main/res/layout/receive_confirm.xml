@@ -81,9 +81,9 @@
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
+                android:text="Sự Cố:"
                 android:textSize="20dp"
-                android:text="Sự Cố:" />
+                android:textStyle="bold" />
             <TextView
                 android:id="@+id/txtRqName"
                 android:layout_width="wrap_content"
@@ -95,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Thiết bị cần xử lý: "
-                android:textSize="15dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <TextView

@@ -19,6 +19,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -171,24 +172,20 @@ public class RecieveRequestFragment extends Fragment {
                     View mView = layoutInflaterAndroid.inflate(R.layout.cause_by, null);
                     android.support.v7.app.AlertDialog.Builder alertDialogBuilderUserInput = new android.support.v7.app.AlertDialog.Builder(getContext());
                     alertDialogBuilderUserInput.setView(mView);
-
-                    final TextView tv1 = (TextView) mView.findViewById(R.id.textView4);
-                    tv1.setPaintFlags(tv1.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-                    TextView tv2 = (TextView) mView.findViewById(R.id.textView4);
-                    tv2.setPaintFlags(tv2.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-                    TextView tv3 = (TextView) mView.findViewById(R.id.textView4);
-                    tv3.setPaintFlags(tv3.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+                    RadioButton rd1 = mView.findViewById(R.id.radioButton1);
+                    rd1.setText("Đang ốm");
+                    RadioButton rd2 = mView.findViewById(R.id.radioButton2);
+                    rd2.setText("Chuyện gia đình");
+                    RadioButton rd3 = mView.findViewById(R.id.radioButton3);
+                    rd3.setText("Xe hỏng");
+                    RadioButton rd4 = mView.findViewById(R.id.radioButton4);
+                    rd4.setText("Khác");
                     alertDialogBuilderUserInput
                             .setCancelable(false)
                             .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
                                 public void onClick(final DialogInterface dialogBox, int id) {
                                     // ToDo get user input here
-                                    tv1.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            dialogBox.cancel();
-                                        }
-                                    });
+
                                 }
                             })
                             .setNegativeButton("Đóng",
@@ -211,6 +208,7 @@ public class RecieveRequestFragment extends Fragment {
                 public void onFinish() {
                     acceptButton.setText("Hết thời gian!");
                     getAllServiceITSupportForAgency(false);
+                    dlg.dismiss();
                 }
             }.start();
 //            final Timer t = new Timer();

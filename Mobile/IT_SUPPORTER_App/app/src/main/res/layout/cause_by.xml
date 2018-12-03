@@ -10,9 +10,9 @@
         android:id="@+id/textView15"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
         android:layout_marginBottom="10dp"
-        android:text="Chọn lý do hoặc điền lý do khác:" />
+        android:text="Chọn lý do hoặc điền lý do khác:"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,19 +20,13 @@
         android:layout_marginBottom="5dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="3dp"
+        <RadioButton
+            android:id="@+id/radioButton1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#C62828"
-           />
+            android:layout_weight="1"
+            android:text="RadioButton" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:text="Công việc gia đình" />
     </LinearLayout>
 
     <LinearLayout
@@ -41,19 +35,13 @@
         android:layout_marginBottom="5dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="3dp"
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#C62828"
-            />
+            android:layout_weight="1"
+            android:text="RadioButton" />
 
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="Xe đang hư" />
     </LinearLayout>
 
     <LinearLayout
@@ -62,19 +50,28 @@
         android:layout_marginBottom="2dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="3dp"
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#C62828"
-            />
+            android:layout_weight="1"
+            android:text="RadioButton" />
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="match_parent"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioButton4"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:text="Đau ốm" />
+            android:layout_weight="1"
+            android:text="RadioButton" />
+
     </LinearLayout>
 
     <EditText
@@ -82,9 +79,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Lý do khác..."
-        android:textStyle="italic"/>
+        android:inputType="textPersonName"
+        android:textStyle="italic" />
 
 
 </LinearLayout>

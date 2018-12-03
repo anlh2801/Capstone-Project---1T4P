@@ -20,6 +20,7 @@ namespace DataService.ViewModels
     			public virtual Nullable<int> Pre_It_SupporterId { get; set; }
     			public virtual Nullable<int> Pre_Status { get; set; }
     			public virtual Nullable<bool> IsITSupportAccept { get; set; }
+    			public virtual string Description { get; set; }
     			public virtual Nullable<System.DateTime> StartTime { get; set; }
     			public virtual Nullable<System.DateTime> EndTime { get; set; }
     			public virtual bool IsDelete { get; set; }

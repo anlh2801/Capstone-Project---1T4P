@@ -887,7 +887,7 @@ namespace DataService.Models.Entities.Services
             }
         }
 
-        public ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept, string check = null)
+        public ResponseObject<bool> AcceptRequestFromITSupporter(int itSupporterId, int requestId, bool isAccept, string des = null, string check = null)
         {
 
             if (!string.IsNullOrEmpty(check))
@@ -962,6 +962,7 @@ namespace DataService.Models.Entities.Services
                                 IsDelete = false,
                                 Pre_It_SupporterId = rejected.ITSupporterId,
                                 RequestId = requestId,
+                                Description = des != null ? des : string.Empty,
                                 CreateDate = DateTime.UtcNow.AddHours(7)
                             };
                             requestHistoryRepo.Add(requestHistory);

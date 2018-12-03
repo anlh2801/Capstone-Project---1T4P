@@ -19,6 +19,7 @@ namespace DataService.Models.Entities
         public Nullable<int> Pre_It_SupporterId { get; set; }
         public Nullable<int> Pre_Status { get; set; }
         public Nullable<bool> IsITSupportAccept { get; set; }
+        public string Description { get; set; }
         public Nullable<System.DateTime> StartTime { get; set; }
         public Nullable<System.DateTime> EndTime { get; set; }
         public bool IsDelete { get; set; }

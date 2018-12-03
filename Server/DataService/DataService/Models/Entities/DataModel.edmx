@@ -177,6 +177,7 @@
           <Property Name="Pre_It_SupporterId" Type="int" />
           <Property Name="Pre_Status" Type="int" />
           <Property Name="IsITSupportAccept" Type="bit" />
+          <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="StartTime" Type="datetime" />
           <Property Name="EndTime" Type="datetime" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
@@ -964,6 +965,7 @@
           <Property Name="Pre_It_SupporterId" Type="Int32" />
           <Property Name="Pre_Status" Type="Int32" />
           <Property Name="IsITSupportAccept" Type="Boolean" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StartTime" Type="DateTime" Precision="3" />
           <Property Name="EndTime" Type="DateTime" Precision="3" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
@@ -1523,6 +1525,7 @@
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="EndTime" ColumnName="EndTime" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="IsITSupportAccept" ColumnName="IsITSupportAccept" />
                 <ScalarProperty Name="Pre_Status" ColumnName="Pre_Status" />
                 <ScalarProperty Name="Pre_It_SupporterId" ColumnName="Pre_It_SupporterId" />
