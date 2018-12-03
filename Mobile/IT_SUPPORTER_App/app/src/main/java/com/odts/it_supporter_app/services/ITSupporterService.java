@@ -46,7 +46,7 @@ public class ITSupporterService {
 
             @Override
             public void onFailure(Call<ResponseObject<Boolean>> call, Throwable t) {
-                Log.e("ERROR: ", t.getMessage());
+
             }
         });
 

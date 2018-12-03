@@ -61,11 +61,11 @@ public class MyFirebaseMessagingService extends  com.google.firebase.messaging.F
         manager.notify(0, builder.build());
         share = getSharedPreferences("firebaseData", MODE_PRIVATE);
         SharedPreferences.Editor editor = share.edit();
-        editor.putString("a",remoteMessage.getData().get("AgencyName"));
-        editor.putString("b",remoteMessage.getData().get("AgencyAddress"));
-        editor.putString("c",remoteMessage.getData().get("TicketsInfo"));
-        editor.putString("d",remoteMessage.getData().get("RequestName"));
-        editor.putString("e",remoteMessage.getData().get("RequestId"));
+        editor.putString("AgencyName",remoteMessage.getData().get("AgencyName"));
+        editor.putString("AgencyAddress",remoteMessage.getData().get("AgencyAddress"));
+        editor.putString("TicketsInfo",remoteMessage.getData().get("TicketsInfo"));
+        editor.putString("RequestName",remoteMessage.getData().get("RequestName"));
+        editor.putString("RequestId",remoteMessage.getData().get("RequestId"));
         editor.commit();
 
 

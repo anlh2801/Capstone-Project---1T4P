@@ -53,11 +53,11 @@ public class LoginActivity extends AppCompatActivity {
         if (extras != null) {
             share = getSharedPreferences("firebaseData", MODE_PRIVATE);
             SharedPreferences.Editor editor = share.edit();
-            editor.putString("a",extras.getString("AgencyName"));
-            editor.putString("b",extras.getString("AgencyAddress"));
-            editor.putString("c",extras.getString("TicketsInfo"));
-            editor.putString("d",extras.getString("RequestName"));
-            editor.putString("e",extras.getString("RequestId"));
+            editor.putString("AgencyName",extras.getString("AgencyName"));
+            editor.putString("AgencyAddress",extras.getString("AgencyAddress"));
+            editor.putString("TicketsInfo",extras.getString("TicketsInfo"));
+            editor.putString("RequestName",extras.getString("RequestName"));
+            editor.putString("RequestId",extras.getString("RequestId"));
             editor.commit();
         }
     }

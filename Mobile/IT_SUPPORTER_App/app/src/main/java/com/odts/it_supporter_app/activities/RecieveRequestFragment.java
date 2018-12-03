@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -35,6 +36,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class RecieveRequestFragment extends Fragment {
@@ -104,32 +107,85 @@ public class RecieveRequestFragment extends Fragment {
 //                getAllServiceITSupportForAgency(false);
 //            }
 //        });
-        String a = share2.getString("a", null);
-        this.requestId = Integer.parseInt(share2.getString("e", "0"));
+        String a = share2.getString("AgencyName", null);
+        this.requestId = Integer.parseInt(share2.getString("RequestId", "0"));
         if (a != null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            View confirmView = getLayoutInflater().inflate(R.layout.receive_confirm, null);
+            final Button acceptButton = confirmView.findViewById(R.id.btnAccept);
+            final Button rejectButton = confirmView.findViewById(R.id.btnReject);
+            final TextView requestName = confirmView.findViewById(R.id.txtRqName);
+            final TextView agencyName = confirmView.findViewById(R.id.txtAgencyName);
+            final TextView agencyAddress = confirmView.findViewById(R.id.txtAddress);
+            final TextView ticketInfo = confirmView.findViewById(R.id.txtTicketInfo);
+            requestName.setText(share2.getString("RequestName", "").toString());
+            agencyName.setText(share2.getString("AgencyName", "").toString());
+            agencyAddress.setText(share2.getString("AgencyAddress", "").toString());
+            ticketInfo.setText(share2.getString("TicketsInfo", "").toString());
             builder
-                    .setMessage("Bạn có nhận việc không?")
-                    .setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            getAllServiceITSupportForAgency(true);
-                            Firebase.setAndroidContext(getActivity());
-                            Firebase reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" + requestId);
-                            final Map<String, String> map = new HashMap<String, String>();
-                            map.put("status", "Đã nhận");
-                            map.put("message", "");
-                            map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
-                            reference1.push().setValue(map);
-                        }
-                    })
-                    .setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            getAllServiceITSupportForAgency(false);
-                        }
-                    })
-                    .show();
+                    .setMessage("Bạn có nhận việc không?");
+//                    .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            getAllServiceITSupportForAgency(true);
+//                            Firebase.setAndroidContext(getActivity());
+//                            Firebase reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" + requestId);
+//                            final Map<String, String> map = new HashMap<String, String>();
+//                            map.put("status", "Đã nhận");
+//                            map.put("message", "");
+//                            map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
+//                            reference1.push().setValue(map);
+//                        }
+//                    })
+//                    .setNegativeButton("Không", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            getAllServiceITSupportForAgency(false);
+//                        }
+//                    });
+            builder.setView(confirmView);
+            final AlertDialog dlg = builder.create();
+            dlg.show();
+            acceptButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getAllServiceITSupportForAgency(true);
+                    dlg.dismiss();
+                    Firebase.setAndroidContext(getActivity());
+                    Firebase reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" + requestId);
+                    final Map<String, String> map = new HashMap<String, String>();
+                    map.put("status", "Đã nhận");
+                    map.put("message", "");
+                    map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
+                    reference1.push().setValue(map);
+                }
+            });
+            rejectButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getAllServiceITSupportForAgency(false);
+                    dlg.dismiss();
+                }
+            });
+            new CountDownTimer(10000, 1000) {
+
+                public void onTick(long millisUntilFinished) {
+                    acceptButton.setText("Chấp nhận: " + millisUntilFinished / 1000);
+                }
+
+                public void onFinish() {
+                    acceptButton.setText("Hết thời gian!");
+                    getAllServiceITSupportForAgency(false);
+                }
+            }.start();
+//            final Timer t = new Timer();
+//            t.schedule(new TimerTask() {
+//                public void run() {
+//                    dlg.dismiss(); // when the task active then close the dialog
+//                    t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
+//                    getAllServiceITSupportForAgency(false);
+//                }
+//            }, 10000);
         }
 //        txtAgencyNameRecieveRequest.setText(share2.getString("a", "").toString());
 //        txtAgencyAddressRecieveRequest.setText(share2.getString("b", "").toString());
@@ -148,25 +204,25 @@ public class RecieveRequestFragment extends Fragment {
     }
 
 
-    private void getAllServiceITSupportForAgency(boolean isAccept) {
+    private void getAllServiceITSupportForAgency(final boolean isAccept) {
         _itSupporterService.acceptRequest(getActivity(), requestId, itSupporterId, isAccept, new CallBackData<Boolean>() {
             @Override
             public void onSuccess(Boolean aBoolean) {
+                SharedPreferences.Editor editor2 = share2.edit();
+                editor2.clear().commit();
+                if (isAccept) {
+                    moveToDoRequestFragment();
+                } else {
+                    Intent restartIntent = getActivity().getPackageManager().getLaunchIntentForPackage(getActivity().getPackageName());
+                    restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(restartIntent);
+                }
             }
 
             @Override
             public void onFail(String message) {
             }
         });
-        SharedPreferences.Editor editor2 = share2.edit();
-        editor2.clear().commit();
-        if (isAccept) {
-            moveToDoRequestFragment();
-        } else {
-            Intent restartIntent = getActivity().getPackageManager().getLaunchIntentForPackage(getActivity().getPackageName());
-            restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(restartIntent);
-        }
     }
 
     private void moveToDoRequestFragment() {
