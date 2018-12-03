@@ -93,7 +93,7 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
         final int itSupporterId = share.getInt("itSupporterId", 0);
         requestService = new RequestService();
         deviceService = new DeviceService();
-        final ArrayList<MultiSelectModel> listDevices = new ArrayList<>();
+
         requestService.getRequestByRequestIdAndITSupporterId(getActivity(), itSupporterId, new CallBackData<Request>() {
             @Override
             public void onSuccess(final Request request) {
@@ -103,6 +103,7 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                 addDevice.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        final ArrayList<MultiSelectModel> listDevices = new ArrayList<>();
                         deviceService.getAllDeviceByAgencyIdAndServiceItem(getActivity(), request.getAgencyId(), request.getServiceId(), new CallBackData<ArrayList<Device>>() {
                             @Override
                             public void onSuccess(ArrayList<Device> devices) {
@@ -122,18 +123,27 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                                         .onSubmit(new MultiSelectDialog.SubmitCallbackListener() {
                                             @Override
                                             public void onSelected(final ArrayList<Integer> selectedIds, final ArrayList<String> selectedNames, String dataString) {
+                                                for (int i = 0; i < request.getTicket().size(); i++) {
+                                                    for (int j = 0; j < selectedIds.size(); j ++) {
+                                                        if(request.getTicket().get(i).getDeviceName().contains(selectedNames.get(j))) {
+                                                            Toast.makeText(getActivity(), "Thiết bị đã được thêm", Toast.LENGTH_SHORT).show();
+                                                            selectedIds.remove(j);
+                                                        }
+                                                        else {
+                                                            deviceService.addDeviceForRequest(getActivity(), requestId, selectedIds, new CallBackData<Boolean>() {
+                                                                @Override
+                                                                public void onSuccess(Boolean aBoolean) {
 
-                                                deviceService.addDeviceForRequest(getActivity(), requestId, selectedIds, new CallBackData<Boolean>() {
-                                                    @Override
-                                                    public void onSuccess(Boolean aBoolean) {
+                                                                }
 
+                                                                @Override
+                                                                public void onFail(String message) {
+
+                                                                }
+                                                            });
+                                                        }
                                                     }
-
-                                                    @Override
-                                                    public void onFail(String message) {
-
-                                                    }
-                                                });
+                                                }
                                             }
 
                                             @Override
