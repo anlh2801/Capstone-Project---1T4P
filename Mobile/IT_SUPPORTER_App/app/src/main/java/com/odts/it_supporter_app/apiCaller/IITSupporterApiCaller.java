@@ -49,6 +49,9 @@ public interface IITSupporterApiCaller {
     @GET("ITsupporter/view_itsupporter_statistic_all")
     Call<ResponseObject<ITSupporterStatistic>> viewITsupporterStatistic(@Query("itsupporterId") int itsupporterId);
 
+    @GET("ITsupporter/view_itsupporter_statistic_today")
+    Call<ResponseObject<ITSupporterStatistic>> viewITsupporterStatisticToday(@Query("itsupporterId") int itsupporterId);
+
     @GET("ITsupporter/view_all_feedback")
     Call<ResponseObjectReturnList<RequestGroupMonth>> viewAllFeedback(@Query("itsupporter_id") int itsupporter_id);
 

@@ -86,7 +86,7 @@ public class HeroFragment extends Fragment {
                     title = "Thông Tin";
                     break;
                 case 1:
-                    title = "Xử lý";
+                    title = "Hoạt Động";
                     break;
                 case 2:
                     title = "Bộ hỗ trợ";

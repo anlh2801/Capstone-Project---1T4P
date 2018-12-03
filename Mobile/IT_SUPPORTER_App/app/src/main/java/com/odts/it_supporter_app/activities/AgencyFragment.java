@@ -96,7 +96,7 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
         final int itSupporterId = share.getInt("itSupporterId", 0);
         requestService = new RequestService();
         deviceService = new DeviceService();
-        final ArrayList<MultiSelectModel> listDevices = new ArrayList<>();
+
         requestService.getRequestByRequestIdAndITSupporterId(getActivity(), itSupporterId, new CallBackData<Request>() {
             @Override
             public void onSuccess(final Request request) {
@@ -106,12 +106,21 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                 addDevice.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        final ArrayList<MultiSelectModel> listDevices = new ArrayList<>();
                         deviceService.getAllDeviceByAgencyIdAndServiceItem(getActivity(), request.getAgencyId(), request.getServiceId(), new CallBackData<ArrayList<Device>>() {
                             @Override
                             public void onSuccess(ArrayList<Device> devices) {
-                                for (int i = 0; i < devices.size(); i++) {
-                                    listDevices.add(new MultiSelectModel(devices.get(i).getDeviceId(), devices.get(i).getDeviceName()));
+                                ArrayList<Integer> listDeviceRequest = new ArrayList<>();
+                                for (int i = 0; i < request.getTicket().size(); i++) {
+                                    listDeviceRequest.add(request.getTicket().get(i).getDeviceId());
                                 }
+                                for (int i = 0; i < devices.size(); i++) {
+                                    if (!listDeviceRequest.contains(devices.get(i).getDeviceId())) {
+                                        listDevices.add(new MultiSelectModel(devices.get(i).getDeviceId(), devices.get(i).getDeviceName()));
+                                    }
+//                                    listDevices.add(new MultiSelectModel(devices.get(i).getDeviceId(), devices.get(i).getDeviceName()));
+                                }
+
                                 final ArrayList<Integer> alreadyTickets = new ArrayList<>();
                                 multiSelectDialog = new MultiSelectDialog()
                                         .title("Thiết bị") //setting title for dialog
@@ -125,7 +134,6 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                                         .onSubmit(new MultiSelectDialog.SubmitCallbackListener() {
                                             @Override
                                             public void onSelected(final ArrayList<Integer> selectedIds, final ArrayList<String> selectedNames, String dataString) {
-
                                                 deviceService.addDeviceForRequest(getActivity(), requestId, selectedIds, new CallBackData<Boolean>() {
                                                     @Override
                                                     public void onSuccess(Boolean aBoolean) {
@@ -160,10 +168,10 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                 agencyName.setText(request.getAgencyName());
                 //rqName.setText(request.getRequestName());
 
-                if (request.getPriority().equalsIgnoreCase("Xử lý gấp")) {
+                if (request.getPriority().equalsIgnoreCase("Cao")) {
                     priority.setText(request.getPriority());
                     priority.setTextColor(Color.parseColor("#C62828"));
-                } else if (request.getPriority().equalsIgnoreCase("Cần xử lý")) {
+                } else if (request.getPriority().equalsIgnoreCase("Trung Bình")) {
                     priority.setText(request.getPriority());
                     priority.setTextColor(Color.parseColor("#F9A825"));
                 } else {
@@ -231,6 +239,7 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                             historyAgency.addView(v1);
                         }
                     }
+
                     @Override
                     public void onFail(String message) {
 

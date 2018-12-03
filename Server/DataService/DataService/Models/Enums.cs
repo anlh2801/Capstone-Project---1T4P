@@ -23,7 +23,7 @@ namespace DataService.Models
         New = 5,
         [Display(Name = "Chờ hủy")]
         WaitingCancel = 6,
-        [Display(Name = "Chờ Xác nhận hoàn thành")]
+        [Display(Name = "Chờ xác nhận hoàn thành")]
         WaitingDone = 7
     }
 
