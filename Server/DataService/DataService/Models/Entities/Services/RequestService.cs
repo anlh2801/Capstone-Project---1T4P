@@ -1034,6 +1034,7 @@ namespace DataService.Models.Entities.Services
                                 IsDelete = false,
                                 Pre_It_SupporterId = rejected.ITSupporterId,
                                 RequestId = requestId,
+                                Description = des != null ? des : string.Empty,
                                 CreateDate = DateTime.UtcNow.AddHours(7)
                             };
                             requestHistoryRepo.Add(requestHistory);
