@@ -18,6 +18,7 @@ namespace DataService.APIViewModels
         public string DeviceCode { get; set; }
         public string GuarantyStartDate { get; set; }
         public string GuarantyEndDate { get; set; }
+        public string GuarantyStatus { get; set; }
         public string Ip { get; set; }
         public string Port { get; set; }
         public string DeviceAccount { get; set; }

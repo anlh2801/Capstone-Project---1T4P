@@ -70,7 +70,7 @@ namespace DataService.Models.Entities.Services
             }
         }
         public ResponseObject<List<DeviceAPIViewModel>> GetAllDevice()
-        {
+        {   
             try
             {
                 List<DeviceAPIViewModel> rsList = new List<DeviceAPIViewModel>();
@@ -191,8 +191,9 @@ namespace DataService.Models.Entities.Services
                         DeviceTypeId = device.DeviceTypeId,
                         DeviceTypeName = device.DeviceType.DeviceTypeName,
                         DeviceCode = device.DeviceCode,
-                        GuarantyStartDate = device.GuarantyStartDate.Value.ToString("dd/MM/yyyy"),
-                        GuarantyEndDate = device.GuarantyEndDate.Value.ToString("dd/MM/yyyy"),
+                        GuarantyStartDate = device.GuarantyStartDate != null ? device.GuarantyStartDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                        GuarantyEndDate = device.GuarantyEndDate != null ? device.GuarantyEndDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                        GuarantyStatus = device.GuarantyEndDate != null && device.GuarantyEndDate.Value.Date >= DateTime.Now.Date ? "Còn bảo hành" : "Hết bảo hành",
                         Ip = device.Ip,
                         Port = device.Port,
                         DeviceAccount = device.DeviceAccount,

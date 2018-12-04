@@ -1,6 +1,7 @@
 package com.odts.it_supporter_app.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,13 +29,14 @@ public class DeviceInfoActivity extends AppCompatActivity {
 
     TextView deviceNameInfo, deviceCodeInfo;
     TextView agencyNameDeviceInfo, deviceTypeInfo, guarantyStartDateInfo, guarantyEndDate, createDateDeviceInfo;
-    TextView ipDeviceInfo, portDeviceInfo, accountDeviceInfo, passWordDeviceInfo, settingDateDeviceInfo;
+    TextView ipDeviceInfo, portDeviceInfo, accountDeviceInfo, passWordDeviceInfo, settingDateDeviceInfo, guarantyStatus;
     LinearLayout historyDevice;
     Button btnClose;
 
-    public DeviceInfoActivity(){
+    public DeviceInfoActivity() {
         _itSupporterService = new ITSupporterService();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +57,7 @@ public class DeviceInfoActivity extends AppCompatActivity {
         settingDateDeviceInfo = findViewById(R.id.SettingDateDeviceInfo);
         historyDevice = findViewById(R.id.HistoryDevice);
         btnClose = findViewById(R.id.btnClose);
+        guarantyStatus = findViewById(R.id.GuarantyStatus);
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,7 +82,13 @@ public class DeviceInfoActivity extends AppCompatActivity {
             public void onSuccess(Device device) {
                 deviceNameInfo.setText(device.getDeviceName());
                 deviceCodeInfo.setText("Mã thiết bị: " + device.getDeviceCode());
-                agencyNameDeviceInfo.setText("Thuộc cửa hàng: " + device.getAgencyName());
+                guarantyStatus.setText("Trạng thái: " + device.getGuarantyStatus());
+                if(device.getGuarantyStatus().equalsIgnoreCase("Còn bảo hành")) {
+//                    guarantyStatus.setTextColor("#");
+                }else {
+                    guarantyStatus.setTextColor(Color.parseColor("#C62828"));
+                }
+                agencyNameDeviceInfo.setText(device.getAgencyName());
                 deviceTypeInfo.setText("Loại thiết bị: " + device.getDeviceTypeName());
                 guarantyStartDateInfo.setText("Kích hoạt bảo hành: " + device.getGuarantyStartDate());
                 guarantyEndDate.setText("Hết hạn bảo hành: " + device.getGuarantyEndDate());
@@ -90,13 +99,13 @@ public class DeviceInfoActivity extends AppCompatActivity {
                 passWordDeviceInfo.setText("Mật khẩu thiết bị: " + device.getDevicePassword());
                 settingDateDeviceInfo.setText("Ngày cấu hình: " + device.getSettingDate());
                 LayoutInflater inflater = getLayoutInflater();
-                for (DeviceHistory_Ticket item: device.getTicketList()) {
+                for (DeviceHistory_Ticket item : device.getTicketList()) {
                     View view = inflater.inflate(R.layout.device_history_item, null);
                     TextView txtHienTuong = (TextView) view.findViewById(R.id.txtHienTuong);
                     TextView txtNgayTao = (TextView) view.findViewById(R.id.txtNgayTao);
 
                     txtHienTuong.setText("Hiện tượng: " + item.getServiceItemName());
-                    txtNgayTao.setText("Đã bị sự cố ngày: " + item.getCreateDate());
+                    txtNgayTao.setText("Thời gian: " + item.getCreateDate());
 
                     historyDevice.addView(view);
                 }

@@ -244,7 +244,7 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                             TextView txtHienTuong = (TextView) v1.findViewById(R.id.txtHienTuong);
                             TextView txtNgayTao = (TextView) v1.findViewById(R.id.txtNgayTao);
                             txtHienTuong.setText("Hiện tượng: " + item.getRequestName());
-                            txtNgayTao.setText("Đã bị sự cố ngày: " + item.getCreateDate());
+                            txtNgayTao.setText("Thời gian: " + item.getCreateDate());
                             historyAgency.addView(v1);
                         }
                     }

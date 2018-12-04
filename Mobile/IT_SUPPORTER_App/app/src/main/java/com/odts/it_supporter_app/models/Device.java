@@ -40,9 +40,18 @@ public class Device implements Serializable {
     private String createDate;
     @SerializedName("UpdateDate")
     private String updateDate;
+    @SerializedName("GuarantyStatus")
+    private String guarantyStatus;
     @SerializedName("TicketList")
     private List<DeviceHistory_Ticket> ticketList;
 
+    public String getGuarantyStatus() {
+        return guarantyStatus;
+    }
+
+    public void setGuarantyStatus(String guarantyStatus) {
+        this.guarantyStatus = guarantyStatus;
+    }
 
     public Integer getDeviceId() {
         return deviceId;
