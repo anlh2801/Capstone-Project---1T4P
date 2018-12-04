@@ -138,16 +138,16 @@ public class DoneDetailActivity extends AppCompatActivity implements RatingDialo
     }
 
     private void setDataListItems(String status, String time, String message) {
-        mDataList.add(new TimeLine(status, time, message));
+        mDataList.add(0, new TimeLine(status, time, message));
         mTimeLineAdapter = new StatusTimeLineAdapter(mDataList);
         mRecyclerView.setAdapter(mTimeLineAdapter);
-        mRecyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                // Call smooth scroll
-                mRecyclerView.smoothScrollToPosition(mTimeLineAdapter.getItemCount());
-            }
-        });
+//        mRecyclerView.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                // Call smooth scroll
+//                mRecyclerView.smoothScrollToPosition(mTimeLineAdapter.getItemCount());
+//            }
+//        });
     }
 
     @Override

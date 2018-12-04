@@ -143,15 +143,15 @@ public class StatusTimelineActivity extends AppCompatActivity {
     }
 
     private void setDataListItems(String status, String time, String message) {
-        mDataList.add(new TimeLine(status, time, message));
+        mDataList.add(0, new TimeLine(status, time, message));
         mTimeLineAdapter = new StatusTimeLineAdapter(mDataList);
         mRecyclerView.setAdapter(mTimeLineAdapter);
-        mRecyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                mRecyclerView.smoothScrollToPosition(mTimeLineAdapter.getItemCount());
-            }
-        });
+//        mRecyclerView.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                mRecyclerView.smoothScrollToPosition(mTimeLineAdapter.getItemCount());
+//            }
+//        });
     }
 
 }

@@ -54,6 +54,7 @@ public class RecieveRequestFragment extends Fragment {
     ListView lvRequestGroup;
     SharedPreferences share;
     SharedPreferences share2;
+    String itSupportName;
 
     public RecieveRequestFragment() {
         _itSupporterService = new ITSupporterService();
@@ -78,6 +79,8 @@ public class RecieveRequestFragment extends Fragment {
         share2 = getActivity().getApplicationContext().getSharedPreferences("firebaseData", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = share.edit();
         itSupporterId = share.getInt("itSupporterId", 0);
+        itSupportName = share.getString("itName", "");
+
         FirebaseMessaging.getInstance().subscribeToTopic(itSupporterId.toString());
 //        btnAccept.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -155,7 +158,7 @@ public class RecieveRequestFragment extends Fragment {
                     Firebase reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" + requestId);
                     final Map<String, String> map = new HashMap<String, String>();
                     map.put("status", "Đã nhận");
-                    map.put("message", "");
+                    map.put("message", "bởi nhân viên: " + itSupportName);
                     map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
                     reference1.push().setValue(map);
                 }
