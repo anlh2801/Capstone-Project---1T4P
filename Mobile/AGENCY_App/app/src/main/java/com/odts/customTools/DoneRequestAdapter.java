@@ -49,7 +49,7 @@ public class DoneRequestAdapter extends ArrayAdapter<RequestGroupMonth> {
             TextView txtHero = (TextView) view.findViewById(R.id.txtHeroName);
             txtRequestName.setText(item.getAgencyName() + " - " + item.getRequestName());
             txtCreateDate.setText("Tạo vào: " + item.getCreateDate());
-            txtEndDate.setText("Xác nhận hoàn thành: " + item.getNod());
+            txtEndDate.setText("Xác nhận hoàn thành: " + item.getUpdateDate());
             txtHero.setText("Xử lý bởi: " + item.getiTSupporterName());
             lvDetailsThangNam.addView(view);
             view.setOnClickListener(new View.OnClickListener() {

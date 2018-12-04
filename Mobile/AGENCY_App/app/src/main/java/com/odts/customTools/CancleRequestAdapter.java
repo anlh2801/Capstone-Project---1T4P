@@ -48,7 +48,7 @@ public class CancleRequestAdapter extends ArrayAdapter<RequestGroupMonth> {
             TextView txtRequestName = (TextView) view.findViewById(R.id.txtRequestNameCan);
             TextView txtEndDate = (TextView) view.findViewById(R.id.udDateCan);
             txtRequestName.setText(item.getAgencyName() + " - " + item.getRequestName());
-            txtEndDate.setText("Hủy vào lúc: " + item.getNod());
+            txtEndDate.setText("Hủy vào lúc: " + item.getUpdateDate());
             lvDetailsThangNam.addView(view);
         }
         return row;
