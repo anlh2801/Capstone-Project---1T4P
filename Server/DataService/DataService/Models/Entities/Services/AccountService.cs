@@ -159,6 +159,12 @@ namespace DataService.Models.Entities.Services
             try
             {
                 var accountRepo = DependencyUtils.Resolve<IAccountRepository>();
+                var acc = accountRepo.GetActive().SingleOrDefault(p => p.Username == model.Username);
+
+                if (acc != null)
+                {
+                    return new ResponseObject<bool> { IsError = true, WarningMessage = "Tên đăng nhập đã tồn tại! Vui lòng nhập lại", ObjReturn = false };
+                }
                 var createAccount = new Account();
 
                 createAccount.RoleId = model.RoleId;

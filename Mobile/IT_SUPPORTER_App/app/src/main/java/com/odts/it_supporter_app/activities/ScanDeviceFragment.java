@@ -49,9 +49,6 @@ public class ScanDeviceFragment extends Fragment {
     CameraSource cameraSource;
     SurfaceHolder holder;
 
-//    public ScanDeviceFragment() {
-//        _itSupporterService = new ITSupporterService();
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

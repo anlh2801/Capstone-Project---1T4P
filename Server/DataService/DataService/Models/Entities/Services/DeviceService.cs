@@ -222,6 +222,12 @@ namespace DataService.Models.Entities.Services
             try
             {
                 var deviceRepo = DependencyUtils.Resolve<IDeviceRepository>();
+                var device = deviceRepo.GetActive(p => p.DeviceCode == model.DeviceCode).SingleOrDefault();
+                if (device != null)
+                {
+                    return new ResponseObject<bool> { IsError = true, WarningMessage = "Trùng mã thiết bị vui lòng nhập lại", ObjReturn = false };
+                }
+
                 var createDevice = new Device();
                 createDevice.DeviceTypeId = model.DeviceTypeId;
                 createDevice.AgencyId = model.AgencyId;
