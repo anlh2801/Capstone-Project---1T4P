@@ -832,7 +832,7 @@ namespace DataService.Models.Entities.Services
             {
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                 var ticketRepo = DependencyUtils.Resolve<ITicketRepository>();
-                var request = requestRepo.GetActive().FirstOrDefault(x => x.RequestId == requestId);
+                var request = requestRepo.GetActive().SingleOrDefault(x => x.RequestId == requestId);
                 if (request != null)
                 {
                     List<AgencyCreateTicketAPIViewModel> ticketList = new List<AgencyCreateTicketAPIViewModel>();
