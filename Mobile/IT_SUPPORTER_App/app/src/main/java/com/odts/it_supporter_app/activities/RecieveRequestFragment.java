@@ -210,7 +210,7 @@ public class RecieveRequestFragment extends Fragment {
                     alertDialogAndroid.show();
                 }
             });
-            new CountDownTimer(20000, 1000) {
+            new CountDownTimer(25000, 1000) {
 
                 public void onTick(long millisUntilFinished) {
                     acceptButton.setText("Chấp nhận: " + millisUntilFinished / 1000);
