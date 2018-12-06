@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6cf6503f7370481f812cb843361d804c" Name="Diagram1" ZoomLevel="95">
+        <EntityTypeShape EntityType="ODTS_DBModel.Account" Width="1.5" PointX="1.5" PointY="22.125" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Agency" Width="1.5" PointX="3" PointY="30.25" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Company" Width="1.5" PointX="1.5" PointY="6.125" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Contract" Width="1.5" PointX="3.75" PointY="6.125" />
+        <EntityTypeShape EntityType="ODTS_DBModel.ContractServiceITSupport" Width="1.5" PointX="6" PointY="8.125" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Device" Width="1.5" PointX="8.25" PointY="16.625" />
+        <EntityTypeShape EntityType="ODTS_DBModel.DeviceType" Width="1.5" PointX="3" PointY="17.625" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Guideline" Width="1.5" PointX="5.25" PointY="20.75" />
+        <EntityTypeShape EntityType="ODTS_DBModel.ITSupporter" Width="1.5" PointX="0.75" PointY="16.5" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Request" Width="1.5" PointX="5.25" PointY="12.5" />
+        <EntityTypeShape EntityType="ODTS_DBModel.RequestCategory" Width="1.5" PointX="3" PointY="2.125" />
+        <EntityTypeShape EntityType="ODTS_DBModel.RequestHistory" Width="1.5" PointX="8.5" PointY="11.75" />
+        <EntityTypeShape EntityType="ODTS_DBModel.RequestTask" Width="1.5" PointX="7.5" PointY="22.75" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Role" Width="1.5" PointX="1.5" PointY="26.625" />
+        <EntityTypeShape EntityType="ODTS_DBModel.ServiceItem" Width="1.5" PointX="3" PointY="13.875" />
+        <EntityTypeShape EntityType="ODTS_DBModel.ServiceITSupport" Width="1.5" PointX="0.75" PointY="12.125" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Skill" Width="1.5" PointX="3" PointY="10.25" />
+        <EntityTypeShape EntityType="ODTS_DBModel.Ticket" Width="1.5" PointX="10.5" PointY="16.5" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Account_Role" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Agency_Account" />
+        <AssociationConnector Association="ODTS_DBModel.FK_ITSupporter_Account" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Agency_Company" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Device_Agency" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Ticket_Agency" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Contract_Company" />
+        <AssociationConnector Association="ODTS_DBModel.FK_ContractServiceITSupport_Contract" />
+        <AssociationConnector Association="ODTS_DBModel.FK_ContractServiceITSupport_ServiceITSupport" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Device_DeviceType" />
+        <AssociationConnector Association="ODTS_DBModel.FK_TicketDetail_Device" />
+        <AssociationConnector Association="ODTS_DBModel.FK_DeviceType_ServiceITSupport" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Guideline_ServiceItem" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Request_ITSupporter" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Skill_ITSupporter" />
+        <AssociationConnector Association="ODTS_DBModel.FK_TicketHistory_ITSupporter" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Request_RequestCategory" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Request_ServiceItem" />
+        <AssociationConnector Association="ODTS_DBModel.FK_RequestTask_Request" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Ticket_Request" />
+        <AssociationConnector Association="ODTS_DBModel.FK_TicketHistory_Request" />
+        <AssociationConnector Association="ODTS_DBModel.FK_ServiceItem_Service" />
+        <AssociationConnector Association="ODTS_DBModel.FK_Skill_ServiceITSupport" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
