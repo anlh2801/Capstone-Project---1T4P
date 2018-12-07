@@ -1,0 +1,1634 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ODTS_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountId" />
+          </Key>
+          <Property Name="AccountId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Agency">
+          <Key>
+            <PropertyRef Name="AgencyId" />
+          </Key>
+          <Property Name="AgencyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="AccountId" Type="int" Nullable="false" />
+          <Property Name="AgencyName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="PercentForITSupporterRate" Type="int" />
+          <Property Name="PercentForITSupporterExp" Type="int" />
+          <Property Name="PercentForITSupporterFamiliarWithAgency" Type="int" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Contract">
+          <Key>
+            <PropertyRef Name="ContractId" />
+          </Key>
+          <Property Name="ContractId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="ContractName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ContractServiceITSupport">
+          <Key>
+            <PropertyRef Name="ContractServiceITSupportId" />
+          </Key>
+          <Property Name="ContractServiceITSupportId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ContractId" Type="int" Nullable="false" />
+          <Property Name="ServiceITSupportId" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="DeviceId" />
+          </Key>
+          <Property Name="DeviceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AgencyId" Type="int" Nullable="false" />
+          <Property Name="DeviceTypeId" Type="int" Nullable="false" />
+          <Property Name="DeviceName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DeviceCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GuarantyStartDate" Type="datetime" />
+          <Property Name="GuarantyEndDate" Type="datetime" />
+          <Property Name="Ip" Type="nvarchar" MaxLength="50" />
+          <Property Name="Port" Type="nvarchar" MaxLength="50" />
+          <Property Name="DeviceAccount" Type="nvarchar" MaxLength="50" />
+          <Property Name="DevicePassword" Type="nvarchar" MaxLength="50" />
+          <Property Name="SettingDate" Type="datetime" />
+          <Property Name="Other" Type="nvarchar(max)" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DeviceType">
+          <Key>
+            <PropertyRef Name="DeviceTypeId" />
+          </Key>
+          <Property Name="DeviceTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceId" Type="int" Nullable="false" />
+          <Property Name="DeviceTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Guideline">
+          <Key>
+            <PropertyRef Name="GuidelineId" />
+          </Key>
+          <Property Name="GuidelineId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceItemId" Type="int" Nullable="false" />
+          <Property Name="GuidelineName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ITSupporter">
+          <Key>
+            <PropertyRef Name="ITSupporterId" />
+          </Key>
+          <Property Name="ITSupporterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ITSupporterName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AccountId" Type="int" Nullable="false" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gender" Type="int" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="RatingAVG" Type="float" />
+          <Property Name="IsBusy" Type="bit" />
+          <Property Name="IsOnline" Type="bit" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AgencyId" Type="int" Nullable="false" />
+          <Property Name="ServiceItemId" Type="int" Nullable="false" />
+          <Property Name="RequestDesciption" Type="nvarchar(max)" />
+          <Property Name="RequestCategoryId" Type="int" Nullable="false" />
+          <Property Name="RequestStatus" Type="int" Nullable="false" />
+          <Property Name="Priority" Type="int" />
+          <Property Name="RequestName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estimation" Type="float" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="StartTime" Type="datetime" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="CurrentITSupporter_Id" Type="int" />
+          <Property Name="Rating" Type="int" />
+          <Property Name="Feedback" Type="nvarchar(max)" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="RequestCategory">
+          <Key>
+            <PropertyRef Name="RequestCategoryId" />
+          </Key>
+          <Property Name="RequestCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestCategoryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="RequestHistory">
+          <Key>
+            <PropertyRef Name="RequestHistoryId" />
+          </Key>
+          <Property Name="RequestHistoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestId" Type="int" Nullable="false" />
+          <Property Name="Pre_It_SupporterId" Type="int" />
+          <Property Name="Pre_Status" Type="int" />
+          <Property Name="IsITSupportAccept" Type="bit" />
+          <Property Name="StartTime" Type="datetime" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="RequestTask">
+          <Key>
+            <PropertyRef Name="RequestTaskId" />
+          </Key>
+          <Property Name="RequestTaskId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestId" Type="int" Nullable="false" />
+          <Property Name="TaskDetails" Type="nvarchar(max)" />
+          <Property Name="TaskStatus" Type="int" />
+          <Property Name="CreateByITSupporter" Type="int" />
+          <Property Name="StartTime" Type="datetime" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="Priority" Type="int" />
+          <Property Name="PreTaskCondition" Type="int" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ServiceItem">
+          <Key>
+            <PropertyRef Name="ServiceItemId" />
+          </Key>
+          <Property Name="ServiceItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceITSupportId" Type="int" Nullable="false" />
+          <Property Name="ServiceItemName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ServiceITSupport">
+          <Key>
+            <PropertyRef Name="ServiceITSupportId" />
+          </Key>
+          <Property Name="ServiceITSupportId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="SkillId" />
+          </Key>
+          <Property Name="SkillId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ITSupporterId" Type="int" Nullable="false" />
+          <Property Name="ServiceITSupportId" Type="int" />
+          <Property Name="MonthExperience" Type="int" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="TicketId" />
+          </Key>
+          <Property Name="TicketId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestId" Type="int" Nullable="false" />
+          <Property Name="DeviceId" Type="int" Nullable="false" />
+          <Property Name="Desciption" Type="nvarchar(max)" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Account_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Agency_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Agency" Type="Self.Agency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="Agency">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Agency_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="Agency" Type="Self.Agency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Agency">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContractServiceITSupport_Contract">
+          <End Role="Contract" Type="Self.Contract" Multiplicity="1" />
+          <End Role="ContractServiceITSupport" Type="Self.ContractServiceITSupport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract">
+              <PropertyRef Name="ContractId" />
+            </Principal>
+            <Dependent Role="ContractServiceITSupport">
+              <PropertyRef Name="ContractId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContractServiceITSupport_ServiceITSupport">
+          <End Role="ServiceITSupport" Type="Self.ServiceITSupport" Multiplicity="1" />
+          <End Role="ContractServiceITSupport" Type="Self.ContractServiceITSupport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceITSupport">
+              <PropertyRef Name="ServiceITSupportId" />
+            </Principal>
+            <Dependent Role="ContractServiceITSupport">
+              <PropertyRef Name="ServiceITSupportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_Agency">
+          <End Role="Agency" Type="Self.Agency" Multiplicity="1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agency">
+              <PropertyRef Name="AgencyId" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="AgencyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_DeviceType">
+          <End Role="DeviceType" Type="Self.DeviceType" Multiplicity="1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceType">
+              <PropertyRef Name="DeviceTypeId" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="DeviceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeviceType_ServiceITSupport">
+          <End Role="ServiceITSupport" Type="Self.ServiceITSupport" Multiplicity="1" />
+          <End Role="DeviceType" Type="Self.DeviceType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceITSupport">
+              <PropertyRef Name="ServiceITSupportId" />
+            </Principal>
+            <Dependent Role="DeviceType">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Guideline_ServiceItem">
+          <End Role="ServiceItem" Type="Self.ServiceItem" Multiplicity="1" />
+          <End Role="Guideline" Type="Self.Guideline" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceItem">
+              <PropertyRef Name="ServiceItemId" />
+            </Principal>
+            <Dependent Role="Guideline">
+              <PropertyRef Name="ServiceItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ITSupporter_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="ITSupporter" Type="Self.ITSupporter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="ITSupporter">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_ITSupporter">
+          <End Role="ITSupporter" Type="Self.ITSupporter" Multiplicity="0..1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ITSupporter">
+              <PropertyRef Name="ITSupporterId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="CurrentITSupporter_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_RequestCategory">
+          <End Role="RequestCategory" Type="Self.RequestCategory" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestCategory">
+              <PropertyRef Name="RequestCategoryId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="RequestCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_ServiceItem">
+          <End Role="ServiceItem" Type="Self.ServiceItem" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceItem">
+              <PropertyRef Name="ServiceItemId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="ServiceItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestTask_Request">
+          <End Role="Request" Type="Self.Request" Multiplicity="1" />
+          <End Role="RequestTask" Type="Self.RequestTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="RequestId" />
+            </Principal>
+            <Dependent Role="RequestTask">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceItem_Service">
+          <End Role="ServiceITSupport" Type="Self.ServiceITSupport" Multiplicity="1" />
+          <End Role="ServiceItem" Type="Self.ServiceItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceITSupport">
+              <PropertyRef Name="ServiceITSupportId" />
+            </Principal>
+            <Dependent Role="ServiceItem">
+              <PropertyRef Name="ServiceITSupportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Skill_ITSupporter">
+          <End Role="ITSupporter" Type="Self.ITSupporter" Multiplicity="1" />
+          <End Role="Skill" Type="Self.Skill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ITSupporter">
+              <PropertyRef Name="ITSupporterId" />
+            </Principal>
+            <Dependent Role="Skill">
+              <PropertyRef Name="ITSupporterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Skill_ServiceITSupport">
+          <End Role="ServiceITSupport" Type="Self.ServiceITSupport" Multiplicity="0..1" />
+          <End Role="Skill" Type="Self.Skill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceITSupport">
+              <PropertyRef Name="ServiceITSupportId" />
+            </Principal>
+            <Dependent Role="Skill">
+              <PropertyRef Name="ServiceITSupportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Agency">
+          <End Role="Agency" Type="Self.Agency" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agency">
+              <PropertyRef Name="AgencyId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="AgencyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Request">
+          <End Role="Request" Type="Self.Request" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="RequestId" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketDetail_Device">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="DeviceId" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="DeviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketHistory_ITSupporter">
+          <End Role="ITSupporter" Type="Self.ITSupporter" Multiplicity="0..1" />
+          <End Role="RequestHistory" Type="Self.RequestHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ITSupporter">
+              <PropertyRef Name="ITSupporterId" />
+            </Principal>
+            <Dependent Role="RequestHistory">
+              <PropertyRef Name="Pre_It_SupporterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketHistory_Request">
+          <End Role="Request" Type="Self.Request" Multiplicity="1" />
+          <End Role="RequestHistory" Type="Self.RequestHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="RequestId" />
+            </Principal>
+            <Dependent Role="RequestHistory">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ODTS_DBModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Agency" EntityType="Self.Agency" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contract" EntityType="Self.Contract" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContractServiceITSupport" EntityType="Self.ContractServiceITSupport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Device" EntityType="Self.Device" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeviceType" EntityType="Self.DeviceType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Guideline" EntityType="Self.Guideline" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ITSupporter" EntityType="Self.ITSupporter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request" EntityType="Self.Request" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestCategory" EntityType="Self.RequestCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestHistory" EntityType="Self.RequestHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestTask" EntityType="Self.RequestTask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceItem" EntityType="Self.ServiceItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceITSupport" EntityType="Self.ServiceITSupport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Skill" EntityType="Self.Skill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Account_Role" Association="Self.FK_Account_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Agency_Account" Association="Self.FK_Agency_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Agency" EntitySet="Agency" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Agency_Company" Association="Self.FK_Agency_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Agency" EntitySet="Agency" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Company" Association="Self.FK_Contract_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContractServiceITSupport_Contract" Association="Self.FK_ContractServiceITSupport_Contract">
+            <End Role="Contract" EntitySet="Contract" />
+            <End Role="ContractServiceITSupport" EntitySet="ContractServiceITSupport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContractServiceITSupport_ServiceITSupport" Association="Self.FK_ContractServiceITSupport_ServiceITSupport">
+            <End Role="ServiceITSupport" EntitySet="ServiceITSupport" />
+            <End Role="ContractServiceITSupport" EntitySet="ContractServiceITSupport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_Agency" Association="Self.FK_Device_Agency">
+            <End Role="Agency" EntitySet="Agency" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_DeviceType" Association="Self.FK_Device_DeviceType">
+            <End Role="DeviceType" EntitySet="DeviceType" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeviceType_ServiceITSupport" Association="Self.FK_DeviceType_ServiceITSupport">
+            <End Role="ServiceITSupport" EntitySet="ServiceITSupport" />
+            <End Role="DeviceType" EntitySet="DeviceType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Guideline_ServiceItem" Association="Self.FK_Guideline_ServiceItem">
+            <End Role="ServiceItem" EntitySet="ServiceItem" />
+            <End Role="Guideline" EntitySet="Guideline" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ITSupporter_Account" Association="Self.FK_ITSupporter_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="ITSupporter" EntitySet="ITSupporter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_ITSupporter" Association="Self.FK_Request_ITSupporter">
+            <End Role="ITSupporter" EntitySet="ITSupporter" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_RequestCategory" Association="Self.FK_Request_RequestCategory">
+            <End Role="RequestCategory" EntitySet="RequestCategory" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_ServiceItem" Association="Self.FK_Request_ServiceItem">
+            <End Role="ServiceItem" EntitySet="ServiceItem" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestTask_Request" Association="Self.FK_RequestTask_Request">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="RequestTask" EntitySet="RequestTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceItem_Service" Association="Self.FK_ServiceItem_Service">
+            <End Role="ServiceITSupport" EntitySet="ServiceITSupport" />
+            <End Role="ServiceItem" EntitySet="ServiceItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Skill_ITSupporter" Association="Self.FK_Skill_ITSupporter">
+            <End Role="ITSupporter" EntitySet="ITSupporter" />
+            <End Role="Skill" EntitySet="Skill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Skill_ServiceITSupport" Association="Self.FK_Skill_ServiceITSupport">
+            <End Role="ServiceITSupport" EntitySet="ServiceITSupport" />
+            <End Role="Skill" EntitySet="Skill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Agency" Association="Self.FK_Ticket_Agency">
+            <End Role="Agency" EntitySet="Agency" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Request" Association="Self.FK_Ticket_Request">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketDetail_Device" Association="Self.FK_TicketDetail_Device">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketHistory_ITSupporter" Association="Self.FK_TicketHistory_ITSupporter">
+            <End Role="ITSupporter" EntitySet="ITSupporter" />
+            <End Role="RequestHistory" EntitySet="RequestHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketHistory_Request" Association="Self.FK_TicketHistory_Request">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="RequestHistory" EntitySet="RequestHistory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ODTS_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ODTS_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Account" EntityType="ODTS_DBModel.Account" />
+          <EntitySet Name="Agency" EntityType="ODTS_DBModel.Agency" />
+          <EntitySet Name="Company" EntityType="ODTS_DBModel.Company" />
+          <EntitySet Name="Contract" EntityType="ODTS_DBModel.Contract" />
+          <EntitySet Name="ContractServiceITSupport" EntityType="ODTS_DBModel.ContractServiceITSupport" />
+          <EntitySet Name="Device" EntityType="ODTS_DBModel.Device" />
+          <EntitySet Name="DeviceType" EntityType="ODTS_DBModel.DeviceType" />
+          <EntitySet Name="Guideline" EntityType="ODTS_DBModel.Guideline" />
+          <EntitySet Name="ITSupporter" EntityType="ODTS_DBModel.ITSupporter" />
+          <EntitySet Name="Request" EntityType="ODTS_DBModel.Request" />
+          <EntitySet Name="RequestCategory" EntityType="ODTS_DBModel.RequestCategory" />
+          <EntitySet Name="RequestHistory" EntityType="ODTS_DBModel.RequestHistory" />
+          <EntitySet Name="RequestTask" EntityType="ODTS_DBModel.RequestTask" />
+          <EntitySet Name="Role" EntityType="ODTS_DBModel.Role" />
+          <EntitySet Name="ServiceItem" EntityType="ODTS_DBModel.ServiceItem" />
+          <EntitySet Name="ServiceITSupport" EntityType="ODTS_DBModel.ServiceITSupport" />
+          <EntitySet Name="Skill" EntityType="ODTS_DBModel.Skill" />
+          <EntitySet Name="Ticket" EntityType="ODTS_DBModel.Ticket" />
+          <AssociationSet Name="FK_Account_Role" Association="ODTS_DBModel.FK_Account_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Agency_Account" Association="ODTS_DBModel.FK_Agency_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Agency" EntitySet="Agency" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ITSupporter_Account" Association="ODTS_DBModel.FK_ITSupporter_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="ITSupporter" EntitySet="ITSupporter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Agency_Company" Association="ODTS_DBModel.FK_Agency_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Agency" EntitySet="Agency" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_Agency" Association="ODTS_DBModel.FK_Device_Agency">
+            <End Role="Agency" EntitySet="Agency" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Agency" Association="ODTS_DBModel.FK_Ticket_Agency">
+            <End Role="Agency" EntitySet="Agency" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Company" Association="ODTS_DBModel.FK_Contract_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContractServiceITSupport_Contract" Association="ODTS_DBModel.FK_ContractServiceITSupport_Contract">
+            <End Role="Contract" EntitySet="Contract" />
+            <End Role="ContractServiceITSupport" EntitySet="ContractServiceITSupport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContractServiceITSupport_ServiceITSupport" Association="ODTS_DBModel.FK_ContractServiceITSupport_ServiceITSupport">
+            <End Role="ServiceITSupport" EntitySet="ServiceITSupport" />
+            <End Role="ContractServiceITSupport" EntitySet="ContractServiceITSupport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_DeviceType" Association="ODTS_DBModel.FK_Device_DeviceType">
+            <End Role="DeviceType" EntitySet="DeviceType" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketDetail_Device" Association="ODTS_DBModel.FK_TicketDetail_Device">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeviceType_ServiceITSupport" Association="ODTS_DBModel.FK_DeviceType_ServiceITSupport">
+            <End Role="ServiceITSupport" EntitySet="ServiceITSupport" />
+            <End Role="DeviceType" EntitySet="DeviceType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Guideline_ServiceItem" Association="ODTS_DBModel.FK_Guideline_ServiceItem">
+            <End Role="ServiceItem" EntitySet="ServiceItem" />
+            <End Role="Guideline" EntitySet="Guideline" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_ITSupporter" Association="ODTS_DBModel.FK_Request_ITSupporter">
+            <End Role="ITSupporter" EntitySet="ITSupporter" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Skill_ITSupporter" Association="ODTS_DBModel.FK_Skill_ITSupporter">
+            <End Role="ITSupporter" EntitySet="ITSupporter" />
+            <End Role="Skill" EntitySet="Skill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketHistory_ITSupporter" Association="ODTS_DBModel.FK_TicketHistory_ITSupporter">
+            <End Role="ITSupporter" EntitySet="ITSupporter" />
+            <End Role="RequestHistory" EntitySet="RequestHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_RequestCategory" Association="ODTS_DBModel.FK_Request_RequestCategory">
+            <End Role="RequestCategory" EntitySet="RequestCategory" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_ServiceItem" Association="ODTS_DBModel.FK_Request_ServiceItem">
+            <End Role="ServiceItem" EntitySet="ServiceItem" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestTask_Request" Association="ODTS_DBModel.FK_RequestTask_Request">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="RequestTask" EntitySet="RequestTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Request" Association="ODTS_DBModel.FK_Ticket_Request">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketHistory_Request" Association="ODTS_DBModel.FK_TicketHistory_Request">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="RequestHistory" EntitySet="RequestHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceItem_Service" Association="ODTS_DBModel.FK_ServiceItem_Service">
+            <End Role="ServiceITSupport" EntitySet="ServiceITSupport" />
+            <End Role="ServiceItem" EntitySet="ServiceItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Skill_ServiceITSupport" Association="ODTS_DBModel.FK_Skill_ServiceITSupport">
+            <End Role="ServiceITSupport" EntitySet="ServiceITSupport" />
+            <End Role="Skill" EntitySet="Skill" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountId" />
+          </Key>
+          <Property Name="AccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Role" Relationship="ODTS_DBModel.FK_Account_Role" FromRole="Account" ToRole="Role" />
+          <NavigationProperty Name="Agency" Relationship="ODTS_DBModel.FK_Agency_Account" FromRole="Account" ToRole="Agency" />
+          <NavigationProperty Name="ITSupporter" Relationship="ODTS_DBModel.FK_ITSupporter_Account" FromRole="Account" ToRole="ITSupporter" />
+        </EntityType>
+        <EntityType Name="Agency">
+          <Key>
+            <PropertyRef Name="AgencyId" />
+          </Key>
+          <Property Name="AgencyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="AccountId" Type="Int32" Nullable="false" />
+          <Property Name="AgencyName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Account" Relationship="ODTS_DBModel.FK_Agency_Account" FromRole="Agency" ToRole="Account" />
+          <NavigationProperty Name="Company" Relationship="ODTS_DBModel.FK_Agency_Company" FromRole="Agency" ToRole="Company" />
+          <NavigationProperty Name="Device" Relationship="ODTS_DBModel.FK_Device_Agency" FromRole="Agency" ToRole="Device" />
+          <NavigationProperty Name="Request" Relationship="ODTS_DBModel.FK_Ticket_Agency" FromRole="Agency" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PercentForITSupporterRate" Type="Int32" />
+          <Property Name="PercentForITSupporterExp" Type="Int32" />
+          <Property Name="PercentForITSupporterFamiliarWithAgency" Type="Int32" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Agency" Relationship="ODTS_DBModel.FK_Agency_Company" FromRole="Company" ToRole="Agency" />
+          <NavigationProperty Name="Contract" Relationship="ODTS_DBModel.FK_Contract_Company" FromRole="Company" ToRole="Contract" />
+        </EntityType>
+        <EntityType Name="Contract">
+          <Key>
+            <PropertyRef Name="ContractId" />
+          </Key>
+          <Property Name="ContractId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="ContractName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Company" Relationship="ODTS_DBModel.FK_Contract_Company" FromRole="Contract" ToRole="Company" />
+          <NavigationProperty Name="ContractServiceITSupport" Relationship="ODTS_DBModel.FK_ContractServiceITSupport_Contract" FromRole="Contract" ToRole="ContractServiceITSupport" />
+        </EntityType>
+        <EntityType Name="ContractServiceITSupport">
+          <Key>
+            <PropertyRef Name="ContractServiceITSupportId" />
+          </Key>
+          <Property Name="ContractServiceITSupportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContractId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceITSupportId" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Contract" Relationship="ODTS_DBModel.FK_ContractServiceITSupport_Contract" FromRole="ContractServiceITSupport" ToRole="Contract" />
+          <NavigationProperty Name="ServiceITSupport" Relationship="ODTS_DBModel.FK_ContractServiceITSupport_ServiceITSupport" FromRole="ContractServiceITSupport" ToRole="ServiceITSupport" />
+        </EntityType>
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="DeviceId" />
+          </Key>
+          <Property Name="DeviceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AgencyId" Type="Int32" Nullable="false" />
+          <Property Name="DeviceTypeId" Type="Int32" Nullable="false" />
+          <Property Name="DeviceName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DeviceCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GuarantyStartDate" Type="DateTime" Precision="3" />
+          <Property Name="GuarantyEndDate" Type="DateTime" Precision="3" />
+          <Property Name="Ip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Port" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DeviceAccount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DevicePassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SettingDate" Type="DateTime" Precision="3" />
+          <Property Name="Other" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Agency" Relationship="ODTS_DBModel.FK_Device_Agency" FromRole="Device" ToRole="Agency" />
+          <NavigationProperty Name="DeviceType" Relationship="ODTS_DBModel.FK_Device_DeviceType" FromRole="Device" ToRole="DeviceType" />
+          <NavigationProperty Name="Ticket" Relationship="ODTS_DBModel.FK_TicketDetail_Device" FromRole="Device" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="DeviceType">
+          <Key>
+            <PropertyRef Name="DeviceTypeId" />
+          </Key>
+          <Property Name="DeviceTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceId" Type="Int32" Nullable="false" />
+          <Property Name="DeviceTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Device" Relationship="ODTS_DBModel.FK_Device_DeviceType" FromRole="DeviceType" ToRole="Device" />
+          <NavigationProperty Name="ServiceITSupport" Relationship="ODTS_DBModel.FK_DeviceType_ServiceITSupport" FromRole="DeviceType" ToRole="ServiceITSupport" />
+        </EntityType>
+        <EntityType Name="Guideline">
+          <Key>
+            <PropertyRef Name="GuidelineId" />
+          </Key>
+          <Property Name="GuidelineId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceItemId" Type="Int32" Nullable="false" />
+          <Property Name="GuidelineName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ServiceItem" Relationship="ODTS_DBModel.FK_Guideline_ServiceItem" FromRole="Guideline" ToRole="ServiceItem" />
+        </EntityType>
+        <EntityType Name="ITSupporter">
+          <Key>
+            <PropertyRef Name="ITSupporterId" />
+          </Key>
+          <Property Name="ITSupporterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ITSupporterName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AccountId" Type="Int32" Nullable="false" />
+          <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RatingAVG" Type="Double" />
+          <Property Name="IsBusy" Type="Boolean" />
+          <Property Name="IsOnline" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Account" Relationship="ODTS_DBModel.FK_ITSupporter_Account" FromRole="ITSupporter" ToRole="Account" />
+          <NavigationProperty Name="Request" Relationship="ODTS_DBModel.FK_Request_ITSupporter" FromRole="ITSupporter" ToRole="Request" />
+          <NavigationProperty Name="Skill" Relationship="ODTS_DBModel.FK_Skill_ITSupporter" FromRole="ITSupporter" ToRole="Skill" />
+          <NavigationProperty Name="RequestHistory" Relationship="ODTS_DBModel.FK_TicketHistory_ITSupporter" FromRole="ITSupporter" ToRole="RequestHistory" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AgencyId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceItemId" Type="Int32" Nullable="false" />
+          <Property Name="RequestDesciption" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RequestCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="RequestStatus" Type="Int32" Nullable="false" />
+          <Property Name="Priority" Type="Int32" />
+          <Property Name="RequestName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Estimation" Type="Double" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="CurrentITSupporter_Id" Type="Int32" />
+          <Property Name="Rating" Type="Int32" />
+          <Property Name="Feedback" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Agency" Relationship="ODTS_DBModel.FK_Ticket_Agency" FromRole="Request" ToRole="Agency" />
+          <NavigationProperty Name="ITSupporter" Relationship="ODTS_DBModel.FK_Request_ITSupporter" FromRole="Request" ToRole="ITSupporter" />
+          <NavigationProperty Name="RequestCategory" Relationship="ODTS_DBModel.FK_Request_RequestCategory" FromRole="Request" ToRole="RequestCategory" />
+          <NavigationProperty Name="ServiceItem" Relationship="ODTS_DBModel.FK_Request_ServiceItem" FromRole="Request" ToRole="ServiceItem" />
+          <NavigationProperty Name="RequestTask" Relationship="ODTS_DBModel.FK_RequestTask_Request" FromRole="Request" ToRole="RequestTask" />
+          <NavigationProperty Name="Ticket" Relationship="ODTS_DBModel.FK_Ticket_Request" FromRole="Request" ToRole="Ticket" />
+          <NavigationProperty Name="RequestHistory" Relationship="ODTS_DBModel.FK_TicketHistory_Request" FromRole="Request" ToRole="RequestHistory" />
+        </EntityType>
+        <EntityType Name="RequestCategory">
+          <Key>
+            <PropertyRef Name="RequestCategoryId" />
+          </Key>
+          <Property Name="RequestCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestCategoryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Request" Relationship="ODTS_DBModel.FK_Request_RequestCategory" FromRole="RequestCategory" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="RequestHistory">
+          <Key>
+            <PropertyRef Name="RequestHistoryId" />
+          </Key>
+          <Property Name="RequestHistoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestId" Type="Int32" Nullable="false" />
+          <Property Name="Pre_It_SupporterId" Type="Int32" />
+          <Property Name="Pre_Status" Type="Int32" />
+          <Property Name="IsITSupportAccept" Type="Boolean" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ITSupporter" Relationship="ODTS_DBModel.FK_TicketHistory_ITSupporter" FromRole="RequestHistory" ToRole="ITSupporter" />
+          <NavigationProperty Name="Request" Relationship="ODTS_DBModel.FK_TicketHistory_Request" FromRole="RequestHistory" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="RequestTask">
+          <Key>
+            <PropertyRef Name="RequestTaskId" />
+          </Key>
+          <Property Name="RequestTaskId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestId" Type="Int32" Nullable="false" />
+          <Property Name="TaskDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TaskStatus" Type="Int32" />
+          <Property Name="CreateByITSupporter" Type="Int32" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="Priority" Type="Int32" />
+          <Property Name="PreTaskCondition" Type="Int32" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Request" Relationship="ODTS_DBModel.FK_RequestTask_Request" FromRole="RequestTask" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Account" Relationship="ODTS_DBModel.FK_Account_Role" FromRole="Role" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="ServiceItem">
+          <Key>
+            <PropertyRef Name="ServiceItemId" />
+          </Key>
+          <Property Name="ServiceItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceITSupportId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceItemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Guideline" Relationship="ODTS_DBModel.FK_Guideline_ServiceItem" FromRole="ServiceItem" ToRole="Guideline" />
+          <NavigationProperty Name="Request" Relationship="ODTS_DBModel.FK_Request_ServiceItem" FromRole="ServiceItem" ToRole="Request" />
+          <NavigationProperty Name="ServiceITSupport" Relationship="ODTS_DBModel.FK_ServiceItem_Service" FromRole="ServiceItem" ToRole="ServiceITSupport" />
+        </EntityType>
+        <EntityType Name="ServiceITSupport">
+          <Key>
+            <PropertyRef Name="ServiceITSupportId" />
+          </Key>
+          <Property Name="ServiceITSupportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ContractServiceITSupport" Relationship="ODTS_DBModel.FK_ContractServiceITSupport_ServiceITSupport" FromRole="ServiceITSupport" ToRole="ContractServiceITSupport" />
+          <NavigationProperty Name="DeviceType" Relationship="ODTS_DBModel.FK_DeviceType_ServiceITSupport" FromRole="ServiceITSupport" ToRole="DeviceType" />
+          <NavigationProperty Name="ServiceItem" Relationship="ODTS_DBModel.FK_ServiceItem_Service" FromRole="ServiceITSupport" ToRole="ServiceItem" />
+          <NavigationProperty Name="Skill" Relationship="ODTS_DBModel.FK_Skill_ServiceITSupport" FromRole="ServiceITSupport" ToRole="Skill" />
+        </EntityType>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="SkillId" />
+          </Key>
+          <Property Name="SkillId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ITSupporterId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceITSupportId" Type="Int32" />
+          <Property Name="MonthExperience" Type="Int32" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ITSupporter" Relationship="ODTS_DBModel.FK_Skill_ITSupporter" FromRole="Skill" ToRole="ITSupporter" />
+          <NavigationProperty Name="ServiceITSupport" Relationship="ODTS_DBModel.FK_Skill_ServiceITSupport" FromRole="Skill" ToRole="ServiceITSupport" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="TicketId" />
+          </Key>
+          <Property Name="TicketId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestId" Type="Int32" Nullable="false" />
+          <Property Name="DeviceId" Type="Int32" Nullable="false" />
+          <Property Name="Desciption" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Device" Relationship="ODTS_DBModel.FK_TicketDetail_Device" FromRole="Ticket" ToRole="Device" />
+          <NavigationProperty Name="Request" Relationship="ODTS_DBModel.FK_Ticket_Request" FromRole="Ticket" ToRole="Request" />
+        </EntityType>
+        <Association Name="FK_Account_Role">
+          <End Type="ODTS_DBModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="ODTS_DBModel.Account" Role="Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Agency_Account">
+          <End Type="ODTS_DBModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="ODTS_DBModel.Agency" Role="Agency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="Agency">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ITSupporter_Account">
+          <End Type="ODTS_DBModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="ODTS_DBModel.ITSupporter" Role="ITSupporter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="ITSupporter">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Agency_Company">
+          <End Type="ODTS_DBModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="ODTS_DBModel.Agency" Role="Agency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Agency">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_Agency">
+          <End Type="ODTS_DBModel.Agency" Role="Agency" Multiplicity="1" />
+          <End Type="ODTS_DBModel.Device" Role="Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agency">
+              <PropertyRef Name="AgencyId" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="AgencyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Agency">
+          <End Type="ODTS_DBModel.Agency" Role="Agency" Multiplicity="1" />
+          <End Type="ODTS_DBModel.Request" Role="Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agency">
+              <PropertyRef Name="AgencyId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="AgencyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Company">
+          <End Type="ODTS_DBModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="ODTS_DBModel.Contract" Role="Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContractServiceITSupport_Contract">
+          <End Type="ODTS_DBModel.Contract" Role="Contract" Multiplicity="1" />
+          <End Type="ODTS_DBModel.ContractServiceITSupport" Role="ContractServiceITSupport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract">
+              <PropertyRef Name="ContractId" />
+            </Principal>
+            <Dependent Role="ContractServiceITSupport">
+              <PropertyRef Name="ContractId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContractServiceITSupport_ServiceITSupport">
+          <End Type="ODTS_DBModel.ServiceITSupport" Role="ServiceITSupport" Multiplicity="1" />
+          <End Type="ODTS_DBModel.ContractServiceITSupport" Role="ContractServiceITSupport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceITSupport">
+              <PropertyRef Name="ServiceITSupportId" />
+            </Principal>
+            <Dependent Role="ContractServiceITSupport">
+              <PropertyRef Name="ServiceITSupportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_DeviceType">
+          <End Type="ODTS_DBModel.DeviceType" Role="DeviceType" Multiplicity="1" />
+          <End Type="ODTS_DBModel.Device" Role="Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceType">
+              <PropertyRef Name="DeviceTypeId" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="DeviceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketDetail_Device">
+          <End Type="ODTS_DBModel.Device" Role="Device" Multiplicity="1" />
+          <End Type="ODTS_DBModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="DeviceId" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="DeviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeviceType_ServiceITSupport">
+          <End Type="ODTS_DBModel.ServiceITSupport" Role="ServiceITSupport" Multiplicity="1" />
+          <End Type="ODTS_DBModel.DeviceType" Role="DeviceType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceITSupport">
+              <PropertyRef Name="ServiceITSupportId" />
+            </Principal>
+            <Dependent Role="DeviceType">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Guideline_ServiceItem">
+          <End Type="ODTS_DBModel.ServiceItem" Role="ServiceItem" Multiplicity="1" />
+          <End Type="ODTS_DBModel.Guideline" Role="Guideline" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceItem">
+              <PropertyRef Name="ServiceItemId" />
+            </Principal>
+            <Dependent Role="Guideline">
+              <PropertyRef Name="ServiceItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_ITSupporter">
+          <End Type="ODTS_DBModel.ITSupporter" Role="ITSupporter" Multiplicity="0..1" />
+          <End Type="ODTS_DBModel.Request" Role="Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ITSupporter">
+              <PropertyRef Name="ITSupporterId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="CurrentITSupporter_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Skill_ITSupporter">
+          <End Type="ODTS_DBModel.ITSupporter" Role="ITSupporter" Multiplicity="1" />
+          <End Type="ODTS_DBModel.Skill" Role="Skill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ITSupporter">
+              <PropertyRef Name="ITSupporterId" />
+            </Principal>
+            <Dependent Role="Skill">
+              <PropertyRef Name="ITSupporterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketHistory_ITSupporter">
+          <End Type="ODTS_DBModel.ITSupporter" Role="ITSupporter" Multiplicity="0..1" />
+          <End Type="ODTS_DBModel.RequestHistory" Role="RequestHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ITSupporter">
+              <PropertyRef Name="ITSupporterId" />
+            </Principal>
+            <Dependent Role="RequestHistory">
+              <PropertyRef Name="Pre_It_SupporterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_RequestCategory">
+          <End Type="ODTS_DBModel.RequestCategory" Role="RequestCategory" Multiplicity="1" />
+          <End Type="ODTS_DBModel.Request" Role="Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestCategory">
+              <PropertyRef Name="RequestCategoryId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="RequestCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_ServiceItem">
+          <End Type="ODTS_DBModel.ServiceItem" Role="ServiceItem" Multiplicity="1" />
+          <End Type="ODTS_DBModel.Request" Role="Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceItem">
+              <PropertyRef Name="ServiceItemId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="ServiceItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestTask_Request">
+          <End Type="ODTS_DBModel.Request" Role="Request" Multiplicity="1" />
+          <End Type="ODTS_DBModel.RequestTask" Role="RequestTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="RequestId" />
+            </Principal>
+            <Dependent Role="RequestTask">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Request">
+          <End Type="ODTS_DBModel.Request" Role="Request" Multiplicity="1" />
+          <End Type="ODTS_DBModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="RequestId" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketHistory_Request">
+          <End Type="ODTS_DBModel.Request" Role="Request" Multiplicity="1" />
+          <End Type="ODTS_DBModel.RequestHistory" Role="RequestHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="RequestId" />
+            </Principal>
+            <Dependent Role="RequestHistory">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceItem_Service">
+          <End Type="ODTS_DBModel.ServiceITSupport" Role="ServiceITSupport" Multiplicity="1" />
+          <End Type="ODTS_DBModel.ServiceItem" Role="ServiceItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceITSupport">
+              <PropertyRef Name="ServiceITSupportId" />
+            </Principal>
+            <Dependent Role="ServiceItem">
+              <PropertyRef Name="ServiceITSupportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Skill_ServiceITSupport">
+          <End Type="ODTS_DBModel.ServiceITSupport" Role="ServiceITSupport" Multiplicity="0..1" />
+          <End Type="ODTS_DBModel.Skill" Role="Skill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceITSupport">
+              <PropertyRef Name="ServiceITSupportId" />
+            </Principal>
+            <Dependent Role="Skill">
+              <PropertyRef Name="ServiceITSupportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ODTS_DBModelStoreContainer" CdmEntityContainer="ODTS_DBEntities">
+          <EntitySetMapping Name="Account">
+            <EntityTypeMapping TypeName="ODTS_DBModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Agency">
+            <EntityTypeMapping TypeName="ODTS_DBModel.Agency">
+              <MappingFragment StoreEntitySet="Agency">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="AgencyName" ColumnName="AgencyName" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Company">
+            <EntityTypeMapping TypeName="ODTS_DBModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="PercentForITSupporterFamiliarWithAgency" ColumnName="PercentForITSupporterFamiliarWithAgency" />
+                <ScalarProperty Name="PercentForITSupporterExp" ColumnName="PercentForITSupporterExp" />
+                <ScalarProperty Name="PercentForITSupporterRate" ColumnName="PercentForITSupporterRate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contract">
+            <EntityTypeMapping TypeName="ODTS_DBModel.Contract">
+              <MappingFragment StoreEntitySet="Contract">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="ContractName" ColumnName="ContractName" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="ContractId" ColumnName="ContractId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContractServiceITSupport">
+            <EntityTypeMapping TypeName="ODTS_DBModel.ContractServiceITSupport">
+              <MappingFragment StoreEntitySet="ContractServiceITSupport">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="ServiceITSupportId" ColumnName="ServiceITSupportId" />
+                <ScalarProperty Name="ContractId" ColumnName="ContractId" />
+                <ScalarProperty Name="ContractServiceITSupportId" ColumnName="ContractServiceITSupportId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Device">
+            <EntityTypeMapping TypeName="ODTS_DBModel.Device">
+              <MappingFragment StoreEntitySet="Device">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Other" ColumnName="Other" />
+                <ScalarProperty Name="SettingDate" ColumnName="SettingDate" />
+                <ScalarProperty Name="DevicePassword" ColumnName="DevicePassword" />
+                <ScalarProperty Name="DeviceAccount" ColumnName="DeviceAccount" />
+                <ScalarProperty Name="Port" ColumnName="Port" />
+                <ScalarProperty Name="Ip" ColumnName="Ip" />
+                <ScalarProperty Name="GuarantyEndDate" ColumnName="GuarantyEndDate" />
+                <ScalarProperty Name="GuarantyStartDate" ColumnName="GuarantyStartDate" />
+                <ScalarProperty Name="DeviceCode" ColumnName="DeviceCode" />
+                <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
+                <ScalarProperty Name="DeviceTypeId" ColumnName="DeviceTypeId" />
+                <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
+                <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeviceType">
+            <EntityTypeMapping TypeName="ODTS_DBModel.DeviceType">
+              <MappingFragment StoreEntitySet="DeviceType">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DeviceTypeName" ColumnName="DeviceTypeName" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="DeviceTypeId" ColumnName="DeviceTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Guideline">
+            <EntityTypeMapping TypeName="ODTS_DBModel.Guideline">
+              <MappingFragment StoreEntitySet="Guideline">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="GuidelineName" ColumnName="GuidelineName" />
+                <ScalarProperty Name="ServiceItemId" ColumnName="ServiceItemId" />
+                <ScalarProperty Name="GuidelineId" ColumnName="GuidelineId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ITSupporter">
+            <EntityTypeMapping TypeName="ODTS_DBModel.ITSupporter">
+              <MappingFragment StoreEntitySet="ITSupporter">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsOnline" ColumnName="IsOnline" />
+                <ScalarProperty Name="IsBusy" ColumnName="IsBusy" />
+                <ScalarProperty Name="RatingAVG" ColumnName="RatingAVG" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="ITSupporterName" ColumnName="ITSupporterName" />
+                <ScalarProperty Name="ITSupporterId" ColumnName="ITSupporterId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Request">
+            <EntityTypeMapping TypeName="ODTS_DBModel.Request">
+              <MappingFragment StoreEntitySet="Request">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Feedback" ColumnName="Feedback" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="CurrentITSupporter_Id" ColumnName="CurrentITSupporter_Id" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Estimation" ColumnName="Estimation" />
+                <ScalarProperty Name="RequestName" ColumnName="RequestName" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
+                <ScalarProperty Name="RequestCategoryId" ColumnName="RequestCategoryId" />
+                <ScalarProperty Name="RequestDesciption" ColumnName="RequestDesciption" />
+                <ScalarProperty Name="ServiceItemId" ColumnName="ServiceItemId" />
+                <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestCategory">
+            <EntityTypeMapping TypeName="ODTS_DBModel.RequestCategory">
+              <MappingFragment StoreEntitySet="RequestCategory">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="RequestCategoryName" ColumnName="RequestCategoryName" />
+                <ScalarProperty Name="RequestCategoryId" ColumnName="RequestCategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestHistory">
+            <EntityTypeMapping TypeName="ODTS_DBModel.RequestHistory">
+              <MappingFragment StoreEntitySet="RequestHistory">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="IsITSupportAccept" ColumnName="IsITSupportAccept" />
+                <ScalarProperty Name="Pre_Status" ColumnName="Pre_Status" />
+                <ScalarProperty Name="Pre_It_SupporterId" ColumnName="Pre_It_SupporterId" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="RequestHistoryId" ColumnName="RequestHistoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestTask">
+            <EntityTypeMapping TypeName="ODTS_DBModel.RequestTask">
+              <MappingFragment StoreEntitySet="RequestTask">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="PreTaskCondition" ColumnName="PreTaskCondition" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="CreateByITSupporter" ColumnName="CreateByITSupporter" />
+                <ScalarProperty Name="TaskStatus" ColumnName="TaskStatus" />
+                <ScalarProperty Name="TaskDetails" ColumnName="TaskDetails" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="RequestTaskId" ColumnName="RequestTaskId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="ODTS_DBModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceItem">
+            <EntityTypeMapping TypeName="ODTS_DBModel.ServiceItem">
+              <MappingFragment StoreEntitySet="ServiceItem">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ServiceItemName" ColumnName="ServiceItemName" />
+                <ScalarProperty Name="ServiceITSupportId" ColumnName="ServiceITSupportId" />
+                <ScalarProperty Name="ServiceItemId" ColumnName="ServiceItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceITSupport">
+            <EntityTypeMapping TypeName="ODTS_DBModel.ServiceITSupport">
+              <MappingFragment StoreEntitySet="ServiceITSupport">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+                <ScalarProperty Name="ServiceITSupportId" ColumnName="ServiceITSupportId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Skill">
+            <EntityTypeMapping TypeName="ODTS_DBModel.Skill">
+              <MappingFragment StoreEntitySet="Skill">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="MonthExperience" ColumnName="MonthExperience" />
+                <ScalarProperty Name="ServiceITSupportId" ColumnName="ServiceITSupportId" />
+                <ScalarProperty Name="ITSupporterId" ColumnName="ITSupporterId" />
+                <ScalarProperty Name="SkillId" ColumnName="SkillId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket">
+            <EntityTypeMapping TypeName="ODTS_DBModel.Ticket">
+              <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Desciption" ColumnName="Desciption" />
+                <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
