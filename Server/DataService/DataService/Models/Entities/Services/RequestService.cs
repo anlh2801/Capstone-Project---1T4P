@@ -136,7 +136,7 @@ namespace DataService.Models.Entities.Services
                     {
                         NumberOfRecord = no,
                         RequestName = item.RequestName,
-                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
+                        CreateDate = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
                         AgencyName = item.Agency.AgencyName,
                         StatusName = requestStatus,
                         Priority = requestPriorityStatus,
@@ -180,7 +180,7 @@ namespace DataService.Models.Entities.Services
                     ticket.DeviceId = ticketItem.DeviceId;
                     ticket.DeviceName = ticketItem.Device.DeviceName;
                     ticket.Desciption = ticketItem.Desciption;
-                    ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+                    ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("HH:mm dd/MM/yyyy") : string.Empty;
                     ticket.DeviceCode = ticketItem.Device.DeviceCode;
                     ticketList.Add(ticket);
                 }
@@ -209,12 +209,12 @@ namespace DataService.Models.Entities.Services
                 {
                     RequestId = request.RequestId,
                     RequestName = request.RequestName,
-                    CreateDate = request.CreateDate.ToString("dd/MM/yyyy"),
-                    UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
+                    CreateDate = request.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                    UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
                     AgencyTelephone = request.Phone != null ? request.Phone : request.Agency.Telephone,
                     AgencyName = request.Agency.AgencyName,
                     RequestStatus = requestStatus,
-                    RequestEstimationTime = request.CreateDate.AddHours(request.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
+                    RequestEstimationTime = request.CreateDate.AddHours(request.Estimation ?? 0).ToString("HH:mm dd/MM/yyyy"),
                     //NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
                     //NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
                     NumberOfTicket = ticketList.Count,
@@ -304,7 +304,7 @@ namespace DataService.Models.Entities.Services
                     {
                         NumberOfRecord = no,
                         RequestName = item.RequestName,
-                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
+                        CreateDate = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
                         AgencyName = item.Agency.AgencyName,
                         StatusName = requestStatus,
                         Priority = requestPriorityStatus,
@@ -351,7 +351,7 @@ namespace DataService.Models.Entities.Services
                     {
                         RequestId = item.RequestId,
                         RequestName = item.RequestName,
-                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
+                        CreateDate = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
                         RequestStatus = requestStatus,
                     };
                     rsList.Add(a);
@@ -407,7 +407,7 @@ namespace DataService.Models.Entities.Services
                 {
                     RequestId = request.RequestId,
                     RequestName = request.RequestName,
-                    CreateDate = request.CreateDate.ToString("dd/MM/yyyy"),
+                    CreateDate = request.CreateDate.ToString("HH:mm dd/MM/yyyy"),
                     AgencyName = request.Agency.AgencyName,
                     IssueName = listIssue,
                     ITName = request.ITSupporter.ITSupporterName,
@@ -454,7 +454,7 @@ namespace DataService.Models.Entities.Services
                     //    String.Format("about {0} days ago", timeSpan.Days) :
                     //    "hôm qua";
                     result = timeSpan.Days > 1 ?
-                        dateTime.ToString("dd/MM/yyyy HH:mm") :
+                        dateTime.ToString("HH:mm dd/MM/yyyy") :
                         "hôm qua";
                 }
                 //else if (timeSpan <= TimeSpan.FromDays(365))
@@ -471,7 +471,7 @@ namespace DataService.Models.Entities.Services
                 //}
                 else
                 {
-                    result = dateTime.ToString("dd/MM/yyyy HH:mm");
+                    result = dateTime.ToString("HH:mm dd/MM/yyyy");
                 }
 
                 return result;
@@ -513,7 +513,7 @@ namespace DataService.Models.Entities.Services
                         ticket.DeviceId = ticketItem.DeviceId;
                         ticket.DeviceName = ticketItem.Device.DeviceName;
                         ticket.Desciption = ticketItem.Desciption;
-                        ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+                        ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("HH:mm dd/MM/yyyy") : string.Empty;
 
                         ticketList.Add(ticket);
                     }
@@ -532,17 +532,17 @@ namespace DataService.Models.Entities.Services
                     {
                         RequestId = item.RequestId,
                         RequestName = item.RequestName,
-                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
-                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
+                        CreateDate = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
                         AgencyName = item.Agency.AgencyName,
                         RequestStatus = requestStatus,
-                        RequestEstimationTime = item.CreateDate.AddHours(item.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
+                        RequestEstimationTime = item.CreateDate.AddHours(item.Estimation ?? 0).ToString("HH:mm dd/MM/yyyy"),
                         //NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
                         //NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
                         NumberOfTicket = ticketList.Count,
                         ITSupporterName = item.ITSupporter != null ? item.ITSupporter.ITSupporterName : "Chưa có người xử lý",
-                        StartTime = item.StartTime != null ? item.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
-                        EndTime = item.EndTime != null ? item.EndTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
+                        StartTime = item.StartTime != null ? item.StartTime.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
+                        EndTime = item.EndTime != null ? item.EndTime.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
                         ITSupporterPhone = item.ITSupporter != null ? item.ITSupporter.Telephone : "0773909125",
                         Tickets = ticketList
                     };
@@ -606,17 +606,17 @@ namespace DataService.Models.Entities.Services
                     {
                         RequestId = item.RequestId,
                         RequestName = item.RequestName,
-                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
-                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
+                        CreateDate = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
                         AgencyName = item.Agency.AgencyName,
                         RequestStatus = requestStatus,
-                        RequestEstimationTime = item.CreateDate.AddHours(item.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
+                        RequestEstimationTime = item.CreateDate.AddHours(item.Estimation ?? 0).ToString("HH:mm dd/MM/yyyy"),
                         //NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
                         //NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
                         NumberOfTicket = ticketList.Count,
                         ITSupporterName = item.ITSupporter != null ? item.ITSupporter.ITSupporterName : "Chưa có người xử lý",
-                        StartTime = item.StartTime != null ? item.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
-                        EndTime = item.EndTime != null ? item.EndTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
+                        StartTime = item.StartTime != null ? item.StartTime.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
+                        EndTime = item.EndTime != null ? item.EndTime.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
                         ITSupporterPhone = item.ITSupporter != null ? item.ITSupporter.Telephone : "0773909125",
                         Tickets = ticketList
                     };
@@ -684,7 +684,7 @@ namespace DataService.Models.Entities.Services
                                 ticket.DeviceId = ticketItem.DeviceId;
                                 ticket.DeviceName = ticketItem.Device.DeviceName;
                                 ticket.Desciption = ticketItem.Desciption;
-                                ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+                                ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("HH:mm dd/MM/yyyy") : string.Empty;
 
                                 ticketList.Add(ticket);
                             }
@@ -703,17 +703,17 @@ namespace DataService.Models.Entities.Services
                             {
                                 RequestId = itemRequest.RequestId,
                                 RequestName = itemRequest.RequestName,
-                                CreateDate = itemRequest.CreateDate.ToString("dd/MM/yyyy"),
-                                UpdateDate = itemRequest.UpdateDate != null ? itemRequest.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
+                                CreateDate = itemRequest.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                                UpdateDate = itemRequest.UpdateDate != null ? itemRequest.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
                                 AgencyName = itemRequest.Agency.AgencyName,
                                 RequestStatus = requestStatus,
-                                RequestEstimationTime = itemRequest.CreateDate.AddHours(itemRequest.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
+                                RequestEstimationTime = itemRequest.CreateDate.AddHours(itemRequest.Estimation ?? 0).ToString("HH:mm dd/MM/yyyy"),
                                 //NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
                                 //NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
                                 NumberOfTicket = ticketList.Count,
                                 ITSupporterName = itemRequest.ITSupporter != null ? itemRequest.ITSupporter.ITSupporterName : "Chưa có người xử lý",
-                                StartTime = itemRequest.StartTime != null ? itemRequest.StartTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
-                                EndTime = itemRequest.EndTime != null ? itemRequest.EndTime.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty,
+                                StartTime = itemRequest.StartTime != null ? itemRequest.StartTime.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
+                                EndTime = itemRequest.EndTime != null ? itemRequest.EndTime.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
                                 ITSupporterPhone = itemRequest.ITSupporter != null ? itemRequest.ITSupporter.Telephone : "0773909125",
                                 Tickets = ticketList
                             };
@@ -789,7 +789,7 @@ namespace DataService.Models.Entities.Services
                         request.UpdateDate = now;
 
                         FirebaseService firebaseService = new FirebaseService();
-                        firebaseService.SendNotificationFromFirebaseCloudForApproveRequestDone(request.CurrentITSupporter_Id.Value, request.RequestName, request.Agency.AgencyName, now.ToString("dd/MM/yyyyy"));
+                        firebaseService.SendNotificationFromFirebaseCloudForApproveRequestDone(request.CurrentITSupporter_Id.Value, request.RequestName, request.Agency.AgencyName, now.ToString("HH:mm dd/MM/yyyy"));
                         //foreach (var item in request.Tickets)
                         //{
                         //    item.Current_TicketStatus = (int)TicketStatusEnum.Done;
@@ -865,12 +865,12 @@ namespace DataService.Models.Entities.Services
                     {
                         RequestId = request.RequestId,
                         RequestName = request.RequestName,
-                        CreateDate = request.CreateDate.ToString("dd/MM/yyyy"),
-                        UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("MM/dd/yyyy HH:mm") : string.Empty,
+                        CreateDate = request.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                        UpdateDate = request.UpdateDate != null ? request.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
                         AgencyName = request.Agency.AgencyName,
                         RequestStatus = requestStatus,
                         ITSupporterName = request.ITSupporter != null ? request.ITSupporter.ITSupporterName : string.Empty,
-                        RequestEstimationTime = request.CreateDate.AddHours(request.Estimation ?? 0).ToString("dd/MM/yyyy HH:mm"),
+                        RequestEstimationTime = request.CreateDate.AddHours(request.Estimation ?? 0).ToString("HH:mm dd/MM/yyyy"),
                         //NumberOfTicketDone = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.Done),
                         //NumberTicketInProcessing = ticketList.Count(p => p.Current_TicketStatus == (int)TicketStatusEnum.In_Process),
                         NumberOfTicket = ticketList.Count,
@@ -1110,7 +1110,7 @@ namespace DataService.Models.Entities.Services
                     ticket.DeviceId = ticketItem.DeviceId;
                     ticket.DeviceName = ticketItem.Device.DeviceName;
                     ticket.Desciption = ticketItem.Desciption;
-                    ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+                    ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("HH:mm dd/MM/yyyy") : string.Empty;
                     ticket.DeviceCode = ticketItem.Device.DeviceCode;
                     ticketList.Add(ticket);
                 }

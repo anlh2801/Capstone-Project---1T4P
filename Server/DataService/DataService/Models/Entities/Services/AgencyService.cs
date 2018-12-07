@@ -72,8 +72,8 @@ namespace DataService.Models.Entities.Services
                         AgencyName = item.AgencyName,
                         Address = item.Address,
                         Telephone = item.Telephone,
-                        CreateAt = item.CreateDate.ToString("MM/dd/yyyy"),
-                        UpdateAt = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                        CreateAt = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                        UpdateAt = item.UpdateDate != null ? item.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty
 
                     });
                 }
@@ -106,8 +106,8 @@ namespace DataService.Models.Entities.Services
                         AgencyName = agency.AgencyName,
                         Address = agency.Address,
                         Telephone = agency.Telephone,
-                        CreateAt = agency.CreateDate.ToString("MM/dd/yyyy"),
-                        UpdateAt = agency.UpdateDate != null ? agency.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                        CreateAt = agency.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                        UpdateAt = agency.UpdateDate != null ? agency.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty
                     };
                     return new ResponseObject<AgencyAPIViewModel> { IsError = false, ObjReturn = agencyAPIViewModel, SuccessMessage = "Tìm thấy thông tin chi nhánh!" };
                 }
@@ -169,8 +169,8 @@ namespace DataService.Models.Entities.Services
                         AgencyName = item.AgencyName,
                         Address = item.Address,
                         Telephone = item.Telephone,
-                        CreateAt = item.CreateDate.ToString("MM/dd/yyyy"),
-                        UpdateAt = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                        CreateAt = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                        UpdateAt = item.UpdateDate != null ? item.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty
                     });
                 }
 
@@ -404,16 +404,16 @@ namespace DataService.Models.Entities.Services
                     DeviceTypeId = devices.DeviceTypeId,
                     DeviceName = devices.DeviceName,
                     DeviceCode = devices.DeviceCode,
-                    GuarantyStartDate = devices.GuarantyStartDate != null ? devices.GuarantyStartDate.Value.ToString("MM/dd/yyyy") : string.Empty,
-                    GuarantyEndDate = devices.GuarantyEndDate != null ? devices.GuarantyEndDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    GuarantyStartDate = devices.GuarantyStartDate != null ? devices.GuarantyStartDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
+                    GuarantyEndDate = devices.GuarantyEndDate != null ? devices.GuarantyEndDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
                     Ip = devices.Ip,
                     Port = devices.Port,
                     DeviceAccount = devices.DeviceAccount,
                     DevicePassword = devices.DevicePassword,
-                    SettingDate = devices.SettingDate != null ? devices.SettingDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                    SettingDate = devices.SettingDate != null ? devices.SettingDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
                     Other = devices.Other,
-                    CreateDate = devices.CreateDate.ToString("MM/dd/yyyy"),
-                    UpdateDate = devices.UpdateDate != null ? devices.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                    CreateDate = devices.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                    UpdateDate = devices.UpdateDate != null ? devices.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty
                 };
                 return new ResponseObject<AgencyDeviceAPIViewModel> { IsError = false, SuccessMessage = "Tìm thấy thiết bị!", ObjReturn = agencyDeviceAPIViewModel };
             }
@@ -452,8 +452,8 @@ namespace DataService.Models.Entities.Services
                         RequestId = item.RequestId,
                         DeviceId = item.DeviceId,
                         Desciption = item.Desciption,
-                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
-                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
+                        CreateDate = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty
                     });
                 }
                 return new ResponseObject<List<TicketAPIViewModel>> { IsError = false, SuccessMessage = "Tìm thấy danh sách!", ObjReturn = rsList };
@@ -484,16 +484,16 @@ namespace DataService.Models.Entities.Services
                         DeviceTypeId = item.DeviceTypeId,
                         DeviceName = item.DeviceName,
                         DeviceCode = item.DeviceCode,
-                        GuarantyStartDate = item.GuarantyStartDate != null ? item.GuarantyStartDate.Value.ToString("MM/dd/yyyy") : string.Empty,
-                        GuarantyEndDate = item.GuarantyEndDate != null ? item.GuarantyEndDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        GuarantyStartDate = item.GuarantyStartDate != null ? item.GuarantyStartDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
+                        GuarantyEndDate = item.GuarantyEndDate != null ? item.GuarantyEndDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
                         Ip = item.Ip,
                         Port = item.Port,
                         DeviceAccount = item.DeviceAccount,
                         DevicePassword = item.DevicePassword,
-                        SettingDate = item.SettingDate != null ? item.SettingDate.Value.ToString("MM/dd/yyyy") : string.Empty,
+                        SettingDate = item.SettingDate != null ? item.SettingDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
                         Other = item.Other,
-                        CreateDate = item.CreateDate.ToString("MM/dd/yyyy"),
-                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                        CreateDate = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty
                     });
                 }
                 return new ResponseObject<List<AgencyDeviceAPIViewModel>> { IsError = false, SuccessMessage = "Tìm thấy danh sách thiết bị!", ObjReturn = rsList };

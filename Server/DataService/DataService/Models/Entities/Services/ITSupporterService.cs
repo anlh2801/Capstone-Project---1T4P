@@ -121,8 +121,8 @@ namespace DataService.Models.Entities.Services
                             RatingAVG = item.RatingAVG ?? 0,
                             IsOnline = item.IsOnline.Value == true ? "Online" : "Offline",
                             IsBusy = item.IsBusy.Value == true ? "Đang bận!" : "Chờ việc",
-                            CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
-                            UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                            CreateDate = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                            UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
 
                         });
                     }
@@ -196,8 +196,8 @@ namespace DataService.Models.Entities.Services
                         Address = itSupporter.Address,
                         RatingAVG = itSupporter.RatingAVG ?? 0,
                         IsBusy = itSupporter.IsBusy.Value == true ? "Đang bận!" : "Chờ việc",
-                        CreateDate = itSupporter.CreateDate.ToString("MM/dd/yyyy"),
-                        UpdateDate = itSupporter.UpdateDate != null ? itSupporter.UpdateDate.Value.ToString("MM/dd/yyyy") : string.Empty
+                        CreateDate = itSupporter.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                        UpdateDate = itSupporter.UpdateDate != null ? itSupporter.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty
                     };
                     return new ResponseObject<ITSupporterAPIViewModel> { IsError = false, ObjReturn = itSupporterAPIViewModel, SuccessMessage = "Thành công" };
                 }
@@ -241,7 +241,7 @@ namespace DataService.Models.Entities.Services
                                 Rating = itemRequest.Rating.Value,
                                 AgencyName = itemRequest.Agency.AgencyName,
                                 RequestName = itemRequest.RequestName,
-                                CreateDate = itemRequest.CreateDate != null ? itemRequest.CreateDate.ToString("MM/dd/yyyy") : string.Empty,
+                                CreateDate = itemRequest.CreateDate != null ? itemRequest.CreateDate.ToString("HH:mm dd/MM/yyyy") : string.Empty,
                             });
                         }
                     }
@@ -620,8 +620,8 @@ namespace DataService.Models.Entities.Services
                         GuidelineId = item.GuidelineId,
                         ServiceItemId = item.ServiceItemId,
                         GuidelineName = item.GuidelineName,
-                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
-                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
+                        CreateDate = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty
                     };
                     rsList.Add(guidelineAPIViewModel);
                 }
@@ -863,8 +863,8 @@ namespace DataService.Models.Entities.Services
                             var requestViewModel = new RequestAllTicketWithStatusAgencyAPIViewModel();
                             requestViewModel.RequestName = itemRequest.RequestName;
                             requestViewModel.AgencyName = itemRequest.Agency.AgencyName;
-                            requestViewModel.CreateDate = itemRequest.CreateDate.ToString("dd/MM/yyyy HH:mm");
-                            requestViewModel.EndTime = itemRequest.EndTime != null ? itemRequest.EndTime.Value.ToString("dd/MM/yyyy HH:mm") : "Chờ xác nhận";
+                            requestViewModel.CreateDate = itemRequest.CreateDate.ToString("HH:mm dd/MM/yyyy");
+                            requestViewModel.EndTime = itemRequest.EndTime != null ? itemRequest.EndTime.Value.ToString("HH:mm dd/MM/yyyy") : "Chờ xác nhận";
 
                             requestList.Add(requestViewModel);
                         }
@@ -938,8 +938,8 @@ namespace DataService.Models.Entities.Services
                         var requestViewModel = new RequestAllTicketWithStatusAgencyAPIViewModel();
                         requestViewModel.RequestName = itemRequest.RequestName;
                         requestViewModel.AgencyName = itemRequest.Agency.AgencyName;
-                        requestViewModel.CreateDate = itemRequest.CreateDate.ToString("dd/MM/yyyy HH:mm");
-                        requestViewModel.EndTime = itemRequest.EndTime != null ? itemRequest.EndTime.Value.ToString("dd/MM/yyyy HH:mm") : "Chờ xác nhận";
+                        requestViewModel.CreateDate = itemRequest.CreateDate.ToString("HH:mm dd/MM/yyyy");
+                        requestViewModel.EndTime = itemRequest.EndTime != null ? itemRequest.EndTime.Value.ToString("HH:mm dd/MM/yyyy") : "Chờ xác nhận";
 
                         requestList.Add(requestViewModel);                        
                     }
