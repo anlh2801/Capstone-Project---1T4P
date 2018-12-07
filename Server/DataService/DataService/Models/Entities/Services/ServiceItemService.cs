@@ -46,8 +46,8 @@ namespace DataService.Models.Entities.Services
                     ServiceItemId = item.ServiceItemId,
                     ServiceItemName = item.ServiceItemName,
                     Description = item.Description != null ? item.Description : string.Empty,
-                    CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
-                    UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
+                    CreateDate = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                    UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty
                 });
 
                 count++;
@@ -79,7 +79,7 @@ namespace DataService.Models.Entities.Services
                     ServiceItemId = item.ServiceItemId,
                     ServiceItemName = item.ServiceItemName,
                     Description = item.Description,
-                    CreateDate = item.CreateDate.ToString("dd/MM/yyyy")
+                    CreateDate = item.CreateDate.ToString("HH:mm dd/MM/yyyy")
                 });
 
                 count++;
@@ -102,8 +102,8 @@ namespace DataService.Models.Entities.Services
                         ServiceItemName = serviceItem.ServiceItemName,
                         ServiceItemId = serviceItem.ServiceItemId,
                         Description = serviceItem.Description,
-                        CreateDate = serviceItem.CreateDate.ToString("dd/MM/yyyy"),
-                        UpdateDate = serviceItem.UpdateDate != null ? serviceItem.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
+                        CreateDate = serviceItem.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                        UpdateDate = serviceItem.UpdateDate != null ? serviceItem.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty
                     };
                     return new ResponseObject<ServiceItemAPIViewModel> { IsError = false, ObjReturn = ServiceItemAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
                 }

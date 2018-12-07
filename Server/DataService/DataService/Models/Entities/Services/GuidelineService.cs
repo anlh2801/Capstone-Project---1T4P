@@ -44,8 +44,8 @@ namespace DataService.Models.Entities.Services
                     ServiceItemId = item.ServiceItemId,
                     GuidelineName = item.GuidelineName,
                     GuidelineId = item.GuidelineId,
-                    CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
-                    UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
+                    CreateDate = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                    UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty
                 });
 
                 count++;
@@ -66,8 +66,8 @@ namespace DataService.Models.Entities.Services
                     {
                         GuidelineName = guideline.GuidelineName,
                         GuidelineId = guideline.GuidelineId,
-                        CreateDate = guideline.CreateDate.ToString("dd/MM/yyyy"),
-                        UpdateDate = guideline.UpdateDate != null ? guideline.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
+                        CreateDate = guideline.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                        UpdateDate = guideline.UpdateDate != null ? guideline.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty
                     };
                     return new ResponseObject<GuidelineAPIViewModel> { IsError = false, ObjReturn = GuidelineAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
                 }

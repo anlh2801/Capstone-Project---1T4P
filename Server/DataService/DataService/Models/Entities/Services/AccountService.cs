@@ -106,8 +106,8 @@ namespace DataService.Models.Entities.Services
                             RoleName = item.Role.RoleName,
                             Username = item.Username,
                             Password = item.Password,
-                            CreateAt = item.CreateDate.ToString("dd/MM/yyyy"),
-                            UpdateAt = item.UpdateDate.Value.ToString("dd/MM/yyyy"),
+                            CreateAt = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                            UpdateAt = item.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy"),
 
                         });
 
@@ -140,8 +140,8 @@ namespace DataService.Models.Entities.Services
                         RoleName = account.Role.RoleName,
                         Username = account.Username,
                         Password = account.Password,
-                        CreateAt = account.CreateDate.ToString("dd/MM/yyyy"),
-                        UpdateAt = account.UpdateDate.Value.ToString("dd/MM/yyyy"),
+                        CreateAt = account.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                        UpdateAt = account.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy"),
                     };
                     return new ResponseObject<AccountAPIViewModel> { IsError = false, ObjReturn = accountAPIViewModel, SuccessMessage = "Đã tìm thấy tài khoản" };
                 }

@@ -38,8 +38,8 @@ namespace DataService.Models.Entities.Services
                             RoleId = item.RoleId,
                             RoleName = item.RoleName,
                             IsDelete = item.IsDelete,
-                            CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
-                            UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy"),
+                            CreateDate = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                            UpdateDate = item.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy"),
 
                         });
 

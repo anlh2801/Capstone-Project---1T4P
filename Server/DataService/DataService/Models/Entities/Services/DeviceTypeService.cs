@@ -49,8 +49,8 @@ namespace DataService.Models.Entities.Services
                             ServiceName = item.ServiceITSupport.ServiceName,
                             Description = item.Description,
                             IsDelete = item.IsDelete,
-                            CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
-                            UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy"),
+                            CreateDate = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                            UpdateDate = item.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy"),
                         });
                     }
                     count++;
@@ -89,8 +89,8 @@ namespace DataService.Models.Entities.Services
                             ServiceName = item.ServiceITSupport.ServiceName,
                             Description = item.Description,
                             IsDelete = item.IsDelete,
-                            CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
-                            UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy"),
+                            CreateDate = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                            UpdateDate = item.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy"),
                         });
                     }
                     count++;
@@ -117,8 +117,8 @@ namespace DataService.Models.Entities.Services
                     ServiceId = devicetype.ServiceId,
                     ServiceName = devicetype.ServiceITSupport.ServiceName,
                     Description = devicetype.Description,
-                    CreateDate = devicetype.CreateDate.ToString("dd/MM/yyyy"),
-                    UpdateDate = devicetype.UpdateDate.Value.ToString("dd/MM/yyyy"),
+                    CreateDate = devicetype.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                    UpdateDate = devicetype.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy"),
                 };
                 return new ResponseObject<DeviceTypeAPIViewModel> { IsError = false, ObjReturn = devicetypeAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
             }
