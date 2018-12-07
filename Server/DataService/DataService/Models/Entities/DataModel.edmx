@@ -257,6 +257,7 @@
           <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK_Account_Role">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
@@ -1058,6 +1059,7 @@
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Device" Relationship="DataModel.FK_TicketDetail_Device" FromRole="Ticket" ToRole="Device" />
           <NavigationProperty Name="Request" Relationship="DataModel.FK_Ticket_Request" FromRole="Ticket" ToRole="Request" />
         </EntityType>
@@ -1604,6 +1606,7 @@
           <EntitySetMapping Name="Tickets">
             <EntityTypeMapping TypeName="DataModel.Ticket">
               <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />

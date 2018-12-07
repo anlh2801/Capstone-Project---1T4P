@@ -21,6 +21,7 @@ namespace DataService.Models.Entities
         public bool IsDelete { get; set; }
         public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
+        public string CreateBy { get; set; }
     
         public virtual Device Device { get; set; }
         public virtual Request Request { get; set; }

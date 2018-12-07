@@ -22,6 +22,7 @@ namespace DataService.ViewModels
     			public virtual bool IsDelete { get; set; }
     			public virtual System.DateTime CreateDate { get; set; }
     			public virtual Nullable<System.DateTime> UpdateDate { get; set; }
+    			public virtual string CreateBy { get; set; }
     	
     	public TicketViewModel() : base() { }
     	public TicketViewModel(DataService.Models.Entities.Ticket entity) : base(entity) { }
