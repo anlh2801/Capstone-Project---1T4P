@@ -182,6 +182,7 @@ namespace DataService.Models.Entities.Services
                     ticket.Desciption = ticketItem.Desciption;
                     ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("HH:mm dd/MM/yyyy") : string.Empty;
                     ticket.DeviceCode = ticketItem.Device.DeviceCode;
+                    ticket.CreateBy = ticketItem.CreateBy != null ? ticketItem.CreateBy : String.Empty;
                     ticketList.Add(ticket);
                 }
                 //var timeAgo = TimeAgo(request.CreateDate);

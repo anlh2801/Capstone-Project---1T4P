@@ -313,7 +313,7 @@ namespace DataService.Models.Entities.Services
                     createTicket.DeviceId = item.DeviceId;                    
                     createTicket.Desciption = item.Desciption;
                     createTicket.CreateDate = DateTime.UtcNow.AddHours(7);
-
+                    createTicket.CreateBy = item.CreateBy;
                     ticketRepo.Add(createTicket);
                 }
                 ticketRepo.Save();

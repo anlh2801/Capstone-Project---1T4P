@@ -932,7 +932,8 @@
         var tickets = new Array();
         for (i = 0; i < deviceIds.length; ++i) {
             var ticket = {
-                DeviceId: deviceIds[i]
+                DeviceId: deviceIds[i],
+                CreateBy: 'ADMIN'
             }
             tickets.push(ticket);
         }

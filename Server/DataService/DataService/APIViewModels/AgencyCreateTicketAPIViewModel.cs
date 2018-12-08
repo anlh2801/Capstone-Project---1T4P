@@ -14,6 +14,7 @@ namespace DataService.APIViewModels
         public string Desciption { get; set; }
         public string DeviceName { get; set; }        
         public string CreateDate { get; set; }
+        public string CreateBy { get; set; }
 
     }
 }
