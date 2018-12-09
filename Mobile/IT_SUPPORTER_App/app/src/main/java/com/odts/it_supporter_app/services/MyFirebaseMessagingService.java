@@ -43,6 +43,8 @@ public class MyFirebaseMessagingService extends  com.google.firebase.messaging.F
 //                .build();
 //        NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
 //        manager.notify(123, notification);
+
+
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
@@ -66,7 +68,12 @@ public class MyFirebaseMessagingService extends  com.google.firebase.messaging.F
         editor.putString("TicketsInfo",remoteMessage.getData().get("TicketsInfo"));
         editor.putString("RequestName",remoteMessage.getData().get("RequestName"));
         editor.putString("RequestId",remoteMessage.getData().get("RequestId"));
+        editor.putString("Date", remoteMessage.getData().get("DateSend"));
         editor.commit();
+        Intent launchIntent = getPackageManager().getLaunchIntentForPackage(getPackageName());
+        launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(launchIntent);
+
 
 
         //sendNotification(strTitle,message);
