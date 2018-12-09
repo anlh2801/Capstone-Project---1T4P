@@ -168,7 +168,7 @@ namespace DataService.CustomTools
                 ticketInfo.AppendLine($"Thiết bị: {item.Device.DeviceType.DeviceTypeName} - {item.Device.DeviceName}");
             }
             itSupporterReceiveFirebaseViewModel.TicketsInfo = ticketInfo.ToString();
-
+            itSupporterReceiveFirebaseViewModel.DateSend = DateTime.UtcNow.AddHours(7).ToString("HH:mm:ss");
             return itSupporterReceiveFirebaseViewModel;
         }
 
@@ -218,6 +218,7 @@ namespace DataService.CustomTools
         public string ITSupporterName { get; set; }
         public int AccountId { get; set; }
         public string Username { get; set; }
+        public string DateSend { get; set; }
     }
 
     public class ITSupporterOfflineFirebaseViewModel
