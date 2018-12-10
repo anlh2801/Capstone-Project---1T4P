@@ -132,6 +132,7 @@ namespace DataService.Models.Entities.Services
                     updateAgency.AgencyName = model.AgencyName;
                     updateAgency.Address = model.Address;
                     updateAgency.Telephone = model.Telephone;
+                    updateAgency.Account.Password = model.password;
                     updateAgency.UpdateDate = DateTime.UtcNow.AddHours(7);
 
                     agencyRepo.Edit(updateAgency);
