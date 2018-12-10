@@ -37,7 +37,10 @@ import com.odts.it_supporter_app.utils.CallBackData;
 
 import java.lang.ref.Reference;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -210,7 +213,28 @@ public class RecieveRequestFragment extends Fragment {
                     alertDialogAndroid.show();
                 }
             });
-            new CountDownTimer(25000, 1000) {
+            String nowTime = share2.getString("Date", "");
+            Calendar cal = Calendar.getInstance();
+            Date date = cal.getTime();
+            DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+            String formattedDate = dateFormat.format(date);
+            Date d1 = null;
+            Date d2 = null;
+            try {
+                d1 = dateFormat.parse(nowTime);
+                d2 = dateFormat.parse(formattedDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            long diff = d2.getTime() - d1.getTime();
+            long diffSeconds = 60000 - diff;
+            int timeCountDown = 0;
+            if (share2.getString("checkDate", "") != null) {
+                timeCountDown = (int) diffSeconds;
+            } else {
+                timeCountDown = 60000;
+            }
+            new CountDownTimer(timeCountDown, 1000) {
 
                 public void onTick(long millisUntilFinished) {
                     acceptButton.setText("Chấp nhận: " + millisUntilFinished / 1000);
