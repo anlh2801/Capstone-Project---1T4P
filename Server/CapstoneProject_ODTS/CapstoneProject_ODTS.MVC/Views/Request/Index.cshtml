@@ -170,11 +170,11 @@
 <div class="row col-md-12">
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="fa fa-cogs" aria-hidden="true"></i></span>
+            <span class="info-box-icon bg-gray"><i class="fa fa-cogs" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text" style="width: 200px">Chờ nhân viên xử lý</span>
-                <span class="info-box-number" id="wailting">0</span>
+                <span class="info-box-text" style="width: 200px">Tạo mới</span>
+                <span class="info-box-number" id="new">0</span>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -183,10 +183,10 @@
     <!-- /.col -->
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
-            <span class="info-box-icon bg-primary"><i class="fa fa-wrench" aria-hidden="true"></i></span>
+            <span class="info-box-icon bg-yellow"><i class="fa fa-wrench" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text" style="width: 200px">Đang xử lý</span>
+                <span class="info-box-text" style="width: 200px">Đang và chờxử lý</span>
                 <span class="info-box-number" id="processing">0</span>
             </div>
             <!-- /.info-box-content -->
@@ -202,7 +202,7 @@
             <span class="info-box-icon bg-green"><i class="fa fa-check" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text" style="width: 200px">Hoàn thành</span>
+                <span class="info-box-text" style="width: 200px">Hoàn thành và chờ xác nhận</span>
                 <span class="info-box-number" id="done">0</span>
             </div>
             <!-- /.info-box-content -->
@@ -215,7 +215,7 @@
             <span class="info-box-icon bg-red"><i class="fa fa-times" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text" style="width: 200px">Hủy bỏ</span>
+                <span class="info-box-text" style="width: 200px">Hủy và chờ hủy</span>
                 <span class="info-box-number" id="cancel">0</span>
             </div>
             <!-- /.info-box-content -->
@@ -385,7 +385,7 @@
                     var i;
                     for (i = 0; i < statusList.length; ++i) {
                         if (statusList[i].StatusId === 1) {
-                                $('#wailting').text(statusList[i].NumberOfStatus);
+                                $('#new').text(statusList[i].NumberOfStatus);
                         }
                         else if (statusList[i].StatusId === 2) {
                             $('#processing').text(statusList[i].NumberOfStatus);
