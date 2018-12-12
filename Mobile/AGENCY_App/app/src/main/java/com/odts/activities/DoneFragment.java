@@ -43,7 +43,6 @@ public class DoneFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_done, container, false);
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
-        SharedPreferences.Editor edit = share.edit();
         agencyId = share.getInt("agencyId", 0);
         listView = (ListView) v.findViewById(R.id.listDone);
         requestService = new RequestService();
