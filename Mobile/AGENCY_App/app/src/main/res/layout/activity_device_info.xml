@@ -33,7 +33,7 @@
                 android:layout_marginRight="10dp"
                 android:text="DeviceNameInfo"
                 android:textColor="#FAFAFA"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -43,7 +43,7 @@
                 android:layout_marginRight="5dp"
                 android:text="DeviceCodeInfo"
                 android:textColor="#FAFAFA"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -65,7 +65,7 @@
                     android:paddingLeft="10dp"
                     android:paddingTop="20dp"
                     android:text="Thông tin chung"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <android.support.v7.widget.CardView
@@ -208,7 +208,7 @@
                     android:paddingLeft="10dp"
                     android:paddingTop="10dp"
                     android:text="Thông tin cấu hình"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <android.support.v7.widget.CardView
@@ -350,7 +350,7 @@
                     android:paddingLeft="10dp"
                     android:paddingTop="10dp"
                     android:text="Lịch sử sự cố"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
