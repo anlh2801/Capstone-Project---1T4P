@@ -11,7 +11,9 @@
     <!-- TODO: Update blank fragment layout -->
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toStartOf="@+id/multiple_actions"
+        app:layout_constraintStart_toStartOf="@+id/multiple_actions">
 
         <com.getbase.floatingactionbutton.FloatingActionsMenu
             android:id="@+id/multiple_actions"
@@ -50,11 +52,14 @@
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:orientation="vertical"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="66dp">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/multiple_actions"
+            app:layout_constraintStart_toStartOf="@+id/multiple_actions"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -69,9 +74,9 @@
                         android:id="@+id/textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="20dp"
-                        android:paddingBottom="5dp"
                         android:text="Thông tin sự cố"
                         android:textSize="20dp"
                         android:textStyle="bold" />
@@ -86,6 +91,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -99,13 +105,15 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     app:srcCompat="@drawable/ic_report_problem_black_24dp" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:layout_marginLeft="10dp"
-                                    android:textStyle="bold"
-                                    android:text="Hiện tượng: " />
+                                    android:text="Hiện tượng: "
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:id="@+id/ServiceItemAgencyDetail"
                                     android:layout_width="wrap_content"
@@ -126,13 +134,14 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     app:srcCompat="@drawable/ic_present_to_all_black_24dp" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:layout_marginLeft="10dp"
-                                    android:textStyle="bold"
-                                    android:text="Độ ưu tiên: " />
+                                    android:text="Độ ưu tiên: "
+                                    android:textStyle="bold" />
 
                                 <TextView
                                     android:id="@+id/PriorityAgencyDetail"
@@ -140,17 +149,17 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
 
-                                    android:textStyle="bold"
-                                    android:text="Gấp" />
+                                    android:text="Gấp"
+                                    android:textStyle="bold" />
                             </LinearLayout>
 
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:layout_marginBottom="10dp"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
-                                android:layout_marginBottom="10dp"
                                 android:orientation="horizontal">
 
                                 <ImageView
@@ -159,13 +168,15 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     app:srcCompat="@drawable/ic_date_range_black_24dp" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:layout_marginLeft="10dp"
-                                    android:textStyle="bold"
-                                    android:text="Ngày tạo: " />
+                                    android:text="Ngày tạo: "
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:id="@+id/CreateDateAgencyDetail"
                                     android:layout_width="wrap_content"
@@ -218,10 +229,11 @@
                                 android:id="@+id/historyDevice"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:layout_marginBottom="10dp"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="15dp"
-                                android:layout_marginBottom="10dp"
                                 android:orientation="vertical"></LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -250,28 +262,31 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="15dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginRight="15dp"
                                 android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="5dp"
                                 android:text="Mô ta them ve su co" />
                         </LinearLayout>
                     </android.support.v7.widget.CardView>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="10dp"
-                            android:textStyle="bold"
+                            android:text="Cửa hàng: "
                             android:textSize="20dp"
-                            android:text="Cửa hàng: " />
+                            android:textStyle="bold" />
+
                         <TextView
                             android:id="@+id/AgencyNameAgencyDetail"
                             android:layout_width="wrap_content"
@@ -279,8 +294,9 @@
                             android:layout_gravity="center_vertical"
                             android:text="Passio 47TCV"
                             android:textSize="20dp"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
                     </LinearLayout>
+
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -304,13 +320,15 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     app:srcCompat="@drawable/ic_account_balance_black_24dp" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:layout_marginLeft="10dp"
-                                    android:textStyle="bold"
-                                    android:text="Địa chỉ: " />
+                                    android:text="Địa chỉ: "
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:id="@+id/AgencyAdressAgencuDetails"
                                     android:layout_width="wrap_content"
@@ -322,9 +340,9 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:layout_marginBottom="10dp"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
-                                android:layout_marginBottom="10dp"
                                 android:orientation="horizontal">
 
                                 <ImageView
@@ -333,13 +351,15 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     app:srcCompat="@drawable/ic_local_phone_black_info_gency_24dp" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:layout_marginLeft="10dp"
-                                    android:textStyle="bold"
-                                    android:text="Điện thoại: " />
+                                    android:text="Điện thoại: "
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:id="@+id/AgencyPhoneAgencuDetails"
                                     android:layout_width="wrap_content"

@@ -7,11 +7,14 @@
     tools:context=".activities.GuidelineActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="66dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/linearLayout4"
@@ -50,19 +53,19 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:paddingBottom="5dp"
             android:paddingLeft="10dp"
             android:paddingTop="20dp"
-            android:paddingBottom="5dp"
+            android:text="Các hướng dẫn cần làm"
             android:textSize="25dp"
-            android:text="Các hướng dẫn cần làm" />
+            android:textStyle="bold" />
 
         <ListView
             android:id="@+id/lvGuidline"
-            android:divider="@null"
-            android:dividerHeight="0dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
 
 
     </LinearLayout>
@@ -71,9 +74,9 @@
         android:id="@+id/flbAddTaskFromGuidline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="28dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

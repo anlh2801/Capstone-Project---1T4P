@@ -7,11 +7,14 @@
     tools:context=".activities.DeviceInfoActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="66dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/linearLayout4"
@@ -61,10 +64,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
+                    android:text="Thuộc cửa hàng:"
                     android:textColor="#FAFAFA"
-                    android:text="Thuộc cửa hàng:" />
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>
@@ -82,9 +85,9 @@
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
                     android:paddingLeft="10dp"
                     android:paddingTop="20dp"
-                    android:paddingBottom="5dp"
                     android:text="Thông tin chung"
                     android:textSize="20dp"
                     android:textStyle="bold" />
@@ -103,9 +106,9 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -119,16 +122,17 @@
                                 android:id="@+id/DeviceTypeInfo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
                                 android:text="Loại thiết bị: WIFI" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -142,16 +146,17 @@
                                 android:id="@+id/GuarantyStatus"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
                                 android:text="Hết bảo hành: 20/11/2018" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -165,16 +170,17 @@
                                 android:id="@+id/GuarantyStartDateInfo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
                                 android:text="Kích hoạt bảo hành: 19/02/2018" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -188,17 +194,18 @@
                                 android:id="@+id/GuarantyEndDate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:layout_gravity="center_vertical"
-                                android:textColor="#C62828"
-                                android:text="Hết bảo hành: 20/11/2018" />
+                                android:layout_marginLeft="10dp"
+                                android:text="Hết bảo hành: 20/11/2018"
+                                android:textColor="#C62828" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -212,8 +219,8 @@
                                 android:id="@+id/CreateDateDeviceInfo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
                                 android:text="Ngày thêm vào hệ thống: 12/03/2017" />
                         </LinearLayout>
                     </LinearLayout>
@@ -223,9 +230,9 @@
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
                     android:paddingLeft="10dp"
                     android:paddingTop="10dp"
-                    android:paddingBottom="5dp"
                     android:text="Thông tin cấu hình"
                     android:textSize="20dp"
                     android:textStyle="bold" />
@@ -258,17 +265,17 @@
                                 android:id="@+id/IpDeviceInfo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
                                 android:text="Số IP: 192.168.1.1" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -282,16 +289,17 @@
                                 android:id="@+id/PortDeviceInfo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
                                 android:text="Port: 80" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -305,16 +313,17 @@
                                 android:id="@+id/AccountDeviceInfo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
                                 android:text="Tài khoản thiết bị: admin" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -328,16 +337,17 @@
                                 android:id="@+id/PassWordDeviceInfo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
                                 android:text="Mật khẩu thiết bị: 123456" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -351,8 +361,8 @@
                                 android:id="@+id/SettingDateDeviceInfo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
                                 android:text="Ngày cấu hình: 30/02/2015" />
                         </LinearLayout>
                     </LinearLayout>
@@ -362,9 +372,9 @@
                     android:id="@+id/textView93"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
                     android:paddingLeft="10dp"
                     android:paddingTop="10dp"
-                    android:paddingBottom="5dp"
                     android:text="Lịch sử sự cố"
                     android:textSize="20dp"
                     android:textStyle="bold" />
@@ -383,9 +393,9 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:background="@color/colorPrimary"
+                    android:text="Quay lại"
                     android:textColor="#FAFAFA"
-                    android:textStyle="bold"
-                    android:text="Quay lại" />
+                    android:textStyle="bold" />
             </LinearLayout>
         </ScrollView>
 
