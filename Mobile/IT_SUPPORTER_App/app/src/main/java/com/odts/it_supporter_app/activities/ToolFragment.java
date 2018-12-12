@@ -74,7 +74,6 @@ public class ToolFragment extends Fragment {
         itSupporterService = new ITSupporterService();
         rqName = (TextView) v.findViewById(R.id.txtRequestName);
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
-        SharedPreferences.Editor edit = share.edit();
         itSupporterId = share.getInt("itSupporterId", 0);
         _requestService.getRequestByRequestIdAndITSupporterId(getActivity(), itSupporterId, new CallBackData<Request>() {
             @Override

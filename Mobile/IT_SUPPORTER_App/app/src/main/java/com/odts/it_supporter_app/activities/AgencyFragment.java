@@ -83,8 +83,6 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
         final TextView txtPhoneAgency = v.findViewById(R.id.AgencyPhoneAgencuDetails);
         final TextView numberDevice = v.findViewById(R.id.numberDevice);
         final TextView descriptionAgencyInfo = v.findViewById(R.id.DescriptionAgencyInfo);
-//        final ImageButton deviceDetail = v.findViewById(R.id.imageButton4);
-
         btnCall = v.findViewById(R.id.action_a);
         btnChat = v.findViewById(R.id.action_b);
         final FloatingActionsMenu menu = v.findViewById(R.id.multiple_actions);
@@ -92,7 +90,6 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
         historyDevice = v.findViewById(R.id.historyDevice);
         menu.bringToFront();
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
-        SharedPreferences.Editor edit = share.edit();
         final int itSupporterId = share.getInt("itSupporterId", 0);
         requestService = new RequestService();
         deviceService = new DeviceService();
@@ -118,7 +115,6 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                                     if (!listDeviceRequest.contains(devices.get(i).getDeviceId())) {
                                         listDevices.add(new MultiSelectModel(devices.get(i).getDeviceId(), devices.get(i).getDeviceName()));
                                     }
-//                                    listDevices.add(new MultiSelectModel(devices.get(i).getDeviceId(), devices.get(i).getDeviceName()));
                                 }
 
                                 final ArrayList<Integer> alreadyTickets = new ArrayList<>();
@@ -165,10 +161,7 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                 });
 
                 int numberDeviceString = request.getTicket().size();
-
                 agencyName.setText(request.getAgencyName());
-                //rqName.setText(request.getRequestName());
-
                 if (request.getPriority().equalsIgnoreCase("Cao")) {
                     priority.setText(request.getPriority());
                     priority.setTextColor(Color.parseColor("#C62828"));
@@ -184,7 +177,7 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                 txtPhoneAgency.setText(request.getPhoneNumber());
                 txtAddressAgency.setText(request.getAgencyAddress());
                 String requesDes = request.getRequestDesciption();
-                if(request.getRequestDesciption().contains("Unknown#")) {
+                if (request.getRequestDesciption().contains("Unknown#")) {
                     String finalDes = requesDes.replace("Unknown#", "");
                     descriptionAgencyInfo.setText(finalDes);
                     numberDevice.setText(String.valueOf(numberDeviceString) + " thiết bị và 1 chưa xác định");
