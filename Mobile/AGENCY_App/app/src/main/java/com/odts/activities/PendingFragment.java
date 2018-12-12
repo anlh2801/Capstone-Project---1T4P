@@ -40,7 +40,6 @@ public class PendingFragment extends Fragment {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_pending, container, false);
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
-        SharedPreferences.Editor edit = share.edit();
         listView = (ListView) v.findViewById(R.id.listPending);
         agencyId = share.getInt("agencyId", 0);
         _requestService = new RequestService();
