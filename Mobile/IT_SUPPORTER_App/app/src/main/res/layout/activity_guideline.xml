@@ -34,7 +34,7 @@
                 android:layout_marginRight="10dp"
                 android:text="Hướng dẫn"
                 android:textColor="#FAFAFA"
-                android:textSize="40dp"
+                android:textSize="40sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -44,7 +44,7 @@
                 android:layout_marginRight="5dp"
                 android:text="Wifi hu"
                 android:textColor="#FAFAFA"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -57,7 +57,7 @@
             android:paddingLeft="10dp"
             android:paddingTop="20dp"
             android:text="Các hướng dẫn cần làm"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <ListView

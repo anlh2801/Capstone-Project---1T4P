@@ -55,7 +55,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Tổng"
                                 android:textColor="#FAFAFA"
-                                android:textSize="20dp"
+                                android:textSize="20sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -79,7 +79,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Sự cố đã hỗ trợ:"
                                 android:textColor="#FFFFFF"
-                                android:textSize="15dp"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -90,7 +90,7 @@
                                 android:layout_marginEnd="16dp"
                                 android:text="000"
                                 android:textColor="#FFFFFF"
-                                android:textSize="15dp" />
+                                android:textSize="15sp" />
 
                         </LinearLayout>
 
@@ -105,7 +105,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Số giờ hỗ trợ:"
                                 android:textColor="#FFFFFF"
-                                android:textSize="15dp"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -116,7 +116,7 @@
                                 android:layout_marginEnd="16dp"
                                 android:text="0 giờ 00 phút"
                                 android:textColor="#FFFFFF"
-                                android:textSize="15dp"
+                                android:textSize="15sp"
 
                                 tools:layout_editor_absoluteY="13dp" />
                         </LinearLayout>
@@ -166,7 +166,7 @@
                         android:layout_height="wrap_content"
                         android:text="Tháng này"
                         android:textColor="#FAFAFA"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -190,7 +190,7 @@
                         android:layout_height="wrap_content"
                         android:text="Sự cố đã hỗ trợ:"
                         android:textColor="#FFFFFF"
-                        android:textSize="15dp"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -201,7 +201,7 @@
                         android:layout_marginEnd="16dp"
                         android:text="000"
                         android:textColor="#FFFFFF"
-                        android:textSize="15dp" />
+                        android:textSize="15sp" />
 
                 </LinearLayout>
 
@@ -216,7 +216,7 @@
                         android:layout_height="wrap_content"
                         android:text="Số giờ hỗ trợ:"
                         android:textColor="#FFFFFF"
-                        android:textSize="15dp"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -230,7 +230,7 @@
                         android:layout_marginEnd="16dp"
                         android:text="0 giờ 00 phút"
                         android:textColor="#FFFFFF"
-                        android:textSize="15dp"
+                        android:textSize="15sp"
 
                         tools:layout_editor_absoluteY="13dp" />
                 </LinearLayout>

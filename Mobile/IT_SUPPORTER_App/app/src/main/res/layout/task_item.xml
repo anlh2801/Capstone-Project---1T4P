@@ -23,7 +23,7 @@
         android:layout_height="36dp"
         android:gravity="center_vertical"
         android:text="DeviceName"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:textStyle="bold" />
 
     <ImageButton
