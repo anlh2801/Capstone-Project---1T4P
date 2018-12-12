@@ -35,7 +35,6 @@
                 android:id="@+id/txtNoD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtRequestNamee"
                 android:padding="3dp"
                 android:text="Thiết bị cần xử lý" />
 
@@ -43,7 +42,6 @@
                 android:id="@+id/txtCreateDatee"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/txtRequestNamee"
                 android:padding="3dp"
                 android:text="ngày tháng năm" />
         </LinearLayout>
