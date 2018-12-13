@@ -896,14 +896,14 @@ namespace DataService.Models.Entities.Services
                 FirebaseService firebaseService = new FirebaseService();
                 firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(itSupporterId, requestId);
 
-                int counter = 60;
+                //int counter = 60;
 
-                while (counter > 0)
-                {
-                    counter--;
-                    Thread.Sleep(1000);
-                }
-                this.AcceptRequestFromITSupporter(itSupporterId, requestId, false);
+                //while (counter > 0)
+                //{
+                //    counter--;
+                //    Thread.Sleep(1000);
+                //}
+                //this.AcceptRequestFromITSupporter(itSupporterId, requestId, false);
             }
 
 
@@ -918,6 +918,10 @@ namespace DataService.Models.Entities.Services
                 if (isAccept)
                 {
                     var request = requestRepo.GetActive().SingleOrDefault(p => p.RequestId == requestId);
+                    if (request != null && request.CurrentITSupporter_Id != null)
+                    {
+                        return new ResponseObject<bool> { IsError = true, WarningMessage = $"Sự cố đã được nhận bởi {request.ITSupporter.ITSupporterName}", ObjReturn = false };
+                    }
                     var itSupporter = itSupporterRepo.GetActive().SingleOrDefault(p => p.ITSupporterId == itSupporterId);
 
                     if (request != null && itSupporter != null)
@@ -991,14 +995,14 @@ namespace DataService.Models.Entities.Services
                                 FirebaseService firebaseService = new FirebaseService();
                                 firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(idSupporterListWithWeightNext.ITSupporterId, requestId);
 
-                                int counter = 60;
+                                //int counter = 60;
 
-                                while (counter > 0)
-                                {
-                                    counter--;
-                                    Thread.Sleep(1000);
-                                }
-                                this.AcceptRequestFromITSupporter(idSupporterListWithWeightNext.ITSupporterId, requestId, false);
+                                //while (counter > 0)
+                                //{
+                                //    counter--;
+                                //    Thread.Sleep(1000);
+                                //}
+                                //this.AcceptRequestFromITSupporter(idSupporterListWithWeightNext.ITSupporterId, requestId, false);
 
 
                                 return new ResponseObject<bool> { IsError = false, WarningMessage = "Nhận oki", ObjReturn = true };
@@ -1014,14 +1018,14 @@ namespace DataService.Models.Entities.Services
                                     FirebaseService firebaseService = new FirebaseService();
                                     firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
 
-                                    int counter = 60;
+                                    //int counter = 60;
 
-                                    while (counter > 0)
-                                    {
-                                        counter--;
-                                        Thread.Sleep(1000);
-                                    }
-                                    this.AcceptRequestFromITSupporter(result.ObjReturn, requestId, false);
+                                    //while (counter > 0)
+                                    //{
+                                    //    counter--;
+                                    //    Thread.Sleep(1000);
+                                    //}
+                                    //this.AcceptRequestFromITSupporter(result.ObjReturn, requestId, false);
                                 }
                             }
                         }
@@ -1062,15 +1066,15 @@ namespace DataService.Models.Entities.Services
                             idSupporterListWithWeightNext = idSupporterListWithWeights.FirstOrDefault();
                             firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(idSupporterListWithWeightNext.ITSupporterId, requestId);
 
-                            int counter = 60;
+                            //int counter = 60;
 
-                            while (counter > 0)
-                            {
-                                Console.WriteLine($"Gửi lại sau khi từ chối trong {counter} giây");
-                                counter--;
-                                Thread.Sleep(1000);
-                            }
-                            AcceptRequestFromITSupporter(idSupporterListWithWeightNext.ITSupporterId, requestId, false);
+                            //while (counter > 0)
+                            //{
+                            //    Console.WriteLine($"Gửi lại sau khi từ chối trong {counter} giây");
+                            //    counter--;
+                            //    Thread.Sleep(1000);
+                            //}
+                            //AcceptRequestFromITSupporter(idSupporterListWithWeightNext.ITSupporterId, requestId, false);
                         }
                     }
                 }
