@@ -48,7 +48,6 @@ public class CancleFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_cancle, container, false);
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
-        SharedPreferences.Editor edit = share.edit();
         agencyId = share.getInt("agencyId", 0);
         listView = (ListView) v.findViewById(R.id.listCancel) ;
         requestService = new RequestService();

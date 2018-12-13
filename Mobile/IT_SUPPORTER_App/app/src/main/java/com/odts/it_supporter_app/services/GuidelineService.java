@@ -23,18 +23,18 @@ import retrofit2.Response;
 import retrofit2.Call;
 
 public class GuidelineService {
-    public void getGuidelineByServiceItemID (final Context context, int serviceItemId, final CallBackData<ArrayList<Guideline>> callBackData) {
+    public void getGuidelineByServiceItemID(final Context context, int serviceItemId, final CallBackData<ArrayList<Guideline>> callBackData) {
         IGuidelineApiCaller service = RetrofitInstance.getRetrofitInstance().create(IGuidelineApiCaller.class);
         Call<ResponseObjectReturnList<Guideline>> call = service.getGuidelineByServiceItemID(serviceItemId);
         call.enqueue(new Callback<ResponseObjectReturnList<Guideline>>() {
             @Override
             public void onResponse(Call<ResponseObjectReturnList<Guideline>> call, Response<ResponseObjectReturnList<Guideline>> response) {
-                if(response.code() == 200 && response.body() != null){
+                if (response.code() == 200 && response.body() != null) {
                     if (!response.body().isError()) {
                         callBackData.onSuccess(response.body().getObjList());
                     }
                 } else {
-                    Log.e("MainActivity", "error" );
+                    Log.e("MainActivity", "error");
                 }
             }
 
@@ -54,7 +54,7 @@ public class GuidelineService {
                 if (!response.body().isError()) {
                     Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
                     if (response.body().getObjReturn() != null && response.body().getObjReturn() > 0) {
-                        Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_LONG);
+
                     }
                 }
             }

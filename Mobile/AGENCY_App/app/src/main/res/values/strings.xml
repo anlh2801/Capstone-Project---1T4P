@@ -2,13 +2,4 @@
     <string name="app_name">ODTS_AGENCY_MOBILE</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello pending fragment</string>
-    <string name="hello_processing_fragment">Hello processing fragment</string>
-    <string name="title_activity_request_detail">RequestDetailActivity</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="horizontal_timeline">Horizontal Timeline</string>
-    <string name="vertical_timeline">Vertical Timeline</string>
-    <string name="horizontal_timeline_w_padding">Horizontal Timeline With Line Padding</string>
-    <string name="vertical_timeline_w_padding">Vertical Timeline With Line Padding</string>
 </resources>

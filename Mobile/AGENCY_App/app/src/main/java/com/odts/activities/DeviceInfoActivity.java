@@ -85,7 +85,6 @@ public class DeviceInfoActivity extends AppCompatActivity {
                     View view = inflater.inflate(R.layout.device_history_item, null);
                     TextView txtHienTuong = (TextView) view.findViewById(R.id.txtHienTuong);
                     TextView txtNgayTao = (TextView) view.findViewById(R.id.txtNgayTao);
-
                     txtHienTuong.setText("Hiện tượng: " + item.getServiceItemName());
                     txtNgayTao.setText("Đã bị sự cố ngày: " + item.getCreateDate());
 

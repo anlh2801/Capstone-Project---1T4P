@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:layout_gravity="center_horizontal"
                 android:text="Sự Cố Từ Cửa Hàng" />
 
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:text="AgencyName"                />
             <ImageView
                 android:id="@+id/imageView16"
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="Địa chỉ Cửa Hàng"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
 
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Address"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:layout_gravity="center_horizontal"
                 />
         </LinearLayout>
@@ -82,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sự Cố:"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
             <TextView
                 android:id="@+id/txtRqName"
@@ -95,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Thiết bị cần xử lý: "
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -103,7 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ticket"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
         </LinearLayout>
 

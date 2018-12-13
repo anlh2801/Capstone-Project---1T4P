@@ -75,22 +75,21 @@ public class DoRequestFragment extends Fragment {
     Firebase reference1;
     SegmentedGroup segmentedGroup;
     EditText userInputDialogEditText;
-    RequestService _requestService;
-    TaskService _taskService;
+    RequestService requestService;
+    TaskService taskService;
     ListView listView;
     SharedPreferences share2;
 
 
     public DoRequestFragment() {
-        _requestService = new RequestService();
-        _taskService = new TaskService();
+        requestService = new RequestService();
+        taskService = new TaskService();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getActivity().getIntent();
-        int requestID = intent.getIntExtra("requestId", 0);
     }
 
     @Override
@@ -104,9 +103,8 @@ public class DoRequestFragment extends Fragment {
         itSupporterService = new ITSupporterService();
         rqName = (TextView) v.findViewById(R.id.txtRequestName);
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
-        SharedPreferences.Editor edit = share.edit();
         itSupporterId = share.getInt("itSupporterId", 0);
-        _requestService.getRequestByRequestIdAndITSupporterId(getActivity(), itSupporterId, new CallBackData<Request>() {
+        requestService.getRequestByRequestIdAndITSupporterId(getActivity(), itSupporterId, new CallBackData<Request>() {
             @Override
             public void onSuccess(final Request request) {
                 requestId = request.getRequestId();
@@ -122,9 +120,6 @@ public class DoRequestFragment extends Fragment {
                         String time = map.get("time").toString();
                         String message = map.get("message").toString();
                         setDataListItems(status, time, message);
-//                        if (status.equalsIgnoreCase("Hoàn thành")) {
-//                            btnDone.setVisibility(View.VISIBLE);
-//                        }
                     }
 
                     @Override

@@ -39,8 +39,6 @@ dependencies {
     compile 'com.android.support:design:27.1.1'
     compile 'com.android.support:cardview-v7:27.1.1'
     compile 'com.github.vipulasri:timelineview:1.0.6'
-    compile 'com.jakewharton:butterknife:8.4.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.melnykov:floatingactionbutton:1.3.0'
     compile 'me.riddhimanadib.form-master:form-master:1.1.0'
     compile 'com.github.abumoallim:Android-Multi-Select-Dialog:v1.9'

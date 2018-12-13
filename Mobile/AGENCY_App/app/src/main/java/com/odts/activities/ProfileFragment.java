@@ -30,7 +30,6 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
-    private Button btnLogoutt;
     private SharedPreferences share;
     private TextView txtAgencyName, txtAdrr, txtPhone, txtCompanyName, txtUsername;
     ImageButton imgLogout;
@@ -46,7 +45,6 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
-        SharedPreferences.Editor edit = share.edit();
         agencyId = share.getInt("agencyId", 0);
         getAgencyProfile(agencyId);
     }
@@ -64,7 +62,6 @@ public class ProfileFragment extends Fragment {
         txtUsername = (TextView) v.findViewById(R.id.UsernameProfile);
         imgLogout = (ImageButton) v.findViewById(R.id.imgLogout);
 
-        //btnLogoutt = (Button) v.findViewById(R.id.btnLogout);
         imgLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

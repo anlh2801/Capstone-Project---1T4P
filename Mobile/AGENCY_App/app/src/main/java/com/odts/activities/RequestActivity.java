@@ -40,22 +40,15 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
     int serviceItemId;
     int serviceId;
     int agencyId;
-
     TextView requestName;
     Button btnSave;
     ListView lvDeviceToRequest;
     DeviceRemoveAdapter deviceRemoveAdapter;
-
-
     ImageButton ibtnAddMoreDeviceInRequest;
     BottomSheetBehavior behavior;
     private BottomSheetDialog mBottomSheetDialog;
-    private DeviceAdapter mAdapter;
-
-
     private ArrayList<Device> deviceList;
     private ArrayList<Device> deviceListToRequest = new ArrayList<>();
-
     private RequestService _requestService;
     private DeviceService _deviceService;
 
@@ -109,9 +102,7 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
 
     private void initData() {
         SharedPreferences share = getApplicationContext().getSharedPreferences("ODTS", 0);
-        SharedPreferences.Editor edit = share.edit();
         agencyId = share.getInt("agencyId", 0);
-
         Intent myIntent = getIntent(); // gets the previously created intent
         serviceItemId = myIntent.getIntExtra("serviceItemId", 0);
         serviceId = myIntent.getIntExtra("serviceId", 0);
@@ -220,7 +211,6 @@ public class RequestActivity extends AppCompatActivity implements DeviceAdapter.
         request.setRequestDesciption(txtRequestDesciption.getText().toString());
         request.setRequestName(requestName.getText().toString());
         request.setTicket(listTicket);
-
         _requestService.createRequest(RequestActivity.this, request);
     }
 }
