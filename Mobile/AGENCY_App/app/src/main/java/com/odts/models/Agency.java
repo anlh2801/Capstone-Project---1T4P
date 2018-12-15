@@ -18,6 +18,17 @@ public class Agency {
     @SerializedName("UserName")
     private String userName;
 
+    @SerializedName("password")
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getTelephone() {
         return telephone;
     }

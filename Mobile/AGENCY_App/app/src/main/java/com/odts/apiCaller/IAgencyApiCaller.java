@@ -19,4 +19,6 @@ public interface IAgencyApiCaller {
     Call<ResponseObject<Boolean>> createDevice(@Body Device device);
     @PUT("agency/update_device")
     Call<ResponseObject<Boolean>> updateDevice(@Body Device device);
+    @PUT("agency/update_profile_agency")
+    Call<ResponseObject<Boolean>> updateProfile(@Body Agency agency);
 }
