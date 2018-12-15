@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -58,4 +59,7 @@ public interface IITSupporterApiCaller {
 
     @GET("ITsupporter/check_device_info_by_code")
     Call<ResponseObject<Device>> checkDeviceInfo(@Query("devcieCode") String devcieCode);
+
+    @PUT("ITsuportter/update_profile")
+    Call<ResponseObject<Boolean>> updateProfile(@Body ITSupporter itSupporter);
 }
