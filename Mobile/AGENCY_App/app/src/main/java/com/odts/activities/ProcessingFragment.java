@@ -44,7 +44,6 @@ public class ProcessingFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_processing, container, false);
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
-        SharedPreferences.Editor edit = share.edit();
         listView =v.findViewById(R.id.listProcess);
         agencyId = share.getInt("agencyId", 0);
 

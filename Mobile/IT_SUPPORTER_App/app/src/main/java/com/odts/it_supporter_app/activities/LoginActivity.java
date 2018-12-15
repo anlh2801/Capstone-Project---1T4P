@@ -58,6 +58,8 @@ public class LoginActivity extends AppCompatActivity {
             editor.putString("TicketsInfo",extras.getString("TicketsInfo"));
             editor.putString("RequestName",extras.getString("RequestName"));
             editor.putString("RequestId",extras.getString("RequestId"));
+            editor.putString("Date", extras.getString("DateSend"));
+            editor.putString("checkDate", "checkDate");
             editor.commit();
         }
     }

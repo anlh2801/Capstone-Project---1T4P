@@ -65,21 +65,38 @@
                 </div>
                 <div class="col-md-6" style="margin-top:10px">
                     <label>Trạng Thái:</label>
-                    <select class="form-control select2" type="button" style="width: 99%;float:right;" id="comboStatusE">
-                        <option value="0">--Chọn trạng thái--</option>
-                        <option value="5">Tạo mới</option>
-                        <option value="1">Chờ nhân viên xử lý</option>
-                        <option value="3">Hoàn thành</option>
-                    </select>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="r22" class="minimal r22" value="5">
+                            Tạo mới
+                        </label>
+                        <label>
+                            <input type="radio" name="r22"  class="minimal r22" value="1">
+                            Chờ nhân viên xử lý
+                        </label>
+                        <label>
+                            <input type="radio" name="r22" class="minimal r22" value="3">
+                            Hoàn thành
+                        </label>
+                    </div>
                 </div>
                 <div class="col-md-6" style="margin-top:10px">
                     <label>Độ Ưu Tiên:</label>
-                    <select class="form-control select2" type="button" style="width: 99%;float:right;" id="comboPriorityE">
-                        <option value="0">--Chọn độ ưu tiên--</option>
-                        <option value="1">Cao</option>
-                        <option value="2">Trung bình</option>
-                        <option value="3">Thấp</option>
-                    </select>
+                    <!-- radio -->
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="r11" class="minimal r11" value="1">
+                            Cao
+                        </label>
+                        <label>
+                            <input type="radio" name="r11" class="minimal r11" value="2">
+                            Trung bình
+                        </label>
+                        <label>
+                            <input type="radio" name="r11" class="minimal r11" value="3">
+                            Thấp
+                        </label>
+                    </div>
                 </div>
                 <div class="col-md-12" style="margin-top:10px">
                     <label>Mô Tả hiện tượng:</label>
@@ -127,6 +144,8 @@
         $('#comboDevices').select2({
             dropdownParent: $('#createModal')
         });
+        var radios = $(".r11");
+        var radios1 = $(".r22");
         var devicesAdded = [];
         function getDataEdit(id) {
             $.ajax({
@@ -144,8 +163,18 @@
                     $("#comboAgencyE").val(data.result.ObjReturn.AgencyName);
                     $("#comboSerNameE").val(data.result.ObjReturn.RequestName);
                     $("#comboSerItemE").val(data.result.ObjReturn.ServiceItemName);
-                    $("#comboStatusE").val(data.result.ObjReturn.RequestStatusValue);
-                    $("#comboPriorityE").val(data.result.ObjReturn.PriorityValue);
+                    for (var i = 0, length = radios.length; i < length; i++) {
+                        if (radios[i].value == data.result.ObjReturn.PriorityValue) {
+                            $("input[name=r11][value=" + radios[i].value + "]").prop('checked', true);
+                            break;
+                        }
+                    }
+                    for (var i = 0, length = radios1.length; i < length; i++) {
+                        if (radios1[i].value == data.result.ObjReturn.RequestStatusValue) {
+                            $("input[name=r22][value=" + radios1[i].value + "]").prop('checked', true);
+                            break;
+                        }
+                    }
                     var i;
                     
                     var tickets = data.result.ObjReturn.Tickets;
@@ -161,12 +190,33 @@
             $('#EditModal').modal('show');
         }
         function updateRequest() {
+            var radios = $(".r11");
+            var radios1 = $(".r22");
+            var pri;
+            var sta;
+
+            for (var i = 0, length = radios.length; i < length; i++) {
+                if (radios[i].checked) {
+                    // do whatever you want with the checked radio
+                    pri = radios[i].value;
+                    // only one radio can be logically checked, don't check the rest
+                    break;
+                }
+            }
+            for (var i = 0, length = radios1.length; i < length; i++) {
+                if (radios1[i].checked) {
+                    // do whatever you want with the checked radio
+                    sta = radios1[i].value;
+                    // only one radio can be logically checked, don't check the rest
+                    break;
+                }
+            }
             $.ajax({
                 url: '@Url.Action("UpdateRequest", "Request")',
                 data: {
                     requestId: @requestId,
-                    prioryty: $('#comboPriorityE').val(),
-                    status: $('#comboStatusE').val(),
+                    prioryty: pri,
+                    status: sta,
                     description: $('#DescripE').val()
                 },
                 type: 'POST',
@@ -221,8 +271,11 @@
                     {
                         "aTargets": [2],
                         "mRender": function (data, type, full) {
-                            var del = ' <button type="button" class="btn btn-danger fa fa-close" data-toggle="modal" data-target="" onclick="removeTicket(' + full.TicketId + ')"></button>';
-                            return del;
+                            if (full.CreateBy === 'ADMIN') {
+                                var del = ' <button type="button" id = "btnRemove" class="btn btn-danger fa fa-close" data-toggle="modal" data-target="" onclick="removeTicket(' + full.TicketId + ')"></button>';
+                                return del;
+                            }
+                            return "";
                         }
                     },
                 ],

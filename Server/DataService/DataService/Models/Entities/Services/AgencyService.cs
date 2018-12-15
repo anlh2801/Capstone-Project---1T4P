@@ -129,9 +129,22 @@ namespace DataService.Models.Entities.Services
 
                 if (updateAgency != null)
                 {
-                    updateAgency.AgencyName = model.AgencyName;
-                    updateAgency.Address = model.Address;
-                    updateAgency.Telephone = model.Telephone;
+                    if(model.AgencyName != "")
+                    {
+                        updateAgency.AgencyName = model.AgencyName;
+                    } 
+                    if(model.Address != "")
+                    {
+                        updateAgency.Address = model.Address;
+                    }
+                    if(model.Telephone !="")
+                    {
+                        updateAgency.Telephone = model.Telephone;
+                    }
+                    if(model.password != "")
+                    {
+                        updateAgency.Account.Password = model.password;
+                    }
                     updateAgency.UpdateDate = DateTime.UtcNow.AddHours(7);
 
                     agencyRepo.Edit(updateAgency);
@@ -313,7 +326,7 @@ namespace DataService.Models.Entities.Services
                     createTicket.DeviceId = item.DeviceId;                    
                     createTicket.Desciption = item.Desciption;
                     createTicket.CreateDate = DateTime.UtcNow.AddHours(7);
-
+                    createTicket.CreateBy = item.CreateBy;
                     ticketRepo.Add(createTicket);
                 }
                 ticketRepo.Save();

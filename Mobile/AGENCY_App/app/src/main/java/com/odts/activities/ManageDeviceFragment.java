@@ -47,9 +47,7 @@ public class ManageDeviceFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
-        SharedPreferences.Editor edit = share.edit();
         agencyId = share.getInt("agencyId", 0);
-
         getAllServiceITSupportForAgency(agencyId);
     }
 

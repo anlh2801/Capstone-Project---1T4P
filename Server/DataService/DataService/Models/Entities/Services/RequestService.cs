@@ -182,6 +182,7 @@ namespace DataService.Models.Entities.Services
                     ticket.Desciption = ticketItem.Desciption;
                     ticket.CreateDate = ticketItem.CreateDate != null ? ticketItem.CreateDate.ToString("HH:mm dd/MM/yyyy") : string.Empty;
                     ticket.DeviceCode = ticketItem.Device.DeviceCode;
+                    ticket.CreateBy = ticketItem.CreateBy != null ? ticketItem.CreateBy : String.Empty;
                     ticketList.Add(ticket);
                 }
                 //var timeAgo = TimeAgo(request.CreateDate);
@@ -895,14 +896,14 @@ namespace DataService.Models.Entities.Services
                 FirebaseService firebaseService = new FirebaseService();
                 firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(itSupporterId, requestId);
 
-                int counter = 60;
+                //int counter = 60;
 
-                while (counter > 0)
-                {
-                    counter--;
-                    Thread.Sleep(1000);
-                }
-                this.AcceptRequestFromITSupporter(itSupporterId, requestId, false);
+                //while (counter > 0)
+                //{
+                //    counter--;
+                //    Thread.Sleep(1000);
+                //}
+                //this.AcceptRequestFromITSupporter(itSupporterId, requestId, false);
             }
 
 
@@ -917,6 +918,10 @@ namespace DataService.Models.Entities.Services
                 if (isAccept)
                 {
                     var request = requestRepo.GetActive().SingleOrDefault(p => p.RequestId == requestId);
+                    if (request != null && request.CurrentITSupporter_Id != null)
+                    {
+                        return new ResponseObject<bool> { IsError = true, WarningMessage = $"Sự cố đã được nhận bởi {request.ITSupporter.ITSupporterName}", ObjReturn = false };
+                    }
                     var itSupporter = itSupporterRepo.GetActive().SingleOrDefault(p => p.ITSupporterId == itSupporterId);
 
                     if (request != null && itSupporter != null)
@@ -990,14 +995,14 @@ namespace DataService.Models.Entities.Services
                                 FirebaseService firebaseService = new FirebaseService();
                                 firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(idSupporterListWithWeightNext.ITSupporterId, requestId);
 
-                                int counter = 60;
+                                //int counter = 60;
 
-                                while (counter > 0)
-                                {
-                                    counter--;
-                                    Thread.Sleep(1000);
-                                }
-                                this.AcceptRequestFromITSupporter(idSupporterListWithWeightNext.ITSupporterId, requestId, false);
+                                //while (counter > 0)
+                                //{
+                                //    counter--;
+                                //    Thread.Sleep(1000);
+                                //}
+                                //this.AcceptRequestFromITSupporter(idSupporterListWithWeightNext.ITSupporterId, requestId, false);
 
 
                                 return new ResponseObject<bool> { IsError = false, WarningMessage = "Nhận oki", ObjReturn = true };
@@ -1013,14 +1018,14 @@ namespace DataService.Models.Entities.Services
                                     FirebaseService firebaseService = new FirebaseService();
                                     firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(result.ObjReturn, requestId);
 
-                                    int counter = 60;
+                                    //int counter = 60;
 
-                                    while (counter > 0)
-                                    {
-                                        counter--;
-                                        Thread.Sleep(1000);
-                                    }
-                                    this.AcceptRequestFromITSupporter(result.ObjReturn, requestId, false);
+                                    //while (counter > 0)
+                                    //{
+                                    //    counter--;
+                                    //    Thread.Sleep(1000);
+                                    //}
+                                    //this.AcceptRequestFromITSupporter(result.ObjReturn, requestId, false);
                                 }
                             }
                         }
@@ -1061,15 +1066,15 @@ namespace DataService.Models.Entities.Services
                             idSupporterListWithWeightNext = idSupporterListWithWeights.FirstOrDefault();
                             firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(idSupporterListWithWeightNext.ITSupporterId, requestId);
 
-                            int counter = 60;
+                            //int counter = 60;
 
-                            while (counter > 0)
-                            {
-                                Console.WriteLine($"Gửi lại sau khi từ chối trong {counter} giây");
-                                counter--;
-                                Thread.Sleep(1000);
-                            }
-                            AcceptRequestFromITSupporter(idSupporterListWithWeightNext.ITSupporterId, requestId, false);
+                            //while (counter > 0)
+                            //{
+                            //    Console.WriteLine($"Gửi lại sau khi từ chối trong {counter} giây");
+                            //    counter--;
+                            //    Thread.Sleep(1000);
+                            //}
+                            //AcceptRequestFromITSupporter(idSupporterListWithWeightNext.ITSupporterId, requestId, false);
                         }
                     }
                 }
@@ -1179,24 +1184,50 @@ namespace DataService.Models.Entities.Services
                 var groupRequestByStatus = requests.GroupBy(p => p.RequestStatus).Select(p => new { Status = p.Key, Requests = p.ToList() }).ToList();
 
                 List<StatusAPIViewModel> statusList = new List<StatusAPIViewModel>();
-                foreach (var status in groupRequestByStatus)
-                {
-                    var statusItem = new StatusAPIViewModel();
-                    statusItem.StatusId = status.Status;
-                    //statusItem.StatusName = Enum.GetName(typeof(RequestStatusEnum), status.Status);
-                    var i = 1;
-                    foreach (RequestStatusEnum item in Enum.GetValues(typeof(RequestStatusEnum)))
-                    {
-                        if (status.Status == i)
-                        {
-                            statusItem.StatusName = item.DisplayName();
-                        }
-                        i++;
-                    }
-                    statusItem.NumberOfStatus = status.Requests.Count();
-                    statusList.Add(statusItem);
-                }
+                //foreach (var status in groupRequestByStatus)
+                //{
+                //    var statusItem = new StatusAPIViewModel();
+                //    statusItem.StatusId = status.Status;
+                //    //statusItem.StatusName = Enum.GetName(typeof(RequestStatusEnum), status.Status);
+                //    var i = 1;
+                //    foreach (RequestStatusEnum item in Enum.GetValues(typeof(RequestStatusEnum)))
+                //    {
+                //        if (status.Status == i)
+                //        {
+                //            statusItem.StatusName = item.DisplayName();
+                //        }
+                //        i++;
+                //    }
+                //    statusItem.NumberOfStatus = status.Requests.Count();
+                //    statusList.Add(statusItem);
+                //}
 
+                var newRequest = new StatusAPIViewModel();
+                newRequest.StatusId = 1;
+                newRequest.StatusName = "Tạo mới";
+                newRequest.NumberOfStatus = groupRequestByStatus.SingleOrDefault(p => p.Status == (int)RequestStatusEnum.New).Requests.Count();
+                statusList.Add(newRequest);
+
+                var processingAndWailtProcessRequest = new StatusAPIViewModel();
+                processingAndWailtProcessRequest.StatusId = 2;
+                processingAndWailtProcessRequest.StatusName = "Đang và chờ xử lý";
+                processingAndWailtProcessRequest.NumberOfStatus = (groupRequestByStatus.SingleOrDefault(p => p.Status == (int)RequestStatusEnum.Pending) != null ? groupRequestByStatus.SingleOrDefault(p => p.Status == (int)RequestStatusEnum.Pending).Requests.Count() : 0 )
+                    + (groupRequestByStatus.SingleOrDefault(p => p.Status == (int)RequestStatusEnum.Processing) != null ? groupRequestByStatus.SingleOrDefault(p => p.Status == (int)RequestStatusEnum.Processing).Requests.Count() : 0);
+                statusList.Add(processingAndWailtProcessRequest);
+
+                var doneAndWailtDoneRequest = new StatusAPIViewModel();
+                doneAndWailtDoneRequest.StatusId = 3;
+                doneAndWailtDoneRequest.StatusName = "Hoàn thành và chờ xác nhận";
+                doneAndWailtDoneRequest.NumberOfStatus = (groupRequestByStatus.SingleOrDefault(p => p.Status == (int)RequestStatusEnum.Done) != null ? groupRequestByStatus.SingleOrDefault(p => p.Status == (int)RequestStatusEnum.Done).Requests.Count() : 0) 
+                    + (groupRequestByStatus.SingleOrDefault(p => p.Status == (int)RequestStatusEnum.WaitingDone) != null ? groupRequestByStatus.SingleOrDefault(p => p.Status == (int)RequestStatusEnum.WaitingDone).Requests.Count() : 0);
+                statusList.Add(doneAndWailtDoneRequest);
+
+                var cancelAndWailCancelRequest = new StatusAPIViewModel();
+                cancelAndWailCancelRequest.StatusId = 4;
+                cancelAndWailCancelRequest.StatusName = "Hủy và chờ hủy";
+                cancelAndWailCancelRequest.NumberOfStatus = (groupRequestByStatus.SingleOrDefault(p => p.Status == (int)RequestStatusEnum.Cancel) != null ? groupRequestByStatus.SingleOrDefault(p => p.Status == (int)RequestStatusEnum.Cancel).Requests.Count() : 0)
+                    + (groupRequestByStatus.SingleOrDefault(p => p.Status == (int)RequestStatusEnum.WaitingCancel) != null ? groupRequestByStatus.SingleOrDefault(p => p.Status == (int)RequestStatusEnum.WaitingCancel).Requests.Count() : 0);
+                statusList.Add(cancelAndWailCancelRequest);
 
                 return new ResponseObject<List<StatusAPIViewModel>> { IsError = false, SuccessMessage = "Thống kê thành công!", ObjReturn = statusList };
             }

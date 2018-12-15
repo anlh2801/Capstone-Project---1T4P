@@ -21,7 +21,7 @@
         android:layout_marginLeft="10dp"
         android:text="Guidline details"
         android:textColor="#000000"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
 
 </LinearLayout>

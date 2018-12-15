@@ -94,4 +94,26 @@ public class AgencyService {
             }
         });
     }
+
+    public void updateProfile(final Context context, Agency agency) {
+        IAgencyApiCaller service= RetrofitInstance.getRetrofitInstance().create(IAgencyApiCaller.class);
+        Call<ResponseObject<Boolean>> call = service.updateProfile(agency);
+        call.enqueue(new Callback<ResponseObject<Boolean>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<Boolean>> call, Response<ResponseObject<Boolean>> response) {
+                if (!response.body().isError()) {
+                    Toast.makeText(context, response.body().getSuccessMessage(), Toast.LENGTH_SHORT).show();
+                    if (response.body().getObjReturn() != null) {
+//                        Intent intent = new Intent(context, MainActivity.class);
+//                        context.startActivity(intent);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<Boolean>> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
 }

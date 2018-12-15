@@ -37,7 +37,10 @@ import com.odts.it_supporter_app.utils.CallBackData;
 
 import java.lang.ref.Reference;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -64,52 +67,12 @@ public class RecieveRequestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_recieve_request, container, false);
-//        btnReject = v.findViewById(R.id.btnReject);
-//        btnAccept = v.findViewById(R.id.btnAccept);
-//        txtAgencyAddressRecieveRequest = (TextView) v.findViewById(R.id.txtAgencyAddressRecieveRequest);
-//        txtAgencyNameRecieveRequest = (TextView) v.findViewById(R.id.txtAgencyNameRecieveRequest);
-//        txtRequestNameRecieveRequest = (TextView) v.findViewById(R.id.txtRequestNameRecieveRequest);
-//        txtTicketInfoRecieveRequest = (TextView) v.findViewById(R.id.txtTicketInfoRecieveRequest);
-
-//        ImageView imageView = (ImageView) v.findViewById(R.id.imageView15);
-//        Animation animFade = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.rotate);
-//        imageView.startAnimation(animFade);
-
         share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
         share2 = getActivity().getApplicationContext().getSharedPreferences("firebaseData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = share.edit();
         itSupporterId = share.getInt("itSupporterId", 0);
         itSupportName = share.getString("itName", "");
 
         FirebaseMessaging.getInstance().subscribeToTopic(itSupporterId.toString());
-//        btnAccept.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//                builder
-//                        .setMessage("Bạn chắc chắn nhận sửa không?")
-//                        .setPositiveButton("Có", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                getAllServiceITSupportForAgency(true);
-//                            }
-//                        })
-//                        .setNegativeButton("Không", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                dialog.cancel();
-//                            }
-//                        })
-//                        .show();
-//            }
-//        });
-
-//        btnReject.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                getAllServiceITSupportForAgency(false);
-//            }
-//        });
         String a = share2.getString("AgencyName", null);
         this.requestId = Integer.parseInt(share2.getString("RequestId", "0"));
         if (a != null) {
@@ -125,27 +88,6 @@ public class RecieveRequestFragment extends Fragment {
             agencyName.setText(share2.getString("AgencyName", "").toString());
             agencyAddress.setText(share2.getString("AgencyAddress", "").toString());
             ticketInfo.setText(share2.getString("TicketsInfo", "").toString());
-//            builder
-//                    .setMessage("Bạn có nhận việc không?");
-//                    .setPositiveButton("Có", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int id) {
-//                            getAllServiceITSupportForAgency(true);
-//                            Firebase.setAndroidContext(getActivity());
-//                            Firebase reference1 = new Firebase("https://mystatus-2e32a.firebaseio.com/status/" + requestId);
-//                            final Map<String, String> map = new HashMap<String, String>();
-//                            map.put("status", "Đã nhận");
-//                            map.put("message", "");
-//                            map.put("time", DateFormat.getDateTimeInstance().format(new Date()));
-//                            reference1.push().setValue(map);
-//                        }
-//                    })
-//                    .setNegativeButton("Không", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int id) {
-//                            getAllServiceITSupportForAgency(false);
-//                        }
-//                    });
             builder.setView(confirmView);
             final AlertDialog dlg = builder.create();
             dlg.show();
@@ -166,7 +108,6 @@ public class RecieveRequestFragment extends Fragment {
             rejectButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    getAllServiceITSupportForAgency(false, "Time out");
                     dlg.dismiss();
                     LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getContext());
                     View mView = layoutInflaterAndroid.inflate(R.layout.cause_by, null);
@@ -210,7 +151,28 @@ public class RecieveRequestFragment extends Fragment {
                     alertDialogAndroid.show();
                 }
             });
-            new CountDownTimer(25000, 1000) {
+            String nowTime = share2.getString("Date", "");
+            Calendar cal = Calendar.getInstance();
+            Date date = cal.getTime();
+            DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+            String formattedDate = dateFormat.format(date);
+            Date d1 = null;
+            Date d2 = null;
+            try {
+                d1 = dateFormat.parse(nowTime);
+                d2 = dateFormat.parse(formattedDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            long diff = d2.getTime() - d1.getTime();
+            long diffSeconds = 60000 - diff;
+            int timeCountDown = 0;
+            if (share2.getString("checkDate", "") != null) {
+                timeCountDown = (int) diffSeconds;
+            } else {
+                timeCountDown = 60000;
+            }
+            new CountDownTimer(timeCountDown, 1000) {
 
                 public void onTick(long millisUntilFinished) {
                     acceptButton.setText("Chấp nhận: " + millisUntilFinished / 1000);

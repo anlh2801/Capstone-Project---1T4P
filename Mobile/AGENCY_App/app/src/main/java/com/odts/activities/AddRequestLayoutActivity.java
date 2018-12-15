@@ -60,7 +60,6 @@ public class AddRequestLayoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_request_layout);
         SharedPreferences share = getApplicationContext().getSharedPreferences("ODTS", 0);
-        SharedPreferences.Editor edit = share.edit();
         agencyId = share.getInt("agencyId", 0);
         getAllServiceITSupportForAgency(agencyId);
         btnSave = (Button) findViewById(R.id.btnSaveRequest);

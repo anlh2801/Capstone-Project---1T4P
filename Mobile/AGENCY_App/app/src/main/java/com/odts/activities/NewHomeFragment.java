@@ -40,7 +40,6 @@ public class NewHomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences share = getActivity().getApplicationContext().getSharedPreferences("ODTS", 0);
-        SharedPreferences.Editor edit = share.edit();
         agencyId = share.getInt("agencyId", 0);
         agencyName = share.getString("agencyName", "");
         agencyAddr = share.getString("agencyAddr", "");
