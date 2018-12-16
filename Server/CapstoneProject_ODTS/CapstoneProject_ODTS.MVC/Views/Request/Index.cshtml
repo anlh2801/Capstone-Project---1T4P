@@ -826,6 +826,7 @@
             });
         }
         function getPriority() {
+            $('#comboPriority').empty();
             var html = '';
             html += '<option value="0">--Chọn độ ưu tiên--</option>' + '<option value="1">Thấp</option>' + '<option value="2">Trung bình</option>'
                 + '<option value="3">Cao</option>';
@@ -952,23 +953,31 @@
         }
 
     function createRequest() {
-        var deviceIds = $('#comboDevices').val();
-        var tickets = new Array();
-        for (i = 0; i < deviceIds.length; ++i) {
-            var ticket = {
-                DeviceId: deviceIds[i],
-                CreateBy: 'ADMIN'
-            }
-            tickets.push(ticket);
+        if ($('#comboAgency').val() == 0 ) {
+            swal("Vui lòng chọn chi nhánh", "", "error");
+        } else if ($('#comboSerName').val() == 0) {
+            swal("Vui lòng chọn danh mục", "", "error");
+        } else if ($('#comboSerItem').val() == 0) {
+            swal("Vui lòng chọn hiện tượng", "", "error");
         }
+        else {
+            var deviceIds = $('#comboDevices').val();
+            var tickets = new Array();
+            for (i = 0; i < deviceIds.length; ++i) {
+                var ticket = {
+                    DeviceId: deviceIds[i],
+                    CreateBy: 'ADMIN'
+                }
+                tickets.push(ticket);
+            }
 
-             var empObj = {
-                 AgencyId: $('#comboAgency').val(),
-                 RequestCategoryId: 3,
-                 ServiceItemId: $('#comboSerItem').val(),
-                 RequestName: $("#comboAgency option:selected").text() + " - " + $("#comboSerItem option:selected").text(),
-                 PriorityCreate: $('#comboPriority').val(),
-                 Tickets: tickets,
+            var empObj = {
+                AgencyId: $('#comboAgency').val(),
+                RequestCategoryId: 3,
+                ServiceItemId: $('#comboSerItem').val(),
+                RequestName: $("#comboAgency option:selected").text() + " - " + $("#comboSerItem option:selected").text(),
+                PriorityCreate: $('#comboPriority').val(),
+                Tickets: tickets,
                 AgencyTelephone: $('#PhoneC').val(),
                 RequestDesciption: $('#DescripC').val(),
             }
@@ -989,7 +998,8 @@
                     else
                         swal(data.result.WarningMessage, "", "error");
                 }
-            });
+                });
+            }
         }
         function updateRequest() {
             $.ajax({
