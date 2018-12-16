@@ -177,8 +177,8 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                 txtPhoneAgency.setText(request.getPhoneNumber());
                 txtAddressAgency.setText(request.getAgencyAddress());
                 String requesDes = request.getRequestDesciption();
-                if (request.getRequestDesciption().contains("Unknown#")) {
-                    String finalDes = requesDes.replace("Unknown#", "");
+                if (request.getRequestDesciption().contains("Có thiết bị chưa xác định -")) {
+                    String finalDes = requesDes.replace("Có thiết bị chưa xác định -", "");
                     descriptionAgencyInfo.setText(finalDes);
                     numberDevice.setText(String.valueOf(numberDeviceString) + " thiết bị và 1 chưa xác định");
                 } else {
