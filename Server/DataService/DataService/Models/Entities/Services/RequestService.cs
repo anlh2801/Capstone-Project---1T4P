@@ -1383,6 +1383,7 @@ namespace DataService.Models.Entities.Services
                         ticket.RequestId = requestId;
                         ticket.DeviceId = item;
                         var addBy = request.ITSupporter != null ? request.ITSupporter.ITSupporterName : "Admin";
+                        ticket.CreateBy = request.ITSupporter != null ? request.ITSupporter.ITSupporterName : "ADMIN";
                         ticket.Desciption = $"Được Thêm bởi {addBy} vào lúc {DateTime.UtcNow.AddHours(7)} cho sự cố {request.RequestName}";
                         ticket.CreateDate = DateTime.UtcNow.AddHours(7);
                         ticketRepo.Add(ticket);
