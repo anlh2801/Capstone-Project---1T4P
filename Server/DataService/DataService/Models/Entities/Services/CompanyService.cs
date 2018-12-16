@@ -74,11 +74,11 @@ namespace DataService.Models.Entities.Services
                     CompanyId = company.CompanyId,
                     CompanyName = company.CompanyName,
                     Description = company.Description,
-                    PercentForITSupporterRate = company.PercentForITSupporterRate.Value,
-                    PercentForITSupporterExp = company.PercentForITSupporterExp.Value,
-                    PercentForITSupporterFamiliarWithAgency = company.PercentForITSupporterFamiliarWithAgency.Value,
+                    PercentForITSupporterRate = company.PercentForITSupporterRate ?? 0,
+                    PercentForITSupporterExp = company.PercentForITSupporterExp ?? 0,
+                    PercentForITSupporterFamiliarWithAgency = company.PercentForITSupporterFamiliarWithAgency ?? 0,
                     CreateDate = company.CreateDate.ToString("HH:mm dd/MM/yyyy"),
-                    UpdateDate = company.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy"),
+                    UpdateDate = company.UpdateDate != null ? company.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
                 };
                 return new ResponseObject<CompanyAPIViewModel> { IsError = false, ObjReturn = companyAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
             }

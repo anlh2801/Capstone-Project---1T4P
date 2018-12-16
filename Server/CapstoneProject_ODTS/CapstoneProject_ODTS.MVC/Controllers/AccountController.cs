@@ -34,6 +34,16 @@ namespace CapstoneProject_ODTS.Controllers
 
             return Json(new { result = accounts }, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult GetAllAgencyAccount()
+        {
+            var accounts = _accountDomain.GetAllAgencyAccount();
+            if (accounts.IsError)
+            {
+                return Json(new { result = accounts.ErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { result = accounts }, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult ViewProfile(int account_id)
         {
             var accountdetail = _accountDomain.ViewProfile(account_id);
