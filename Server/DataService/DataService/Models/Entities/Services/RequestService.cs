@@ -273,7 +273,7 @@ namespace DataService.Models.Entities.Services
             {
                 List<RequestAPIViewModel> rsList = new List<RequestAPIViewModel>();
                 var RequestRepo = DependencyUtils.Resolve<IRequestRepository>();
-                var requests = RequestRepo.GetActive(p => p.CreateDate.Month == month && p.CreateDate.Year == year).ToList();
+                var requests = RequestRepo.GetActive(p => p.CreateDate.Month == month && p.CreateDate.Year == year).OrderByDescending(c => c.CreateDate).ToList();
                 if (requests.Count <= 0)
                 {
                     return new ResponseObject<List<RequestAPIViewModel>> { IsError = true, WarningMessage = "Hiển thị yêu cầu thất bại" };
@@ -1383,6 +1383,7 @@ namespace DataService.Models.Entities.Services
                         ticket.RequestId = requestId;
                         ticket.DeviceId = item;
                         var addBy = request.ITSupporter != null ? request.ITSupporter.ITSupporterName : "Admin";
+                        ticket.CreateBy = request.ITSupporter != null ? request.ITSupporter.ITSupporterName : "ADMIN";
                         ticket.Desciption = $"Được Thêm bởi {addBy} vào lúc {DateTime.UtcNow.AddHours(7)} cho sự cố {request.RequestName}";
                         ticket.CreateDate = DateTime.UtcNow.AddHours(7);
                         ticketRepo.Add(ticket);

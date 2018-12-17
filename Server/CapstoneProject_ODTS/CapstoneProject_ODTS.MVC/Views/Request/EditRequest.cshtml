@@ -202,6 +202,9 @@
                     // only one radio can be logically checked, don't check the rest
                     break;
                 }
+                else {
+                    pri = 0;
+                }
             }
             for (var i = 0, length = radios1.length; i < length; i++) {
                 if (radios1[i].checked) {
@@ -247,7 +250,7 @@
                     //"sSearch": "Tìm kiếm:",
                     //"sSearchPlaceholder": "",
                     "sZeroRecords": "Không có dữ liệu phù hợp",
-                    //"sInfo": "Hiển thị từ _START_ đến _END_ trên tổng số _TOTAL_ dòng",
+                    "sInfo": "Hiển thị từ _START_ đến _END_ trên tổng số _TOTAL_ dòng",
                     "sEmptyTable": "Không có dữ liệu",
                     "sInfoFiltered": " - lọc ra từ _MAX_ dòng",
                     "sLengthMenu": "Hiển thị _MENU_ dòng",

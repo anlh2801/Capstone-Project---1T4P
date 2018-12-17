@@ -16,6 +16,7 @@ namespace DataService.Models.Entities.Services
         ResponseObject<AgencyAPIViewModel> CheckLoginForAgency(string username, string password, int roleid);
         ResponseObject<ITSupporterAPIViewModel> CheckLoginForITSupporter(string username, string password, int roleid);
         ResponseObject<List<AccountAPIViewModel>> GetAllAccount();
+        ResponseObject<List<AccountAPIViewModel>> GetAllAgencyAccount();
         ResponseObject<AccountAPIViewModel> ViewProfile(int account_id);
         ResponseObject<bool> CreateAccount(AccountAPIViewModel model);
         ResponseObject<bool> RemoveAccount(int account_id);
@@ -109,6 +110,54 @@ namespace DataService.Models.Entities.Services
                             CreateAt = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
                             UpdateAt = item.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy"),
 
+                        });
+
+                    }
+                    count++;
+                }
+
+                return new ResponseObject<List<AccountAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Lấy danh sách thành công!" };
+            }
+            catch (Exception e)
+            {
+
+                return new ResponseObject<List<AccountAPIViewModel>> { IsError = true, ObjReturn = null, WarningMessage = "Lấy danh sách thất bại!", ErrorMessage = e.ToString() };
+            }
+
+        }
+
+        public ResponseObject<List<AccountAPIViewModel>> GetAllAgencyAccount()
+        {
+            try
+            {
+                
+                List<AgencyAPIViewModel> listAgencyAccount = new List<AgencyAPIViewModel>();
+                var agencyDeviceRepo = DependencyUtils.Resolve<IAgencyRepository>();
+                var agencyAccount = agencyDeviceRepo.GetActive(p => p.Account.RoleId == 3).ToList();
+              
+                List<AccountAPIViewModel> rsList = new List<AccountAPIViewModel>();
+                var accountRepo = DependencyUtils.Resolve<IAccountRepository>();
+                var accounts = accountRepo.GetActive(p => p.RoleId == 3).ToList();
+                var accounts2 = accounts.Where(p => !agencyAccount.Any(o => o.AccountId == p.AccountId)).ToList();
+                // run debug di a               
+                if (accounts.Count <= 0)
+                {
+                    return new ResponseObject<List<AccountAPIViewModel>> { IsError = true, WarningMessage = "Không có tài khoản" };
+                }
+                int count = 1;
+                foreach (var item in accounts2)
+                {
+                    if (!item.IsDelete)
+                    {
+                        rsList.Add(new AccountAPIViewModel
+                        {
+                            NumericalOrder = count,
+                            AccountId = item.AccountId,
+                            RoleName = item.Role.RoleName,
+                            Username = item.Username,
+                            Password = item.Password,
+                            CreateAt = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
+                            UpdateAt = item.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy"),
                         });
 
                     }

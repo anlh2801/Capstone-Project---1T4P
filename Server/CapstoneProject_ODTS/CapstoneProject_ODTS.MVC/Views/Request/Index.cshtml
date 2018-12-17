@@ -57,29 +57,25 @@
                             <input id="idAgency" type="hidden" />
                             <div class="col-md-12">
                                 <label>Chi Nhánh:</label>
-                                <select class="form-control select2" type="button" style="width: 100%;" id="comboAgency" onchange="getSers()"></select>
+                                <select class="form-control select2" type="button" style="width: 100%;" id="comboAgency" onchange="getSers(); activeSer();"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <label>Danh mục:</label>
-                                <select type="button" class="form-control select2" style="width: 100%;" id="comboSerName" onchange="getSerItems()"></select>
+                                <select type="button" class="form-control select2" disabled="true" style="width: 100%;" id="comboSerName" onchange="getSerItems(); activeSerItems();"></select>
                             </div>
                             <input id="idSer" type="hidden" />
                             <div class="col-md-6" style="margin-top:10px">
                                 <label>Hiện tượng:</label>
-                                <select class="form-control select2" type="button" style="width: 99%;" id="comboSerItem" onchange="getDevice()"></select>
+                                <select class="form-control select2" type="button" disabled="true" style="width: 99%;" id="comboSerItem" onchange="getDevice(); activeDevice(); getPriority(); activePriority();"></select>
                             </div>
                             <div class="col-md-6" style="margin-top:10px">
                                 <label>Độ Ưu Tiên:</label>
-                                <select class="form-control select2" type="button" style="width: 99%;float:right;" id="comboPriority">
-                                    <option value="0">--Chọn độ ưu tiên--</option>
-                                    <option value="1">Cao</option>
-                                    <option value="2">Trung bình</option>
-                                    <option value="3">Thấp</option>
+                                <select class="form-control select2" type="button" disabled="true" style="width: 99%;float:right;" id="comboPriority">
                                 </select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <label>Thiết Bị:</label>
-                                <select multiple class="form-control select2" type="button" style="width: 100%;" id="comboDevices"></select>
+                                <select multiple class="form-control select2" disabled="true" type="button" style="width: 100%;" id="comboDevices"></select>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <label>Số Điện Thoại:</label>
@@ -136,9 +132,9 @@
                             <label>Độ Ưu Tiên:</label>
                             <select class="form-control select2" type="button" style="width: 99%;float:right;" id="comboPriorityE">
                                 <option value="0">--Chọn độ ưu tiên--</option>
-                                <option value="1">Cao</option>
+                                <option value="1">Thấp</option>
                                 <option value="2">Trung bình</option>
-                                <option value="3">Thấp</option>
+                                <option value="3">Cao</option>
                             </select>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
@@ -173,7 +169,7 @@
             <span class="info-box-icon bg-gray"><i class="fa fa-cogs" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text" style="width: 200px">Tạo mới</span>
+                <span class="info-box-text" style="width: 200px; height:40px;">Tạo mới</span>
                 <span class="info-box-number" id="new">0</span>
             </div>
             <!-- /.info-box-content -->
@@ -186,7 +182,7 @@
             <span class="info-box-icon bg-yellow"><i class="fa fa-wrench" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text" style="width: 200px">Đang và chờxử lý</span>
+                <span class="info-box-text" style="width: 200px; height:40px;">Đang và chờ xử lý</span>
                 <span class="info-box-number" id="processing">0</span>
             </div>
             <!-- /.info-box-content -->
@@ -202,7 +198,10 @@
             <span class="info-box-icon bg-green"><i class="fa fa-check" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text" style="width: 200px">Hoàn thành và chờ xác nhận</span>
+                <div style="height:40px">
+                    <span class="info-box-text" style="width: 200px">Hoàn thành và </span>
+                    <span class="info-box-text" style="width: 200px">chờ xác nhận</span>
+                </div>
                 <span class="info-box-number" id="done">0</span>
             </div>
             <!-- /.info-box-content -->
@@ -215,7 +214,7 @@
             <span class="info-box-icon bg-red"><i class="fa fa-times" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text" style="width: 200px">Hủy và chờ hủy</span>
+                <span class="info-box-text" style="width: 200px; height:40px;">Hủy và chờ hủy</span>
                 <span class="info-box-number" id="cancel">0</span>
             </div>
             <!-- /.info-box-content -->
@@ -257,46 +256,46 @@
         <select class="form-control select2" type="button" id="requestServiceItem" style="width:100%; margin-bottom:15px;"></select>
     </div>
 </div>
-    <div class="row col-md-12">
-        <!-- Custom Tabs -->
-        <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs" id="curent_tab">
-                <li class="active"><a href="#tab_1" data-toggle="tab" onclick="setValue(5)"><span class="label label-default">Sự cố mới</span></a></li>
-                <li><a href="#tab_1" data-toggle="tab" onclick="setValue(2)"><span class="label label-warning">Sự cố đang và chờ xử lý</span></a></li>
-                <li><a href="#tab_1" data-toggle="tab" onclick="setValue(3)"><span class="label label-success">Sự cố hoàn thành và chờ xác nhận</span></a></li>
-                <li><a href="#tab_1" data-toggle="tab" onclick="setValue(4)"><span class="label label-danger">Sự cố hủy và chờ hủy</span></a></li>
-                <li class="pull-right"><a onclick="showCreateModal()" class="btn btn-primary"><i class="fa fa-plus"></i> Tạo sự cố</a></li>
-                @*<button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Sự Cố</button>*@
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" id="tab_1">
-                    <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
-                        <thead>
-                            <tr>
-                                <th><label>STT</label></th>
-                                <th><label>Tên Sự Cố</label></th>
-                                <th><label>Thời gian</label></th>
-                                <th><label>Tạo bởi</label></th>
-                                <th><label>Độ ưu tiên</label></th>
-                                <th><label>Trạng thái</label></th>
-                                <th><label>Xử lý bởi/Tùy chọn</label></th>
-                                <th><label>Chỉnh Sửa</label></th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-                <!-- /.tab-pane -->
-                <div class="tab-pane" id="tab_2">
-                    Nội dung của tab 2
-                </div>
-               
-                <!-- /.tab-pane -->
+<div class="row col-md-12">
+    <!-- Custom Tabs -->
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs" id="curent_tab">
+            <li class="active"><a href="#tab_1" data-toggle="tab" onclick="setValue(5)"><span class="label label-default">Sự cố mới</span></a></li>
+            <li><a href="#tab_1" data-toggle="tab" onclick="setValue(2)"><span class="label label-warning">Sự cố đang và chờ xử lý</span></a></li>
+            <li><a href="#tab_1" data-toggle="tab" onclick="setValue(3)"><span class="label label-success">Sự cố hoàn thành và chờ xác nhận</span></a></li>
+            <li><a href="#tab_1" data-toggle="tab" onclick="setValue(4)"><span class="label label-danger">Sự cố hủy và chờ hủy</span></a></li>
+            <li class="pull-right"><a onclick="showCreateModal()" class="btn btn-primary"><i class="fa fa-plus"></i> Tạo sự cố</a></li>
+            @*<button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Sự Cố</button>*@
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_1">
+                <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
+                    <thead>
+                        <tr>
+                            <th><label>STT</label></th>
+                            <th><label>Tên Sự Cố</label></th>
+                            <th><label>Thời gian</label></th>
+                            <th><label>Tạo bởi</label></th>
+                            <th><label>Độ ưu tiên</label></th>
+                            <th><label>Trạng thái</label></th>
+                            <th><label>Xử lý bởi/Tùy chọn</label></th>
+                            <th><label>Chỉnh Sửa</label></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
-            <!-- /.tab-content -->
+            <!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_2">
+                Nội dung của tab 2
+            </div>
+
+            <!-- /.tab-pane -->
         </div>
-        <!-- nav-tabs-custom -->
+        <!-- /.tab-content -->
     </div>
+    <!-- nav-tabs-custom -->
+</div>
 
 <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts {
@@ -322,7 +321,7 @@
             showAgency();
             //loadRequest();
             //loadRequestStatistic();
-            
+
             startRefresh();
         });
 
@@ -368,7 +367,18 @@
             loadRequest();
             loadRequestStatistic();
         }
-
+        function activeSer() {
+            $('#comboSerName').prop('disabled', false);
+        }
+        function activeSerItems() {
+            $('#comboSerItem').prop('disabled', false);
+        }
+        function activeDevice() {
+            $('#comboDevices').prop('disabled', false);
+        }
+        function activePriority() {
+            $('#comboPriority').prop('disabled', false);
+        }
         function setValue(tabValue) {
             $('#curent_tab').val(tabValue);
         }
@@ -629,7 +639,7 @@
                                 var asignHero = '<button type="button" class="btn btn-info btn fa fa-user-plus" data-toggle="modal" data-target="" onclick="asignHero(' + full.RequestId + ')"></button>'
                                 var details = '<span class = "label label-warning">Đợi nhân viên phản hồi</span>';
                                 return details + " " + asignHero;
-                            }                            
+                            }
                             else {
                                 //var del = ' <button type="button" class="btn btn-danger fa fa-close" data-toggle="modal" data-target="" onclick="removeResquest(' + full.RequestId + ')"></button>';
                                 return "";
@@ -641,7 +651,7 @@
                         "mRender": function (data, type, full) {
                             if (full.StatusName === "Tạo mới") {
                                 //var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.RequestId + ')"></button>';
-                                var edit = '<a href="@Url.Action("EditRequest", "Request")?requestId=' + full.RequestId + '">Chỉnh sửa thông tin</a>';
+                                var edit = '<a href="@Url.Action("EditRequest", "Request")?requestId=' + full.RequestId + '">Chỉnh sửa</a>';
                                 return edit;
                             } else {
                                 return "";
@@ -654,6 +664,7 @@
         }
         function showCreateModal() {
             $('#createModal').modal('show');
+            showAgency();
         }
         function clearModal() {
             $("#comboDevices").empty();
@@ -666,6 +677,13 @@
                     .prop("checked", "")
                     .end();
             })
+            $('#comboSerName').empty();
+            $('#comboSerItem').empty();
+            $('#comboPriority').empty();
+            $('#comboSerName').prop('disabled', true);
+            $('#comboSerItem').prop('disabled', true);
+            $('#comboDevices').prop('disabled', true);
+            $('#comboPriority').prop('disabled', true);
         }
         function showAgency() {
             $('#comboAgency')
@@ -694,7 +712,7 @@
                     $('#comboAgency').append(html);
                 }
             });
-        }       
+        }
 
         function getSers() {
             var idd = $('#comboAgency').val();
@@ -807,7 +825,14 @@
                 }
             });
         }
-        function asignHero(requestId) {            
+        function getPriority() {
+            $('#comboPriority').empty();
+            var html = '';
+            html += '<option value="0">--Chọn độ ưu tiên--</option>' + '<option value="1">Thấp</option>' + '<option value="2">Trung bình</option>'
+                + '<option value="3">Cao</option>';
+            $('#comboPriority').append(html);
+        }
+        function asignHero(requestId) {
             $.ajax({
                 url: '@Url.RouteUrl(new {action = "FindITSupporterByRequestId", controller = "Request"})',
 
@@ -830,7 +855,7 @@
             });
         }
 
-        function approveRequestDone(requestId) {            
+        function approveRequestDone(requestId) {
             $.ajax({
                 url: '@Url.RouteUrl(new {action = "ApproveRequestDone", controller = "Request"})',
 
@@ -842,7 +867,7 @@
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
                     if (!data.result.IsError) {
-                        swal(data.result.SuccessMessage, "", "success");                       
+                        swal(data.result.SuccessMessage, "", "success");
                         loadRequest();
                         loadRequestStatistic();
                     } else
@@ -928,23 +953,31 @@
         }
 
     function createRequest() {
-        var deviceIds = $('#comboDevices').val();
-        var tickets = new Array();
-        for (i = 0; i < deviceIds.length; ++i) {
-            var ticket = {
-                DeviceId: deviceIds[i],
-                CreateBy: 'ADMIN'
-            }
-            tickets.push(ticket);
+        if ($('#comboAgency').val() == 0 ) {
+            swal("Vui lòng chọn chi nhánh", "", "error");
+        } else if ($('#comboSerName').val() == 0) {
+            swal("Vui lòng chọn danh mục", "", "error");
+        } else if ($('#comboSerItem').val() == 0) {
+            swal("Vui lòng chọn hiện tượng", "", "error");
         }
+        else {
+            var deviceIds = $('#comboDevices').val();
+            var tickets = new Array();
+            for (i = 0; i < deviceIds.length; ++i) {
+                var ticket = {
+                    DeviceId: deviceIds[i],
+                    CreateBy: 'ADMIN'
+                }
+                tickets.push(ticket);
+            }
 
-             var empObj = {
-                 AgencyId: $('#comboAgency').val(),
-                 RequestCategoryId: 3,
-                 ServiceItemId: $('#comboSerItem').val(),
-                 RequestName: $("#comboAgency option:selected").text() + " - " + $("#comboSerItem option:selected").text(),
-                 PriorityCreate: $('#comboPriority').val(),
-                 Tickets: tickets,
+            var empObj = {
+                AgencyId: $('#comboAgency').val(),
+                RequestCategoryId: 3,
+                ServiceItemId: $('#comboSerItem').val(),
+                RequestName: $("#comboAgency option:selected").text() + " - " + $("#comboSerItem option:selected").text(),
+                PriorityCreate: $('#comboPriority').val(),
+                Tickets: tickets,
                 AgencyTelephone: $('#PhoneC').val(),
                 RequestDesciption: $('#DescripC').val(),
             }
@@ -965,7 +998,8 @@
                     else
                         swal(data.result.WarningMessage, "", "error");
                 }
-            });
+                });
+            }
         }
         function updateRequest() {
             $.ajax({

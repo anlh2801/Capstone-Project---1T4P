@@ -387,15 +387,13 @@ namespace DataService.Models.Entities.Services
                 var updateProfile = ITSupporterRepo.GetActive().SingleOrDefault(a => a.ITSupporterId == model.ITSupporterId);
                 if (updateProfile != null)
                 {
-                    updateProfile.ITSupporterName = model.ITSupporterName;
-                    updateProfile.Telephone = model.ITSupporterName;
-                    updateProfile.Email = model.Email;
-                    updateProfile.Gender = model.Gender;
-                    updateProfile.Address = model.Address;
+                    //updateProfile.ITSupporterName = model.ITSupporterName;
+                    updateProfile.Telephone = model.Telephone;
+                    //updateProfile.Email = model.Email;
+                    //updateProfile.Gender = model.Gender;
+                    //updateProfile.Address = model.Address;
                     updateProfile.UpdateDate = DateTime.UtcNow.AddHours(7);
-
                     ITSupporterRepo.Edit(updateProfile);
-
                     ITSupporterRepo.Save();
                     return new ResponseObject<bool> { IsError = false, ObjReturn = true, SuccessMessage = "Cập nhật profile thành công" };
                 }

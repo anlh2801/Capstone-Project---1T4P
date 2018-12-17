@@ -21,6 +21,7 @@ namespace DataService.Domain
         ResponseObject<bool> UpdateProfile(AccountAPIViewModel model);
 
         ResponseObject<AccountAPIViewModel> CheckLogin(string username, string password, int roleId);
+        ResponseObject<List<AccountAPIViewModel>> GetAllAgencyAccount();
     };
 
     public class AccountDomain : BaseDomain, IAccountDomain
@@ -90,6 +91,15 @@ namespace DataService.Domain
             var result = accountService.CheckLogin(username, password, roleId);
 
             return result;
+        }
+
+        public ResponseObject<List<AccountAPIViewModel>> GetAllAgencyAccount()
+        {
+            var accountService = this.Service<IAccountService>();
+
+            var accounts = accountService.GetAllAgencyAccount();
+
+            return accounts;
         }
     }
 }
