@@ -66,6 +66,7 @@ public class ProfleFragment extends Fragment {
                 builder.setView(confirmView);
                 builder
                         .setCancelable(false)
+                        .setTitle("Chỉnh sửa thông tin")
                         .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
                             public void onClick(final DialogInterface dialogBox, int id) {
                                 ITSupporter itSupporter = new ITSupporter();
