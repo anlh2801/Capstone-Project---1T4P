@@ -69,22 +69,22 @@
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <b>Mô Tả:</b><br>
-                                <input class="form-control" type="text" id="comDescriptionCreate" />
+                                <input class="form-control" type="text" id="comDescriptionCreate" required title="Vui lòng nhập mô tả"/>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <h4 class="city"><b>Vui lòng thêm chỉ số để chọn người hỗ trợ phù hợp</b><br></h4>
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <b>Điểm Bình Chọn(%):</b><br>
-                                <input class="form-control" type="text" id="comPercentForITSupporterRate" pattern="(0*(?:[1-9][0-9]?|100))" title="Vui lòng nhập số nguyên" />
+                                <input class="form-control" type="text" id="comPercentForITSupporterRate" required title="Vui lòng nhập điểm bình chọn(%)" pattern="(0*(?:[1-9][0-9]?|100))" title="Vui lòng nhập số nguyên và nhỏ hơn 100" />
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <b>Kinh Nghiệm(%):</b><br>
-                                <input class="form-control" type="text" id="comPercentForITSupporterExp" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên" />
+                                <input class="form-control" type="text" id="comPercentForITSupporterExp" required title="Vui lòng nhập kinh nghiệm(%)" pattern="(0*(?:[1-9][0-9]?|100))" title="Vui lòng nhập số nguyên và nhỏ hơn 100" />
                             </div>
                             <div class="col-md-12" style="margin-top:10px">
                                 <b>Độ Thân Thuộc(%):</b><br>
-                                <input class="form-control" type="text" id="comPercentForITSupporterFami" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên" />
+                                <input class="form-control" type="text" id="comPercentForITSupporterFami" required title="Vui lòng nhập độ thân thuộc(%)" pattern="(0*(?:[1-9][0-9]?|100))" title="Vui lòng nhập số nguyên và nhỏ hơn 100" />
                             </div>
                         </div>
 
@@ -114,22 +114,22 @@
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
                             <b>Mô Tả:</b><br>
-                            <input class="form-control" type="text" id="comDescriptionEdit" />
+                            <input class="form-control" type="text" id="comDescriptionEdit" required title="Vui lòng nhập mô tả"/>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
                             <h4 class="city"><b>Chỉ số chọn người hỗ trợ phù hợp.</b><br></h4>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
                             <b>Điểm Bình Chọn(%):</b><br>
-                            <input class="form-control" type="text" id="editPercentForITSupporterRate" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên"/>
+                            <input class="form-control" type="text" id="editPercentForITSupporterRate" required title="Vui lòng nhập điểm bình chọn(%)" pattern="(0*(?:[1-9][0-9]?|100))" title="Vui lòng nhập số nguyên và nhỏ hơn 100"/>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
                             <b>Kinh Nghiệm(%):</b><br>
-                            <input class="form-control" type="text" id="editPercentForITSupporterExp" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên"/>
+                            <input class="form-control" type="text" id="editPercentForITSupporterExp" required title="Vui lòng nhập kinh nghiệm(%)" pattern="(0*(?:[1-9][0-9]?|100))" title="Vui lòng nhập số nguyên và nhỏ hơn 100"/>
                         </div>
                         <div class="col-md-12" style="margin-top:10px">
                             <b>Độ Thân Thuộc(%):</b><br>
-                            <input class="form-control" type="text" id="editPercentForITSupporterFami" pattern="[0-9]{1,}" title="Vui lòng nhập số nguyên"/>
+                            <input class="form-control" type="text" id="editPercentForITSupporterFami" required title="Vui lòng nhập độ thân thuộc(%)" pattern="(0*(?:[1-9][0-9]?|100))" title="Vui lòng nhập số nguyên và nhỏ hơn 100"/>
                         </div>
                     </div>
                 </div>
@@ -361,6 +361,8 @@
             });
         }
         function createCompany() {
+            comPercentForITSupporterRate;comPercentForITSupporterExp;comPercentForITSupporterFami
+
             var empObj = {
                 CompanyName: $('#comNameCreate').val(),
                 Description: $('#comDescriptionCreate').val(),
