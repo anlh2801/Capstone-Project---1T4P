@@ -37,10 +37,12 @@ namespace DataService.Models.Entities.Services
                 {
                     return new ResponseObject<List<AgencyDeviceAPIViewModel>> { IsError = true, WarningMessage = "Không tìm thấy thiết bị nào!" };
                 }
+                int count = 1;
                 foreach (var item in agencyDevices)
                 {
                     rsList.Add(new AgencyDeviceAPIViewModel
                     {
+                        NumericalOrder = count,
                         AgencyName = item.Agency.AgencyName,
                         CompanyName = item.Agency.Company.CompanyName,
                         DeviceId = item.DeviceId,
@@ -59,6 +61,7 @@ namespace DataService.Models.Entities.Services
                         CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
                         UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                     });
+                    count++;
                 }
 
                 return new ResponseObject<List<AgencyDeviceAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Tìm thấy thiết bị" };

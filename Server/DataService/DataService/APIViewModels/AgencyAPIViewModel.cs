@@ -22,5 +22,7 @@ namespace DataService.APIViewModels
         public string CompanyName { get; set; }
         public string UserName {get; set; }
         public bool IsDelete { get; set; }
+        public int NumericalOrder { get; set; }
+        
     }
 }
