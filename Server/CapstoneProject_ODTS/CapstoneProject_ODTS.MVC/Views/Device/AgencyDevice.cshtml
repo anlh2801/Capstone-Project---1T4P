@@ -526,8 +526,16 @@
             });
             $('#EditModal').modal('show');
         }
-
+        function process(date) {
+            var parts = date.split("/");
+            return new Date(parts[2], parts[1] - 1, parts[0]);
+        }
         function createDevice() {
+            var sD = $('#dvGDateC').val();
+            var eD = $('#dvGEndDateC').val();
+            if (process(sD) > process(eD)) {
+                swal("Ngày kết thúc bảo hành phải lớn hơn ngày bắt đầu.", "", "error");
+            } else {
             var empObj = {
                 AgencyId: @ViewData["ID"],
                 DeviceTypeId: $('#comboDeviceType').val(),
@@ -542,11 +550,6 @@
                 SettingDate: $('#dvSettingDateC').val(),
                 Other: $('#dvOtherC').val(),
             }
-            var sD = $('#dvGDateC').val();
-            var eD = $('#dvGEndDateC').val();
-            if (sD > eD) {
-                swal("Ngày kết thúc bảo hành phải lớn hơn ngày bắt đầu.", "", "error");
-            } else {
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("CreateDevice", "Agency")',

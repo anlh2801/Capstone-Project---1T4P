@@ -171,6 +171,7 @@
         $(document).ready(function() {
             loadCompanyAgency();
             showAccount();
+            showAccountEdit();
             showCompany();
             getComName();
         });
@@ -410,7 +411,7 @@
 
         //show all account on combo box
         function showAccount() {
-            $('#ww, #w')
+            $('#ww')
                 .find('option')
                 .remove()
                 .end();
@@ -432,12 +433,36 @@
                             data.result.ObjReturn[i].Username +
                             '</option>';
                     }
-                    $('#w').append(html);
                     $('#ww').append(html);
-
                 }
             });
 
+        }
+        function showAccountEdit() {
+            $('#w')
+                .find('option')
+                .remove()
+                .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllAccount", "Account")',
+                data: {
+                },
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    var len = data.result.ObjReturn.length;
+                    var html = '<option value="0">--Chọn tài khoản--</option>';
+                    for (var i = 0; i < len; i++) {
+                        html += '<option value="' +
+                            data.result.ObjReturn[i].AccountId +
+                            '">' +
+                            data.result.ObjReturn[i].Username +
+                            '</option>';
+                    }
+                    $('#w').append(html);
+                }
+            });
         }
 
         //create agency when click create button on create modal
@@ -467,31 +492,36 @@
         }
 
         function createAgency() {
-            var empObj = {
-                CompanyId: $('#qq').val(),
-                AccountId: $('#ww').val(),
-                AgencyName: $('#ee').val(),
-                Address: $('#rr').val(),
-                Telephone: $('#tt').val(),
+            if ($('#ww').val() == 0) {
+                swal("Vui lòng chọn tài khoản", "", "error");
             }
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("CreateAgency", "Agency")',
-                data: JSON.stringify(empObj),
-
-                dataType: 'json',
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    if (!data.result.isError) {
-                        clearModal();
-                        $('#createAgencyModal').modal('hide');
-                        loadCompanyAgency();
-                        swal(data.result.SuccessMessage, "", "success");
-                    }
-                    else
-                        swal(data.result.WarningMessage, "", "error");
+            else {
+                var empObj = {
+                    CompanyId: $('#qq').val(),
+                    AccountId: $('#ww').val(),
+                    AgencyName: $('#ee').val(),
+                    Address: $('#rr').val(),
+                    Telephone: $('#tt').val(),
                 }
-            });
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("CreateAgency", "Agency")',
+                    data: JSON.stringify(empObj),
+
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (!data.result.isError) {
+                            clearModal();
+                            $('#createAgencyModal').modal('hide');
+                            loadCompanyAgency();
+                            swal(data.result.SuccessMessage, "", "success");
+                        }
+                        else
+                            swal(data.result.WarningMessage, "", "error");
+                    }
+                });
+            }
         }
 
 
