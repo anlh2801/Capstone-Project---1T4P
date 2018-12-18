@@ -102,7 +102,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title"><b>Chỉnh sửa thông tin</b></h3>
+                    <h3 class="modal-title"><b>Cập nhật thông tin</b></h3>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -152,7 +152,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Chỉnh Sửa</button>
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
                 </div>
             </div>
@@ -279,7 +279,7 @@
                             <th><label>Độ ưu tiên</label></th>
                             <th><label>Trạng thái</label></th>
                             <th><label>Xử lý bởi/Tùy chọn</label></th>
-                            <th><label>Chỉnh Sửa</label></th>
+                            <th><label>Cập nhật</label></th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -651,7 +651,7 @@
                         "mRender": function (data, type, full) {
                             if (full.StatusName === "Tạo mới") {
                                 //var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.RequestId + ')"></button>';
-                                var edit = '<a href="@Url.Action("EditRequest", "Request")?requestId=' + full.RequestId + '">Chỉnh sửa</a>';
+                                var edit = '<a href="@Url.Action("EditRequest", "Request")?requestId=' + full.RequestId + '">Cập nhật</a>';
                                 return edit;
                             } else {
                                 return "";

@@ -44,6 +44,8 @@ namespace DataService.Models.Entities.Services
         ResponseObject<List<AgencyStatisticalAPIViewModel>> GetAgencyStatistic(int agencyId);
 
         ResponseObject<int> CreateRequestMVC(RequestAllTicketWithStatusAgencyAPIViewModel model);
+
+        ResponseObject<bool> UpdateAgency(AgencyUpdateAPIViewModel model);
     }
 
     public partial class AgencyService
@@ -159,6 +161,26 @@ namespace DataService.Models.Entities.Services
 
                 return new ResponseObject<bool> { IsError = true, WarningMessage = "Cập nhật chi nhánh thất bại!", ObjReturn = false, ErrorMessage = e.ToString() };
             }
+        }
+
+        public ResponseObject<bool> UpdateAgency(AgencyUpdateAPIViewModel model)
+        {
+            var agencyRepo = DependencyUtils.Resolve<IAgencyRepository>();
+            var updateAgency = agencyRepo.GetActive().SingleOrDefault(a => a.AgencyId == model.AgencyId);
+
+            if (updateAgency != null)
+            {
+                updateAgency.AgencyName = model.AgencyName;
+                updateAgency.Address = model.Address;
+                updateAgency.Telephone = model.Telephone;
+                updateAgency.UpdateDate = DateTime.UtcNow.AddHours(7);
+
+                agencyRepo.Edit(updateAgency);
+                agencyRepo.Save();
+                return new ResponseObject<bool> { IsError = false, SuccessMessage = "Chỉnh sửa chinh nhánh thành công", ObjReturn = true };
+            }
+
+            return new ResponseObject<bool> { IsError = true, WarningMessage = "Chỉnh sửa chi nhánh thất bại", ObjReturn = false };
         }
 
         public ResponseObject<List<AgencyAPIViewModel>> GetAllAgency()

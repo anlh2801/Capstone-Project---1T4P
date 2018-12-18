@@ -37,6 +37,7 @@ namespace DataService.Domain
         ResponseObject<List<AgencyStatisticalAPIViewModel>> GetAgencyStatistic(int agencyId);
 
         ResponseObject<int> CreateRequestMVC(RequestAllTicketWithStatusAgencyAPIViewModel model);
+
     }
 
     public class AgencyDomain : BaseDomain, IAgencyDomain
@@ -54,7 +55,7 @@ namespace DataService.Domain
         {
             var agencyService = this.Service<IAgencyService>();
 
-            var result = agencyService.UpdateProfile(model);
+            var result = agencyService.UpdateAgency(model);
 
             return result;
         }

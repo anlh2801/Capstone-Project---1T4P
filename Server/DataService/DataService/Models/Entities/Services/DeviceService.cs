@@ -48,16 +48,16 @@ namespace DataService.Models.Entities.Services
                         DeviceTypeId = item.DeviceTypeId,
                         DeviceName = item.DeviceName,
                         DeviceCode = item.DeviceCode,
-                        GuarantyStartDate = item.GuarantyStartDate != null ? item.GuarantyStartDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
-                        GuarantyEndDate = item.GuarantyEndDate != null ? item.GuarantyEndDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
+                        GuarantyStartDate = item.GuarantyStartDate != null ? item.GuarantyStartDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                        GuarantyEndDate = item.GuarantyEndDate != null ? item.GuarantyEndDate.Value.ToString("dd/MM/yyyy") : string.Empty,
                         Ip = item.Ip,
                         Port = item.Port,
                         DeviceAccount = item.DeviceAccount,
                         DevicePassword = item.DevicePassword,
-                        SettingDate = item.SettingDate != null ? item.SettingDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
+                        SettingDate = item.SettingDate != null ? item.SettingDate.Value.ToString("dd/MM/yyyy") : string.Empty,
                         Other = item.Other,
-                        CreateDate = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
-                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty
+                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
+                        UpdateDate = item.UpdateDate != null ? item.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty
                     });
                 }
 
@@ -89,17 +89,17 @@ namespace DataService.Models.Entities.Services
                         AgencyId = item.AgencyId,
                         DeviceTypeId = item.DeviceTypeId,
                         DeviceCode = item.DeviceCode,
-                        GuarantyStartDate = item.GuarantyStartDate != null ? item.GuarantyStartDate.Value.ToString("HH:mm dd/MM/yyyy") : "Chưa có ngày",
-                        GuarantyEndDate = item.GuarantyEndDate.Value.ToString("HH:mm dd/MM/yyyy"),
+                        GuarantyStartDate = item.GuarantyStartDate != null ? item.GuarantyStartDate.Value.ToString("dd/MM/yyyy") : "Chưa có ngày",
+                        GuarantyEndDate = item.GuarantyEndDate.Value.ToString("dd/MM/yyyy"),
                         Ip = item.Ip,
                         Port = item.Port,
                         DeviceAccount = item.DeviceAccount,
                         DevicePassword = item.DevicePassword,
-                        SettingDate = item.SettingDate.Value.ToString("HH:mm dd/MM/yyyy"),
+                        SettingDate = item.SettingDate.Value.ToString("dd/MM/yyyy"),
                         Other = item.Other,
                         IsDelete = item.IsDelete,
-                        CreateDate = item.CreateDate.ToString("HH:mm dd/MM/yyyy"),
-                        UpdateDate = item.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy"),
+                        CreateDate = item.CreateDate.ToString("dd/MM/yyyy"),
+                        UpdateDate = item.UpdateDate.Value.ToString("dd/MM/yyyy"),
                     });
                 }
 
@@ -129,17 +129,17 @@ namespace DataService.Models.Entities.Services
                         DeviceTypeId = device.DeviceTypeId,
                         DeviceTypeName = device.DeviceType.DeviceTypeName,
                         DeviceCode = device.DeviceCode,
-                        GuarantyStartDate = device.GuarantyStartDate != null ? device.GuarantyStartDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
-                        GuarantyEndDate = device.GuarantyEndDate != null ? device.GuarantyEndDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
+                        GuarantyStartDate = device.GuarantyStartDate != null ? device.GuarantyStartDate.Value.ToString("dd/MM/yyyy") : string.Empty,
+                        GuarantyEndDate = device.GuarantyEndDate != null ? device.GuarantyEndDate.Value.ToString("dd/MM/yyyy") : string.Empty,
                         Ip = device.Ip,
                         Port = device.Port,
                         DeviceAccount = device.DeviceAccount,
                         DevicePassword = device.DevicePassword,
-                        SettingDate = device.SettingDate != null ? device.SettingDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
+                        SettingDate = device.SettingDate != null ? device.SettingDate.Value.ToString("dd/MM/yyyy") : string.Empty,
                         Other = device.Other,
                         IsDelete = device.IsDelete,
-                        CreateDate = device.CreateDate.ToString("HH:mm dd/MM/yyyy"),
-                        UpdateDate = device.UpdateDate != null ? device.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
+                        CreateDate = device.CreateDate.ToString("dd/MM/yyyy"),
+                        UpdateDate = device.UpdateDate != null ? device.UpdateDate.Value.ToString("dd/MM/yyyy") : string.Empty,
                     };
                     return new ResponseObject<DeviceAPIViewModel> { IsError = false, ObjReturn = deviceAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
                 }
