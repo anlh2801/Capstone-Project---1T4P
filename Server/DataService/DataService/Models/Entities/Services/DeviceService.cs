@@ -129,17 +129,17 @@ namespace DataService.Models.Entities.Services
                         DeviceTypeId = device.DeviceTypeId,
                         DeviceTypeName = device.DeviceType.DeviceTypeName,
                         DeviceCode = device.DeviceCode,
-                        GuarantyStartDate = device.GuarantyStartDate.Value.ToString("HH:mm dd/MM/yyyy"),
-                        GuarantyEndDate = device.GuarantyEndDate.Value.ToString("HH:mm dd/MM/yyyy"),
+                        GuarantyStartDate = device.GuarantyStartDate != null ? device.GuarantyStartDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
+                        GuarantyEndDate = device.GuarantyEndDate != null ? device.GuarantyEndDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
                         Ip = device.Ip,
                         Port = device.Port,
                         DeviceAccount = device.DeviceAccount,
                         DevicePassword = device.DevicePassword,
-                        SettingDate = device.SettingDate.Value.ToString("HH:mm dd/MM/yyyy"),
+                        SettingDate = device.SettingDate != null ? device.SettingDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
                         Other = device.Other,
                         IsDelete = device.IsDelete,
                         CreateDate = device.CreateDate.ToString("HH:mm dd/MM/yyyy"),
-                        UpdateDate = device.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy"),
+                        UpdateDate = device.UpdateDate != null ? device.UpdateDate.Value.ToString("HH:mm dd/MM/yyyy") : string.Empty,
                     };
                     return new ResponseObject<DeviceAPIViewModel> { IsError = false, ObjReturn = deviceAPIViewModel, SuccessMessage = "Lấy chi tiết thành công" };
                 }
