@@ -953,7 +953,7 @@ namespace DataService.Models.Entities.Services
                     //var itSupporterFound = memoryCacher.GetValue("ITSupporterListWithWeights");
                     var itSupporterFound = redisTools.Get("ITSupporterListWithWeights");
                     Queue<RenderITSupporterListWithWeight> idSupporterListWithWeights;
-                    if (itSupporterFound != null)
+                    if (itSupporterFound != null && itSupporterFound.Count() > 0)
                     {
                         idSupporterListWithWeights = JsonConvert.DeserializeObject<Queue<RenderITSupporterListWithWeight>>(itSupporterFound);
 
