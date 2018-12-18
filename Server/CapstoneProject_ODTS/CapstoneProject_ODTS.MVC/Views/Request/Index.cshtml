@@ -651,7 +651,7 @@
                         "mRender": function (data, type, full) {
                             if (full.StatusName === "Tạo mới") {
                                 //var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.RequestId + ')"></button>';
-                                var edit = '<a href="@Url.Action("EditRequest", "Request")?requestId=' + full.RequestId + '">Chỉnh sửa thông tin</a>';
+                                var edit = '<a href="@Url.Action("EditRequest", "Request")?requestId=' + full.RequestId + '">Chỉnh sửa</a>';
                                 return edit;
                             } else {
                                 return "";

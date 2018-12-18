@@ -134,7 +134,7 @@ namespace Automatic_updating_of_seniority.Services
                 ticketInfo.AppendLine($"Thiết bị: {deviceTypeService.GetAll().SingleOrDefault(dt => dt.DeviceTypeId == device.DeviceTypeId).DeviceTypeName} - {deviceService.GetAll().SingleOrDefault(d => d.DeviceId == item.DeviceId).DeviceName}");
             }
             itSupporterReceiveFirebaseViewModel.TicketsInfo = ticketInfo.ToString();
-
+            itSupporterReceiveFirebaseViewModel.DateSend = DateTime.UtcNow.AddHours(7).ToString("HH:mm:ss");
             return itSupporterReceiveFirebaseViewModel;
         }
 
@@ -185,6 +185,7 @@ namespace Automatic_updating_of_seniority.Services
         public string ITSupporterName { get; set; }
         public int AccountId { get; set; }
         public string Username { get; set; }
+        public string DateSend { get; set; }
     }
 
     public class ITSupporterOfflineFirebaseViewModel
