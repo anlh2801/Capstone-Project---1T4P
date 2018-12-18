@@ -97,6 +97,7 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
         requestService.getRequestByRequestIdAndITSupporterId(getActivity(), itSupporterId, new CallBackData<Request>() {
             @Override
             public void onSuccess(final Request request) {
+
                 requestId = request.getRequestId();
                 serviceItemId = request.getServiceItemId();
                 serviceItemName = request.getServiceItemName();
@@ -207,6 +208,7 @@ public class AgencyFragment extends android.support.v4.app.Fragment {
                     public void onClick(View view) {
                         menu.collapse();
                         Intent intent = new Intent(getActivity(), ChatActivity.class);
+                        intent.putExtra("agencyName", request.getAgencyName());
                         startActivity(intent);
                     }
                 });
