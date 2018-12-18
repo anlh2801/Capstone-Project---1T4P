@@ -1,0 +1,650 @@
+﻿@{
+    var dataContract = ViewData["ID"];
+}
+
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b>Thông tin chi tiết</b></h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Tên Công Ty:</b><br>
+                            <p id="conCompany"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <b>Trạng Thái:</b><br>
+                            <p id="conStt"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top:10px">
+                            <b>Ngày Bắt Đầu:</b><br>
+                            <p id="conStartDate"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top:10px">
+                            <b>Ngày Kết Thúc:</b><br>
+                            <p id="conEndDate"></p>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Dịch Vụ Sử Dụng:</b><br>
+                            <table id="service-table" class="table table-bordered table-hover" cellspacing="0" style="table-layout: auto">
+                                <thead>
+                                    <tr>
+                                        <th><label>STT</label></th>
+                                        <th><label>Tên Dịch Vụ</label></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-6" style="margin-top:10px">
+                            <b>Mô Tả Hợp Đồng:</b><br>
+                            <p id="conName"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top:10px">
+                            <b>Thời hạn:</b><br>
+                            <p id="conDateCountDown"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top:10px">
+                            <b>Giá Hợp Đồng:</b><br>
+                            <p id="conPrice"></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top:10px">
+                            <b>Lần Cập Nhật Cuối:</b><br>
+                            <p id="conUpdateDate"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="shutDownText()">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="contractHidden" />
+<form onsubmit="createContracttt(); return false">
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade2" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title"><b>Tạo hợp đồng mới</b></h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <b>Tên Công Ty:</b><br>
+                                <select class="form-control select2" id="comboCompany" disabled="disabled"></select>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <b>Mô Tả Hợp Đồng:</b><br>
+                                <input class="form-control" type="text" id="conNameCreate" required>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <b>Dịch Vụ Đăng Ký:</b><br>
+                                <select multiple class="form-control select2" style="width: 100%;" id="test"></select>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <b>Ngày Bắt Đầu:</b><br>
+                                <input type="button" style="text-align: left" id="createDate" class="form-control" required>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <b>Ngày Kết Thúc:</b><br>
+                                <input type="button" style="text-align: left" id="endDate" class="form-control" required>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px">
+                                <b>Giá Hợp Đồng:</b><br>
+                                <input type="text" id="price" class="form-control" required pattern="\d*" title="Vui lòng nhập số.">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Tạo Mới</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal()">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form onsubmit="UpdateContract(); return false">
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b>Cập nhật thông tin</b></h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" id="id" />
+                        <div class="col-md-12">
+                            <b>Tên Công Ty:</b><br>
+                            <select class="form-control select2" id="comboCompanyE" disabled="disabled"></select>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Mô Tả Hợp Đồng:</b><br>
+                            <input class="form-control" type="text" id="conNameE">
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Dịch Vụ Đăng Ký:</b><br>
+                            <select multiple class="form-control select2" style="width: 100%;" id="testE"></select>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Ngày Bắt Đầu:</b><br>
+                            <input type="button" style="text-align: left" id="conStartDateE" class="form-control" required>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Ngày Kết Thúc:</b><br>
+                            <input type="button" style="text-align: left" id="conEndDateE" class="form-control" required>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <b>Giá Hợp Đồng:</b><br>
+                            <input type="text" id="conPriceE" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Cập Nhật</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<style>
+    .city {
+        background-color: azure;
+        color: black;
+        padding: 1%;
+        border-left: solid cadetblue;
+        width: 100%;
+    }
+</style>
+<!-- Datatable -->
+<div class="row col-md-12">
+    <h3 class="city" id="comNameShow"></h3>
+</div>
+
+<div class="row col-md-12">
+    <table id="detail-table" class="table table-hover" cellspacing="0" style="table-layout: auto">
+        <thead>
+            <tr>
+                <th><label>STT</label></th>
+                <th><label>Tên Công Ty</label></th>
+                <th><label>Ngày Bắt Đầu</label></th>
+                <th><label>Ngày Kết Thúc</label></th>
+                <th><label>Giá Hợp Đồng</label></th>
+                <th><label>Trạng thái</label></th>
+                <th><label>Tùy Chọn</label></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <div class="NewThing">
+        <button type="button" class="btn btn-primary fa fa-mail-reply-all" style="float:right;margin-top:15px;margin-left:15px;" data-toggle="modal" data-target="" onclick="window.location.href='@Url.Action("Index", "Company")'"><font face="verdana"> Quay Lại Trang Công Ty</button>
+        <button type="button" class="btn btn-primary fa fa-plus" style="float:right;margin-top:15px;" data-toggle="modal" data-target="" onclick="showCreateModal()"><font face="verdana"> Tạo Hợp Đồng</button>
+
+    </div>
+</div>
+
+<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts {
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+    <link href="~/AdminLTE/bower_components/select2/dist/css/select2.css" rel="stylesheet" />
+    <script src="~/AdminLTE/bower_components/select2/dist/js/select2.js"></script>
+
+    <script>
+    $(document).ready(function () {
+        loadContract();
+        showCompany();
+        showSupportService();
+        getComName();
+    });
+    $('#test').select2({
+        dropdownParent: $('#CreateModal')
+        });
+    $('#testE').select2({
+        dropdownParent: $('#EditModal')
+    });
+    function loadContract() {
+        $.ajax({
+        type: 'POST',
+        url: '@Url.Action("GetAllContract",  "Company", new { company_id = dataContract })',
+        data: {
+        },
+        success: function (result) {
+            initDatatable(result.result.ObjReturn);
+        },
+        error: function (error) {
+            showMessage("Cõ lỗi xảy ra. Vui lòng thử lại sau.", "error", "OK");
+        }
+        });
+    }
+    function initDatatable(data) {
+        if (data == null) {
+                $('#detail-table').dataTable().fnClearTable();
+            }
+        $("#detail-table").dataTable().fnDestroy();
+        $("#detail-table").dataTable({
+            stateSave: true,
+            "bFilter": true,
+            "bSort": false,
+            "data": data,
+            "bRetrieve": true,
+            "bScrollCollapse": true,
+            "bProcessing": true,
+            "oLanguage": {
+                "sSearch": "Tìm kiếm:",
+                "sSearchPlaceholder": "",
+                "sZeroRecords": "Không có dữ liệu phù hợp",
+                "sInfo": "Hiển thị từ _START_ đến _END_ trên tổng số _TOTAL_ dòng",
+                "sEmptyTable": "Không có dữ liệu",
+                "sInfoFiltered": " - lọc ra từ _MAX_ dòng",
+                "sLengthMenu": "Hiển thị _MENU_ dòng",
+                "sProcessing": "Đang xử lý...",
+                "oPaginate": {
+                    "sNext": "<i class='fa fa-chevron-right'></i>",
+                    "sPrevious": "<i class='fa fa-chevron-left'></i>"
+                }
+            },
+            "aoColumnDefs": [
+                {
+                    "aTargets": [0, 2, 3, 4, 5, 6],
+                    "bSortable": false,
+                    "sClass": "text-center"
+                },
+            ],
+            "columns": [
+                { "data": "NumericalOrder" },
+                { "data": "CompanyName" },
+                { "data": "StartDate" },
+                { "data": "EndDate" },
+                { "data": "ContractPrice" },
+                {
+                    "aTargets": [5],
+                    "mRender": function (data, type, full) {
+                        if (full.ContractStatus && full.ContractStatus != "") {
+                            return '<span class = "label label-danger">' + full.ContractStatus + '</span>';
+                        }
+                        else {
+                            return '<span class = "label label-success">' + 'Còn Hạn Hợp Đồng' + '</span>';
+                        };
+                    }
+                },
+                {
+                    "aTargets": [6],
+                    "mRender": function (data, type, full) {
+                        var view = ' <button type="button" class="btn btn-info fa fa-eye" data-toggle="modal" data-target="" onclick="getData(' + full.ContractId + ')"></button>';
+                        var edit = ' <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="" onclick="getDataEdit(' + full.ContractId + ')"></button>';
+                        var del = ' <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="" onclick="removeContract(' + full.ContractId + ')"></button>';
+                        return view + " " + edit + " " + del;
+                    }
+                },
+            ],
+            "bAutoWidth": false,
+        });
+        }
+        function initServiceDatatable(data) {
+            if (data == null) {
+                $('#service-table').dataTable().fnClearTable();
+            }
+            $("#service-table").dataTable().fnDestroy();
+            $("#service-table").dataTable({
+                stateSave: true,
+                "bFilter": false,
+                "bSort": false,
+                "data": data,
+                "bRetrieve": true,
+                "bScrollCollapse": true,
+                "bProcessing": true,
+                "oLanguage": {
+                    "sSearch": "Tìm kiếm:",
+                    "sSearchPlaceholder": "Thành phần con",
+                    "sZeroRecords": "Không có dữ liệu phù hợp",
+                    "sInfo": "",
+                    "sEmptyTable": "Không có dữ liệu",
+                    "sInfoFiltered": " - lọc ra từ _MAX_ dòng",
+                    "sLengthMenu": "",
+                    "sProcessing": "Đang xử lý...",
+                    "oPaginate": {
+                        "sNext": "<i class='fa fa-chevron-right'></i>",
+                        "sPrevious": "<i class='fa fa-chevron-left'></i>"
+                    }
+                },
+                "aoColumnDefs": [
+                    {
+                        "aTargets": [0],
+                        "bSortable": false,
+                        "sClass": "text-center"
+                    },
+                ],
+                "columns": [
+                    { "data": "NumericalOrder" },
+                    { "data": "ContractServiceName" },
+                ],
+                "bAutoWidth": false,
+            });
+        }
+    function showCreateModal() {
+        $('#CreateModal').modal('show');
+    }
+    function clearModal() {
+        $('#CreateModal').on('hidden.bs.modal', function (e) {
+            $(this)
+                .find("input,textarea")
+                .val('')
+                .end()
+                .find("input[type=checkbox], input[type=radio]")
+                .prop("checked", "")
+                .end();
+        })
+    }
+
+    function shutDownText() {
+        $("#conCompany").text("");
+        $("#conStt").text("");
+        $("#conStartDate").text("");
+        $("#conEndDate").text("");
+        $("#conName").text("");
+        $("#conUpdateDate").text("");
+        $("#conPrice").text("");
+    }
+    function getComName() {
+
+            $.ajax({
+                url: '@Url.RouteUrl(new { action = "ViewDetail", controller = "Company" })',
+
+                data: {
+                    company_id: @dataContract
+                },
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var html = '';
+                    html = 'Tất Cả Hợp Đồng Của Công Ty ' + data.result.ObjReturn.CompanyName;
+                    $('#comNameShow').append(html);
+                }
+                });
+        }
+
+    function showCompany() {
+        $('#comboCompany, #comboCompanyE')
+            .find('option')
+                    .remove()
+                    .end();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetCompanyDetail", "Company", new { company_id = dataContract })',
+                data: {
+                },
+
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    //$('#createAgency').modal('show');
+                    var len = data.result.ObjReturn.length;
+                    var html = '';
+                    for (var i = 0; i < len; i++) {
+                        html += '<option value="' +
+                            data.result.ObjReturn[i].CompanyId +
+                            '">' +
+                            data.result.ObjReturn[i].CompanyName +
+                            '</option>';
+                    }
+                $('#comboCompany').append(html);
+                $('#comboCompanyE').append(html);
+            }
+        });
+    }
+    function showSupportService() {
+        $('#test,#testE')
+        .find('option')
+                .remove()
+                .end();
+        $.ajax({
+            type: 'GET',
+            url: '@Url.RouteUrl(new {action = "GetAllServiceITSupport", controller = "ServiceITSupport" })',
+            data: {
+            },
+
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function(data) {
+                //$('#createAgency').modal('show');
+                var len = data.result.ObjReturn.length;
+                var html = '';
+                for (var i = 0; i < len; i++) {
+                    html += '<option value="' +
+                        data.result.ObjReturn[i].ServiceITSupportId +
+                        '">' +
+                        data.result.ObjReturn[i].ServiceName +
+                        '</option>';
+                }
+                $('#test').append(html);
+                $('#testE').append(html);
+            }
+        });
+    }
+
+    function getData(idd) {
+        getContractService(idd);
+        $.ajax({
+
+            url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "Contract"})',
+
+            data: {
+                contract_id: idd
+            },
+            type: 'GET',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $("#conCompany").text(data.result.ObjReturn.CompanyName);
+                $("#conName").text(data.result.ObjReturn.ContractName);
+                $("#conDateCountDown").text(data.result.ObjReturn.EndDateCountDown);
+                $("#conStartDate").text(data.result.ObjReturn.StartDate);
+                $("#conEndDate").text(data.result.ObjReturn.EndDate);
+                $("#conUpdateDate").text(data.result.ObjReturn.UpdateDate);
+                $("#conPrice").text(data.result.ObjReturn.ContractPrice);
+                var outExp = data.result.ObjReturn.ContractStatus;
+                if (outExp && outExp != "") {
+                    $("#conStt").text(outExp);
+                }
+                else {
+                    $("#conStt").text('Còn Hạn Hợp Đồng');
+                };
+            }
+        });
+        $('#ViewModal').modal('show');
+    }
+    function getContractService(idd) {
+        $.ajax({
+            url: '@Url.RouteUrl(new {action = "ViewAllContractServiceByContractId", controller = "Contract"})',
+
+            data: {
+                contract_id: idd
+            },
+            type: 'GET',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                initServiceDatatable(data.result.ObjReturn);
+            }
+        });
+    }
+    $('#createDate').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        forceParse: false,
+    })
+    $('#endDate').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        forceParse: false,
+    })
+    $('#conStartDateE').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        forceParse: false,
+    })
+    $('#conEndDateE').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        forceParse: false,
+    })
+
+    function getDataEdit(id) {
+        $.ajax({
+            url: '@Url.RouteUrl(new {action = "ViewDetail", controller = "Contract" })',
+            data: {
+                contract_id: id
+            },
+            type: 'GET',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                var arr = data.result.ObjReturn.ServiceIdList;
+                var arr2 = [];
+                var i;
+                for (i = 0; i < arr.length; i++) {
+                    arr2.push(arr[i].toString());
+                }
+                $("#id").val(data.result.ObjReturn.ContractId);
+                $("#comboCompanyE").val(data.result.ObjReturn.CompanyId);
+                $('#testE').select2().val(arr2).trigger('change');
+                $("#conNameE").val(data.result.ObjReturn.ContractName);
+                $("#conStartDateE").val(data.result.ObjReturn.StartDate);
+                $("#conEndDateE").val(data.result.ObjReturn.EndDate);
+                $("#conPriceE").val(data.result.ObjReturn.ContractPrice);
+            }
+        });
+        $('#EditModal').modal('show');
+    }
+    function UpdateContract() {
+        var empObj = {
+            ContractId: $('#id').val(),
+            ContractName: $('#conNameE').val(),
+            ServiceIdList: $('#testE').val(),
+            StartDate: $('#conStartDateE').val(),
+            EndDate: $('#conEndDateE').val(),
+            ContractPrice: $('#conPriceE').val(),
+        }
+        $.ajax({
+            type: 'POST',
+
+            url: '@Url.Action("UpdateContract", "Contract")',
+
+            data: JSON.stringify(empObj),
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $('#EditModal').modal('hide');
+                if (!data.result.isError) {
+                    swal(data.result.SuccessMessage, "", "success");
+                }
+                else
+                    swal(data.result.WarningMessage, "", "error");
+                loadContract();
+            }
+        });
+    }
+    function process(date) {
+        var parts = date.split("/");
+        return new Date(parts[2], parts[1] - 1, parts[0]);
+    }
+    function createContracttt() {
+        var cD = $('#createDate').val();
+        var eD = $('#endDate').val();
+        if ($('#test').val().length <= 0) {
+            swal("Vui lòng chọn loại dịch vụ đăng ký.", "", "error");
+        }
+
+        else if (process(cD) > process(eD)) {
+            swal("Ngày kết thúc bảo hành phải lớn hơn ngày bắt đầu.", "", "error");
+        }
+        else {
+            var empObj = {
+                CompanyId: $('#comboCompany').val(),
+                ContractName: $('#conNameCreate').val(),
+                ServiceIdList: $('#test').val(),
+                StartDate: $('#createDate').val(),
+                EndDate: $('#endDate').val(),
+                ContractPrice: $('#price').val(),
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("CreateContract", "Contract")',
+                data: JSON.stringify(empObj),
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (!data.result.isError) {
+                        $('#CreateModal').modal('hide');
+                        clearModal();
+                        loadContract();
+                        swal(data.result.SuccessMessage, "", "success");
+                    }
+                    else
+                        swal(data.result.WarningMessage, "", "error");
+                }
+            });
+        }
+    }
+    function removeContract(id) {
+        swal({
+            title: 'Bạn có Chắc Chắn Muốn Xóa?',
+            text: "Dữ Liệu Đã Xóa Không Thể Hoàn Lại!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Quay Lại',
+            confirmButtonText: 'Chấp Nhận Xóa!'
+        }).then(function () {
+            deleteContract();
+        });
+        $('#contractHidden').val(id);
+    }
+    function deleteContract() {
+        var contract_id = $('#contractHidden').val();
+        $.ajax({
+            type: 'GET',
+
+            url: '@Url.Action("RemoveContract", "Contract")',
+
+        data: {
+                contract_id: contract_id
+            },
+
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $('#modalConfirmDelete').modal('hide');
+                swal(
+                    'Đã Xóa!',
+                    'Dữ Liệu Của Bạn Đã Được Xóa.',
+                    'success'
+                )
+                loadContract();
+            }
+        });
+    }
+
+    </script>
+
+}
+
