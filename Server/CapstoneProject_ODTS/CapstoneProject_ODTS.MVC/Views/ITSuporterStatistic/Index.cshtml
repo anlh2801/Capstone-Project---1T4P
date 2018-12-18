@@ -20,7 +20,7 @@
     <div class="col-md-6" style="margin-top: 10px">
         <div class="box box-success">
             <div class="box-header with-border">
-                <h4 class="box-title">Tổng Thời Gian Hỗ Trợ Các Loại Dịch Vụ Của Tất Cả Nhân Viên</h4>
+                <h4 class="box-title">Số Lần Hỗ Trợ Các Loại Dịch Vụ</h4>
 
             </div>
             <div class="box-body">
@@ -66,8 +66,7 @@
                     <th><label>Tên Nhân Viên</label></th>
                     <th><label>Số giờ/Dịch Vụ</label></th>
                     <th><label>Tổng Số Lần Hỗ Trợ</label></th>
-                    <th><label>Số lần Hủy</label></th>
-                    <th><label>Thời Gian Hỗ Trợ</label></th>
+                    <th><label>Số lần Hủy</label></th>                    
                 </tr>
             </thead>
             <tbody></tbody>
@@ -229,7 +228,7 @@
                     },
                     { "data": "SupportTimeInMonth" },
                     { "data": "TotalRejectTime" },
-                    { "data": "TotalTimeSupport" },
+                    //{ "data": "TotalTimeSupport" },
 
                 ],
                 "bAutoWidth": false,
@@ -329,7 +328,7 @@
                 var j;
                 var arr2 = [];
                 for (j = 0; j < data.length; ++j) {
-                    arr2.push(data[j].SupportTimeByHour);
+                    arr2.push(data[j].SupportTimeByTimes);
                 }
                 var options = {
                     responsive: true,
@@ -367,7 +366,7 @@
                         labels: arr,
                         datasets: [
                             {
-                                label: "Giờ Hỗ Trợ",
+                                label: "Lần Hỗ Trợ",
                                 backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
                                 data: arr2
                             }

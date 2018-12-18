@@ -761,19 +761,18 @@ namespace DataService.Models.Entities.Services
                 List<ITSupporterStatisticServiceTimeAPIViewModel> rsList = new List<ITSupporterStatisticServiceTimeAPIViewModel>();
                 var servieceRepo = DependencyUtils.Resolve<IServiceITSupportRepository>();
                 var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
-
-                var request = requestRepo.GetActive().Where(r => (r.StartTime != null && r.StartTime.Value.Year == year) && (r.StartTime != null && r.StartTime.Value.Month == month)).ToList();
-
-                if (request.Count() <= 0)
+                
+                var requests = requestRepo.GetActive(p => p.CreateDate.Month == month && p.CreateDate.Year == year).OrderByDescending(c => c.CreateDate).ToList();
+                if (requests.Count() <= 0)
                 {
                     return new ResponseObject<List<ITSupporterStatisticServiceTimeAPIViewModel>> { IsError = true, WarningMessage = "Không có thống kê nào!" };
                 }
 
-                var requestGroupBy = request.GroupBy(a => a.ServiceItem.ServiceITSupport.ServiceITSupportId);
+                var requestGroupBy = requests.GroupBy(a => a.ServiceItem.ServiceITSupport.ServiceITSupportId);
                 var requestSelect = requestGroupBy.Select(b => new { ServiceId = b.Key, ServiceItems = b.ToList() }).ToList();
 
 
-                if (request.Count() > 0)
+                if (requests.Count() > 0)
                 {
                     foreach (var item in requestSelect)
                     {
@@ -798,21 +797,41 @@ namespace DataService.Models.Entities.Services
                         {
                             if (otherServiceItem.ServiceName != servieceRepo.GetActive().SingleOrDefault(q => q.ServiceITSupportId == item.ServiceId).ServiceName)
                             {
-                                rsList.Add(new ITSupporterStatisticServiceTimeAPIViewModel
+                                if (rsList.Any(p => p.ServiceName == otherServiceItem.ServiceName))
                                 {
-                                    ServiceName = otherServiceItem.ServiceName,
-                                    SupportTimeByTimes = 0,
-                                    SupportTimeByHour = "0"
-                                });
+                                    var c = rsList.FirstOrDefault(p => p.ServiceName == otherServiceItem.ServiceName);
+                                    c.SupportTimeByTimes = c.SupportTimeByTimes + 0;
+                                    //SupportTimeByHour = SupportTimeByTimes.toS
+                                }
+                                else
+                                {
+                                    rsList.Add(new ITSupporterStatisticServiceTimeAPIViewModel
+                                    {
+                                        ServiceName = otherServiceItem.ServiceName,
+                                        SupportTimeByTimes = 0,
+                                        SupportTimeByHour = "0"
+                                    });
+                                }
+                                
                             }
                         }
-
-                        rsList.Add(new ITSupporterStatisticServiceTimeAPIViewModel
+                        var serviceName = servieceRepo.GetActive().SingleOrDefault(q => q.ServiceITSupportId == item.ServiceId).ServiceName;
+                        if (rsList.Any(p => p.ServiceName == serviceName))
                         {
-                            ServiceName = servieceRepo.GetActive().SingleOrDefault(q => q.ServiceITSupportId == item.ServiceId).ServiceName,
-                            SupportTimeByTimes = item.ServiceItems.Count(),
-                            SupportTimeByHour = $"{int.Parse(totalTimeSupportStringGetDays[0]) * 24 + int.Parse(totalTimeSupportStringGetTimes[0])}.{totalTimeSupportStringGetTimes[1]}"
-                        });
+                            var c = rsList.FirstOrDefault(p => p.ServiceName == serviceName);
+                            c.SupportTimeByTimes = c.SupportTimeByTimes + item.ServiceItems.Count();
+                            //SupportTimeByHour = SupportTimeByTimes.toS
+                        }
+                        else
+                        {
+                            rsList.Add(new ITSupporterStatisticServiceTimeAPIViewModel
+                            {
+                                ServiceName = serviceName,
+                                SupportTimeByTimes = item.ServiceItems.Count(),
+                                SupportTimeByHour = $"{int.Parse(totalTimeSupportStringGetDays[0]) * 24 + int.Parse(totalTimeSupportStringGetTimes[0])}.{totalTimeSupportStringGetTimes[1]}"
+                            });
+                        }
+                        
                     }
                 }
                 return new ResponseObject<List<ITSupporterStatisticServiceTimeAPIViewModel>> { IsError = false, ObjReturn = rsList, SuccessMessage = "Thành công" };
@@ -841,7 +860,7 @@ namespace DataService.Models.Entities.Services
 
                     var requestRepo = DependencyUtils.Resolve<IRequestRepository>();
                     var requests = requestRepo.GetActive().Where(r => r.CurrentITSupporter_Id == itsupporterId)
-                        .GroupBy(o => new { MonthGroupByStartTime = o.StartTime.Value.Month, YearGroupByStartTime = o.StartTime.Value.Year })
+                        .GroupBy(o => new { MonthGroupByStartTime = o.CreateDate.Month, YearGroupByStartTime = o.CreateDate.Year })
                         .Select(g => new { MonthSelect = g.Key.MonthGroupByStartTime, YearSelect = g.Key.YearGroupByStartTime, RequestList = g })
                         .OrderByDescending(a => a.YearSelect)
                         .ThenByDescending(a => a.MonthSelect)
