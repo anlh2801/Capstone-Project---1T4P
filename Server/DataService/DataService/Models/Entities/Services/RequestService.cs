@@ -1210,7 +1210,8 @@ namespace DataService.Models.Entities.Services
                 var newRequest = new StatusAPIViewModel();
                 newRequest.StatusId = 1;
                 newRequest.StatusName = "Tạo mới";
-                newRequest.NumberOfStatus = groupRequestByStatus.SingleOrDefault(p => p.Status == (int)RequestStatusEnum.New).Requests.Count();
+                var requestNews = groupRequestByStatus.SingleOrDefault(p => p.Status == (int)RequestStatusEnum.New);
+                newRequest.NumberOfStatus = requestNews != null ? requestNews.Requests.Count() : 0;
                 statusList.Add(newRequest);
 
                 var processingAndWailtProcessRequest = new StatusAPIViewModel();

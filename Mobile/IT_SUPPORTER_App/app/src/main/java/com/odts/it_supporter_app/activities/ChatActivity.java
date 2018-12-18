@@ -1,5 +1,6 @@
 package com.odts.it_supporter_app.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,7 +36,8 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
+        Intent myIntent = getIntent();
+        final String agencyName = myIntent.getStringExtra("agencyName");
         layout = (LinearLayout) findViewById(R.id.layout1);
         layout_2 = (RelativeLayout)findViewById(R.id.layout2);
         sendButton = (ImageView)findViewById(R.id.sendButton);
@@ -43,10 +45,10 @@ public class ChatActivity extends AppCompatActivity {
         scrollView = (ScrollView)findViewById(R.id.scrollView);
         SharedPreferences sharedPreferences = getSharedPreferences("ODTS", MODE_PRIVATE);
         final String itName = sharedPreferences.getString("itName", "");
-
+//        final String agencyName =
         Firebase.setAndroidContext(this);
-        reference1 = new Firebase("https://androidchatapp-c60cb.firebaseio.com/messages/" + itName + "_" + "Passio 47 TCV");
-        reference2 = new Firebase("https://androidchatapp-c60cb.firebaseio.com/messages/" + "Passio 47 TCV" + "_" + itName);
+        reference1 = new Firebase("https://androidchatapp-c60cb.firebaseio.com/messages/" + itName + "_" + agencyName);
+        reference2 = new Firebase("https://androidchatapp-c60cb.firebaseio.com/messages/" + agencyName + "_" + itName);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +77,7 @@ public class ChatActivity extends AppCompatActivity {
                     addMessageBox("You:-\n" + message, 1);
                 }
                 else{
-                    addMessageBox("Passio 47 TCV" + ":-\n" + message, 2);
+                    addMessageBox(agencyName + ":-\n" + message, 2);
                 }
             }
 
