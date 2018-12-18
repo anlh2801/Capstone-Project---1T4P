@@ -28,5 +28,7 @@ namespace DataService.APIViewModels
         public string UpdateDate { get; set; }
         public string CompanyName { get; set; }
         public string AgencyName { get; set; }
+        public int NumericalOrder { get; set; }
+        
     }
 }
