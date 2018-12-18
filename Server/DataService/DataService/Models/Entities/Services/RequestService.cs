@@ -1030,51 +1030,56 @@ namespace DataService.Models.Entities.Services
                             }
                         }
                         else
-                        {
-                            var rejected = idSupporterListWithWeights.Dequeue();
-                            rejected.TimesReject++;
+                        {                            
                             var requestHistory = new RequestHistory()
                             {
                                 IsITSupportAccept = false,
                                 IsDelete = false,
-                                Pre_It_SupporterId = rejected.ITSupporterId,
+                                Pre_It_SupporterId = itSupporterId,
                                 RequestId = requestId,
                                 Description = des != null ? des : string.Empty,
                                 CreateDate = DateTime.UtcNow.AddHours(7)
                             };
                             requestHistoryRepo.Add(requestHistory);
                             requestHistoryRepo.Save();
-
-                            var idSupporterListWithWeightNext = idSupporterListWithWeights.FirstOrDefault();
-                            if (rejected.TimesReject < 3)
+                            if (idSupporterListWithWeights.Count > 0)
                             {
-                                idSupporterListWithWeights.Enqueue(rejected);
+
+
+                                var rejected = idSupporterListWithWeights.Dequeue();
+                                rejected.TimesReject++;
+
+                                var idSupporterListWithWeightNext = idSupporterListWithWeights.FirstOrDefault();
+                                if (rejected.TimesReject < 3)
+                                {
+                                    idSupporterListWithWeights.Enqueue(rejected);
+                                }
+                                else
+                                {
+                                    var itSupporter = itSupporterRepo.GetActive(p => p.ITSupporterId == rejected.ITSupporterId).SingleOrDefault();
+                                    itSupporter.IsOnline = false;
+                                    itSupporterRepo.Edit(itSupporter);
+                                    itSupporterRepo.Save();
+
+                                    FirebaseService firebaseService2 = new FirebaseService();
+                                    firebaseService2.SendNotificationFromFirebaseCloudForITSupporterOffline(rejected.ITSupporterId);
+                                }
+                                //memoryCacher.Add("ITSupporterListWithWeights", idSupporterListWithWeights, DateTimeOffset.UtcNow.AddHours(1));
+                                redisTools.Save("ITSupporterListWithWeights", idSupporterListWithWeights);
+                                FirebaseService firebaseService = new FirebaseService();
+                                idSupporterListWithWeightNext = idSupporterListWithWeights.FirstOrDefault();
+                                firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(idSupporterListWithWeightNext.ITSupporterId, requestId);
+
+                                //int counter = 60;
+
+                                //while (counter > 0)
+                                //{
+                                //    Console.WriteLine($"Gửi lại sau khi từ chối trong {counter} giây");
+                                //    counter--;
+                                //    Thread.Sleep(1000);
+                                //}
+                                //AcceptRequestFromITSupporter(idSupporterListWithWeightNext.ITSupporterId, requestId, false);
                             }
-                            else
-                            {
-                                var itSupporter = itSupporterRepo.GetActive(p => p.ITSupporterId == rejected.ITSupporterId).SingleOrDefault();
-                                itSupporter.IsOnline = false;
-                                itSupporterRepo.Edit(itSupporter);
-                                itSupporterRepo.Save();
-
-                                FirebaseService firebaseService2 = new FirebaseService();
-                                firebaseService2.SendNotificationFromFirebaseCloudForITSupporterOffline(rejected.ITSupporterId);
-                            }
-                            //memoryCacher.Add("ITSupporterListWithWeights", idSupporterListWithWeights, DateTimeOffset.UtcNow.AddHours(1));
-                            redisTools.Save("ITSupporterListWithWeights", idSupporterListWithWeights);
-                            FirebaseService firebaseService = new FirebaseService();
-                            idSupporterListWithWeightNext = idSupporterListWithWeights.FirstOrDefault();
-                            firebaseService.SendNotificationFromFirebaseCloudForITSupporterReceive(idSupporterListWithWeightNext.ITSupporterId, requestId);
-
-                            //int counter = 60;
-
-                            //while (counter > 0)
-                            //{
-                            //    Console.WriteLine($"Gửi lại sau khi từ chối trong {counter} giây");
-                            //    counter--;
-                            //    Thread.Sleep(1000);
-                            //}
-                            //AcceptRequestFromITSupporter(idSupporterListWithWeightNext.ITSupporterId, requestId, false);
                         }
                     }
                 }
